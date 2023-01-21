@@ -639,10 +639,10 @@ c.ab_selector <- function(...) {
 
 all_any_ab_selector <- function(type, ..., na.rm = TRUE) {
   cols_ab <- c(...)
-  result <- cols_ab[toupper(cols_ab) %in% c("R", "S", "I")]
+  result <- cols_ab[toupper(cols_ab) %in% c("S", "I", "R")]
   if (length(result) == 0) {
-    message_("Filtering ", type, " of columns ", vector_and(font_bold(cols_ab, collapse = NULL), quotes = "'"), ' to contain value "R", "S" or "I"')
-    result <- c("R", "S", "I")
+    message_("Filtering ", type, " of columns ", vector_and(font_bold(cols_ab, collapse = NULL), quotes = "'"), ' to contain value "S", "I" or "R"')
+    result <- c("S", "I", "R")
   }
   cols_ab <- cols_ab[!cols_ab %in% result]
   df <- get_current_data(arg_name = NA, call = -3)
@@ -751,8 +751,8 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
     }
   }
   # this is `!=`, so turn around the values
-  rsi <- c("R", "S", "I")
-  e2 <- rsi[rsi != e2]
+  sir <- c("S", "I", "R")
+  e2 <- sir[sir != e2]
   structure(all_any_ab_selector(type = type, e1, e2),
     class = c("ab_selector_any_all", "logical")
   )

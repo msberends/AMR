@@ -71,7 +71,7 @@ sir_sf(
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antibiotics, see section \emph{Combination Therapy} below}
 
-\item{ab_result}{antibiotic results to test against, must be one of more values of "R", "S", "I"}
+\item{ab_result}{antibiotic results to test against, must be one or more values of "S", "I", or "R"}
 
 \item{confidence_level}{the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method.}
 
@@ -264,7 +264,7 @@ if (require("dplyr")) {
       combination_n = count_all(CIP, GEN)
     )
 
-  # Get proportions S/I/R immediately of all rsi columns
+  # Get proportions S/I/R immediately of all sir columns
   example_isolates \%>\%
     select(AMX, CIP) \%>\%
     proportion_df(translate = FALSE)

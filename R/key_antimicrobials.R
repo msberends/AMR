@@ -282,7 +282,7 @@ generate_antimcrobials_string <- function(df) {
           as.list(df),
           function(x) {
             x <- toupper(as.character(x))
-            x[!x %in% c("R", "S", "I")] <- "."
+            x[!x %in% c("S", "I", "R")] <- "."
             paste(x)
           }
         )
@@ -308,7 +308,7 @@ antimicrobials_equal <- function(y,
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
 
-  key2rsi <- function(val) {
+  key2sir <- function(val) {
     val <- strsplit(val, "", fixed = TRUE)[[1L]]
     val.int <- rep(NA_real_, length(val))
     val.int[val == "S"] <- 1
@@ -318,7 +318,7 @@ antimicrobials_equal <- function(y,
   }
   # only run on uniques
   uniq <- unique(c(y, z))
-  uniq_list <- lapply(uniq, key2rsi)
+  uniq_list <- lapply(uniq, key2sir)
   names(uniq_list) <- uniq
 
   y <- uniq_list[match(y, names(uniq_list))]

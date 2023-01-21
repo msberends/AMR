@@ -16,7 +16,7 @@ mean_amr_distance(x, ...)
 amr_distance_from_row(amr_distance, row)
 }
 \arguments{
-\item{x}{a vector of class \link[=as.sir]{rsi}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
+\item{x}{a vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
 
 \item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=ab_selector]{antibiotic selectors}}
 
@@ -46,9 +46,9 @@ Isolates with distances less than 0.01 difference from each other should be cons
 }
 
 \examples{
-rsi <- random_sir(10)
-rsi
-mean_amr_distance(rsi)
+sir <- random_sir(10)
+sir
+mean_amr_distance(sir)
 
 mic <- random_mic(10)
 mic

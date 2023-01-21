@@ -69,7 +69,7 @@ expect_error(as.sir.mic(as.mic(16)))
 expect_error(as.sir.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  # 40 rsi columns
+  # 40 sir columns
   expect_equal(
     example_isolates %>%
       mutate_at(vars(PEN:RIF), as.character) %>%
@@ -218,7 +218,7 @@ expect_inherits(
 expect_inherits(
   suppressWarnings(as.sir(data.frame(
     mo = "Escherichia coli",
-    amoxi = c("R", "S", "I", "invalid")
+    amoxi = c("S", "I", "R", "invalid")
   ))$amoxi),
   "sir"
 )

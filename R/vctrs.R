@@ -141,7 +141,7 @@ vec_math.mic <- function(.fn, x, ...) {
   .fn(as.double(x), ...)
 }
 
-# S3: rsi
+# S3: sir
 vec_ptype2.character.sir <- function(x, y, ...) {
   x
 }

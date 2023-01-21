@@ -11,7 +11,7 @@
 \alias{as.sir.disk}
 \alias{as.sir.data.frame}
 \alias{sir_interpretation_history}
-\title{Interpret MIC and Disk Values, or Clean Raw SIR Data}
+\title{Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data}
 \format{
 An object of class \code{sir} (inherits from \code{ordered}, \code{factor}) of length 1.
 }

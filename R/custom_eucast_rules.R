@@ -181,8 +181,8 @@ custom_eucast_rules <- function(...) {
     result_value <- as.character(result)[[3]]
     result_value[result_value == "NA"] <- NA
     stop_ifnot(
-      result_value %in% c("R", "S", "I", NA),
-      "the resulting value of rule ", i, " must be either \"R\", \"S\", \"I\" or NA"
+      result_value %in% c("S", "I", "R", NA),
+      "the resulting value of rule ", i, " must be either \"S\", \"I\", \"R\" or NA"
     )
     result_value <- as.sir(result_value)
 

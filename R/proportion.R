@@ -40,7 +40,7 @@
 #' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
 #' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to `TRUE`
-#' @param ab_result antibiotic results to test against, must be one of more values of "R", "S", "I"
+#' @param ab_result antibiotic results to test against, must be one or more values of "S", "I", or "R"
 #' @param confidence_level the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
 #' @param side the side of the confidence interval to return. Defaults to `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
 #' @inheritSection as.sir Interpretation of SIR
@@ -200,7 +200,7 @@
 #'       combination_n = count_all(CIP, GEN)
 #'     )
 #'
-#'   # Get proportions S/I/R immediately of all rsi columns
+#'   # Get proportions S/I/R immediately of all sir columns
 #'   example_isolates %>%
 #'     select(AMX, CIP) %>%
 #'     proportion_df(translate = FALSE)
@@ -256,7 +256,7 @@ sir_confidence_interval <- function(...,
                                     only_all_tested = FALSE,
                                     confidence_level = 0.95,
                                     side = "both") {
-  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1, 2, 3), is_in = c("R", "S", "I"))
+  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1, 2, 3), is_in = c("S", "I", "R"))
   meet_criteria(confidence_level, allow_class = "numeric", is_positive = TRUE, has_length = 1)
   meet_criteria(side, allow_class = "character", has_length = 1, is_in = c("both", "b", "left", "l", "lower", "lowest", "less", "min", "right", "r", "higher", "highest", "greater", "g", "max"))
   x <- tryCatch(

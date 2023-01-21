@@ -166,7 +166,7 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_cast", "mic.character")
   s3_register("vctrs::vec_cast", "mic.double")
   s3_register("vctrs::vec_math", "mic")
-  # S3: rsi
+  # S3: sir
   s3_register("vctrs::vec_ptype2", "character.sir")
   s3_register("vctrs::vec_ptype2", "sir.character")
   s3_register("vctrs::vec_cast", "character.sir")

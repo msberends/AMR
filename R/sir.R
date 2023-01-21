@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Interpret MIC and Disk Values, or Clean Raw SIR Data
+#' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
 #' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
 #' @rdname as.sir
@@ -258,9 +258,9 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (all(x %in% c("R", "S", "I", NA)) & !all(is.na(x))) {
+  } else if (all(x %in% c("S", "I", "R", NA)) & !all(is.na(x))) {
     return(TRUE)
-  } else if (!any(c("R", "S", "I") %in% x, na.rm = TRUE) & !all(is.na(x))) {
+  } else if (!any(c("S", "I", "R") %in% x, na.rm = TRUE) & !all(is.na(x))) {
     return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !x %in% c("", "-", "NULL")]
@@ -301,7 +301,7 @@ as.sir.default <- function(x, ...) {
   if (inherits(x.bak, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
     lbls <- attributes(x.bak)$labels
-    if (!is.null(lbls) && all(c("R", "S", "I") %in% names(lbls)) && all(c(1:3) %in% lbls)) {
+    if (!is.null(lbls) && all(c("S", "I", "R") %in% names(lbls)) && all(c(1:3) %in% lbls)) {
       x[x.bak == 1] <- names(lbls[lbls == 1])
       x[x.bak == 2] <- names(lbls[lbls == 2])
       x[x.bak == 3] <- names(lbls[lbls == 3])
@@ -314,7 +314,7 @@ as.sir.default <- function(x, ...) {
     x[x.bak == "1"] <- "S"
     x[x.bak == "2"] <- "I"
     x[x.bak == "3"] <- "R"
-  } else if (!all(is.na(x)) && !identical(levels(x), c("R", "S", "I")) && !all(x %in% c("R", "S", "I", NA))) {
+  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R")) && !all(x %in% c("S", "I", "R", NA))) {
     if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
@@ -625,7 +625,7 @@ as.sir.data.frame <- function(x,
       show_message <- FALSE
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
-      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I", NA), na.rm = TRUE)) {
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "I", "R", NA), na.rm = TRUE)) {
         show_message <- TRUE
         # only print message if values are not already clean
         message_("=> Cleaning values in column '", font_bold(ab), "' (",

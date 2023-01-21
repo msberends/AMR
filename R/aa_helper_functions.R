@@ -667,7 +667,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   }
   if (identical(v, c("I", "R", "S"))) {
     # class 'sir' should be sorted like this
-    v <- c("R", "S", "I")
+    v <- c("S", "I", "R")
   }
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
   paste0(

@@ -33,7 +33,7 @@ if (AMR:::pkg_is_available("dplyr", also_load = FALSE)) {
                         mo = as.mo("Escherichia coli"),
                         mic = as.mic(2),
                         disk = as.disk(20),
-                        rsi = as.sir("S"))
+                        sir = as.sir("S"))
   check1 <- lapply(test, class)
   test[1, "ab"] <- "GEN"
   test[1, "mo"] <- "B_KLBSL_PNMN"

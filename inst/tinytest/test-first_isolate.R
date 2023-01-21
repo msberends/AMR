@@ -214,7 +214,7 @@ expect_equal(
   1108
 )
 
-# empty rsi results
+# empty sir results
 expect_equal(
   sum(first_isolate(example_isolates, include_untested_sir = FALSE)),
   1366
