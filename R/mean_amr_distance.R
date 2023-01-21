@@ -30,14 +30,14 @@
 #' Calculate the Mean AMR Distance
 #'
 #' Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
-#' @param x a vector of class [rsi][as.rsi()], [mic][as.mic()] or [disk][as.disk()], or a [data.frame] containing columns of any of these classes
+#' @param x a vector of class [sir][as.sir()], [mic][as.mic()] or [disk][as.disk()], or a [data.frame] containing columns of any of these classes
 #' @param ... variables to select (supports [tidyselect language][tidyselect::language] such as `column1:column4` and `where(is.mic)`, and can thus also be [antibiotic selectors][ab_selector()]
 #' @param combine_SI 	a [logical] to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant), defaults to `TRUE`
 #' @details The mean AMR distance is effectively [the Z-score](https://en.wikipedia.org/wiki/Standard_score); a normalised numeric value to compare AMR test results which can help to identify similar isolates, without comparing antibiograms by hand.
 #'
 #' MIC values (see [as.mic()]) are transformed with [log2()] first; their distance is thus calculated as `(log2(x) - mean(log2(x))) / sd(log2(x))`.
 #'
-#' R/SI values (see [as.rsi()]) are transformed using `"S"` = 1, `"I"` = 2, and `"R"` = 3. If `combine_SI` is `TRUE` (default), the `"I"` will be considered to be 1.
+#' SIR values (see [as.sir()]) are transformed using `"S"` = 1, `"I"` = 2, and `"R"` = 3. If `combine_SI` is `TRUE` (default), the `"I"` will be considered to be 1.
 #'
 #' For data sets, the mean AMR distance will be calculated per column, after which the mean per row will be returned, see *Examples*.
 #'
@@ -46,9 +46,9 @@
 #' Isolates with distances less than 0.01 difference from each other should be considered similar. Differences lower than 0.025 should be considered suspicious.
 #' @export
 #' @examples
-#' rsi <- random_rsi(10)
-#' rsi
-#' mean_amr_distance(rsi)
+#' sir <- random_sir(10)
+#' sir
+#' mean_amr_distance(sir)
 #' 
 #' mic <- random_mic(10)
 #' mic
@@ -62,7 +62,7 @@
 #'
 #' y <- data.frame(
 #'   id = LETTERS[1:10],
-#'   amox = random_rsi(10, ab = "amox", mo = "Escherichia coli"),
+#'   amox = random_sir(10, ab = "amox", mo = "Escherichia coli"),
 #'   cipr = random_disk(10, ab = "cipr", mo = "Escherichia coli"),
 #'   gent = random_mic(10, ab = "gent", mo = "Escherichia coli"),
 #'   tobr = random_mic(10, ab = "tobr", mo = "Escherichia coli")
@@ -115,7 +115,7 @@ mean_amr_distance.disk <- function(x, ...) {
 
 #' @rdname mean_amr_distance
 #' @export
-mean_amr_distance.rsi <- function(x, ..., combine_SI = TRUE) {
+mean_amr_distance.sir <- function(x, ..., combine_SI = TRUE) {
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = -1)
   if (isTRUE(combine_SI)) {
     x[x == "I"] <- "S"

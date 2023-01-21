@@ -62,7 +62,7 @@ if (require("dplyr") && require("ggplot2")) {
     filter(mo == as.mo("Escherichia coli")) \%>\%
     group_by(age_group = age_groups(age)) \%>\%
     select(age_group, CIP) \%>\%
-    ggplot_rsi(
+    ggplot_sir(
       x = "age_group",
       minimum = 0,
       x.title = "Age Group",

@@ -1,4 +1,4 @@
-# AMR 1.8.2.9095
+# AMR 1.8.2.9096
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -6,20 +6,29 @@ This is a new major release of the AMR package, with great new additions but als
 
 **[TL;DR](https://en.wikipedia.org/wiki/TL;DR)**
 
+* All functions and arguments with 'rsi' were replaced with 'sir', such as the interpretation of MIC values (now `as.sir()` instead of `as.rsi()`) - all old functions still work for now
 * Microbiological taxonomy (`microorganisms` data set) updated to 2022 and now based on LPSN and GBIF
 * Much increased algorithms to translate user input to valid taxonomy, e.g. by using [recent scientific work](https://doi.org/10.1099/mic.0.001269) about per-species human pathogenicity
 * Clinical breakpoints added for EUCAST 2022 and CLSI 2022
 * 20 new antibiotics added and updated all DDDs and ATC codes
 * Extended support for antiviral agents (`antivirals` data set), with many new functions
 * Now available in 16 languages
-* Many new interesting functions, such as `rsi_confidence_interval()` and `mean_amr_distance()`, and `add_custom_microorganisms()` to add custom microorganisms to this package
+* Many new interesting functions, such as `sir_confidence_interval()` and `mean_amr_distance()`, and `add_custom_microorganisms()` to add custom microorganisms to this package
 * Many small bug fixes
 
 ## New
 
+### SIR vs. RSI
+
+For this milestone version, we replaced all mentions of RSI with SIR, to comply with what is actually being commonly used in the field of clinical microbiology when it comes to this tri-form regarding AMR.
+
+While existing functions such as `as.rsi()`, `rsi_df()` and `ggplot_rsi()` still work, their replacements `as.sir()`,  `sir_df()`, `ggplot_sir()` are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set `rsi_translation` is now called `clinical_breakpoints` to better reflect its content.
+
+The 'RSI functions' will be removed in a future version, but not before late 2023 / early 2024.
+
 ### Interpretation of MIC and disk diffusion values
 
-The clinical breakpoints and intrinsic resistance of EUCAST 2022 and CLSI 2022 have been added for `as.rsi()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new `AMR_guideline` option, such as: `options(AMR_guideline = "CLSI 2020")`.
+The clinical breakpoints and intrinsic resistance of EUCAST 2022 and CLSI 2022 have been added for `as.sir()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new `AMR_guideline` option, such as: `options(AMR_guideline = "CLSI 2020")`.
  
 Interpretation guidelines older than 10 years were removed, the oldest now included guidelines of EUCAST and CLSI are from 2013.
 
@@ -64,7 +73,7 @@ The `antibiotics` data set was greatly updated:
   * Updated DDDs and PubChem Compound IDs
   * Updated some antibiotic name spelling, now used by WHOCC (such as cephalexin -> cefalexin, and phenethicillin -> pheneticillin)
   * Antibiotic code "CEI" for ceftolozane/tazobactam has been replaced with "CZT" to comply with EARS-Net and WHONET 2022. The old code will still work in all cases when using `as.ab()` or any of the `ab_*()` functions.
-  * Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and adding the breakpoints of anaerobics to the `rsi_interpretation` data set, which is used by `as.rsi()` for interpretion of MIC and disk diffusion values
+  * Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and adding the breakpoints of anaerobics to the `clinical_breakpoints` data set, which is used by `as.sir()` for interpretion of MIC and disk diffusion values
 
 Also, we added support for using antibiotic selectors in scoped `dplyr` verbs (with or without using `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, please see `resistance()` for examples.
 
@@ -78,22 +87,22 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 ### Other new functions
 
-* Function `rsi_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `rsi_df()` and `proportion_df()`.
+* Function `sir_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `sir_df()` and `proportion_df()`.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
-* Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
+* Function `sir_interpretation_history()` to view the history of previous runs of `as.sir()` (previously `as.rsi()`). This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.sir()` was run.
 * Function `mo_current()` to get the currently valid taxonomic name of a microorganism
 * Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
 
 ## Changes
 
-* Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `rsi_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
+* Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `sir_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
 * Using `units` in `ab_ddd(..., units = "...")` had been deprecated for some time and is now not supported anymore. Use `ab_ddd_units()` instead.
-* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
+* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `sir_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
 * All data sets in this package are now a `tibble`, instead of base R `data.frame`s. Older R versions are still supported, even if they do not support `tibble`s.
 * Our data sets are now also continually exported to **Apache Feather and Apache Parquet formats**. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
-* For `as.rsi()`:
+* For `as.sir()`:
   * Fixed certain EUCAST breakpoints for MIC values
-  * Allow `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
+  * Allow `NA` values (e.g. `as.sir(as.disk(NA), ...)`)
   * Fix for bug-drug combinations with multiple breakpoints for different body sites
   * Interpretation from MIC and disk zones is now more informative about availability of breakpoints and more robust
 * Removed the `as.integer()` method for MIC values, since MIC are not integer values and running `table()` on MIC values consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
@@ -103,17 +112,17 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Fixes for reading in text files using `set_mo_source()`, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package
 * Fixed a bug for `mdro()` when using similar column names with the Magiorakos guideline
 * Using any `random_*()` function (such as `random_mic()`) is now possible by directly calling the package without loading it first: `AMR::random_mic(10)`
-* Extended support for the `vctrs` package, used internally by the tidyverse. This allows to change values of class `mic`, `disk`, `rsi`, `mo` and `ab` in tibbles, and to use antibiotic selectors for selecting/filtering, e.g. `df[carbapenems() == "R", ]`
+* Extended support for the `vctrs` package, used internally by the tidyverse. This allows to change values of class `mic`, `disk`, `sir`, `mo` and `ab` in tibbles, and to use antibiotic selectors for selecting/filtering, e.g. `df[carbapenems() == "R", ]`
 * Fix for using `info = FALSE` in `mdro()`
-* For all interpretation guidelines using `as.rsi()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
+* For all interpretation guidelines using `as.sir()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
 * Fix for using `ab_atc()` on non-existing ATC codes
 * Black and white message texts are now reversed in colour if using an RStudio dark theme
 * `mo_snomed()` now returns class `character`, not `numeric` anymore (to make long SNOMED codes readable)
 * Fix for using `as.ab()` on `NA` values
 * Updated support for all WHONET 2022 microorganism codes 
-* Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.rsi()`
+* Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.sir()`
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
-* Cleaning columns with `as.rsi()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
+* Cleaning columns with `as.sir()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
 
 ## Other
 

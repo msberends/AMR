@@ -127,6 +127,8 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
 }
 
 join_microorganisms <- function(type, x, by, suffix, ...) {
+  add_MO_lookup_to_AMR_env()
+  
   if (!is.data.frame(x)) {
     if (pkg_is_available("tibble", also_load = FALSE)) {
       x <- import_fn("tibble", "tibble")(mo = x)

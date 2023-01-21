@@ -37,7 +37,7 @@
 #' 
 #' There are two ways to automate this process:
 #' 
-#' **Method 1:** Using the [option `AMR_custom_mo`][AMR-options], which is the preferred method. To use this method:
+#' **Method 1:** Using the option [`AMR_custom_mo`][AMR-options], which is the preferred method. To use this method:
 #' 
 #'    1. Create a data set in the structure of the [microorganisms] data set (containing at the very least column "genus") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_mo.rds"`, or any remote location.
 #'    
@@ -123,6 +123,8 @@
 add_custom_microorganisms <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
   stop_ifnot("genus" %in% tolower(colnames(x)), paste0("`x` must contain column 'genus'."))
+  
+  add_MO_lookup_to_AMR_env()
   
   # remove any extra class/type, such as grouped tbl, or data.table:
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -269,7 +271,11 @@ add_custom_microorganisms <- function(x) {
 #' @export
 clear_custom_microorganisms <- function() {
   n <- nrow(AMR_env$MO_lookup)
-  AMR_env$MO_lookup <- create_MO_lookup()
+  
+  # reset
+  AMR_env$MO_lookup <- NULL
+  add_MO_lookup_to_AMR_env()
+  
   n2 <- nrow(AMR_env$MO_lookup)
   AMR_env$custom_mo_codes <- character(0)
   AMR_env$mo_previously_coerced <- AMR_env$mo_previously_coerced[which(AMR_env$mo_previously_coerced$mo %in% AMR_env$MO_lookup$mo), , drop = FALSE]

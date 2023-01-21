@@ -44,7 +44,7 @@
 #' @param main title of the plot
 #' @param ribbon a [logical] to indicate whether a ribbon should be shown (default) or error bars
 #' @param ... arguments passed on to functions
-#' @inheritSection as.rsi Interpretation of R and S/I
+#' @inheritSection as.sir Interpretation of SIR
 #' @inheritParams first_isolate
 #' @inheritParams graphics::plot
 #' @details Valid options for the statistical model (argument `model`) are:
@@ -76,7 +76,7 @@
 #' plot(x)
 #' \donttest{
 #' if (require("ggplot2")) {
-#'   ggplot_rsi_predict(x)
+#'   ggplot_sir_predict(x)
 #' }
 #'
 #' # using dplyr:
@@ -156,7 +156,7 @@ resistance_predict <- function(x,
   }
 
   df <- x
-  df[, col_ab] <- droplevels(as.rsi(df[, col_ab, drop = TRUE]))
+  df[, col_ab] <- droplevels(as.sir(df[, col_ab, drop = TRUE]))
   if (I_as_S == TRUE) {
     # then I as S
     df[, col_ab] <- gsub("I", "S", df[, col_ab, drop = TRUE], fixed = TRUE)
@@ -286,7 +286,7 @@ resistance_predict <- function(x,
 
 #' @rdname resistance_predict
 #' @export
-rsi_predict <- resistance_predict
+sir_predict <- resistance_predict
 
 #' @method plot resistance_predict
 #' @export
@@ -341,7 +341,7 @@ plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", 
 
 #' @rdname resistance_predict
 #' @export
-ggplot_rsi_predict <- function(x,
+ggplot_sir_predict <- function(x,
                                main = paste("Resistance Prediction of", x_name),
                                ribbon = TRUE,
                                ...) {
@@ -402,7 +402,7 @@ autoplot.resistance_predict <- function(object,
   x_name <- paste0(ab_name(attributes(object)$ab), " (", attributes(object)$ab, ")")
   meet_criteria(main, allow_class = "character", has_length = 1)
   meet_criteria(ribbon, allow_class = "logical", has_length = 1)
-  ggplot_rsi_predict(x = object, main = main, ribbon = ribbon, ...)
+  ggplot_sir_predict(x = object, main = main, ribbon = ribbon, ...)
 }
 
 #' @method fortify resistance_predict

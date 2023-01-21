@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # This script runs in under a minute and renews all guidelines of CLSI and EUCAST!
-# Run it with source("data-raw/reproduction_of_rsi_translation.R")
+# Run it with source("data-raw/reproduction_of_clinical_breakpoints.R")
 
 library(dplyr)
 library(readr)
@@ -206,11 +206,11 @@ breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- b
 # check again
 breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
-rsi_translation %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+clinical_breakpoints %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 
 # Save to package ----
 
-rsi_translation <- breakpoints_new
-usethis::use_data(rsi_translation, overwrite = TRUE, compress = "xz", version = 2)
-rm(rsi_translation)
+clinical_breakpoints <- breakpoints_new
+usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)
+rm(clinical_breakpoints)
 devtools::load_all(".")

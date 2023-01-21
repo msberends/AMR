@@ -33,7 +33,7 @@ Conducting AMR data analysis unfortunately requires in-depth knowledge from diff
 * Good questions (always start with those!)
 * A thorough understanding of (clinical) epidemiology, to understand the clinical and epidemiological relevance and possible bias of results
 * A thorough understanding of (clinical) microbiology/infectious diseases, to understand which microorganisms are causal to which infections and the implications of pharmaceutical treatment, as well as understanding intrinsic and acquired microbial resistance
-* Experience with data analysis with microbiological tests and their results, to understand the determination and limitations of MIC values and their interpretations to RSI values
+* Experience with data analysis with microbiological tests and their results, to understand the determination and limitations of MIC values and their interpretations to SIR values
 * Availability of the biological taxonomy of microorganisms and probably normalisation factors for pharmaceuticals, such as defined daily doses (DDD)
 * Available (inter-)national guidelines, and profound methods to apply them
 
@@ -122,7 +122,7 @@ bacteria <- c(
 
 ## Put everything together
 
-Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results, using the `random_rsi()` function.
+Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results, using the `random_sir()` function.
 
 ```{r merge data}
 sample_size <- 20000
@@ -142,10 +142,10 @@ data <- data.frame(
     size = sample_size, replace = TRUE,
     prob = c(0.50, 0.25, 0.15, 0.10)
   ),
-  AMX = random_rsi(sample_size, prob_RSI = c(0.35, 0.60, 0.05)),
-  AMC = random_rsi(sample_size, prob_RSI = c(0.15, 0.75, 0.10)),
-  CIP = random_rsi(sample_size, prob_RSI = c(0.20, 0.80, 0.00)),
-  GEN = random_rsi(sample_size, prob_RSI = c(0.08, 0.92, 0.00))
+  AMX = random_sir(sample_size, prob_sir = c(0.35, 0.60, 0.05)),
+  AMC = random_sir(sample_size, prob_sir = c(0.15, 0.75, 0.10)),
+  CIP = random_sir(sample_size, prob_sir = c(0.20, 0.80, 0.00)),
+  GEN = random_sir(sample_size, prob_sir = c(0.08, 0.92, 0.00))
 )
 ```
 
@@ -186,14 +186,14 @@ data <- data %>%
   mutate(bacteria = as.mo(bacteria))
 ```
 
-We also want to transform the antibiotics, because in real life data we don't know if they are really clean. The `as.rsi()` function ensures reliability and reproducibility in these kind of variables. The `is.rsi.eligible()` can check which columns are probably columns with R/SI test results. Using `mutate()` and `across()`, we can apply the transformation to the formal `<rsi>` class:
+We also want to transform the antibiotics, because in real life data we don't know if they are really clean. The `as.sir()` function ensures reliability and reproducibility in these kind of variables. The `is_sir_eligible()` can check which columns are probably columns with SIR test results. Using `mutate()` and `across()`, we can apply the transformation to the formal `<rsi>` class:
 
 ```{r transform abx}
-is.rsi.eligible(data)
-colnames(data)[is.rsi.eligible(data)]
+is_sir_eligible(data)
+colnames(data)[is_sir_eligible(data)]
 
 data <- data %>%
-  mutate(across(where(is.rsi.eligible), as.rsi))
+  mutate(across(where(is_sir_eligible), as.sir))
 ```
 
 Finally, we will apply [EUCAST rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
@@ -360,14 +360,14 @@ data_1st %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
 
-Of course it would be very convenient to know the number of isolates responsible for the percentages. For that purpose the `n_rsi()` can be used, which works exactly like `n_distinct()` from the `dplyr` package. It counts all isolates available for every group (i.e. values S, I or R):
+Of course it would be very convenient to know the number of isolates responsible for the percentages. For that purpose the `n_sir()` can be used, which works exactly like `n_distinct()` from the `dplyr` package. It counts all isolates available for every group (i.e. values S, I or R):
 
 ```{r, eval = FALSE}
 data_1st %>%
   group_by(hospital) %>%
   summarise(
     amoxicillin = resistance(AMX),
-    available = n_rsi(AMX)
+    available = n_sir(AMX)
   )
 ```
 ```{r, echo = FALSE}
@@ -375,7 +375,7 @@ data_1st %>%
   group_by(hospital) %>%
   summarise(
     amoxicillin = resistance(AMX),
-    available = n_rsi(AMX)
+    available = n_sir(AMX)
   ) %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
@@ -469,11 +469,11 @@ ggplot(a_data_set) +
   geom_bar(aes(year))
 ```
 
-The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_rsi()`. It automatically transforms data with `count_df()` or `proportion_df()` and show results in stacked bars. Its simplest and shortest example:
+The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_sir()`. It automatically transforms data with `count_df()` or `proportion_df()` and show results in stacked bars. Its simplest and shortest example:
 
 ```{r plot 3}
 ggplot(data_1st) +
-  geom_rsi(translate_ab = FALSE)
+  geom_sir(translate_ab = FALSE)
 ```
 
 Omit the `translate_ab = FALSE` to have the antibiotic codes (AMX, AMC, CIP, GEN) translated to official WHO names (amoxicillin, amoxicillin/clavulanic acid, ciprofloxacin, gentamicin).
@@ -484,13 +484,13 @@ If we group on e.g. the `genus` column and add some additional functions from ou
 # group the data on `genus`
 ggplot(data_1st %>% group_by(genus)) +
   # create bars with genus on x axis
-  # it looks for variables with class `rsi`,
-  # of which we have 4 (earlier created with `as.rsi`)
-  geom_rsi(x = "genus") +
+  # it looks for variables with class `sir`,
+  # of which we have 4 (earlier created with `as.sir`)
+  geom_sir(x = "genus") +
   # split plots on antibiotic
-  facet_rsi(facet = "antibiotic") +
-  # set colours to the R/SI interpretations (colour-blind friendly)
-  scale_rsi_colours() +
+  facet_sir(facet = "antibiotic") +
+  # set colours to the SIR interpretations (colour-blind friendly)
+  scale_sir_colours() +
   # show percentages on y axis
   scale_y_percent(breaks = 0:4 * 25) +
   # turn 90 degrees, to make it bars instead of columns
@@ -505,12 +505,12 @@ ggplot(data_1st %>% group_by(genus)) +
   theme(axis.text.y = element_text(face = "italic"))
 ```
 
-To simplify this, we also created the `ggplot_rsi()` function, which combines almost all above functions:
+To simplify this, we also created the `ggplot_sir()` function, which combines almost all above functions:
 
 ```{r plot 5}
 data_1st %>%
   group_by(genus) %>%
-  ggplot_rsi(
+  ggplot_sir(
     x = "genus",
     facet = "antibiotic",
     breaks = 0:4 * 25,

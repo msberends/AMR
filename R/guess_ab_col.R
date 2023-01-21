@@ -33,7 +33,7 @@
 #' @param x a [data.frame]
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a [logical] to indicate whether additional info should be printed
-#' @param only_rsi_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `rsi` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_sir_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (defaults to `FALSE`)
 #' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic.
 #' @return A column name of `x`, or `NULL` when no result is found.
 #' @export
@@ -57,11 +57,11 @@
 #' guess_ab_col(df, "ampicillin")
 #' guess_ab_col(df, "J01CR02")
 #' guess_ab_col(df, as.ab("augmentin"))
-guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_rsi_columns = FALSE) {
+guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_sir_columns = FALSE) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
 
   if (is.null(x) && is.null(search_string)) {
     return(as.name("guess_ab_col"))
@@ -70,7 +70,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
   }
 
   all_found <- get_column_abx(x,
-    info = verbose, only_rsi_columns = only_rsi_columns,
+    info = verbose, only_sir_columns = only_sir_columns,
     verbose = verbose, fn = "guess_ab_col"
   )
   search_string.ab <- suppressWarnings(as.ab(search_string))
@@ -102,7 +102,7 @@ get_column_abx <- function(x,
                            hard_dependencies = NULL,
                            verbose = FALSE,
                            info = TRUE,
-                           only_rsi_columns = FALSE,
+                           only_sir_columns = FALSE,
                            sort = TRUE,
                            reuse_previous_result = TRUE,
                            fn = NULL) {
@@ -125,8 +125,8 @@ get_column_abx <- function(x,
     new_cols <- colnames(x)[!colnames(x) %in% AMR_env$get_column_abx.checked_cols]
     if (length(new_cols) > 0) {
       # these columns did not exist in the last call, so add them
-      new_cols_rsi <- get_column_abx(x[, new_cols, drop = FALSE], reuse_previous_result = FALSE, info = FALSE, sort = FALSE)
-      current <- c(current, new_cols_rsi)
+      new_cols_sir <- get_column_abx(x[, new_cols, drop = FALSE], reuse_previous_result = FALSE, info = FALSE, sort = FALSE)
+      current <- c(current, new_cols_sir)
       # order according to columns in current call
       current <- current[match(colnames(x)[colnames(x) %in% current], current)]
     }
@@ -144,7 +144,7 @@ get_column_abx <- function(x,
   meet_criteria(hard_dependencies, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(sort, allow_class = "logical", has_length = 1)
 
   if (isTRUE(info)) {
@@ -153,8 +153,8 @@ get_column_abx <- function(x,
 
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x.bak <- x
-  if (only_rsi_columns == TRUE) {
-    x <- x[, which(is.rsi(x)), drop = FALSE]
+  if (only_sir_columns == TRUE) {
+    x <- x[, which(is.sir(x)), drop = FALSE]
   }
 
   if (NROW(x) > 10000) {
@@ -171,7 +171,7 @@ get_column_abx <- function(x,
   }
 
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
-  # or already have the 'rsi' class (as.rsi)
+  # or already have the 'sir' class (as.sir)
   # and that they have no more than 50% invalid values
   vectr_antibiotics <- unlist(AMR_env$AB_lookup$generalised_all)
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
@@ -180,8 +180,8 @@ get_column_abx <- function(x,
     colnames(x),
     function(col, df = x) {
       if (generalise_antibiotic_name(col) %in% vectr_antibiotics ||
-        is.rsi(x[, col, drop = TRUE]) ||
-        is.rsi.eligible(x[, col, drop = TRUE], threshold = 0.5)
+        is.sir(x[, col, drop = TRUE]) ||
+        is_sir_eligible(x[, col, drop = TRUE], threshold = 0.5)
       ) {
         return(col)
       } else {

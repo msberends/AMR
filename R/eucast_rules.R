@@ -69,11 +69,11 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
-#' @param only_rsi_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `rsi` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_sir_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (defaults to `FALSE`)
 #' @param custom_rules custom rules to apply, created with [custom_eucast_rules()]
 #' @inheritParams first_isolate
 #' @details
-#' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
+#' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 #'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The `AMR` package contains the full microbial taxonomy updated until `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`, see [microorganisms].
@@ -168,7 +168,7 @@ eucast_rules <- function(x,
                          version_breakpoints = 12.0,
                          version_expertrules = 3.3,
                          ampc_cephalosporin_resistance = NA,
-                         only_rsi_columns = FALSE,
+                         only_sir_columns = FALSE,
                          custom_rules = NULL,
                          ...) {
   meet_criteria(x, allow_class = "data.frame")
@@ -178,9 +178,11 @@ eucast_rules <- function(x,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
   meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
-  meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "rsi"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "sir"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
+
+  add_MO_lookup_to_AMR_env()
 
   if ("custom" %in% rules && is.null(custom_rules)) {
     warning_("in `eucast_rules()`: no custom rules were set with the `custom_rules` argument",
@@ -240,7 +242,7 @@ eucast_rules <- function(x,
   }
 
   warned <- FALSE
-  warn_lacking_rsi_class <- character(0)
+  warn_lacking_sir_class <- character(0)
   txt_ok <- function(n_added, n_changed, warned = FALSE) {
     if (warned == FALSE) {
       if (n_added + n_changed == 0) {
@@ -309,7 +311,7 @@ eucast_rules <- function(x,
     hard_dependencies = NULL,
     verbose = verbose,
     info = info,
-    only_rsi_columns = only_rsi_columns,
+    only_sir_columns = only_sir_columns,
     fn = "eucast_rules",
     ...
   )
@@ -376,11 +378,11 @@ eucast_rules <- function(x,
       }
     }
   }
-  as.rsi_no_warning <- function(x) {
-    if (is.rsi(x)) {
+  as.sir_no_warning <- function(x) {
+    if (is.sir(x)) {
       return(x)
     }
-    suppressWarnings(as.rsi(x))
+    suppressWarnings(as.sir(x))
   }
 
   # Preparing the data ------------------------------------------------------
@@ -389,8 +391,8 @@ eucast_rules <- function(x,
     rowid = character(0),
     col = character(0),
     mo_fullname = character(0),
-    old = as.rsi(character(0)),
-    new = as.rsi(character(0)),
+    old = as.sir(character(0)),
+    new = as.sir(character(0)),
     rule = character(0),
     rule_group = character(0),
     rule_name = character(0),
@@ -493,14 +495,14 @@ eucast_rules <- function(x,
             extra_indent = 6
           ))
         }
-        run_changes <- edit_rsi(
+        run_changes <- edit_sir(
           x = x,
           to = "R",
           rule = c(
             rule_current, "Other rules", "",
             paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)
           ),
-          rows = which(as.rsi_no_warning(x[, col_enzyme, drop = TRUE]) == "R"),
+          rows = which(as.sir_no_warning(x[, col_enzyme, drop = TRUE]) == "R"),
           cols = col_base,
           last_verbose_info = verbose_info,
           original_data = x.bak,
@@ -512,7 +514,7 @@ eucast_rules <- function(x,
         n_changed <- n_changed + run_changes$changed
         verbose_info <- run_changes$verbose_info
         x <- run_changes$output
-        warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
+        warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
         # Print number of new changes
         if (isTRUE(info)) {
           # print only on last one of rules in this group
@@ -534,14 +536,14 @@ eucast_rules <- function(x,
             extra_indent = 6
           ))
         }
-        run_changes <- edit_rsi(
+        run_changes <- edit_sir(
           x = x,
           to = "S",
           rule = c(
             rule_current, "Other rules", "",
             paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)
           ),
-          rows = which(as.rsi_no_warning(x[, col_base, drop = TRUE]) == "S"),
+          rows = which(as.sir_no_warning(x[, col_base, drop = TRUE]) == "S"),
           cols = col_enzyme,
           last_verbose_info = verbose_info,
           original_data = x.bak,
@@ -553,7 +555,7 @@ eucast_rules <- function(x,
         n_changed <- n_changed + run_changes$changed
         verbose_info <- run_changes$verbose_info
         x <- run_changes$output
-        warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
+        warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
         # Print number of new changes
         if (isTRUE(info)) {
           # print only on last one of rules in this group
@@ -788,21 +790,21 @@ eucast_rules <- function(x,
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
         rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value &
-          as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
+          as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
         error = function(e) integer(0)
         )
       } else if (length(source_antibiotics) == 2) {
         rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value &
-          as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
-          as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
+          as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
+          as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
         error = function(e) integer(0)
         )
         # nolint start
         # } else if (length(source_antibiotics) == 3) {
         #   rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value
-        #                           & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
-        #                           & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
-        #                           & as.rsi_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
+        #                           & as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
+        #                           & as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
+        #                           & as.sir_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
         #                     error = function(e) integer(0))
         # nolint end
       } else {
@@ -814,7 +816,7 @@ eucast_rules <- function(x,
 
     # Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes
-    run_changes <- edit_rsi(
+    run_changes <- edit_sir(
       x = x,
       to = target_value,
       rule = c(
@@ -836,7 +838,7 @@ eucast_rules <- function(x,
     n_changed <- n_changed + run_changes$changed
     verbose_info <- run_changes$verbose_info
     x <- run_changes$output
-    warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
+    warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
     # Print number of new changes ---------------------------------------------
     if (isTRUE(info) && rule_next != rule_current) {
       # print only on last one of rules in this group
@@ -878,7 +880,7 @@ eucast_rules <- function(x,
         ))
         warned <- FALSE
       }
-      run_changes <- edit_rsi(
+      run_changes <- edit_sir(
         x = x,
         to = target_value,
         rule = c(
@@ -902,7 +904,7 @@ eucast_rules <- function(x,
       n_changed <- n_changed + run_changes$changed
       verbose_info <- run_changes$verbose_info
       x <- run_changes$output
-      warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
+      warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
       # Print number of new changes ---------------------------------------------
       if (isTRUE(info) && rule_next != rule_current) {
         # print only on last one of rules in this group
@@ -1017,19 +1019,19 @@ eucast_rules <- function(x,
     }
   }
 
-  if (length(warn_lacking_rsi_class) > 0) {
-    warn_lacking_rsi_class <- unique(warn_lacking_rsi_class)
+  if (length(warn_lacking_sir_class) > 0) {
+    warn_lacking_sir_class <- unique(warn_lacking_sir_class)
     # take order from original data set
-    warn_lacking_rsi_class <- warn_lacking_rsi_class[order(colnames(x.bak))]
-    warn_lacking_rsi_class <- warn_lacking_rsi_class[!is.na(warn_lacking_rsi_class)]
+    warn_lacking_sir_class <- warn_lacking_sir_class[order(colnames(x.bak))]
+    warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
-      "in `eucast_rules()`: not all columns with antimicrobial results are of class 'rsi'. Transform them on beforehand, with e.g.:\n",
-      "  - ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1,
-        warn_lacking_rsi_class,
-        paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])
+      "in `eucast_rules()`: not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
+      "  - ", x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
+        warn_lacking_sir_class,
+        paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])
       ), ")\n",
-      "  - ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-      "  - ", x_deparsed, " %>% mutate(across(where(is.rsi.eligible), as.rsi))"
+      "  - ", x_deparsed, " %>% mutate_if(is_sir_eligible, as.sir)\n",
+      "  - ", x_deparsed, " %>% mutate(across(where(is_sir_eligible), as.sir))"
     )
   }
 
@@ -1051,7 +1053,7 @@ eucast_rules <- function(x,
 }
 
 # helper function for editing the table ----
-edit_rsi <- function(x,
+edit_sir <- function(x,
                      to,
                      rule,
                      rows,
@@ -1069,7 +1071,7 @@ edit_rsi <- function(x,
     changed = 0,
     output = x,
     verbose_info = last_verbose_info,
-    rsi_warn = character(0)
+    sir_warn = character(0)
   )
 
   txt_error <- function() {
@@ -1084,8 +1086,8 @@ edit_rsi <- function(x,
 
   if (length(rows) > 0 && length(cols) > 0) {
     new_edits <- x
-    if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
-      track_changes$rsi_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.rsi)]
+    if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir), na.rm = TRUE)) {
+      track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
     tryCatch(
       # insert into original table

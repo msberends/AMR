@@ -2,21 +2,21 @@
 % Please edit documentation in R/mean_amr_distance.R
 \name{mean_amr_distance}
 \alias{mean_amr_distance}
-\alias{mean_amr_distance.rsi}
+\alias{mean_amr_distance.sir}
 \alias{mean_amr_distance.data.frame}
 \alias{amr_distance_from_row}
 \title{Calculate the Mean AMR Distance}
 \usage{
 mean_amr_distance(x, ...)
 
-\method{mean_amr_distance}{rsi}(x, ..., combine_SI = TRUE)
+\method{mean_amr_distance}{sir}(x, ..., combine_SI = TRUE)
 
 \method{mean_amr_distance}{data.frame}(x, ..., combine_SI = TRUE)
 
 amr_distance_from_row(amr_distance, row)
 }
 \arguments{
-\item{x}{a vector of class \link[=as.rsi]{rsi}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
+\item{x}{a vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
 
 \item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=ab_selector]{antibiotic selectors}}
 
@@ -34,7 +34,7 @@ The mean AMR distance is effectively \href{https://en.wikipedia.org/wiki/Standar
 
 MIC values (see \code{\link[=as.mic]{as.mic()}}) are transformed with \code{\link[=log2]{log2()}} first; their distance is thus calculated as \code{(log2(x) - mean(log2(x))) / sd(log2(x))}.
 
-R/SI values (see \code{\link[=as.rsi]{as.rsi()}}) are transformed using \code{"S"} = 1, \code{"I"} = 2, and \code{"R"} = 3. If \code{combine_SI} is \code{TRUE} (default), the \code{"I"} will be considered to be 1.
+SIR values (see \code{\link[=as.sir]{as.sir()}}) are transformed using \code{"S"} = 1, \code{"I"} = 2, and \code{"R"} = 3. If \code{combine_SI} is \code{TRUE} (default), the \code{"I"} will be considered to be 1.
 
 For data sets, the mean AMR distance will be calculated per column, after which the mean per row will be returned, see \emph{Examples}.
 
@@ -46,9 +46,9 @@ Isolates with distances less than 0.01 difference from each other should be cons
 }
 
 \examples{
-rsi <- random_rsi(10)
-rsi
-mean_amr_distance(rsi)
+sir <- random_sir(10)
+sir
+mean_amr_distance(sir)
 
 mic <- random_mic(10)
 mic
@@ -62,7 +62,7 @@ mean_amr_distance(disk)
 
 y <- data.frame(
   id = LETTERS[1:10],
-  amox = random_rsi(10, ab = "amox", mo = "Escherichia coli"),
+  amox = random_sir(10, ab = "amox", mo = "Escherichia coli"),
   cipr = random_disk(10, ab = "cipr", mo = "Escherichia coli"),
   gent = random_mic(10, ab = "gent", mo = "Escherichia coli"),
   tobr = random_mic(10, ab = "tobr", mo = "Escherichia coli")

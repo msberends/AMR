@@ -111,16 +111,16 @@ example_isolates %>%
 For another example, I will create a data set to determine multi-drug resistant TB:
 
 ```{r}
-# random_rsi() is a helper function to generate
+# random_sir() is a helper function to generate
 # a random vector with values S, I and R
 my_TB_data <- data.frame(
-  rifampicin = random_rsi(5000),
-  isoniazid = random_rsi(5000),
-  gatifloxacin = random_rsi(5000),
-  ethambutol = random_rsi(5000),
-  pyrazinamide = random_rsi(5000),
-  moxifloxacin = random_rsi(5000),
-  kanamycin = random_rsi(5000)
+  rifampicin = random_sir(5000),
+  isoniazid = random_sir(5000),
+  gatifloxacin = random_sir(5000),
+  ethambutol = random_sir(5000),
+  pyrazinamide = random_sir(5000),
+  moxifloxacin = random_sir(5000),
+  kanamycin = random_sir(5000)
 )
 ```
 
@@ -128,13 +128,13 @@ Because all column names are automatically verified for valid drug names or code
 
 ```{r, eval = FALSE}
 my_TB_data <- data.frame(
-  RIF = random_rsi(5000),
-  INH = random_rsi(5000),
-  GAT = random_rsi(5000),
-  ETH = random_rsi(5000),
-  PZA = random_rsi(5000),
-  MFX = random_rsi(5000),
-  KAN = random_rsi(5000)
+  RIF = random_sir(5000),
+  INH = random_sir(5000),
+  GAT = random_sir(5000),
+  ETH = random_sir(5000),
+  PZA = random_sir(5000),
+  MFX = random_sir(5000),
+  KAN = random_sir(5000)
 )
 ```
 

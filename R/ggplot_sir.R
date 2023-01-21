@@ -30,7 +30,7 @@
 #' AMR Plots with `ggplot2`
 #'
 #' Use these functions to create bar plots for AMR data analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
-#' @param data a [data.frame] with column(s) of class [`rsi`] (see [as.rsi()])
+#' @param data a [data.frame] with column(s) of class [`sir`] (see [as.sir()])
 #' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
 #' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
 #' @param fill variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
@@ -41,7 +41,7 @@
 #' @param nrow (when using `facet`) number of rows
 #' @param colours a named vactor with colour to be used for filling. The default colours are colour-blind friendly.
 #' @param aesthetics aesthetics to apply the colours to, defaults to "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
-#' @param datalabels show datalabels using [labels_rsi_count()]
+#' @param datalabels show datalabels using [labels_sir_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
 #' @param title text to show as title of the plot
@@ -49,24 +49,24 @@
 #' @param caption text to show as caption of the plot
 #' @param x.title text to show as x axis description
 #' @param y.title text to show as y axis description
-#' @param ... other arguments passed on to [geom_rsi()] or, in case of [scale_rsi_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
+#' @param ... other arguments passed on to [geom_sir()] or, in case of [scale_sir_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
 #' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
 #' ### The Functions
-#' [geom_rsi()] will take any variable from the data that has an [`rsi`] class (created with [as.rsi()]) using [rsi_df()] and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+#' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_df()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
-#' [facet_rsi()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
+#' [facet_sir()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
 #'
 #' [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_y_continuous()].
 #'
-#' [scale_rsi_colours()] sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
+#' [scale_sir_colours()] sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
 #'
-#' [theme_rsi()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
+#' [theme_sir()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
 #'
-#' [labels_rsi_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()].
+#' [labels_sir_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()].
 #'
-#' [ggplot_rsi()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See *Examples*.
-#' @rdname ggplot_rsi
+#' [ggplot_sir()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See *Examples*.
+#' @rdname ggplot_sir
 #' @export
 #' @examples
 #' \donttest{
@@ -74,39 +74,39 @@
 #'
 #'   # get antimicrobial results for drugs against a UTI:
 #'   ggplot(example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)) +
-#'     geom_rsi()
+#'     geom_sir()
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
 #'   # prettify the plot using some additional functions:
 #'   df <- example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)
 #'   ggplot(df) +
-#'     geom_rsi() +
+#'     geom_sir() +
 #'     scale_y_percent() +
-#'     scale_rsi_colours() +
-#'     labels_rsi_count() +
-#'     theme_rsi()
+#'     scale_sir_colours() +
+#'     labels_sir_count() +
+#'     theme_sir()
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
 #'   # or better yet, simplify this using the wrapper function - a single command:
 #'   example_isolates %>%
 #'     select(AMX, NIT, FOS, TMP, CIP) %>%
-#'     ggplot_rsi()
+#'     ggplot_sir()
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
 #'   # get only proportions and no counts:
 #'   example_isolates %>%
 #'     select(AMX, NIT, FOS, TMP, CIP) %>%
-#'     ggplot_rsi(datalabels = FALSE)
+#'     ggplot_sir(datalabels = FALSE)
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
 #'   # add other ggplot2 arguments as you like:
 #'   example_isolates %>%
 #'     select(AMX, NIT, FOS, TMP, CIP) %>%
-#'     ggplot_rsi(
+#'     ggplot_sir(
 #'       width = 0.5,
 #'       colour = "black",
 #'       size = 1,
@@ -119,7 +119,7 @@
 #'   # you can alter the colours with colour names:
 #'   example_isolates %>%
 #'     select(AMX) %>%
-#'     ggplot_rsi(colours = c(SI = "yellow"))
+#'     ggplot_sir(colours = c(SI = "yellow"))
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
@@ -132,7 +132,7 @@
 #'   ) %>%
 #'     ggplot() +
 #'     geom_col(aes(x = x, y = y, fill = z)) +
-#'     scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
+#'     scale_sir_colours(Value4 = "S", Value5 = "I", Value6 = "R")
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
@@ -146,14 +146,14 @@
 #'     # age_groups() is also a function in this AMR package:
 #'     group_by(age_group = age_groups(age)) %>%
 #'     select(age_group, CIP) %>%
-#'     ggplot_rsi(x = "age_group")
+#'     ggplot_sir(x = "age_group")
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
 #'   # a shorter version which also adjusts data label colours:
 #'   example_isolates %>%
 #'     select(AMX, NIT, FOS, TMP, CIP) %>%
-#'     ggplot_rsi(colours = FALSE)
+#'     ggplot_sir(colours = FALSE)
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'
@@ -163,7 +163,7 @@
 #'     # select only UTI-specific drugs
 #'     select(ward, AMX, NIT, FOS, TMP, CIP) %>%
 #'     group_by(ward) %>%
-#'     ggplot_rsi(
+#'     ggplot_sir(
 #'       x = "ward",
 #'       facet = "antibiotic",
 #'       nrow = 1,
@@ -173,7 +173,7 @@
 #'     )
 #' }
 #' }
-ggplot_rsi <- function(data,
+ggplot_sir <- function(data,
                        position = NULL,
                        x = "antibiotic",
                        fill = "interpretation",
@@ -203,7 +203,7 @@ ggplot_rsi <- function(data,
                        y.title = "Proportion",
                        ...) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi")
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)
@@ -249,15 +249,15 @@ ggplot_rsi <- function(data,
   }
 
   p <- ggplot2::ggplot(data = data) +
-    geom_rsi(
+    geom_sir(
       position = position, x = x, fill = fill, translate_ab = translate_ab,
       minimum = minimum, language = language,
       combine_SI = combine_SI, ...
     ) +
-    theme_rsi()
+    theme_sir()
 
   if (fill == "interpretation") {
-    p <- p + scale_rsi_colours(colours = colours)
+    p <- p + scale_sir_colours(colours = colours)
   }
 
   if (identical(position, "fill")) {
@@ -266,7 +266,7 @@ ggplot_rsi <- function(data,
   }
 
   if (datalabels == TRUE) {
-    p <- p + labels_rsi_count(
+    p <- p + labels_sir_count(
       position = position,
       x = x,
       translate_ab = translate_ab,
@@ -279,7 +279,7 @@ ggplot_rsi <- function(data,
   }
 
   if (!is.null(facet)) {
-    p <- p + facet_rsi(facet = facet, nrow = nrow)
+    p <- p + facet_sir(facet = facet, nrow = nrow)
   }
 
   p <- p + ggplot2::labs(
@@ -293,9 +293,9 @@ ggplot_rsi <- function(data,
   p
 }
 
-#' @rdname ggplot_rsi
+#' @rdname ggplot_sir
 #' @export
-geom_rsi <- function(position = NULL,
+geom_sir <- function(position = NULL,
                      x = c("antibiotic", "interpretation"),
                      fill = "interpretation",
                      translate_ab = "name",
@@ -334,13 +334,13 @@ geom_rsi <- function(position = NULL,
 
   if (tolower(x) %in% tolower(c("ab", "abx", "antibiotics"))) {
     x <- "antibiotic"
-  } else if (tolower(x) %in% tolower(c("SIR", "RSI", "interpretations", "result"))) {
+  } else if (tolower(x) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
     x <- "interpretation"
   }
 
   ggplot2::geom_col(
     data = function(x) {
-      rsi_df(
+      sir_df(
         data = x,
         translate_ab = translate_ab,
         language = language,
@@ -354,9 +354,9 @@ geom_rsi <- function(position = NULL,
   )
 }
 
-#' @rdname ggplot_rsi
+#' @rdname ggplot_sir
 #' @export
-facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
+facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
   facet <- facet[1]
   stop_ifnot_installed("ggplot2")
   meet_criteria(facet, allow_class = "character", has_length = 1)
@@ -371,7 +371,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
     facet <- substr(facet, 2, nchar(facet) - 1)
   }
 
-  if (tolower(facet) %in% tolower(c("SIR", "RSI", "interpretations", "result"))) {
+  if (tolower(facet) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
     facet <- "interpretation"
   } else if (tolower(facet) %in% tolower(c("ab", "abx", "antibiotics"))) {
     facet <- "antibiotic"
@@ -380,7 +380,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
   ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow)
 }
 
-#' @rdname ggplot_rsi
+#' @rdname ggplot_sir
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   stop_ifnot_installed("ggplot2")
@@ -397,13 +397,13 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   )
 }
 
-#' @rdname ggplot_rsi
+#' @rdname ggplot_sir
 #' @export
-scale_rsi_colours <- function(...,
+scale_sir_colours <- function(...,
                               aesthetics = "fill") {
   stop_ifnot_installed("ggplot2")
   meet_criteria(aesthetics, allow_class = "character", is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
-  # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_rsi()
+  # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_sir()
   if ("colours" %in% names(list(...))) {
     original_cols <- c(
       S = "#3CAEA3",
@@ -457,7 +457,7 @@ scale_rsi_colours <- function(...,
 
   original_cols <- c(susceptible, incr_exposure, resistant)
   dots <- c(...)
-  # replace S, I, R as colours: scale_rsi_colours(mydatavalue = "S")
+  # replace S, I, R as colours: scale_sir_colours(mydatavalue = "S")
   dots[dots == "S"] <- "#3CAEA3"
   dots[dots == "I"] <- "#F6D55C"
   dots[dots == "R"] <- "#ED553B"
@@ -467,9 +467,9 @@ scale_rsi_colours <- function(...,
   ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = cols, limits = force)
 }
 
-#' @rdname ggplot_rsi
+#' @rdname ggplot_sir
 #' @export
-theme_rsi <- function() {
+theme_sir <- function() {
   stop_ifnot_installed("ggplot2")
   ggplot2::theme_minimal(base_size = 10) +
     ggplot2::theme(
@@ -482,9 +482,9 @@ theme_rsi <- function() {
     )
 }
 
-#' @rdname ggplot_rsi
+#' @rdname ggplot_sir
 #' @export
-labels_rsi_count <- function(position = NULL,
+labels_sir_count <- function(position = NULL,
                              x = "antibiotic",
                              translate_ab = "name",
                              minimum = 30,
@@ -521,7 +521,7 @@ labels_rsi_count <- function(position = NULL,
     colour = datalabels.colour,
     lineheight = 0.75,
     data = function(x) {
-      transformed <- rsi_df(
+      transformed <- sir_df(
         data = x,
         translate_ab = translate_ab,
         combine_SI = combine_SI,

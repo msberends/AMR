@@ -112,8 +112,8 @@
 #' # even antibiotic selectors work
 #' x <- data.frame(
 #'   random_column = "some value",
-#'   coflu = as.rsi("S"),
-#'   ampicillin = as.rsi("R")
+#'   coflu = as.sir("S"),
+#'   ampicillin = as.sir("R")
 #' )
 #' x
 #' x[, betalactams()]
@@ -165,7 +165,7 @@ add_custom_antimicrobials <- function(x) {
 #' @export
 clear_custom_antimicrobials <- function() {
   n <- nrow(AMR_env$AB_lookup)
-  AMR_env$AB_lookup <- create_AB_lookup()
+  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
   n2 <- nrow(AMR_env$AB_lookup)
   AMR_env$custom_ab_codes <- character(0)
   AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(AMR_env$ab_previously_coerced$ab %in% AMR_env$AB_lookup$ab), , drop = FALSE]

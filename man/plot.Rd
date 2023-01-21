@@ -8,10 +8,10 @@
 \alias{plot.disk}
 \alias{autoplot.disk}
 \alias{fortify.disk}
-\alias{plot.rsi}
-\alias{autoplot.rsi}
-\alias{fortify.rsi}
-\title{Plotting for Classes \code{rsi}, \code{mic} and \code{disk}}
+\alias{plot.sir}
+\alias{autoplot.sir}
+\alias{fortify.sir}
+\title{Plotting for Classes \code{sir}, \code{mic} and \code{disk}}
 \usage{
 \method{plot}{mic}(
   x,
@@ -21,7 +21,7 @@
   main = deparse(substitute(x)),
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
   ...
@@ -35,7 +35,7 @@
   title = deparse(substitute(object)),
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
   ...
@@ -51,7 +51,7 @@
   mo = NULL,
   ab = NULL,
   guideline = "EUCAST",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
   ...
@@ -65,7 +65,7 @@
   ylab = "Frequency",
   xlab = "Disk diffusion diameter (mm)",
   guideline = "EUCAST",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
   ...
@@ -73,7 +73,7 @@
 
 \method{fortify}{disk}(object, ...)
 
-\method{plot}{rsi}(
+\method{plot}{sir}(
   x,
   ylab = "Percentage",
   xlab = "Antimicrobial Interpretation",
@@ -82,20 +82,20 @@
   ...
 )
 
-\method{autoplot}{rsi}(
+\method{autoplot}{sir}(
   object,
   title = deparse(substitute(object)),
   xlab = "Antimicrobial Interpretation",
   ylab = "Frequency",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   ...
 )
 
-\method{fortify}{rsi}(object, ...)
+\method{fortify}{sir}(object, ...)
 }
 \arguments{
-\item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.rsi]{as.rsi()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
+\item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
 
 \item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
@@ -107,7 +107,7 @@
 
 \item{xlab, ylab}{axis title}
 
-\item{colours_RSI}{colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.}
+\item{colours_SIR}{colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.}
 
 \item{language}{language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -121,7 +121,7 @@ The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} mo
 The \code{fortify()} functions return a \link{data.frame} as an extension for usage in the \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} function.
 }
 \description{
-Functions to plot classes \code{rsi}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
+Functions to plot classes \code{sir}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
 }
 \details{
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
@@ -133,11 +133,11 @@ Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select
 \examples{
 some_mic_values <- random_mic(size = 100)
 some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
-some_rsi_values <- random_rsi(50, prob_RSI = c(0.30, 0.55, 0.05))
+some_sir_values <- random_sir(50, prob_SIR = c(0.55, 0.05, 0.30))
 
 plot(some_mic_values)
 plot(some_disk_values)
-plot(some_rsi_values)
+plot(some_sir_values)
 
 # when providing the microorganism and antibiotic, colours will show interpretations:
 plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
@@ -152,7 +152,7 @@ if (require("ggplot2")) {
   autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 }
 if (require("ggplot2")) {
-  autoplot(some_rsi_values)
+  autoplot(some_sir_values)
 }
 }
 }

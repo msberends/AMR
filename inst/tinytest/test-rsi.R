@@ -27,34 +27,34 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# we must only have EUCAST and CLSI, because otherwise the rules in as.rsi() will fail
+# we must only have EUCAST and CLSI, because otherwise the rules in as.sir() will fail
 expect_identical(
-  unique(gsub("[^A-Z]", "", AMR::rsi_translation$guideline)),
+  unique(gsub("[^A-Z]", "", AMR::clinical_breakpoints$guideline)),
   c("EUCAST", "CLSI")
 )
 
-expect_true(as.rsi("S") < as.rsi("I"))
-expect_true(as.rsi("I") < as.rsi("R"))
-expect_true(is.rsi(as.rsi("S")))
+expect_true(as.sir("S") < as.sir("I"))
+expect_true(as.sir("I") < as.sir("R"))
+expect_true(is.sir(as.sir("S")))
 x <- example_isolates$AMX
-expect_inherits(x[1], "rsi")
-expect_inherits(x[[1]], "rsi")
-expect_inherits(c(x[1], x[9]), "rsi")
-expect_inherits(unique(x[1], x[9]), "rsi")
+expect_inherits(x[1], "sir")
+expect_inherits(x[[1]], "sir")
+expect_inherits(c(x[1], x[9]), "sir")
+expect_inherits(unique(x[1], x[9]), "sir")
 pdf(NULL) # prevent Rplots.pdf being created
-expect_silent(barplot(as.rsi(c("S", "I", "R"))))
-expect_silent(plot(as.rsi(c("S", "I", "R"))))
+expect_silent(barplot(as.sir(c("S", "I", "R"))))
+expect_silent(plot(as.sir(c("S", "I", "R"))))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(autoplot(as.rsi(c("S", "I", "R"))), "gg")
+  expect_inherits(autoplot(as.sir(c("S", "I", "R"))), "gg")
 }
-expect_stdout(print(as.rsi(c("S", "I", "R"))))
-expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
-expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
-expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)
+expect_stdout(print(as.sir(c("S", "I", "R"))))
+expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
+expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
+expect_equal(suppressWarnings(as.logical(as.sir("INVALID VALUE"))), NA)
 expect_equal(
-  summary(as.rsi(c("S", "R"))),
+  summary(as.sir(c("S", "R"))),
   structure(c(
-    "Class" = "rsi",
+    "Class" = "sir",
     "%R" = "50.0% (n=1)",
     "%SI" = "50.0% (n=1)",
     "- %S" = "50.0% (n=1)",
@@ -62,31 +62,31 @@ expect_equal(
   ), class = c("summaryDefault", "table"))
 )
 expect_identical(
-  as.logical(lapply(example_isolates, is.rsi.eligible)),
-  as.logical(lapply(example_isolates, is.rsi))
+  as.logical(lapply(example_isolates, is_sir_eligible)),
+  as.logical(lapply(example_isolates, is.sir))
 )
-expect_error(as.rsi.mic(as.mic(16)))
-expect_error(as.rsi.disk(as.disk(16)))
+expect_error(as.sir.mic(as.mic(16)))
+expect_error(as.sir.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  # 40 rsi columns
+  # 40 sir columns
   expect_equal(
     example_isolates %>%
       mutate_at(vars(PEN:RIF), as.character) %>%
-      lapply(is.rsi.eligible) %>%
+      lapply(is_sir_eligible) %>%
       as.logical() %>%
       sum(),
     40
   )
-  expect_equal(sum(is.rsi(example_isolates)), 40)
+  expect_equal(sum(is.sir(example_isolates)), 40)
 
-  expect_stdout(print(tibble(ab = as.rsi("S"))))
+  expect_stdout(print(tibble(ab = as.sir("S"))))
   
   expect_true(example_isolates %>% 
                 select(AMC, MEM) %>% 
-                mutate(MEM = as.rsi(ifelse(AMC == "S", "S", MEM))) %>% 
+                mutate(MEM = as.sir(ifelse(AMC == "S", "S", MEM))) %>% 
                 pull(MEM) %>% 
-                is.rsi())
+                is.sir())
 }
 if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
   expect_inherits(
@@ -106,12 +106,12 @@ if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
   }
 }
 
-expect_equal(as.rsi(c("", "-", NA, "NULL")), c(NA_rsi_, NA_rsi_, NA_rsi_, NA_rsi_))
+expect_equal(as.sir(c("", "-", NA, "NULL")), c(NA_sir_, NA_sir_, NA_sir_, NA_sir_))
 
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
 expect_equal(suppressMessages(
   as.character(
-    as.rsi(
+    as.sir(
       x = as.mic(c(0.125, 0.5, 1, 2, 4)),
       mo = "B_STRPT_PNMN",
       ab = "AMP",
@@ -123,7 +123,7 @@ expect_equal(suppressMessages(
 # S. pneumoniae/amoxicillin in CLSI 2019: 2-8 ug/ml (R is 8 and > 8)
 expect_equal(suppressMessages(
   as.character(
-    as.rsi(
+    as.sir(
       x = as.mic(c(1, 2, 4, 8, 16)),
       mo = "B_STRPT_PNMN",
       ab = "AMX",
@@ -133,31 +133,31 @@ expect_equal(suppressMessages(
   c("S", "S", "I", "R", "R")
 )
 
-expect_true(is.data.frame(rsi_interpretation_history(clean = FALSE)))
-expect_true(is.data.frame(rsi_interpretation_history(clean = TRUE)))
-expect_true(is.null(rsi_interpretation_history()))
+expect_true(is.data.frame(sir_interpretation_history(clean = FALSE)))
+expect_true(is.data.frame(sir_interpretation_history(clean = TRUE)))
+expect_true(is.null(sir_interpretation_history()))
 
 # cutoffs at MIC = 8
 expect_equal(
-  suppressMessages(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
-  as.rsi("S")
+  suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
+  as.sir("S")
 )
 expect_equal(
-  suppressMessages(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
-  as.rsi("R")
+  suppressMessages(as.sir(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
+  as.sir("R")
 )
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_true(suppressWarnings(example_isolates %>%
     mutate(amox_mic = as.mic(2)) %>%
     select(mo, amox_mic) %>%
-    as.rsi() %>%
+    as.sir() %>%
     pull(amox_mic) %>%
-    is.rsi()))
+    is.sir()))
 }
 
 expect_equal(
   as.character(
-    as.rsi(
+    as.sir(
       x = as.disk(22),
       mo = "B_STRPT_PNMN",
       ab = "ERY",
@@ -168,7 +168,7 @@ expect_equal(
 )
 expect_equal(
   as.character(
-    as.rsi(
+    as.sir(
       x = as.disk(18),
       mo = "B_STRPT_PNMN",
       ab = "ERY",
@@ -179,7 +179,7 @@ expect_equal(
 )
 expect_equal(
   as.character(
-    as.rsi(
+    as.sir(
       x = as.disk(10),
       mo = "B_STRPT_PNMN",
       ab = "ERY",
@@ -192,9 +192,9 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_true(example_isolates %>%
     mutate(amox_disk = as.disk(15)) %>%
     select(mo, amox_disk) %>%
-    as.rsi(guideline = "CLSI") %>%
+    as.sir(guideline = "CLSI") %>%
     pull(amox_disk) %>%
-    is.rsi())
+    is.sir())
 }
 # frequency tables
 if (AMR:::pkg_is_available("cleaner")) {
@@ -212,26 +212,26 @@ df <- data.frame(
   CLR = "V"
 ) # note about cleaning
 expect_inherits(
-  suppressWarnings(as.rsi(df)),
+  suppressWarnings(as.sir(df)),
   "data.frame"
 )
 expect_inherits(
-  suppressWarnings(as.rsi(data.frame(
+  suppressWarnings(as.sir(data.frame(
     mo = "Escherichia coli",
-    amoxi = c("R", "S", "I", "invalid")
+    amoxi = c("S", "I", "R", "invalid")
   ))$amoxi),
-  "rsi"
+  "sir"
 )
-expect_warning(as.rsi(data.frame(
+expect_warning(as.sir(data.frame(
   mo = "E. coli",
   NIT = c("<= 2", 32)
 )))
-expect_message(as.rsi(data.frame(
+expect_message(as.sir(data.frame(
   mo = "E. coli",
   NIT = c("<= 2", 32),
   uti = TRUE
 )))
-expect_message(as.rsi(data.frame(
+expect_message(as.sir(data.frame(
   mo = "E. coli",
   NIT = c("<= 2", 32),
   specimen = c("urine", "blood")

@@ -111,7 +111,7 @@ print_df <- function(x, rows = 6) {
 }
 ```
 
-All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
+All reference data (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
 On this page, we explain how to download them and how the structure of the data sets look like. 
 
@@ -209,22 +209,22 @@ antivirals %>%
   print_df()
 ```
 
-## `rsi_translation`: Interpretation from MIC values / disk diameters to R/SI
+## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-`r structure_txt(rsi_translation)`
+`r structure_txt(clinical_breakpoints)`
 
-This data set is in R available as `rsi_translation`, after you load the `AMR` package.
+This data set is in R available as `clinical_breakpoints`, after you load the `AMR` package.
 
-`r download_txt("rsi_translation")`
+`r download_txt("clinical_breakpoints")`
 
 ### Source
 
-This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`).
+This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`).
 
 ### Example content
 
 ```{r, echo = FALSE}
-rsi_translation %>%
+clinical_breakpoints %>%
   mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>%
   mutate(ab_name = ab_name(ab, language = NULL), .after = ab) %>%
   print_df()

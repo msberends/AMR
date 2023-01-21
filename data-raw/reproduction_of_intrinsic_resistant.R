@@ -31,7 +31,7 @@ library(AMR)
 library(dplyr)
 int_resis <- data.frame(mo = microorganisms$mo, stringsAsFactors = FALSE)
 for (i in seq_len(nrow(antibiotics))) {
-  int_resis$new <- as.rsi("S")
+  int_resis$new <- as.sir("S")
   colnames(int_resis)[ncol(int_resis)] <- antibiotics$ab[i]
 }
 
@@ -43,7 +43,7 @@ int_resis <- eucast_rules(int_resis,
   info = FALSE
 )
 
-int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R")), drop = FALSE] %>%
+int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.sir(x) | x == "R")), drop = FALSE] %>%
   tidyr::pivot_longer(-mo) %>%
   filter(value == "R") %>%
   select(mo, ab = name)

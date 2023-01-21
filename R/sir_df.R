@@ -29,7 +29,7 @@
 
 #' @rdname proportion
 #' @export
-rsi_df <- function(data,
+sir_df <- function(data,
                    translate_ab = "name",
                    language = get_AMR_locale(),
                    minimum = 30,
@@ -37,7 +37,7 @@ rsi_df <- function(data,
                    combine_SI = TRUE,
                    confidence_level = 0.95) {
   tryCatch(
-    rsi_calc_df(
+    sir_calc_df(
       type = "both",
       data = data,
       translate_ab = translate_ab,
@@ -47,6 +47,6 @@ rsi_df <- function(data,
       combine_SI = combine_SI,
       confidence_level = confidence_level
     ),
-    error = function(e) stop_(gsub("in rsi_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }

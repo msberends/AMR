@@ -33,7 +33,7 @@ Ordered \link{factor} with additional class \code{\link{mic}}, that in mathemati
 This transforms vectors to a new class \code{\link{mic}}, which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 }
 \details{
-To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST (2013-2022) and CLSI (2013-2022).
+To interpret MIC values as SIR values, use \code{\link[=as.sir]{as.sir()}} on MIC values. It supports guidelines from EUCAST (2013-2022) and CLSI (2013-2022).
 
 This class for MIC values is a quite a special data type: formally it is an ordered \link{factor} with valid MIC values as \link{factor} levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
 
@@ -82,7 +82,7 @@ mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 mic_data
 is.mic(mic_data)
 
-# this can also coerce combined MIC/RSI values:
+# this can also coerce combined MIC/SIR values:
 as.mic("<=0.002; S")
 
 # mathematical processing treats MICs as numeric values
@@ -91,13 +91,13 @@ quantile(mic_data)
 all(mic_data < 512)
 
 # interpret MIC values
-as.rsi(
+as.sir(
   x = as.mic(2),
   mo = as.mo("Streptococcus pneumoniae"),
   ab = "AMX",
   guideline = "EUCAST"
 )
-as.rsi(
+as.sir(
   x = as.mic(c(0.01, 2, 4, 8)),
   mo = as.mo("Streptococcus pneumoniae"),
   ab = "AMX",
@@ -119,6 +119,6 @@ if (require("ggplot2")) {
 }
 }
 \seealso{
-\code{\link[=as.rsi]{as.rsi()}}
+\code{\link[=as.sir]{as.sir()}}
 }
 \keyword{datasets}

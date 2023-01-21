@@ -146,10 +146,10 @@ reference:
   - title: "Preparing data: antimicrobial resistance"
     desc: >
       With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
-      Use `as.rsi()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as R/SI based on the lastest EUCAST and CLSI guidelines.
+      Use `as.sir()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines.
       Afterwards, you can extend antibiotic interpretations by applying [EUCAST rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) with `eucast_rules()`.
     contents:
-    - "`as.rsi`"
+    - "`as.sir`"
     - "`as.mic`"
     - "`as.disk`"
     - "`eucast_rules`"
@@ -169,7 +169,7 @@ reference:
     - "`mdro`"
     - "`count`"
     - "`plot`"
-    - "`ggplot_rsi`"
+    - "`ggplot_sir`"
     - "`bug_drug_combinations`"
     - "`antibiotic_class_selectors`"
     - "`mean_amr_distance`"
@@ -201,7 +201,7 @@ reference:
     - "`dosage`"
     - "`WHOCC`"
     - "`example_isolates_unclean`"
-    - "`rsi_translation`"
+    - "`clinical_breakpoints`"
     - "`WHONET`"
 
   - title: "Other: miscellaneous functions"

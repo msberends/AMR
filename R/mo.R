@@ -164,6 +164,8 @@ as.mo <- function(x,
   language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
+  add_MO_lookup_to_AMR_env()
+
   if (tryCatch(all(x %in% c(AMR_env$MO_lookup$mo, NA)) &&
     isFALSE(Becker) &&
     isFALSE(Lancefield), error = function(e) FALSE)) {
@@ -492,6 +494,7 @@ mo_uncertainties <- function() {
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
+  add_MO_lookup_to_AMR_env()
   x <- AMR_env$mo_renamed
 
   x$new <- synonym_mo_to_accepted_mo(x$old)
@@ -547,6 +550,7 @@ mo_cleaning_regex <- function() {
 
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.mo <- function(x, ...) {
+  add_MO_lookup_to_AMR_env()
   out <- format(x)
   # grey out the kingdom (part until first "_")
   out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
@@ -664,6 +668,7 @@ get_skimmers.mo <- function(column) {
 #' @export
 #' @noRd
 print.mo <- function(x, print.shortnames = FALSE, ...) {
+  add_MO_lookup_to_AMR_env()
   cat("Class 'mo'\n")
   x_names <- names(x)
   if (is.null(x_names) & print.shortnames == TRUE) {
@@ -704,6 +709,7 @@ summary.mo <- function(object, ...) {
 #' @export
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
+  add_MO_lookup_to_AMR_env()
   if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
       "The data contains old MO codes (from a previous AMR package version). ",
@@ -741,6 +747,7 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
+  add_MO_lookup_to_AMR_env()
   return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 #' @method [[<- mo
@@ -750,6 +757,7 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
+  add_MO_lookup_to_AMR_env()
   return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 #' @method c mo
@@ -759,6 +767,7 @@ c.mo <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
+  add_MO_lookup_to_AMR_env()
   return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 
@@ -788,6 +797,8 @@ print.mo_uncertainties <- function(x, ...) {
     cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
     return(invisible(NULL))
   }
+  
+  add_MO_lookup_to_AMR_env()
 
   cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
   if (has_colour()) {
@@ -1049,6 +1060,7 @@ replace_old_mo_codes <- function(x, property) {
   # B_ESCH_COL (AMR v0.5.0) -> B_ESCHR_COLI
   ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% AMR_env$MO_lookup$mo
   if (any(ind, na.rm = TRUE)) {
+    add_MO_lookup_to_AMR_env()
     # get the ones that match
     affected <- x[ind]
     affected_unique <- unique(affected)

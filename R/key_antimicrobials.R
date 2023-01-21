@@ -37,7 +37,7 @@
 #' @param gram_negative names of antibiotic drugs for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs
 #' @param gram_positive names of antibiotic drugs for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs
 #' @param antifungal names of antifungal drugs for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antifungal drugs
-#' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `rsi` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_sir_columns a [logical] to indicate whether only columns must be included that were transformed to class `sir` (see [as.sir()]) on beforehand (defaults to `FALSE`)
 #' @param ... ignored, only in place to allow future extensions
 #' @details
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
@@ -135,7 +135,7 @@ key_antimicrobials <- function(x = NULL,
                                  "anidulafungin", "caspofungin", "fluconazole",
                                  "miconazole", "nystatin", "voriconazole"
                                ),
-                               only_rsi_columns = FALSE,
+                               only_sir_columns = FALSE,
                                ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
@@ -148,11 +148,11 @@ key_antimicrobials <- function(x = NULL,
   meet_criteria(gram_negative, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(gram_positive, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(antifungal, allow_class = "character", allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
 
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-  cols <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns, fn = "key_antimicrobials")
+  cols <- get_column_abx(x, info = FALSE, only_sir_columns = only_sir_columns, fn = "key_antimicrobials")
 
   # try to find columns based on type
   # -- mo
@@ -247,7 +247,7 @@ key_antimicrobials <- function(x = NULL,
 #' @rdname key_antimicrobials
 #' @export
 all_antimicrobials <- function(x = NULL,
-                               only_rsi_columns = FALSE,
+                               only_sir_columns = FALSE,
                                ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
@@ -255,12 +255,12 @@ all_antimicrobials <- function(x = NULL,
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
 
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   cols <- get_column_abx(x,
-    only_rsi_columns = only_rsi_columns, info = FALSE,
+    only_sir_columns = only_sir_columns, info = FALSE,
     sort = FALSE, fn = "all_antimicrobials"
   )
 
@@ -282,7 +282,7 @@ generate_antimcrobials_string <- function(df) {
           as.list(df),
           function(x) {
             x <- toupper(as.character(x))
-            x[!x %in% c("R", "S", "I")] <- "."
+            x[!x %in% c("S", "I", "R")] <- "."
             paste(x)
           }
         )
@@ -308,7 +308,7 @@ antimicrobials_equal <- function(y,
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
 
-  key2rsi <- function(val) {
+  key2sir <- function(val) {
     val <- strsplit(val, "", fixed = TRUE)[[1L]]
     val.int <- rep(NA_real_, length(val))
     val.int[val == "S"] <- 1
@@ -318,7 +318,7 @@ antimicrobials_equal <- function(y,
   }
   # only run on uniques
   uniq <- unique(c(y, z))
-  uniq_list <- lapply(uniq, key2rsi)
+  uniq_list <- lapply(uniq, key2sir)
   names(uniq_list) <- uniq
 
   y <- uniq_list[match(y, names(uniq_list))]
@@ -339,12 +339,12 @@ antimicrobials_equal <- function(y,
       # - no change is 0 points
       # - I <-> S|R is 0.5 point
       # - S|R <-> R|S is 1 point
-      # use the levels of as.rsi (S = 1, I = 2, R = 3)
+      # use the levels of as.sir (S = 1, I = 2, R = 3)
       # and divide by 2 (S = 0.5, I = 1, R = 1.5)
       (sum(abs(a - b), na.rm = TRUE) / 2) < points_threshold
     } else {
       if (ignore_I == TRUE) {
-        ind <- which(a == 2 | b == 2) # since as.double(as.rsi("I")) == 2
+        ind <- which(a == 2 | b == 2) # since as.double(as.sir("I")) == 2
         a[ind] <- NA_real_
         b[ind] <- NA_real_
       }

@@ -4,14 +4,14 @@
 \alias{random}
 \alias{random_mic}
 \alias{random_disk}
-\alias{random_rsi}
-\title{Random MIC Values/Disk Zones/RSI Generation}
+\alias{random_sir}
+\title{Random MIC Values/Disk Zones/SIR Generation}
 \usage{
 random_mic(size = NULL, mo = NULL, ab = NULL, ...)
 
 random_disk(size = NULL, mo = NULL, ab = NULL, ...)
 
-random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
+random_sir(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...)
 }
 \arguments{
 \item{size}{desired size of the returned vector. If used in a \link{data.frame} call or \code{dplyr} verb, will get the current (group) size if left blank.}
@@ -22,7 +22,7 @@ random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
 
 \item{...}{ignored, only in place to allow future extensions}
 
-\item{prob_RSI}{a vector of length 3: the probabilities for "R" (1st value), "S" (2nd value) and "I" (3rd value)}
+\item{prob_SIR}{a vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value)}
 }
 \value{
 class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \code{disk} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})
@@ -33,12 +33,12 @@ These functions can be used for generating random MIC values and disk diffusion 
 \details{
 The base \R function \code{\link[=sample]{sample()}} is used for generating values.
 
-Generated values are based on the EUCAST 2022 guideline as implemented in the \link{rsi_translation} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
+Generated values are based on the EUCAST 2022 guideline as implemented in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
 }
 \examples{
 random_mic(25)
 random_disk(25)
-random_rsi(25)
+random_sir(25)
 
 \donttest{
 # make the random generation more realistic by setting a bug and/or drug:

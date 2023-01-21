@@ -140,7 +140,11 @@ reset_AMR_locale <- function() {
 #' @rdname translate
 #' @export
 translate_AMR <- function(x, language = get_AMR_locale()) {
-  translate_into_language(x, language = language)
+  translate_into_language(x,
+                          language = language,
+                          only_unknown = FALSE,
+                          only_affect_ab_names = FALSE,
+                          only_affect_mo_names = FALSE)
 }
 
 
@@ -192,6 +196,7 @@ translate_into_language <- function(from,
                                     only_unknown = FALSE,
                                     only_affect_ab_names = FALSE,
                                     only_affect_mo_names = FALSE) {
+
   # get ISO-639-1 of language
   lang <- validate_language(language)
   if (lang == "en") {
@@ -259,7 +264,7 @@ translate_into_language <- function(from,
   # a kind of left join to get all results back
   out <- from_unique_translated[match(from.bak, from_unique)]
   
-  if (!identical(from.bak, out) && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
+  if (!identical(from.bak, out) && get_AMR_locale() == lang && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
     message(word_wrap(
       "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
       LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this once-per-session note.",

@@ -63,7 +63,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
       order = mo_order(mo),
       genus = mo_genus(mo)
     ) %>%
-    summarise_if(is.rsi, resistance, minimum = 0)
+    summarise_if(is.sir, resistance, minimum = 0)
   pca_result <- resistance_data %>%
     pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, "SXT")
   expect_inherits(pca_result, "prcomp")

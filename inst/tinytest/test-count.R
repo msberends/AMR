@@ -29,7 +29,7 @@
 
 expect_equal(count_resistant(example_isolates$AMX), count_R(example_isolates$AMX))
 expect_equal(count_susceptible(example_isolates$AMX), count_SI(example_isolates$AMX))
-expect_equal(count_all(example_isolates$AMX), n_rsi(example_isolates$AMX))
+expect_equal(count_all(example_isolates$AMX), n_sir(example_isolates$AMX))
 
 # AMX resistance in `example_isolates`
 expect_equal(count_R(example_isolates$AMX), 804)
@@ -103,10 +103,10 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
     )
   )
 
-  # grouping in rsi_calc_df() (= backbone of rsi_df())
+  # grouping in sir_calc_df() (= backbone of sir_df())
   expect_true("ward" %in% (example_isolates %>%
     group_by(ward) %>%
     select(ward, AMX, CIP, gender) %>%
-    rsi_df() %>%
+    sir_df() %>%
     colnames()))
 }

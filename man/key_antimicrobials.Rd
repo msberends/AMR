@@ -17,11 +17,11 @@ key_antimicrobials(
     "oxacillin", "rifampin"),
   antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole", "nystatin",
     "voriconazole"),
-  only_rsi_columns = FALSE,
+  only_sir_columns = FALSE,
   ...
 )
 
-all_antimicrobials(x = NULL, only_rsi_columns = FALSE, ...)
+all_antimicrobials(x = NULL, only_sir_columns = FALSE, ...)
 
 antimicrobials_equal(
   y,
@@ -45,7 +45,7 @@ antimicrobials_equal(
 
 \item{antifungal}{names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \code{rsi} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_sir_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{ignored, only in place to allow future extensions}
 

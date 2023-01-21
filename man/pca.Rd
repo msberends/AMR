@@ -72,7 +72,7 @@ if (require("dplyr")) {
       genus = mo_genus(mo)
     ) \%>\% #   and genus as we do here;
     filter(n() >= 30) \%>\% # filter on only 30 results per group
-    summarise_if(is.rsi, resistance) # then get resistance of all drugs
+    summarise_if(is.sir, resistance) # then get resistance of all drugs
 
   # now conduct PCA for certain antimicrobial drugs
   pca_result <- resistance_data \%>\%

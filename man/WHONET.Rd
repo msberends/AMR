@@ -32,7 +32,7 @@ A \link[tibble:tibble]{tibble} with 500 observations and 53 variables:
 \item \verb{Inducible clindamycin resistance}\cr Clindamycin can be induced?
 \item \code{Comment}\cr Other comments
 \item \verb{Date of data entry}\cr \link{Date} this data was entered in WHONET
-\item \code{AMP_ND10:CIP_EE}\cr 28 different antibiotics. You can lookup the abbreviations in the \link{antibiotics} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link[=as.rsi]{as.rsi()}}.
+\item \code{AMP_ND10:CIP_EE}\cr 0 different antibiotics. You can lookup the abbreviations in the \link{antibiotics} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link[=as.sir]{as.sir()}}.
 }
 }
 \usage{

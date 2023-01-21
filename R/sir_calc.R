@@ -34,7 +34,7 @@ dots2vars <- function(...) {
   as.character(dots)[2:length(dots)]
 }
 
-rsi_calc <- function(...,
+sir_calc <- function(...,
                      ab_result,
                      minimum = 0,
                      as_percent = FALSE,
@@ -78,7 +78,7 @@ rsi_calc <- function(...,
     }
     if (length(dots) == 0 || all(dots == "df")) {
       # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
-      # and the old rsi function, which has "df" as name of the first argument
+      # and the old sir function, which has "df" as name of the first argument
       x <- dots_df
     } else {
       # get dots that are in column names already, and the ones that will be once evaluated using dots_df or global env
@@ -115,21 +115,21 @@ rsi_calc <- function(...,
 
   print_warning <- FALSE
 
-  ab_result <- as.rsi(ab_result)
+  ab_result <- as.sir(ab_result)
 
   if (is.data.frame(x)) {
-    rsi_integrity_check <- character(0)
+    sir_integrity_check <- character(0)
     for (i in seq_len(ncol(x))) {
-      # check integrity of columns: force 'rsi' class
-      if (!is.rsi(x[, i, drop = TRUE])) {
-        rsi_integrity_check <- c(rsi_integrity_check, as.character(x[, i, drop = TRUE]))
-        x[, i] <- suppressWarnings(as.rsi(x[, i, drop = TRUE])) # warning will be given later
+      # check integrity of columns: force 'sir' class
+      if (!is.sir(x[, i, drop = TRUE])) {
+        sir_integrity_check <- c(sir_integrity_check, as.character(x[, i, drop = TRUE]))
+        x[, i] <- suppressWarnings(as.sir(x[, i, drop = TRUE])) # warning will be given later
         print_warning <- TRUE
       }
     }
-    if (length(rsi_integrity_check) > 0) {
+    if (length(sir_integrity_check) > 0) {
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
-      rsi_integrity_check <- as.rsi(rsi_integrity_check)
+      sir_integrity_check <- as.sir(sir_integrity_check)
     }
 
     x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
@@ -150,8 +150,8 @@ rsi_calc <- function(...,
     }
   } else {
     # x is not a data.frame
-    if (!is.rsi(x)) {
-      x <- as.rsi(x)
+    if (!is.sir(x)) {
+      x <- as.sir(x)
       print_warning <- TRUE
     }
     numerator <- sum(x %in% ab_result, na.rm = TRUE)
@@ -159,9 +159,9 @@ rsi_calc <- function(...,
   }
 
   if (print_warning == TRUE) {
-    if (message_not_thrown_before("rsi_calc")) {
-      warning_("Increase speed by transforming to class 'rsi' on beforehand:\n",
-        "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
+    if (message_not_thrown_before("sir_calc")) {
+      warning_("Increase speed by transforming to class 'sir' on beforehand:\n",
+        "  your_data %>% mutate_if(is_sir_eligible, as.sir)",
         call = FALSE
       )
     }
@@ -213,7 +213,7 @@ rsi_calc <- function(...,
   }
 }
 
-rsi_calc_df <- function(type, # "proportion", "count" or "both"
+sir_calc_df <- function(type, # "proportion", "count" or "both"
                         data,
                         translate_ab = "name",
                         language = get_AMR_locale(),
@@ -222,7 +222,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
                         combine_SI = TRUE,
                         confidence_level = 0.95) {
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi")
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
@@ -237,16 +237,16 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   if (is_null_or_grouped_tbl(data)) {
     data_has_groups <- TRUE
     groups <- setdiff(names(attributes(data)$groups), ".rows")
-    data <- data[, c(groups, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.rsi)]), drop = FALSE]
+    data <- data[, c(groups, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.sir)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE
-    data <- data[, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.rsi)], drop = FALSE]
+    data <- data[, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.sir)], drop = FALSE]
   }
 
   data <- as.data.frame(data, stringsAsFactors = FALSE)
   if (isTRUE(combine_SI)) {
     for (i in seq_len(ncol(data))) {
-      if (is.rsi(data[, i, drop = TRUE])) {
+      if (is.sir(data[, i, drop = TRUE])) {
         data[, i] <- as.character(data[, i, drop = TRUE])
         data[, i] <- gsub("(I|S)", "SI", data[, i, drop = TRUE])
       }
@@ -348,7 +348,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   if (isTRUE(combine_SI)) {
     out$interpretation <- factor(out$interpretation, levels = c("SI", "R"), ordered = TRUE)
   } else {
-    # don't use as.rsi() here, as it would add the class 'rsi' and we would like
+    # don't use as.sir() here, as it would add the class 'sir' and we would like
     # the same data structure as output, regardless of input
     out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)
   }
@@ -372,5 +372,5 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
 
   rownames(out) <- NULL
   out <- as_original_data_class(out, class(data.bak)) # will remove tibble groups
-  structure(out, class = c("rsi_df", class(out)))
+  structure(out, class = c("sir_df", "rsi_df", class(out)))
 }

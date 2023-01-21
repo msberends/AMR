@@ -11,7 +11,7 @@ A \link[tibble:tibble]{tibble} with 3,000 observations and 8 variables:
 \item \code{date}\cr date of receipt at the laboratory
 \item \code{hospital}\cr ID of the hospital, from A to C
 \item \code{bacteria}\cr info about microorganism that can be transformed with \code{\link[=as.mo]{as.mo()}}, see also \link{microorganisms}
-\item \code{AMX:GEN}\cr 4 different antibiotics that have to be transformed with \code{\link[=as.rsi]{as.rsi()}}
+\item \code{AMX:GEN}\cr 4 different antibiotics that have to be transformed with \code{\link[=as.sir]{as.sir()}}
 }
 }
 \usage{
