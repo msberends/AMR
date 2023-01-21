@@ -120,7 +120,7 @@ Use these functions to create bar plots for AMR data analysis. All functions rel
 At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} argument. See \code{\link[=count_df]{count_df()}}.
 \subsection{The Functions}{
 
-\code{\link[=geom_sir]{geom_sir()}} will take any variable from the data that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) using \code{\link[=sir_sf]{sir_sf()}} and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+\code{\link[=geom_sir]{geom_sir()}} will take any variable from the data that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) using \code{\link[=sir_df]{sir_df()}} and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 
 \code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
 

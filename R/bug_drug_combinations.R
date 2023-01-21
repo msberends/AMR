@@ -37,7 +37,7 @@
 #' @param FUN the function to call on the `mo` column to transform the microorganism codes, defaults to [mo_shortname()]
 #' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
-#' @inheritParams sir_sf
+#' @inheritParams sir_df
 #' @inheritParams base::formatC
 #' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S.
 #' @export

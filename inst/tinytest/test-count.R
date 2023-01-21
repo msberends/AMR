@@ -103,10 +103,10 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
     )
   )
 
-  # grouping in sir_calc_df() (= backbone of sir_sf())
+  # grouping in sir_calc_df() (= backbone of sir_df())
   expect_true("ward" %in% (example_isolates %>%
     group_by(ward) %>%
     select(ward, AMX, CIP, gender) %>%
-    sir_sf() %>%
+    sir_df() %>%
     colnames()))
 }

@@ -67,7 +67,7 @@ The function \code{\link[=count_resistant]{count_resistant()}} is equal to the f
 
 The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
-The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=sir_sf]{sir_sf()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
+The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=sir_df]{sir_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
 \section{Interpretation of SIR}{
 

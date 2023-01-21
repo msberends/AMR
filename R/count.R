@@ -41,7 +41,7 @@
 #'
 #' The function [n_sir()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
-#' The function [count_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [sir_sf()] works exactly like [count_df()], but adds the percentage of S, I and R.
+#' The function [count_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [sir_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
 #' @inheritSection proportion Combination Therapy
 #' @seealso [`proportion_*`][proportion] to calculate microbial resistance and susceptibility.
 #' @return An [integer]

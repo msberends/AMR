@@ -372,5 +372,5 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
 
   rownames(out) <- NULL
   out <- as_original_data_class(out, class(data.bak)) # will remove tibble groups
-  structure(out, class = c("sir_sf", class(out)))
+  structure(out, class = c("sir_df", "rsi_df", class(out)))
 }

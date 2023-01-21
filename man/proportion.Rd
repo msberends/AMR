@@ -12,7 +12,7 @@
 \alias{proportion_SI}
 \alias{proportion_S}
 \alias{proportion_df}
-\alias{sir_sf}
+\alias{sir_df}
 \title{Calculate Microbial Resistance}
 \source{
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
@@ -52,7 +52,7 @@ proportion_df(
   confidence_level = 0.95
 )
 
-sir_sf(
+sir_df(
   data,
   translate_ab = "name",
   language = get_AMR_locale(),
@@ -102,7 +102,7 @@ Use \code{\link[=sir_confidence_interval]{sir_confidence_interval()}} to calcula
 
 These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[=count]{count()}} functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can influence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} argument).}
 
-The function \code{\link[=proportion_df]{proportion_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and calculates the proportions S, I, and R. It also supports grouped variables. The function \code{\link[=sir_sf]{sir_sf()}} works exactly like \code{\link[=proportion_df]{proportion_df()}}, but adds the number of isolates.
+The function \code{\link[=proportion_df]{proportion_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and calculates the proportions S, I, and R. It also supports grouped variables. The function \code{\link[=sir_df]{sir_df()}} works exactly like \code{\link[=proportion_df]{proportion_df()}}, but adds the number of isolates.
 }
 \section{Combination Therapy}{
 
@@ -270,11 +270,11 @@ if (require("dplyr")) {
     proportion_df(translate = FALSE)
 
   # It also supports grouping variables
-  # (use sir_sf to also include the count)
+  # (use sir_df to also include the count)
   example_isolates \%>\%
     select(ward, AMX, CIP) \%>\%
     group_by(ward) \%>\%
-    sir_sf(translate = FALSE)
+    sir_df(translate = FALSE)
 }
 }
 }

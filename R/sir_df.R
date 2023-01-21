@@ -29,7 +29,7 @@
 
 #' @rdname proportion
 #' @export
-sir_sf <- function(data,
+sir_df <- function(data,
                    translate_ab = "name",
                    language = get_AMR_locale(),
                    minimum = 30,

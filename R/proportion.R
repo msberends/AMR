@@ -53,7 +53,7 @@
 #'
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` argument).*
 #'
-#' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_sf()] works exactly like [proportion_df()], but adds the number of isolates.
+#' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination Therapy:
 #' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
 #'
@@ -206,11 +206,11 @@
 #'     proportion_df(translate = FALSE)
 #'
 #'   # It also supports grouping variables
-#'   # (use sir_sf to also include the count)
+#'   # (use sir_df to also include the count)
 #'   example_isolates %>%
 #'     select(ward, AMX, CIP) %>%
 #'     group_by(ward) %>%
-#'     sir_sf(translate = FALSE)
+#'     sir_df(translate = FALSE)
 #' }
 #' }
 resistance <- function(...,

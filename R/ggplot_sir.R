@@ -53,7 +53,7 @@
 #' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
 #' ### The Functions
-#' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_sf()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+#' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_df()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
 #' [facet_sir()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
 #'
@@ -340,7 +340,7 @@ geom_sir <- function(position = NULL,
 
   ggplot2::geom_col(
     data = function(x) {
-      sir_sf(
+      sir_df(
         data = x,
         translate_ab = translate_ab,
         language = language,
@@ -521,7 +521,7 @@ labels_sir_count <- function(position = NULL,
     colour = datalabels.colour,
     lineheight = 0.75,
     data = function(x) {
-      transformed <- sir_sf(
+      transformed <- sir_df(
         data = x,
         translate_ab = translate_ab,
         combine_SI = combine_SI,
