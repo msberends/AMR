@@ -124,6 +124,8 @@ add_custom_microorganisms <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
   stop_ifnot("genus" %in% tolower(colnames(x)), paste0("`x` must contain column 'genus'."))
   
+  add_MO_lookup_to_AMR_env()
+  
   # remove any extra class/type, such as grouped tbl, or data.table:
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   colnames(x) <- tolower(colnames(x))
@@ -269,7 +271,11 @@ add_custom_microorganisms <- function(x) {
 #' @export
 clear_custom_microorganisms <- function() {
   n <- nrow(AMR_env$MO_lookup)
-  AMR_env$MO_lookup <- create_MO_lookup()
+  
+  # reset
+  AMR_env$MO_lookup <- NULL
+  add_MO_lookup_to_AMR_env()
+  
   n2 <- nrow(AMR_env$MO_lookup)
   AMR_env$custom_mo_codes <- character(0)
   AMR_env$mo_previously_coerced <- AMR_env$mo_previously_coerced[which(AMR_env$mo_previously_coerced$mo %in% AMR_env$MO_lookup$mo), , drop = FALSE]

@@ -51,6 +51,8 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
   meet_criteria(string, allow_class = "character")
   meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("markdown", "ansi"))
 
+  add_MO_lookup_to_AMR_env()
+
   if (type == "markdown") {
     before <- "*"
     after <- "*"

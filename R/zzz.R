@@ -181,11 +181,10 @@ if (utf8_supported && !is_latex) {
     try(loadNamespace("tibble"), silent = TRUE)
   }
 
-  # reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
+  # reference data - they have additional to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
-  AMR_env$AB_lookup <- create_AB_lookup()
-  AMR_env$AV_lookup <- create_AV_lookup()
-  AMR_env$MO_lookup <- create_MO_lookup()
+  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
+  AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
 }
 
 .onAttach <- function(lib, pkg) {
@@ -207,37 +206,4 @@ if (utf8_supported && !is_latex) {
       packageStartupMessage("OK.")
     }, error = function(e) packageStartupMessage("Failed: ", e$message))
   }
-}
-
-# Helper functions --------------------------------------------------------
-
-create_AB_lookup <- function() {
-  cbind(AMR::antibiotics, AB_LOOKUP)
-}
-
-create_AV_lookup <- function() {
-  cbind(AMR::antivirals, AV_LOOKUP)
-}
-
-create_MO_lookup <- function() {
-  MO_lookup <- AMR::microorganisms
-
-  MO_lookup$kingdom_index <- NA_real_
-  MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
-  MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
-  MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
-  MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
-  # all the rest
-  MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
-  
-  if (length(MO_FULLNAME_LOWER) != nrow(MO_lookup)) {
-    packageStartupMessage("fullname_lower not same size - applied tolower(), update sysdata.rda!")
-    MO_lookup$fullname_lower <- tolower(MO_lookup$fullname)
-  } else {
-    MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
-  }
-  MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
-  MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
-  MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars
-  MO_lookup
 }

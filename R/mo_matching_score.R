@@ -84,6 +84,8 @@ mo_matching_score <- function(x, n) {
   meet_criteria(x, allow_class = c("character", "data.frame", "list"))
   meet_criteria(n, allow_class = "character")
 
+  add_MO_lookup_to_AMR_env()
+
   x <- parse_and_convert(x)
   # no dots and other non-whitespace characters
   x <- gsub("[^a-zA-Z0-9 \\(\\)]+", "", x)

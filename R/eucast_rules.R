@@ -182,6 +182,8 @@ eucast_rules <- function(x,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
 
+  add_MO_lookup_to_AMR_env()
+
   if ("custom" %in% rules && is.null(custom_rules)) {
     warning_("in `eucast_rules()`: no custom rules were set with the `custom_rules` argument",
       immediate = TRUE

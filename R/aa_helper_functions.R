@@ -225,6 +225,8 @@ search_type_in_df <- function(x, type, info = TRUE) {
 
   # -- mo
   if (type == "mo") {
+    add_MO_lookup_to_AMR_env()
+    
     if (any(vapply(FUN.VALUE = logical(1), x, is.mo))) {
       # take first 'mo' column
       found <- colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)]
@@ -1376,6 +1378,38 @@ add_intrinsic_resistance_to_AMR_env <- function() {
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   if (is.null(AMR_env$intrinsic_resistant)) {
     AMR_env$intrinsic_resistant <- paste(AMR::intrinsic_resistant$mo, AMR::intrinsic_resistant$ab)
+  }
+}
+
+add_MO_lookup_to_AMR_env <- function() {
+  # for all MO functions, saves a lot of time on package load and in package size
+  if (is.null(AMR_env$MO_lookup)) {
+    MO_lookup <- AMR::microorganisms
+    
+    MO_lookup$kingdom_index <- NA_real_
+    MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
+    MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
+    MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
+    MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
+    # all the rest
+    MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
+    
+    # the fullname lowercase, important for the internal algorithms in as.mo()
+    MO_lookup$fullname_lower <- tolower(trimws(paste(
+      MO_lookup$genus,
+      MO_lookup$species,
+      MO_lookup$subspecies
+    )))
+    ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
+    MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
+    MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+    # special for Salmonella - they have cities as subspecies but not the species (enterica) in the fullname:
+    MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
+    
+    MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
+    MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
+    MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars
+    AMR_env$MO_lookup <- MO_lookup
   }
 }
 

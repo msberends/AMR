@@ -144,21 +144,6 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
     ]
   }
 }
-create_MO_fullname_lower <- function() {
-  AMR_env$MO_lookup <- AMR::microorganisms
-  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  AMR_env$MO_lookup$fullname_lower <- tolower(trimws(paste(
-    AMR_env$MO_lookup$genus,
-    AMR_env$MO_lookup$species,
-    AMR_env$MO_lookup$subspecies
-  )))
-  ind <- AMR_env$MO_lookup$genus == "" | grepl("^[(]unknown ", AMR_env$MO_lookup$fullname, perl = TRUE)
-  AMR_env$MO_lookup[ind, "fullname_lower"] <- tolower(AMR_env$MO_lookup[ind, "fullname", drop = TRUE])
-  AMR_env$MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", AMR_env$MO_lookup$fullname_lower, perl = TRUE))
-  # special for Salmonella - they have cities as subspecies but not the species (enterica) in the fullname:
-  AMR_env$MO_lookup$fullname_lower[which(AMR_env$MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", AMR_env$MO_lookup$fullname_lower[which(AMR_env$MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
-  AMR_env$MO_lookup$fullname_lower
-}
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
 MO_STREP_ABCG <- AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$genus == "Streptococcus" &
@@ -166,7 +151,6 @@ MO_STREP_ABCG <- AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$genus == "Streptoc
     "pyogenes", "agalactiae", "dysgalactiae", "equi", "canis",
     "group A", "group B", "group C", "group G"
   ))]
-MO_FULLNAME_LOWER <- create_MO_fullname_lower()
 MO_PREVALENT_GENERA <- c(
   "Absidia", "Acanthamoeba", "Acremonium", "Aedes", "Alternaria", "Amoeba", "Ancylostoma", "Angiostrongylus",
   "Anisakis", "Anopheles", "Apophysomyces", "Aspergillus", "Aureobasidium", "Basidiobolus", "Beauveria",
@@ -298,7 +282,6 @@ suppressMessages(usethis::use_data(EUCAST_RULES_DF,
   MO_CONS,
   MO_COPS,
   MO_STREP_ABCG,
-  MO_FULLNAME_LOWER,
   MO_PREVALENT_GENERA,
   AB_LOOKUP,
   AV_LOOKUP,

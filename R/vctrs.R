@@ -95,6 +95,7 @@ vec_cast.character.mo <- function(x, to, ...) {
   as.character(x)
 }
 vec_cast.mo.character <- function(x, to, ...) {
+  add_MO_lookup_to_AMR_env()
   return_after_integrity_check(x, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 

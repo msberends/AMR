@@ -417,6 +417,8 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
+  add_MO_lookup_to_AMR_env()
+
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
 
@@ -725,6 +727,8 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  add_MO_lookup_to_AMR_env()
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
@@ -811,6 +815,8 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
   meet_criteria(open, allow_class = "logical", has_length = 1)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  add_MO_lookup_to_AMR_env()
 
   x.mo <- as.mo(x = x, language = language, keep_synonyms = keep_synonyms, ... = ...)
   metadata <- get_mo_uncertainties()
@@ -847,7 +853,7 @@ mo_property <- function(x, property = "fullname", language = get_AMR_locale(), k
     x <- find_mo_col(fn = "mo_property")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR_env$MO_lookup))
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms))
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
@@ -855,7 +861,8 @@ mo_property <- function(x, property = "fullname", language = get_AMR_locale(), k
 }
 
 mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ...) {
-
+  add_MO_lookup_to_AMR_env()
+  
   # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% unlist(AMR_env$MO_lookup[1, property, drop = TRUE]),
