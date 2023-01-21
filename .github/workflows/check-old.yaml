@@ -49,16 +49,14 @@ jobs:
           # Test all old versions of R >= 3.0, we support them all!
           # For these old versions, dependencies and vignettes will not be checked.
           # For recent R versions, see check-recent.yaml (r-lib and tidyverse support the latest 5 major R versions).
-          - {os: ubuntu-22.04, r: '3.4', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04, r: '3.3', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04, r: '3.2', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04, r: '3.1', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04, r: '3.0', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: ubuntu-latest, r: '3.4', allowfail: false}
+          - {os: ubuntu-latest, r: '3.3', allowfail: false}
+          - {os: ubuntu-latest, r: '3.2', allowfail: false}
+          - {os: ubuntu-latest, r: '3.1', allowfail: false}
+          - {os: ubuntu-latest, r: '3.0', allowfail: false}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
-      R_REPOSITORIES: "https://cran.rstudio.com"
 
     steps:
       - uses: actions/checkout@v3
@@ -69,9 +67,9 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install tinytest
+      - name: Install tinytest from CRAN
         run: |
-          install.packages("tinytest")
+          install.packages("tinytest", repos = "https://cran.r-project.org")
         shell: Rscript {0}
 
       - name: Show session info
