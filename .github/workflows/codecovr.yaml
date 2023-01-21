@@ -61,6 +61,6 @@ jobs:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
           R_RUN_TINYTEST: true
         run: |
-          x <- covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
+          x <- covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/zz_deprecated.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
           print(x)
         shell: Rscript {0}

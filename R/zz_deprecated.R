@@ -162,6 +162,34 @@ print.rsi <- function(x, ...) {
   print(as.character(x), quote = FALSE)
 }
 
+#' @noRd
+#' @export
+`[<-.rsi` <- `[<-.sir`
+#' @noRd
+#' @export
+`[[<-.rsi` <- `[[<-.sir`
+#' @noRd
+#' @export
+barplot.rsi <- barplot.sir
+#' @noRd
+#' @export
+c.rsi <- c.sir
+#' @noRd
+#' @export
+droplevels.rsi <- droplevels.sir
+#' @noRd
+#' @export
+plot.rsi <- plot.sir
+#' @noRd
+#' @export
+rep.rsi <- rep.sir
+#' @noRd
+#' @export
+summary.rsi <- summary.sir
+#' @noRd
+#' @export
+unique.rsi <- unique.sir
+
 deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL) {
   if (is.null(old)) {
     warning_(extra_msg)
