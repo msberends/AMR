@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,7 @@
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">rsi_predict</span><span class="op">(</span></span>
+<span><span class="fu">sir_predict</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">col_ab</span>,</span>
 <span>  col_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -171,7 +171,7 @@
 <span><span class="co"># S3 method for resistance_predict</span></span>
 <span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">x</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Resistance Prediction of"</span>, <span class="va">x_name</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot_rsi_predict</span><span class="op">(</span></span>
+<span><span class="fu">ggplot_sir_predict</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Resistance Prediction of"</span>, <span class="va">x_name</span><span class="op">)</span>,</span>
 <span>  ribbon <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -269,15 +269,16 @@
 <li><p><code>"lin"</code> or <code>"linear"</code>: a linear regression model</p></li>
 </ul></div>
     <div class="section level2">
-    <h2 id="interpretation-of-r-and-s-i">Interpretation of R and S/I<a class="anchor" aria-label="anchor" href="#interpretation-of-r-and-s-i"></a></h2>
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>).</p><ul><li><p><strong>R = Resistant</strong><br>
-A microorganism is categorised as <em>Resistant</em> when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
-<li><p><strong>S = Susceptible</strong><br>
-A microorganism is categorised as <em>Susceptible, standard dosing regimen</em>, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
-<li><p><strong>I = Susceptible, Increased exposure</strong><br>
-A microorganism is categorised as <em>Susceptible, Increased exposure</em> when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>):</p><ul><li><p><strong>S - Susceptible, standard dosing regimen</strong><br>
+A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
+<li><p><strong>I - Susceptible, increased exposure</strong> <em><br>
+A microorganism is categorised as "Susceptible, Increased exposure</em>" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<li><p><strong>R = Resistant</strong><br>
+A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p><ul><li><p><em>Exposure</em> is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
+</ul></li>
 </ul><p>This AMR package honours this insight. Use <code><a href="proportion.html">susceptibility()</a></code> (equal to <code><a href="proportion.html">proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href="count.html">count_susceptible()</a></code> (equal to <code><a href="count.html">count_SI()</a></code>) to count susceptible isolates.</p>
     </div>
     <div class="section level2">
@@ -298,7 +299,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-plt img"><img src="resistance_predict-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">ggplot_rsi_predict</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggplot_sir_predict</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="resistance_predict-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

@@ -100,7 +100,7 @@
     <loc>https://msberends.github.io/AMR/reference/as.mo.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/as.rsi.html</loc>
+    <loc>https://msberends.github.io/AMR/reference/as.sir.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/atc_online.html</loc>
@@ -116,6 +116,9 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/bug_drug_combinations.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.github.io/AMR/reference/clinical_breakpoints.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/count.html</loc>
@@ -148,7 +151,7 @@
     <loc>https://msberends.github.io/AMR/reference/ggplot_pca.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/ggplot_rsi.html</loc>
+    <loc>https://msberends.github.io/AMR/reference/ggplot_sir.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/guess_ab_col.html</loc>
@@ -209,9 +212,6 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/resistance_predict.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/rsi_translation.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/skewness.html</loc>

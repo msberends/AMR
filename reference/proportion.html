@@ -12,7 +12,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,7 +130,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Calculate Microbial Resistance</h1>
-      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/R/proportion.R" class="external-link"><code>R/proportion.R</code></a>, <a href="https://github.com/msberends/AMR/blob/HEAD/R/rsi_df.R" class="external-link"><code>R/rsi_df.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/R/proportion.R" class="external-link"><code>R/proportion.R</code></a>, <a href="https://github.com/msberends/AMR/blob/HEAD/R/sir_df.R" class="external-link"><code>R/sir_df.R</code></a></small>
       <div class="d-none name"><code>proportion.Rd</code></div>
     </div>
 
@@ -145,7 +145,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <span></span>
 <span><span class="fu">susceptibility</span><span class="op">(</span><span class="va">...</span>, minimum <span class="op">=</span> <span class="fl">30</span>, as_percent <span class="op">=</span> <span class="cn">FALSE</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">rsi_confidence_interval</span><span class="op">(</span></span>
+<span><span class="fu">sir_confidence_interval</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  ab_result <span class="op">=</span> <span class="st">"R"</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
@@ -175,7 +175,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <span>  confidence_level <span class="op">=</span> <span class="fl">0.95</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">rsi_df</span><span class="op">(</span></span>
+<span><span class="fu">sir_df</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -193,7 +193,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
-<dd><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href="as.rsi.html">as.rsi()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See <em>Examples</em>.</p></dd>
+<dd><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href="as.sir.html">as.sir()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See <em>Examples</em>.</p></dd>
 
 
 <dt>minimum</dt>
@@ -209,7 +209,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
 
 <dt>ab_result</dt>
-<dd><p>antibiotic results to test against, must be one of more values of "R", "S", "I"</p></dd>
+<dd><p>antibiotic results to test against, must be one or more values of "S", "I", or "R"</p></dd>
 
 
 <dt>confidence_level</dt>
@@ -221,7 +221,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
 
 <dt>data</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.rsi.html">rsi</a></code> (see <code><a href="as.rsi.html">as.rsi()</a></code>)</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
 
 
 <dt>translate_ab</dt>
@@ -245,10 +245,10 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
-<p>Use <code>rsi_confidence_interval()</code> to calculate the confidence interval, which relies on <code><a href="https://rdrr.io/r/stats/binom.test.html" class="external-link">binom.test()</a></code>, i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial <em>resistance</em>. Change the <code>side</code> argument to "left"/"min" or "right"/"max" to return a single value, and change the <code>ab_result</code> argument to e.g. <code>c("S", "I")</code> to test for antimicrobial <em>susceptibility</em>, see Examples.</p>
+<p>Use <code>sir_confidence_interval()</code> to calculate the confidence interval, which relies on <code><a href="https://rdrr.io/r/stats/binom.test.html" class="external-link">binom.test()</a></code>, i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial <em>resistance</em>. Change the <code>side</code> argument to "left"/"min" or "right"/"max" to return a single value, and change the <code>ab_result</code> argument to e.g. <code>c("S", "I")</code> to test for antimicrobial <em>susceptibility</em>, see Examples.</p>
 <p><strong>Remember that you should filter your data to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href="first_isolate.html">first_isolate()</a></code> to determine them in your data set.</p>
 <p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href="count.html">count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> argument).</em></p>
-<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href="as.rsi.html">rsi</a></code> class (created with <code><a href="as.rsi.html">as.rsi()</a></code>) and calculates the proportions R, I and S. It also supports grouped variables. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
+<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href="as.sir.html">sir</a></code> class (created with <code><a href="as.sir.html">as.sir()</a></code>) and calculates the proportions S, I, and R. It also supports grouped variables. The function <code>sir_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     </div>
     <div class="section level2">
     <h2 id="combination-therapy">Combination Therapy<a class="anchor" aria-label="anchor" href="#combination-therapy"></a></h2>
@@ -280,15 +280,16 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
     </div>
     <div class="section level2">
-    <h2 id="interpretation-of-r-and-s-i">Interpretation of R and S/I<a class="anchor" aria-label="anchor" href="#interpretation-of-r-and-s-i"></a></h2>
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>).</p><ul><li><p><strong>R = Resistant</strong><br>
-A microorganism is categorised as <em>Resistant</em> when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
-<li><p><strong>S = Susceptible</strong><br>
-A microorganism is categorised as <em>Susceptible, standard dosing regimen</em>, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
-<li><p><strong>I = Susceptible, Increased exposure</strong><br>
-A microorganism is categorised as <em>Susceptible, Increased exposure</em> when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>):</p><ul><li><p><strong>S - Susceptible, standard dosing regimen</strong><br>
+A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
+<li><p><strong>I - Susceptible, increased exposure</strong> <em><br>
+A microorganism is categorised as "Susceptible, Increased exposure</em>" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<li><p><strong>R = Resistant</strong><br>
+A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p><ul><li><p><em>Exposure</em> is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
+</ul></li>
 </ul><p>This AMR package honours this insight. Use <code>susceptibility()</code> (equal to <code>proportion_SI()</code>) to determine antimicrobial susceptibility and <code><a href="count.html">count_susceptible()</a></code> (equal to <code><a href="count.html">count_SI()</a></code>) to count susceptible isolates.</p>
     </div>
     <div class="section level2">
@@ -305,9 +306,9 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="co"># determines %R</span></span></span>
 <span class="r-in"><span><span class="fu">resistance</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5955556</span>
-<span class="r-in"><span><span class="fu">rsi_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5688204 0.6218738</span>
-<span class="r-in"><span><span class="fu">rsi_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
+<span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  confidence_level <span class="op">=</span> <span class="fl">0.975</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5650148 0.6255670</span>
@@ -315,7 +316,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="co"># determines %S+I:</span></span></span>
 <span class="r-in"><span><span class="fu">susceptibility</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4044444</span>
-<span class="r-in"><span><span class="fu">rsi_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
+<span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  ab_result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"I"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3781262 0.4311796</span>
@@ -339,8 +340,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      r <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      n <span class="op">=</span> <span class="fu"><a href="count.html">n_rsi</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span> <span class="co"># n_rsi works like n_distinct in dplyr, see ?n_rsi</span></span></span>
+<span class="r-in"><span>      n <span class="op">=</span> <span class="fu"><a href="count.html">n_sir</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span> <span class="co"># n_sir works like n_distinct in dplyr, see ?n_sir</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ward           r     n</span>
@@ -353,8 +354,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      cipro_R <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      ci_min <span class="op">=</span> <span class="fu">rsi_confidence_interval</span><span class="op">(</span><span class="va">CIP</span>, side <span class="op">=</span> <span class="st">"min"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      ci_max <span class="op">=</span> <span class="fu">rsi_confidence_interval</span><span class="op">(</span><span class="va">CIP</span>, side <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      ci_min <span class="op">=</span> <span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">CIP</span>, side <span class="op">=</span> <span class="st">"min"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      ci_max <span class="op">=</span> <span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">CIP</span>, side <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
@@ -392,7 +393,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>      R <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      SI <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      n1 <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># the actual total; sum of all three</span></span></span>
-<span class="r-in"><span>      n2 <span class="op">=</span> <span class="fu"><a href="count.html">n_rsi</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># same - analogous to n_distinct</span></span></span>
+<span class="r-in"><span>      n2 <span class="op">=</span> <span class="fu"><a href="count.html">n_sir</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># same - analogous to n_distinct</span></span></span>
 <span class="r-in"><span>      total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span> <span class="co"># NOT the number of tested isolates!</span></span></span>
 <span class="r-in"><span></span></span>
@@ -435,17 +436,17 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>      combination_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span>, <span class="va">GEN</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Get proportions S/I/R immediately of all rsi columns</span></span></span>
+<span class="r-in"><span>  <span class="co"># Get proportions S/I/R immediately of all sir columns</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">proportion_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># It also supports grouping variables</span></span></span>
-<span class="r-in"><span>  <span class="co"># (use rsi_df to also include the count)</span></span></span>
+<span class="r-in"><span>  <span class="co"># (use sir_df to also include the count)</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ward</span>, <span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu">rsi_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu">sir_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ward       antibiotic interpretation value ci_min ci_max isolates</span>

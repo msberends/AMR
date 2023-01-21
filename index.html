@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,7 +193,7 @@
 </h3>
 <p>The <code>AMR</code> package is a <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. <a href="./authors.html">Many different researchers</a> from around the globe are continually helping us to make this a successful and durable project!</p>
 <p>This work was published in the Journal of Statistical Software (Volume 104(3); <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">DOI 10.18637/jss.v104.i03</a>) and formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>).</p>
-<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~52,000 distinct microbial species</strong></a> (updated December 2022) and all <a href="./reference/antibiotics.html"><strong>~600 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. The integral breakpoint guidelines from CLSI and EUCAST are included from the last 10 years. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
+<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~52,000 distinct microbial species</strong></a> (updated December 2022) and all <a href="./reference/antibiotics.html"><strong>~600 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral breakpoint guidelines from CLSI and EUCAST are included from the last 10 years. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
 <div class="section level5">
 <h5 id="used-in-175-countries-translated-to-16-languages">Used in 175 countries, translated to 16 languages<a class="anchor" aria-label="anchor" href="#used-in-175-countries-translated-to-16-languages"></a>
 </h5>
@@ -485,7 +485,7 @@
 <p>This package was intended as a comprehensive toolbox for integrated AMR data analysis. This package can be used for:</p>
 <ul>
 <li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature (<a href="(https://lpsn.dsmz.de)" class="external-link">LPSN</a>) and the Global Biodiversity Information Facility (<a href="https://www.gbif.org" class="external-link">GBIF</a>) (<a href="./reference/mo_property.html">manual</a>)</li>
-<li>Interpreting raw MIC and disk diffusion values, based on any CLSI or EUCAST guideline from the last 10 years (<a href="./reference/as.rsi.html">manual</a>)</li>
+<li>Interpreting raw MIC and disk diffusion values, based on any CLSI or EUCAST guideline from the last 10 years (<a href="./reference/as.sir.html">manual</a>)</li>
 <li>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records (<a href="./reference/ab_from_text.html">manual</a>)</li>
 <li>Determining first isolates to be used for AMR data analysis (<a href="./reference/first_isolate.html">manual</a>)</li>
 <li>Calculating antimicrobial resistance (<a href="./articles/AMR.html">tutorial</a>)</li>
@@ -498,7 +498,7 @@
 <li>Applying EUCAST expert rules (<a href="./reference/eucast_rules.html">manual</a>)</li>
 <li>Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code (<a href="./reference/ab_property.html">manual</a>)</li>
-<li>Machine reading the EUCAST and CLSI guidelines from 2011-2021 to translate MIC values and disk diffusion diameters to R/SI (<a href="./articles/datasets.html">link</a>)</li>
+<li>Machine reading the EUCAST and CLSI guidelines from 2011-2021 to translate MIC values and disk diffusion diameters to SIR (<a href="./articles/datasets.html">link</a>)</li>
 <li>Principal component analysis for AMR (<a href="./articles/PCA.html">tutorial</a>)</li>
 </ul>
 </div>

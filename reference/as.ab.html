@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -202,7 +202,7 @@
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
     
 
-<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -266,13 +266,13 @@
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># you can quickly rename 'rsi' columns using set_ab_names() with dplyr:</span></span></span>
+<span class="r-in"><span>  <span class="co"># you can quickly rename 'sir' columns using set_ab_names() with dplyr:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.rsi</span><span class="op">)</span>, property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           J01CE01 J01CF04 J01CF05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R       NA      NA     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R       NA      NA     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R       NA      R      </span>
@@ -283,13 +283,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R       NA      S      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R       NA      R      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R       NA      S      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, and 37 more variables: J01CA04 &lt;rsi&gt;, J01CR02 &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01CA01 &lt;rsi&gt;, J01CR05 &lt;rsi&gt;, J01DB04 &lt;rsi&gt;, J01DE01 &lt;rsi&gt;, J01DC02 &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01DC01 &lt;rsi&gt;, J01DD01 &lt;rsi&gt;, J01DD02 &lt;rsi&gt;, J01DD04 &lt;rsi&gt;, J01GB03 &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01GB01 &lt;rsi&gt;, J01GB06 &lt;rsi&gt;, J01GB04 &lt;rsi&gt;, J01EA01 &lt;rsi&gt;, J01EE01 &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01XE01 &lt;rsi&gt;, J01XX01 &lt;rsi&gt;, J01XX08 &lt;rsi&gt;, J01MA02 &lt;rsi&gt;, J01MA14 &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01XA01 &lt;rsi&gt;, J01XA02 &lt;rsi&gt;, J01AA07 &lt;rsi&gt;, J01AA12 &lt;rsi&gt;, J01AA02 &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01FA01 &lt;rsi&gt;, J01FF01 &lt;rsi&gt;, J01FA10 &lt;rsi&gt;, J01DH51 &lt;rsi&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, and 37 more variables: J01CA04 &lt;sir&gt;, J01CR02 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01CA01 &lt;sir&gt;, J01CR05 &lt;sir&gt;, J01DB04 &lt;sir&gt;, J01DE01 &lt;sir&gt;, J01DC02 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01DC01 &lt;sir&gt;, J01DD01 &lt;sir&gt;, J01DD02 &lt;sir&gt;, J01DD04 &lt;sir&gt;, J01GB03 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01GB01 &lt;sir&gt;, J01GB06 &lt;sir&gt;, J01GB04 &lt;sir&gt;, J01EA01 &lt;sir&gt;, J01EE01 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01XE01 &lt;sir&gt;, J01XX01 &lt;sir&gt;, J01XX08 &lt;sir&gt;, J01MA02 &lt;sir&gt;, J01MA14 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01XA01 &lt;sir&gt;, J01XA02 &lt;sir&gt;, J01AA07 &lt;sir&gt;, J01AA12 &lt;sir&gt;, J01AA02 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01FA01 &lt;sir&gt;, J01FF01 &lt;sir&gt;, J01FA10 &lt;sir&gt;, J01DH51 &lt;sir&gt;, …</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

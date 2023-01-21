@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -252,15 +252,15 @@ input. We extended its function to cope with resistance predictions:</p>
 right axes, error bars, titles, number of available observations and
 type of model.</p>
 <p>We also support the <code>ggplot2</code> package with our custom
-function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing
+function <code><a href="../reference/resistance_predict.html">ggplot_sir_predict()</a></code> to create more appealing
 plots:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/resistance_predict.html">ggplot_sir_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># choose for error bars instead of a ribbon</span></span>
-<span><span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span>, ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/resistance_predict.html">ggplot_sir_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span>, ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-2.png" width="720"></p>
 <div class="section level3">
 <h3 id="choosing-the-right-model">Choosing the right model<a class="anchor" aria-label="anchor" href="#choosing-the-right-model"></a>
@@ -272,7 +272,7 @@ is enormous:</p>
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_sir_predict</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
 <p>Vancomycin resistance could be 100% in ten years, but might remain
 very low.</p>
@@ -324,7 +324,7 @@ model might be more appropriate:</p>
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_sir_predict</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 <p>The model itself is also available from the object, as an
 <code>attribute</code>:</p>

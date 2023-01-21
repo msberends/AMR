@@ -12,7 +12,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,7 +157,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span></span>
 <span><span class="fu">count_all</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">n_rsi</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">n_sir</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">count_df</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
@@ -170,7 +170,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
-<dd><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href="as.rsi.html">as.rsi()</a></code> if needed.</p></dd>
+<dd><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href="as.sir.html">as.sir()</a></code> if needed.</p></dd>
 
 
 <dt>only_all_tested</dt>
@@ -178,7 +178,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
 
 <dt>data</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.rsi.html">rsi</a></code> (see <code><a href="as.rsi.html">as.rsi()</a></code>)</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
 
 
 <dt>translate_ab</dt>
@@ -205,19 +205,20 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions are meant to count isolates. Use the <code><a href="proportion.html">resistance()</a></code>/<code><a href="proportion.html">susceptibility()</a></code> functions to calculate microbial resistance/susceptibility.</p>
 <p>The function <code>count_resistant()</code> is equal to the function <code>count_R()</code>. The function <code>count_susceptible()</code> is equal to the function <code>count_SI()</code>.</p>
-<p>The function <code>n_rsi()</code> is an alias of <code>count_all()</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
-<p>The function <code>count_df()</code> takes any variable from <code>data</code> that has an <code><a href="as.rsi.html">rsi</a></code> class (created with <code><a href="as.rsi.html">as.rsi()</a></code>) and counts the number of S's, I's and R's. It also supports grouped variables. The function <code><a href="proportion.html">rsi_df()</a></code> works exactly like <code>count_df()</code>, but adds the percentage of S, I and R.</p>
+<p>The function <code>n_sir()</code> is an alias of <code>count_all()</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
+<p>The function <code>count_df()</code> takes any variable from <code>data</code> that has an <code><a href="as.sir.html">sir</a></code> class (created with <code><a href="as.sir.html">as.sir()</a></code>) and counts the number of S's, I's and R's. It also supports grouped variables. The function <code><a href="proportion.html">sir_df()</a></code> works exactly like <code>count_df()</code>, but adds the percentage of S, I and R.</p>
     </div>
     <div class="section level2">
-    <h2 id="interpretation-of-r-and-s-i">Interpretation of R and S/I<a class="anchor" aria-label="anchor" href="#interpretation-of-r-and-s-i"></a></h2>
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>).</p><ul><li><p><strong>R = Resistant</strong><br>
-A microorganism is categorised as <em>Resistant</em> when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
-<li><p><strong>S = Susceptible</strong><br>
-A microorganism is categorised as <em>Susceptible, standard dosing regimen</em>, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
-<li><p><strong>I = Susceptible, Increased exposure</strong><br>
-A microorganism is categorised as <em>Susceptible, Increased exposure</em> when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>):</p><ul><li><p><strong>S - Susceptible, standard dosing regimen</strong><br>
+A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
+<li><p><strong>I - Susceptible, increased exposure</strong> <em><br>
+A microorganism is categorised as "Susceptible, Increased exposure</em>" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<li><p><strong>R = Resistant</strong><br>
+A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p><ul><li><p><em>Exposure</em> is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
+</ul></li>
 </ul><p>This AMR package honours this insight. Use <code><a href="proportion.html">susceptibility()</a></code> (equal to <code><a href="proportion.html">proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code>count_susceptible()</code> (equal to <code>count_SI()</code>) to count susceptible isolates.</p>
     </div>
     <div class="section level2">
@@ -288,16 +289,16 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="co"># Count all available isolates</span></span></span>
 <span class="r-in"><span><span class="fu">count_all</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1350</span>
-<span class="r-in"><span><span class="fu">n_rsi</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">n_sir</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1350</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># n_rsi() is an alias of count_all().</span></span></span>
+<span class="r-in"><span><span class="co"># n_sir() is an alias of count_all().</span></span></span>
 <span class="r-in"><span><span class="co"># Since it counts all available isolates, you can</span></span></span>
 <span class="r-in"><span><span class="co"># calculate back to count e.g. susceptible isolates.</span></span></span>
 <span class="r-in"><span><span class="co"># These results are the same:</span></span></span>
 <span class="r-in"><span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
-<span class="r-in"><span><span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="op">*</span> <span class="fu">n_rsi</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="op">*</span> <span class="fu">n_sir</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># dplyr -------------------------------------------------------------</span></span></span>
@@ -310,7 +311,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>      I <span class="op">=</span> <span class="fu">count_I</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      S <span class="op">=</span> <span class="fu">count_S</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      n1 <span class="op">=</span> <span class="fu">count_all</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># the actual total; sum of all three</span></span></span>
-<span class="r-in"><span>      n2 <span class="op">=</span> <span class="fu">n_rsi</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># same - analogous to n_distinct</span></span></span>
+<span class="r-in"><span>      n2 <span class="op">=</span> <span class="fu">n_sir</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># same - analogous to n_distinct</span></span></span>
 <span class="r-in"><span>      total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span> <span class="co"># NOT the number of tested isolates!</span></span></span>
 <span class="r-in"><span></span></span>
@@ -318,7 +319,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>  <span class="co"># (i.e., in this data set columns GEN, TOB, AMK, KAN)</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">n_rsi</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">n_sir</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Count co-resistance between amoxicillin/clav acid and gentamicin,</span></span></span>
 <span class="r-in"><span>  <span class="co"># so we can see that combination therapy does a lot more than mono therapy.</span></span></span>

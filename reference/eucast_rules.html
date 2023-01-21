@@ -12,7 +12,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,7 +150,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 <span>  version_breakpoints <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,</span>
 <span>  ampc_cephalosporin_resistance <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  custom_rules <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -205,8 +205,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code> and higher; these version of '<em>EUCAST Expert Rules on Enterobacterales</em>' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of <code>NA</code> (the default) for this argument will remove results for these three drugs, while e.g. a value of <code>"R"</code> will make the results for these drugs resistant. Use <code>NULL</code> or <code>FALSE</code> to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using <code>TRUE</code> is equal to using <code>"R"</code>. <br> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Citrobacter braakii</em>, <em>Citrobacter freundii</em>, <em>Citrobacter gillenii</em>, <em>Citrobacter murliniae</em>, <em>Citrobacter rodenticum</em>, <em>Citrobacter sedlakii</em>, <em>Citrobacter werkmanii</em>, <em>Citrobacter youngae</em>, <em>Enterobacter</em>, <em>Hafnia alvei</em>, <em>Klebsiella aerogenes</em>, <em>Morganella morganii</em>, <em>Providencia</em> and <em>Serratia</em>.</p></dd>
 
 
-<dt>only_rsi_columns</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antibiotic columns must be detected that were transformed to class <code>rsi</code> (see <code><a href="as.rsi.html">as.rsi()</a></code>) on beforehand (defaults to <code>FALSE</code>)</p></dd>
+<dt>only_sir_columns</dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antibiotic columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (defaults to <code>FALSE</code>)</p></dd>
 
 
 <dt>custom_rules</dt>
@@ -233,7 +233,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href="as.rsi.html">as.rsi()</a></code> for that. <br><strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. <br></p>
+    <p><strong>Note:</strong> This function does not translate MIC values to SIR values. Use <code><a href="as.sir.html">as.sir()</a></code> for that. <br><strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. <br></p>
 <p>The file containing all EUCAST rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The <code>AMR</code> package contains the full microbial taxonomy updated until 11 December, 2022, see <a href="microorganisms.html">microorganisms</a>.</p><div class="section">
 <h3 id="custom-rules">Custom Rules<a class="anchor" aria-label="anchor" href="#custom-rules"></a></h3>
 
@@ -268,7 +268,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
     
 
-<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
 
     <div class="section level2">
@@ -304,10 +304,10 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="co"># apply EUCAST rules: some results wil be changed</span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in eucast_rules(): not all columns with antimicrobial results are of</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'rsi'. Transform them on beforehand, with e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.rsi(CXM:AMX)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is.rsi.eligible, as.rsi)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate(across(where(is.rsi.eligible), as.rsi))</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'sir'. Transform them on beforehand, with e.g.:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(CXM:AMX)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is_sir_eligible, as.sir)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate(across(where(is_sir_eligible), as.sir))</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       mo VAN AMX COL CAZ CXM PEN FOX</span>
@@ -322,10 +322,10 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="co"># containing all details about the transformations:</span></span></span>
 <span class="r-in"><span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in eucast_rules(): not all columns with antimicrobial results are of</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'rsi'. Transform them on beforehand, with e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.rsi(CXM:AMX)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is.rsi.eligible, as.rsi)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate(across(where(is.rsi.eligible), as.rsi))</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'sir'. Transform them on beforehand, with e.g.:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(CXM:AMX)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is_sir_eligible, as.sir)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate(across(where(is_sir_eligible), as.sir))</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   row col           mo_fullname old new rule   rule_group</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 AMX Staphylococcus aureus   -   S       Breakpoints</span>

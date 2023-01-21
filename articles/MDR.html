@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -348,46 +348,46 @@ Unique: 2</p>
 <p>For another example, I will create a data set to determine multi-drug
 resistant TB:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># random_rsi() is a helper function to generate</span></span>
+<code class="sourceCode R"><span><span class="co"># random_sir() is a helper function to generate</span></span>
 <span><span class="co"># a random vector with values S, I and R</span></span>
 <span><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  rifampicin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  isoniazid <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  gatifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  ethambutol <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  pyrazinamide <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  moxifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  kanamycin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
+<span>  rifampicin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  isoniazid <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  gatifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  ethambutol <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  pyrazinamide <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  moxifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  kanamycin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Because all column names are automatically verified for valid drug
 names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  RIF <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  INH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  GAT <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  ETH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  PZA <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  MFX <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>  KAN <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
+<span>  RIF <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  INH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  GAT <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  ETH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  PZA <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  MFX <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  KAN <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_sir</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co"># 1          R         I            I          I            R            I</span></span>
-<span><span class="co"># 2          I         R            I          I            R            S</span></span>
-<span><span class="co"># 3          R         S            I          S            S            I</span></span>
-<span><span class="co"># 4          S         R            S          R            I            I</span></span>
-<span><span class="co"># 5          S         R            R          R            I            I</span></span>
-<span><span class="co"># 6          R         I            S          S            S            R</span></span>
+<span><span class="co"># 1          I         S            S          I            S            I</span></span>
+<span><span class="co"># 2          R         R            R          R            I            S</span></span>
+<span><span class="co"># 3          R         I            R          R            I            R</span></span>
+<span><span class="co"># 4          R         S            I          S            S            I</span></span>
+<span><span class="co"># 5          I         I            S          S            S            I</span></span>
+<span><span class="co"># 6          I         I            I          R            R            I</span></span>
 <span><span class="co">#   kanamycin</span></span>
-<span><span class="co"># 1         I</span></span>
-<span><span class="co"># 2         I</span></span>
-<span><span class="co"># 3         S</span></span>
-<span><span class="co"># 4         I</span></span>
+<span><span class="co"># 1         S</span></span>
+<span><span class="co"># 2         S</span></span>
+<span><span class="co"># 3         I</span></span>
+<span><span class="co"># 4         R</span></span>
 <span><span class="co"># 5         I</span></span>
-<span><span class="co"># 6         I</span></span></code></pre></div>
+<span><span class="co"># 6         S</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can
 use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -428,40 +428,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3201</td>
-<td align="right">64.02%</td>
-<td align="right">3201</td>
-<td align="right">64.02%</td>
+<td align="right">3238</td>
+<td align="right">64.76%</td>
+<td align="right">3238</td>
+<td align="right">64.76%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">981</td>
-<td align="right">19.62%</td>
-<td align="right">4182</td>
-<td align="right">83.64%</td>
+<td align="right">994</td>
+<td align="right">19.88%</td>
+<td align="right">4232</td>
+<td align="right">84.64%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">441</td>
-<td align="right">8.82%</td>
-<td align="right">4623</td>
-<td align="right">92.46%</td>
+<td align="right">425</td>
+<td align="right">8.50%</td>
+<td align="right">4657</td>
+<td align="right">93.14%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">258</td>
-<td align="right">5.16%</td>
-<td align="right">4881</td>
-<td align="right">97.62%</td>
+<td align="right">247</td>
+<td align="right">4.94%</td>
+<td align="right">4904</td>
+<td align="right">98.08%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">119</td>
-<td align="right">2.38%</td>
+<td align="right">96</td>
+<td align="right">1.92%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

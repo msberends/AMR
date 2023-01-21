@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,13 +169,13 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Interpret disk values as RSI values with <code><a href="as.rsi.html">as.rsi()</a></code>. It supports guidelines from EUCAST and CLSI.</p>
+    <p>Interpret disk values as SIR values with <code><a href="as.sir.html">as.sir()</a></code>. It supports guidelines from EUCAST and CLSI.</p>
 <p>Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return <code>NA</code>.</p>
 <p><code>NA_disk_</code> is a missing value of the new <code>disk</code> class.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="as.rsi.html">as.rsi()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="as.sir.html">as.sir()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -206,8 +206,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli  20  14  18  16</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># interpret disk values, see ?as.rsi</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="as.rsi.html">as.rsi</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="co"># interpret disk values, see ?as.sir</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="as.sir.html">as.sir</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="fu">as.disk</span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mo <span class="op">=</span> <span class="st">"Strep pneu"</span>, <span class="co"># `mo` will be coerced with as.mo()</span></span></span>
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
@@ -216,11 +216,11 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'ampicillin' (AMP) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># interpret whole data set, pretend to be all from urinary tract infections:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="as.rsi.html">as.rsi</a></span><span class="op">(</span><span class="va">df</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">df</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'AMP' (ampicillin) according</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
