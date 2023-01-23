@@ -69,26 +69,26 @@ av_from_text <- function(text,
   if (missing(type)) {
     type <- type[1L]
   }
-  
+
   meet_criteria(text)
   meet_criteria(type, allow_class = "character", has_length = 1)
   meet_criteria(collapse, has_length = 1, allow_NULL = TRUE)
   meet_criteria(translate_av, allow_NULL = FALSE) # get_translate_av() will be more informative about what's allowed
   meet_criteria(thorough_search, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-  
+
   type <- tolower(trimws2(type))
-  
+
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")
   progress <- progress_ticker(n = length(text_split_all), n_min = 5, print = info)
   on.exit(close(progress))
-  
+
   if (type %like% "(drug|ab|anti)") {
     translate_av <- get_translate_av(translate_av)
-    
+
     if (isTRUE(thorough_search) ||
-        (isTRUE(is.null(thorough_search)) && max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
+      (isTRUE(is.null(thorough_search)) && max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
       text_split_all <- text_split_all[nchar(text_split_all) >= 4 & grepl("[a-z]+", text_split_all)]
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
@@ -125,9 +125,9 @@ av_from_text <- function(text,
         )
       })
     }
-    
+
     close(progress)
-    
+
     result <- lapply(result, function(out) {
       out <- out[!is.na(out)]
       if (length(out) == 0) {
@@ -149,7 +149,7 @@ av_from_text <- function(text,
       text_split <- as.double(gsub("[^0-9.]", "", text_split))
       # minimal 100 units/mg and no years that unlikely doses
       text_split <- text_split[text_split >= 100 & !text_split %in% c(1951:1999, 2001:2049)]
-      
+
       if (length(text_split) > 0) {
         text_split
       } else {
@@ -170,7 +170,7 @@ av_from_text <- function(text,
   } else {
     stop_("`type` must be either 'drug', 'dose' or 'administration'")
   }
-  
+
   # collapse text if needed
   if (!is.null(collapse)) {
     result <- vapply(FUN.VALUE = character(1), result, function(x) {
@@ -181,6 +181,6 @@ av_from_text <- function(text,
       }
     })
   }
-  
+
   result
 }

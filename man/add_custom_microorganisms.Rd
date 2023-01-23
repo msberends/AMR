@@ -58,8 +58,9 @@ mo_name("Enterobacter asburiae/cloacae")
 # now add a custom entry - it will be considered by as.mo() and
 # all mo_*() functions
 add_custom_microorganisms(
-  data.frame(genus = "Enterobacter",
-             species = "asburiae/cloacae"
+  data.frame(
+    genus = "Enterobacter",
+    species = "asburiae/cloacae"
   )
 )
 
@@ -81,8 +82,10 @@ mo_info("Enterobacter asburiae/cloacae")
 
 # the function tries to be forgiving:
 add_custom_microorganisms(
-  data.frame(GENUS = "BACTEROIDES / PARABACTEROIDES SLASHLINE",
-             SPECIES = "SPECIES")
+  data.frame(
+    GENUS = "BACTEROIDES / PARABACTEROIDES SLASHLINE",
+    SPECIES = "SPECIES"
+  )
 )
 mo_name("BACTEROIDES / PARABACTEROIDES")
 mo_rank("BACTEROIDES / PARABACTEROIDES")
@@ -93,9 +96,11 @@ mo_family("Bacteroides/Parabacteroides")
 
 # for groups and complexes, set them as species or subspecies:
 add_custom_microorganisms(
-  data.frame(genus = "Citrobacter", 
-             species = c("freundii", "braakii complex"),
-             subspecies = c("complex", ""))
+  data.frame(
+    genus = "Citrobacter",
+    species = c("freundii", "braakii complex"),
+    subspecies = c("complex", "")
+  )
 )
 mo_name(c("C. freundii complex", "C. braakii complex"))
 mo_species(c("C. freundii complex", "C. braakii complex"))

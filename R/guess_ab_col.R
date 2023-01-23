@@ -274,14 +274,15 @@ get_column_abx <- function(x,
       }
       if (names(out[i]) %in% names(duplicates)) {
         already_set_as <- out[unname(out) == unname(out[i])][1L]
-        warning_(paste0(
-          "Column '", font_bold(out[i]), "' will not be used for ",
-          names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
-          ", as it is already set for ",
-          names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
-        ),
-        add_fn = font_red,
-        immediate = verbose
+        warning_(
+          paste0(
+            "Column '", font_bold(out[i]), "' will not be used for ",
+            names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
+            ", as it is already set for ",
+            names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
+          ),
+          add_fn = font_red,
+          immediate = verbose
         )
       }
     }
@@ -307,11 +308,12 @@ get_column_abx <- function(x,
     if (isTRUE(info) && !all(soft_dependencies %in% names(out))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(out)]
-      missing_msg <- vector_and(paste0(
-        ab_name(missing, tolower = TRUE, language = NULL),
-        " (", font_bold(missing, collapse = NULL), ")"
-      ),
-      quotes = FALSE
+      missing_msg <- vector_and(
+        paste0(
+          ab_name(missing, tolower = TRUE, language = NULL),
+          " (", font_bold(missing, collapse = NULL), ")"
+        ),
+        quotes = FALSE
       )
       message_(
         "Reliability would be improved if these antimicrobial results would be available too: ",
@@ -355,10 +357,11 @@ generate_warning_abs_missing <- function(missing, any = FALSE) {
   } else {
     any_txt <- c("", "are")
   }
-  warning_(paste0(
-    "Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
-    vector_and(missing, quotes = FALSE)
-  ),
-  immediate = TRUE
+  warning_(
+    paste0(
+      "Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
+      vector_and(missing, quotes = FALSE)
+    ),
+    immediate = TRUE
   )
 }

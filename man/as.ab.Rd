@@ -91,7 +91,6 @@ ab_name("eryt")
 
 \donttest{
 if (require("dplyr")) {
-
   # you can quickly rename 'sir' columns using set_ab_names() with dplyr:
   example_isolates \%>\%
     set_ab_names(where(is.sir), property = "atc")

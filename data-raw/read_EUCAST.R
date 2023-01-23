@@ -66,33 +66,36 @@ read_EUCAST <- function(sheet, file, guideline_name) {
 
   # in the info header in the Excel file, EUCAST mentions which genera are targeted
   if (sheet %like% "anaerob.*Gram.*posi") {
-    sheet <- paste0(c(
-      "Actinomyces", "Bifidobacterium", "Clostridioides",
-      "Clostridium", "Cutibacterium", "Eggerthella",
-      "Eubacterium", "Lactobacillus", "Propionibacterium",
-      "Staphylococcus saccharolyticus"
-    ),
-    collapse = "_"
+    sheet <- paste0(
+      c(
+        "Actinomyces", "Bifidobacterium", "Clostridioides",
+        "Clostridium", "Cutibacterium", "Eggerthella",
+        "Eubacterium", "Lactobacillus", "Propionibacterium",
+        "Staphylococcus saccharolyticus"
+      ),
+      collapse = "_"
     )
   } else if (sheet %like% "anaerob.*Gram.*nega") {
-    sheet <- paste0(c(
-      "Bacteroides",
-      "Bilophila",
-      "Fusobacterium",
-      "Mobiluncus",
-      "Parabacteroides",
-      "Porphyromonas",
-      "Prevotella"
-    ),
-    collapse = "_"
+    sheet <- paste0(
+      c(
+        "Bacteroides",
+        "Bilophila",
+        "Fusobacterium",
+        "Mobiluncus",
+        "Parabacteroides",
+        "Porphyromonas",
+        "Prevotella"
+      ),
+      collapse = "_"
     )
   } else if (sheet == "Streptococcus A,B,C,G") {
-    sheet <- paste0(microorganisms %>%
-      filter(genus == "Streptococcus") %>%
-      mutate(lancefield = mo_name(mo, Lancefield = TRUE)) %>%
-      filter(lancefield %like% "^Streptococcus group") %>%
-      pull(fullname),
-    collapse = "_"
+    sheet <- paste0(
+      microorganisms %>%
+        filter(genus == "Streptococcus") %>%
+        mutate(lancefield = mo_name(mo, Lancefield = TRUE)) %>%
+        filter(lancefield %like% "^Streptococcus group") %>%
+        pull(fullname),
+      collapse = "_"
     )
   } else if (sheet %like% "PK.*PD") {
     sheet <- "UNKNOWN"

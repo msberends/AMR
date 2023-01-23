@@ -35,7 +35,8 @@
 #' @rdname AMR-deprecated
 #' @export
 NA_rsi_ <- set_clean_class(factor(NA_character_, levels = c("S", "I", "R"), ordered = TRUE),
-                           new_class = c("rsi", "ordered", "factor"))
+  new_class = c("rsi", "ordered", "factor")
+)
 #' @rdname AMR-deprecated
 #' @export
 as.rsi <- function(x, ...) {
@@ -197,14 +198,18 @@ deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL) {
     env <- paste0("deprecated_", old)
     if (!env %in% names(AMR_env)) {
       AMR_env[[paste0("deprecated_", old)]] <- 1
-      warning_(ifelse(is.null(new), 
-                      paste0("The `", old, "()` function is no longer in use"),
-                      paste0("The `", old, "()` function has been replaced with `", new, "()`")),
-               ", see `?AMR-deprecated`.",
-               ifelse(!is.null(extra_msg),
-                      paste0(" ", extra_msg),
-                      ""),
-               "\nThis warning will be shown once per session.")
+      warning_(
+        ifelse(is.null(new),
+          paste0("The `", old, "()` function is no longer in use"),
+          paste0("The `", old, "()` function has been replaced with `", new, "()`")
+        ),
+        ", see `?AMR-deprecated`.",
+        ifelse(!is.null(extra_msg),
+          paste0(" ", extra_msg),
+          ""
+        ),
+        "\nThis warning will be shown once per session."
+      )
     }
   }
 }

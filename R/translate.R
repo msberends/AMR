@@ -141,10 +141,11 @@ reset_AMR_locale <- function() {
 #' @export
 translate_AMR <- function(x, language = get_AMR_locale()) {
   translate_into_language(x,
-                          language = language,
-                          only_unknown = FALSE,
-                          only_affect_ab_names = FALSE,
-                          only_affect_mo_names = FALSE)
+    language = language,
+    only_unknown = FALSE,
+    only_affect_ab_names = FALSE,
+    only_affect_mo_names = FALSE
+  )
 }
 
 
@@ -170,14 +171,15 @@ find_language <- function(language, fallback = TRUE) {
   language <- Map(LANGUAGES_SUPPORTED_NAMES,
     LANGUAGES_SUPPORTED,
     f = function(l, n, check = language) {
-      grepl(paste0(
-        "^(", l[1], "|", l[2], "|",
-        n, "(_|$)|", toupper(n), "(_|$))"
-      ),
-      check,
-      ignore.case = TRUE,
-      perl = TRUE,
-      useBytes = FALSE
+      grepl(
+        paste0(
+          "^(", l[1], "|", l[2], "|",
+          n, "(_|$)|", toupper(n), "(_|$))"
+        ),
+        check,
+        ignore.case = TRUE,
+        perl = TRUE,
+        useBytes = FALSE
       )
     },
     USE.NAMES = TRUE
@@ -196,7 +198,6 @@ translate_into_language <- function(from,
                                     only_unknown = FALSE,
                                     only_affect_ab_names = FALSE,
                                     only_affect_mo_names = FALSE) {
-
   # get ISO-639-1 of language
   lang <- validate_language(language)
   if (lang == "en") {
@@ -260,10 +261,10 @@ translate_into_language <- function(from,
 
   # force UTF-8 for diacritics
   from_unique_translated <- enc2utf8(from_unique_translated)
-  
+
   # a kind of left join to get all results back
   out <- from_unique_translated[match(from.bak, from_unique)]
-  
+
   if (!identical(from.bak, out) && get_AMR_locale() == lang && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
     message(word_wrap(
       "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
@@ -271,6 +272,6 @@ translate_into_language <- function(from,
       add_fn = list(font_blue), as_note = TRUE
     ))
   }
-  
+
   out
 }

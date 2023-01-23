@@ -125,7 +125,7 @@ your_data \%>\% mutate(across(where(is.disk), as.sir))
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.sir(your_data)}.
 }
 
-For points 2, 3 and 4: Use \code{\link[=sir_interpretation_history]{sir_interpretation_history()}} to retrieve a \link{data.frame} (or \link[tibble:tibble]{tibble} if the \code{tibble} package is installed) with all results of the last \code{\link[=as.sir]{as.sir()}} call.
+\strong{For points 2, 3 and 4: Use \code{\link[=sir_interpretation_history]{sir_interpretation_history()}}} to retrieve a \link{data.frame} (or \link[tibble:tibble]{tibble} if the \code{tibble} package is installed) with all results of the last \code{\link[=as.sir]{as.sir()}} call.
 }
 
 \subsection{Supported Guidelines}{

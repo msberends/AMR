@@ -101,46 +101,48 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   MO_staph <- AMR::microorganisms
   MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
   if (type == "CoNS") {
-    MO_staph[which(MO_staph$species %in% c(
-      "coagulase-negative", "argensis", "arlettae",
-      "auricularis", "borealis", "caeli", "capitis", "caprae",
-      "carnosus", "casei", "caseolyticus", "chromogenes", "cohnii", "condimenti",
-      "croceilyticus",
-      "debuckii", "devriesei", "edaphicus", "epidermidis",
-      "equorum", "felis", "fleurettii", "gallinarum",
-      "haemolyticus", "hominis", "jettensis", "kloosii",
-      "lentus", "lugdunensis", "massiliensis", "microti",
-      "muscae", "nepalensis", "pasteuri", "petrasii",
-      "pettenkoferi", "piscifermentans", "pragensis", "pseudoxylosus",
-      "pulvereri", "rostri", "saccharolyticus", "saprophyticus",
-      "sciuri", "simulans", "stepanovicii", "succinus",
-      "ureilyticus",
-      "vitulinus", "vitulus", "warneri", "xylosus",
-      "caledonicus", "canis",
-      "durrellii", "lloydii",
-      "ratti", "taiwanensis", "veratri", "urealyticus"
-    ) |
-      # old, now renamed to S. schleiferi (but still as synonym in our data of course):
-      (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
-    "mo",
-    drop = TRUE
+    MO_staph[
+      which(MO_staph$species %in% c(
+        "coagulase-negative", "argensis", "arlettae",
+        "auricularis", "borealis", "caeli", "capitis", "caprae",
+        "carnosus", "casei", "caseolyticus", "chromogenes", "cohnii", "condimenti",
+        "croceilyticus",
+        "debuckii", "devriesei", "edaphicus", "epidermidis",
+        "equorum", "felis", "fleurettii", "gallinarum",
+        "haemolyticus", "hominis", "jettensis", "kloosii",
+        "lentus", "lugdunensis", "massiliensis", "microti",
+        "muscae", "nepalensis", "pasteuri", "petrasii",
+        "pettenkoferi", "piscifermentans", "pragensis", "pseudoxylosus",
+        "pulvereri", "rostri", "saccharolyticus", "saprophyticus",
+        "sciuri", "simulans", "stepanovicii", "succinus",
+        "ureilyticus",
+        "vitulinus", "vitulus", "warneri", "xylosus",
+        "caledonicus", "canis",
+        "durrellii", "lloydii",
+        "ratti", "taiwanensis", "veratri", "urealyticus"
+      ) |
+        # old, now renamed to S. schleiferi (but still as synonym in our data of course):
+        (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
+      "mo",
+      drop = TRUE
     ]
   } else if (type == "CoPS") {
-    MO_staph[which(MO_staph$species %in% c(
-      "coagulase-positive", "coagulans",
-      "agnetis", "argenteus",
-      "cornubiensis",
-      "delphini", "lutrae",
-      "hyicus", "intermedius",
-      "pseudintermedius", "pseudointermedius",
-      "schweitzeri", "simiae",
-      "roterodami",
-      "singaporensis"
-    ) |
-      # old, now renamed to S. coagulans (but still as synonym in our data of course):
-      (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
-    "mo",
-    drop = TRUE
+    MO_staph[
+      which(MO_staph$species %in% c(
+        "coagulase-positive", "coagulans",
+        "agnetis", "argenteus",
+        "cornubiensis",
+        "delphini", "lutrae",
+        "hyicus", "intermedius",
+        "pseudintermedius", "pseudointermedius",
+        "schweitzeri", "simiae",
+        "roterodami",
+        "singaporensis"
+      ) |
+        # old, now renamed to S. coagulans (but still as synonym in our data of course):
+        (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
+      "mo",
+      drop = TRUE
     ]
   }
 }
@@ -254,14 +256,15 @@ create_AB_AV_lookup <- function(df) {
   }
   new_df$generalised_loinc <- lapply(new_df$loinc, generalise_antibiotic_name)
   new_df$generalised_all <- unname(lapply(
-    as.list(as.data.frame(t(new_df[,
-      c(
-        colnames(new_df)[colnames(new_df) %in% c("ab", "av", "atc", "cid", "name")],
-        colnames(new_df)[colnames(new_df) %like% "generalised"]
-      ),
-      drop = FALSE
-    ]),
-    stringsAsFactors = FALSE
+    as.list(as.data.frame(
+      t(new_df[,
+        c(
+          colnames(new_df)[colnames(new_df) %in% c("ab", "av", "atc", "cid", "name")],
+          colnames(new_df)[colnames(new_df) %like% "generalised"]
+        ),
+        drop = FALSE
+      ]),
+      stringsAsFactors = FALSE
     )),
     function(x) {
       x <- generalise_antibiotic_name(unname(unlist(x)))
@@ -472,7 +475,7 @@ suppressMessages(devtools::document(quiet = TRUE))
 if (!"styler" %in% rownames(utils::installed.packages())) {
   message("Package 'styler' not installed!")
 } else if (interactive()) {
-  # # only when sourcing this file ourselves
+  # only when sourcing this file ourselves
   # usethis::ui_info("Styling package")
   # styler::style_pkg(
   #   style = styler::tidyverse_style,

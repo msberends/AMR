@@ -1,4 +1,3 @@
-
 license_text <- readLines("docs/LICENSE-text.html")
 license_text <- paste(license_text, collapse = "|||")
 license_text <- gsub("licen(s|c)e", "Survey", license_text, ignore.case = TRUE)

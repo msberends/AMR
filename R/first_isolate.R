@@ -144,13 +144,11 @@
 #'     filter(first_isolate())
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # short-hand version:
 #'   example_isolates %>%
 #'     filter_first_isolate(info = FALSE)
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # flag the first isolates per group:
 #'   example_isolates %>%
 #'     group_by(ward) %>%
@@ -244,18 +242,19 @@ first_isolate <- function(x = NULL,
     method <- "episode-based"
   }
   if (isTRUE(info) && message_not_thrown_before("first_isolate", "method")) {
-    message_(paste0(
-      "Determining first isolates ",
-      ifelse(method %in% c("episode-based", "phenotype-based"),
-        ifelse(is.infinite(episode_days),
-          "without a specified episode length",
-          paste("using an episode length of", episode_days, "days")
-        ),
-        ""
-      )
-    ),
-    as_note = FALSE,
-    add_fn = font_black
+    message_(
+      paste0(
+        "Determining first isolates ",
+        ifelse(method %in% c("episode-based", "phenotype-based"),
+          ifelse(is.infinite(episode_days),
+            "without a specified episode length",
+            paste("using an episode length of", episode_days, "days")
+          ),
+          ""
+        )
+      ),
+      as_note = FALSE,
+      add_fn = font_black
     )
   }
 
@@ -469,15 +468,17 @@ first_isolate <- function(x = NULL,
   x$other_pat_or_mo <- !(x$newvar_patient_id == pm_lag(x$newvar_patient_id) & x$newvar_genus_species == pm_lag(x$newvar_genus_species))
 
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
-  x$more_than_episode_ago <- unlist(lapply(split(
-    x$newvar_date,
-    x$episode_group
-  ),
-  exec_episode, # this will skip meet_criteria() in is_new_episode(), saving time
-  type = "logical",
-  episode_days = episode_days
-  ),
-  use.names = FALSE
+  x$more_than_episode_ago <- unlist(
+    lapply(
+      split(
+        x$newvar_date,
+        x$episode_group
+      ),
+      exec_episode, # this will skip meet_criteria() in is_new_episode(), saving time
+      type = "logical",
+      episode_days = episode_days
+    ),
+    use.names = FALSE
   )
 
   if (!is.null(col_keyantimicrobials)) {
@@ -606,21 +607,22 @@ first_isolate <- function(x = NULL,
     }
     # mark up number of found
     n_found <- format(n_found, big.mark = big.mark, decimal.mark = decimal.mark)
-    message_(paste0(
-      "=> Found ",
-      font_bold(paste0(
-        n_found,
-        ifelse(method == "isolate-based", "", paste0(" '", method, "'")),
-        " first isolates"
-      )),
-      " (",
-      ifelse(p_found_total != p_found_scope,
-        paste0(p_found_scope, " within scope and "),
-        ""
+    message_(
+      paste0(
+        "=> Found ",
+        font_bold(paste0(
+          n_found,
+          ifelse(method == "isolate-based", "", paste0(" '", method, "'")),
+          " first isolates"
+        )),
+        " (",
+        ifelse(p_found_total != p_found_scope,
+          paste0(p_found_scope, " within scope and "),
+          ""
+        ),
+        p_found_total, " of total where a microbial ID was available)"
       ),
-      p_found_total, " of total where a microbial ID was available)"
-    ),
-    add_fn = font_black, as_note = FALSE
+      add_fn = font_black, as_note = FALSE
     )
   }
 

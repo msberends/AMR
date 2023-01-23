@@ -34,7 +34,7 @@
 
 # test only on GitHub Actions and at using RStudio jobs - not on CRAN as tests are lengthy
 if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(e) FALSE) ||
-    identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
+  identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
   if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {

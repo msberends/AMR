@@ -87,7 +87,6 @@
 #'
 #' \donttest{
 #' if (require("dplyr")) {
-#'
 #'   # you can quickly rename 'sir' columns using set_ab_names() with dplyr:
 #'   example_isolates %>%
 #'     set_ab_names(where(is.sir), property = "atc")
@@ -338,22 +337,23 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
 
       # transform back from other languages and try again
-      x_translated <- paste(lapply(
-        strsplit(x[i], "[^A-Z0-9]"),
-        function(y) {
-          for (i in seq_len(length(y))) {
-            for (lang in LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]) {
-              y[i] <- ifelse(tolower(y[i]) %in% tolower(TRANSLATIONS[, lang, drop = TRUE]),
-                TRANSLATIONS[which(tolower(TRANSLATIONS[, lang, drop = TRUE]) == tolower(y[i]) &
-                  !isFALSE(TRANSLATIONS$fixed)), "pattern"],
-                y[i]
-              )
+      x_translated <- paste(
+        lapply(
+          strsplit(x[i], "[^A-Z0-9]"),
+          function(y) {
+            for (i in seq_len(length(y))) {
+              for (lang in LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]) {
+                y[i] <- ifelse(tolower(y[i]) %in% tolower(TRANSLATIONS[, lang, drop = TRUE]),
+                  TRANSLATIONS[which(tolower(TRANSLATIONS[, lang, drop = TRUE]) == tolower(y[i]) &
+                    !isFALSE(TRANSLATIONS$fixed)), "pattern"],
+                  y[i]
+                )
+              }
             }
+            generalise_antibiotic_name(y)
           }
-          generalise_antibiotic_name(y)
-        }
-      )[[1]],
-      collapse = "/"
+        )[[1]],
+        collapse = "/"
       )
       x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
       if (!is.na(x_translated_guess)) {
@@ -362,20 +362,21 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
 
       # now also try to coerce brandname combinations like "Amoxy/clavulanic acid"
-      x_translated <- paste(lapply(
-        strsplit(x_translated, "[^A-Z0-9 ]"),
-        function(y) {
-          for (i in seq_len(length(y))) {
-            y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial_search = FALSE))
-            y[i] <- ifelse(!is.na(y_name),
-              y_name,
-              y[i]
-            )
+      x_translated <- paste(
+        lapply(
+          strsplit(x_translated, "[^A-Z0-9 ]"),
+          function(y) {
+            for (i in seq_len(length(y))) {
+              y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial_search = FALSE))
+              y[i] <- ifelse(!is.na(y_name),
+                y_name,
+                y[i]
+              )
+            }
+            generalise_antibiotic_name(y)
           }
-          generalise_antibiotic_name(y)
-        }
-      )[[1]],
-      collapse = "/"
+        )[[1]],
+        collapse = "/"
       )
       x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
       if (!is.na(x_translated_guess)) {
@@ -513,8 +514,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     )
   }
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
-  x_unknown <- c(x_unknown,
-                 AMR_env$ab_previously_coerced$x_bak[which(AMR_env$ab_previously_coerced$x %in% x & is.na(AMR_env$ab_previously_coerced$ab))])
+  x_unknown <- c(
+    x_unknown,
+    AMR_env$ab_previously_coerced$x_bak[which(AMR_env$ab_previously_coerced$x %in% x & is.na(AMR_env$ab_previously_coerced$ab))]
+  )
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
       "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
@@ -660,9 +663,9 @@ get_translate_ab <- function(translate_ab) {
   } else {
     translate_ab <- tolower(translate_ab)
     stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
-               "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
-               "or TRUE (equals 'name') or FALSE to not translate at all.",
-               call = FALSE
+      "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
+      "or TRUE (equals 'name') or FALSE to not translate at all.",
+      call = FALSE
     )
     translate_ab
   }

@@ -142,14 +142,15 @@ abx2 <- bind_rows(abx_atc1, abx_atc2)
 rm(abx_atc1)
 rm(abx_atc2)
 
-abx2$ab[is.na(abx2$ab)] <- toupper(abbreviate(gsub(
-  "[/0-9-]",
-  " ",
-  abx2$name[is.na(abx2$ab)]
-),
-minlength = 3,
-method = "left.kept",
-strict = TRUE
+abx2$ab[is.na(abx2$ab)] <- toupper(abbreviate(
+  gsub(
+    "[/0-9-]",
+    " ",
+    abx2$name[is.na(abx2$ab)]
+  ),
+  minlength = 3,
+  method = "left.kept",
+  strict = TRUE
 ))
 
 n_distinct(abx2$ab)
@@ -197,24 +198,26 @@ get_CID <- function(ab) {
     p$tick()
 
     CID[i] <- tryCatch(
-      data.table::fread(paste0(
-        "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
-        URLencode(ab[i], reserved = TRUE),
-        "/cids/TXT?name_type=complete"
-      ),
-      showProgress = FALSE
+      data.table::fread(
+        paste0(
+          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
+          URLencode(ab[i], reserved = TRUE),
+          "/cids/TXT?name_type=complete"
+        ),
+        showProgress = FALSE
       )[[1]][1],
       error = function(e) NA_integer_
     )
     if (is.na(CID[i])) {
       # try with removing the text in brackets
       CID[i] <- tryCatch(
-        data.table::fread(paste0(
-          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
-          URLencode(trimws(gsub("[(].*[)]", "", ab[i])), reserved = TRUE),
-          "/cids/TXT?name_type=complete"
-        ),
-        showProgress = FALSE
+        data.table::fread(
+          paste0(
+            "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
+            URLencode(trimws(gsub("[(].*[)]", "", ab[i])), reserved = TRUE),
+            "/cids/TXT?name_type=complete"
+          ),
+          showProgress = FALSE
         )[[1]][1],
         error = function(e) NA_integer_
       )
@@ -223,12 +226,13 @@ get_CID <- function(ab) {
       # try match on word and take the lowest CID value (sorted)
       ab[i] <- gsub("[^a-z0-9]+", " ", ab[i], ignore.case = TRUE)
       CID[i] <- tryCatch(
-        data.table::fread(paste0(
-          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
-          URLencode(ab[i], reserved = TRUE),
-          "/cids/TXT?name_type=word"
-        ),
-        showProgress = FALSE
+        data.table::fread(
+          paste0(
+            "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
+            URLencode(ab[i], reserved = TRUE),
+            "/cids/TXT?name_type=word"
+          ),
+          showProgress = FALSE
         )[[1]][1],
         error = function(e) NA_integer_
       )
@@ -260,13 +264,14 @@ get_synonyms <- function(CID, clean = TRUE) {
     }
 
     synonyms_txt <- tryCatch(
-      data.table::fread(paste0(
-        "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastidentity/cid/",
-        CID[i],
-        "/synonyms/TXT"
-      ),
-      sep = "\n",
-      showProgress = FALSE
+      data.table::fread(
+        paste0(
+          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastidentity/cid/",
+          CID[i],
+          "/synonyms/TXT"
+        ),
+        sep = "\n",
+        showProgress = FALSE
       )[[1]],
       error = function(e) NA_character_
     )

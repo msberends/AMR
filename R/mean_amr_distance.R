@@ -49,13 +49,13 @@
 #' sir <- random_sir(10)
 #' sir
 #' mean_amr_distance(sir)
-#' 
+#'
 #' mic <- random_mic(10)
 #' mic
 #' mean_amr_distance(mic)
 #' # equal to the Z-score of their log2:
 #' (log2(mic) - mean(log2(mic))) / sd(log2(mic))
-#' 
+#'
 #' disk <- random_disk(10)
 #' disk
 #' mean_amr_distance(disk)
@@ -143,7 +143,7 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
   df_classes <- colnames(df)[vapply(FUN.VALUE = logical(1), df, function(x) is.disk(x) | is.mic(x) | is.disk(x), USE.NAMES = FALSE)]
   df_antibiotics <- unname(get_column_abx(df, info = FALSE))
   df <- df[, colnames(df)[colnames(df) %in% union(df_classes, df_antibiotics)], drop = FALSE]
-  
+
   stop_if(ncol(df) < 2,
     "data set must contain at least two variables",
     call = -2
@@ -151,7 +151,7 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
   if (message_not_thrown_before("mean_amr_distance", "groups")) {
     message_("Calculating mean AMR distance based on columns ", vector_and(colnames(df), sort = FALSE))
   }
-  
+
   res <- vapply(
     FUN.VALUE = double(nrow(df)),
     df,

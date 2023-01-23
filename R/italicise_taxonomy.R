@@ -73,41 +73,44 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
       search_strings <- gsub("[^a-zA-Z-]", "", s_split)
 
       ind_species <- search_strings != "" &
-        search_strings %in% AMR_env$MO_lookup[which(AMR_env$MO_lookup$rank %in% c(
-          "family",
-          "genus",
+        search_strings %in% AMR_env$MO_lookup[
+          which(AMR_env$MO_lookup$rank %in% c(
+            "family",
+            "genus",
+            "species",
+            "subspecies",
+            "infraspecies",
+            "subsp."
+          )),
           "species",
-          "subspecies",
-          "infraspecies",
-          "subsp."
-        )),
-        "species",
-        drop = TRUE
+          drop = TRUE
         ]
 
       ind_fullname <- search_strings != "" &
         search_strings %in% c(
-          AMR_env$MO_lookup[which(AMR_env$MO_lookup$rank %in% c(
-            "family",
-            "genus",
-            "species",
-            "subspecies",
-            "infraspecies",
-            "subsp."
-          )),
-          "fullname",
-          drop = TRUE
+          AMR_env$MO_lookup[
+            which(AMR_env$MO_lookup$rank %in% c(
+              "family",
+              "genus",
+              "species",
+              "subspecies",
+              "infraspecies",
+              "subsp."
+            )),
+            "fullname",
+            drop = TRUE
           ],
-          AMR_env$MO_lookup[which(AMR_env$MO_lookup$rank %in% c(
-            "family",
-            "genus",
-            "species",
+          AMR_env$MO_lookup[
+            which(AMR_env$MO_lookup$rank %in% c(
+              "family",
+              "genus",
+              "species",
+              "subspecies",
+              "infraspecies",
+              "subsp."
+            )),
             "subspecies",
-            "infraspecies",
-            "subsp."
-          )),
-          "subspecies",
-          drop = TRUE
+            drop = TRUE
           ]
         )
 

@@ -173,7 +173,7 @@ dosage_new <- bind_rows(
   as.data.frame(stringsAsFactors = FALSE)
 rownames(dosage_new) <- NULL
 
-dosage <- bind_rows(dosage_new, AMR::dosage) %>% 
+dosage <- bind_rows(dosage_new, AMR::dosage) %>%
   dataset_UTF8_to_ASCII()
 
 usethis::use_data(dosage, internal = FALSE, overwrite = TRUE, version = 2)

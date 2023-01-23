@@ -83,11 +83,12 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
   # add decimals
   if (exact == TRUE) {
     # get dates of `x` when `x` would have the year of `reference`
-    x_in_reference_year <- as.POSIXlt(paste0(
-      format(as.Date(reference), "%Y"),
-      format(as.Date(x), "-%m-%d")
-    ),
-    format = "%Y-%m-%d"
+    x_in_reference_year <- as.POSIXlt(
+      paste0(
+        format(as.Date(reference), "%Y"),
+        format(as.Date(x), "-%m-%d")
+      ),
+      format = "%Y-%m-%d"
     )
     # get differences in days
     n_days_x_rest <- as.double(difftime(as.Date(reference),

@@ -84,7 +84,7 @@ av_name <- function(x, language = get_AMR_locale(), tolower = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(tolower, allow_class = "logical", has_length = 1)
-  
+
   x <- translate_into_language(av_validate(x = x, property = "name", ...), language = language, only_affect_ab_names = TRUE)
   if (tolower == TRUE) {
     # use perl to only transform the first character
@@ -155,11 +155,11 @@ av_loinc <- function(x, ...) {
 av_ddd <- function(x, administration = "oral", ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
-  
+
   x <- as.av(x, ...)
   ddd_prop <- paste0(administration, "_ddd")
   out <- av_validate(x = x, property = ddd_prop)
-  
+
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
       "in `av_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
@@ -175,11 +175,11 @@ av_ddd <- function(x, administration = "oral", ...) {
 av_ddd_units <- function(x, administration = "oral", ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
-  
+
   x <- as.av(x, ...)
   ddd_prop <- paste0(administration, "_units")
   out <- av_validate(x = x, property = ddd_prop)
-  
+
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
       "in `av_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
@@ -195,7 +195,7 @@ av_ddd_units <- function(x, administration = "oral", ...) {
 av_info <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
-  
+
   x <- as.av(x, ...)
   list(
     av = as.character(x),
@@ -224,18 +224,18 @@ av_info <- function(x, language = get_AMR_locale(), ...) {
 av_url <- function(x, open = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(open, allow_class = "logical", has_length = 1)
-  
+
   av <- as.av(x = x, ...)
   atcs <- av_atc(av, only_first = TRUE)
   u <- paste0("https://www.whocc.no/atc_ddd_index/?code=", atcs, "&showdescription=no")
   u[is.na(atcs)] <- NA_character_
   names(u) <- av_name(av)
-  
+
   NAs <- av_name(av, tolower = TRUE, language = NULL)[!is.na(av) & is.na(atcs)]
   if (length(NAs) > 0) {
     warning_("in `av_url()`: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
-  
+
   if (open == TRUE) {
     if (length(u) > 1 && !is.na(u[1L])) {
       warning_("in `av_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
@@ -264,9 +264,9 @@ av_validate <- function(x, property, ...) {
     # try to catch an error when inputting an invalid argument
     # so the 'call.' can be set to FALSE
     tryCatch(x[1L] %in% AMR_env$AV_lookup[1, property, drop = TRUE],
-             error = function(e) stop(e$message, call. = FALSE)
+      error = function(e) stop(e$message, call. = FALSE)
     )
-    
+
     if (!all(x %in% AMR_env$AV_lookup[, property, drop = TRUE])) {
       x <- as.av(x, ...)
       if (all(is.na(x)) && is.list(AMR_env$AV_lookup[, property, drop = TRUE])) {
@@ -276,7 +276,7 @@ av_validate <- function(x, property, ...) {
       }
     }
   }
-  
+
   if (property == "av") {
     return(set_clean_class(x, new_class = c("av", "character")))
   } else if (property == "cid") {

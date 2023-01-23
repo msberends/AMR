@@ -37,10 +37,10 @@
 #    CSV file (~12,5 MB) as "taxonomy.csv". Their API unfortunately does
 #    not include the full taxonomy and is currently (2022) pretty worthless.
 # 3. For data about human pathogens, we use Bartlett et al. (2022),
-#    https://doi.org/10.1099/mic.0.001269. Their latest supplementary material 
+#    https://doi.org/10.1099/mic.0.001269. Their latest supplementary material
 #    can be found here: https://github.com/padpadpadpad/bartlett_et_al_2022_human_pathogens.
-#.   Download their latest xlsx file in the `data` folder and save it to our
-#.   `data-raw` folder.
+# .   Download their latest xlsx file in the `data` folder and save it to our
+# .   `data-raw` folder.
 # 4. Set this folder_location to the path where these two files are:
 folder_location <- "~/Downloads/backbone/"
 file_gbif <- paste0(folder_location, "Taxon.tsv")
@@ -65,7 +65,7 @@ devtools::load_all(".") # load AMR package
 
 get_author_year <- function(ref) {
   # Only keep first author, e.g. transform 'Smith, Jones, 2011' to 'Smith et al., 2011'
-  
+
   authors2 <- iconv(ref, from = "UTF-8", to = "ASCII//TRANSLIT")
   authors2 <- gsub(" ?\\(Approved Lists [0-9]+\\) ?", " () ", authors2)
   authors2 <- gsub(" [)(]+ $", "", authors2)
@@ -73,21 +73,21 @@ get_author_year <- function(ref) {
   authors2 <- trimws(gsub("^[(](.*)[)]$", "\\1", authors2))
   # only take part after brackets if there's a name
   authors2 <- ifelse(grepl(".*[)] [a-zA-Z]+.*", authors2),
-                     gsub(".*[)] (.*)", "\\1", authors2),
-                     authors2
+    gsub(".*[)] (.*)", "\\1", authors2),
+    authors2
   )
   # replace parentheses with emend. to get the latest authors
   authors2 <- gsub("(", " emend. ", authors2, fixed = TRUE)
   authors2 <- gsub(")", "", authors2, fixed = TRUE)
   authors2 <- gsub(" +", " ", authors2)
   authors2 <- trimws(authors2)
-  
+
   # get year from last 4 digits
   lastyear <- as.integer(gsub(".*([0-9]{4})$", "\\1", authors2))
   # can never be later than now
   lastyear <- ifelse(lastyear > as.integer(format(Sys.Date(), "%Y")),
-                     NA,
-                     lastyear
+    NA,
+    lastyear
   )
   # get authors without last year
   authors <- gsub("(.*)[0-9]{4}$", "\\1", authors2)
@@ -119,8 +119,8 @@ get_author_year <- function(ref) {
   authors[nchar(authors) <= 3] <- ""
   # combine author and year if year is available
   ref <- ifelse(!is.na(lastyear),
-                paste0(authors, ", ", lastyear),
-                authors
+    paste0(authors, ", ", lastyear),
+    authors
   )
   # fix beginning and ending
   ref <- gsub(", $", "", ref)
@@ -128,7 +128,7 @@ get_author_year <- function(ref) {
   ref <- gsub("^(emend|et al.,?)", "", ref)
   ref <- trimws(ref)
   ref <- gsub("'", "", ref)
-  
+
   # a lot start with a lowercase character - fix that
   ref[!grepl("^d[A-Z]", ref)] <- gsub("^([a-z])", "\\U\\1", ref[!grepl("^d[A-Z]", ref)], perl = TRUE)
   # specific one for the French that are named dOrbigny
@@ -222,9 +222,9 @@ include_fungal_orders <- c(
 # get latest taxonomic names of these fungal orders
 include_fungal_orders_ids <- taxonomy_gbif.bak %>%
   filter(order %in% include_fungal_orders)
-include_fungal_orders <- taxonomy_gbif.bak %>% 
-  filter(taxonID %in% c(include_fungal_orders_ids$taxonID, include_fungal_orders_ids$acceptedNameUsageID)) %>% 
-  distinct(order) %>% 
+include_fungal_orders <- taxonomy_gbif.bak %>%
+  filter(taxonID %in% c(include_fungal_orders_ids$taxonID, include_fungal_orders_ids$acceptedNameUsageID)) %>%
+  distinct(order) %>%
   pull(order)
 
 # check some columns to validate below filters
@@ -361,7 +361,7 @@ for (page in LETTERS) {
     names <- names[ranks != "species"]
     ranks <- ranks[ranks != "species"]
     ranks[ranks == "domain"] <- "kingdom"
-    
+
     df <- names %>%
       tibble() %>%
       t() %>%
@@ -369,7 +369,7 @@ for (page in LETTERS) {
       setNames(ranks) %>%
       # no candidates please
       filter(genus %unlike% "^(Candidatus|\\[)")
-    
+
     taxonomy_lpsn_missing <- taxonomy_lpsn_missing %>%
       bind_rows(df)
   }
@@ -491,14 +491,14 @@ saveRDS(taxonomy_lpsn, "data-raw/taxonomy_lpsn.rds", version = 2)
 taxonomy_gbif <- taxonomy_gbif %>%
   # clean NAs and add fullname
   mutate(across(kingdom:subspecies, function(x) ifelse(is.na(x), "", x)),
-         fullname = trimws(case_when(
-           rank == "family" ~ family,
-           rank == "order" ~ order,
-           rank == "class" ~ class,
-           rank == "phylum" ~ phylum,
-           rank == "kingdom" ~ kingdom,
-           TRUE ~ paste(genus, species, subspecies)
-         )), .before = 1
+    fullname = trimws(case_when(
+      rank == "family" ~ family,
+      rank == "order" ~ order,
+      rank == "class" ~ class,
+      rank == "phylum" ~ phylum,
+      rank == "kingdom" ~ kingdom,
+      TRUE ~ paste(genus, species, subspecies)
+    )), .before = 1
   ) %>%
   # keep only one GBIF taxon ID per full name
   arrange(fullname, gbif) %>%
@@ -507,14 +507,14 @@ taxonomy_gbif <- taxonomy_gbif %>%
 taxonomy_lpsn <- taxonomy_lpsn %>%
   # clean NAs and add fullname
   mutate(across(kingdom:subspecies, function(x) ifelse(is.na(x), "", x)),
-         fullname = trimws(case_when(
-           rank == "family" ~ family,
-           rank == "order" ~ order,
-           rank == "class" ~ class,
-           rank == "phylum" ~ phylum,
-           rank == "kingdom" ~ kingdom,
-           TRUE ~ paste(genus, species, subspecies)
-         )), .before = 1
+    fullname = trimws(case_when(
+      rank == "family" ~ family,
+      rank == "order" ~ order,
+      rank == "class" ~ class,
+      rank == "phylum" ~ phylum,
+      rank == "kingdom" ~ kingdom,
+      TRUE ~ paste(genus, species, subspecies)
+    )), .before = 1
   ) %>%
   # keep only one LPSN record ID per full name
   arrange(fullname, lpsn) %>%
@@ -536,23 +536,25 @@ taxonomy_lpsn$lpsn_parent[taxonomy_lpsn$rank == "subspecies"] <- taxonomy_lpsn$l
 taxonomy <- taxonomy_lpsn %>%
   # join GBIF identifiers to them
   left_join(taxonomy_gbif %>% select(kingdom, fullname, starts_with("gbif")),
-            by = c("kingdom", "fullname")
+    by = c("kingdom", "fullname")
   )
 
 # for everything else, add the GBIF data
 taxonomy <- taxonomy %>%
   bind_rows(taxonomy_gbif %>%
-              filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname))) %>%
+    filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname))) %>%
   arrange(fullname) %>%
   filter(fullname != "")
 
 # get missing entries from existing microorganisms data set
 taxonomy <- taxonomy %>%
   bind_rows(AMR::microorganisms %>%
-              select(all_of(colnames(taxonomy))) %>% 
-              filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
-                     # these will be added later:
-                     source != "manually added")) %>%
+    select(all_of(colnames(taxonomy))) %>%
+    filter(
+      !paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
+      # these will be added later:
+      source != "manually added"
+    )) %>%
   arrange(fullname) %>%
   filter(fullname != "")
 
@@ -602,9 +604,10 @@ taxonomy <- taxonomy %>%
         source = "manually added"
       ) %>%
       filter(!paste(kingdom, rank) %in% paste(taxonomy$kingdom, taxonomy$rank)) %>%
-      left_join(current_gbif %>%
-                  select(kingdom, rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
-                by = c("kingdom", "rank")
+      left_join(
+        current_gbif %>%
+          select(kingdom, rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
+        by = c("kingdom", "rank")
       ) %>%
       mutate(source = ifelse(!is.na(gbif), "GBIF", source))
   )
@@ -625,17 +628,18 @@ for (i in 2:6) {
       source = "manually added"
     ) %>%
     filter(!paste(kingdom, .[[ncol(.) - 4]], rank) %in% paste(taxonomy$kingdom, taxonomy[[i + 1]], taxonomy$rank)) %>%
-  # get GBIF identifier where available
-  left_join(current_gbif %>%
-    select(kingdom, all_of(i_name), rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
-  by = c("kingdom", "rank", i_name)
-  ) %>%
-  mutate(source = ifelse(!is.na(gbif), "GBIF", source))
+    # get GBIF identifier where available
+    left_join(
+      current_gbif %>%
+        select(kingdom, all_of(i_name), rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
+      by = c("kingdom", "rank", i_name)
+    ) %>%
+    mutate(source = ifelse(!is.na(gbif), "GBIF", source))
   message("n = ", nrow(to_add))
   if (is.null(taxonomy_all_missing)) {
     taxonomy_all_missing <- to_add
   } else {
-    taxonomy_all_missing <- taxonomy_all_missing %>% 
+    taxonomy_all_missing <- taxonomy_all_missing %>%
       bind_rows(to_add)
   }
 }
@@ -645,20 +649,24 @@ taxonomy <- taxonomy %>%
   bind_rows(taxonomy_all_missing)
 
 # fix for duplicate fullnames within a kingdom (such as Nitrospira which is the name of the genus AND its class)
-taxonomy <- taxonomy %>% 
-  mutate(rank_index = case_when(rank == "subspecies" ~ 1,
-                                rank == "species" ~ 2,
-                                rank == "genus" ~ 3,
-                                rank == "family" ~ 4,
-                                rank == "order" ~ 5,
-                                rank == "class" ~ 6,
-                                TRUE ~ 7),
-         fullname_rank = paste0(fullname, " {", rank, "}")) %>% 
-  arrange(kingdom, fullname, rank_index) %>% 
-  group_by(kingdom, fullname) %>% 
-  mutate(fullname = if_else(row_number() > 1, fullname_rank, fullname)) %>% 
-  ungroup() %>% 
-  select(-fullname_rank, -rank_index) %>% 
+taxonomy <- taxonomy %>%
+  mutate(
+    rank_index = case_when(
+      rank == "subspecies" ~ 1,
+      rank == "species" ~ 2,
+      rank == "genus" ~ 3,
+      rank == "family" ~ 4,
+      rank == "order" ~ 5,
+      rank == "class" ~ 6,
+      TRUE ~ 7
+    ),
+    fullname_rank = paste0(fullname, " {", rank, "}")
+  ) %>%
+  arrange(kingdom, fullname, rank_index) %>%
+  group_by(kingdom, fullname) %>%
+  mutate(fullname = if_else(row_number() > 1, fullname_rank, fullname)) %>%
+  ungroup() %>%
+  select(-fullname_rank, -rank_index) %>%
   arrange(fullname)
 
 # now also add missing species (requires combination with genus)
@@ -676,12 +684,13 @@ taxonomy <- taxonomy %>%
       ) %>%
       filter(!paste(kingdom, genus, species, rank) %in% paste(taxonomy$kingdom, taxonomy$genus, taxonomy$species, taxonomy$rank)) %>%
       # get GBIF identifier where available
-      left_join(current_gbif %>%
-                  select(kingdom, genus, species = specificEpithet, rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
-                by = c("kingdom", "rank", "genus", "species")
+      left_join(
+        current_gbif %>%
+          select(kingdom, genus, species = specificEpithet, rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
+        by = c("kingdom", "rank", "genus", "species")
       ) %>%
       mutate(source = ifelse(!is.na(gbif), "GBIF", source))
-    )
+  )
 
 
 # remove NAs from taxonomy again, and keep unique full names
@@ -702,7 +711,7 @@ manually_added <- AMR::microorganisms %>%
   filter(source == "manually added", !paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname)) %>%
   select(fullname:subspecies, ref, source, rank)
 
-manually_added <- manually_added %>% 
+manually_added <- manually_added %>%
   bind_rows(salmonellae)
 
 # get latest taxonomy for those entries
@@ -805,76 +814,83 @@ taxonomy <- taxonomy %>%
 pathogens <- read_excel(file_bartlett, sheet = "Tab 6 Full List")
 
 # get all established, both old and current taxonomic names
-established <- pathogens %>% 
-  filter(status == "established") %>% 
+established <- pathogens %>%
+  filter(status == "established") %>%
   mutate(fullname = paste(genus, species)) %>%
-  pull(fullname) %>% 
-  c(unlist(mo_current(.)),
-    unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
-  strsplit(" ", fixed = TRUE) %>% 
-  sapply(function(x) ifelse(length(x) == 1, x, paste(x[1], x[2]))) %>% 
-  sort() %>% 
+  pull(fullname) %>%
+  c(
+    unlist(mo_current(.)),
+    unlist(mo_synonyms(., keep_synonyms = FALSE))
+  ) %>%
+  strsplit(" ", fixed = TRUE) %>%
+  sapply(function(x) ifelse(length(x) == 1, x, paste(x[1], x[2]))) %>%
+  sort() %>%
   unique()
 
 # get all putative, both old and current taxonomic names
-putative <- pathogens %>% 
-  filter(status == "putative") %>% 
+putative <- pathogens %>%
+  filter(status == "putative") %>%
   mutate(fullname = paste(genus, species)) %>%
-  pull(fullname) %>% 
-  c(unlist(mo_current(.)),
-    unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
-  strsplit(" ", fixed = TRUE) %>% 
-  sapply(function(x) ifelse(length(x) == 1, x, paste(x[1], x[2]))) %>% 
-  sort() %>% 
+  pull(fullname) %>%
+  c(
+    unlist(mo_current(.)),
+    unlist(mo_synonyms(., keep_synonyms = FALSE))
+  ) %>%
+  strsplit(" ", fixed = TRUE) %>%
+  sapply(function(x) ifelse(length(x) == 1, x, paste(x[1], x[2]))) %>%
+  sort() %>%
   unique()
 
 established <- established[established %unlike% "unknown"]
 putative <- putative[putative %unlike% "unknown"]
 
-established_genera <- established %>% 
-  strsplit(" ", fixed = TRUE) %>% 
-  sapply(function(x) x[1]) %>% 
-  sort() %>% 
+established_genera <- established %>%
+  strsplit(" ", fixed = TRUE) %>%
+  sapply(function(x) x[1]) %>%
+  sort() %>%
   unique()
 
-putative_genera <- putative %>% 
-  strsplit(" ", fixed = TRUE) %>% 
-  sapply(function(x) x[1]) %>% 
-  sort() %>% 
+putative_genera <- putative %>%
+  strsplit(" ", fixed = TRUE) %>%
+  sapply(function(x) x[1]) %>%
+  sort() %>%
   unique()
 
-nonbacterial_genera <- AMR:::MO_PREVALENT_GENERA %>% 
-  c(unlist(mo_current(.)),
-    unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
-  strsplit(" ", fixed = TRUE) %>% 
-  sapply(function(x) x[1]) %>% 
-  sort() %>% 
+nonbacterial_genera <- AMR:::MO_PREVALENT_GENERA %>%
+  c(
+    unlist(mo_current(.)),
+    unlist(mo_synonyms(., keep_synonyms = FALSE))
+  ) %>%
+  strsplit(" ", fixed = TRUE) %>%
+  sapply(function(x) x[1]) %>%
+  sort() %>%
   unique()
 nonbacterial_genera <- nonbacterial_genera[nonbacterial_genera %unlike% "unknown"]
 
 # update prevalence based on taxonomy (following the recent and thorough work of Bartlett et al., 2022)
 # see https://doi.org/10.1099/mic.0.001269
-taxonomy <- taxonomy %>% 
+taxonomy <- taxonomy %>%
   mutate(prevalence = case_when(
     # 'established' means 'have infected at least three persons in three or more references'
     paste(genus, species) %in% established & rank %in% c("species", "subspecies") ~ 1.0,
     # other genera in the 'established' group
     genus %in% established_genera & rank == "genus" ~ 1.0,
-    
+
     # 'putative' means 'fewer than three known cases'
     paste(genus, species) %in% putative & rank %in% c("species", "subspecies") ~ 1.25,
     # other genera in the 'putative' group
     genus %in% putative_genera & rank == "genus" ~ 1.25,
-    
+
     # species and subspecies in 'established' and 'putative' groups
     genus %in% c(established_genera, putative_genera) & rank %in% c("species", "subspecies") ~ 1.5,
     # other species from a genus in either group
     genus %in% nonbacterial_genera & rank %in% c("genus", "species", "subspecies") ~ 1.5,
     # we keep track of prevalent genera too of non-bacterial species
     genus %in% AMR:::MO_PREVALENT_GENERA & kingdom != "Bacteria" & rank %in% c("genus", "species", "subspecies") ~ 1.5,
-    
+
     # all others
-    TRUE ~ 2.0))
+    TRUE ~ 2.0
+  ))
 
 table(taxonomy$prevalence, useNA = "always")
 # (a lot will be removed further below)
@@ -909,13 +925,14 @@ mo_kingdom <- taxonomy %>%
 mo_phylum <- taxonomy %>%
   filter(rank == "phylum") %>%
   distinct(kingdom, phylum) %>%
-  left_join(AMR::microorganisms %>%
-              filter(rank == "phylum") %>%
-              transmute(kingdom,
-                        phylum = fullname,
-                        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
-              ),
-            by = c("kingdom", "phylum")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank == "phylum") %>%
+      transmute(kingdom,
+        phylum = fullname,
+        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
+      ),
+    by = c("kingdom", "phylum")
   ) %>%
   group_by(kingdom) %>%
   mutate(
@@ -935,13 +952,14 @@ mo_phylum <- mo_phylum %>%
 mo_class <- taxonomy %>%
   filter(rank == "class") %>%
   distinct(kingdom, class) %>%
-  left_join(AMR::microorganisms %>%
-              filter(rank == "class") %>%
-              transmute(kingdom,
-                        class = fullname,
-                        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
-              ),
-            by = c("kingdom", "class")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank == "class") %>%
+      transmute(kingdom,
+        class = fullname,
+        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
+      ),
+    by = c("kingdom", "class")
   ) %>%
   group_by(kingdom) %>%
   mutate(
@@ -961,13 +979,14 @@ mo_class <- mo_class %>%
 mo_order <- taxonomy %>%
   filter(rank == "order") %>%
   distinct(kingdom, order) %>%
-  left_join(AMR::microorganisms %>%
-              filter(rank == "order") %>%
-              transmute(kingdom,
-                        order = fullname,
-                        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
-              ),
-            by = c("kingdom", "order")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank == "order") %>%
+      transmute(kingdom,
+        order = fullname,
+        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
+      ),
+    by = c("kingdom", "order")
   ) %>%
   group_by(kingdom) %>%
   mutate(
@@ -987,13 +1006,14 @@ mo_order <- mo_order %>%
 mo_family <- taxonomy %>%
   filter(rank == "family") %>%
   distinct(kingdom, family) %>%
-  left_join(AMR::microorganisms %>%
-              filter(rank == "family") %>%
-              transmute(kingdom,
-                        family = fullname,
-                        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
-              ),
-            by = c("kingdom", "family")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank == "family") %>%
+      transmute(kingdom,
+        family = fullname,
+        mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
+      ),
+    by = c("kingdom", "family")
   ) %>%
   group_by(kingdom) %>%
   mutate(
@@ -1014,11 +1034,12 @@ mo_genus <- taxonomy %>%
   filter(rank == "genus") %>%
   distinct(kingdom, genus) %>%
   # get available old MO codes
-  left_join(AMR::microorganisms %>%
-              filter(rank == "genus") %>%
-              transmute(mo_genus_old = gsub("^[A-Z]+_", "", as.character(mo)), kingdom, genus) %>%
-              distinct(kingdom, genus, .keep_all = TRUE),
-            by = c("kingdom", "genus")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank == "genus") %>%
+      transmute(mo_genus_old = gsub("^[A-Z]+_", "", as.character(mo)), kingdom, genus) %>%
+      distinct(kingdom, genus, .keep_all = TRUE),
+    by = c("kingdom", "genus")
   ) %>%
   distinct(kingdom, genus, .keep_all = TRUE) %>%
   # since kingdom is part of the code, genus abbreviations may be duplicated between kingdoms
@@ -1060,12 +1081,13 @@ mo_genus <- mo_genus %>%
 mo_species <- taxonomy %>%
   filter(rank == "species") %>%
   distinct(kingdom, genus, species) %>%
-  left_join(AMR::microorganisms %>%
-              filter(rank == "species") %>%
-              transmute(mo_species_old = gsub("^[A-Z]+_[A-Z]+_", "", as.character(mo)), kingdom, genus, species) %>%
-              filter(mo_species_old %unlike% "-") %>%
-              distinct(kingdom, genus, species, .keep_all = TRUE),
-            by = c("kingdom", "genus", "species")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank == "species") %>%
+      transmute(mo_species_old = gsub("^[A-Z]+_[A-Z]+_", "", as.character(mo)), kingdom, genus, species) %>%
+      filter(mo_species_old %unlike% "-") %>%
+      distinct(kingdom, genus, species, .keep_all = TRUE),
+    by = c("kingdom", "genus", "species")
   ) %>%
   distinct(kingdom, genus, species, .keep_all = TRUE) %>%
   group_by(kingdom, genus) %>%
@@ -1108,12 +1130,13 @@ mo_species <- mo_species %>%
 mo_subspecies <- taxonomy %>%
   filter(rank == "subspecies") %>%
   distinct(kingdom, genus, species, subspecies) %>%
-  left_join(AMR::microorganisms %>%
-              filter(rank %in% c("subspecies", "subsp.", "infraspecies")) %>%
-              transmute(mo_subspecies_old = gsub("^[A-Z]+_[A-Z]+_[A-Z]+_", "", as.character(mo)), kingdom, genus, species, subspecies) %>%
-              filter(mo_subspecies_old %unlike% "-") %>%
-              distinct(kingdom, genus, species, subspecies, .keep_all = TRUE),
-            by = c("kingdom", "genus", "species", "subspecies")
+  left_join(
+    AMR::microorganisms %>%
+      filter(rank %in% c("subspecies", "subsp.", "infraspecies")) %>%
+      transmute(mo_subspecies_old = gsub("^[A-Z]+_[A-Z]+_[A-Z]+_", "", as.character(mo)), kingdom, genus, species, subspecies) %>%
+      filter(mo_subspecies_old %unlike% "-") %>%
+      distinct(kingdom, genus, species, subspecies, .keep_all = TRUE),
+    by = c("kingdom", "genus", "species", "subspecies")
   ) %>%
   distinct(kingdom, genus, species, subspecies, .keep_all = TRUE) %>%
   group_by(kingdom, genus, species) %>%
@@ -1187,20 +1210,26 @@ taxonomy <- taxonomy %>%
   arrange(fullname)
 
 # now check these - e.g. Nitrospira is the name of a genus AND its class
-taxonomy %>% filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE]) %>% View()
+taxonomy %>%
+  filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE]) %>%
+  View()
 taxonomy <- taxonomy %>%
-  mutate(rank_index = case_when(kingdom == "Bacteria" ~ 1,
-                                kingdom == "Fungi" ~ 2,
-                                kingdom == "Protozoa" ~ 3,
-                                kingdom == "Archaea" ~ 4,
-                                TRUE ~ 5)) %>% 
-  arrange(fullname, rank_index) %>% 
-  distinct(fullname, .keep_all = TRUE) %>% 
-  select(-rank_index) %>% 
+  mutate(rank_index = case_when(
+    kingdom == "Bacteria" ~ 1,
+    kingdom == "Fungi" ~ 2,
+    kingdom == "Protozoa" ~ 3,
+    kingdom == "Archaea" ~ 4,
+    TRUE ~ 5
+  )) %>%
+  arrange(fullname, rank_index) %>%
+  distinct(fullname, .keep_all = TRUE) %>%
+  select(-rank_index) %>%
   filter(mo != "")
 
 # this must not exist:
-taxonomy %>% filter(mo %like% "__") %>% View()
+taxonomy %>%
+  filter(mo %like% "__") %>%
+  View()
 taxonomy <- taxonomy %>% filter(mo %unlike% "__")
 
 
@@ -1214,14 +1243,20 @@ taxonomy <- taxonomy %>% distinct(mo, .keep_all = TRUE)
 taxonomy %>% filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE])
 
 # are all GBIFs available?
-taxonomy %>% filter(!gbif_parent %in% gbif) %>% count(rank)
+taxonomy %>%
+  filter(!gbif_parent %in% gbif) %>%
+  count(rank)
 # try to find the right gbif IDs
 taxonomy$gbif_parent[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "species")] <- taxonomy$gbif[match(taxonomy$genus[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "species")], taxonomy$genus)]
 taxonomy$gbif_parent[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "class")] <- taxonomy$gbif[match(taxonomy$phylum[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "class")], taxonomy$phylum)]
-taxonomy %>% filter(!gbif_parent %in% gbif) %>% count(rank)
+taxonomy %>%
+  filter(!gbif_parent %in% gbif) %>%
+  count(rank)
 
 # are all LPSNs available?
-taxonomy %>% filter(!lpsn_parent %in% lpsn) %>% count(rank)
+taxonomy %>%
+  filter(!lpsn_parent %in% lpsn) %>%
+  count(rank)
 # make GBIF refer to newest renaming according to LPSN
 taxonomy$gbif_renamed_to[which(!is.na(taxonomy$gbif_renamed_to) & !is.na(taxonomy$lpsn_renamed_to))] <- taxonomy$gbif[match(taxonomy$lpsn_renamed_to[which(!is.na(taxonomy$gbif_renamed_to) & !is.na(taxonomy$lpsn_renamed_to))], taxonomy$lpsn)]
 
@@ -1251,21 +1286,33 @@ taxonomy <- taxonomy %>%
 
 # no ghost families, orders classes, phyla
 taxonomy <- taxonomy %>%
-  group_by(kingdom, family) %>% filter(n() > 1 |  fullname %like% "unknown" | rank == "kingdom") %>%
-  group_by(kingdom, order) %>% filter(n() > 1 |  fullname %like% "unknown" | rank == "kingdom") %>%
-  group_by(kingdom, class) %>% filter(n() > 1 |  fullname %like% "unknown" | rank == "kingdom") %>%
-  group_by(kingdom, phylum) %>% filter(n() > 1 |  fullname %like% "unknown" | rank == "kingdom") %>% 
+  group_by(kingdom, family) %>%
+  filter(n() > 1 | fullname %like% "unknown" | rank == "kingdom") %>%
+  group_by(kingdom, order) %>%
+  filter(n() > 1 | fullname %like% "unknown" | rank == "kingdom") %>%
+  group_by(kingdom, class) %>%
+  filter(n() > 1 | fullname %like% "unknown" | rank == "kingdom") %>%
+  group_by(kingdom, phylum) %>%
+  filter(n() > 1 | fullname %like% "unknown" | rank == "kingdom") %>%
   ungroup()
 
 
-message("\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = ","), " rows.\n",
-        "This was ", format(nrow(AMR::microorganisms), big.mark = ","), " rows.\n")
+message(
+  "\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = ","), " rows.\n",
+  "This was ", format(nrow(AMR::microorganisms), big.mark = ","), " rows.\n"
+)
 
 # these are the new ones:
-taxonomy %>% filter(!paste(kingdom, fullname) %in% paste(AMR::microorganisms$kingdom, AMR::microorganisms$fullname)) %>% View()
+taxonomy %>%
+  filter(!paste(kingdom, fullname) %in% paste(AMR::microorganisms$kingdom, AMR::microorganisms$fullname)) %>%
+  View()
 # these were removed:
-AMR::microorganisms %>% filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname)) %>% View()
-AMR::microorganisms %>% filter(!fullname %in% taxonomy$fullname) %>% View()
+AMR::microorganisms %>%
+  filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname)) %>%
+  View()
+AMR::microorganisms %>%
+  filter(!fullname %in% taxonomy$fullname) %>%
+  View()
 
 
 # Add SNOMED CT -----------------------------------------------------------

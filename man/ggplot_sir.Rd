@@ -138,13 +138,11 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 \examples{
 \donttest{
 if (require("ggplot2") && require("dplyr")) {
-
   # get antimicrobial results for drugs against a UTI:
   ggplot(example_isolates \%>\% select(AMX, NIT, FOS, TMP, CIP)) +
     geom_sir()
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # prettify the plot using some additional functions:
   df <- example_isolates \%>\% select(AMX, NIT, FOS, TMP, CIP)
   ggplot(df) +
@@ -155,21 +153,18 @@ if (require("ggplot2") && require("dplyr")) {
     theme_sir()
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # or better yet, simplify this using the wrapper function - a single command:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_sir()
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # get only proportions and no counts:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_sir(datalabels = FALSE)
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # add other ggplot2 arguments as you like:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
@@ -182,14 +177,12 @@ if (require("ggplot2") && require("dplyr")) {
     )
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # you can alter the colours with colour names:
   example_isolates \%>\%
     select(AMX) \%>\%
     ggplot_sir(colours = c(SI = "yellow"))
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # but you can also use the built-in colour-blind friendly colours for
   # your plots, where "S" is green, "I" is yellow and "R" is red:
   data.frame(
@@ -202,7 +195,6 @@ if (require("ggplot2") && require("dplyr")) {
     scale_sir_colours(Value4 = "S", Value5 = "I", Value6 = "R")
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # resistance of ciprofloxacine per age group
   example_isolates \%>\%
     mutate(first_isolate = first_isolate()) \%>\%
@@ -216,14 +208,12 @@ if (require("ggplot2") && require("dplyr")) {
     ggplot_sir(x = "age_group")
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # a shorter version which also adjusts data label colours:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_sir(colours = FALSE)
 }
 if (require("ggplot2") && require("dplyr")) {
-
   # it also supports groups (don't forget to use the group var on `x` or `facet`):
   example_isolates \%>\%
     filter(mo_is_gram_negative(), ward != "Outpatient") \%>\%

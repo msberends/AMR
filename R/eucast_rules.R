@@ -702,11 +702,12 @@ eucast_rules <- function(x,
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
-        cat(italicise_taxonomy(word_wrap(rule_current,
-          width = getOption("width") - 30,
-          extra_indent = 6
-        ),
-        type = "ansi"
+        cat(italicise_taxonomy(
+          word_wrap(rule_current,
+            width = getOption("width") - 30,
+            extra_indent = 6
+          ),
+          type = "ansi"
         ))
         warned <- FALSE
       }
@@ -721,21 +722,23 @@ eucast_rules <- function(x,
     if (mo_value %like% "coagulase" && any(x$genus == "Staphylococcus", na.rm = TRUE)) {
       if (mo_value %like% "negative") {
         eucast_rules_df[i, "this_value"] <- paste0(
-          "^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "negative"),
-            "fullname",
-            drop = TRUE
-          ],
-          collapse = "|"
+          "^(", paste0(
+            all_staph[which(all_staph$CNS_CPS %like% "negative"),
+              "fullname",
+              drop = TRUE
+            ],
+            collapse = "|"
           ),
           ")$"
         )
       } else {
         eucast_rules_df[i, "this_value"] <- paste0(
-          "^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "positive"),
-            "fullname",
-            drop = TRUE
-          ],
-          collapse = "|"
+          "^(", paste0(
+            all_staph[which(all_staph$CNS_CPS %like% "positive"),
+              "fullname",
+              drop = TRUE
+            ],
+            collapse = "|"
           ),
           ")$"
         )
@@ -745,11 +748,12 @@ eucast_rules <- function(x,
     # be sure to comprise all beta-haemolytic Streptococci (Lancefield groups A, B, C and G) when they are mentioned
     if (mo_value %like% "group [ABCG]" && any(x$genus == "Streptococcus", na.rm = TRUE)) {
       eucast_rules_df[i, "this_value"] <- paste0(
-        "^(", paste0(all_strep[which(all_strep$Lancefield %like% "group [ABCG]"),
-          "fullname",
-          drop = TRUE
-        ],
-        collapse = "|"
+        "^(", paste0(
+          all_strep[which(all_strep$Lancefield %like% "group [ABCG]"),
+            "fullname",
+            drop = TRUE
+          ],
+          collapse = "|"
         ),
         ")$"
       )
@@ -789,15 +793,17 @@ eucast_rules <- function(x,
       if (length(source_antibiotics) == 0) {
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
-        rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value &
-          as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
-        error = function(e) integer(0)
+        rows <- tryCatch(
+          which(x[, if_mo_property, drop = TRUE] %like% mo_value &
+            as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
+          error = function(e) integer(0)
         )
       } else if (length(source_antibiotics) == 2) {
-        rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value &
-          as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
-          as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
-        error = function(e) integer(0)
+        rows <- tryCatch(
+          which(x[, if_mo_property, drop = TRUE] %like% mo_value &
+            as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
+            as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
+          error = function(e) integer(0)
         )
         # nolint start
         # } else if (length(source_antibiotics) == 3) {
@@ -872,11 +878,12 @@ eucast_rules <- function(x,
       )
       if (isTRUE(info)) {
         # print rule
-        cat(italicise_taxonomy(word_wrap(format_custom_query_rule(rule$query, colours = FALSE),
-          width = getOption("width") - 30,
-          extra_indent = 6
-        ),
-        type = "ansi"
+        cat(italicise_taxonomy(
+          word_wrap(format_custom_query_rule(rule$query, colours = FALSE),
+            width = getOption("width") - 30,
+            extra_indent = 6
+          ),
+          type = "ansi"
         ))
         warned <- FALSE
       }
@@ -1117,14 +1124,15 @@ edit_sir <- function(x,
       },
       error = function(e) {
         txt_error()
-        stop(paste0(
-          "In row(s) ", paste(rows[seq_len(min(length(rows), 10))], collapse = ","),
-          ifelse(length(rows) > 10, "...", ""),
-          " while writing value '", to,
-          "' to column(s) `", paste(cols, collapse = "`, `"),
-          "`:\n", e$message
-        ),
-        call. = FALSE
+        stop(
+          paste0(
+            "In row(s) ", paste(rows[seq_len(min(length(rows), 10))], collapse = ","),
+            ifelse(length(rows) > 10, "...", ""),
+            " while writing value '", to,
+            "' to column(s) `", paste(cols, collapse = "`, `"),
+            "`:\n", e$message
+          ),
+          call. = FALSE
         )
       }
     )

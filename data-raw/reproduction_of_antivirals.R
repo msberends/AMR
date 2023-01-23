@@ -106,31 +106,32 @@ antivirals <- antivirals %>%
     oral_units,
     iv_ddd,
     iv_units
-  ) %>% 
+  ) %>%
   AMR:::dataset_UTF8_to_ASCII()
 
 av_codes <- tibble(name = antivirals$name %>%
-                     strsplit("(, | and )") %>%
-                     unlist() %>%
-                     unique() %>%
-                     sort()) %>% 
-  mutate(av_1st = toupper(abbreviate(name, minlength = 3, use.classes = FALSE))) %>% 
+  strsplit("(, | and )") %>%
+  unlist() %>%
+  unique() %>%
+  sort()) %>%
+  mutate(av_1st = toupper(abbreviate(name, minlength = 3, use.classes = FALSE))) %>%
   filter(!name %in% c("acid", "dipivoxil", "disoproxil", "marboxil", "alafenamide"))
 
 replace_with_av_code <- function(name) {
   unname(av_codes$av_1st[match(name, av_codes$name)])
 }
 
-names_codes <- antivirals %>% 
+names_codes <- antivirals %>%
   separate(name,
-           into = paste0("name", c(1:7)),
-           sep = "(, | and )",
-           remove = FALSE,
-           fill = "right") %>%
+    into = paste0("name", c(1:7)),
+    sep = "(, | and )",
+    remove = FALSE,
+    fill = "right"
+  ) %>%
   # remove empty columns
-  select(!where(function(x) all(is.na(x)))) %>% 
-  mutate_at(vars(matches("name[1-9]")), replace_with_av_code) %>% 
-  unite(av, matches("name[1-9]"), sep = "+", na.rm = TRUE) %>% 
+  select(!where(function(x) all(is.na(x)))) %>%
+  mutate_at(vars(matches("name[1-9]")), replace_with_av_code) %>%
+  unite(av, matches("name[1-9]"), sep = "+", na.rm = TRUE) %>%
   mutate(name = gsub("(, | and )", "/", name))
 substr(names_codes$name, 1, 1) <- toupper(substr(names_codes$name, 1, 1))
 
@@ -143,8 +144,9 @@ antivirals <- antivirals %>% AMR:::dataset_UTF8_to_ASCII()
 
 # add loinc, see 'data-raw/loinc.R'
 loinc_df <- read.csv("data-raw/Loinc.csv",
-                     row.names = NULL,
-                     stringsAsFactors = FALSE)
+  row.names = NULL,
+  stringsAsFactors = FALSE
+)
 
 loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
 av_names <- antivirals %>%

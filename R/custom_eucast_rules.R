@@ -240,11 +240,12 @@ print.custom_eucast_rules <- function(x, ...) {
       " (", rule$result_group, ")"
     )
     agents <- sort(agents)
-    rule_if <- word_wrap(paste0(
-      i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then "),
-      "set to {result}:"
-    ),
-    extra_indent = 5
+    rule_if <- word_wrap(
+      paste0(
+        i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then "),
+        "set to {result}:"
+      ),
+      extra_indent = 5
     )
     rule_if <- gsub("{result}", val, rule_if, fixed = TRUE)
     rule_then <- paste0("     ", word_wrap(paste0(agents, collapse = ", "), extra_indent = 5))

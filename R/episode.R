@@ -57,11 +57,12 @@
 #' df[which(get_episode(df$date, 60) == 3), ]
 #'
 #' # the functions also work for less than a day, e.g. to include one per hour:
-#' get_episode(c(
-#'   Sys.time(),
-#'   Sys.time() + 60 * 60
-#' ),
-#' episode_days = 1 / 24
+#' get_episode(
+#'   c(
+#'     Sys.time(),
+#'     Sys.time() + 60 * 60
+#'   ),
+#'   episode_days = 1 / 24
 #' )
 #'
 #' \donttest{
@@ -98,7 +99,6 @@
 #'     )
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # grouping on patients and microorganisms leads to the same
 #'   # results as first_isolate() when using 'episode-based':
 #'   x <- df %>%
@@ -115,7 +115,6 @@
 #'   identical(x, y)
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # but is_new_episode() has a lot more flexibility than first_isolate(),
 #'   # since you can now group on anything that seems relevant:
 #'   df %>%

@@ -49,12 +49,13 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
 
   merged <- cbind(
     x,
-    y[match(
-      x[, by[1], drop = TRUE],
-      y[, by[2], drop = TRUE]
-    ),
-    colnames(y)[!colnames(y) %in% colnames(x) & !colnames(y) == by[2]],
-    drop = FALSE
+    y[
+      match(
+        x[, by[1], drop = TRUE],
+        y[, by[2], drop = TRUE]
+      ),
+      colnames(y)[!colnames(y) %in% colnames(x) & !colnames(y) == by[2]],
+      drop = FALSE
     ]
   )
 
@@ -190,12 +191,13 @@ addin_insert_like <- function() {
     )
   }
   replace_pos <- function(old, with) {
-    modifyRange(document_range(
-      document_position(current_row, current_col - nchar(old)),
-      document_position(current_row, current_col)
-    ),
-    text = with,
-    id = context$id
+    modifyRange(
+      document_range(
+        document_position(current_row, current_col - nchar(old)),
+        document_position(current_row, current_col)
+      ),
+      text = with,
+      id = context$id
     )
   }
 
@@ -226,7 +228,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
   # -- mo
   if (type == "mo") {
     add_MO_lookup_to_AMR_env()
-    
+
     if (any(vapply(FUN.VALUE = logical(1), x, is.mo))) {
       # take first 'mo' column
       found <- colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)]
@@ -253,11 +255,12 @@ search_type_in_df <- function(x, type, info = TRUE) {
       # WHONET support
       found <- sort(colnames(x)[colnames_formatted %like_case% "^(specimen date|specimen_date|spec_date)"])
       if (!inherits(pm_pull(x, found), c("Date", "POSIXct"))) {
-        stop(font_red(paste0(
-          "Found column '", font_bold(found), "' to be used as input for `col_", type,
-          "`, but this column contains no valid dates. Transform its values to valid dates first."
-        )),
-        call. = FALSE
+        stop(
+          font_red(paste0(
+            "Found column '", font_bold(found), "' to be used as input for `col_", type,
+            "`, but this column contains no valid dates. Transform its values to valid dates first."
+          )),
+          call. = FALSE
         )
       }
     } else if (any(vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct"))))) {
@@ -319,21 +322,23 @@ search_type_in_df <- function(x, type, info = TRUE) {
 }
 
 is_valid_regex <- function(x) {
-  regex_at_all <- tryCatch(vapply(
-    FUN.VALUE = logical(1),
-    X = strsplit(x, "", fixed = TRUE),
-    FUN = function(y) {
-      any(y %in% c(
-        "$", "(", ")", "*", "+", "-",
-        ".", "?", "[", "]", "^", "{",
-        "|", "}", "\\"
-      ),
-      na.rm = TRUE
-      )
-    },
-    USE.NAMES = FALSE
-  ),
-  error = function(e) rep(TRUE, length(x))
+  regex_at_all <- tryCatch(
+    vapply(
+      FUN.VALUE = logical(1),
+      X = strsplit(x, "", fixed = TRUE),
+      FUN = function(y) {
+        any(
+          y %in% c(
+            "$", "(", ")", "*", "+", "-",
+            ".", "?", "[", "]", "^", "{",
+            "|", "}", "\\"
+          ),
+          na.rm = TRUE
+        )
+      },
+      USE.NAMES = FALSE
+    ),
+    error = function(e) rep(TRUE, length(x))
   )
   regex_valid <- vapply(
     FUN.VALUE = logical(1),
@@ -410,16 +415,17 @@ word_wrap <- function(...,
 
   if (msg %like% "\n") {
     # run word_wraps() over every line here, bind them and return again
-    return(paste0(vapply(
-      FUN.VALUE = character(1),
-      trimws(unlist(strsplit(msg, "\n", fixed = TRUE)), which = "right"),
-      word_wrap,
-      add_fn = add_fn,
-      as_note = FALSE,
-      width = width,
-      extra_indent = extra_indent
-    ),
-    collapse = "\n"
+    return(paste0(
+      vapply(
+        FUN.VALUE = character(1),
+        trimws(unlist(strsplit(msg, "\n", fixed = TRUE)), which = "right"),
+        word_wrap,
+        add_fn = add_fn,
+        as_note = FALSE,
+        width = width,
+        extra_indent = extra_indent
+      ),
+      collapse = "\n"
     ))
   }
 
@@ -429,11 +435,12 @@ word_wrap <- function(...,
   # we need to correct for already applied style, that adds text like "\033[31m\"
   msg_stripped <- font_stripstyle(msg)
   # where are the spaces now?
-  msg_stripped_wrapped <- paste0(strwrap(msg_stripped,
-    simplify = TRUE,
-    width = width
-  ),
-  collapse = "\n"
+  msg_stripped_wrapped <- paste0(
+    strwrap(msg_stripped,
+      simplify = TRUE,
+      width = width
+    ),
+    collapse = "\n"
   )
   msg_stripped_wrapped <- paste0(unlist(strsplit(msg_stripped_wrapped, "(\n|\\*\\|\\*)")),
     collapse = "\n"
@@ -487,11 +494,12 @@ message_ <- function(...,
                      appendLF = TRUE,
                      add_fn = list(font_blue),
                      as_note = TRUE) {
-  message(word_wrap(...,
-    add_fn = add_fn,
-    as_note = as_note
-  ),
-  appendLF = appendLF
+  message(
+    word_wrap(...,
+      add_fn = add_fn,
+      as_note = as_note
+    ),
+    appendLF = appendLF
   )
 }
 
@@ -499,12 +507,13 @@ warning_ <- function(...,
                      add_fn = list(),
                      immediate = FALSE,
                      call = FALSE) {
-  warning(word_wrap(...,
-    add_fn = add_fn,
-    as_note = FALSE
-  ),
-  immediate. = immediate,
-  call. = call
+  warning(
+    word_wrap(...,
+      add_fn = add_fn,
+      as_note = FALSE
+    ),
+    immediate. = immediate,
+    call. = call
   )
 }
 
@@ -836,17 +845,18 @@ meet_criteria <- function(object,
     )
   }
   if (!is.null(contains_column_class)) {
-    stop_ifnot(any(vapply(
-      FUN.VALUE = logical(1),
-      object,
-      function(col, columns_class = contains_column_class) {
-        inherits(col, columns_class)
-      }
-    ), na.rm = TRUE),
-    "the data provided in argument `", obj_name,
-    "` must contain at least one column of class <", contains_column_class, ">. ",
-    "See ?as.", contains_column_class, ".",
-    call = call_depth
+    stop_ifnot(
+      any(vapply(
+        FUN.VALUE = logical(1),
+        object,
+        function(col, columns_class = contains_column_class) {
+          inherits(col, columns_class)
+        }
+      ), na.rm = TRUE),
+      "the data provided in argument `", obj_name,
+      "` must contain at least one column of class <", contains_column_class, ">. ",
+      "See ?as.", contains_column_class, ".",
+      call = call_depth
     )
   }
   return(invisible())
@@ -1314,7 +1324,6 @@ round2 <- function(x, digits = 1, force_zero = TRUE) {
 
 # percentage from our other package: 'cleaner'
 percentage <- function(x, digits = NULL, ...) {
-
   # getdecimalplaces() function
   getdecimalplaces <- function(x, minimum = 0, maximum = 3) {
     if (maximum < minimum) {
@@ -1330,12 +1339,13 @@ percentage <- function(x, digits = NULL, ...) {
       ), ".", fixed = TRUE),
       function(y) ifelse(length(y) == 2, nchar(y[2]), 0)
     )), na.rm = TRUE)
-    max(min(max_places,
-      maximum,
+    max(
+      min(max_places,
+        maximum,
+        na.rm = TRUE
+      ),
+      minimum,
       na.rm = TRUE
-    ),
-    minimum,
-    na.rm = TRUE
     )
   }
 
@@ -1366,11 +1376,12 @@ percentage <- function(x, digits = NULL, ...) {
     # max one digit if undefined
     digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
   }
-  format_percentage(structure(
-    .Data = as.double(x),
-    class = c("percentage", "numeric")
-  ),
-  digits = digits, ...
+  format_percentage(
+    structure(
+      .Data = as.double(x),
+      class = c("percentage", "numeric")
+    ),
+    digits = digits, ...
   )
 }
 
@@ -1385,7 +1396,7 @@ add_MO_lookup_to_AMR_env <- function() {
   # for all MO functions, saves a lot of time on package load and in package size
   if (is.null(AMR_env$MO_lookup)) {
     MO_lookup <- AMR::microorganisms
-    
+
     MO_lookup$kingdom_index <- NA_real_
     MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
     MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
@@ -1393,7 +1404,7 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
     # all the rest
     MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
-    
+
     # the fullname lowercase, important for the internal algorithms in as.mo()
     MO_lookup$fullname_lower <- tolower(trimws(paste(
       MO_lookup$genus,
@@ -1405,7 +1416,7 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
     # special for Salmonella - they have cities as subspecies but not the species (enterica) in the fullname:
     MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
-    
+
     MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
     MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
     MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars

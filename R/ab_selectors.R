@@ -95,20 +95,17 @@
 #' # dplyr -------------------------------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
-#'
 #'   # get AMR for all aminoglycosides e.g., per ward:
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(across(aminoglycosides(), resistance))
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # You can combine selectors with '&' to be more specific:
 #'   example_isolates %>%
 #'     select(penicillins() & administrable_per_os())
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # get AMR for only drugs that matter - no intrinsic resistance:
 #'   example_isolates %>%
 #'     filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>%
@@ -116,7 +113,6 @@
 #'     summarise(across(not_intrinsic_resistant(), resistance))
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # get susceptibility for antibiotics whose name contains "trim":
 #'   example_isolates %>%
 #'     filter(first_isolate()) %>%
@@ -124,19 +120,16 @@
 #'     summarise(across(ab_selector(name %like% "trim"), susceptibility))
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
 #'   example_isolates %>%
 #'     select(carbapenems())
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
 #'   example_isolates %>%
 #'     select(mo, aminoglycosides())
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # any() and all() work in dplyr's filter() too:
 #'   example_isolates %>%
 #'     filter(
@@ -145,25 +138,21 @@
 #'     )
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # also works with c():
 #'   example_isolates %>%
 #'     filter(any(c(carbapenems(), aminoglycosides()) == "R"))
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # not setting any/all will automatically apply all():
 #'   example_isolates %>%
 #'     filter(aminoglycosides() == "R")
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
 #'   example_isolates %>%
 #'     select(mo, ab_class("mycobact"))
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # get bug/drug combinations for only glycopeptides in Gram-positives:
 #'   example_isolates %>%
 #'     filter(mo_is_gram_positive()) %>%
@@ -179,7 +168,6 @@
 #'     select(penicillins()) # only the 'J01CA01' column will be selected
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # with recent versions of dplyr this is all equal:
 #'   x <- example_isolates[carbapenems() == "R", ]
 #'   y <- example_isolates %>% filter(carbapenems() == "R")
@@ -433,14 +421,16 @@ administrable_per_os <- function(only_sir_columns = FALSE, ...) {
     ab_group = "administrable_per_os",
     examples = paste0(
       " (such as ",
-      vector_or(ab_name(sample(agents_all,
-        size = min(5, length(agents_all)),
-        replace = FALSE
-      ),
-      tolower = TRUE,
-      language = NULL
-      ),
-      quotes = FALSE
+      vector_or(
+        ab_name(
+          sample(agents_all,
+            size = min(5, length(agents_all)),
+            replace = FALSE
+          ),
+          tolower = TRUE,
+          language = NULL
+        ),
+        quotes = FALSE
       ),
       ")"
     )
@@ -491,20 +481,21 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
     sort = FALSE, fn = "not_intrinsic_resistant"
   )
   # intrinsic vars
-  vars_df_R <- tryCatch(sapply(
-    eucast_rules(vars_df,
-      col_mo = col_mo,
-      version_expertrules = version_expertrules,
-      rules = "expert",
-      info = FALSE
+  vars_df_R <- tryCatch(
+    sapply(
+      eucast_rules(vars_df,
+        col_mo = col_mo,
+        version_expertrules = version_expertrules,
+        rules = "expert",
+        info = FALSE
+      ),
+      function(col) {
+        tryCatch(!any(is.na(col)) && all(col == "R"),
+          error = function(e) FALSE
+        )
+      }
     ),
-    function(col) {
-      tryCatch(!any(is.na(col)) && all(col == "R"),
-        error = function(e) FALSE
-      )
-    }
-  ),
-  error = function(e) stop_("in not_intrinsic_resistant(): ", e$message, call = FALSE)
+    error = function(e) stop_("in not_intrinsic_resistant(): ", e$message, call = FALSE)
   )
 
   agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]
@@ -549,12 +540,13 @@ ab_select_exec <- function(function_name,
       if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
         warning_(
           "in `", function_name, "()`: some drugs were ignored since they cannot be used for treating patients: ",
-          vector_and(ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
-            language = NULL,
-            tolower = TRUE
-          ),
-          quotes = FALSE,
-          sort = TRUE
+          vector_and(
+            ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
+              language = NULL,
+              tolower = TRUE
+            ),
+            quotes = FALSE,
+            sort = TRUE
           ), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
           "This warning will be shown once per session."
         )
@@ -593,11 +585,12 @@ ab_select_exec <- function(function_name,
       }
       ab_group <- function_name
     }
-    examples <- paste0(" (such as ", vector_or(ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
-      tolower = TRUE,
-      language = NULL
-    ),
-    quotes = FALSE
+    examples <- paste0(" (such as ", vector_or(
+      ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
+        tolower = TRUE,
+        language = NULL
+      ),
+      quotes = FALSE
     ), ")")
   } else {
     # this for the 'manual' ab_class() function
@@ -821,11 +814,12 @@ find_ab_names <- function(ab_group, n = 3) {
   if (length(drugs) == 0) {
     return("??")
   }
-  vector_or(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
-    tolower = TRUE,
-    language = NULL
-  ),
-  quotes = FALSE
+  vector_or(
+    ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
+      tolower = TRUE,
+      language = NULL
+    ),
+    quotes = FALSE
   )
 }
 

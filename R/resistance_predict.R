@@ -274,7 +274,7 @@ resistance_predict <- function(x,
   df_prediction$value <- ifelse(df_prediction$value > 1, 1, pmax(df_prediction$value, 0))
   df_prediction <- df_prediction[order(df_prediction$year), , drop = FALSE]
 
-  out <- as_original_data_class(df_prediction, class(x.bak))  # will remove tibble groups
+  out <- as_original_data_class(df_prediction, class(x.bak)) # will remove tibble groups
   structure(out,
     class = c("resistance_predict", class(out)),
     I_as_S = I_as_S,

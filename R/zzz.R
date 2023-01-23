@@ -192,18 +192,24 @@ if (utf8_supported && !is_latex) {
   if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {
     packageStartupMessage("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'...", appendLF = FALSE)
     x <- readRDS2(getOption("AMR_custom_ab"))
-    tryCatch({
-      suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
-      packageStartupMessage("OK.")
-    }, error = function(e) packageStartupMessage("Failed: ", e$message))
+    tryCatch(
+      {
+        suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
+        packageStartupMessage("OK.")
+      },
+      error = function(e) packageStartupMessage("Failed: ", e$message)
+    )
   }
   # if custom mo option is available, load it
   if (!is.null(getOption("AMR_custom_mo")) && file.exists(getOption("AMR_custom_mo", default = ""))) {
     packageStartupMessage("Adding custom microorganisms from '", getOption("AMR_custom_mo"), "'...", appendLF = FALSE)
     x <- readRDS2(getOption("AMR_custom_mo"))
-    tryCatch({
-      suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
-      packageStartupMessage("OK.")
-    }, error = function(e) packageStartupMessage("Failed: ", e$message))
+    tryCatch(
+      {
+        suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
+        packageStartupMessage("OK.")
+      },
+      error = function(e) packageStartupMessage("Failed: ", e$message)
+    )
   }
 }

@@ -48,15 +48,16 @@ For this tutorial, we will create fake demonstration data to work with.
 You can skip to [Cleaning the data](#cleaning-the-data) if you already have your own data ready. If you start your analysis, try to make the structure of your data generally look like this:
 
 ```{r example table, echo = FALSE, results = 'asis'}
-knitr::kable(data.frame(
-  date = Sys.Date(),
-  patient_id = c("abcd", "abcd", "efgh"),
-  mo = "Escherichia coli",
-  AMX = c("S", "S", "R"),
-  CIP = c("S", "R", "S"),
-  stringsAsFactors = FALSE
-),
-align = "c"
+knitr::kable(
+  data.frame(
+    date = Sys.Date(),
+    patient_id = c("abcd", "abcd", "efgh"),
+    mo = "Escherichia coli",
+    AMX = c("S", "S", "R"),
+    CIP = c("S", "R", "S"),
+    stringsAsFactors = FALSE
+  ),
+  align = "c"
 )
 ``` 
 
@@ -129,14 +130,15 @@ sample_size <- 20000
 data <- data.frame(
   date = sample(dates, size = sample_size, replace = TRUE),
   patient_id = sample(patients, size = sample_size, replace = TRUE),
-  hospital = sample(c(
-    "Hospital A",
-    "Hospital B",
-    "Hospital C",
-    "Hospital D"
-  ),
-  size = sample_size, replace = TRUE,
-  prob = c(0.30, 0.35, 0.15, 0.20)
+  hospital = sample(
+    c(
+      "Hospital A",
+      "Hospital B",
+      "Hospital C",
+      "Hospital D"
+    ),
+    size = sample_size, replace = TRUE,
+    prob = c(0.30, 0.35, 0.15, 0.20)
   ),
   bacteria = sample(bacteria,
     size = sample_size, replace = TRUE,
@@ -293,10 +295,11 @@ data_1st %>%
 ```
 
 ```{r bug_drg 2b, echo = FALSE, results = 'asis'}
-knitr::kable(data_1st %>%
-  filter(any(aminoglycosides() == "R")) %>%
-  head(),
-align = "c"
+knitr::kable(
+  data_1st %>%
+    filter(any(aminoglycosides() == "R")) %>%
+    head(),
+  align = "c"
 )
 ```
 
@@ -309,10 +312,11 @@ data_1st %>%
 ```
 
 ```{r bug_drg 1b, echo = FALSE, results = 'asis'}
-knitr::kable(data_1st %>%
-  bug_drug_combinations() %>%
-  head(),
-align = "c"
+knitr::kable(
+  data_1st %>%
+    bug_drug_combinations() %>%
+    head(),
+  align = "c"
 )
 ```
 
@@ -325,10 +329,11 @@ data_1st %>%
 
 
 ```{r bug_drg 3b, echo = FALSE, results = 'asis'}
-knitr::kable(data_1st %>%
-  select(bacteria, aminoglycosides()) %>%
-  bug_drug_combinations(),
-align = "c"
+knitr::kable(
+  data_1st %>%
+    select(bacteria, aminoglycosides()) %>%
+    bug_drug_combinations(),
+  align = "c"
 )
 ```
 

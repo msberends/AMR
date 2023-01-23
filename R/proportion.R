@@ -140,7 +140,6 @@
 #'     )
 #' }
 #' if (require("dplyr")) {
-#'
 #'   # scoped dplyr verbs with antibiotic selectors
 #'   # (you could also use across() of course)
 #'   example_isolates %>%

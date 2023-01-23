@@ -179,13 +179,11 @@ if (require("dplyr")) {
     filter(first_isolate())
 }
 if (require("dplyr")) {
-
   # short-hand version:
   example_isolates \%>\%
     filter_first_isolate(info = FALSE)
 }
 if (require("dplyr")) {
-
   # flag the first isolates per group:
   example_isolates \%>\%
     group_by(ward) \%>\%

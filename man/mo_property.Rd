@@ -405,7 +405,6 @@ mo_species("EHEC")
 mo_fullname("K. pneu rh")
 mo_shortname("K. pneu rh")
 
-
 \donttest{
 # Becker classification, see ?as.mo ----------------------------------------
 

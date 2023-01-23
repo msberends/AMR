@@ -31,25 +31,25 @@
 #'
 #' With [add_custom_antimicrobials()] you can add your own custom antimicrobial drug names and codes.
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
-#' @details **Important:** Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. 
-#' 
+#' @details **Important:** Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited.
+#'
 #' There are two ways to automate this process:
-#' 
+#'
 #' **Method 1:** Save the antimicrobials to a local or remote file (can even be the internet). To use this method:
-#' 
+#'
 #'    1. Create a data set in the structure of the [antibiotics] data set (containing at the very least columns "ab" and "name") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_ab.rds"`, or any remote location.
-#'    
+#'
 #'    2. Set the file location to the `AMR_custom_ab` \R option: `options(AMR_custom_ab = "~/my_custom_ab.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
 #'
 #'       ```r
 #'       # Add custom antibiotic drug codes:
 #'       options(AMR_custom_ab = "~/my_custom_ab.rds")
 #'       ```
-#'       
+#'
 #'       Upon package load, this file will be loaded and run through the [add_custom_antimicrobials()] function.
-#' 
+#'
 #' **Method 2:** Save the antimicrobial additions directly to your `.Rprofile` file. An important downside is that this requires to load the `AMR` package at every start-up. To use this method:
-#' 
+#'
 #'    1. Edit the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`.
 #'
 #'    2. Add a text like below and save the file:
@@ -139,10 +139,10 @@ add_custom_antimicrobials <- function(x) {
       x[, col] <- as.list(x[, col, drop = TRUE])
     }
   }
-  
+
   AMR_env$custom_ab_codes <- c(AMR_env$custom_ab_codes, x$ab)
   class(AMR_env$AB_lookup$ab) <- "character"
-  
+
   new_df <- AMR_env$AB_lookup[0, , drop = FALSE][seq_len(NROW(x)), , drop = FALSE]
   rownames(new_df) <- NULL
   list_cols <- vapply(FUN.VALUE = logical(1), new_df, is.list)
@@ -155,7 +155,7 @@ add_custom_antimicrobials <- function(x) {
     new_df[, col] <- x[, col, drop = TRUE]
   }
   AMR_env$AB_lookup <- unique(rbind(AMR_env$AB_lookup, new_df))
-  
+
   AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% x$ab), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
   message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antibiotics` data set.")

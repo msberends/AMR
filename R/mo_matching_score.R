@@ -34,13 +34,13 @@
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
 #' @note This algorithm was originally described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
-#' 
+#'
 #' Later, the work of Bartlett A *et al.* about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated.
 #' @section Matching Score for Microorganisms:
 #' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #'
 #' \ifelse{latex}{\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}}{
-#' 
+#'
 #' \ifelse{html}{\figure{mo_matching_score.png}{options: width="300" alt="mo matching score"}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}}
 #'
 #' where:
@@ -53,12 +53,12 @@
 #' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.
 #'
 #' The grouping into human pathogenic prevalence \eqn{p} is based on recent work from Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
-#' 
+#'
 #' - **Established**, if a taxonomic species has infected at least three persons in three or more references. These records have `prevalence = 1.0` in the [microorganisms] data set;
 #' - **Putative**, if a taxonomic species has fewer than three known cases. These records have `prevalence = 1.25` in the [microorganisms] data set.
-#' 
+#'
 #' Furthermore,
-#' 
+#'
 #' - Any genus present in the **established** list also has `prevalence = 1.0` in the [microorganisms] data set;
 #' - Any other genus present in the **putative** list has `prevalence = 1.25` in the [microorganisms] data set;
 #' - Any other species or subspecies of which the genus is present in the two aforementioned groups, has `prevalence = 1.5` in the [microorganisms] data set;
@@ -72,7 +72,7 @@
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' mo_reset_session()
-#' 
+#'
 #' as.mo("E. coli")
 #' mo_uncertainties()
 #'
@@ -95,7 +95,7 @@ mo_matching_score <- function(x, n) {
 
   # force a capital letter, so this conversion will not count as a substitution
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
-  
+
   # n is always a taxonomically valid full name
   if (length(n) == 1) {
     n <- rep(n, length(x))
@@ -103,7 +103,7 @@ mo_matching_score <- function(x, n) {
   if (length(x) == 1) {
     x <- rep(x, length(n))
   }
-  
+
   # length of fullname
   l_n <- nchar(n)
   lev <- double(length = length(x))
@@ -126,7 +126,7 @@ mo_matching_score <- function(x, n) {
   p_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "prevalence", drop = TRUE]
   # kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
   k_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "kingdom_index", drop = TRUE]
-  
+
   # matching score:
   (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)
 }

@@ -414,13 +414,14 @@ pca_calculations <- function(pca_model,
       sigma <- var(cbind(x$xvar, x$yvar))
       mu <- c(mean(x$xvar), mean(x$yvar))
       ed <- sqrt(qchisq(ellipse_prob, df = 2))
-      data.frame(sweep(circle %*% chol(sigma) * ed,
-        MARGIN = 2,
-        STATS = mu,
-        FUN = "+"
-      ),
-      groups = x$groups[1],
-      stringsAsFactors = FALSE
+      data.frame(
+        sweep(circle %*% chol(sigma) * ed,
+          MARGIN = 2,
+          STATS = mu,
+          FUN = "+"
+        ),
+        groups = x$groups[1],
+        stringsAsFactors = FALSE
       )
     })
     ell <- do.call(rbind, df.groups)

@@ -262,7 +262,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
 
 check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
   add_MO_lookup_to_AMR_env()
-  
+
   if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {
     return(TRUE)
   }

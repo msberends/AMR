@@ -64,16 +64,16 @@
 #'      ```
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.sir(your_data)`.
 #'
-#' For points 2, 3 and 4: Use [sir_interpretation_history()] to retrieve a [data.frame] (or [tibble][tibble::tibble()] if the `tibble` package is installed) with all results of the last [as.sir()] call.
+#' **For points 2, 3 and 4: Use [sir_interpretation_history()]** to retrieve a [data.frame] (or [tibble][tibble::tibble()] if the `tibble` package is installed) with all results of the last [as.sir()] call.
 #'
 #' ### Supported Guidelines
 #'
 #' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
-#' 
+#'
 #' You can set the default guideline with the `AMR_guideline` [option][options()] (e.g. in your `.Rprofile` file), such as:
-#' 
+#'
 #' ```
 #'   options(AMR_guideline = "CLSI")
 #'   options(AMR_guideline = "CLSI 2018")
@@ -104,7 +104,7 @@
 #'   A microorganism is categorised as "Susceptible, Increased exposure*" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #' - **R = Resistant**\cr
 #'   A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
-#'   
+#'
 #'   * *Exposure* is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 #'
 #' This AMR package honours this insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
@@ -297,7 +297,7 @@ as.sir.default <- function(x, ...) {
 
   x.bak <- x
   x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
-  
+
   if (inherits(x.bak, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
     lbls <- attributes(x.bak)$labels
@@ -328,7 +328,7 @@ as.sir.default <- function(x, ...) {
     x <- trimws2(as.character(unlist(x)))
     x[x %in% c(NA, "", "-", "NULL")] <- NA_character_
     x.bak <- x
-    
+
     na_before <- length(x[is.na(x)])
 
     # correct for translations
@@ -768,13 +768,13 @@ as_sir_method <- function(method_short,
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
   }
-  
+
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (message_not_thrown_before("as.sir", "intrinsic")) {
       warning_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
     }
   }
-  
+
   agent_formatted <- paste0("'", font_bold(ab.bak), "'")
   agent_name <- ab_name(ab, tolower = TRUE, language = NULL)
   if (generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)) {
@@ -801,27 +801,31 @@ as_sir_method <- function(method_short,
     appendLF = FALSE,
     as_note = FALSE
   )
-  
+
   msg_note <- function(messages) {
     for (i in seq_len(length(messages))) {
       messages[i] <- word_wrap(extra_indent = 5, messages[i])
     }
-    message(font_green(font_bold(" Note:\n")),
-            paste0("   ", font_black(AMR_env$bullet_icon)," ", font_black(messages, collapse = NULL) , collapse = "\n"))
+    message(
+      font_green(font_bold(" Note:\n")),
+      paste0("   ", font_black(AMR_env$bullet_icon), " ", font_black(messages, collapse = NULL), collapse = "\n")
+    )
   }
 
   method <- method_short
 
   metadata_mo <- get_mo_uncertainties()
 
-  df <- data.frame(values = x,
-                   mo = mo,
-                   result = NA_sir_,
-                   uti = uti,
-                   stringsAsFactors = FALSE)
+  df <- data.frame(
+    values = x,
+    mo = mo,
+    result = NA_sir_,
+    uti = uti,
+    stringsAsFactors = FALSE
+  )
   if (method == "mic") {
     # when as.sir.mic is called directly
-    df$values <- as.mic(df$values) 
+    df$values <- as.mic(df$values)
   } else if (method == "disk") {
     # when as.sir.disk is called directly
     df$values <- as.disk(df$values)
@@ -832,7 +836,7 @@ as_sir_method <- function(method_short,
   method_coerced <- toupper(method)
   ab_coerced <- ab
   mo_coerced <- mo
-  
+
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
       subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
@@ -845,30 +849,31 @@ as_sir_method <- function(method_short,
     breakpoints <- reference_data %pm>%
       subset(method == method_coerced & ab == ab_coerced)
   }
-  
+
   msgs <- character(0)
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
-    msg_note(paste0("No ", method_coerced, " breakpoints available for ",
-                    suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
-                    " (", ab_coerced, ")"))
+    msg_note(paste0(
+      "No ", method_coerced, " breakpoints available for ",
+      suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
+      " (", ab_coerced, ")"
+    ))
     load_mo_uncertainties(metadata_mo)
     return(rep(NA_sir_, nrow(df)))
   }
-  
+
   if (guideline_coerced %like% "EUCAST") {
     any_is_intrinsic_resistant <- FALSE
     add_intrinsic_resistance_to_AMR_env()
   }
-  
+
   # run the rules
   for (mo_unique in unique(df$mo)) {
-    
     rows <- which(df$mo == mo_unique)
     values <- df[rows, "values", drop = TRUE]
     uti <- df[rows, "uti", drop = TRUE]
     new_sir <- rep(NA_sir_, length(rows))
-    
+
     # find different mo properties
     mo_current_genus <- as.mo(mo_genus(mo_unique, language = NULL))
     mo_current_family <- as.mo(mo_family(mo_unique, language = NULL))
@@ -890,17 +895,21 @@ as_sir_method <- function(method_short,
     if (!mo_rank(mo_unique) %in% c("kingdom", "phylum", "class", "order")) {
       mo_formatted <- font_italic(mo_formatted)
     }
-    ab_formatted <- paste0(suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))), 
-                           " (", ab_coerced, ")")
-    
-    # gather all available breakpoints for current MO and sort on taxonomic rank 
+    ab_formatted <- paste0(
+      suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
+      " (", ab_coerced, ")"
+    )
+
+    # gather all available breakpoints for current MO and sort on taxonomic rank
     # (this will prefer species breakpoints over order breakpoints)
     breakpoints_current <- breakpoints %pm>%
-      subset(mo %in% c(mo_current_genus, mo_current_family,
-                       mo_current_order, mo_current_class,
-                       mo_current_becker, mo_current_lancefield,
-                       mo_current_other))
-    
+      subset(mo %in% c(
+        mo_current_genus, mo_current_family,
+        mo_current_order, mo_current_class,
+        mo_current_becker, mo_current_lancefield,
+        mo_current_other
+      ))
+
     if (any(df[rows, "uti", drop = TRUE], na.rm = TRUE)) {
       breakpoints_current <- breakpoints_current %pm>%
         # be as specific as possible (i.e. prefer species over genus):
@@ -911,7 +920,7 @@ as_sir_method <- function(method_short,
         # sort UTI = FALSE first, then UTI = TRUE
         pm_arrange(rank_index, uti)
     }
-    
+
     # throw notes for different body sites
     if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_coerced)) {
       # only UTI breakpoints available
@@ -932,16 +941,15 @@ as_sir_method <- function(method_short,
       }
       msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
     }
-    
+
     # first check if mo is intrinsic resistant
     if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_unique, ab_coerced) %in% AMR_env$intrinsic_resistant) {
       msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
       new_sir <- rep(as.sir("R"), length(rows))
-      
     } else {
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
-      
+
       if (method == "mic") {
         new_sir <- quick_case_when(
           is.na(values) ~ NA_sir_,
@@ -953,7 +961,6 @@ as_sir_method <- function(method_short,
           # and NA otherwise
           TRUE ~ NA_sir_
         )
-        
       } else if (method == "disk") {
         new_sir <- quick_case_when(
           is.na(values) ~ NA_sir_,
@@ -988,10 +995,10 @@ as_sir_method <- function(method_short,
         )
       )
     }
-    
+
     df[rows, "result"] <- new_sir
   }
-  
+
   if (isTRUE(rise_warning)) {
     message(font_yellow(font_bold(" * WARNING *")))
   } else if (length(msgs) == 0) {
@@ -999,9 +1006,9 @@ as_sir_method <- function(method_short,
   } else {
     msg_note(sort(msgs))
   }
-  
+
   load_mo_uncertainties(metadata_mo)
-  
+
   df$result
 }
 
@@ -1026,6 +1033,9 @@ sir_interpretation_history <- function(clean = FALSE) {
   } else {
     AMR_env$sir_interpretation_history <- out.bak
   }
+
+  # sort descending on time
+  out <- out[order(out$datetime, decreasing = TRUE), , drop = FALSE]
 
   if (pkg_is_available("tibble", also_load = FALSE)) {
     import_fn("as_tibble", "tibble")(out)
