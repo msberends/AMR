@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9096</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9098</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,8 +184,9 @@
 <span class="r-in"><span><span class="co"># now add a custom entry - it will be considered by as.mo() and</span></span></span>
 <span class="r-in"><span><span class="co"># all mo_*() functions</span></span></span>
 <span class="r-in"><span><span class="fu">add_custom_microorganisms</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="st">"Enterobacter"</span>,</span></span>
-<span class="r-in"><span>             species <span class="op">=</span> <span class="st">"asburiae/cloacae"</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    genus <span class="op">=</span> <span class="st">"Enterobacter"</span>,</span></span>
+<span class="r-in"><span>    species <span class="op">=</span> <span class="st">"asburiae/cloacae"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Added Enterobacter asburiae/cloacae to the internal microorganisms data</span>
@@ -260,8 +261,10 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># the function tries to be forgiving:</span></span></span>
 <span class="r-in"><span><span class="fu">add_custom_microorganisms</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>GENUS <span class="op">=</span> <span class="st">"BACTEROIDES / PARABACTEROIDES SLASHLINE"</span>,</span></span>
-<span class="r-in"><span>             SPECIES <span class="op">=</span> <span class="st">"SPECIES"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    GENUS <span class="op">=</span> <span class="st">"BACTEROIDES / PARABACTEROIDES SLASHLINE"</span>,</span></span>
+<span class="r-in"><span>    SPECIES <span class="op">=</span> <span class="st">"SPECIES"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Added Bacteroides/Parabacteroides to the internal microorganisms data</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   set.</span>
@@ -277,9 +280,11 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for groups and complexes, set them as species or subspecies:</span></span></span>
 <span class="r-in"><span><span class="fu">add_custom_microorganisms</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="st">"Citrobacter"</span>, </span></span>
-<span class="r-in"><span>             species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"freundii"</span>, <span class="st">"braakii complex"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>             subspecies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"complex"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    genus <span class="op">=</span> <span class="st">"Citrobacter"</span>,</span></span>
+<span class="r-in"><span>    species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"freundii"</span>, <span class="st">"braakii complex"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    subspecies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"complex"</span>, <span class="st">""</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Added Citrobacter braakii complex and Citrobacter freundii complex to the</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   internal microorganisms data set.</span>
