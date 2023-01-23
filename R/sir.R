@@ -39,6 +39,7 @@
 #' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [clinical_breakpoints] data set), but can be set with the [option][options()] `AMR_guideline`. Supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
+#' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to `TRUE`. Can also be set with the option [`AMR_include_PKPD`][AMR-options].
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
@@ -72,7 +73,7 @@
 #'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #'
-#' You can set the default guideline with the `AMR_guideline` [option][options()] (e.g. in your `.Rprofile` file), such as:
+#' You can set the default guideline with the option [`AMR_guideline`][AMR-options] (e.g. in your `.Rprofile` file), such as:
 #'
 #' ```
 #'   options(AMR_guideline = "CLSI")
@@ -417,6 +418,7 @@ as.sir.mic <- function(x,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::clinical_breakpoints,
+                       include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        ...) {
   as_sir_method(
     method_short = "mic",
@@ -429,6 +431,7 @@ as.sir.mic <- function(x,
     conserve_capped_values = conserve_capped_values,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
+    include_PKPD = include_PKPD,
     ...
   )
 }
@@ -442,6 +445,7 @@ as.sir.disk <- function(x,
                         uti = NULL,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::clinical_breakpoints,
+                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -454,6 +458,7 @@ as.sir.disk <- function(x,
     conserve_capped_values = FALSE,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
+    include_PKPD = include_PKPD,
     ...
   )
 }
@@ -467,7 +472,8 @@ as.sir.data.frame <- function(x,
                               uti = NULL,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE,
-                              reference_data = AMR::clinical_breakpoints) {
+                              reference_data = AMR::clinical_breakpoints,
+                              include_PKPD = getOption("AMR_include_PKPD", TRUE)) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -604,6 +610,7 @@ as.sir.data.frame <- function(x,
           conserve_capped_values = conserve_capped_values,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
+          include_PKPD = include_PKPD,
           is_data.frame = TRUE
         )
     } else if (types[i] == "disk") {
@@ -619,6 +626,7 @@ as.sir.data.frame <- function(x,
           uti = uti,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
+          include_PKPD = include_PKPD,
           is_data.frame = TRUE
         )
     } else if (types[i] == "sir") {
@@ -686,6 +694,7 @@ as_sir_method <- function(method_short,
                           conserve_capped_values,
                           add_intrinsic_resistance,
                           reference_data,
+                          include_PKPD,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE, .call_depth = -2)
@@ -695,6 +704,7 @@ as_sir_method <- function(method_short,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
+  meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
   check_reference_data(reference_data)
 
   # for dplyr's across()
@@ -850,6 +860,12 @@ as_sir_method <- function(method_short,
       subset(method == method_coerced & ab == ab_coerced)
   }
 
+  if (isFALSE(include_PKPD)) {
+    # remove PKPD rules from the breakpoints table
+    breakpoints <- breakpoints %pm>%
+      subset(mo != "UNKNOWN" & ref_tbl %unlike% "PK.*PD")
+  }
+
   msgs <- character(0)
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
@@ -910,7 +926,7 @@ as_sir_method <- function(method_short,
         mo_current_other
       ))
 
-    if (any(df[rows, "uti", drop = TRUE], na.rm = TRUE)) {
+    if (any(uti, na.rm = TRUE)) {
       breakpoints_current <- breakpoints_current %pm>%
         # be as specific as possible (i.e. prefer species over genus):
         # the below `pm_desc(uti)` will put `TRUE` on top and FALSE on bottom
@@ -946,9 +962,16 @@ as_sir_method <- function(method_short,
     if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_unique, ab_coerced) %in% AMR_env$intrinsic_resistant) {
       msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
       new_sir <- rep(as.sir("R"), length(rows))
+    } else if (nrow(breakpoints_current) == 0) {
+      # no rules available
+      new_sir <- rep(NA_sir_, length(rows))
     } else {
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
+
+      if (breakpoints_current$mo == "UNKNOWN" | breakpoints_current$ref_tbl %like% "PK.*PD") {
+        msgs <- c(msgs, "(Some) PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
+      }
 
       if (method == "mic") {
         new_sir <- quick_case_when(
@@ -1166,6 +1189,9 @@ summary.sir <- function(object, ...) {
   I <- sum(x == "I", na.rm = TRUE)
   R <- sum(x == "R", na.rm = TRUE)
   pad <- function(x) {
+    if (is.na(x)) {
+      return("??")
+    }
     if (x == "0%") {
       x <- " 0.0%"
     }

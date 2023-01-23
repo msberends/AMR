@@ -41,7 +41,7 @@
 #'
 #'    1. Create a data set in the structure of the [microorganisms] data set (containing at the very least column "genus") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_mo.rds"`, or any remote location.
 #'
-#'    2. Set the file location to the `AMR_custom_mo` \R option: `options(AMR_custom_mo = "~/my_custom_mo.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will be loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
+#'    2. Set the file location to the option [`AMR_custom_mo`][AMR-options]: `options(AMR_custom_mo = "~/my_custom_mo.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will be loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
 #'
 #'       ```r
 #'       # Add custom microorganism codes:

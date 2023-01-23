@@ -35,20 +35,20 @@
 #'
 #' There are two ways to automate this process:
 #'
-#' **Method 1:** Save the antimicrobials to a local or remote file (can even be the internet). To use this method:
+#' **Method 1:** Using the option [`AMR_custom_ab`][AMR-options], which is the preferred method. To use this method:
 #'
 #'    1. Create a data set in the structure of the [antibiotics] data set (containing at the very least columns "ab" and "name") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_ab.rds"`, or any remote location.
 #'
-#'    2. Set the file location to the `AMR_custom_ab` \R option: `options(AMR_custom_ab = "~/my_custom_ab.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
+#'    2. Set the file location to the option [`AMR_custom_ab`][AMR-options]: `options(AMR_custom_ab = "~/my_custom_ab.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will be loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
 #'
 #'       ```r
-#'       # Add custom antibiotic drug codes:
+#'       # Add custom antimicrobial codes:
 #'       options(AMR_custom_ab = "~/my_custom_ab.rds")
 #'       ```
 #'
 #'       Upon package load, this file will be loaded and run through the [add_custom_antimicrobials()] function.
 #'
-#' **Method 2:** Save the antimicrobial additions directly to your `.Rprofile` file. An important downside is that this requires to load the `AMR` package at every start-up. To use this method:
+#' **Method 2:** Loading the antimicrobial additions directly from your `.Rprofile` file. An important downside is that this requires the `AMR` package to be installed or else this method will fail. To use this method:
 #'
 #'    1. Edit the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`.
 #'
@@ -56,8 +56,7 @@
 #'
 #'       ```r
 #'        # Add custom antibiotic drug codes:
-#'        library(AMR)
-#'        add_custom_antimicrobials(
+#'        AMR::add_custom_antimicrobials(
 #'          data.frame(ab = "TESTAB",
 #'                     name = "Test Antibiotic",
 #'                     group = "Test Group")

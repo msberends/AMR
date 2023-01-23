@@ -22,12 +22,12 @@ translate_AMR(x, language = get_AMR_locale())
 \item{x}{text to translate}
 }
 \description{
-For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
+For language-dependent output of \code{AMR} functions, such as \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
 The currently 16 supported languages are English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) and Ukrainian (uk). All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 
-To permanently silence the once-per-session language note on a non-English operating system, you can set the option \code{AMR_locale} in your \code{.Rprofile} file like this:
+To permanently silence the once-per-session language note on a non-English operating system, you can set the option \code{\link[=AMR-options]{AMR_locale}} in your \code{.Rprofile} file like this:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Open .Rprofile file
 utils::file.edit("~/.Rprofile")
@@ -43,13 +43,13 @@ Please read about adding or updating a language in \href{https://github.com/msbe
 
 The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale("LC_COLLATE")}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 \enumerate{
-\item Setting the R option \code{AMR_locale}, either by using e.g. \code{set_AMR_locale("German")} or by running e.g. \code{options(AMR_locale = "German")}.
+\item Setting the option \code{\link[=AMR-options]{AMR_locale}}, either by using e.g. \code{set_AMR_locale("German")} or by running e.g. \code{options(AMR_locale = "German")}.
 
 Note that setting an \R option only works in the same session. Save the command \code{options(AMR_locale = "(your language)")} to your \code{.Rprofile} file to apply it for every session. Run \code{utils::file.edit("~/.Rprofile")} to edit your \code{.Rprofile} file.
 \item Setting the system variable \code{LANGUAGE} or \code{LANG}, e.g. by adding \code{LANGUAGE="de_DE.utf8"} to your \code{.Renviron} file in your home directory.
 }
 
-Thus, if the R option \code{AMR_locale} is set, the system variables \code{LANGUAGE} and \code{LANG} will be ignored.
+Thus, if the option \code{\link[=AMR-options]{AMR_locale}} is set, the system variables \code{LANGUAGE} and \code{LANG} will be ignored.
 }
 }
 \examples{

@@ -41,6 +41,7 @@ is_sir_eligible(x, threshold = 0.05)
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
   ...
 )
 
@@ -52,6 +53,7 @@ is_sir_eligible(x, threshold = 0.05)
   uti = NULL,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
   ...
 )
 
@@ -63,7 +65,8 @@ is_sir_eligible(x, threshold = 0.05)
   uti = NULL,
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
-  reference_data = AMR::clinical_breakpoints
+  reference_data = AMR::clinical_breakpoints,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE)
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -88,6 +91,8 @@ sir_interpretation_history(clean = FALSE)
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 
 \item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
+
+\item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to \code{TRUE}. Can also be set with the option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -134,7 +139,7 @@ For interpreting MIC values as well as disk diffusion diameters, currently imple
 
 Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2022"} or \code{"CLSI 2022"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 
-You can set the default guideline with the \code{AMR_guideline} \link[=options]{option} (e.g. in your \code{.Rprofile} file), such as:
+You can set the default guideline with the option \code{\link[=AMR-options]{AMR_guideline}} (e.g. in your \code{.Rprofile} file), such as:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
   options(AMR_guideline = "CLSI 2018")

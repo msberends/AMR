@@ -42,7 +42,7 @@ av_property(x, property = "name", language = get_AMR_locale(), ...)
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid antiviral drug code with \code{\link[=as.av]{as.av()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}.}
 

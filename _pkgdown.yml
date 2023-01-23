@@ -72,37 +72,40 @@ navbar:
     - text: "How to"
       icon: "fa-question-circle"
       menu:
-      - text: "Conduct AMR analysis"
+      - text: "User- Or Team-specific Package Settings"
+        icon: "fa-gear"
+        href: "reference/AMR-options.html"
+      - text: "Conduct AMR Analysis"
         icon: "fa-directions"
         href: "articles/AMR.html"
-      - text: "Predict antimicrobial resistance"
+      - text: "Predict Antimicrobial Resistance"
         icon: "fa-dice"
         href: "articles/resistance_predict.html"
-      - text: "Data sets for download / own use"
+      - text: "Data Sets for Download / Own Use"
         icon: "fa-database"
         href: "articles/datasets.html"
-      - text: "Conduct principal component analysis for AMR"
+      - text: "Conduct Principal Component Analysis for AMR"
         icon: "fa-compress"
         href: "articles/PCA.html"
-      - text: "Determine multi-drug resistance (MDR)"
+      - text: "Determine Multi-Drug Resistance (MDR)"
         icon: "fa-skull-crossbones"
         href: "articles/MDR.html"
-      - text: "Work with WHONET data"
+      - text: "Work with WHONET Data"
         icon: "fa-globe-americas"
         href: "articles/WHONET.html"
-      - text: "Import data from SPSS/SAS/Stata"
+      - text: "Import Data From SPSS/SAS/Stata"
         icon: "fa-file-upload"
         href: "articles/SPSS.html"
-      - text: "Apply EUCAST rules"
+      - text: "Apply Eucast Rules"
         icon: "fa-exchange-alt"
         href: "articles/EUCAST.html"
-      - text: "Get taxonomy of a microorganism"
+      - text: "Get Taxonomy of a Microorganism"
         icon: "fa-bug"
         href: "reference/mo_property.html" # reference instead of an article
-      - text: "Get properties of an antibiotic drug"
+      - text: "Get Properties of an Antibiotic Drug"
         icon: "fa-capsules"
         href: "reference/ab_property.html" # reference instead of an article
-      - text: "Get properties of an antiviral drug"
+      - text: "Get Properties of an Antiviral Drug"
         icon: "fa-capsules"
         href: "reference/av_property.html" # reference instead of an article
     - text: "Manual"
@@ -175,6 +178,15 @@ reference:
     - "`mean_amr_distance`"
     - "`resistance_predict`"
     - "`guess_ab_col`"
+    
+  - title: "Other: AMR-specific options"
+    desc: >
+      The AMR package is customisable, by providing settings that can be set per user or per team. For
+      example, the default interpretation guideline can be changed from EUCAST to CLSI, or a supported
+      language can be set for the whole team (system-language independent) for antibiotic names in a
+      foreign language.
+    contents:
+    - "`AMR-options`"
     
   - title: "Other: antiviral drugs"
     desc: >
