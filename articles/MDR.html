@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9098</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9099</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,60 +61,65 @@
     How to
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--how-to">
+    <a class="dropdown-item" href="../reference/AMR-options.html">
+      <span class="fa fa-gear"></span>
+       
+      User- Or Team-specific Package Settings
+    </a>
     <a class="dropdown-item" href="../articles/AMR.html">
       <span class="fa fa-directions"></span>
        
-      Conduct AMR analysis
+      Conduct AMR Analysis
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
        
-      Predict antimicrobial resistance
+      Predict Antimicrobial Resistance
     </a>
     <a class="dropdown-item" href="../articles/datasets.html">
       <span class="fa fa-database"></span>
        
-      Data sets for download / own use
+      Data Sets for Download / Own Use
     </a>
     <a class="dropdown-item" href="../articles/PCA.html">
       <span class="fa fa-compress"></span>
        
-      Conduct principal component analysis for AMR
+      Conduct Principal Component Analysis for AMR
     </a>
     <a class="dropdown-item" href="../articles/MDR.html">
       <span class="fa fa-skull-crossbones"></span>
        
-      Determine multi-drug resistance (MDR)
+      Determine Multi-Drug Resistance (MDR)
     </a>
     <a class="dropdown-item" href="../articles/WHONET.html">
       <span class="fa fa-globe-americas"></span>
        
-      Work with WHONET data
+      Work with WHONET Data
     </a>
     <a class="dropdown-item" href="../articles/SPSS.html">
       <span class="fa fa-file-upload"></span>
        
-      Import data from SPSS/SAS/Stata
+      Import Data From SPSS/SAS/Stata
     </a>
     <a class="dropdown-item" href="../articles/EUCAST.html">
       <span class="fa fa-exchange-alt"></span>
        
-      Apply EUCAST rules
+      Apply Eucast Rules
     </a>
     <a class="dropdown-item" href="../reference/mo_property.html">
       <span class="fa fa-bug"></span>
        
-      Get taxonomy of a microorganism
+      Get Taxonomy of a Microorganism
     </a>
     <a class="dropdown-item" href="../reference/ab_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antibiotic drug
+      Get Properties of an Antibiotic Drug
     </a>
     <a class="dropdown-item" href="../reference/av_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antiviral drug
+      Get Properties of an Antiviral Drug
     </a>
   </div>
 </li>
@@ -375,19 +380,19 @@ names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co"># 1          I         S            R          I            S            S</span></span>
-<span><span class="co"># 2          I         R            R          I            S            I</span></span>
-<span><span class="co"># 3          I         R            S          I            R            I</span></span>
-<span><span class="co"># 4          S         S            I          S            R            I</span></span>
-<span><span class="co"># 5          I         I            R          I            I            S</span></span>
-<span><span class="co"># 6          R         S            S          S            R            I</span></span>
+<span><span class="co"># 1          I         R            R          R            S            R</span></span>
+<span><span class="co"># 2          R         I            R          S            R            S</span></span>
+<span><span class="co"># 3          R         R            R          I            I            R</span></span>
+<span><span class="co"># 4          I         S            R          R            S            I</span></span>
+<span><span class="co"># 5          S         R            R          S            R            R</span></span>
+<span><span class="co"># 6          S         I            R          I            S            R</span></span>
 <span><span class="co">#   kanamycin</span></span>
-<span><span class="co"># 1         S</span></span>
-<span><span class="co"># 2         R</span></span>
-<span><span class="co"># 3         S</span></span>
-<span><span class="co"># 4         I</span></span>
+<span><span class="co"># 1         I</span></span>
+<span><span class="co"># 2         S</span></span>
+<span><span class="co"># 3         R</span></span>
+<span><span class="co"># 4         R</span></span>
 <span><span class="co"># 5         S</span></span>
-<span><span class="co"># 6         R</span></span></code></pre></div>
+<span><span class="co"># 6         I</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can
 use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -428,40 +433,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3130</td>
-<td align="right">62.60%</td>
-<td align="right">3130</td>
-<td align="right">62.60%</td>
+<td align="right">3227</td>
+<td align="right">64.54%</td>
+<td align="right">3227</td>
+<td align="right">64.54%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">1022</td>
-<td align="right">20.44%</td>
-<td align="right">4152</td>
-<td align="right">83.04%</td>
+<td align="right">976</td>
+<td align="right">19.52%</td>
+<td align="right">4203</td>
+<td align="right">84.06%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">476</td>
-<td align="right">9.52%</td>
-<td align="right">4628</td>
-<td align="right">92.56%</td>
+<td align="right">442</td>
+<td align="right">8.84%</td>
+<td align="right">4645</td>
+<td align="right">92.90%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">269</td>
-<td align="right">5.38%</td>
-<td align="right">4897</td>
-<td align="right">97.94%</td>
+<td align="right">247</td>
+<td align="right">4.94%</td>
+<td align="right">4892</td>
+<td align="right">97.84%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">103</td>
-<td align="right">2.06%</td>
+<td align="right">108</td>
+<td align="right">2.16%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

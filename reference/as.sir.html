@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9098</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9099</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,60 +32,65 @@
     How to
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--how-to">
+    <a class="dropdown-item" href="../reference/AMR-options.html">
+      <span class="fa fa-gear"></span>
+       
+      User- Or Team-specific Package Settings
+    </a>
     <a class="dropdown-item" href="../articles/AMR.html">
       <span class="fa fa-directions"></span>
        
-      Conduct AMR analysis
+      Conduct AMR Analysis
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
        
-      Predict antimicrobial resistance
+      Predict Antimicrobial Resistance
     </a>
     <a class="dropdown-item" href="../articles/datasets.html">
       <span class="fa fa-database"></span>
        
-      Data sets for download / own use
+      Data Sets for Download / Own Use
     </a>
     <a class="dropdown-item" href="../articles/PCA.html">
       <span class="fa fa-compress"></span>
        
-      Conduct principal component analysis for AMR
+      Conduct Principal Component Analysis for AMR
     </a>
     <a class="dropdown-item" href="../articles/MDR.html">
       <span class="fa fa-skull-crossbones"></span>
        
-      Determine multi-drug resistance (MDR)
+      Determine Multi-Drug Resistance (MDR)
     </a>
     <a class="dropdown-item" href="../articles/WHONET.html">
       <span class="fa fa-globe-americas"></span>
        
-      Work with WHONET data
+      Work with WHONET Data
     </a>
     <a class="dropdown-item" href="../articles/SPSS.html">
       <span class="fa fa-file-upload"></span>
        
-      Import data from SPSS/SAS/Stata
+      Import Data From SPSS/SAS/Stata
     </a>
     <a class="dropdown-item" href="../articles/EUCAST.html">
       <span class="fa fa-exchange-alt"></span>
        
-      Apply EUCAST rules
+      Apply Eucast Rules
     </a>
     <a class="dropdown-item" href="../reference/mo_property.html">
       <span class="fa fa-bug"></span>
        
-      Get taxonomy of a microorganism
+      Get Taxonomy of a Microorganism
     </a>
     <a class="dropdown-item" href="../reference/ab_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antibiotic drug
+      Get Properties of an Antibiotic Drug
     </a>
     <a class="dropdown-item" href="../reference/av_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antiviral drug
+      Get Properties of an Antiviral Drug
     </a>
   </div>
 </li>
@@ -156,6 +161,7 @@
 <span>  conserve_capped_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span>,</span>
+<span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -168,6 +174,7 @@
 <span>  uti <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span>,</span>
+<span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -180,7 +187,8 @@
 <span>  uti <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  conserve_capped_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span></span>
+<span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span>,</span>
+<span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">sir_interpretation_history</span><span class="op">(</span>clean <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -238,6 +246,10 @@
 <dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for interpretation, which defaults to the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set (same column names and column types). Please note that the <code>guideline</code> argument will be ignored when <code>reference_data</code> is manually set.</p></dd>
 
 
+<dt>include_PKPD</dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to <code>TRUE</code>. Can also be set with the option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
+
+
 <dt>col_mo</dt>
 <dd><p>column name of the IDs of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
@@ -281,7 +293,7 @@
 
 <p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022).</p>
 <p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2022"</code> or <code>"CLSI 2022"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
-<p>You can set the default guideline with the <code>AMR_guideline</code> <a href="https://rdrr.io/r/base/options.html" class="external-link">option</a> (e.g. in your <code>.Rprofile</code> file), such as:</p>
+<p>You can set the default guideline with the option <code><a href="AMR-options.html">AMR_guideline</a></code> (e.g. in your <code>.Rprofile</code> file), such as:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI 2018"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"EUCAST 2020"</span>)</span>
@@ -507,16 +519,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input ab_guid…¹ mo_in…² mo_guideline     guide…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-01-23 <span style="color: #949494;">14:05:17</span>     1 TOB      TOB       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-01-23 <span style="color: #949494;">14:05:17</span>     1 GEN      GEN       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-01-23 <span style="color: #949494;">14:05:17</span>     1 CIP      CIP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-01-23 <span style="color: #949494;">14:05:17</span>     1 AMP      AMP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-01-23 <span style="color: #949494;">14:05:12</span>     1 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-01-23 <span style="color: #949494;">14:05:12</span>     2 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-01-23 <span style="color: #949494;">14:05:12</span>     3 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-01-23 <span style="color: #949494;">14:05:12</span>     4 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-01-23 <span style="color: #949494;">14:05:12</span>     5 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-01-23 <span style="color: #949494;">14:05:12</span>     6 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-01-23 <span style="color: #949494;">19:11:56</span>     1 TOB      TOB       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-01-23 <span style="color: #949494;">19:11:56</span>     1 GEN      GEN       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-01-23 <span style="color: #949494;">19:11:56</span>     1 CIP      CIP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-01-23 <span style="color: #949494;">19:11:55</span>     1 AMP      AMP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-01-23 <span style="color: #949494;">19:11:50</span>     1 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-01-23 <span style="color: #949494;">19:11:50</span>     2 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-01-23 <span style="color: #949494;">19:11:50</span>     3 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-01-23 <span style="color: #949494;">19:11:50</span>     4 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-01-23 <span style="color: #949494;">19:11:50</span>     5 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-01-23 <span style="color: #949494;">19:11:50</span>     6 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows, 5 more variables: ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   input &lt;dbl&gt;, outcome &lt;sir&gt;, breakpoint_S_R &lt;chr&gt;, and abbreviated variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   names ¹​ab_guideline, ²​mo_input, ³​guideline</span></span>

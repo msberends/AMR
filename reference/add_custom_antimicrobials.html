@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9098</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9099</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,60 +32,65 @@
     How to
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--how-to">
+    <a class="dropdown-item" href="../reference/AMR-options.html">
+      <span class="fa fa-gear"></span>
+       
+      User- Or Team-specific Package Settings
+    </a>
     <a class="dropdown-item" href="../articles/AMR.html">
       <span class="fa fa-directions"></span>
        
-      Conduct AMR analysis
+      Conduct AMR Analysis
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
        
-      Predict antimicrobial resistance
+      Predict Antimicrobial Resistance
     </a>
     <a class="dropdown-item" href="../articles/datasets.html">
       <span class="fa fa-database"></span>
        
-      Data sets for download / own use
+      Data Sets for Download / Own Use
     </a>
     <a class="dropdown-item" href="../articles/PCA.html">
       <span class="fa fa-compress"></span>
        
-      Conduct principal component analysis for AMR
+      Conduct Principal Component Analysis for AMR
     </a>
     <a class="dropdown-item" href="../articles/MDR.html">
       <span class="fa fa-skull-crossbones"></span>
        
-      Determine multi-drug resistance (MDR)
+      Determine Multi-Drug Resistance (MDR)
     </a>
     <a class="dropdown-item" href="../articles/WHONET.html">
       <span class="fa fa-globe-americas"></span>
        
-      Work with WHONET data
+      Work with WHONET Data
     </a>
     <a class="dropdown-item" href="../articles/SPSS.html">
       <span class="fa fa-file-upload"></span>
        
-      Import data from SPSS/SAS/Stata
+      Import Data From SPSS/SAS/Stata
     </a>
     <a class="dropdown-item" href="../articles/EUCAST.html">
       <span class="fa fa-exchange-alt"></span>
        
-      Apply EUCAST rules
+      Apply Eucast Rules
     </a>
     <a class="dropdown-item" href="../reference/mo_property.html">
       <span class="fa fa-bug"></span>
        
-      Get taxonomy of a microorganism
+      Get Taxonomy of a Microorganism
     </a>
     <a class="dropdown-item" href="../reference/ab_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antibiotic drug
+      Get Properties of an Antibiotic Drug
     </a>
     <a class="dropdown-item" href="../reference/av_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antiviral drug
+      Get Properties of an Antiviral Drug
     </a>
   </div>
 </li>
@@ -153,16 +158,15 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Important:</strong> Due to how <span style="R">R</span> works, the <code>add_custom_antimicrobials()</code> function has to be run in every <span style="R">R</span> session - added antimicrobials are not stored between sessions and are thus lost when <span style="R">R</span> is exited.</p>
 <p>There are two ways to automate this process:</p>
-<p><strong>Method 1:</strong> Save the antimicrobials to a local or remote file (can even be the internet). To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="antibiotics.html">antibiotics</a> data set (containing at the very least columns "ab" and "name") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_ab.rds"</code>, or any remote location.</p></li>
-<li><p>Set the file location to the <code>AMR_custom_ab</code> <span style="R">R</span> option: <code>options(AMR_custom_ab = "~/my_custom_ab.rds")</code>. This can even be a remote file location, such as an https URL. Since options are not saved between <span style="R">R</span> sessions, it is best to save this option to the <code>.Rprofile</code> file so that it will loaded on start-up of <span style="R">R</span>. To do this, open the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>, add this text and save the file:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="co"># Add custom antibiotic drug codes:</span></span>
+<p><strong>Method 1:</strong> Using the option <code><a href="AMR-options.html">AMR_custom_ab</a></code>, which is the preferred method. To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="antibiotics.html">antibiotics</a> data set (containing at the very least columns "ab" and "name") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_ab.rds"</code>, or any remote location.</p></li>
+<li><p>Set the file location to the option <code><a href="AMR-options.html">AMR_custom_ab</a></code>: <code>options(AMR_custom_ab = "~/my_custom_ab.rds")</code>. This can even be a remote file location, such as an https URL. Since options are not saved between <span style="R">R</span> sessions, it is best to save this option to the <code>.Rprofile</code> file so that it will be loaded on start-up of <span style="R">R</span>. To do this, open the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>, add this text and save the file:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="co"># Add custom antimicrobial codes:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>AMR_custom_ab <span class="op">=</span> <span class="st">"~/my_custom_ab.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Upon package load, this file will be loaded and run through the <code>add_custom_antimicrobials()</code> function.</p></li>
-</ol><p><strong>Method 2:</strong> Save the antimicrobial additions directly to your <code>.Rprofile</code> file. An important downside is that this requires to load the <code>AMR</code> package at every start-up. To use this method:</p><ol><li><p>Edit the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>.</p></li>
+</ol><p><strong>Method 2:</strong> Loading the antimicrobial additions directly from your <code>.Rprofile</code> file. An important downside is that this requires the <code>AMR</code> package to be installed or else this method will fail. To use this method:</p><ol><li><p>Edit the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>.</p></li>
 <li><p>Add a text like below and save the file:</p>
 <p></p><div class="sourceCode r"><pre><code><span> <span class="co"># Add custom antibiotic drug codes:</span></span>
-<span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
-<span> <span class="fu"><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobials</a></span><span class="op">(</span></span>
+<span> <span class="fu">AMR</span><span class="fu">::</span><span class="fu"><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobials</a></span><span class="op">(</span></span>
 <span>   <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"TESTAB"</span>,</span>
 <span>              name <span class="op">=</span> <span class="st">"Test Antibiotic"</span>,</span>
 <span>              group <span class="op">=</span> <span class="st">"Test Group"</span><span class="op">)</span></span>

@@ -12,7 +12,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9098</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9099</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,60 +34,65 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     How to
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--how-to">
+    <a class="dropdown-item" href="../reference/AMR-options.html">
+      <span class="fa fa-gear"></span>
+       
+      User- Or Team-specific Package Settings
+    </a>
     <a class="dropdown-item" href="../articles/AMR.html">
       <span class="fa fa-directions"></span>
        
-      Conduct AMR analysis
+      Conduct AMR Analysis
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
        
-      Predict antimicrobial resistance
+      Predict Antimicrobial Resistance
     </a>
     <a class="dropdown-item" href="../articles/datasets.html">
       <span class="fa fa-database"></span>
        
-      Data sets for download / own use
+      Data Sets for Download / Own Use
     </a>
     <a class="dropdown-item" href="../articles/PCA.html">
       <span class="fa fa-compress"></span>
        
-      Conduct principal component analysis for AMR
+      Conduct Principal Component Analysis for AMR
     </a>
     <a class="dropdown-item" href="../articles/MDR.html">
       <span class="fa fa-skull-crossbones"></span>
        
-      Determine multi-drug resistance (MDR)
+      Determine Multi-Drug Resistance (MDR)
     </a>
     <a class="dropdown-item" href="../articles/WHONET.html">
       <span class="fa fa-globe-americas"></span>
        
-      Work with WHONET data
+      Work with WHONET Data
     </a>
     <a class="dropdown-item" href="../articles/SPSS.html">
       <span class="fa fa-file-upload"></span>
        
-      Import data from SPSS/SAS/Stata
+      Import Data From SPSS/SAS/Stata
     </a>
     <a class="dropdown-item" href="../articles/EUCAST.html">
       <span class="fa fa-exchange-alt"></span>
        
-      Apply EUCAST rules
+      Apply Eucast Rules
     </a>
     <a class="dropdown-item" href="../reference/mo_property.html">
       <span class="fa fa-bug"></span>
        
-      Get taxonomy of a microorganism
+      Get Taxonomy of a Microorganism
     </a>
     <a class="dropdown-item" href="../reference/ab_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antibiotic drug
+      Get Properties of an Antibiotic Drug
     </a>
     <a class="dropdown-item" href="../reference/av_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antiviral drug
+      Get Properties of an Antiviral Drug
     </a>
   </div>
 </li>
@@ -162,7 +167,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an <span style="R">R</span> object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
-<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href="microorganisms.html">microorganisms$mo</a></code> or <code><a href="microorganisms.html">microorganisms$fullname</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into <span style="R">R</span> and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> argument and defaults to the user's home directory. It can also be set as an <span style="R">R</span> option, using <code>options(AMR_mo_source = "my/location/file.rds")</code>.</p>
+<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href="microorganisms.html">microorganisms$mo</a></code> or <code><a href="microorganisms.html">microorganisms$fullname</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into <span style="R">R</span> and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> argument and defaults to the user's home directory. It can also be set with the option <code><a href="AMR-options.html">AMR_mo_source</a></code>, e.g. <code>options(AMR_mo_source = "my/location/file.rds")</code>.</p>
 <p>The created compressed data file <code>"mo_source.rds"</code> will be used at default for MO determination (function <code><a href="as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href="mo_property.html">mo_genus()</a></code> and <code><a href="mo_property.html">mo_gramstain()</a></code>). The location and timestamp of the original file will be saved as an <a href="https://rdrr.io/r/base/attributes.html" class="external-link">attribute</a> to the compressed data file.</p>
 <p>The function <code>get_mo_source()</code> will return the data set by reading <code>"mo_source.rds"</code> with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>. If the original file has changed (by checking the location and timestamp of the original file), it will call <code>set_mo_source()</code> to update the data file automatically if used in an interactive session.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file created with <code>set_mo_source()</code> will then have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (millionths of a second).</p>
