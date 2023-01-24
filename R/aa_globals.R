@@ -144,6 +144,7 @@ globalVariables(c(
   "pattern",
   "R",
   "rank_index",
+  "ref_tbl",
   "reference.rule",
   "reference.rule_group",
   "reference.version",

@@ -48,8 +48,8 @@ expect_identical(suppressWarnings(suppressMessages(as.rsi(data.frame(CIP = mic, 
 expect_identical(suppressWarnings(n_rsi(example_isolates$CIP)),
                  suppressWarnings(n_sir(example_isolates$CIP)))
 
-expect_identical(suppressWarnings(rsi_df(example_isolates$CIP)),
-                 suppressWarnings(sir_df(example_isolates$CIP)))
+expect_identical(suppressWarnings(rsi_df(example_isolates)),
+                 suppressWarnings(sir_df(example_isolates)))
 
 expect_identical(suppressWarnings(is.rsi.eligible(example_isolates)),
                  suppressWarnings(is_sir_eligible(example_isolates)))
