@@ -54,7 +54,7 @@ expect_identical(suppressWarnings(rsi_df(example_isolates)),
 expect_identical(suppressWarnings(is.rsi.eligible(example_isolates)),
                  suppressWarnings(is_sir_eligible(example_isolates)))
 
-if (pkg_is_available("ggplot2", also_load = FALSE)) {
+if (AMR:::pkg_is_available("ggplot2", also_load = FALSE)) {
   expect_identical(suppressWarnings(ggplot_rsi(example_isolates[, c("CIP", "GEN", "TOB")])),
                    suppressWarnings(ggplot_sir(example_isolates[, c("CIP", "GEN", "TOB")])))
   
