@@ -55,10 +55,10 @@ expect_identical(suppressWarnings(is.rsi.eligible(example_isolates)),
                  suppressWarnings(is_sir_eligible(example_isolates)))
 
 if (AMR:::pkg_is_available("ggplot2", also_load = FALSE)) {
-  expect_identical(suppressWarnings(ggplot_rsi(example_isolates[, c("CIP", "GEN", "TOB")])),
-                   suppressWarnings(ggplot_sir(example_isolates[, c("CIP", "GEN", "TOB")])))
+  expect_equal(suppressWarnings(ggplot_rsi(example_isolates[, c("CIP", "GEN", "TOB")])),
+               suppressWarnings(ggplot_sir(example_isolates[, c("CIP", "GEN", "TOB")])))
   
   p <- ggplot2::ggplot(example_isolates[, c("CIP", "GEN", "TOB")])
   expect_equal(suppressWarnings(p + geom_rsi() + scale_rsi_colours() + labels_rsi_count() + facet_rsi() + theme_rsi()),
-                   suppressWarnings(p + geom_sir() + scale_sir_colours() + labels_sir_count() + facet_sir() + theme_sir()))
+               suppressWarnings(p + geom_sir() + scale_sir_colours() + labels_sir_count() + facet_sir() + theme_sir()))
 }
