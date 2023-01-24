@@ -150,7 +150,7 @@ theme_rsi <- function(...) {
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.rsi <- pillar_shaft.sir
 type_sum.rsi <- function(x, ...) {
-  deprecation_warning(extra_msg = "* Transform your old 'rsi' class to the new 'sir' class with `as.sir()` using e.g.:\n  your_data %>% mutate_if(is.rsi, as.sir)")
+  deprecation_warning(extra_msg = "* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi' columns to 'sir' with `as.sir()`, e.g.:\n  your_data %>% mutate_if(is.rsi, as.sir)")
   paste0("rsi", font_bold(font_red("[!]")))
 }
 
@@ -158,7 +158,7 @@ type_sum.rsi <- function(x, ...) {
 #' @export
 #' @noRd
 print.rsi <- function(x, ...) {
-  deprecation_warning(extra_msg = "Transform your old 'rsi' class to the new 'sir' class with `as.sir()`")
+  deprecation_warning(extra_msg = "The 'rsi' class has been replaced with 'sir' - transform your 'rsi' data with `as.sir()`")
   cat("Class 'rsi'", font_bold(font_red("[!]\n")))
   print(as.character(x), quote = FALSE)
 }
@@ -190,6 +190,8 @@ summary.rsi <- summary.sir
 #' @noRd
 #' @export
 unique.rsi <- unique.sir
+
+# WHEN REMOVING RSI, DON'T FORGET TO REMOVE THE "rsi_df" CLASS FROM R/sir_calc.R
 
 deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL) {
   if (is.null(old)) {

@@ -82,7 +82,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the \link[=options]{option} \code{AMR_guideline}. Supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}.}
+\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
