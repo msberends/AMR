@@ -722,9 +722,9 @@ format_class <- function(class, plural = FALSE) {
     class <- "input created with `custom_eucast_rules()`"
   }
   if (any(c("mo", "ab", "sir") %in% class)) {
-    class <- paste0("of class <", class[1L], ">")
+    class <- paste0("of class '", class[1L], "'")
   }
-  class[class == class.bak] <- paste0("of class <", class[class == class.bak], ">")
+  class[class == class.bak] <- paste0("of class '", class[class == class.bak], "'")
   # output
   vector_or(class, quotes = FALSE, sort = FALSE)
 }
@@ -854,7 +854,7 @@ meet_criteria <- function(object,
         }
       ), na.rm = TRUE),
       "the data provided in argument `", obj_name,
-      "` must contain at least one column of class <", contains_column_class, ">. ",
+      "` must contain at least one column of class '", contains_column_class, "'. ",
       "See ?as.", contains_column_class, ".",
       call = call_depth
     )

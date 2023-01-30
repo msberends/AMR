@@ -800,25 +800,31 @@ print.mo_uncertainties <- function(x, ...) {
     return(invisible(NULL))
   }
 
-  add_MO_lookup_to_AMR_env()
-
   cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
+  
+  add_MO_lookup_to_AMR_env()
+  
+  col_red <- function(x) font_rose_bg(font_black(x, collapse = NULL), collapse = NULL)
+  col_orange <- function(x) font_orange_bg(font_black(x, collapse = NULL), collapse = NULL)
+  col_yellow <- function(x) font_yellow_bg(font_black(x, collapse = NULL), collapse = NULL)
+  col_green <- function(x) font_green_bg(font_black(x, collapse = NULL), collapse = NULL)
+  
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
-      font_red_bg(" 0.000-0.499 "),
-      font_orange_bg(" 0.500-0.599 "),
-      font_yellow_bg(" 0.600-0.699 "),
-      font_green_bg(" 0.700-1.000"),
+      col_red(" 0.000-0.499 "),
+      col_orange(" 0.500-0.599 "),
+      col_yellow(" 0.600-0.699 "),
+      col_green(" 0.700-1.000"),
       add_fn = font_blue
     ), font_green_bg(" "), "\n", sep = "")
   }
-
+  
   score_set_colour <- function(text, scores) {
     # set colours to scores
-    text[scores >= 0.7] <- font_green_bg(text[scores >= 0.7], collapse = NULL)
-    text[scores >= 0.6 & scores < 0.7] <- font_yellow_bg(text[scores >= 0.6 & scores < 0.7], collapse = NULL)
-    text[scores >= 0.5 & scores < 0.6] <- font_orange_bg(text[scores >= 0.5 & scores < 0.6], collapse = NULL)
-    text[scores < 0.5] <- font_red_bg(text[scores < 0.5], collapse = NULL)
+    text[scores >= 0.7] <- col_green(text[scores >= 0.7])
+    text[scores >= 0.6 & scores < 0.7] <- col_yellow(text[scores >= 0.6 & scores < 0.7])
+    text[scores >= 0.5 & scores < 0.6] <- col_orange(text[scores >= 0.5 & scores < 0.6])
+    text[scores < 0.5] <- col_red(text[scores < 0.5])
     text
   }
 

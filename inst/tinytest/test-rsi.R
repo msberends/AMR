@@ -195,6 +195,20 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
     as.sir(guideline = "CLSI") %>%
     pull(amox_disk) %>%
     is.sir())
+  
+  # used by group_by() on sir_calc_df(), check some internals to see if grouped calculation without tidyverse works
+  groups <- example_isolates %>%
+    group_by(mo) %>%
+    attributes() %>%
+    .$groups
+  expect_equal(nrow(groups),
+               90)
+  expect_equal(class(groups$.rows),
+               c("vctrs_list_of", "vctrs_vctr", "list"))
+  expect_equal(groups$.rows[[1]],
+               c(101, 524, 1368))
+  expect_equal(example_isolates[c(101, 524, 1368), "mo", drop = TRUE],
+               rep(groups$mo[1], 3))
 }
 # frequency tables
 if (AMR:::pkg_is_available("cleaner")) {
