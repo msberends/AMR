@@ -49,6 +49,11 @@
   content: 'Maintainers';
 }
 
+/* marked words for after using the search box */
+mark, .mark {
+  background: rgba(17, 143, 118, 0.25) !important;
+}
+
 
 /* SYNTAX */
 /* These are simple changes for the syntax highlighting */

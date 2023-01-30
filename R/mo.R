@@ -210,7 +210,7 @@ as.mo <- function(x,
   # From known codes ----
   out[is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code] <- AMR::microorganisms.codes$mo[match(toupper(x)[is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code], AMR::microorganisms.codes$code)]
   # From SNOMED ----
-  if (any(is.na(out) & !is.na(x)) && any(is.na(out) & x %in% unlist(microorganisms$snomed), na.rm = TRUE)) {
+  if (any(is.na(out) & !is.na(x)) && any(is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed), na.rm = TRUE)) {
     # found this extremely fast gem here: https://stackoverflow.com/a/11002456/4575331
     out[is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed)] <- AMR_env$MO_lookup$mo[rep(seq_along(AMR_env$MO_lookup$snomed), vapply(FUN.VALUE = double(1), AMR_env$MO_lookup$snomed, length))[match(x[is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed)], unlist(AMR_env$MO_lookup$snomed))]]
   }

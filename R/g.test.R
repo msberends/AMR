@@ -179,7 +179,7 @@ g.test <- function(x,
     V <- outer(sr, sc, v, n)
     dimnames(E) <- dimnames(x)
 
-    STATISTIC <- 2 * sum(x * log(x / E)) # sum((abs(x - E) - YATES)^2/E) for chisq.test
+    STATISTIC <- 2 * sum(x * log(x / E), na.rm = TRUE) # sum((abs(x - E) - YATES)^2/E) for chisq.test
     PARAMETER <- (nr - 1L) * (nc - 1L)
     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
   } else {
