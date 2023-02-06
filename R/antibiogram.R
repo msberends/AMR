@@ -43,6 +43,8 @@
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (defaults to `TRUE`)
 #' @param sep a separating character for antibiotic columns in combination antibiograms
+#' @param object an [antibiogram()] object
+#' @param ... method extensions
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
 #' 
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
@@ -314,7 +316,7 @@ antibiogram <- function(x,
     if (identical(select, import_fn("select", "dplyr", error_on_fail = FALSE))) {
       antibiotics <- suppressWarnings(x %>% select({{ antibiotics }}) %>% colnames())
     } else {
-      antibiotics <- x %>% select(antibiotics) %>% colnames()
+      antibiotics <- colnames(x[, antibiotics, drop = FALSE])
     }
   }
   
@@ -447,9 +449,9 @@ plot.antibiogram <- function(x, ...) {
     df <- df[order(df$mo), , drop = FALSE]
   }
   mo_levels = unique(df$mo)
-  mfrow_old <- par()$mfrow
+  mfrow_old <- graphics::par()$mfrow
   sqrt_levels <- sqrt(length(mo_levels))
-  par(mfrow = c(ceiling(sqrt_levels), floor(sqrt_levels)))
+  graphics::par(mfrow = c(ceiling(sqrt_levels), floor(sqrt_levels)))
   for (i in seq_along(mo_levels)) {
     mo <- mo_levels[i]
     df_sub <- df[df$mo == mo, , drop = FALSE]
@@ -463,12 +465,14 @@ plot.antibiogram <- function(x, ...) {
             main = mo,
             legend = NULL)
   }
-  par(mfrow = mfrow_old)
+  graphics::par(mfrow = mfrow_old)
 }
 
 #' @export
 #' @noRd
-barplot.antibiogram <- plot.antibiogram
+barplot.antibiogram <- function(height, ...) {
+  plot(height, ...)
+}
 
 #' @method autoplot antibiogram
 #' @rdname antibiogram

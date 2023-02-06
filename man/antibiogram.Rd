@@ -63,6 +63,10 @@ antibiogram(
 
 \item{sep}{a separating character for antibiotic columns in combination antibiograms}
 
+\item{...}{method extensions}
+
+\item{object}{an \code{\link[=antibiogram]{antibiogram()}} object}
+
 \item{as_kable}{a \link{logical} to indicate whether the printing should be done using \code{\link[knitr:kable]{knitr::kable()}} (which is the default in non-interactive sessions)}
 }
 \description{
