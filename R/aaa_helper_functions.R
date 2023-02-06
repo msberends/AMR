@@ -1424,30 +1424,6 @@ case_when <- function(...) {
   out
 }
 
-# adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
-where <- function(fn) {
-  if (!is.function(fn)) {
-    stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
-  }
-  df <- pm_select_env$.data
-  cols <- pm_select_env$get_colnames()
-  if (is.null(df)) {
-    df <- get_current_data("where", call = FALSE)
-    cols <- colnames(df)
-  }
-  preds <- unlist(lapply(
-    df,
-    function(x, fn) {
-      do.call("fn", list(x))
-    },
-    fn
-  ))
-  if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
-  data_cols <- cols
-  cols <- data_cols[preds]
-  which(data_cols %in% cols)
-}
-
 
 # dplyr implementations ----
 
@@ -1478,6 +1454,7 @@ if (pkg_is_available("dplyr", also_load = FALSE)) {
   ungroup <- import_fn("ungroup", "dplyr", error_on_fail = FALSE)
   mutate <- import_fn("mutate", "dplyr", error_on_fail = FALSE)
   bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = FALSE)
+  where <- import_fn("where", "dplyr", error_on_fail = FALSE)
 } else {
   `%>%` <- `%pm>%`
   anti_join <- pm_anti_join
@@ -1522,6 +1499,29 @@ if (pkg_is_available("dplyr", also_load = FALSE)) {
     })
     mat <- do.call(rbind, mat_list)
     as.data.frame(mat, stringsAsFactors = FALSE)
+  }
+  where <- function(fn) {
+    # adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
+    if (!is.function(fn)) {
+      stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
+    }
+    df <- pm_select_env$.data
+    cols <- pm_select_env$get_colnames()
+    if (is.null(df)) {
+      df <- get_current_data("where", call = FALSE)
+      cols <- colnames(df)
+    }
+    preds <- unlist(lapply(
+      df,
+      function(x, fn) {
+        do.call("fn", list(x))
+      },
+      fn
+    ))
+    if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
+    data_cols <- cols
+    cols <- data_cols[preds]
+    which(data_cols %in% cols)
   }
   
 }

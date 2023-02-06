@@ -362,13 +362,13 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
   }
 
   if (is.data.frame(data)) {
-    if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
-      out <- tryCatch(suppressWarnings(unlist(list(...))), error = function(e) NULL)
-      if (!is.null(out)) {
-        df <- data[, out, drop = FALSE]
-      } else {
-        df <- select(data, ...)
-      }
+    if (tryCatch(length(c(...)) > 1, error = function(e) TRUE)) {
+      df <- tryCatch(suppressWarnings(select(data, ...)),
+                     error = function(e) {
+                       data[, c(...), drop = FALSE]
+                     })
+    } else if (tryCatch(is.character(c(...)), error = function(e) FALSE)) {
+      df <- data[, c(...), drop = FALSE]
     } else {
       df <- data
     }

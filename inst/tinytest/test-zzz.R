@@ -73,7 +73,8 @@ import_functions <- c(
   "semi_join" = "dplyr",
   "showQuestion" = "rstudioapi",
   "summarise" = "dplyr",
-  "ungroup" = "dplyr"
+  "ungroup" = "dplyr",
+  "where" = "dplyr"
 )
 
 # functions that are called directly with ::
