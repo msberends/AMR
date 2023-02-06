@@ -127,7 +127,7 @@ pca <- function(x,
     x <- cbind(x.bak[, vapply(FUN.VALUE = logical(1), x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
   }
 
-  x <- pm_ungroup(x) # would otherwise select the grouping vars
+  x <- ungroup(x) # would otherwise select the grouping vars
   x <- x[rowSums(is.na(x)) == 0, ] # remove columns containing NAs
 
   pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x))), drop = FALSE]

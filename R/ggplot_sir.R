@@ -202,7 +202,7 @@ ggplot_sir <- function(data,
   meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(colours, allow_class = c("character", "logical"))
@@ -300,7 +300,7 @@ geom_sir <- function(position = NULL,
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
 
@@ -486,7 +486,7 @@ labels_sir_count <- function(position = NULL,
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
@@ -519,11 +519,11 @@ labels_sir_count <- function(position = NULL,
         language = language
       )
       transformed$gr <- transformed[, x_name, drop = TRUE]
-      transformed %pm>%
-        pm_group_by(gr) %pm>%
-        pm_mutate(lbl = paste0("n=", isolates)) %pm>%
-        pm_ungroup() %pm>%
-        pm_select(-gr)
+      transformed %>%
+        group_by(gr) %>%
+        mutate(lbl = paste0("n=", isolates)) %>%
+        ungroup() %>%
+        select(-gr)
     }
   )
 }

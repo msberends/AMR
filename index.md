@@ -73,6 +73,44 @@ example_isolates[which(mo_is_gram_negative() &
 
 This base R snippet will work in any version of R since April 2013 (R-3.0).
 
+#### Generating antibiograms
+
+The `AMR` package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).
+
+If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
+
+```r
+antibiogram(example_isolates,
+            antibiotics = c(aminoglycosides(), carbapenems()))
+```
+
+|Pathogen (N min-max)   | AMK| GEN| IPM| KAN| MEM| TOB|
+|:----------------------|---:|---:|---:|---:|---:|---:|
+|CoNS (43-309)          |   0|  86|  52|   0|  52|  22|
+|E. coli (0-462)        | 100|  98| 100|  NA| 100|  97|
+|E. faecalis (0-39)     |   0|   0| 100|   0|  NA|   0|
+|K. pneumoniae (0-58)   |  NA|  90| 100|  NA| 100|  90|
+|P. aeruginosa (17-30)  |  NA| 100|  NA|   0|  NA| 100|
+|P. mirabilis (0-34)    |  NA|  94|  94|  NA|  NA|  94|
+|S. aureus (2-233)      |  NA|  99|  NA|  NA|  NA|  98|
+|S. epidermidis (8-163) |   0|  79|  NA|   0|  NA|  51|
+|S. hominis (3-80)      |  NA|  92|  NA|  NA|  NA|  85|
+|S. pneumoniae (11-117) |   0|   0|  NA|   0|  NA|   0|
+
+In combination antibiograms, it is clear that combined antibiotics yield higher empiric coverage:
+
+```r
+antibiogram(example_isolates,
+            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+            mo_transform = "gramstain")
+```
+
+|Pathogen (N min-max)     | TZP| TZP + GEN| TZP + TOB|
+|:------------------------|---:|---------:|---------:|
+|Gram-negative (641-693)  |  88|        99|        98|
+|Gram-positive (345-1044) |  86|        98|        95|
+
+
 #### Calculating resistance per group
 
 ```r

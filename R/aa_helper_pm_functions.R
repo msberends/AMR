@@ -519,7 +519,7 @@ pm_join_message <- function(by) {
   }
 }
 pm_lag <- function(x, pm_n = 1L, default = NA) {
-  if (inherits(x, "ts")) stop("`x` must be a vector, not a `ts` object, do you want `stats::pm_lag()`?")
+  if (inherits(x, "ts")) stop("`x` must be a vector, not a `ts` object, do you want `stats::lag()`?")
   if (length(pm_n) != 1L || !is.numeric(pm_n) || pm_n < 0L) stop("`pm_n` must be a nonnegative integer scalar")
   if (pm_n == 0L) {
     return(x)

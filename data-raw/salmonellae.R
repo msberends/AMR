@@ -1410,6 +1410,7 @@ serovars <- c(
   "Tudu",
   "Tumodi",
   "Typhi",
+  "Typhimurium",
   "Typhisuis",
   "Tyresoe",
   "Uccle",
@@ -1567,14 +1568,11 @@ salmonellae <- tibble(
   gbif_parent = 9701185
 )
 
-salmonellae <- salmonellae %>%
-  # remove e.g. Salmonella Enteritidis if Salmonella enteritidis already existed
-  filter(!tolower(fullname) %in% tolower(AMR::microorganisms$fullname))
-
 groups <- c(
   "Paratyphi A",
   "Paratyphi B",
   "Paratyphi C",
+  "Group A",
   "Group B",
   "Group C",
   "Group D"
@@ -1591,3 +1589,7 @@ salmonellae <- salmonellae %>%
   ))
 
 saveRDS(salmonellae, "data-raw/salmonellae.rds", version = 2)
+
+# This was later needed to get the right parents for groups
+microorganisms$lpsn_parent[which(microorganisms$genus == "Salmonella" & microorganisms$rank == "species")] <- "516547"
+microorganisms$gbif_parent[which(microorganisms$genus == "Salmonella" & microorganisms$rank == "species")] <- "3221815"

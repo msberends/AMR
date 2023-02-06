@@ -785,14 +785,14 @@ is_all <- function(el1) {
 
 find_ab_group <- function(ab_class_args) {
   ab_class_args <- gsub("[^a-zA-Z0-9]", ".*", ab_class_args)
-  AMR_env$AB_lookup %pm>%
-    subset(group %like% ab_class_args |
+  AMR_env$AB_lookup %>%
+    filter(group %like% ab_class_args |
       atc_group1 %like% ab_class_args |
-      atc_group2 %like% ab_class_args) %pm>%
-    pm_pull(group) %pm>%
-    unique() %pm>%
-    tolower() %pm>%
-    sort() %pm>%
+      atc_group2 %like% ab_class_args) %>%
+    pull(group) %>%
+    unique() %>%
+    tolower() %>%
+    sort() %>%
     paste(collapse = "/")
 }
 

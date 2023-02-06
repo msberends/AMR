@@ -602,7 +602,7 @@ plot.sir <- function(x,
 
   data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
 
-  ymax <- pm_if_else(max(data$s) > 95, 105, 100)
+  ymax <- ifelse(max(data$s) > 95, 105, 100)
 
   plot(
     x = data$x,
@@ -615,7 +615,7 @@ plot.sir <- function(x,
     axes = FALSE
   )
   # x axis
-  axis(side = 1, at = 1:pm_n_distinct(data$x), labels = levels(data$x), lwd = 0)
+  axis(side = 1, at = 1:n_distinct(data$x), labels = levels(data$x), lwd = 0)
   # y axis, 0-100%
   axis(side = 2, at = seq(0, 100, 5))
 

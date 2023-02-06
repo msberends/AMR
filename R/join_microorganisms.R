@@ -159,14 +159,9 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     by <- stats::setNames("mo", by)
   }
 
-  # use dplyr if available - it's much faster than poorman alternatives
-  dplyr_join <- import_fn(name = type, pkg = "dplyr", error_on_fail = FALSE)
-  if (!is.null(dplyr_join)) {
-    join_fn <- dplyr_join
-  } else {
-    # otherwise use poorman, see R/aa_helper_pm_functions.R
-    join_fn <- get(paste0("pm_", type), envir = asNamespace("AMR"))
-  }
+  # this will use dplyr if available, and the slower poorman otherwise, see R/aaa_helper_pm_functions.R
+  join_fn <- get(type, envir = asNamespace("AMR"))
+  
   MO_df <- AMR_env$MO_lookup[, colnames(AMR::microorganisms), drop = FALSE]
   if (type %like% "full|left|right|inner") {
     joined <- join_fn(x = x, y = MO_df, by = by, suffix = suffix, ...)

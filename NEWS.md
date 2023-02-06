@@ -1,4 +1,4 @@
-# AMR 1.8.2.9105
+# AMR 1.8.2.9106
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -7,13 +7,13 @@ This is a new major release of the AMR package, with great new additions but als
 **[TL;DR](https://en.wikipedia.org/wiki/TL;DR)**
 
 * All functions and arguments with 'rsi' were replaced with 'sir', such as the interpretation of MIC values (now `as.sir()` instead of `as.rsi()`) - all old functions still work for now
+* Many new interesting functions, such as `antibiogram()` (for generating traditional/combined/syndromic/WISCA antibiograms), `sir_confidence_interval()` and `mean_amr_distance()`, and `add_custom_microorganisms()` to add custom microorganisms to this package
+* Clinical breakpoints added for EUCAST 2022 and CLSI 2022
 * Microbiological taxonomy (`microorganisms` data set) updated to 2022 and now based on LPSN and GBIF
 * Much increased algorithms to translate user input to valid taxonomy, e.g. by using [recent scientific work](https://doi.org/10.1099/mic.0.001269) about per-species human pathogenicity
-* Clinical breakpoints added for EUCAST 2022 and CLSI 2022
 * 20 new antibiotics added and updated all DDDs and ATC codes
 * Extended support for antiviral agents (`antivirals` data set), with many new functions
 * Now available in 16 languages
-* Many new interesting functions, such as `sir_confidence_interval()` and `mean_amr_distance()`, and `add_custom_microorganisms()` to add custom microorganisms to this package
 * Many small bug fixes
 
 ## New
@@ -25,6 +25,17 @@ For this milestone version, we replaced all mentions of RSI with SIR, to comply 
 While existing functions such as `as.rsi()`, `rsi_df()` and `ggplot_rsi()` still work, their replacements `as.sir()`,  `sir_df()`, `ggplot_sir()` are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set `rsi_translation` is now called `clinical_breakpoints` to better reflect its content.
 
 The 'RSI functions' will be removed in a future version, but not before late 2023 / early 2024.
+
+### New antibiogram function
+
+Klinker *et al.* (2021, DOI [10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)) and Barbieri *et al.* (2021, DOI [10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)).
+
+With the new `antibiogram()` function, users can now generate traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA). With this, we follow the logic in the previously described work of Klinker *et al.* (2021, DOI [10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)) and Barbieri *et al.* (2021, DOI [10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)).
+
+The help page for `antibiogram()` extensively elaborates on use cases, and `antibiogram()` also supports printing in R Markdown and Quarto, with support for 16 languages.
+
+Furthermore, different plotting methods were implemented to allow for graphical visualisations as well.
+
 
 ### Interpretation of MIC and disk diffusion values
 
@@ -123,6 +134,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.sir()`
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
 * Cleaning columns with `as.sir()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
+* Fix for using `g.test()` with zeroes in a 2x2 table
 
 ## Other
 

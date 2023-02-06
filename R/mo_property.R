@@ -31,7 +31,7 @@
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. See *Examples*.
 #' @param x any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
-#' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
+#' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`
 #' @inheritParams as.mo
 #' @param ... other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
@@ -900,12 +900,16 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
   }
 
   # get property reeaaally fast using match()
-  x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
-
+  if (property == "snomed") {
+    x <- lapply(x, function(y) unlist(AMR_env$MO_lookup$snomed[match(y, AMR_env$MO_lookup$mo)]))
+  } else {
+    x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
+  }
+  
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))
   } else if (property == "snomed") {
-    return(sort(as.character(eval(parse(text = x)))))
+    return(x)
   } else if (property == "prevalence") {
     return(as.double(x))
   } else {

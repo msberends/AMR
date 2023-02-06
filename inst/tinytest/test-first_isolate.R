@@ -228,7 +228,7 @@ expect_identical(
 
 
 # notice that all mo's are distinct, so all are TRUE
-expect_true(all(first_isolate(AMR:::pm_distinct(example_isolates, mo, .keep_all = TRUE), info = TRUE) == TRUE))
+expect_true(all(first_isolate(AMR:::distinct(example_isolates, mo, .keep_all = TRUE), info = TRUE) == TRUE))
 
 # only one isolate, so return fast
 expect_true(first_isolate(data.frame(mo = "Escherichia coli", date = Sys.Date(), patient = "patient"), info = TRUE))

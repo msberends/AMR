@@ -89,7 +89,7 @@
 #'
 #' ### Machine-Readable Interpretation Guidelines
 #'
-#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::clinical_breakpoints), big.mark = ",")` rows and `r ncol(AMR::clinical_breakpoints)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::clinical_breakpoints), big.mark = " ")` rows and `r ncol(AMR::clinical_breakpoints)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
 #' ### Other
 #'
@@ -373,9 +373,9 @@ as.sir.default <- function(x, ...) {
 
     if (!isFALSE(list(...)$warn)) { # so as.sir(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {
-        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
-          unique() %pm>%
-          sort() %pm>%
+        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %>%
+          unique() %>%
+          sort() %>%
           vector_and(quotes = TRUE)
         cur_col <- get_current_column()
         warning_("in `as.sir()`: ", na_after - na_before, " result",
@@ -543,7 +543,7 @@ as.sir.data.frame <- function(x,
 
   i <- 0
   if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
-    sel <- colnames(pm_select(x, ...))
+    sel <- colnames(select(x, ...))
   } else {
     sel <- colnames(x)
   }
@@ -597,10 +597,10 @@ as.sir.data.frame <- function(x,
 
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
-      x[, ab_cols[i]] <- x %pm>%
-        pm_pull(ab_cols[i]) %pm>%
-        as.character() %pm>%
-        as.mic() %pm>%
+      x[, ab_cols[i]] <- x %>%
+        pull(ab_cols[i]) %>%
+        as.character() %>%
+        as.mic() %>%
         as.sir(
           mo = x_mo,
           mo.bak = x[, col_mo, drop = TRUE],
@@ -614,10 +614,10 @@ as.sir.data.frame <- function(x,
           is_data.frame = TRUE
         )
     } else if (types[i] == "disk") {
-      x[, ab_cols[i]] <- x %pm>%
-        pm_pull(ab_cols[i]) %pm>%
-        as.character() %pm>%
-        as.disk() %pm>%
+      x[, ab_cols[i]] <- x %>%
+        pull(ab_cols[i]) %>%
+        as.character() %>%
+        as.disk() %>%
         as.sir(
           mo = x_mo,
           mo.bak = x[, col_mo, drop = TRUE],
@@ -848,21 +848,21 @@ as_sir_method <- function(method_short,
   mo_coerced <- mo
 
   if (identical(reference_data, AMR::clinical_breakpoints)) {
-    breakpoints <- reference_data %pm>%
+    breakpoints <- reference_data %>%
       subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
     if (ab_coerced == "AMX" && nrow(breakpoints) == 0) {
       ab_coerced <- "AMP"
-      breakpoints <- reference_data %pm>%
+      breakpoints <- reference_data %>%
         subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
     }
   } else {
-    breakpoints <- reference_data %pm>%
+    breakpoints <- reference_data %>%
       subset(method == method_coerced & ab == ab_coerced)
   }
 
   if (isFALSE(include_PKPD)) {
     # remove PKPD rules from the breakpoints table
-    breakpoints <- breakpoints %pm>%
+    breakpoints <- breakpoints %>%
       subset(mo != "UNKNOWN" & ref_tbl %unlike% "PK.*PD")
   }
 
@@ -918,7 +918,7 @@ as_sir_method <- function(method_short,
 
     # gather all available breakpoints for current MO and sort on taxonomic rank
     # (this will prefer species breakpoints over order breakpoints)
-    breakpoints_current <- breakpoints %pm>%
+    breakpoints_current <- breakpoints %>%
       subset(mo %in% c(
         mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
@@ -927,14 +927,14 @@ as_sir_method <- function(method_short,
       ))
 
     if (any(uti, na.rm = TRUE)) {
-      breakpoints_current <- breakpoints_current %pm>%
+      breakpoints_current <- breakpoints_current %>%
         # be as specific as possible (i.e. prefer species over genus):
-        # the below `pm_desc(uti)` will put `TRUE` on top and FALSE on bottom
-        pm_arrange(rank_index, pm_desc(uti)) # 'uti' is a column in data set 'clinical_breakpoints'
+        # the below `desc(uti)` will put `TRUE` on top and FALSE on bottom
+        arrange(rank_index, desc(uti)) # 'uti' is a column in data set 'clinical_breakpoints'
     } else {
-      breakpoints_current <- breakpoints_current %pm>%
+      breakpoints_current <- breakpoints_current %>%
         # sort UTI = FALSE first, then UTI = TRUE
-        pm_arrange(rank_index, uti)
+        arrange(rank_index, uti)
     }
 
     # throw notes for different body sites
@@ -945,8 +945,8 @@ as_sir_method <- function(method_short,
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_unique, ab_coerced)) {
       # both UTI and Non-UTI breakpoints available
       msgs <- c(msgs, paste0("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
-      breakpoints_current <- breakpoints_current %pm>%
-        pm_filter(uti == FALSE)
+      breakpoints_current <- breakpoints_current %>%
+        filter(uti == FALSE)
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_unique, ab_coerced)) {
       # breakpoints for multiple body sites available
       site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
@@ -974,7 +974,7 @@ as_sir_method <- function(method_short,
       }
 
       if (method == "mic") {
-        new_sir <- quick_case_when(
+        new_sir <- case_when(
           is.na(values) ~ NA_sir_,
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
@@ -985,7 +985,7 @@ as_sir_method <- function(method_short,
           TRUE ~ NA_sir_
         )
       } else if (method == "disk") {
-        new_sir <- quick_case_when(
+        new_sir <- case_when(
           is.na(values) ~ NA_sir_,
           as.double(values) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),

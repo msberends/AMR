@@ -31,7 +31,8 @@ dots2vars <- function(...) {
   # this function is to give more informative output about
   # variable names in count_* and proportion_* functions
   dots <- substitute(list(...))
-  as.character(dots)[2:length(dots)]
+  dots <- as.character(dots)[2:length(dots)]
+  paste0(dots[dots != "."], collapse = "+")
 }
 
 sir_calc <- function(...,
@@ -41,7 +42,7 @@ sir_calc <- function(...,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
   meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1, 2, 3))
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
   meet_criteria(only_count, allow_class = "logical", has_length = 1)
@@ -67,7 +68,7 @@ sir_calc <- function(...,
   ndots <- length(dots)
 
   if (is.data.frame(dots_df)) {
-    # data.frame passed with other columns, like: example_isolates %pm>% proportion_S(AMC, GEN)
+    # data.frame passed with other columns, like: example_isolates %>% proportion_S(AMC, GEN)
 
     dots <- as.character(dots)
     # remove first element, it's the data.frame
@@ -77,7 +78,7 @@ sir_calc <- function(...,
       dots <- dots[2:length(dots)]
     }
     if (length(dots) == 0 || all(dots == "df")) {
-      # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
+      # for complete data.frames, like example_isolates %>% select(AMC, GEN) %>% proportion_S()
       # and the old sir function, which has "df" as name of the first argument
       x <- dots_df
     } else {
@@ -92,14 +93,14 @@ sir_calc <- function(...,
       x <- dots_df[, dots, drop = FALSE]
     }
   } else if (ndots == 1) {
-    # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %pm>% proportion_S()
+    # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %>% proportion_S()
     x <- dots_df
   } else {
     # multiple variables passed without pipe, like: proportion_S(example_isolates$AMC, example_isolates$GEN)
     x <- NULL
     try(x <- as.data.frame(dots, stringsAsFactors = FALSE), silent = TRUE)
     if (is.null(x)) {
-      # support for example_isolates %pm>% group_by(ward) %pm>% summarise(amox = susceptibility(GEN, AMX))
+      # support for example_isolates %>% group_by(ward) %>% summarise(amox = susceptibility(GEN, AMX))
       x <- as.data.frame(list(...), stringsAsFactors = FALSE)
     }
   }
@@ -133,7 +134,7 @@ sir_calc <- function(...,
     }
 
     x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
-    if (only_all_tested == TRUE) {
+    if (isTRUE(only_all_tested)) {
       # no NAs in any column
       y <- apply(
         X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
@@ -170,7 +171,7 @@ sir_calc <- function(...,
   if (only_count == TRUE) {
     return(numerator)
   }
-
+  
   if (denominator < minimum) {
     if (data_vars != "") {
       data_vars <- paste(" for", data_vars)
@@ -224,8 +225,8 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
   meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  language <- validate_language(language)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(confidence_level, allow_class = "numeric", has_length = 1)
@@ -355,6 +356,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
 
   if (data_has_groups) {
     # ordering by the groups and two more: "antibiotic" and "interpretation"
+    # (pm_ungroup here, as we do not use dplyr for summarising)
     out <- pm_ungroup(out[do.call("order", out[, seq_len(length(groups) + 2), drop = FALSE]), , drop = FALSE])
   } else {
     out <- out[order(out$antibiotic, out$interpretation), , drop = FALSE]

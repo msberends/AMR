@@ -45,6 +45,10 @@
 #' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
 #' @examples
 #' \donttest{
+#' #' # example_isolates is a data set available in the AMR package.
+#' # run ?example_isolates for more info.
+#' example_isolates
+#' 
 #' x <- bug_drug_combinations(example_isolates)
 #' head(x)
 #' format(x, translate_ab = "name (atc)")
@@ -79,7 +83,30 @@ bug_drug_combinations <- function(x,
   } else {
     stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
-
+  
+  # use dplyr and tidyr if they are available, they are much faster!
+  if (pkg_is_available("dplyr", min_version = "1.0.0", also_load = FALSE) &&
+      pkg_is_available("tidyr", min_version = "1.0.0", also_load = FALSE)) {
+    across <- import_fn("across", "dplyr")
+    pivot_longer <- import_fn("pivot_longer", "tidyr")
+    out <- x %>%
+      ungroup() %>% 
+      mutate(mo = FUN(ungroup(x)[, col_mo, drop = TRUE], ...)) %>%
+      pivot_longer(where(is.sir), names_to = "ab") %>%
+      group_by(across(c(group_vars(x), mo, ab))) %>%
+      summarise(S = sum(value == "S", na.rm = TRUE),
+                I = sum(value == "I", na.rm = TRUE),
+                R = sum(value == "R", na.rm = TRUE),
+                .groups = "drop") %>%
+      mutate(total = S + I + R)
+    out <- out %>% arrange(mo, ab)
+    return(structure(out,
+                     class = c("bug_drug_combinations",
+                               ifelse(is_null_or_grouped_tbl(x), "grouped", character(0)),
+                               class(out))))
+  }
+  
+  # no dplyr or tidyr available, so use base R
   x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- FUN(x[, col_mo, drop = TRUE], ...)
@@ -161,6 +188,7 @@ bug_drug_combinations <- function(x,
     out <- run_it(x)
   }
   rownames(out) <- NULL
+  out <- out %>% arrange(mo, ab)
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
   structure(out, class = c("bug_drug_combinations", ifelse(data_has_groups, "grouped", character(0)), class(out)))
 }
@@ -176,12 +204,12 @@ format.bug_drug_combinations <- function(x,
                                          add_ab_group = TRUE,
                                          remove_intrinsic_resistant = FALSE,
                                          decimal.mark = getOption("OutDec"),
-                                         big.mark = ifelse(decimal.mark == ",", ".", ","),
+                                         big.mark = ifelse(decimal.mark == ",", " ", ","),
                                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   language <- validate_language(language)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(add_ab_group, allow_class = "logical", has_length = 1)
   meet_criteria(remove_intrinsic_resistant, allow_class = "logical", has_length = 1)
@@ -246,46 +274,38 @@ format.bug_drug_combinations <- function(x,
     .data
   }
 
-  create_var <- function(.data, ...) {
-    dots <- list(...)
-    for (i in seq_len(length(dots))) {
-      .data[, names(dots)[i]] <- dots[[i]]
-    }
-    .data
-  }
-
-  y <- x %pm>%
-    create_var(
+  y <- x %>%
+    mutate(
       ab = as.ab(x$ab),
       ab_txt = give_ab_name(ab = x$ab, format = translate_ab, language = language)
-    ) %pm>%
-    pm_group_by(ab, ab_txt, mo) %pm>%
-    pm_summarise(
+    ) %>%
+    group_by(ab, ab_txt, mo) %>%
+    summarise(
       isolates = sum(isolates, na.rm = TRUE),
       total = sum(total, na.rm = TRUE)
-    ) %pm>%
-    pm_ungroup()
+    ) %>%
+    ungroup()
 
-  y <- y %pm>%
-    create_var(txt = paste0(
+  y <- y %>%
+    mutate(txt = paste0(
       percentage(y$isolates / y$total, decimal.mark = decimal.mark, big.mark = big.mark),
       " (", trimws(format(y$isolates, big.mark = big.mark)), "/",
       trimws(format(y$total, big.mark = big.mark)), ")"
-    )) %pm>%
-    pm_select(ab, ab_txt, mo, txt) %pm>%
-    pm_arrange(mo)
+    )) %>%
+    select(ab, ab_txt, mo, txt) %>%
+    arrange(mo)
 
   # replace tidyr::pivot_wider() from here
   for (i in unique(y$mo)) {
     mo_group <- y[which(y$mo == i), c("ab", "txt"), drop = FALSE]
     colnames(mo_group) <- c("ab", i)
     rownames(mo_group) <- NULL
-    y <- y %pm>%
-      pm_left_join(mo_group, by = "ab")
+    y <- y %>%
+      left_join(mo_group, by = "ab")
   }
-  y <- y %pm>%
-    pm_distinct(ab, .keep_all = TRUE) %pm>%
-    pm_select(-mo, -txt) %pm>%
+  y <- y %>%
+    distinct(ab, .keep_all = TRUE) %>%
+    select(-mo, -txt) %>%
     # replace tidyr::pivot_wider() until here
     remove_NAs()
 
@@ -293,21 +313,21 @@ format.bug_drug_combinations <- function(x,
     .data[, c("ab_group", "ab_txt", colnames(.data)[!colnames(.data) %in% c("ab_group", "ab_txt", "ab")]), drop = FALSE]
   }
 
-  y <- y %pm>%
-    create_var(ab_group = ab_group(y$ab, language = language)) %pm>%
-    select_ab_vars() %pm>%
-    pm_arrange(ab_group, ab_txt)
-  y <- y %pm>%
-    create_var(ab_group = ifelse(y$ab_group != pm_lag(y$ab_group) | is.na(pm_lag(y$ab_group)), y$ab_group, ""))
+  y <- y %>%
+    mutate(ab_group = ab_group(y$ab, language = language)) %>%
+    select_ab_vars() %>%
+    arrange(ab_group, ab_txt)
+  y <- y %>%
+    mutate(ab_group = ifelse(y$ab_group != lag(y$ab_group) | is.na(lag(y$ab_group)), y$ab_group, ""))
 
   if (add_ab_group == FALSE) {
-    y <- y %pm>%
-      pm_select(-ab_group) %pm>%
-      pm_rename("Drug" = ab_txt)
+    y <- y %>%
+      select(-ab_group) %>%
+      rename("Drug" = ab_txt)
     colnames(y)[1] <- translate_into_language(colnames(y)[1], language, only_unknown = FALSE)
   } else {
-    y <- y %pm>%
-      pm_rename(
+    y <- y %>%
+      rename(
         "Group" = ab_group,
         "Drug" = ab_txt
       )

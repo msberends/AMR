@@ -48,7 +48,7 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE, ...)
 
 \item{guideline}{a specific guideline to follow, see sections \emph{Supported international / national guidelines} and \emph{Using Custom Guidelines} below. When left empty, the publication by Magiorakos \emph{et al.} (see below) will be followed.}
 
-\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{info}{a \link{logical} to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
 

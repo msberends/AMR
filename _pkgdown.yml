@@ -78,6 +78,9 @@ navbar:
       - text: "Conduct AMR Analysis"
         icon: "fa-directions"
         href: "articles/AMR.html"
+      - text: "Generate Antibiogram (Trad./Syndromic/WISCA)"
+        icon: "fa-file-prescription"
+        href: "reference/antibiogram.html" # reference instead of an article
       - text: "Predict Antimicrobial Resistance"
         icon: "fa-dice"
         href: "articles/resistance_predict.html"
@@ -161,9 +164,12 @@ reference:
   - title: "Analysing data: antimicrobial resistance"
     desc: >
       Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
+      With `antibiogram()`, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination
+      antibiogram(WISCA). This function also comes with support for R Markdown and Quarto.
       Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()` or `is_new_episode()`.
       You can also filter your data on certain resistance in certain antibiotic classes (`carbapenems()`, `aminoglycosides()`), or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
     contents:
+    - "`antibiogram`"
     - "`proportion`"
     - "`count`"
     - "`is_new_episode`"

@@ -137,7 +137,7 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
     if (!is.null(out)) {
       df <- df[, out, drop = FALSE]
     } else {
-      df <- pm_select(df, ...)
+      df <- select(df, ...)
     }
   }
   df_classes <- colnames(df)[vapply(FUN.VALUE = logical(1), df, function(x) is.disk(x) | is.mic(x) | is.disk(x), USE.NAMES = FALSE)]

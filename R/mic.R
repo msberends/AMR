@@ -219,14 +219,14 @@ as.mic <- function(x, na.rm = FALSE) {
     ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"
 
-    na_before <- x[is.na(x) | x == ""] %pm>% length()
+    na_before <- x[is.na(x) | x == ""] %>% length()
     x[!x %in% valid_mic_levels] <- NA
-    na_after <- x[is.na(x) | x == ""] %pm>% length()
+    na_after <- x[is.na(x) | x == ""] %>% length()
 
     if (na_before != na_after) {
-      list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
-        unique() %pm>%
-        sort() %pm>%
+      list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %>%
+        unique() %>%
+        sort() %>%
         vector_and(quotes = TRUE)
       cur_col <- get_current_column()
       warning_("in `as.mic()`: ", na_after - na_before, " result",

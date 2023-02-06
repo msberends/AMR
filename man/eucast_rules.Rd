@@ -38,7 +38,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 \arguments{
 \item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
 
-\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{info}{a \link{logical} to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
 
