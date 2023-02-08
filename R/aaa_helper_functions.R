@@ -259,7 +259,7 @@ is_valid_regex <- function(x) {
 }
 
 stop_ifnot_installed <- function(package) {
-  installed <- vapply(FUN.VALUE = logical(1), package, requireNamespace, quietly = TRUE)
+  installed <- vapply(FUN.VALUE = logical(1), package, requireNamespace, lib.loc = base::.libPaths(), quietly = TRUE)
   if (any(!installed) && any(package == "rstudioapi")) {
     stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
   } else if (any(!installed)) {
@@ -276,7 +276,7 @@ pkg_is_available <- function(pkg, also_load = TRUE, min_version = NULL) {
   if (also_load == TRUE) {
     out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE))
   } else {
-    out <- requireNamespace(pkg, quietly = TRUE)
+    out <- requireNamespace(pkg, lib.loc = base::.libPaths(), quietly = TRUE)
   }
   if (!is.null(min_version)) {
     out <- out && utils::packageVersion(pkg) >= min_version

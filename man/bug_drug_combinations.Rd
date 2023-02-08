@@ -64,7 +64,6 @@ The function \code{\link[=format]{format()}} calculates the resistance per bug-d
 example_isolates
 
 x <- bug_drug_combinations(example_isolates)
-head(x)
 format(x, translate_ab = "name (atc)")
 
 # Use FUN to change to transformation of microorganism codes

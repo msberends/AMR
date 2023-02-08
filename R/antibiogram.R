@@ -334,6 +334,9 @@ antibiogram <- function(x,
                           FUN = function(x) x)
   counts <- out
   
+  out$numerator <- ifelse(isTRUE(combine_SI), out$S + out$I, out$S)
+  out$minimum <- minimum
+  
   # regroup for summarising
   if (isTRUE(has_syndromic_group)) {
     colnames(out)[1] <- "syndromic_group"
@@ -348,7 +351,6 @@ antibiogram <- function(x,
   }
   
   out <- out %>% 
-    mutate(numerator = ifelse(isTRUE(combine_SI), S + I, S)) %>% 
     summarise(SI = ifelse(total >= minimum, numerator / total, NA_real_)) %>%
     filter(!is.na(SI))
   
@@ -504,7 +506,7 @@ autoplot.antibiogram <- function(object, ...) {
 #' @rdname antibiogram
 print.antibiogram <- function(x, as_kable = !interactive(), ...) {
   meet_criteria(as_kable, allow_class = "logical", has_length = 1)
-  if (isTRUE(as_kable)) {
+  if (isTRUE(as_kable) && !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
     stop_ifnot_installed("knitr")
     kable <- import_fn("kable", "knitr", error_on_fail = TRUE)
     kable(x, ...)

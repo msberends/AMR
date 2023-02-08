@@ -59,7 +59,7 @@ pm_across <- function(.cols = everything(), .fns = NULL, ..., .names = NULL) {
       .col <- setup$cols[i]
       for (j in seq_along(fn_names)) {
         .fn <- fn_names[j]
-        setup$names[id] <- gluestick(ref)
+        setup$names[id] <- pm_gluestick(ref)
         id <- id + 1
       }
     }
@@ -75,7 +75,7 @@ pm_across <- function(.cols = everything(), .fns = NULL, ..., .names = NULL) {
     if (is.null(names)) {
       return(data)
     } else {
-      return(setNames(data, names))
+      return(stats::setNames(data, names))
     }
   }
   n_fns <- length(funs)
@@ -95,13 +95,13 @@ pm_across <- function(.cols = everything(), .fns = NULL, ..., .names = NULL) {
 pm_if_any <- function(.cols, .fns = NULL, ..., .names = NULL) {
   df <- do.call(across, list(.cols = substitute(.cols), .fns = .fns, ..., .names = .names))
   if (nrow(df) == 0L) return(FALSE)
-  check_if_types(df)
+  pm_check_if_types(df)
   Reduce(`|`, df)
 }
 pm_if_all <- function(.cols, .fns = NULL, ..., .names = NULL) {
   df <- do.call(across, list(.cols = substitute(.cols), .fns = .fns, ..., .names = .names))
   if (nrow(df) == 0L) return(FALSE)
-  check_if_types(df)
+  pm_check_if_types(df)
   Reduce(`&`, df)
 }
 pm_check_if_types <- function(df) {
@@ -127,7 +127,7 @@ pm_setup_across <- function(.cols, .fns, .names) {
     names(funs)[miss] <- miss
     f_nms <- names(funs)
   }
-  funs <- lapply(funs, as_function)
+  funs <- lapply(funs, pm_as_function)
   names <- if (!is.null(.names)) {
     .names
   } else {
@@ -147,7 +147,7 @@ pm_arrange <- function(.data, ...) {
 pm_arrange.data.frame <- function(.data, ..., .by_group = FALSE) {
   dots <- pm_dotdotdot(...)
   is_grouped <- pm_has_groups(.data)
-  if (isTRUE(.by_group)) dots <- c(groups(.data), dots)
+  if (isTRUE(.by_group)) dots <- c(pm_groups(.data), dots)
   rows <- pm_arrange_rows(.data = .data, dots)
   row_number <- attr(.data, "row.names") 
   out <- .data[rows, , drop = FALSE]
@@ -155,7 +155,7 @@ pm_arrange.data.frame <- function(.data, ..., .by_group = FALSE) {
     row.names(out) <- row_number
   }
   if (is_grouped) {
-    attr(out, "groups") <- pm_calculate_groups(out, pm_group_vars(out))
+    attr(out, "pm_groups") <- pm_calculate_groups(out, pm_group_vars(out))
   }
   out
 }
@@ -186,20 +186,20 @@ pm_arrange_rows <- function(.data, dots) {
 }
 pm_bind_cols <- function(...) {
   lsts <- list(...)
-  lsts <- squash(lsts)
+  lsts <- pm_squash(lsts)
   lsts <- Filter(Negate(is.null), lsts)
   if (length(lsts) == 0L) return(data.frame())
-  lapply(lsts, function(x) is_df_or_vector(x))
+  lapply(lsts, function(x) pm_is_df_or_vector(x))
   lsts <- do.call(cbind, lsts)
   if (!is.data.frame(lsts)) lsts <- as.data.frame(lsts)
   lsts
 }
 pm_bind_rows <- function(..., .id = NULL) {
   lsts <- list(...)
-  lsts <- flatten(lsts)
+  lsts <- pm_flatten(lsts)
   lsts <- Filter(Negate(is.null), lsts)
-  lapply(lsts, function(x) is_df_or_vector(x))
-  lapply(lsts, function(x) if (is.atomic(x) && !is_named(x)) stop("Vectors must be named."))
+  lapply(lsts, function(x) pm_is_df_or_vector(x))
+  lapply(lsts, function(x) if (is.atomic(x) && !pm_is_named(x)) stop("Vectors must be named."))
   if (!missing(.id)) {
     lsts <- lapply(seq_along(lsts), function(i) {
       nms <- names(lsts)
@@ -233,11 +233,11 @@ pm_case_when <- function(...) {
     value[[i]] <- eval(fs[[i]][[3]], envir = default_env)
     if (!is.logical(query[[i]])) stop(fs[[i]][[2]], " does not return a `logical` vector.")
   }
-  m <- validate_case_when_length(query, value, fs)
+  m <- pm_validate_case_when_length(query, value, fs)
   out <- value[[1]][rep(NA_integer_, m)]
   replaced <- rep(FALSE, m)
   for (i in seq_len(n)) {
-    out <- replace_with(out, query[[i]] & !replaced, value[[i]], NULL)
+    out <- pm_replace_with(out, query[[i]] & !replaced, value[[i]], NULL)
     replaced <- replaced | (query[[i]] & !is.na(query[[i]]))
   }
   out
@@ -283,80 +283,80 @@ pm_context$clean <- function() {
   if (!is.null(pm_context$cur_column)) rm(list = c("cur_column"), envir = pm_context)
 }
 pm_n <- function() {
-  check_pm_context("`n()`", pm_context$.data)
+  pm_check_context("`n()`", pm_context$.data)
   pm_context$get_nrow()
 }
 pm_cur_data <- function() {
-  check_pm_context("`cur_data()`", pm_context$.data)
+  pm_check_context("`cur_data()`", pm_context$.data)
   data <- pm_context$get_data()
   data[, !(colnames(data) %in% pm_group_vars(data)), drop = FALSE]
 }
 pm_cur_data_all <- function() {
-  check_pm_context("`cur_data_all()`", pm_context$.data)
+  pm_check_context("`cur_data_all()`", pm_context$.data)
   pm_ungroup(pm_context$get_data())
 }
 pm_cur_group <- function() {
-  check_pm_context("`cur_group()`", pm_context$.data)
+  pm_check_context("`cur_group()`", pm_context$.data)
   data <- pm_context$get_data()
   res <- data[1L, pm_group_vars(data), drop = FALSE]
   rownames(res) <- NULL
   res
 }
-pm_cur_pm_group_id <- function() {
-  check_pm_context("`cur_pm_group_id()`", pm_context$.data)
+pm_cur_group_id <- function() {
+  pm_check_context("`cur_group_id()`", pm_context$.data)
   data <- pm_context$get_data()
   res <- data[1L, pm_group_vars(data), drop = FALSE]
-  details <- get_pm_group_details(data)
+  details <- pm_get_group_details(data)
   details[, ".pm_group_id"] <- seq_len(nrow(details))
   res <- suppressMessages(semi_join(details, res))
   res[, ".pm_group_id"]
 }
-pm_cur_pm_group_rows <- function() {
-  check_pm_context("`cur_pm_group_rows()`", pm_context$.data)
+pm_cur_group_rows <- function() {
+  pm_check_context("`cur_group_rows()`", pm_context$.data)
   data <- pm_context$get_data()
   res <- data[1L, pm_group_vars(data), drop = FALSE]
-  res <- suppressMessages(semi_join(get_pm_group_details(data), res))
+  res <- suppressMessages(semi_join(pm_get_group_details(data), res))
   unlist(res[, ".rows"])
 }
 pm_cur_column <- function() {
-  check_pm_context("`cur_column()`", pm_context$cur_column, "`across`")
+  pm_check_context("`cur_column()`", pm_context$cur_column, "`across`")
   pm_context$cur_column
 }
-pm_check_pm_context <- function(fn, pm_context, name = NULL) {
+pm_check_context <- function(fn, pm_context, name = NULL) {
   if (is.null(pm_context)) {
     stop(fn, " must only be used inside ", if (is.null(name)) "poorman verbs" else name)
   }
 }
 pm_count <- function(x, ..., wt = NULL, sort = FALSE, name = NULL) {
-  groups <- pm_group_vars(x)
+  pm_groups <- pm_group_vars(x)
   if (!missing(...)) x <- pm_group_by(x, ..., .add = TRUE)
   wt <- pm_deparse_var(wt)
-  res <- do.call(tally, list(x, wt, sort, name))
-  if (length(groups) > 0L) res <- do.call(pm_group_by, list(res, as.name(groups)))
+  res <- do.call(pm_tally, list(x, wt, sort, name))
+  if (length(pm_groups) > 0L) res <- do.call(pm_group_by, list(res, as.name(pm_groups)))
   res
 }
 pm_tally <- function(x, wt = NULL, sort = FALSE, name = NULL) {
-  name <- check_name(x, name)
+  name <- pm_check_name(x, name)
   wt <- pm_deparse_var(wt)
-  res <- do.call(pm_summarise, setNames(list(x, tally_n(x, wt)), c(".data", name)))
+  res <- do.call(pm_summarise, stats::setNames(list(x, pm_tally_n(x, wt)), c(".data", name)))
   res <- pm_ungroup(res)
   if (isTRUE(sort)) res <- do.call(pm_arrange, list(res, call("desc", as.name(name))))
   rownames(res) <- NULL
   res
 }
 pm_add_count <- function(x, ..., wt = NULL, sort = FALSE, name = NULL) {
-  name <- check_name(x, name)
+  name <- pm_check_name(x, name)
   row_names <- rownames(x)
   wt <- pm_deparse_var(wt)
   if (!missing(...)) x <- pm_group_by(x, ..., .add = TRUE)
-  res <- do.call(add_tally, list(x, wt, sort, name))
+  res <- do.call(pm_add_tally, list(x, wt, sort, name))
   res[row_names, ]
 }
 pm_add_tally <- function(x, wt = NULL, sort = FALSE, name = NULL) {
   wt <- pm_deparse_var(wt)
-  n <- tally_n(x, wt)
-  name <- check_name(x, name)
-  res <- do.call(pm_mutate, setNames(list(x, n), c(".data", name)))
+  n <- pm_tally_n(x, wt)
+  name <- pm_check_name(x, name)
+  res <- do.call(pm_mutate, stats::setNames(list(x, n), c(".data", name)))
   if (isTRUE(sort)) {
     do.call(pm_arrange, list(res, call("desc", as.name(name))))
   } else {
@@ -456,7 +456,7 @@ pm_filter <- function(.data, ..., .preserve = FALSE) {
 pm_filter.data.frame <- function(.data, ..., .preserve = FALSE) {
   conditions <- pm_dotdotdot(...)
   if (length(conditions) == 0L) return(.data)
-  check_filter(conditions)
+  pm_check_filter(conditions)
   cond_class <- vapply(conditions, typeof, NA_character_)
   cond_class <- cond_class[!cond_class %in% c("language", "logical")]
   if (length(cond_class) > 0L) stop("Conditions must be logical vectors")
@@ -476,22 +476,22 @@ pm_filter.grouped_df <- function(.data, ..., .preserve = FALSE) {
   rows <- rownames(.data)
   res <- pm_apply_grouped_function("pm_filter", .data, drop = TRUE, ...)
   res <- res[rows[rows %in% rownames(res)], ]
-  groups <- pm_group_vars(.data)
+  pm_groups <- pm_group_vars(.data)
   pre_filtered_groups <- pm_group_data(.data)
-  post_filtered_groups <- pm_calculate_groups(res, groups)
+  post_filtered_groups <- pm_calculate_groups(res, pm_groups)
   if (!(!.preserve && isTRUE(attr(pre_filtered_groups, ".drop")))) {
-    filtered_groups <- anti_join(pre_filtered_groups, post_filtered_groups, by = groups)
-    filtered_groups <- filtered_groups[, groups, drop = FALSE]
+    filtered_groups <- anti_join(pre_filtered_groups, post_filtered_groups, by = pm_groups)
+    filtered_groups <- filtered_groups[, pm_groups, drop = FALSE]
     filtered_groups[[".rows"]] <- rep(list(integer()), length.out = nrow(filtered_groups))
     post_filtered_groups <- bind_rows(post_filtered_groups, filtered_groups)
-    ordered <- do.call(pm_arrange_rows, list(post_filtered_groups, pm_as_symbols(groups)))
+    ordered <- do.call(pm_arrange_rows, list(post_filtered_groups, pm_as_symbols(pm_groups)))
     post_filtered_groups <- post_filtered_groups[ordered, ]
   }
-  attr(res, "groups") <- post_filtered_groups
+  attr(res, "pm_groups") <- post_filtered_groups
   res
 }
 pm_check_filter <- function(conditions) {
-  named <- have_name(conditions)
+  named <- pm_have_name(conditions)
   for (i in which(named)) {
     if (!is.logical(conditions[[i]])) {
       stop(
@@ -502,6 +502,34 @@ pm_check_filter <- function(conditions) {
       )
     }
   }
+}
+pm_gluestick <- function(fmt, src = parent.frame(), open = "{", close = "}", eval = TRUE) {
+  nchar_open <- nchar(open)
+  nchar_close <- nchar(close)
+  stopifnot(exprs = {
+    is.character(fmt)
+    length(fmt) == 1L
+    is.character(open)
+    length(open) == 1L
+    nchar_open > 0L
+    is.character(close)
+    length(close) == 1
+    nchar_close > 0
+  })
+  open <- gsub("(.)", "\\\\\\1", open)
+  close <- gsub("(.)", "\\\\\\1", close)
+  re <- paste0(open, ".*?", close)
+  matches <- gregexpr(re, fmt)
+  exprs <- regmatches(fmt, matches)[[1]]
+  exprs <- substr(exprs, nchar_open + 1L, nchar(exprs) - nchar_close)
+  fmt_sprintf <- gsub(re, "%s", fmt)
+  fmt_sprintf <- gsub("%(?!s)", "%%", fmt_sprintf, perl = TRUE)
+  args <- if (eval) {
+    lapply(exprs, function(expr) eval(parse(text = expr), envir = src))
+  } else {
+    unname(mget(exprs, envir = as.environment(src)))
+  }
+  do.call(sprintf, c(list(fmt_sprintf), args))
 }
 pm_group_by <- function(.data, ..., .add = FALSE, .drop = pm_group_by_drop_default(.data)) {
   pm_group_by.data.frame(.data, ..., .add = FALSE, .drop = pm_group_by_drop_default(.data))
@@ -515,12 +543,12 @@ pm_group_by.data.frame <- function(.data, ..., .add = FALSE, .drop = pm_group_by
   }
   new_cols <- pm_add_group_columns(.data, vars)
   res <- new_cols$data
-  groups <- new_cols$groups
-  if (isTRUE(.add)) groups <- union(pm_group_vars(.data), groups)
-  unknown <- !(groups %in% colnames(res))
-  if (any(unknown)) stop("Invalid groups: ", groups[unknown])
-  if (length(groups) > 0L) {
-    res <- pm_groups_set(res, groups, .drop)
+  pm_groups <- new_cols$pm_groups
+  if (isTRUE(.add)) pm_groups <- union(pm_group_vars(.data), pm_groups)
+  unknown <- !(pm_groups %in% colnames(res))
+  if (any(unknown)) stop("Invalid pm_groups: ", pm_groups[unknown])
+  if (length(pm_groups) > 0L) {
+    res <- pm_groups_set(res, pm_groups, .drop)
     class(res) <- union("grouped_df", class(res))
   }
   res
@@ -546,7 +574,7 @@ pm_add_group_columns <- function(.data, vars) {
   if (!is.null(needs_mutate)) {
     .data <- do.call(pm_mutate, c(list(.data = pm_ungroup(.data)), vars[needs_mutate]))
   }
-  list(data = .data, groups = names(vars))
+  list(data = .data, pm_groups = names(vars))
 }
 pm_group_data <- function(.data) {
   if ("grouped_df" %in% class(.data)) pm_group_data.grouped_df(.data) else pm_group_data.data.frame(.data)
@@ -555,27 +583,27 @@ pm_group_data.data.frame <- function(.data) {
   structure(list(.rows = list(seq_len(nrow(.data)))), class = "data.frame", row.names = c(NA, -1L))
 }
 pm_group_data.grouped_df <- function(.data) {
-  attr(.data, "groups")
+  attr(.data, "pm_groups")
 }
 pm_group_rows <- function(.data) {
   pm_group_data(.data)[[".rows"]]
 }
 pm_group_indices <- function(.data) {
   if (!pm_has_groups(.data)) return(rep(1L, nrow(.data)))
-  groups <- pm_group_vars(.data)
-  res <- unique(.data[, groups, drop = FALSE])
-  res <- res[do.call(order, lapply(groups, function(x) res[, x])), , drop = FALSE]
+  pm_groups <- pm_group_vars(.data)
+  res <- unique(.data[, pm_groups, drop = FALSE])
+  res <- res[do.call(order, lapply(pm_groups, function(x) res[, x])), , drop = FALSE]
   class(res) <- "data.frame"
   nrow_data <- nrow(.data)
   rows <- rep(NA, nrow_data)
   for (i in seq_len(nrow_data)) {
-    rows[i] <- which(interaction(res[, groups]) %in% interaction(.data[i, groups]))
+    rows[i] <- which(interaction(res[, pm_groups]) %in% interaction(.data[i, pm_groups]))
   }
   rows
 }
 pm_group_vars <- function(x) {
-  groups <- attr(x, "groups", exact = TRUE)
-  if (is.null(groups)) character(0) else colnames(groups)[!colnames(groups) %in% c(".pm_group_id", ".rows")]
+  pm_groups <- attr(x, "pm_groups", exact = TRUE)
+  if (is.null(pm_groups)) character(0) else colnames(pm_groups)[!colnames(pm_groups) %in% c(".pm_group_id", ".rows")]
 }
 pm_groups <- function(x) {
   pm_as_symbols(pm_group_vars(x))
@@ -599,71 +627,71 @@ pm_group_split <- function(.data, ..., .keep = TRUE) {
   }
   pm_context$setup(.data)
   on.exit(pm_context$clean(), add = TRUE)
-  groups <- pm_group_vars(.data)
-  attr(pm_context$.data, "groups") <- NULL
-  res <- pm_split_into_groups(pm_context$.data, groups)
+  pm_groups <- pm_group_vars(.data)
+  attr(pm_context$.data, "pm_groups") <- NULL
+  res <- pm_split_into_groups(pm_context$.data, pm_groups)
   names(res) <- NULL
   if (!isTRUE(.keep)) {
-    res <- lapply(res, function(x) x[, !colnames(x) %in% groups])
+    res <- lapply(res, function(x) x[, !colnames(x) %in% pm_groups])
   }
   any_empty <- unlist(lapply(res, function(x) !(nrow(x) == 0L)))
   res[any_empty]
 }
 pm_group_keys <- function(.data) {
-  groups <- pm_group_vars(.data)
+  pm_groups <- pm_group_vars(.data)
   pm_context$setup(.data)
-  res <- pm_context$get_columns(pm_context$get_colnames() %in% groups)
+  res <- pm_context$get_columns(pm_context$get_colnames() %in% pm_groups)
   res <- res[!duplicated(res), , drop = FALSE]
   if (nrow(res) == 0L) return(res)
   class(res) <- "data.frame"
-  res <- res[do.call(order, lapply(groups, function(x) res[, x])), , drop = FALSE]
+  res <- res[do.call(order, lapply(pm_groups, function(x) res[, x])), , drop = FALSE]
   rownames(res) <- NULL
   res
 }
-pm_split_into_groups <- function(.data, groups, drop = FALSE, ...) {
+pm_split_into_groups <- function(.data, pm_groups, drop = FALSE, ...) {
   class(.data) <- "data.frame"
-  pm_group_factors <- lapply(groups, function(x, .data) as.factor(.data[, x]), .data)
+  pm_group_factors <- lapply(pm_groups, function(x, .data) as.factor(.data[, x]), .data)
   split(x = .data, f = pm_group_factors, drop = drop, ...)
 }
-pm_groups_set <- function(x, groups, drop = pm_group_by_drop_default(x)) {
-  attr(x, "groups") <- if (is.null(groups) || length(groups) == 0L) {
+pm_groups_set <- function(x, pm_groups, drop = pm_group_by_drop_default(x)) {
+  attr(x, "pm_groups") <- if (is.null(pm_groups) || length(pm_groups) == 0L) {
     NULL
   } else {
-    pm_calculate_groups(x, groups, drop)
+    pm_calculate_groups(x, pm_groups, drop)
   }
   x
 }
-pm_get_pm_group_details <- function(x) {
-  groups <- attr(x, "groups", exact = TRUE)
-  if (is.null(groups)) character(0) else groups
+pm_get_group_details <- function(x) {
+  pm_groups <- attr(x, "pm_groups", exact = TRUE)
+  if (is.null(pm_groups)) character(0) else pm_groups
 }
 pm_has_groups <- function(x) {
-  groups <- pm_group_vars(x)
-  if (length(groups) == 0L) FALSE else TRUE
+  pm_groups <- pm_group_vars(x)
+  if (length(pm_groups) == 0L) FALSE else TRUE
 }
 pm_apply_grouped_function <- function(fn, .data, drop = FALSE, ...) {
-  groups <- pm_group_vars(.data)
-  grouped <- pm_split_into_groups(.data, groups, drop)
+  pm_groups <- pm_group_vars(.data)
+  grouped <- pm_split_into_groups(.data, pm_groups, drop)
   res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
-  if (any(groups %in% colnames(res))) {
+  if (any(pm_groups %in% colnames(res))) {
     class(res) <- c("grouped_df", class(res))
-    res <- pm_groups_set(res, groups[groups %in% colnames(res)])
+    res <- pm_groups_set(res, pm_groups[pm_groups %in% colnames(res)])
   }
   res
 }
-pm_calculate_groups <- function(data, groups, drop = pm_group_by_drop_default(data)) {
+pm_calculate_groups <- function(data, pm_groups, drop = pm_group_by_drop_default(data)) {
   data <- pm_ungroup(data)
-  unknown <- setdiff(groups, colnames(data))
+  unknown <- setdiff(pm_groups, colnames(data))
   if (length(unknown) > 0L) {
-    stop(sprintf("`groups` missing from `data`: %s.", paste0(groups, collapse = ", ")))
+    stop(sprintf("`pm_groups` missing from `data`: %s.", paste0(pm_groups, collapse = ", ")))
   }
-  unique_groups <- unique(data[, groups, drop = FALSE])
+  unique_groups <- unique(data[, pm_groups, drop = FALSE])
   is_factor <- do.call(c, lapply(unique_groups, function(x) is.factor(x)))
   n_comb <- nrow(unique_groups)
   rows <- rep(list(NA), n_comb)
-  data_groups <- interaction(data[, groups, drop = TRUE])
+  data_groups <- interaction(data[, pm_groups, drop = TRUE])
   for (i in seq_len(n_comb)) {
-    rows[[i]] <- which(data_groups %in% interaction(unique_groups[i, groups]))
+    rows[[i]] <- which(data_groups %in% interaction(unique_groups[i, pm_groups]))
   }
   if (!isTRUE(drop) && any(is_factor)) {
     na_lvls <- do.call(
@@ -676,7 +704,7 @@ pm_calculate_groups <- function(data, groups, drop = pm_group_by_drop_default(da
     }
   }
   unique_groups[[".rows"]] <- rows
-  unique_groups <- unique_groups[do.call(order, lapply(groups, function(x) unique_groups[, x])), , drop = FALSE]
+  unique_groups <- unique_groups[do.call(order, lapply(pm_groups, function(x) unique_groups[, x])), , drop = FALSE]
   rownames(unique_groups) <- NULL
   structure(unique_groups, .drop = drop)
 }
@@ -709,25 +737,25 @@ pm_filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
   type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
   if (is.null(by)) {
     by <- intersect(names(x), names(y))
-    join_message(by)
+    pm_join_message(by)
   }
   rows <- interaction(x[, by]) %in% interaction(y[, by])
   if (type == "anti") rows <- !rows
   res <- x[rows, , drop = FALSE]
   rownames(res) <- NULL
-  reconstruct_attrs(res, x)
+  pm_reconstruct_attrs(res, x)
 }
 pm_inner_join <- function(x, y, by = NULL, suffix = c(".x", ".y"), ..., na_matches = c("na", "never")) {
-  join_worker(x = x, y = y, by = by, suffix = suffix, sort = FALSE, ..., keep = FALSE, na_matches = na_matches)
+  pm_join_worker(x = x, y = y, by = by, suffix = suffix, sort = FALSE, ..., keep = FALSE, na_matches = na_matches)
 }
 pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y"), ..., keep = FALSE, na_matches = c("na", "never")) {
-  join_worker(x = x, y = y, by = by, suffix = suffix, all.x = TRUE, ..., keep = keep, na_matches = na_matches)
+  pm_join_worker(x = x, y = y, by = by, suffix = suffix, all.x = TRUE, ..., keep = keep, na_matches = na_matches)
 }
 pm_right_join <- function(x, y, by = NULL, suffix = c(".x", ".y"), ..., keep = FALSE, na_matches = c("na", "never")) {
-  join_worker(x = x, y = y, by = by, suffix = suffix, all.y = TRUE, ..., keep = keep, na_matches = na_matches)
+  pm_join_worker(x = x, y = y, by = by, suffix = suffix, all.y = TRUE, ..., keep = keep, na_matches = na_matches)
 }
 pm_full_join <- function(x, y, by = NULL, suffix = c(".x", ".y"), ..., keep = FALSE, na_matches = c("na", "never")) {
-  join_worker(x = x, y = y, by = by, suffix = suffix, all = TRUE, ..., keep = keep, na_matches = na_matches)
+  pm_join_worker(x = x, y = y, by = by, suffix = suffix, all = TRUE, ..., keep = keep, na_matches = na_matches)
 }
 pm_join_worker <- function(x, y, by = NULL, suffix = c(".x", ".y"), keep = FALSE, na_matches = c("na", "never"), ...) {
   na_matches <- match.arg(arg = na_matches, choices = c("na", "never"), several.ok = FALSE)
@@ -735,7 +763,7 @@ pm_join_worker <- function(x, y, by = NULL, suffix = c(".x", ".y"), keep = FALSE
   x[, ".join_id"] <- seq_len(nrow(x))
   merged <- if (is.null(by)) {
     by <- intersect(names(x), names(y))
-    join_message(by)
+    pm_join_message(by)
     merge(
       x = x, y = y, by = by, suffixes = suffix, incomparables = incomparables, ...
     )[, union(names(x), names(y)), drop = FALSE]
@@ -752,7 +780,7 @@ pm_join_worker <- function(x, y, by = NULL, suffix = c(".x", ".y"), keep = FALSE
     merged[, paste0(by, suffix[2L])] <- merged[, x_by]
   }
   rownames(merged) <- NULL
-  reconstruct_attrs(merged, x)
+  pm_reconstruct_attrs(merged, x)
 }
 pm_join_message <- function(by) {
   if (length(by) > 1L) {
@@ -763,13 +791,13 @@ pm_join_message <- function(by) {
 }
 pm_as_function <- function(x, env = parent.frame()) {
   if (is.function(x)) return(x)
-  if (is_formula(x)) {
+  if (pm_is_formula(x)) {
     if (length(x) > 2) stop("Can't convert a two-sided formula to a function")
     env <- attr(x, ".Environment", exact = TRUE)
     rhs <- as.list(x)[[2]]
     return(as.function(list(... = substitute(), .x = quote(..1), .y = quote(..2), . = quote(..1), rhs), envir = env))
   }
-  if (is_string(x)) return(get(x, envir = env, mode = "function"))
+  if (pm_is_string(x)) return(get(x, envir = env, mode = "function"))
   stop("Can't convert an object of class ", class(x), " to a function.")
 }
 pm_is_formula <- function(x) {
@@ -787,12 +815,12 @@ pm_names_are_invalid <- function(x) {
 pm_is_named <- function(x) {
   nms <- names(x)
   if (is.null(nms)) return(FALSE)
-  if (any(names_are_invalid(nms))) return(FALSE)
+  if (any(pm_names_are_invalid(nms))) return(FALSE)
   TRUE
 }
 pm_have_name <- function(x) {
   nms <- names(x)
-  if (is.null(nms)) rep(FALSE, length(x)) else !names_are_invalid(nms)
+  if (is.null(nms)) rep(FALSE, length(x)) else !pm_names_are_invalid(nms)
 }
 pm_is_empty_list <- function(x) {
   inherits(x, "list") && length(x) == 0L
@@ -850,7 +878,7 @@ pm_lst <- function(...) {
         envir = if (length(out) == 0) {
           list_to_eval
         } else {
-          drop_dup_list(out[1:(element - 1)])
+          pm_drop_dup_list(out[1:(element - 1)])
         }
       )
     }
@@ -989,10 +1017,10 @@ pm_nth <- function(x, n, order_by = NULL, default = pm_default_missing(x)) {
   if (is.null(order_by)) x[[n]] else x[[order(order_by)[[n]]]]
 }
 pm_first <- function(x, order_by = NULL, default = pm_default_missing(x)) {
-  nth(x, 1L, order_by = order_by, default = default)
+  pm_nth(x, 1L, order_by = order_by, default = default)
 }
 pm_last <- function(x, order_by = NULL, default = pm_default_missing(x)) {
-  nth(x, -1L, order_by = order_by, default = default)
+  pm_nth(x, -1L, order_by = order_by, default = default)
 }
 pm_default_missing <- function(x) {
   pm_default_missing.data.frame(x)
@@ -1179,7 +1207,7 @@ pm_pivot_wider <- function(
           stop(paste0("`values_fill` must be of type numeric."), call. = FALSE)
         } else {
           for (i in new_cols) {
-            wide[[i]] <- replace_na(wide[[i]], replace = values_fill)
+            wide[[i]] <- pm_replace_na(wide[[i]], replace = values_fill)
           }
         }
       } else if (is.character(wide[[new_cols[1]]])) {
@@ -1187,7 +1215,7 @@ pm_pivot_wider <- function(
           stop(paste0("`values_fill` must be of type character."), call. = FALSE)
         } else {
           for (i in new_cols) {
-            wide[[i]] <- replace_na(wide[[i]], replace = values_fill)
+            wide[[i]] <- pm_replace_na(wide[[i]], replace = values_fill)
           }
         }
       } else if (is.factor(wide[[new_cols[1]]])) {
@@ -1195,7 +1223,7 @@ pm_pivot_wider <- function(
           stop(paste0("`values_fill` must be of type factor."), call. = FALSE)
         } else {
           for (i in new_cols) {
-            wide[[i]] <- replace_na(wide[[i]], replace = values_fill)
+            wide[[i]] <- pm_replace_na(wide[[i]], replace = values_fill)
           }
         }
       }
@@ -1270,7 +1298,7 @@ pm_rename_with <- function(.data, .fn, .cols = everything(), ...) {
 }
 pm_rename_with.data.frame <- function(.data, .fn, .cols = everything(), ...) {
   if (!is.function(.fn)) stop("`", .fn, "` is not a valid function")
-  grouped <- is.grouped_df(.data)
+  grouped <- pm_is.grouped_df(.data)
   if (grouped) grp_pos <- which(colnames(.data) %in% pm_group_vars(.data))
   col_pos <- pm_eval_select_pos(.data = .data, .pm_group_pos = TRUE, .cols = substitute(.cols))
   cols <- colnames(.data)[col_pos]
@@ -1282,13 +1310,13 @@ pm_rename_with.data.frame <- function(.data, .fn, .cols = everything(), ...) {
   if (grouped) .data <- pm_groups_set(.data, colnames(.data)[grp_pos])
   .data
 }
-pm_starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+pm_starts_with <- function(match, ignore.case = TRUE, vars = pm_peek_vars()) {
   grep(pattern = paste0("^", paste0(match, collapse = "|^")), x = vars, ignore.case = ignore.case)
 }
-pm_ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+pm_ends_with <- function(match, ignore.case = TRUE, vars = pm_peek_vars()) {
   grep(pattern = paste0(paste0(match, collapse = "$|"), "$"), x = vars, ignore.case = ignore.case)
 }
-pm_contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+pm_contains <- function(match, ignore.case = TRUE, vars = pm_peek_vars()) {
   matches <- lapply(
     match,
     function(x) {
@@ -1305,10 +1333,10 @@ pm_contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   )
   unique(unlist(matches))
 }
-pm_matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars()) {
+pm_matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = pm_peek_vars()) {
   grep(pattern = match, x = vars, ignore.case = ignore.case, perl = perl)
 }
-pm_num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
+pm_num_range <- function(prefix, range, width = NULL, vars = pm_peek_vars()) {
   if (!is.null(width)) {
     range <- sprintf(paste0("%0", width, "d"), range)
   }
@@ -1320,7 +1348,7 @@ pm_num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
     x[!is.na(x)]
   }
 }
-pm_all_of <- function(x, vars = peek_vars()) {
+pm_all_of <- function(x, vars = pm_peek_vars()) {
   x_ <- !x %in% vars
   if (any(x_)) {
     which_x_ <- which(x_)
@@ -1333,14 +1361,14 @@ pm_all_of <- function(x, vars = peek_vars()) {
     which(vars %in% x)
   }
 }
-pm_any_of <- function(x, vars = peek_vars()) {
+pm_any_of <- function(x, vars = pm_peek_vars()) {
   which(vars %in% x)
 }
-pm_everything <- function(vars = peek_vars()) {
+pm_everything <- function(vars = pm_peek_vars()) {
   seq_along(vars)
 }
-pm_last_col <- function(offset = 0L, vars = peek_vars()) {
-  if (!is_wholenumber(offset)) stop("`offset` must be an integer")
+pm_last_col <- function(offset = 0L, vars = pm_peek_vars()) {
+  if (!pm_is_wholenumber(offset)) stop("`offset` must be an integer")
   n <- length(vars)
   if (offset && n <= offset) {
     stop("`offset` must be smaller than the number of `vars`")
@@ -1367,15 +1395,15 @@ pm_select_positions <- function(.data, ..., .pm_group_pos = FALSE) {
     oor <- pos[which(pos > col_len)]
     oor_len <- length(oor)
     stop(
-      "Location", if (oor_len > 1) "s " else " ", collapse_to_sentence(oor),
+      "Location", if (oor_len > 1) "s " else " ", pm_collapse_to_sentence(oor),
       if (oor_len > 1) " don't " else " doesn't ", "exist. There are only ", col_len, " columns."
     )
   }
   if (isTRUE(.pm_group_pos)) {
-    groups <- pm_group_vars(.data)
-    missing_groups <- !(groups %in% cols)
+    pm_groups <- pm_group_vars(.data)
+    missing_groups <- !(pm_groups %in% cols)
     if (any(missing_groups)) {
-      sel_missing <- groups[missing_groups]
+      sel_missing <- pm_groups[missing_groups]
       readd <- match(sel_missing, data_names)
       readd <- readd[!(readd %in% pos)]
       if (length(readd) > 0L) {
@@ -1469,7 +1497,7 @@ pm_select_seq <- function(expr) {
   x:y
 }
 pm_select_negate <- function(expr) {
-  x <- if (is_negated_colon(expr)) {
+  x <- if (pm_is_negated_colon(expr)) {
     expr <- call(":", expr[[2]][[2]], expr[[2]][[3]][[2]])
     pm_eval_expr(expr)
   } else {
@@ -1516,73 +1544,73 @@ pm_select <- function(.data, ...) {
   if (pm_has_groups(.data)) res <- pm_groups_set(res, pm_group_vars(.data))
   res
 }
-pm_summarise <- function(.data, ..., .groups = NULL) {
-  if ("grouped_df" %in% class(.data)) pm_summarise.grouped_df(.data, ..., .groups = NULL) else pm_summarise.data.frame(.data, ..., .groups = NULL)
+pm_summarise <- function(.data, ..., .pm_groups = NULL) {
+  if ("grouped_df" %in% class(.data)) pm_summarise.grouped_df(.data, ..., .pm_groups = NULL) else pm_summarise.data.frame(.data, ..., .pm_groups = NULL)
 }
-pm_summarise.data.frame <- function(.data, ..., .groups = NULL) {
+pm_summarise.data.frame <- function(.data, ..., .pm_groups = NULL) {
   fns <- pm_dotdotdot(...)
   pm_context$setup(.data)
   on.exit(pm_context$clean(), add = TRUE)
-  groups_exist <- pm_context$is_grouped()
-  if (groups_exist) {
+  pm_groups_exist <- pm_context$is_grouped()
+  if (pm_groups_exist) {
     group <- unique(pm_context$get_columns(pm_group_vars(pm_context$.data)))
   }
-  if (is_empty_list(fns)) {
-    if (groups_exist) return(group) else return(data.frame())
+  if (pm_is_empty_list(fns)) {
+    if (pm_groups_exist) return(group) else return(data.frame())
   }
   res <- vector(mode = "list", length = length(fns))
   pm_eval_env <- c(as.list(pm_context$.data), vector(mode = "list", length = length(fns)))
   new_pos <- seq(length(pm_context$.data) + 1L, length(pm_eval_env), 1L)
   for (i in seq_along(fns)) {
     pm_eval_env[[new_pos[i]]] <- do.call(with, list(pm_eval_env, fns[[i]]))
-    nms <- if (!is_named(pm_eval_env[[new_pos[i]]])) {
+    nms <- if (!pm_is_named(pm_eval_env[[new_pos[i]]])) {
       if (!is.null(names(fns)[[i]])) names(fns)[[i]] else deparse(fns[[i]])
     } else {
       NULL
     }
     if (!is.null(nms)) names(pm_eval_env)[[new_pos[i]]] <- nms
-    res[[i]] <- build_data_frame(pm_eval_env[[new_pos[i]]], nms = nms)
+    res[[i]] <- pm_build_data_frame(pm_eval_env[[new_pos[i]]], nms = nms)
   }
   res <- do.call(cbind, res)
-  if (groups_exist) res <- cbind(group, res, row.names = NULL)
+  if (pm_groups_exist) res <- cbind(group, res, row.names = NULL)
   res
 }
-pm_summarise.grouped_df <- function(.data, ..., .groups = NULL) {
-  if (!is.null(.groups)) {
-    .groups <- match.arg(arg = .groups, choices = c("drop", "drop_last", "keep"), several.ok = FALSE)
+pm_summarise.grouped_df <- function(.data, ..., .pm_groups = NULL) {
+  if (!is.null(.pm_groups)) {
+    .pm_groups <- match.arg(arg = .pm_groups, choices = c("drop", "drop_last", "keep"), several.ok = FALSE)
   }
-  groups <- pm_group_vars(.data)
+  pm_groups <- pm_group_vars(.data)
   res <- pm_apply_grouped_function("pm_summarise", .data, drop = TRUE, ...)
-  res <- res[pm_arrange_rows(res, pm_as_symbols(groups)), , drop = FALSE]
-  verbose <- pm_summarise_verbose(.groups)
-  if (is.null(.groups)) {
-    all_one <- as.data.frame(table(res[, groups]))
+  res <- res[pm_arrange_rows(res, pm_as_symbols(pm_groups)), , drop = FALSE]
+  verbose <- pm_summarise_verbose(.pm_groups)
+  if (is.null(.pm_groups)) {
+    all_one <- as.data.frame(table(res[, pm_groups]))
     all_one <- all_one[all_one$Freq != 0, ]
-    .groups <- if (all(all_one$Freq == 1)) "drop_last" else "keep"
+    .pm_groups <- if (all(all_one$Freq == 1)) "drop_last" else "keep"
   }
-  if (.groups == "drop_last") {
-    n <- length(groups)
+  if (.pm_groups == "drop_last") {
+    n <- length(pm_groups)
     if (n > 1) {
-      if (verbose) pm_summarise_inform(groups[-n])
-      res <- pm_groups_set(res, groups[-n], pm_group_by_drop_default(.data))
+      if (verbose) pm_summarise_inform(pm_groups[-n])
+      res <- pm_groups_set(res, pm_groups[-n], pm_group_by_drop_default(.data))
     }
-  } else if (.groups == "keep") {
-    if (verbose) pm_summarise_inform(groups)
-    res <- pm_groups_set(res, groups, pm_group_by_drop_default(.data))
-  } else if (.groups == "drop") {
-    attr(res, "groups") <- NULL
+  } else if (.pm_groups == "keep") {
+    if (verbose) pm_summarise_inform(pm_groups)
+    res <- pm_groups_set(res, pm_groups, pm_group_by_drop_default(.data))
+  } else if (.pm_groups == "drop") {
+    attr(res, "pm_groups") <- NULL
   }
   rownames(res) <- NULL
   res
 }
 pm_summarise_inform <- function(new_groups) {
   message(sprintf(
-    "`pm_summarise()` has grouped output by %s. You can override using the `.groups` argument.",
+    "`pm_summarise()` has grouped output by %s. You can override using the `.pm_groups` argument.",
     paste0("'", new_groups, "'", collapse = ", ")
   ))
 }
-pm_summarise_verbose <- function(.groups) {
-  is.null(.groups) &&
+pm_summarise_verbose <- function(.pm_groups) {
+  is.null(.pm_groups) &&
     !identical(getOption("poorman.summarise.inform"), FALSE)
 }
 pm_transmute <- function(.data, ...) {
@@ -1601,11 +1629,11 @@ pm_ungroup <- function(x, ...) {
 }
 pm_ungroup.data.frame <- function(x, ...) {
   rm_groups <- pm_deparse_dots(...)
-  groups <- pm_group_vars(x)
-  if (length(rm_groups) == 0L) rm_groups <- groups
-  x <- pm_groups_set(x, groups[!(groups %in% rm_groups)])
-  if (length(attr(x, "groups")) == 0L) {
-    attr(x, "groups") <- NULL
+  pm_groups <- pm_group_vars(x)
+  if (length(rm_groups) == 0L) rm_groups <- pm_groups
+  x <- pm_groups_set(x, pm_groups[!(pm_groups %in% rm_groups)])
+  if (length(attr(x, "pm_groups")) == 0L) {
+    attr(x, "pm_groups") <- NULL
     class(x) <- class(x)[!(class(x) %in% "grouped_df")]
   }
   x
@@ -1648,7 +1676,7 @@ pm_build_data_frame <- function(x, nms = NULL) {
 }
 pm_is_nested <- function(lst) vapply(lst, function(x) inherits(x[1L], "list"), FALSE)
 pm_squash <- function(lst) {
-  do.call(c, lapply(lst, function(x) if (is.list(x) && !is.data.frame(x)) squash(x) else list(x)))
+  do.call(c, lapply(lst, function(x) if (is.list(x) && !is.data.frame(x)) pm_squash(x) else list(x)))
 }
 pm_flatten <- function(lst) {
   nested <- pm_is_nested(lst)

@@ -102,22 +102,18 @@
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     set_ab_names() %>%
-#'     head()
+#'     set_ab_names()
 #'
 #'   # this does the same:
 #'   example_isolates %>%
-#'     rename_with(set_ab_names) %>%
-#'     head()
+#'     rename_with(set_ab_names)
 #'
 #'   # set_ab_names() works with any AB property:
 #'   example_isolates %>%
-#'     set_ab_names(property = "atc") %>%
-#'     head()
+#'     set_ab_names(property = "atc")
 #'
 #'   example_isolates %>%
-#'     set_ab_names(where(is.sir)) %>%
-#'     colnames()
+#'     set_ab_names(where(is.sir))
 #'
 #'   example_isolates %>%
 #'     set_ab_names(NIT:VAN) %>%

@@ -50,7 +50,6 @@
 #' example_isolates
 #' 
 #' x <- bug_drug_combinations(example_isolates)
-#' head(x)
 #' format(x, translate_ab = "name (atc)")
 #'
 #' # Use FUN to change to transformation of microorganism codes
@@ -174,7 +173,7 @@ bug_drug_combinations <- function(x,
     res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
     if (any(groups %in% colnames(res))) {
       class(res) <- c("grouped_data", class(res))
-      res <- pm_set_groups(res, groups[groups %in% colnames(res)])
+      res <- pm_groups_set(res, groups[groups %in% colnames(res)])
     }
     res
   }

@@ -1,6 +1,9 @@
 # get complete filenames of all R files in the GitHub repository of nathaneastwood/poorman
 
 library(magrittr)
+`%like%` <- function(x, y) grepl(y, x, ignore.case = TRUE, perl = TRUE)
+`%unlike%` <- function(x, y) !grepl(y, x, ignore.case = TRUE, perl = TRUE)
+
 commit <- "3cc0a9920b1eb559dd166f548561244189586b3a"
 
 files <- xml2::read_html(paste0("https://github.com/nathaneastwood/poorman/tree/", commit, "/R")) %>%
@@ -13,7 +16,7 @@ files <- sort(paste0("https://raw.githubusercontent.com", gsub("blob/", "", file
 # remove files with only pkg specific code
 files <- files[files %unlike% "(zzz|init)[.]R$"]
 # also, there's a lot of functions we don't use
-files <- files[files %unlike% "/(between|coalesce|cumulative|fill|glimpse|gluestick|group_cols|na_if|near|nest_by|poorman-package|print|recode|reconstruct|replace_na|replace_with|rownames|slice|union_all|unite|window_rank|with_groups)[.]R$"]
+files <- files[files %unlike% "/(between|coalesce|cumulative|fill|glimpse|group_cols|na_if|near|nest_by|check_filter|poorman-package|print|recode|reconstruct|replace_na|replace_with|rownames|slice|union_all|unite|window_rank|with_groups)[.]R$"]
 
 # add our prepend file, containing info about the source of the data
 intro <- readLines("data-raw/poorman_prepend.R") %>% 
@@ -60,6 +63,7 @@ contents <- gsub("NextMethod\\(\"(.*)\"\\)", "\\1.data.frame(...)", contents)
 # correct for 'default' method
 contents <- gsub(".default <-", ".data.frame <-", contents, fixed = TRUE)
 contents <- gsub("pm_group_by_drop.data.frame", "pm_group_by_drop", contents, fixed = TRUE)
+contents <- gsub("(stats::)?setNames", "stats::setNames", contents)
 # now get all those pm_* functions to replace all untransformed function name calls as well
 new_pm_names <- sort(gsub("pm_(.*?) <-.*", "\\1", contents[grepl("^pm_", contents)]))
 for (i in seq_len(length(new_pm_names))) {
@@ -76,9 +80,10 @@ contents <- gsub("\\pm_n", "\\n", contents, fixed = TRUE)
 # prefix other functions also with "pm_"
 contents <- gsub("^([a-z_]+)(\\$|)", "pm_\\1\\2", contents)
 # prefix environmental objects and functions
-contents <- gsub("(eval_env|select_env|select_context|context|dotdotdot|as_symbols|insert_dot|deparse_|groups_set|apply_grouped_function|split_into_groups|calculate_groups|has_groups|eval_select_pos|select_positions|eval_expr|eval_call|add_group_columns|find_used|is_nested|setup_|select_|group_)", "pm_\\1", contents)
-# now some items are overprefixed
+contents <- gsub("(add_group_columns|add_tally|apply_grouped_function|as_function|as_symbols|build_data_frame|calculate_groups|check_filter|check_if_types|check_name|check_context|collapse_to_sentence|context|deparse_|dotdotdot|drop_dup_list|eval_call|eval_env|eval_expr|eval_select_pos|find_used|flatten|get_group_details|gluestick|group_|groups|groups_set|has_groups|have_name|insert_dot|is.grouped_df|is_df_or_vector|is_empty_list|is_formula|is_named|is_negated_colon|is_nested|is_string|is_wholenumber|join_message|join_worker|names_are_invalid|nth|peek_vars|reconstruct_attrs|replace_na|replace_with|select_|select_context|select_env|select_positions|setup_|split_into_groups|squash|tally|tally_n|validate_case_when_length)", "pm_\\1", contents)
+# now a lot of items are overprefixed
 contents <- gsub("(pm_)+", "pm_", contents)
+contents <- gsub("_pm_", "_", contents)
 contents <- gsub("pm_if (\"grouped_df", "if (\"grouped_df", contents, fixed = TRUE)
 # remove comments and empty lines
 contents <- gsub("#.*", "", contents)

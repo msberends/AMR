@@ -334,7 +334,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
     res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
     if (any(groups %in% colnames(res))) {
       class(res) <- c("grouped_data", class(res))
-      res <- pm_set_groups(res, groups[groups %in% colnames(res)])
+      res <- pm_groups_set(res, groups[groups %in% colnames(res)])
     }
     res
   }
