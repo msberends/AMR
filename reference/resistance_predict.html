@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9111</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,11 @@
       <span class="fa fa-directions"></span>
        
       Conduct AMR Analysis
+    </a>
+    <a class="dropdown-item" href="../reference/antibiogram.html">
+      <span class="fa fa-file-prescription"></span>
+       
+      Generate Antibiogram (Trad./Syndromic/WISCA)
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
@@ -299,7 +304,6 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  year_min <span class="op">=</span> <span class="fl">2010</span>,</span></span>
 <span class="r-in"><span>  model <span class="op">=</span> <span class="st">"binomial"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'date' as input for col_date.</span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="resistance_predict-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
@@ -320,7 +324,6 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  <span class="va">mymodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">model</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mymodel</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Including isolates from ICU.</span>
 <span class="r-plt img"><img src="resistance_predict-3.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -329,18 +332,18 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Residuals: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Min       1Q   Median       3Q      Max  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.4150  -0.1855   0.0000   0.4096   0.9277  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.3342  -0.1917   0.0000   0.5364   1.2073  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error z value Pr(&gt;|z|)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 47.02915   72.98739   0.644    0.519</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> year        -0.02280    0.03637  -0.627    0.531</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 72.77752   65.66452   1.108    0.268</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> year        -0.03557    0.03272  -1.087    0.277</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Dispersion parameter for binomial family taken to be 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 5.9620  on 11  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 5.5701  on 10  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 50.533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 7.6911  on 11  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 6.5141  on 10  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 53.694</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

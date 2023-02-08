@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9111</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,11 @@
       <span class="fa fa-directions"></span>
        
       Conduct AMR Analysis
+    </a>
+    <a class="dropdown-item" href="../reference/antibiogram.html">
+      <span class="fa fa-file-prescription"></span>
+       
+      Generate Antibiogram (Trad./Syndromic/WISCA)
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
@@ -241,7 +246,7 @@
       </dl></div><div class="section level2">
       <h2 id="analysing-data-antimicrobial-resistance">Analysing data: antimicrobial resistance<a class="anchor" aria-label="anchor" href="#analysing-data-antimicrobial-resistance"></a></h2>
       
-      <p class="section-desc"></p><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/antibiotic_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p>
+      <p class="section-desc"></p><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. With <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination antibiogram(WISCA). This function also comes with support for R Markdown and Quarto. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/antibiotic_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p>
 
       
     </div><div id="" class="section level2">
@@ -251,9 +256,14 @@
 
       <dl><dt>
           
+          <code><a href="antibiogram.html">antibiogram()</a></code> <code><a href="antibiogram.html">plot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">autoplot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">print(<i>&lt;antibiogram&gt;</i>)</a></code> 
+        </dt>
+        <dd>Generate Antibiogram: Traditional, Combined, Syndromic, or Weighted-Incidence Syndromic Combination (WISCA)</dd>
+      </dl><dl><dt>
+          
           <code><a href="proportion.html">resistance()</a></code> <code><a href="proportion.html">susceptibility()</a></code> <code><a href="proportion.html">sir_confidence_interval()</a></code> <code><a href="proportion.html">proportion_R()</a></code> <code><a href="proportion.html">proportion_IR()</a></code> <code><a href="proportion.html">proportion_I()</a></code> <code><a href="proportion.html">proportion_SI()</a></code> <code><a href="proportion.html">proportion_S()</a></code> <code><a href="proportion.html">proportion_df()</a></code> <code><a href="proportion.html">sir_df()</a></code> 
         </dt>
-        <dd>Calculate Microbial Resistance</dd>
+        <dd>Calculate Antimicrobial Resistance</dd>
       </dl><dl><dt>
           
           <code><a href="count.html">count_resistant()</a></code> <code><a href="count.html">count_susceptible()</a></code> <code><a href="count.html">count_R()</a></code> <code><a href="count.html">count_IR()</a></code> <code><a href="count.html">count_I()</a></code> <code><a href="count.html">count_SI()</a></code> <code><a href="count.html">count_S()</a></code> <code><a href="count.html">count_all()</a></code> <code><a href="count.html">n_sir()</a></code> <code><a href="count.html">count_df()</a></code> 
@@ -376,17 +386,17 @@
           
           <code><a href="example_isolates.html">example_isolates</a></code> 
         </dt>
-        <dd>Data Set with 2,000 Example Isolates</dd>
+        <dd>Data Set with 2 000 Example Isolates</dd>
       </dl><dl><dt>
           
           <code><a href="microorganisms.html">microorganisms</a></code> 
         </dt>
-        <dd>Data Set with 52,141 Microorganisms</dd>
+        <dd>Data Set with 52 142 Microorganisms</dd>
       </dl><dl><dt>
           
           <code><a href="microorganisms.codes.html">microorganisms.codes</a></code> 
         </dt>
-        <dd>Data Set with 5,910 Common Microorganism Codes</dd>
+        <dd>Data Set with 5 910 Common Microorganism Codes</dd>
       </dl><dl><dt>
           
           <code><a href="antibiotics.html">antibiotics</a></code> <code><a href="antibiotics.html">antivirals</a></code> 

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9111</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,11 @@
       <span class="fa fa-directions"></span>
        
       Conduct AMR Analysis
+    </a>
+    <a class="dropdown-item" href="../reference/antibiogram.html">
+      <span class="fa fa-file-prescription"></span>
+       
+      Generate Antibiogram (Trad./Syndromic/WISCA)
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
@@ -400,7 +405,7 @@
 
 
 <dt>property</dt>
-<dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed", or must be <code>"shortname"</code></p></dd>
+<dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed"</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -506,8 +511,10 @@
 <span class="r-in"><span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gram-negative"</span>
 <span class="r-in"><span><span class="fu">mo_snomed</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1098101000112102" "1098201000112108" "409801009"        "446870005"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "56415008"         "713926009"        "714315002"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1098101000112102" "446870005"        "1098201000112108" "409801009"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "56415008"         "714315002"        "713926009"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">mo_type</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
 <span class="r-in"><span><span class="fu">mo_rank</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
@@ -748,8 +755,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Trevisan, 1887"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $snomed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1098101000112102" "1098201000112108" "409801009"        "446870005"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "56415008"         "713926009"        "714315002"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1098101000112102" "446870005"        "1098201000112108" "409801009"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "56415008"         "714315002"        "713926009"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

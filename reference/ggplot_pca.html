@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9111</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,11 @@
       <span class="fa fa-directions"></span>
        
       Conduct AMR Analysis
+    </a>
+    <a class="dropdown-item" href="../reference/antibiogram.html">
+      <span class="fa fa-file-prescription"></span>
+       
+      Generate Antibiogram (Trad./Syndromic/WISCA)
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
@@ -318,152 +323,15 @@
 <span class="r-in"><span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Title here"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 14 results available for PEN in group: order =</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 73 warnings in `summarise()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `PEN = (function (..., minimum = 30, as_percent = FALSE,</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   only_all_tested = FALSE) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 5: `order = "Lactobacillales"`, `genus = "Enterococcus"`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Introducing NA: only 14 results available for PEN in group: order =</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for OXA in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for OXA in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for OXA in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 13 results available for OXA in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 15 results available for OXA in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for OXA in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FLC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FLC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FLC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 13 results available for FLC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FLC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 26 results available for AMX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 26 results available for AMP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 27 results available for TZP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 12 results available for CZO in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 5 results available for CZO in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 27 results available for FEP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 23 results available for FEP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 29 results available for FOX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 26 results available for AMK in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 6 results available for AMK in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 17 results available for AMK in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for KAN in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for KAN in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for KAN in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 6 results available for NIT in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 17 results available for NIT in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 8 results available for FOS in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 2 results available for FOS in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FOS in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FOS in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for FOS in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 7 results available for LNZ in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 5 results available for CIP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 23 results available for CIP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 2 results available for MFX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 2 results available for MFX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MFX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 7 results available for MFX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MFX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 6 results available for TEC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 3 results available for TCY in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 2 results available for TCY in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 18 results available for TGC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 7 results available for TGC in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for DOX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for DOX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 2 results available for DOX in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 27 results available for IPM in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 25 results available for MEM in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 26 results available for MEM in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Caryophanales", genus = "Staphylococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 2 results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MTR in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for CHL in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for CHL in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for CHL in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for CHL in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for CHL in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: only 9 results available for COL in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MUP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Escherichia" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MUP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Klebsiella" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MUP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacterales", genus = "Proteus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MUP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MUP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for MUP in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Pseudomonadales", genus = "Pseudomonas" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for RIF in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Enterococcus" (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Introducing NA: no results available for RIF in group: order =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Lactobacillales", genus = "Streptococcus" (minimum = 30).</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 72 remaining warnings.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   and "TOB". Total observations available: 7.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Groups (n=4, named as 'order'):</span>

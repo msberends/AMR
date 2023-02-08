@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9111</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,11 @@
       <span class="fa fa-directions"></span>
        
       Conduct AMR Analysis
+    </a>
+    <a class="dropdown-item" href="../reference/antibiogram.html">
+      <span class="fa fa-file-prescription"></span>
+       
+      Generate Antibiogram (Trad./Syndromic/WISCA)
     </a>
     <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
@@ -183,7 +188,7 @@
 
 
 <dt>col_mo</dt>
-<dd><p>column name of the IDs of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt>info</dt>
@@ -347,7 +352,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in mdro(): NA introduced for isolates where the available percentage of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with pct_required_classes)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  (16 isolates had no test results)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in mdro(): NA introduced for isolates where the available percentage of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `MDRO = mdro()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in mdro(): NA introduced for isolates where the available percentage of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with pct_required_classes)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Negative       Multi-drug-resistant (MDR) </span>
