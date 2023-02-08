@@ -85,10 +85,7 @@ bug_drug_combinations <- function(x,
   }
   
   # use dplyr and tidyr if they are available, they are much faster!
-  if (pkg_is_available("dplyr", min_version = "1.0.0", also_load = FALSE) &&
-      pkg_is_available("tidyr", min_version = "1.0.0", also_load = FALSE)) {
-    across <- import_fn("across", "dplyr")
-    pivot_longer <- import_fn("pivot_longer", "tidyr")
+  if (identical(pivot_longer, import_fn("pivot_longer", "tidyr", error_on_fail = FALSE))) {
     out <- x %>%
       ungroup() %>% 
       mutate(mo = FUN(ungroup(x)[, col_mo, drop = TRUE], ...)) %>%

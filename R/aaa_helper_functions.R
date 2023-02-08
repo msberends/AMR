@@ -1425,13 +1425,15 @@ case_when <- function(...) {
 }
 
 
-# dplyr implementations ----
+# dplyr/tidyr implementations ----
 
-# take {dplyr} functions if available, and the slower {poorman} functions otherwise
-if (pkg_is_available("dplyr", also_load = FALSE)) {
+# take {dplyr} and {tidyr} functions if available, and the slower {poorman} functions otherwise
+if (pkg_is_available("dplyr", min_version = "1.0.0", also_load = FALSE)) {
   `%>%` <- import_fn("%>%", "dplyr", error_on_fail = FALSE)
+  across <- import_fn("across", "dplyr", error_on_fail = FALSE)
   anti_join <- import_fn("anti_join", "dplyr", error_on_fail = FALSE)
   arrange <- import_fn("arrange", "dplyr", error_on_fail = FALSE)
+  bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = FALSE)
   count <- import_fn("count", "dplyr", error_on_fail = FALSE)
   desc <- import_fn("desc", "dplyr", error_on_fail = FALSE)
   distinct <- import_fn("distinct", "dplyr", error_on_fail = FALSE)
@@ -1443,22 +1445,22 @@ if (pkg_is_available("dplyr", also_load = FALSE)) {
   inner_join <- import_fn("inner_join", "dplyr", error_on_fail = FALSE)
   lag <- import_fn("lag", "dplyr", error_on_fail = FALSE)
   left_join <- import_fn("left_join", "dplyr", error_on_fail = FALSE)
+  mutate <- import_fn("mutate", "dplyr", error_on_fail = FALSE)
   n_distinct <- import_fn("n_distinct", "dplyr", error_on_fail = FALSE)
   pull <- import_fn("pull", "dplyr", error_on_fail = FALSE)
   rename <- import_fn("rename", "dplyr", error_on_fail = FALSE)
   right_join <- import_fn("right_join", "dplyr", error_on_fail = FALSE)
-  row_number <- import_fn("row_number", "dplyr", error_on_fail = FALSE)
   select <- import_fn("select", "dplyr", error_on_fail = FALSE)
   semi_join <- import_fn("semi_join", "dplyr", error_on_fail = FALSE)
   summarise <- import_fn("summarise", "dplyr", error_on_fail = FALSE)
   ungroup <- import_fn("ungroup", "dplyr", error_on_fail = FALSE)
-  mutate <- import_fn("mutate", "dplyr", error_on_fail = FALSE)
-  bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = FALSE)
   where <- import_fn("where", "dplyr", error_on_fail = FALSE)
 } else {
   `%>%` <- `%pm>%`
+  across <- pm_across
   anti_join <- pm_anti_join
   arrange <- pm_arrange
+  bind_rows <- pm_bind_rows
   count <- pm_count
   desc <- pm_desc
   distinct <- pm_distinct
@@ -1470,62 +1472,22 @@ if (pkg_is_available("dplyr", also_load = FALSE)) {
   inner_join <- pm_inner_join
   lag <- pm_lag
   left_join <- pm_left_join
+  mutate <- pm_mutate
   n_distinct <- pm_n_distinct
   pull <- pm_pull
   rename <- pm_rename
   right_join <- pm_right_join
-  row_number <- pm_row_number
   select <- pm_select
   semi_join <- pm_semi_join
   summarise <- pm_summarise
   ungroup <- pm_ungroup
-  mutate <- function(.data, ...) {
-    # pm_mutate is buggy, use this simple alternative
-    dots <- list(...)
-    for (i in seq_len(length(dots))) {
-      .data[, names(dots)[i]] <- dots[[i]]
-    }
-    .data
-  }
-  bind_rows <- function(..., fill = NA) {
-    # this AMAZING code is from ChatGPT when I asked for a base R dplyr::bind_rows alternative
-    dfs <- list(...)
-    all_cols <- unique(unlist(lapply(dfs, colnames)))
-    mat_list <- lapply(dfs, function(x) {
-      mat <- matrix(NA, nrow = nrow(x), ncol = length(all_cols))
-      colnames(mat) <- all_cols
-      mat[, colnames(x)] <- as.matrix(x)
-      mat
-    })
-    mat <- do.call(rbind, mat_list)
-    as.data.frame(mat, stringsAsFactors = FALSE)
-  }
-  where <- function(fn) {
-    # adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
-    if (!is.function(fn)) {
-      stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
-    }
-    df <- pm_select_env$.data
-    cols <- pm_select_env$get_colnames()
-    if (is.null(df)) {
-      df <- get_current_data("where", call = FALSE)
-      cols <- colnames(df)
-    }
-    preds <- unlist(lapply(
-      df,
-      function(x, fn) {
-        do.call("fn", list(x))
-      },
-      fn
-    ))
-    if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
-    data_cols <- cols
-    cols <- data_cols[preds]
-    which(data_cols %in% cols)
-  }
-  
+  where <- pm_where
 }
-
+if (pkg_is_available("tidyr", min_version = "1.0.0", also_load = FALSE)) {
+  pivot_longer <- import_fn("pivot_longer", "tidyr", error_on_fail = FALSE)
+} else {
+  pivot_longer <- pm_pivot_longer
+}
 
 # Faster data.table implementations ----
 

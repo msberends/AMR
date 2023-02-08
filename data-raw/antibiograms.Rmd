@@ -1,0 +1,62 @@
+---
+title: "Generating antibiograms with the AMR package"
+author: "AMR package developers"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+library(AMR)
+```
+
+This is an example R Markdown file to show the use of `antibiogram()` of the AMR package.
+
+For starters, this is what our `example_isolates` data set looks like:
+
+```{r}
+example_isolates
+```
+
+
+### Traditional Antibiogram
+
+```{r trad}
+print(
+  antibiogram(example_isolates,
+              antibiotics = c(aminoglycosides(), carbapenems()))
+)
+```
+
+### Combined Antibiogram
+
+```{r comb}
+print(
+  antibiogram(example_isolates,
+              antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+)
+```
+
+### Syndromic Antibiogram
+
+```{r synd}
+print(
+  antibiogram(example_isolates,
+              antibiotics = c(aminoglycosides(), carbapenems()),
+              syndromic_group = "ward")
+)
+```
+
+### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
+
+```{r wisca}
+print(
+  antibiogram(example_isolates,
+              antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+              mo_transform = "gramstain",
+              minimum = 10, # this should be >= 30, but now just as example
+              syndromic_group = ifelse(example_isolates$age >= 65 &
+                                         example_isolates$gender == "M",
+                                       "WISCA Group 1", "WISCA Group 2"))
+)
+```

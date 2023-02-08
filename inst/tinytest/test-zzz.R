@@ -68,7 +68,6 @@ import_functions <- c(
   "read_html" = "xml2",
   "rename" = "dplyr",
   "right_join" = "dplyr",
-  "row_number" = "dplyr",
   "select" = "dplyr",
   "semi_join" = "dplyr",
   "showQuestion" = "rstudioapi",

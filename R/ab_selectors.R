@@ -49,7 +49,6 @@
 #' @return (internally) a [character] vector of column names, with additional class `"ab_selector"`
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
-
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.

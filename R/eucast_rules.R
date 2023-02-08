@@ -926,7 +926,7 @@ eucast_rules <- function(x,
   # Print overview ----------------------------------------------------------
   if (isTRUE(info) || isTRUE(verbose)) {
     verbose_info <- x.bak %>%
-      mutate(row = row_number()) %>%
+      mutate(row = seq_len(NROW(x.bak))) %>%
       select(`.rowid`, row) %>%
       right_join(verbose_info,
         by = c(".rowid" = "rowid")

@@ -40,11 +40,9 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
   if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
     library(AMR)
     if (identical(AMR:::import_fn("select", "dplyr"), AMR:::select)) {
-      print("This test will rely on {dplyr} verbs")
-      message("This test will rely on {dplyr} verbs")
+      message("\n\n------------------------------------\nThis test will rely on {dplyr} verbs\n------------------------------------\n\n")
     } else {
-      print("This test will rely on {poorman} verbs")
-      message("This test will rely on {poorman} verbs")
+      message("\n\n---------------------------------------------------------------------\nThis test will rely on {poorman} verbs (installed state dplyr: ", AMR:::pkg_is_available("dplyr", also_load = FALSE), ")\n---------------------------------------------------------------------\n\n")
     }
     # set language
     set_AMR_locale("English")

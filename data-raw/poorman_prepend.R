@@ -32,11 +32,11 @@
 # Source file: data-raw/reproduction_of_poorman.R
 # ------------------------------------------------
 
-# poorman: a package to replace all dplyr functions with base R so we can lose dependency on dplyr.
+# {poorman}: a package to replace all dplyr functions with base R so we can lose dependency on {dplyr}.
 # These functions were downloaded from https://github.com/nathaneastwood/poorman,
 # from this commit: https://github.com/nathaneastwood/poorman/tree/{commit}.
 #
-# All functions are prefixed with 'pm_' to make it obvious that they are dplyr substitutes.
+# All functions are prefixed with 'pm_' to make it obvious that they are {dplyr} substitutes.
 #
 # All code below was released under MIT license, that permits 'free of charge, to any person obtaining a
 # copy of the software and associated documentation files (the "Software"), to deal in the Software
