@@ -16,14 +16,14 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
   add_ab_group = TRUE,
   remove_intrinsic_resistant = FALSE,
   decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark == ",", " ", ","),
+  big.mark = ifelse(decimal.mark == ",", ".", ","),
   ...
 )
 }
 \arguments{
 \item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{FUN}{the function to call on the \code{mo} column to transform the microorganism codes, defaults to \code{\link[=mo_shortname]{mo_shortname()}}}
 
@@ -59,11 +59,8 @@ The function \code{\link[=format]{format()}} calculates the resistance per bug-d
 }
 \examples{
 \donttest{
-#' # example_isolates is a data set available in the AMR package.
-# run ?example_isolates for more info.
-example_isolates
-
 x <- bug_drug_combinations(example_isolates)
+head(x)
 format(x, translate_ab = "name (atc)")
 
 # Use FUN to change to transformation of microorganism codes

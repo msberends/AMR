@@ -139,9 +139,9 @@ atc_online_property <- function(atc_code,
 
     if (property == "groups") {
       out <- tryCatch(
-        read_html(atc_url) %>%
-          html_node("#content") %>%
-          html_children() %>%
+        read_html(atc_url) %pm>%
+          html_node("#content") %pm>%
+          html_children() %pm>%
           html_node("a"),
         error = function(e) NULL
       )
@@ -151,9 +151,9 @@ atc_online_property <- function(atc_code,
       }
 
       # get URLS of items
-      hrefs <- out %>% html_attr("href")
+      hrefs <- out %pm>% html_attr("href")
       # get text of items
-      texts <- out %>% html_text()
+      texts <- out %pm>% html_text()
       # select only text items where URL like "code="
       texts <- texts[grepl("?code=", tolower(hrefs), fixed = TRUE)]
       # last one is antibiotics, skip it
@@ -161,9 +161,9 @@ atc_online_property <- function(atc_code,
       returnvalue <- c(list(texts), returnvalue)
     } else {
       out <- tryCatch(
-        read_html(atc_url) %>%
-          html_nodes("table") %>%
-          html_table(header = TRUE) %>%
+        read_html(atc_url) %pm>%
+          html_nodes("table") %pm>%
+          html_table(header = TRUE) %pm>%
           as.data.frame(stringsAsFactors = FALSE),
         error = function(e) NULL
       )

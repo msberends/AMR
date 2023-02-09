@@ -35,7 +35,7 @@ antimicrobials_equal(
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank to determine automatically}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{universal}{names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs}
 

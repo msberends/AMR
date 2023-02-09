@@ -13,7 +13,7 @@
 \alias{proportion_S}
 \alias{proportion_df}
 \alias{sir_df}
-\title{Calculate Antimicrobial Resistance}
+\title{Calculate Microbial Resistance}
 \source{
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
@@ -98,7 +98,7 @@ The function \code{\link[=resistance]{resistance()}} is equal to the function \c
 
 Use \code{\link[=sir_confidence_interval]{sir_confidence_interval()}} to calculate the confidence interval, which relies on \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial \emph{resistance}. Change the \code{side} argument to "left"/"min" or "right"/"max" to return a single value, and change the \code{ab_result} argument to e.g. \code{c("S", "I")} to test for antimicrobial \emph{susceptibility}, see Examples.
 
-\strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set with one of the four available algorithms.
+\strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set.
 
 These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[=count]{count()}} functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can influence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} argument).}
 
@@ -162,7 +162,6 @@ This AMR package honours this insight. Use \code{\link[=susceptibility]{suscepti
 \examples{
 # example_isolates is a data set available in the AMR package.
 # run ?example_isolates for more info.
-example_isolates
 
 # base R ------------------------------------------------------------
 # determines \%R

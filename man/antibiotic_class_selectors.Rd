@@ -110,7 +110,7 @@ not_intrinsic_resistant(
 
 \item{filter}{an \link{expression} to be evaluated in the \link{antibiotics} data set, such as \code{name \%like\% "trim"}}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2" or "3.1".}
 }

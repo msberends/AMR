@@ -1,4 +1,4 @@
-# AMR 1.8.2.9111
+# AMR 1.8.2.9112
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -27,8 +27,6 @@ While existing functions such as `as.rsi()`, `rsi_df()` and `ggplot_rsi()` still
 The 'RSI functions' will be removed in a future version, but not before late 2023 / early 2024.
 
 ### New antibiogram function
-
-Klinker *et al.* (2021, DOI [10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)) and Barbieri *et al.* (2021, DOI [10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)).
 
 With the new `antibiogram()` function, users can now generate traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA). With this, we follow the logic in the previously described work of Klinker *et al.* (2021, DOI [10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)) and Barbieri *et al.* (2021, DOI [10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)).
 

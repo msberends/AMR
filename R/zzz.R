@@ -123,7 +123,6 @@ if (utf8_supported && !is_latex) {
   s3_register("ggplot2::autoplot", "mic")
   s3_register("ggplot2::autoplot", "disk")
   s3_register("ggplot2::autoplot", "resistance_predict")
-  s3_register("ggplot2::autoplot", "antibiogram")
   # Support for fortify from the ggplot2 package
   s3_register("ggplot2::fortify", "sir")
   s3_register("ggplot2::fortify", "mic")
@@ -181,7 +180,7 @@ if (utf8_supported && !is_latex) {
   if (pkg_is_available("tibble", also_load = FALSE)) {
     try(loadNamespace("tibble"), silent = TRUE)
   }
-  
+
   # reference data - they have additional to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)

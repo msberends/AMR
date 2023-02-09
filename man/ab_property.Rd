@@ -163,7 +163,8 @@ if (require("dplyr")) {
     set_ab_names(property = "atc")
 
   example_isolates \%>\%
-    set_ab_names(where(is.sir))
+    set_ab_names(where(is.sir)) \%>\%
+    colnames()
 
   example_isolates \%>\%
     set_ab_names(NIT:VAN) \%>\%

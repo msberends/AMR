@@ -63,6 +63,99 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   merged
 }
 
+# support where() like tidyverse:
+# adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
+where <- function(fn) {
+  if (!is.function(fn)) {
+    stop(pm_deparse_var(fn), " is not a valid predicate function.")
+  }
+  preds <- unlist(lapply(
+    pm_select_env$.data,
+    function(x, fn) {
+      do.call("fn", list(x))
+    },
+    fn
+  ))
+  if (!is.logical(preds)) stop("`where()` must be used with functions that return `TRUE` or `FALSE`.")
+  data_cols <- pm_select_env$get_colnames()
+  cols <- data_cols[preds]
+  which(data_cols %in% cols)
+}
+
+# copied and slightly rewritten from poorman under same license (2021-10-15)
+quick_case_when <- function(...) {
+  fs <- list(...)
+  lapply(fs, function(x) {
+    if (!inherits(x, "formula")) {
+      stop("`case_when()` requires formula inputs.")
+    }
+  })
+  n <- length(fs)
+  if (n == 0L) {
+    stop("No cases provided.")
+  }
+
+  validate_case_when_length <- function(query, value, fs) {
+    lhs_lengths <- lengths(query)
+    rhs_lengths <- lengths(value)
+    all_lengths <- unique(c(lhs_lengths, rhs_lengths))
+    if (length(all_lengths) <= 1L) {
+      return(all_lengths[[1L]])
+    }
+    non_atomic_lengths <- all_lengths[all_lengths != 1L]
+    len <- non_atomic_lengths[[1L]]
+    if (length(non_atomic_lengths) == 1L) {
+      return(len)
+    }
+    inconsistent_lengths <- non_atomic_lengths[-1L]
+    lhs_problems <- lhs_lengths %in% inconsistent_lengths
+    rhs_problems <- rhs_lengths %in% inconsistent_lengths
+    problems <- lhs_problems | rhs_problems
+    if (any(problems)) {
+      stop("The following formulas must be length ", len, " or 1, not ",
+        paste(inconsistent_lengths, collapse = ", "), ".\n    ",
+        paste(fs[problems], collapse = "\n    "),
+        call. = FALSE
+      )
+    }
+  }
+
+  replace_with <- function(x, i, val, arg_name) {
+    if (is.null(val)) {
+      return(x)
+    }
+    i[is.na(i)] <- FALSE
+    if (length(val) == 1L) {
+      x[i] <- val
+    } else {
+      x[i] <- val[i]
+    }
+    x
+  }
+
+  query <- vector("list", n)
+  value <- vector("list", n)
+  default_env <- parent.frame()
+  for (i in seq_len(n)) {
+    query[[i]] <- eval(fs[[i]][[2]], envir = default_env)
+    value[[i]] <- eval(fs[[i]][[3]], envir = default_env)
+    if (!is.logical(query[[i]])) {
+      stop(fs[[i]][[2]], " does not return a `logical` vector.")
+    }
+  }
+  m <- validate_case_when_length(query, value, fs)
+  out <- value[[1]][rep(NA_integer_, m)]
+  replaced <- rep(FALSE, m)
+  for (i in seq_len(n)) {
+    out <- replace_with(
+      out, query[[i]] & !replaced, value[[i]],
+      NULL
+    )
+    replaced <- replaced | (query[[i]] & !is.na(query[[i]]))
+  }
+  out
+}
+
 # No export, no Rd
 addin_insert_in <- function() {
   import_fn("insertText", "rstudioapi")(" %in% ")
@@ -259,7 +352,7 @@ is_valid_regex <- function(x) {
 }
 
 stop_ifnot_installed <- function(package) {
-  installed <- vapply(FUN.VALUE = logical(1), package, requireNamespace, lib.loc = base::.libPaths(), quietly = TRUE)
+  installed <- vapply(FUN.VALUE = logical(1), package, requireNamespace, quietly = TRUE)
   if (any(!installed) && any(package == "rstudioapi")) {
     stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
   } else if (any(!installed)) {
@@ -276,7 +369,7 @@ pkg_is_available <- function(pkg, also_load = TRUE, min_version = NULL) {
   if (also_load == TRUE) {
     out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE))
   } else {
-    out <- requireNamespace(pkg, lib.loc = base::.libPaths(), quietly = TRUE)
+    out <- requireNamespace(pkg, quietly = TRUE)
   }
   if (!is.null(min_version)) {
     out <- out && utils::packageVersion(pkg) >= min_version
@@ -293,7 +386,7 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     getExportedValue(name = name, ns = asNamespace(pkg)),
     error = function(e) {
       if (isTRUE(error_on_fail)) {
-        stop_("function `", name, "()` is not an exported object from package '", pkg,
+        stop_("function ", name, "() is not an exported object from package '", pkg,
           "'. Please create an issue at ", font_url("https://github.com/msberends/AMR/issues"), ". Many thanks!",
           call = FALSE
         )
@@ -1179,7 +1272,7 @@ create_pillar_column <- function(x, ...) {
   new_pillar_shaft_simple(x, ...)
 }
 
-as_original_data_class <- function(df, old_class = NULL, extra_class = NULL) {
+as_original_data_class <- function(df, old_class = NULL) {
   if ("tbl_df" %in% old_class && pkg_is_available("tibble", also_load = FALSE)) {
     # this will then also remove groups
     fn <- import_fn("as_tibble", "tibble")
@@ -1192,11 +1285,7 @@ as_original_data_class <- function(df, old_class = NULL, extra_class = NULL) {
   } else {
     fn <- function(x) base::as.data.frame(df, stringsAsFactors = FALSE)
   }
-  out <- fn(df)
-  if (!is.null(extra_class)) {
-    class(out) <- c(extra_class, class(out))
-  }
-  out
+  fn(df)
 }
 
 # works exactly like round(), but rounds `round2(44.55, 1)` to 44.6 instead of 44.5
@@ -1336,7 +1425,7 @@ add_MO_lookup_to_AMR_env <- function() {
 }
 
 trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
-  # this is even faster than trimws() itself which sets "[ \t\r\n]".
+  # this is even faster than trimws() itself which sets " \t\n\r".
   trimws(..., whitespace = whitespace)
 }
 
@@ -1347,154 +1436,12 @@ readRDS2 <- function(file, refhook = NULL) {
   readRDS(con, refhook = refhook)
 }
 
-
-# dplyr implementations ----
-
-# copied from https://github.com/nathaneastwood/poorman under same license (2021-10-15)
-case_when <- function(...) {
-  fs <- list(...)
-  lapply(fs, function(x) {
-    if (!inherits(x, "formula")) {
-      stop("`case_when()` requires formula inputs.")
-    }
-  })
-  n <- length(fs)
-  if (n == 0L) {
-    stop("No cases provided.")
-  }
-  
-  validate_case_when_length <- function(query, value, fs) {
-    lhs_lengths <- lengths(query)
-    rhs_lengths <- lengths(value)
-    all_lengths <- unique(c(lhs_lengths, rhs_lengths))
-    if (length(all_lengths) <= 1L) {
-      return(all_lengths[[1L]])
-    }
-    non_atomic_lengths <- all_lengths[all_lengths != 1L]
-    len <- non_atomic_lengths[[1L]]
-    if (length(non_atomic_lengths) == 1L) {
-      return(len)
-    }
-    inconsistent_lengths <- non_atomic_lengths[-1L]
-    lhs_problems <- lhs_lengths %in% inconsistent_lengths
-    rhs_problems <- rhs_lengths %in% inconsistent_lengths
-    problems <- lhs_problems | rhs_problems
-    if (any(problems)) {
-      stop("The following formulas must be length ", len, " or 1, not ",
-           paste(inconsistent_lengths, collapse = ", "), ".\n    ",
-           paste(fs[problems], collapse = "\n    "),
-           call. = FALSE
-      )
-    }
-  }
-  
-  replace_with <- function(x, i, val, arg_name) {
-    if (is.null(val)) {
-      return(x)
-    }
-    i[is.na(i)] <- FALSE
-    if (length(val) == 1L) {
-      x[i] <- val
-    } else {
-      x[i] <- val[i]
-    }
-    x
-  }
-  
-  query <- vector("list", n)
-  value <- vector("list", n)
-  default_env <- parent.frame()
-  for (i in seq_len(n)) {
-    query[[i]] <- eval(fs[[i]][[2]], envir = default_env)
-    value[[i]] <- eval(fs[[i]][[3]], envir = default_env)
-    if (!is.logical(query[[i]])) {
-      stop(fs[[i]][[2]], " does not return a `logical` vector.")
-    }
-  }
-  m <- validate_case_when_length(query, value, fs)
-  out <- value[[1]][rep(NA_integer_, m)]
-  replaced <- rep(FALSE, m)
-  for (i in seq_len(n)) {
-    out <- replace_with(
-      out, query[[i]] & !replaced, value[[i]],
-      NULL
-    )
-    replaced <- replaced | (query[[i]] & !is.na(query[[i]]))
-  }
-  out
-}
-
-
-# dplyr/tidyr implementations ----
-
-# take {dplyr} and {tidyr} functions if available, and the slower {poorman} functions otherwise
-if (pkg_is_available("dplyr", min_version = "1.0.0", also_load = FALSE)) {
-  `%>%` <- import_fn("%>%", "dplyr", error_on_fail = FALSE)
-  across <- import_fn("across", "dplyr", error_on_fail = FALSE)
-  anti_join <- import_fn("anti_join", "dplyr", error_on_fail = FALSE)
-  arrange <- import_fn("arrange", "dplyr", error_on_fail = FALSE)
-  bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = FALSE)
-  count <- import_fn("count", "dplyr", error_on_fail = FALSE)
-  desc <- import_fn("desc", "dplyr", error_on_fail = FALSE)
-  distinct <- import_fn("distinct", "dplyr", error_on_fail = FALSE)
-  everything <- import_fn("everything", "dplyr", error_on_fail = FALSE)
-  filter <- import_fn("filter", "dplyr", error_on_fail = FALSE)
-  full_join <- import_fn("full_join", "dplyr", error_on_fail = FALSE)
-  group_by <- import_fn("group_by", "dplyr", error_on_fail = FALSE)
-  group_vars <- import_fn("group_vars", "dplyr", error_on_fail = FALSE)
-  inner_join <- import_fn("inner_join", "dplyr", error_on_fail = FALSE)
-  lag <- import_fn("lag", "dplyr", error_on_fail = FALSE)
-  left_join <- import_fn("left_join", "dplyr", error_on_fail = FALSE)
-  mutate <- import_fn("mutate", "dplyr", error_on_fail = FALSE)
-  n_distinct <- import_fn("n_distinct", "dplyr", error_on_fail = FALSE)
-  pull <- import_fn("pull", "dplyr", error_on_fail = FALSE)
-  rename <- import_fn("rename", "dplyr", error_on_fail = FALSE)
-  right_join <- import_fn("right_join", "dplyr", error_on_fail = FALSE)
-  select <- import_fn("select", "dplyr", error_on_fail = FALSE)
-  semi_join <- import_fn("semi_join", "dplyr", error_on_fail = FALSE)
-  summarise <- import_fn("summarise", "dplyr", error_on_fail = FALSE)
-  ungroup <- import_fn("ungroup", "dplyr", error_on_fail = FALSE)
-  where <- import_fn("where", "dplyr", error_on_fail = FALSE)
-} else {
-  `%>%` <- `%pm>%`
-  across <- pm_across
-  anti_join <- pm_anti_join
-  arrange <- pm_arrange
-  bind_rows <- pm_bind_rows
-  count <- pm_count
-  desc <- pm_desc
-  distinct <- pm_distinct
-  everything <- pm_everything
-  filter <- pm_filter
-  full_join <- pm_full_join
-  group_by <- pm_group_by
-  group_vars <- pm_group_vars
-  inner_join <- pm_inner_join
-  lag <- pm_lag
-  left_join <- pm_left_join
-  mutate <- pm_mutate
-  n_distinct <- pm_n_distinct
-  pull <- pm_pull
-  rename <- pm_rename
-  right_join <- pm_right_join
-  select <- pm_select
-  semi_join <- pm_semi_join
-  summarise <- pm_summarise
-  ungroup <- pm_ungroup
-  where <- pm_where
-}
-if (pkg_is_available("tidyr", min_version = "1.0.0", also_load = FALSE)) {
-  pivot_longer <- import_fn("pivot_longer", "tidyr", error_on_fail = FALSE)
-} else {
-  pivot_longer <- pm_pivot_longer
-}
-
 # Faster data.table implementations ----
 
 match <- function(x, table, ...) {
   chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
   if (!is.null(chmatch) && is.character(x) && is.character(table)) {
-    # data.table::chmatch() is much faster than base::match() for character
+    # data.table::chmatch() is 35% faster than base::match() for character
     chmatch(x, table, ...)
   } else {
     base::match(x, table, ...)
@@ -1503,7 +1450,7 @@ match <- function(x, table, ...) {
 `%in%` <- function(x, table) {
   chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
   if (!is.null(chin) && is.character(x) && is.character(table)) {
-    # data.table::`%chin%`() is much faster than base::`%in%`() for character
+    # data.table::`%chin%`() is 20-50% faster than base::`%in%`() for character
     chin(x, table)
   } else {
     base::`%in%`(x, table)

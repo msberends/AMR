@@ -561,10 +561,10 @@ pillar_shaft.mo <- function(x, ...) {
   # markup NA and UNKNOWN
   out[is.na(x)] <- font_na("  NA")
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
-  
+
   # markup manual codes
   out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo] <- font_blue(out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo], collapse = NULL)
-  
+
   df <- tryCatch(get_current_data(arg_name = "x", call = 0),
     error = function(e) NULL
   )
@@ -579,7 +579,7 @@ pillar_shaft.mo <- function(x, ...) {
     (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
     out[!x %in% all_mos] <- font_italic(
-      font_na(font_stripstyle(out[!x %in% all_mos]),
+      font_na(x[!x %in% all_mos],
         collapse = NULL
       ),
       collapse = NULL
@@ -627,7 +627,7 @@ freq.mo <- function(x, ...) {
     .add_header = list(
       `Gram-negative` = paste0(
         format(sum(grams == "Gram-negative", na.rm = TRUE),
-          big.mark = " ",
+          big.mark = ",",
           decimal.mark = "."
         ),
         " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams),
@@ -637,7 +637,7 @@ freq.mo <- function(x, ...) {
       ),
       `Gram-positive` = paste0(
         format(sum(grams == "Gram-positive", na.rm = TRUE),
-          big.mark = " ",
+          big.mark = ",",
           decimal.mark = "."
         ),
         " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams),
@@ -645,8 +645,8 @@ freq.mo <- function(x, ...) {
         ),
         ")"
       ),
-      `Nr. of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
-      `Nr. of species` = n_distinct(paste(
+      `Nr. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
+      `Nr. of species` = pm_n_distinct(paste(
         mo_genus(x_noNA, language = NULL),
         mo_species(x_noNA, language = NULL)
       ))
@@ -1155,14 +1155,14 @@ repair_reference_df <- function(reference_df) {
     return(NULL)
   }
   # has valid own reference_df
-  reference_df <- reference_df %>%
-    filter(!is.na(mo))
+  reference_df <- reference_df %pm>%
+    pm_filter(!is.na(mo))
 
   # keep only first two columns, second must be mo
   if (colnames(reference_df)[1] == "mo") {
-    reference_df <- reference_df %>% select(2, "mo")
+    reference_df <- reference_df %pm>% pm_select(2, "mo")
   } else {
-    reference_df <- reference_df %>% select(1, "mo")
+    reference_df <- reference_df %pm>% pm_select(1, "mo")
   }
 
   # remove factors, just keep characters

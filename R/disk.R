@@ -114,9 +114,9 @@ as.disk <- function(x, na.rm = FALSE) {
     na_after <- length(x[is.na(x)])
 
     if (na_before != na_after) {
-      list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %>%
-        unique() %>%
-        sort() %>%
+      list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %pm>%
+        unique() %pm>%
+        sort() %pm>%
         vector_and(quotes = TRUE)
       cur_col <- get_current_column()
       warning_("in `as.disk()`: ", na_after - na_before, " result",

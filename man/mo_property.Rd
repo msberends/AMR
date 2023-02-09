@@ -278,7 +278,7 @@ mo_property(
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
 
-\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed"}
+\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed", or must be \code{"shortname"}}
 }
 \value{
 \itemize{

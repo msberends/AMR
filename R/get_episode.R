@@ -109,7 +109,7 @@
 get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
-
+  
   exec_episode(
     x = x,
     episode_days = episode_days,
@@ -127,10 +127,10 @@ is_new_episode <- function(x, episode_days, ...) {
 
 exec_episode <- function(x, type, episode_days, ...) {
   x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
-
+  
   # since x is now in seconds, get seconds from episode_days as well
   episode_seconds <- episode_days * 60 * 60 * 24
-
+  
   if (length(x) == 1) { # this will also match 1 NA, which is fine
     return(1)
   } else if (length(x) == 2 && !all(is.na(x))) {
@@ -140,7 +140,7 @@ exec_episode <- function(x, type, episode_days, ...) {
       return(c(1, 1))
     }
   }
-
+  
   # we asked on StackOverflow:
   # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
   run_episodes <- function(x, episode_seconds) {
@@ -157,7 +157,7 @@ exec_episode <- function(x, type, episode_days, ...) {
     }
     indices
   }
-
+  
   ord <- order(x)
   out <- run_episodes(x[ord], episode_seconds)[order(ord)]
   out[is.na(x) & ord != 1] <- NA # every NA expect for the first must remain NA

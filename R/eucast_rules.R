@@ -331,12 +331,12 @@ eucast_rules <- function(x,
 
   # Some helper functions ---------------------------------------------------
   get_antibiotic_names <- function(x) {
-    x <- x %>%
-      strsplit(",") %>%
-      unlist() %>%
-      trimws2() %>%
-      vapply(FUN.VALUE = character(1), function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %>%
-      sort() %>%
+    x <- x %pm>%
+      strsplit(",") %pm>%
+      unlist() %pm>%
+      trimws2() %pm>%
+      vapply(FUN.VALUE = character(1), function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
+      sort() %pm>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
     x <- gsub("except CAZ", paste("except", ab_name("CAZ", language = NULL, tolower = TRUE)), x, fixed = TRUE)
@@ -419,10 +419,10 @@ eucast_rules <- function(x,
   # save original table, with the new .rowid column
   x.bak <- x
   # keep only unique rows for MO and ABx
-  x <- x %>%
-    arrange(`.rowid`) %>%
+  x <- x %pm>%
+    pm_arrange(`.rowid`) %pm>%
     # big speed gain! only analyse unique rows:
-    distinct(`.rowid`, .keep_all = TRUE) %>%
+    pm_distinct(`.rowid`, .keep_all = TRUE) %pm>%
     as.data.frame(stringsAsFactors = FALSE)
   x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]), info = info)
   # rename col_mo to prevent interference with joined columns
@@ -925,16 +925,16 @@ eucast_rules <- function(x,
 
   # Print overview ----------------------------------------------------------
   if (isTRUE(info) || isTRUE(verbose)) {
-    verbose_info <- x.bak %>%
-      mutate(row = seq_len(NROW(x.bak))) %>%
-      select(`.rowid`, row) %>%
-      right_join(verbose_info,
+    verbose_info <- x.bak %pm>%
+      pm_mutate(row = pm_row_number()) %pm>%
+      pm_select(`.rowid`, row) %pm>%
+      pm_right_join(verbose_info,
         by = c(".rowid" = "rowid")
-      ) %>%
-      select(-`.rowid`) %>%
-      select(row, everything()) %>%
-      filter(!is.na(new) | is.na(new) & !is.na(old)) %>%
-      arrange(row, rule_group, rule_name, col)
+      ) %pm>%
+      pm_select(-`.rowid`) %pm>%
+      pm_select(row, pm_everything()) %pm>%
+      pm_filter(!is.na(new) | is.na(new) & !is.na(old)) %pm>%
+      pm_arrange(row, rule_group, rule_name, col)
     rownames(verbose_info) <- NULL
   }
 
@@ -949,7 +949,7 @@ eucast_rules <- function(x,
     cat(word_wrap(paste0(
       "The rules ", paste0(wouldve, "affected "),
       font_bold(
-        formatnr(n_distinct(verbose_info$row)),
+        formatnr(pm_n_distinct(verbose_info$row)),
         "out of", formatnr(nrow(x.bak)),
         "rows"
       ),
@@ -957,8 +957,8 @@ eucast_rules <- function(x,
       font_bold(formatnr(nrow(verbose_info)), "edits\n")
     )))
 
-    total_n_added <- verbose_info %>% filter(is.na(old)) %>% nrow()
-    total_n_changed <- verbose_info %>% filter(!is.na(old)) %>% nrow()
+    total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
+    total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
 
     # print added values
     if (total_n_added == 0) {
@@ -968,15 +968,15 @@ eucast_rules <- function(x,
     }
     cat(colour(paste0(
       "=> ", wouldve, "added ",
-      font_bold(formatnr(verbose_info %>%
-        filter(is.na(old)) %>%
+      font_bold(formatnr(verbose_info %pm>%
+        pm_filter(is.na(old)) %pm>%
         nrow()), "test results"),
       "\n"
     )))
     if (total_n_added > 0) {
-      added_summary <- verbose_info %>%
-        filter(is.na(old)) %>%
-        count(new, name = "n")
+      added_summary <- verbose_info %pm>%
+        pm_filter(is.na(old)) %pm>%
+        pm_count(new, name = "n")
       cat(paste("   -",
         paste0(
           formatnr(added_summary$n), " test result", ifelse(added_summary$n > 1, "s", ""),
@@ -997,16 +997,16 @@ eucast_rules <- function(x,
     }
     cat(colour(paste0(
       "=> ", wouldve, "changed ",
-      font_bold(formatnr(verbose_info %>%
-        filter(!is.na(old)) %>%
+      font_bold(formatnr(verbose_info %pm>%
+        pm_filter(!is.na(old)) %pm>%
         nrow()), "test results"),
       "\n"
     )))
     if (total_n_changed > 0) {
-      changed_summary <- verbose_info %>%
-        filter(!is.na(old)) %>%
-        mutate(new = ifelse(is.na(new), "NA", new)) %>%
-        count(old, new, name = "n")
+      changed_summary <- verbose_info %pm>%
+        pm_filter(!is.na(old)) %pm>%
+        pm_mutate(new = ifelse(is.na(new), "NA", new)) %pm>%
+        pm_count(old, new, name = "n")
       cat(paste("   -",
         paste0(
           formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""), " changed from ",
@@ -1049,8 +1049,8 @@ eucast_rules <- function(x,
     # x was analysed with only unique rows, so join everything together again
     x <- x[, c(cols_ab, ".rowid"), drop = FALSE]
     x.bak <- x.bak[, setdiff(colnames(x.bak), cols_ab), drop = FALSE]
-    x.bak <- x.bak %>%
-      left_join(x, by = ".rowid")
+    x.bak <- x.bak %pm>%
+      pm_left_join(x, by = ".rowid")
     x.bak <- x.bak[, old_cols, drop = FALSE]
     # reset original attributes
     attributes(x.bak) <- old_attributes
@@ -1103,8 +1103,8 @@ edit_sir <- function(x,
         if (w$message %like% "invalid factor level") {
           xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
             new_edits[, col] <<- factor(
-              x = as.character(pull(new_edits, col)),
-              levels = unique(c(to, levels(pull(new_edits, col))))
+              x = as.character(pm_pull(new_edits, col)),
+              levels = unique(c(to, levels(pm_pull(new_edits, col))))
             )
             TRUE
           })
@@ -1159,22 +1159,22 @@ edit_sir <- function(x,
           "rowid", "col", "mo_fullname", "old", "new",
           "rule", "rule_group", "rule_name", "rule_source"
         )
-        verbose_new <- verbose_new %>% filter(old != new | is.na(old) | is.na(new) & !is.na(old))
+        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old) | is.na(new) & !is.na(old))
         # save changes to data set 'verbose_info'
         track_changes$verbose_info <- rbind(track_changes$verbose_info,
           verbose_new,
           stringsAsFactors = FALSE
         )
         # count adds and changes
-        track_changes$added <- track_changes$added + verbose_new %>%
-          filter(is.na(old)) %>%
-          pull(rowid) %>%
-          get_original_rows() %>%
+        track_changes$added <- track_changes$added + verbose_new %pm>%
+          pm_filter(is.na(old)) %pm>%
+          pm_pull(rowid) %pm>%
+          get_original_rows() %pm>%
           length()
-        track_changes$changed <- track_changes$changed + verbose_new %>%
-          filter(!is.na(old)) %>%
-          pull(rowid) %>%
-          get_original_rows() %>%
+        track_changes$changed <- track_changes$changed + verbose_new %pm>%
+          pm_filter(!is.na(old)) %pm>%
+          pm_pull(rowid) %pm>%
+          get_original_rows() %pm>%
           length()
       }
     }

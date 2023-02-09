@@ -3,9 +3,9 @@
 \docType{data}
 \name{example_isolates}
 \alias{example_isolates}
-\title{Data Set with 2 000 Example Isolates}
+\title{Data Set with 2,000 Example Isolates}
 \format{
-A \link[tibble:tibble]{tibble} with 2 000 observations and 46 variables:
+A \link[tibble:tibble]{tibble} with 2,000 observations and 46 variables:
 \itemize{
 \item \code{date}\cr Date of receipt at the laboratory
 \item \code{patient}\cr ID of the patient
@@ -20,7 +20,7 @@ A \link[tibble:tibble]{tibble} with 2 000 observations and 46 variables:
 example_isolates
 }
 \description{
-A data set containing 2 000 microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read \href{https://msberends.github.io/AMR/articles/AMR.html}{the tutorial on our website}.
+A data set containing 2,000 microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read \href{https://msberends.github.io/AMR/articles/AMR.html}{the tutorial on our website}.
 }
 \details{
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.

@@ -91,10 +91,10 @@ random_sir <- function(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...) {
 }
 
 random_exec <- function(type, size, mo = NULL, ab = NULL) {
-  df <- clinical_breakpoints %>%
-    filter(guideline %like% "EUCAST") %>%
-    arrange(pm_desc(guideline)) %>%
-    filter(guideline == max(guideline) &
+  df <- clinical_breakpoints %pm>%
+    pm_filter(guideline %like% "EUCAST") %pm>%
+    pm_arrange(pm_desc(guideline)) %pm>%
+    subset(guideline == max(guideline) &
       method == type)
 
   if (!is.null(mo)) {
@@ -105,7 +105,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
       as.mo(mo_family(mo_coerced)),
       as.mo(mo_order(mo_coerced))
     )
-    df_new <- df %>%
+    df_new <- df %pm>%
       subset(mo %in% mo_include)
     if (nrow(df_new) > 0) {
       df <- df_new
@@ -116,7 +116,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
 
   if (!is.null(ab)) {
     ab_coerced <- as.ab(ab)
-    df_new <- df %>%
+    df_new <- df %pm>%
       subset(ab %in% ab_coerced)
     if (nrow(df_new) > 0) {
       df <- df_new

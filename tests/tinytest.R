@@ -39,11 +39,6 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
   if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
     library(AMR)
-    if (identical(AMR:::import_fn("select", "dplyr"), AMR:::select)) {
-      message("\n\n------------------------------------\nThis test will rely on {dplyr} verbs\n------------------------------------\n\n")
-    } else {
-      message("\n\n---------------------------------------------------------------------\nThis test will rely on {poorman} verbs (installed state dplyr: ", AMR:::pkg_is_available("dplyr", also_load = FALSE), ")\n---------------------------------------------------------------------\n\n")
-    }
     # set language
     set_AMR_locale("English")
     # set some functions if on old R

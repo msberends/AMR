@@ -94,7 +94,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to \code{TRUE}. Can also be set with the option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{clean}{a \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
 }
@@ -156,7 +156,7 @@ After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast
 
 \subsection{Machine-Readable Interpretation Guidelines}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 18 308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 18,308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{

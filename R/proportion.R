@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Calculate Antimicrobial Resistance
+#' Calculate Microbial Resistance
 #'
 #' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
@@ -49,7 +49,7 @@
 #'
 #' Use [sir_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
 #'
-#' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
+#' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` argument).*
 #'
@@ -77,14 +77,11 @@
 #' ```
 #'
 #' Please note that, in combination therapies, for `only_all_tested = TRUE` applies that:
-#' 
 #' ```
 #'     count_S()    +   count_I()    +   count_R()    = count_all()
 #'   proportion_S() + proportion_I() + proportion_R() = 1
 #' ```
-#' 
 #' and that, in combination therapies, for `only_all_tested = FALSE` applies that:
-#' 
 #' ```
 #'     count_S()    +   count_I()    +   count_R()    >= count_all()
 #'   proportion_S() + proportion_I() + proportion_R() >= 1
@@ -101,8 +98,7 @@
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
-#' example_isolates
-#' 
+#'
 #' # base R ------------------------------------------------------------
 #' # determines %R
 #' resistance(example_isolates$AMX)

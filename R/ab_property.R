@@ -113,7 +113,8 @@
 #'     set_ab_names(property = "atc")
 #'
 #'   example_isolates %>%
-#'     set_ab_names(where(is.sir))
+#'     set_ab_names(where(is.sir)) %>%
+#'     colnames()
 #'
 #'   example_isolates %>%
 #'     set_ab_names(NIT:VAN) %>%
@@ -334,7 +335,7 @@ ab_url <- function(x, open = FALSE, ...) {
 ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(property, is_in = colnames(AMR::antibiotics), has_length = 1)
-  language <- validate_language(language)
+  meet_criteria(language, is_in = c(LANGUAGES_SUPPORTED, ""), has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   translate_into_language(ab_validate(x = x, property = property, ...), language = language)
 }
 
@@ -359,7 +360,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
 
   if (is.data.frame(data)) {
     if (tryCatch(length(c(...)) > 1, error = function(e) TRUE)) {
-      df <- tryCatch(suppressWarnings(select(data, ...)),
+      df <- tryCatch(suppressWarnings(pm_select(data, ...)),
                      error = function(e) {
                        data[, c(...), drop = FALSE]
                      })
@@ -434,7 +435,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
 
 ab_validate <- function(x, property, ...) {
   if (tryCatch(all(x[!is.na(x)] %in% AMR_env$AB_lookup$ab), error = function(e) FALSE)) {
-    # # special case for ab_* functions where class is already 'ab'
+    # special case for ab_* functions where class is already 'ab'
     x <- AMR_env$AB_lookup[match(x, AMR_env$AB_lookup$ab), property, drop = TRUE]
   } else {
     # try to catch an error when inputting an invalid argument

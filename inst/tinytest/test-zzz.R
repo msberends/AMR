@@ -32,21 +32,11 @@
 
 # functions used by import_fn()
 import_functions <- c(
-  "%>%" = "dplyr",
   "%chin%" = "data.table",
-  "across" = "dplyr",
   "anti_join" = "dplyr",
-  "arrange" = "dplyr",
-  "bind_rows" = "dplyr",
   "chmatch" = "data.table",
-  "count" = "dplyr",
   "cur_column" = "dplyr",
-  "desc" = "dplyr",
-  "distinct" = "dplyr",
-  "everything" = "dplyr",
   "full_join" = "dplyr",
-  "group_by" = "dplyr",
-  "group_vars" = "dplyr",
   "has_internet" = "curl",
   "html_attr" = "rvest",
   "html_children" = "rvest",
@@ -56,24 +46,13 @@ import_functions <- c(
   "html_text" = "rvest",
   "inner_join" = "dplyr",
   "insertText" = "rstudioapi",
-  "kable" = "knitr",
-  "lag" = "dplyr",
   "left_join" = "dplyr",
-  "mutate" = "dplyr",
-  "n_distinct" = "dplyr",
   "new_pillar_shaft_simple" = "pillar",
-  "pivot_longer" = "tidyr",
   "progress_bar" = "progress",
-  "pull" = "dplyr",
   "read_html" = "xml2",
-  "rename" = "dplyr",
   "right_join" = "dplyr",
-  "select" = "dplyr",
   "semi_join" = "dplyr",
-  "showQuestion" = "rstudioapi",
-  "summarise" = "dplyr",
-  "ungroup" = "dplyr",
-  "where" = "dplyr"
+  "showQuestion" = "rstudioapi"
 )
 
 # functions that are called directly with ::
@@ -92,7 +71,6 @@ call_functions <- c(
   "element_text" = "ggplot2",
   "expand_limits" = "ggplot2",
   "facet_wrap" = "ggplot2",
-  "geom_col" = "ggplot2",
   "geom_errorbar" = "ggplot2",
   "geom_path" = "ggplot2",
   "geom_point" = "ggplot2",
@@ -137,7 +115,7 @@ for (i in seq_len(length(import_functions))) {
   # function should exist in foreign pkg namespace
   if (AMR:::pkg_is_available(pkg,
     also_load = FALSE,
-    min_version = if (pkg %in% c("dplyr", "tidyr")) "1.0.0" else NULL
+    min_version = if (pkg == "dplyr") "1.0.0" else NULL
   )) {
     tst <- !is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE))
     expect_true(tst,
