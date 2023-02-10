@@ -1,4 +1,4 @@
-# AMR 1.8.2.9112
+# AMR 1.8.2.9113
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -33,7 +33,6 @@ With the new `antibiogram()` function, users can now generate traditional, combi
 The help page for `antibiogram()` extensively elaborates on use cases, and `antibiogram()` also supports printing in R Markdown and Quarto, with support for 16 languages.
 
 Furthermore, different plotting methods were implemented to allow for graphical visualisations as well.
-
 
 ### Interpretation of MIC and disk diffusion values
 

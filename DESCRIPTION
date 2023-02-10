@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.8.2.9112
-Date: 2023-02-09
+Version: 1.8.2.9113
+Date: 2023-02-10
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by

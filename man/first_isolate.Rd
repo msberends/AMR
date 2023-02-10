@@ -52,7 +52,7 @@ filter_first_isolate(
 
 \item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)}
 
-\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (such as test codes for screening). In that case \code{testcodes_exclude} will be ignored.}
 
@@ -168,7 +168,7 @@ The default method is phenotype-based (using \code{type = "points"}) and episode
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-example_isolates[first_isolate(), ]
+example_isolates[first_isolate(info = TRUE), ]
 \donttest{
 # get all first Gram-negatives
 example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
@@ -176,7 +176,7 @@ example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
 if (require("dplyr")) {
   # filter on first isolates using dplyr:
   example_isolates \%>\%
-    filter(first_isolate())
+    filter(first_isolate(info = TRUE))
 }
 if (require("dplyr")) {
   # short-hand version:
@@ -187,7 +187,7 @@ if (require("dplyr")) {
   # flag the first isolates per group:
   example_isolates \%>\%
     group_by(ward) \%>\%
-    mutate(first = first_isolate()) \%>\%
+    mutate(first = first_isolate(info = TRUE)) \%>\%
     select(ward, date, patient, mo, first)
 }
 }

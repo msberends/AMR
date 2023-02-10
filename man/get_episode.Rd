@@ -23,7 +23,7 @@ is_new_episode(x, episode_days, ...)
 }
 }
 \description{
-These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis. The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode per group, while the \code{\link[=is_new_episode]{is_new_episode()}} function returns values \code{TRUE}/\code{FALSE} for where \code{\link[=get_episode]{get_episode()}} returns 1, and is thus equal to \code{get_episode(...) == 1}.
+These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis. The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode per group, while the \code{\link[=is_new_episode]{is_new_episode()}} function returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index, and is thus equal to \code{!duplicated(get_episode(...))}.
 }
 \details{
 Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
@@ -70,7 +70,8 @@ if (require("dplyr")) {
       patient,
       new_index = get_episode(date, 60),
       new_logical = is_new_episode(date, 60)
-    )
+    ) \%>\% 
+    arrange(patient, ward, date)
 }
 
 if (require("dplyr")) {

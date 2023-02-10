@@ -33,7 +33,7 @@
 #' @param x a [data.frame] containing isolates. Can be left blank for automatic determination, see *Examples*.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
-#' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
+#' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (such as test codes for screening). In that case `testcodes_exclude` will be ignored.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU). This can also be a [logical] vector with the same length as rows in `x`.
@@ -133,7 +133,7 @@
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #'
-#' example_isolates[first_isolate(), ]
+#' example_isolates[first_isolate(info = TRUE), ]
 #' \donttest{
 #' # get all first Gram-negatives
 #' example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
@@ -141,7 +141,7 @@
 #' if (require("dplyr")) {
 #'   # filter on first isolates using dplyr:
 #'   example_isolates %>%
-#'     filter(first_isolate())
+#'     filter(first_isolate(info = TRUE))
 #' }
 #' if (require("dplyr")) {
 #'   # short-hand version:
@@ -152,7 +152,7 @@
 #'   # flag the first isolates per group:
 #'   example_isolates %>%
 #'     group_by(ward) %>%
-#'     mutate(first = first_isolate()) %>%
+#'     mutate(first = first_isolate(info = TRUE)) %>%
 #'     select(ward, date, patient, mo, first)
 #' }
 #' }
@@ -468,19 +468,19 @@ first_isolate <- function(x = NULL,
   x$other_pat_or_mo <- !(x$newvar_patient_id == pm_lag(x$newvar_patient_id) & x$newvar_genus_species == pm_lag(x$newvar_genus_species))
 
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
+
   x$more_than_episode_ago <- unlist(
     lapply(
       split(
         x$newvar_date,
         x$episode_group
       ),
-      exec_episode, # this will skip meet_criteria() in is_new_episode(), saving time
-      type = "logical",
+      is_new_episode,
       episode_days = episode_days
     ),
     use.names = FALSE
   )
-
+  
   if (!is.null(col_keyantimicrobials)) {
     # with key antibiotics
     x$other_key_ab <- !antimicrobials_equal(
@@ -490,40 +490,35 @@ first_isolate <- function(x = NULL,
       ignore_I = ignore_I,
       points_threshold = points_threshold
     )
-    x$newvar_first_isolate <- pm_if_else(
-      x$newvar_row_index_sorted >= row.start &
-        x$newvar_row_index_sorted <= row.end &
-        x$newvar_genus_species != "" &
-        (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
-      TRUE,
-      FALSE
-    )
+    x$newvar_first_isolate <- x$newvar_row_index_sorted >= row.start &
+      x$newvar_row_index_sorted <= row.end &
+      x$newvar_genus_species != "" &
+      (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab)
   } else {
     # no key antibiotics
-    x$newvar_first_isolate <- pm_if_else(
-      x$newvar_row_index_sorted >= row.start &
-        x$newvar_row_index_sorted <= row.end &
-        x$newvar_genus_species != "" &
-        (x$other_pat_or_mo | x$more_than_episode_ago),
-      TRUE,
-      FALSE
-    )
+    x$newvar_first_isolate <- x$newvar_row_index_sorted >= row.start &
+      x$newvar_row_index_sorted <= row.end &
+      x$newvar_genus_species != "" &
+      (x$other_pat_or_mo | x$more_than_episode_ago)
   }
-
+  
   # first one as TRUE
   x[row.start, "newvar_first_isolate"] <- TRUE
   # no tests that should be included, or ICU
   if (!is.null(col_testcode)) {
     x[which(x[, col_testcode] %in% tolower(testcodes_exclude)), "newvar_first_isolate"] <- FALSE
   }
+  
   if (!is.null(col_icu)) {
     if (icu_exclude == TRUE) {
-      message_("Excluding ", format(sum(col_icu, na.rm = TRUE), big.mark = ","), " isolates from ICU.",
-        add_fn = font_black,
-        as_note = FALSE
-      )
+      if (isTRUE(info)) {
+        message_("Excluding ", format(sum(col_icu, na.rm = TRUE), big.mark = ","), " isolates from ICU.",
+                 add_fn = font_black,
+                 as_note = FALSE
+        )
+      }
       x[which(col_icu), "newvar_first_isolate"] <- FALSE
-    } else {
+    } else if (isTRUE(info)) {
       message_("Including isolates from ICU.",
         add_fn = font_black,
         as_note = FALSE
@@ -532,7 +527,7 @@ first_isolate <- function(x = NULL,
   }
 
   decimal.mark <- getOption("OutDec")
-  big.mark <- ifelse(decimal.mark != ",", ",", ".")
+  big.mark <- ifelse(decimal.mark != ",", ",", " ")
 
   if (isTRUE(info)) {
     # print group name if used in dplyr::group_by()

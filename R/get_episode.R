@@ -29,7 +29,7 @@
 
 #' Determine (New) Episodes for Patients
 #'
-#' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` for where [get_episode()] returns 1, and is thus equal to `get_episode(...) == 1`.
+#' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns `TRUE` for every new [get_episode()] index, and is thus equal to `!duplicated(get_episode(...))`.
 #' @param x vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
 #' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
 #' @param ... ignored, only in place to allow future extensions
@@ -83,7 +83,8 @@
 #'       patient,
 #'       new_index = get_episode(date, 60),
 #'       new_logical = is_new_episode(date, 60)
-#'     )
+#'     ) %>% 
+#'     arrange(patient, ward, date)
 #' }
 #' 
 #' if (require("dplyr")) {
@@ -109,12 +110,7 @@
 get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
-  
-  exec_episode(
-    x = x,
-    episode_days = episode_days,
-    ... = ...
-  )
+  exec_episode(x, episode_days, ...)
 }
 
 #' @rdname get_episode
@@ -122,10 +118,10 @@ get_episode <- function(x, episode_days, ...) {
 is_new_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
-  get_episode(x, episode_days, ...) == 1
+  !duplicated(exec_episode(x, episode_days, ...))
 }
 
-exec_episode <- function(x, type, episode_days, ...) {
+exec_episode <- function(x, episode_days, ...) {
   x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
   
   # since x is now in seconds, get seconds from episode_days as well
