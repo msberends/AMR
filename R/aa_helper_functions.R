@@ -64,20 +64,26 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
 }
 
 # support where() like tidyverse:
-# adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
 where <- function(fn) {
+  # adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
   if (!is.function(fn)) {
-    stop(pm_deparse_var(fn), " is not a valid predicate function.")
+    stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
+  }
+  df <- pm_select_env$.data
+  cols <- pm_select_env$get_colnames()
+  if (is.null(df)) {
+    df <- get_current_data("where", call = FALSE)
+    cols <- colnames(df)
   }
   preds <- unlist(lapply(
-    pm_select_env$.data,
+    df,
     function(x, fn) {
       do.call("fn", list(x))
     },
     fn
   ))
-  if (!is.logical(preds)) stop("`where()` must be used with functions that return `TRUE` or `FALSE`.")
-  data_cols <- pm_select_env$get_colnames()
+  if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
+  data_cols <- cols
   cols <- data_cols[preds]
   which(data_cols %in% cols)
 }
@@ -154,6 +160,20 @@ quick_case_when <- function(...) {
     replaced <- replaced | (query[[i]] & !is.na(query[[i]]))
   }
   out
+}
+
+bind_rows2 <- function(..., fill = NA) {
+  # this AMAZING code is from ChatGPT: when I asked for a base R dplyr::bind_rows alternative
+  dfs <- list(...)
+  all_cols <- unique(unlist(lapply(dfs, colnames)))
+  mat_list <- lapply(dfs, function(x) {
+    mat <- matrix(NA, nrow = nrow(x), ncol = length(all_cols))
+    colnames(mat) <- all_cols
+    mat[, colnames(x)] <- as.matrix(x)
+    mat
+  })
+  mat <- do.call(rbind, mat_list)
+  as.data.frame(mat, stringsAsFactors = FALSE)
 }
 
 # No export, no Rd

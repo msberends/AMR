@@ -585,17 +585,17 @@ plot.sir <- function(x,
   data$s <- round((data$n / sum(data$n)) * 100, 1)
 
   if (!"S" %in% data$x) {
-    data <- rbind(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE),
+    data <- bind_rows2(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE),
       stringsAsFactors = FALSE
     )
   }
   if (!"I" %in% data$x) {
-    data <- rbind(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE),
+    data <- bind_rows2(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE),
       stringsAsFactors = FALSE
     )
   }
   if (!"R" %in% data$x) {
-    data <- rbind(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE),
+    data <- bind_rows2(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE),
       stringsAsFactors = FALSE
     )
   }

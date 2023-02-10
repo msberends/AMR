@@ -279,7 +279,7 @@ add_custom_microorganisms <- function(x) {
   # clear previous coercions
   suppressMessages(mo_reset_session())
 
-  AMR_env$MO_lookup <- unique(rbind(AMR_env$MO_lookup, new_df))
+  AMR_env$MO_lookup <- unique(bind_rows2(AMR_env$MO_lookup, new_df))
   class(AMR_env$MO_lookup$mo) <- c("mo", "character")
   if (nrow(x) <= 3) {
     message_("Added ", vector_and(italicise(x$fullname), quotes = FALSE), " to the internal `microorganisms` data set.")

@@ -495,7 +495,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   # save to package env to save time for next time
   if (isTRUE(initial_search)) {
     AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
-    AMR_env$ab_previously_coerced <- unique(rbind(AMR_env$ab_previously_coerced,
+    AMR_env$ab_previously_coerced <- unique(bind_rows2(AMR_env$ab_previously_coerced,
       data.frame(
         x = x,
         ab = x_new,

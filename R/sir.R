@@ -998,7 +998,7 @@ as_sir_method <- function(method_short,
       }
 
       # write to verbose output
-      AMR_env$sir_interpretation_history <- rbind(
+      AMR_env$sir_interpretation_history <- bind_rows2(
         AMR_env$sir_interpretation_history,
         # recycling 1 to 2 rows does not seem to work, which is why rep() was added
         data.frame(

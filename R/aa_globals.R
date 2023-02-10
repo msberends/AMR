@@ -107,7 +107,6 @@ globalVariables(c(
   "atc_group1",
   "atc_group2",
   "base_ab",
-  "bind_rows",
   "ci_max",
   "ci_min",
   "clinical_breakpoints",
