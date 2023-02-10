@@ -170,9 +170,11 @@
 #'             antibiotics = c(aminoglycosides(), carbapenems()),
 #'             syndromic_group = "ward")
 #' 
+#' # now define a data set with only E. coli
+#' ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
+#' 
 #' # with a custom language, though this will be determined automatically
 #' # (i.e., this table will be in Spanish on Spanish systems)
-#' ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
 #' antibiogram(ex1,
 #'             antibiotics = aminoglycosides(),
 #'             ab_transform = "name",
@@ -313,46 +315,48 @@ antibiogram <- function(x,
     }
     antibiotics <- unlist(antibiotics)
   } else {
-    if (identical(select, import_fn("select", "dplyr", error_on_fail = FALSE))) {
-      antibiotics <- suppressWarnings(x %>% select({{ antibiotics }}) %>% colnames())
-    } else {
-      antibiotics <- colnames(x[, antibiotics, drop = FALSE])
-    }
+    antibiotics <- colnames(suppressWarnings(x[, antibiotics, drop = FALSE]))
   }
   
   if (isTRUE(has_syndromic_group)) {
-    out <- x %>% 
-      select(.syndromic_group, .mo, antibiotics) %>% 
-      group_by(.syndromic_group)
+    out <- x %pm>% 
+      pm_select(.syndromic_group, .mo, antibiotics) %pm>% 
+      pm_group_by(.syndromic_group)
   } else {
-    out <- x %>% 
-      select(.mo, antibiotics)
+    out <- x %pm>% 
+      pm_select(.mo, antibiotics)
   }
+  
   # get numbers of S, I, R (per group)
-  out <- out %>% 
+  out <- out %pm>% 
     bug_drug_combinations(col_mo = ".mo",
                           FUN = function(x) x)
   counts <- out
   
-  out$numerator <- ifelse(isTRUE(combine_SI), out$S + out$I, out$S)
-  out$minimum <- minimum
-  
   # regroup for summarising
   if (isTRUE(has_syndromic_group)) {
     colnames(out)[1] <- "syndromic_group"
-    out <- out %>% 
-      group_by(syndromic_group, mo, ab)
+    out <- out %pm>% 
+      pm_group_by(syndromic_group, mo, ab)
   } else {
-    out <- out %>% 
-      group_by(mo, ab)
-  }
-  if (any(out$total < minimum, na.rm = TRUE)) {
-    message_("NOTE: ", sum(out$total < minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
+    out <- out %pm>% 
+      pm_group_by(mo, ab)
   }
   
-  out <- out %>% 
-    summarise(SI = ifelse(total >= minimum, numerator / total, NA_real_)) %>%
-    filter(!is.na(SI))
+  if (isTRUE(combine_SI)) {
+    out$numerator <- out$S + out$I
+  } else {
+    out$numerator <- out$S
+  }
+  out$minimum <- minimum
+  if (any(out$total < out$minimum, na.rm = TRUE)) {
+    message_("NOTE: ", sum(out$total < out$minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
+    out <- out %pm>% 
+      subset(total >= minimum)
+  }
+  
+  out <- out %pm>%
+    pm_summarise(SI = numerator / total)
   
   # transform names of antibiotics
   ab_naming_function <- function(x, t, l, s) {
@@ -378,16 +382,20 @@ antibiogram <- function(x,
   
   # transform long to wide
   long_to_wide <- function(object, digs) {
-    object <- object %>% 
-      mutate(SI = round(SI * 100, digits = digs)) %>% 
+    object$SI <- round(object$SI * 100, digits = digs)
+    object <- object %pm>%
       # an unclassed data.frame is required for stats::reshape()
-      as.data.frame(stringsAsFactors = FALSE) %>% 
+      as.data.frame(stringsAsFactors = FALSE) %pm>% 
       stats::reshape(direction = "wide", idvar = "mo", timevar = "ab", v.names = "SI")
     colnames(object) <- gsub("^SI?[.]", "", colnames(object))
     return(object)
   }
   
-  long <- ungroup(out)
+  # ungroup for long -> wide transformation
+  attr(out, "pm_groups") <- NULL
+  attr(out, "groups") <- NULL
+  class(out) <- class(out)[!class(out) %in% c("grouped_df", "grouped_data")]
+  long <- out
   
   if (isTRUE(has_syndromic_group)) {
     grps <- unique(out$syndromic_group)
@@ -401,14 +409,14 @@ antibiogram <- function(x,
       }
     }
     # sort rows
-    new_df <- new_df %>% arrange(mo, syndromic_group)
+    new_df <- new_df %pm>% pm_arrange(mo, syndromic_group)
     # sort columns
     new_df <- new_df[, c("syndromic_group", "mo", sort(colnames(new_df)[!colnames(new_df) %in% c("syndromic_group", "mo")])), drop = FALSE]
     colnames(new_df)[1:2] <- translate_AMR(c("Syndromic Group", "Pathogen"), language = language)
   } else {
     new_df <- long_to_wide(out, digs = digits)
     # sort rows
-    new_df <- new_df %>% arrange(mo)
+    new_df <- new_df %pm>% pm_arrange(mo)
     # sort columns
     new_df <- new_df[, c("mo", sort(colnames(new_df)[colnames(new_df) != "mo"])), drop = FALSE]
     colnames(new_df)[1] <- translate_AMR("Pathogen", language = language)
@@ -417,16 +425,16 @@ antibiogram <- function(x,
   # add total N if indicated
   if (isTRUE(add_total_n)) {
     if (isTRUE(has_syndromic_group)) {
-      n_per_mo <- counts %>%
-        group_by(mo, .syndromic_group) %>%
-        summarise(paste0(min(total, na.rm = TRUE), "-", max(total, na.rm = TRUE)))
+      n_per_mo <- counts %pm>%
+        pm_group_by(mo, .syndromic_group) %pm>%
+        pm_summarise(paste0(min(total, na.rm = TRUE), "-", max(total, na.rm = TRUE)))
       colnames(n_per_mo) <- c("mo", "syn", "count")
       count_group <- n_per_mo$count[match(paste(new_df[[2]], new_df[[1]]), paste(n_per_mo$mo, n_per_mo$syn))]
       edit_col <- 2
     } else {
-      n_per_mo <- counts %>%
-        group_by(mo) %>%
-        summarise(paste0(min(total, na.rm = TRUE), "-", max(total, na.rm = TRUE)))
+      n_per_mo <- counts %pm>%
+        pm_group_by(mo) %pm>%
+        pm_summarise(paste0(min(total, na.rm = TRUE), "-", max(total, na.rm = TRUE)))
       colnames(n_per_mo) <- c("mo", "count")
       count_group <- n_per_mo$count[match(new_df[[1]], n_per_mo$mo)]
       edit_col <- 1
@@ -489,7 +497,7 @@ autoplot.antibiogram <- function(object, ...) {
                                    } else {
                                      NULL
                                    }),
-                      position = "dodge") +
+                      position = ggplot2::position_dodge2(preserve = "single")) +
     ggplot2::facet_wrap("mo") +
     ggplot2::labs(y = ifelse(isTRUE(attributes(object)$combine_SI), "%SI", "%S"),
                   x = NULL,
@@ -506,12 +514,14 @@ autoplot.antibiogram <- function(object, ...) {
 #' @rdname antibiogram
 print.antibiogram <- function(x, as_kable = !interactive(), ...) {
   meet_criteria(as_kable, allow_class = "logical", has_length = 1)
-  if (isTRUE(as_kable) && !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
+  if (isTRUE(as_kable) &&
+      # be sure not to run kable in pkgdown for our website generation
+      !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
     stop_ifnot_installed("knitr")
     kable <- import_fn("kable", "knitr", error_on_fail = TRUE)
     kable(x, ...)
   } else {
-    # remove 'antibiogram' class and print as indicated
+    # remove 'antibiogram' class and print with default method
     class(x) <- class(x)[class(x) != "antibiogram"]
     print(x, ...)
   }

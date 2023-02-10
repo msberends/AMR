@@ -32,7 +32,7 @@ The \code{AMR} package is a \href{https://msberends.github.io/AMR/#copyright}{fr
 
 This work was published in the Journal of Statistical Software (Volume 104(3); \href{https://doi.org/10.18637/jss.v104.i03}{DOI 10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\href{https://doi.org/10.33612/diss.177417131}{DOI 10.33612/diss.177417131} and \href{https://doi.org/10.33612/diss.192486375}{DOI 10.33612/diss.192486375}).
 
-After installing this package, R knows \href{https://msberends.github.io/AMR/reference/microorganisms.html}{\strong{~52,000}} (updated December 2022) and all \href{https://msberends.github.io/AMR/reference/antibiotics.html}{\strong{~600 antibiotic, antimycotic and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral breakpoint guidelines from CLSI and EUCAST are included from the last 10 years. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the \href{https://www.rug.nl}{University of Groningen}, in collaboration with non-profit organisations \href{https://www.certe.nl}{Certe Medical Diagnostics and Advice Foundation} and \href{https://www.umcg.nl}{University Medical Center Groningen}.
+After installing this package, R knows \href{https://msberends.github.io/AMR/reference/microorganisms.html}{\strong{~52 000}} (updated December 2022) and all \href{https://msberends.github.io/AMR/reference/antibiotics.html}{\strong{~600 antibiotic, antimycotic and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral breakpoint guidelines from CLSI and EUCAST are included from the last 10 years. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the \href{https://www.rug.nl}{University of Groningen}, in collaboration with non-profit organisations \href{https://www.certe.nl}{Certe Medical Diagnostics and Advice Foundation} and \href{https://www.umcg.nl}{University Medical Center Groningen}.
 
 The \code{AMR} package is available in English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 }
@@ -79,6 +79,7 @@ Other contributors:
   \item Rogier P. Schade [contributor]
   \item Bhanu N. M. Sinha (\href{https://orcid.org/0000-0003-1634-0010}{ORCID}) [thesis advisor]
   \item Anthony Underwood (\href{https://orcid.org/0000-0002-8547-4277}{ORCID}) [contributor]
+  \item Anita Williams (\href{https://orcid.org/0000-0002-5295-8451}{ORCID}) [contributor]
 }
 
 }

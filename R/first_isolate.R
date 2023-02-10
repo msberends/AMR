@@ -512,7 +512,7 @@ first_isolate <- function(x = NULL,
   if (!is.null(col_icu)) {
     if (icu_exclude == TRUE) {
       if (isTRUE(info)) {
-        message_("Excluding ", format(sum(col_icu, na.rm = TRUE), big.mark = ","), " isolates from ICU.",
+        message_("Excluding ", format(sum(col_icu, na.rm = TRUE), big.mark = " "), " isolates from ICU.",
                  add_fn = font_black,
                  as_note = FALSE
         )

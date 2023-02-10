@@ -1298,8 +1298,8 @@ taxonomy <- taxonomy %>%
 
 
 message(
-  "\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = ","), " rows.\n",
-  "This was ", format(nrow(AMR::microorganisms), big.mark = ","), " rows.\n"
+  "\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = " "), " rows.\n",
+  "This was ", format(nrow(AMR::microorganisms), big.mark = " "), " rows.\n"
 )
 
 # these are the new ones:

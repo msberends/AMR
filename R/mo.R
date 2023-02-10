@@ -158,7 +158,7 @@ as.mo <- function(x,
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  meet_criteria(minimum_matching_score, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(minimum_matching_score, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   language <- validate_language(language)
@@ -627,7 +627,7 @@ freq.mo <- function(x, ...) {
     .add_header = list(
       `Gram-negative` = paste0(
         format(sum(grams == "Gram-negative", na.rm = TRUE),
-          big.mark = ",",
+          big.mark = " ",
           decimal.mark = "."
         ),
         " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams),
@@ -637,7 +637,7 @@ freq.mo <- function(x, ...) {
       ),
       `Gram-positive` = paste0(
         format(sum(grams == "Gram-positive", na.rm = TRUE),
-          big.mark = ",",
+          big.mark = " ",
           decimal.mark = "."
         ),
         " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams),

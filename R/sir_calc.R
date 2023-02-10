@@ -31,7 +31,8 @@ dots2vars <- function(...) {
   # this function is to give more informative output about
   # variable names in count_* and proportion_* functions
   dots <- substitute(list(...))
-  as.character(dots)[2:length(dots)]
+  dots <- as.character(dots)[2:length(dots)]
+  paste0(dots[dots != "."], collapse = "+")
 }
 
 sir_calc <- function(...,
@@ -41,7 +42,7 @@ sir_calc <- function(...,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
   meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1, 2, 3))
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
   meet_criteria(only_count, allow_class = "logical", has_length = 1)
@@ -133,7 +134,7 @@ sir_calc <- function(...,
     }
 
     x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
-    if (only_all_tested == TRUE) {
+    if (isTRUE(only_all_tested)) {
       # no NAs in any column
       y <- apply(
         X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
@@ -224,8 +225,8 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
   meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  language <- validate_language(language)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(confidence_level, allow_class = "numeric", has_length = 1)
@@ -236,7 +237,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   # select only groups and antibiotics
   if (is_null_or_grouped_tbl(data)) {
     data_has_groups <- TRUE
-    groups <- setdiff(names(attributes(data)$groups), ".rows")
+    groups <- get_group_names(data)
     data <- data[, c(groups, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.sir)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE

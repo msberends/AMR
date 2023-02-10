@@ -246,7 +246,8 @@ translate_into_language <- function(from,
   }
 
   lapply(
-    seq_len(nrow(df_trans)),
+    # starting from last row, since more general translations are on top, such as 'Group'
+    rev(seq_len(nrow(df_trans))),
     function(i) {
       from_unique_translated <<- gsub(
         pattern = df_trans$pattern[i],

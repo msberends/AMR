@@ -44,6 +44,10 @@
 #' @rdname bug_drug_combinations
 #' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
 #' @examples
+#' # example_isolates is a data set available in the AMR package.
+#' # run ?example_isolates for more info.
+#' example_isolates
+#' 
 #' \donttest{
 #' x <- bug_drug_combinations(example_isolates)
 #' head(x)
@@ -89,7 +93,7 @@ bug_drug_combinations <- function(x,
   # select only groups and antibiotics
   if (is_null_or_grouped_tbl(x.bak)) {
     data_has_groups <- TRUE
-    groups <- setdiff(names(attributes(x.bak)$groups), ".rows")
+    groups <- get_group_names(x.bak)
     x <- x[, c(groups, col_mo, colnames(x)[vapply(FUN.VALUE = logical(1), x, is.sir)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE
@@ -161,6 +165,7 @@ bug_drug_combinations <- function(x,
     out <- run_it(x)
   }
   rownames(out) <- NULL
+  out <- out %>% pm_arrange(mo, ab)
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
   structure(out, class = c("bug_drug_combinations", ifelse(data_has_groups, "grouped", character(0)), class(out)))
 }
@@ -181,7 +186,7 @@ format.bug_drug_combinations <- function(x,
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   language <- validate_language(language)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(add_ab_group, allow_class = "logical", has_length = 1)
   meet_criteria(remove_intrinsic_resistant, allow_class = "logical", has_length = 1)

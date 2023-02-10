@@ -85,9 +85,27 @@ if (require("dplyr")) {
     )
 }
 
+# grouping on patients and microorganisms leads to the same
+# results as first_isolate() when using 'episode-based':
 if (require("dplyr")) {
-  # is_new_episode() has a lot more flexibility than first_isolate(),
-  # since you can group on anything that seems relevant:
+  x <- df \%>\%
+    filter_first_isolate(
+      include_unknown = TRUE,
+      method = "episode-based"
+    )
+
+  y <- df \%>\%
+    group_by(patient, mo) \%>\%
+    filter(is_new_episode(date, 365)) \%>\%
+    ungroup()
+
+  identical(x, y)
+}
+
+# but is_new_episode() has a lot more flexibility than first_isolate(),
+# since you can now group on anything that seems relevant:
+if (require("dplyr")) {
+  
   df \%>\%
     group_by(patient, mo, ward) \%>\%
     mutate(flag_episode = is_new_episode(date, 365)) \%>\%

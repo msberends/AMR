@@ -30,7 +30,7 @@ options(knitr.kable.NA = "")
 structure_txt <- function(dataset) {
   paste0(
     "A data set with ",
-    format(nrow(dataset), big.mark = ","), " rows and ",
+    format(nrow(dataset), big.mark = " "), " rows and ",
     ncol(dataset), " columns, containing the following column names:  \n",
     AMR:::vector_or(colnames(dataset), quotes = "*", last_sep = " and ", sort = FALSE), "."
   )
@@ -142,7 +142,7 @@ Included (sub)species per taxonomic kingdom:
 ```{r, echo = FALSE}
 microorganisms %>%
   count(kingdom) %>%
-  mutate(n = format(n, big.mark = ",")) %>%
+  mutate(n = format(n, big.mark = " ")) %>%
   setNames(c("Kingdom", "Number of (sub)species")) %>%
   print_df()
 ```

@@ -252,7 +252,7 @@ av_url <- function(x, open = FALSE, ...) {
 av_property <- function(x, property = "name", language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(property, is_in = colnames(AMR::antivirals), has_length = 1)
-  meet_criteria(language, is_in = c(LANGUAGES_SUPPORTED, ""), has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   translate_into_language(av_validate(x = x, property = property, ...), language = language)
 }
 

@@ -126,7 +126,7 @@ run_it <- microbenchmark(mo_name(x),
 print(run_it, unit = "ms", signif = 3)
 ```
 
-So getting official taxonomic names of `r format(length(x), big.mark = ",")` (!!) items consisting of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 3)` seconds. That is `r round(median(run_it$time, na.rm = TRUE) / length(x), 0)` nanoseconds on average. You only lose time on your unique input values.
+So getting official taxonomic names of `r format(length(x), big.mark = " ")` (!!) items consisting of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 3)` seconds. That is `r round(median(run_it$time, na.rm = TRUE) / length(x), 0)` nanoseconds on average. You only lose time on your unique input values.
 
 ### Precalculated results
 

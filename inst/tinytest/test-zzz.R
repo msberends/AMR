@@ -81,6 +81,7 @@ call_functions <- c(
   "labs" = "ggplot2",
   "layer" = "ggplot2",
   "position_fill" = "ggplot2",
+  "position_dodge2" = "ggplot2",
   "scale_fill_manual" = "ggplot2",
   "scale_y_continuous" = "ggplot2",
   "theme" = "ggplot2",

@@ -157,7 +157,7 @@ Using the `left_join()` function from the `dplyr` package, we can 'map' the gend
 data <- data %>% left_join(patients_table)
 ```
 
-The resulting data set contains `r format(nrow(data), big.mark = ",")` blood culture isolates. With the `head()` function we can preview the first 6 rows of this data set:
+The resulting data set contains `r format(nrow(data), big.mark = " ")` blood culture isolates. With the `head()` function we can preview the first 6 rows of this data set:
 
 ```{r preview data set 1, eval = FALSE}
 head(data)
@@ -251,7 +251,7 @@ data_1st <- data %>%
   filter_first_isolate()
 ```
 
-So we end up with `r format(nrow(data_1st), big.mark = ",")` isolates for analysis. Now our data looks like:
+So we end up with `r format(nrow(data_1st), big.mark = " ")` isolates for analysis. Now our data looks like:
 
 ```{r preview data set 3, eval = FALSE}
 head(data_1st)
@@ -362,7 +362,7 @@ data_1st %>%
 data_1st %>%
   group_by(hospital) %>%
   summarise(amoxicillin = resistance(AMX)) %>%
-  knitr::kable(align = "c", big.mark = ",")
+  knitr::kable(align = "c", big.mark = " ")
 ```
 
 Of course it would be very convenient to know the number of isolates responsible for the percentages. For that purpose the `n_sir()` can be used, which works exactly like `n_distinct()` from the `dplyr` package. It counts all isolates available for every group (i.e. values S, I or R):
@@ -382,7 +382,7 @@ data_1st %>%
     amoxicillin = resistance(AMX),
     available = n_sir(AMX)
   ) %>%
-  knitr::kable(align = "c", big.mark = ",")
+  knitr::kable(align = "c", big.mark = " ")
 ```
 
 These functions can also be used to get the proportion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:
@@ -404,7 +404,7 @@ data_1st %>%
     gentamicin = susceptibility(GEN),
     amoxiclav_genta = susceptibility(AMC, GEN)
   ) %>%
-  knitr::kable(align = "c", big.mark = ",")
+  knitr::kable(align = "c", big.mark = " ")
 ```
 
 Or if you are curious for the resistance within certain antibiotic classes, use a antibiotic class selector such as `penicillins()`, which automatically will include the columns `AMX` and `AMC` of our data:

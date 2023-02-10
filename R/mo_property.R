@@ -900,12 +900,16 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
   }
 
   # get property reeaaally fast using match()
-  x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
+  if (property == "snomed") {
+    x <- lapply(x, function(y) unlist(AMR_env$MO_lookup$snomed[match(y, AMR_env$MO_lookup$mo)]))
+  } else {
+    x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
+  }
 
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))
   } else if (property == "snomed") {
-    return(sort(as.character(eval(parse(text = x)))))
+    return(x)
   } else if (property == "prevalence") {
     return(as.double(x))
   } else {

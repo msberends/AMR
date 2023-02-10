@@ -123,6 +123,7 @@ if (utf8_supported && !is_latex) {
   s3_register("ggplot2::autoplot", "mic")
   s3_register("ggplot2::autoplot", "disk")
   s3_register("ggplot2::autoplot", "resistance_predict")
+  s3_register("ggplot2::autoplot", "antibiogram")
   # Support for fortify from the ggplot2 package
   s3_register("ggplot2::fortify", "sir")
   s3_register("ggplot2::fortify", "mic")

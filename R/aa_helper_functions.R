@@ -386,7 +386,7 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     getExportedValue(name = name, ns = asNamespace(pkg)),
     error = function(e) {
       if (isTRUE(error_on_fail)) {
-        stop_("function ", name, "() is not an exported object from package '", pkg,
+        stop_("function `", name, "()` is not an exported object from package '", pkg,
           "'. Please create an issue at ", font_url("https://github.com/msberends/AMR/issues"), ". Many thanks!",
           call = FALSE
         )
@@ -622,7 +622,7 @@ format_included_data_number <- function(data) {
   } else {
     rounder <- -1 # round on tens
   }
-  paste0("~", format(round(n, rounder), decimal.mark = ".", big.mark = ","))
+  paste0("~", format(round(n, rounder), decimal.mark = ".", big.mark = " "))
 }
 
 # for eucast_rules() and mdro(), creates markdown output with URLs and names
@@ -928,11 +928,9 @@ get_current_data <- function(arg_name, call) {
 get_current_column <- function() {
   # try dplyr::cur_columns() first
   cur_column <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_column)) {
-    out <- tryCatch(cur_column(), error = function(e) NULL)
-    if (!is.null(out)) {
-      return(out)
-    }
+  out <- tryCatch(cur_column(), error = function(e) NULL)
+  if (!is.null(out)) {
+    return(out)
   }
 
   # cur_column() doesn't always work (only allowed for certain conditions set by dplyr), but it's probably still possible:
@@ -965,8 +963,20 @@ get_current_column <- function() {
 }
 
 is_null_or_grouped_tbl <- function(x) {
-  # class "grouped_df" might change at one point, so only set in one place; here.
-  is.null(x) || inherits(x, "grouped_df")
+  # class "grouped_data" is from {poorman}, see aa_helper_pm_functions.R
+  # class "grouped_df" is from {dplyr} and might change at one point, so only set in one place; here.
+  is.null(x) || inherits(x, "grouped_data") || inherits(x, "grouped_df")
+}
+
+get_group_names <- function(x) {
+  if ("pm_groups" %in% names(attributes(x))) {
+    pm_get_groups(x)
+  } else if (!is.null(x) && is_null_or_grouped_tbl(x)) {
+    grps <- colnames(attributes(x)$groups)
+    grps[!grps %in% c(".group_id", ".rows")]
+  } else {
+    character(0)
+  }
 }
 
 unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
@@ -1272,7 +1282,7 @@ create_pillar_column <- function(x, ...) {
   new_pillar_shaft_simple(x, ...)
 }
 
-as_original_data_class <- function(df, old_class = NULL) {
+as_original_data_class <- function(df, old_class = NULL, extra_class = NULL) {
   if ("tbl_df" %in% old_class && pkg_is_available("tibble", also_load = FALSE)) {
     # this will then also remove groups
     fn <- import_fn("as_tibble", "tibble")
@@ -1285,7 +1295,11 @@ as_original_data_class <- function(df, old_class = NULL) {
   } else {
     fn <- function(x) base::as.data.frame(df, stringsAsFactors = FALSE)
   }
-  fn(df)
+  out <- fn(df)
+  if (!is.null(extra_class)) {
+    class(out) <- c(extra_class, class(out))
+  }
+  out
 }
 
 # works exactly like round(), but rounds `round2(44.55, 1)` to 44.6 instead of 44.5
@@ -1425,7 +1439,7 @@ add_MO_lookup_to_AMR_env <- function() {
 }
 
 trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
-  # this is even faster than trimws() itself which sets " \t\n\r".
+  # this is even faster than trimws() itself which sets "[ \t\r\n]".
   trimws(..., whitespace = whitespace)
 }
 
@@ -1441,7 +1455,7 @@ readRDS2 <- function(file, refhook = NULL) {
 match <- function(x, table, ...) {
   chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
   if (!is.null(chmatch) && is.character(x) && is.character(table)) {
-    # data.table::chmatch() is 35% faster than base::match() for character
+    # data.table::chmatch() is much faster than base::match() for character
     chmatch(x, table, ...)
   } else {
     base::match(x, table, ...)
@@ -1450,7 +1464,7 @@ match <- function(x, table, ...) {
 `%in%` <- function(x, table) {
   chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
   if (!is.null(chin) && is.character(x) && is.character(table)) {
-    # data.table::`%chin%`() is 20-50% faster than base::`%in%`() for character
+    # data.table::`%chin%`() is much faster than base::`%in%`() for character
     chin(x, table)
   } else {
     base::`%in%`(x, table)
