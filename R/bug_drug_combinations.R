@@ -165,7 +165,7 @@ bug_drug_combinations <- function(x,
     out <- run_it(x)
   }
   rownames(out) <- NULL
-  out <- out %>% pm_arrange(mo, ab)
+  out <- out %pm>% pm_arrange(mo, ab)
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
   structure(out, class = c("bug_drug_combinations", ifelse(data_has_groups, "grouped", character(0)), class(out)))
 }

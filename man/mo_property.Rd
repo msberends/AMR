@@ -284,9 +284,8 @@ mo_property(
 \itemize{
 \item An \link{integer} in case of \code{\link[=mo_year]{mo_year()}}
 \item An \link[=factor]{ordered factor} in case of \code{\link[=mo_pathogenicity]{mo_pathogenicity()}}
-\item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}}, \code{\link[=mo_synonyms]{mo_synonyms()}} and \code{\link[=mo_info]{mo_info()}}
+\item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}}, \code{\link[=mo_synonyms]{mo_synonyms()}}, \code{\link[=mo_snomed]{mo_snomed()}} and \code{\link[=mo_info]{mo_info()}}
 \item A named \link{character} in case of \code{\link[=mo_url]{mo_url()}}
-\item A \link{numeric} in case of \code{\link[=mo_snomed]{mo_snomed()}}
 \item A \link{character} in all other cases
 }
 }

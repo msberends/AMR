@@ -966,14 +966,14 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "(viridans.* (strepto|^s).*|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
 
   # Salmonella in different languages, like "Salmonella grupo B"
-  out[x %like_case% "salmonella.* [bcd]$"] <- gsub(".*salmonella.* ([bcd])$",
+  out[x %like_case% "salmonella.* [abcd]$"] <- gsub(".*salmonella.* ([abcd])$",
     "B_SLMNL_GRP\\U\\1",
-    x[x %like_case% "salmonella.* [bcd]$"],
+    x[x %like_case% "salmonella.* [abcd]$"],
     perl = TRUE
   )
-  out[x %like_case% "group [bcd] salmonella"] <- gsub(".*group ([bcd]) salmonella*",
+  out[x %like_case% "group [abcd] salmonella"] <- gsub(".*group ([abcd]) salmonella*",
     "B_SLMNL_GRP\\U\\1",
-    x[x %like_case% "group [bcd] salmonella"],
+    x[x %like_case% "group [abcd] salmonella"],
     perl = TRUE
   )
 

@@ -69,9 +69,8 @@
 #' @return
 #' - An [integer] in case of [mo_year()]
 #' - An [ordered factor][factor] in case of [mo_pathogenicity()]
-#' - A [list] in case of [mo_taxonomy()], [mo_synonyms()] and [mo_info()]
+#' - A [list] in case of [mo_taxonomy()], [mo_synonyms()], [mo_snomed()] and [mo_info()]
 #' - A named [character] in case of [mo_url()]
-#' - A [numeric] in case of [mo_snomed()]
 #' - A [character] in all other cases
 #' @export
 #' @seealso Data set [microorganisms]
