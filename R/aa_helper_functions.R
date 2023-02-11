@@ -167,7 +167,7 @@ bind_rows2 <- function(..., fill = NA) {
   dfs <- list(...)
   all_cols <- unique(unlist(lapply(dfs, colnames)))
   mat_list <- lapply(dfs, function(x) {
-    mat <- matrix(NA, nrow = nrow(x), ncol = length(all_cols))
+    mat <- matrix(NA, nrow = NROW(x), ncol = length(all_cols))
     colnames(mat) <- all_cols
     mat[, colnames(x)] <- as.matrix(x)
     mat

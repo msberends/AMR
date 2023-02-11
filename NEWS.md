@@ -1,4 +1,4 @@
-# AMR 1.8.2.9116
+# AMR 1.8.2.9117
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -13,7 +13,7 @@ This is a new major release of the AMR package, with great new additions but als
 * Much increased algorithms to translate user input to valid taxonomy, e.g. by using [recent scientific work](https://doi.org/10.1099/mic.0.001269) about per-species human pathogenicity
 * 20 new antibiotics added and updated all DDDs and ATC codes
 * Extended support for antiviral agents (`antivirals` data set), with many new functions
-* Now available in 16 languages
+* Now available in 20 languages
 * Many small bug fixes
 
 ## New
@@ -30,7 +30,7 @@ The 'RSI functions' will be removed in a future version, but not before late 202
 
 With the new `antibiogram()` function, users can now generate traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA). With this, we follow the logic in the previously described work of Klinker *et al.* (2021, DOI [10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)) and Barbieri *et al.* (2021, DOI [10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)).
 
-The help page for `antibiogram()` extensively elaborates on use cases, and `antibiogram()` also supports printing in R Markdown and Quarto, with support for 16 languages.
+The help page for `antibiogram()` extensively elaborates on use cases, and `antibiogram()` also supports printing in R Markdown and Quarto, with support for 20 languages.
 
 Furthermore, different plotting methods were implemented to allow for graphical visualisations as well.
 
@@ -42,9 +42,9 @@ Interpretation guidelines older than 10 years were removed, the oldest now inclu
 
 ### Supported languages
 
-We added support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. All antibiotic names are now available in these languages, and the AMR package will automatically determine a supported language based on the user system language.
+We added support for the following 10 languages: Chinese, Czech, Finnish, Greek, Japanese, Norwegian, Polish, Romanian, Turkish and Ukrainian. All antibiotic names are now available in these languages, and the AMR package will automatically determine a supported language based on the user system language.
 
-We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages and according to download stats used in almost all countries in the world!
+We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 20 languages in total, and according to download stats used in almost all countries in the world!
 
 ### Microbiological taxonomy
 
@@ -135,11 +135,11 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 ## Other
 
-* Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, Andrew Norgan, and Jonas Salm as contributors, to thank them for their valuable input
+* Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, Andrew Norgan, Jonas Salm, and Anita Williams as contributors, to thank them for their valuable input
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
 * All R and Rmd files in this project are now styled using the `styler` package
 * Set scalar conditional expressions (`&&` and `||`) where possible to comply with the upcoming R 4.3
-* An enormous lot of code cleaning, fixing some small bugs on the way
+* An enormous lot of code cleaning, fixing some small bugs along the way
 
 ----
 

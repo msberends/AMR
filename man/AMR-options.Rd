@@ -16,7 +16,7 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \item \code{AMR_ignore_pattern} \cr A \link[base:regex]{regular expression} to define input that must be ignored in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions.
 \item \code{AMR_include_PKPD} \cr A \link{logical} to use in \code{\link[=as.sir]{as.sir()}}, to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to \code{TRUE}.
 \item \code{AMR_keep_synonyms} \cr A \link{logical} to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names.
-\item \code{AMR_locale} \cr A language to use for the \code{AMR} package, can be one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk).
+\item \code{AMR_locale} \cr A language to use for the \code{AMR} package, can be one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk).
 \item \code{AMR_mo_source} \cr A file location for a manual code list to be used in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions. This is explained in \code{\link[=set_mo_source]{set_mo_source()}}.
 }
 }
