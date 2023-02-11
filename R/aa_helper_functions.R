@@ -88,7 +88,8 @@ where <- function(fn) {
   which(data_cols %in% cols)
 }
 
-# copied and slightly rewritten from poorman under same license (2021-10-15)
+# copied and slightly rewritten from {poorman} under permissive license (2021-10-15)
+# https://github.com/nathaneastwood/poorman, MIT licensed, Nathan Eastwood, 2020
 quick_case_when <- function(...) {
   fs <- list(...)
   lapply(fs, function(x) {
@@ -162,19 +163,25 @@ quick_case_when <- function(...) {
   out
 }
 
-bind_rows2 <- function(..., fill = NA) {
-  # this AMAZING code is from ChatGPT: when I asked for a base R dplyr::bind_rows alternative
-  dfs <- list(...)
-  all_cols <- unique(unlist(lapply(dfs, colnames)))
-  mat_list <- lapply(dfs, function(x) {
-    mat <- matrix(NA, nrow = NROW(x), ncol = length(all_cols))
-    colnames(mat) <- all_cols
-    mat[, colnames(x)] <- as.matrix(x)
-    mat
+# copied and slightly rewritten from {poorman} under permissive license (2023-02-11)
+# https://github.com/nathaneastwood/poorman, MIT licensed, Nathan Eastwood, 2020
+pm_bind_rows <- function (..., stringsAsFactors = FALSE) {
+  lsts <- Filter(Negate(is.null), list(...))
+  nms <- unique(unlist(lapply(lsts, names)))
+  lsts <- lapply(lsts, function(x) {
+    if (!is.data.frame(x)) {
+      x <- data.frame(as.list(x), stringsAsFactors = stringsAsFactors)
+    }
+    for (i in nms[!nms %in% names(x)]) {
+      # create the new column, could also be length 0
+      x[[i]] <- rep(NA, NROW(x))
+    }
+    x
   })
-  mat <- do.call(rbind, mat_list)
-  as.data.frame(mat, stringsAsFactors = FALSE)
+  names(lsts) <- NULL
+  do.call(rbind, lsts)
 }
+
 
 # No export, no Rd
 addin_insert_in <- function() {

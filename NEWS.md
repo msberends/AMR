@@ -1,4 +1,4 @@
-# AMR 1.8.2.9117
+# AMR 1.8.2.9118
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -42,7 +42,7 @@ Interpretation guidelines older than 10 years were removed, the oldest now inclu
 
 ### Supported languages
 
-We added support for the following 10 languages: Chinese, Czech, Finnish, Greek, Japanese, Norwegian, Polish, Romanian, Turkish and Ukrainian. All antibiotic names are now available in these languages, and the AMR package will automatically determine a supported language based on the user system language.
+We added support for the following ten languages: Chinese (simplified), Czech, Finnish, Greek, Japanese, Norwegian (bokmål), Polish, Romanian, Turkish and Ukrainian. All antibiotic names are now available in these languages, and the AMR package will automatically determine a supported language based on the user's system language.
 
 We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 20 languages in total, and according to download stats used in almost all countries in the world!
 

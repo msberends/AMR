@@ -475,7 +475,7 @@ eucast_rules <- function(x,
     amox$base_ab <- "AMX"
     amox$base_name <- ab_name("AMX", language = NULL)
     # merge and sort
-    ab_enzyme <- bind_rows2(ab_enzyme, ampi, amox)
+    ab_enzyme <- pm_bind_rows(ab_enzyme, ampi, amox)
     ab_enzyme <- ab_enzyme[order(ab_enzyme$enzyme_name), , drop = FALSE]
 
     for (i in seq_len(nrow(ab_enzyme))) {
@@ -1161,7 +1161,7 @@ edit_sir <- function(x,
         )
         verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old) | is.na(new) & !is.na(old))
         # save changes to data set 'verbose_info'
-        track_changes$verbose_info <- bind_rows2(track_changes$verbose_info,
+        track_changes$verbose_info <- pm_bind_rows(track_changes$verbose_info,
           verbose_new)
         # count adds and changes
         track_changes$added <- track_changes$added + verbose_new %pm>%
@@ -1213,7 +1213,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 12.0)
       )
     )
   }
-  out <- do.call("bind_rows2", lapply(lst, as.data.frame, stringsAsFactors = FALSE))
+  out <- do.call("pm_bind_rows", lapply(lst, as.data.frame, stringsAsFactors = FALSE))
   rownames(out) <- NULL
   out$ab <- ab
   out$name <- ab_name(ab, language = NULL)
