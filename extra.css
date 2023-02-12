@@ -62,6 +62,7 @@ pre code {
   /* never wrap code on smaller screens */
   word-wrap: normal !important;
   white-space: pre !important;
+  font-size: 0.8em !important;
 }
 .ot, .dv, .fl, .cn, .at,
 .op a {
