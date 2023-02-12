@@ -404,8 +404,8 @@ antibiogram <- function(x,
       if (i == 1) {
         new_df <- long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits)
       } else {
-        new_df <- pm_bind_rows(new_df,
-                               long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits))
+        new_df <- rbind2(new_df,
+                         long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits))
       }
     }
     # sort rows

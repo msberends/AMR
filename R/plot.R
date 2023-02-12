@@ -585,19 +585,13 @@ plot.sir <- function(x,
   data$s <- round((data$n / sum(data$n)) * 100, 1)
 
   if (!"S" %in% data$x) {
-    data <- pm_bind_rows(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE),
-      stringsAsFactors = FALSE
-    )
+    data <- rbind2(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE))
   }
   if (!"I" %in% data$x) {
-    data <- pm_bind_rows(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE),
-      stringsAsFactors = FALSE
-    )
+    data <- rbind2(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE))
   }
   if (!"R" %in% data$x) {
-    data <- pm_bind_rows(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE),
-      stringsAsFactors = FALSE
-    )
+    data <- rbind2(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE))
   }
 
   data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)

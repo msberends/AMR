@@ -163,25 +163,22 @@ quick_case_when <- function(...) {
   out
 }
 
-# copied and slightly rewritten from {poorman} under permissive license (2023-02-11)
-# https://github.com/nathaneastwood/poorman, MIT licensed, Nathan Eastwood, 2020
-pm_bind_rows <- function (..., stringsAsFactors = FALSE) {
-  lsts <- Filter(Negate(is.null), list(...))
-  nms <- unique(unlist(lapply(lsts, names)))
-  lsts <- lapply(lsts, function(x) {
-    if (!is.data.frame(x)) {
-      x <- data.frame(as.list(x), stringsAsFactors = stringsAsFactors)
-    }
-    for (i in nms[!nms %in% names(x)]) {
+rbind2 <- function (...) {
+  # this is just rbind(), but then with the functionality of dplyr::bind_rows(),
+  # to allow differences in available columns
+  l <- list(...)
+  l_names <- unique(unlist(lapply(l, names)))
+  l_new <- lapply(l, function(df) {
+    rownames(df) <- NULL
+    for (col in l_names[!l_names %in% colnames(df)]) {
       # create the new column, could also be length 0
-      x[[i]] <- rep(NA, NROW(x))
+      df[, col] <- rep(NA, NROW(df))
     }
-    x
+    df
   })
-  names(lsts) <- NULL
-  do.call(rbind, lsts)
+  fun <- function(...) rbind(..., stringsAsFactors = FALSE)
+  do.call(fun, l_new)
 }
-
 
 # No export, no Rd
 addin_insert_in <- function() {

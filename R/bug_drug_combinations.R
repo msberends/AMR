@@ -124,7 +124,7 @@ bug_drug_combinations <- function(x,
         m <- as.matrix(table(x))
         data.frame(S = m["S", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
       })
-      merged <- do.call(pm_bind_rows, pivot)
+      merged <- do.call(rbind2, pivot)
       out_group <- data.frame(
         mo = rep(unique_mo[i], NROW(merged)),
         ab = rownames(merged),
@@ -144,14 +144,14 @@ bug_drug_combinations <- function(x,
         }
         out_group <- cbind(group_values, out_group)
       }
-      out <- pm_bind_rows(out, out_group)
+      out <- rbind2(out, out_group)
     }
     out
   }
   # based on pm_apply_grouped_function
   apply_group <- function(.data, fn, groups, drop = FALSE, ...) {
     grouped <- pm_split_into_groups(.data, groups, drop)
-    res <- do.call(pm_bind_rows, unname(lapply(grouped, fn, ...)))
+    res <- do.call(rbind2, unname(lapply(grouped, fn, ...)))
     if (any(groups %in% colnames(res))) {
       class(res) <- c("grouped_data", class(res))
       res <- pm_set_groups(res, groups[groups %in% colnames(res)])

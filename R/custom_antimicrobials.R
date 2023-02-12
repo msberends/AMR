@@ -153,7 +153,7 @@ add_custom_antimicrobials <- function(x) {
     # assign new values
     new_df[, col] <- x[, col, drop = TRUE]
   }
-  AMR_env$AB_lookup <- unique(pm_bind_rows(AMR_env$AB_lookup, new_df))
+  AMR_env$AB_lookup <- unique(rbind2(AMR_env$AB_lookup, new_df))
 
   AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% x$ab), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
