@@ -30,7 +30,7 @@
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
 #' @description Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
-#' 
+#'
 #' All breakpoints used for interpretation are publicly available in the [clinical_breakpoints] data set.
 #' @rdname as.sir
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)

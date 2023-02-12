@@ -46,62 +46,62 @@
 #' @param object an [antibiogram()] object
 #' @param ... method extensions
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
-#' 
+#'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
-#' 
+#'
 #' There are four antibiogram types, as proposed by Klinker *et al.* (2021, \doi{10.1177/20499361211011373}), and they are all supported by [antibiogram()]:
-#' 
+#'
 #' 1. **Traditional Antibiogram**
-#' 
+#'
 #'    Case example: Susceptibility of *Pseudomonas aeruginosa* to piperacillin/tazobactam (TZP)
-#'    
+#'
 #'    Code example:
-#'    
+#'
 #'    ```r
 #'    antibiogram(your_data,
 #'                antibiotics = "TZP")
 #'    ```
-#'    
+#'
 #' 2. **Combination Antibiogram**
-#' 
+#'
 #'    Case example: Additional susceptibility of *Pseudomonas aeruginosa* to TZP + tobramycin versus TZP alone
-#'    
+#'
 #'    Code example:
-#'    
+#'
 #'    ```r
 #'    antibiogram(your_data,
 #'                antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
 #'    ```
-#'    
+#'
 #' 3. **Syndromic Antibiogram**
-#' 
+#'
 #'    Case example: Susceptibility of *Pseudomonas aeruginosa* to TZP among respiratory specimens (obtained among ICU patients only)
-#'    
+#'
 #'    Code example:
-#'    
+#'
 #'    ```r
 #'    antibiogram(your_data,
 #'                antibiotics = penicillins(),
 #'                syndromic_group = "ward")
 #'    ```
-#'    
+#'
 #' 4. **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**
-#' 
+#'
 #'    Case example: Susceptibility of *Pseudomonas aeruginosa* to TZP among respiratory specimens (obtained among ICU patients only) for male patients age >=65 years with heart failure
-#'    
+#'
 #'    Code example:
-#'    
+#'
 #'    ```r
 #'    antibiogram(your_data,
 #'                antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
 #'                syndromic_group = ifelse(your_data$age >= 65 & your_data$gender == "Male",
 #'                                         "Group 1", "Group 2"))
 #'    ```
-#' 
+#'
 #' All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]) or printed into R Markdown / Quarto formats for reports. Use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. `flextable::as_flextable()` or `gt::gt()`.
-#' 
+#'
 #' Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (defaults to `FALSE`). See this example for two antibiotics, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
-#' 
+#'
 #' ```
 #' --------------------------------------------------------------------
 #'                     only_all_tested = FALSE  only_all_tested = TRUE
@@ -120,99 +120,111 @@
 #'   <NA>      <NA>        -            -            -            -
 #' --------------------------------------------------------------------
 #' ```
-#' @source 
+#' @source
 #' * Klinker KP *et al.* (2021). **Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms**. *Therapeutic Advances in Infectious Disease*, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
 #' * Barbieri E *et al.* (2021). **Development of a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) to guide the choice of the empiric antibiotic treatment for urinary tract infection in paediatric patients: a Bayesian approach** *Antimicrobial Resistance & Infection Control* May 1;10(1):74; \doi{10.1186/s13756-021-00939-2}
 #' * **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @rdname antibiogram
 #' @name antibiogram
 #' @export
-#' @examples 
+#' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
 #' example_isolates
-#' 
-#' 
+#'
+#'
 #' # Traditional antibiogram ----------------------------------------------
-#' 
+#'
 #' antibiogram(example_isolates,
-#'             antibiotics = c(aminoglycosides(), carbapenems()))
-#'             
+#'   antibiotics = c(aminoglycosides(), carbapenems())
+#' )
+#'
 #' antibiogram(example_isolates,
-#'             antibiotics = aminoglycosides(),
-#'             ab_transform = "atc",
-#'             mo_transform = "gramstain")
-#'             
+#'   antibiotics = aminoglycosides(),
+#'   ab_transform = "atc",
+#'   mo_transform = "gramstain"
+#' )
+#'
 #' antibiogram(example_isolates,
-#'             antibiotics = carbapenems(),
-#'             ab_transform = "name",
-#'             mo_transform = "name")
-#' 
-#' 
+#'   antibiotics = carbapenems(),
+#'   ab_transform = "name",
+#'   mo_transform = "name"
+#' )
+#'
+#'
 #' # Combined antibiogram -------------------------------------------------
-#' 
+#'
 #' # combined antibiotics yield higher empiric coverage
 #' antibiogram(example_isolates,
-#'             antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-#'             mo_transform = "gramstain")
-#'             
+#'   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+#'   mo_transform = "gramstain"
+#' )
+#'
 #' antibiogram(example_isolates,
-#'             antibiotics = c("TZP", "TZP+TOB"),
-#'             mo_transform = "gramstain",
-#'             ab_transform = "name",
-#'             sep = " & ")
-#' 
-#' 
+#'   antibiotics = c("TZP", "TZP+TOB"),
+#'   mo_transform = "gramstain",
+#'   ab_transform = "name",
+#'   sep = " & "
+#' )
+#'
+#'
 #' # Syndromic antibiogram ------------------------------------------------
-#' 
+#'
 #' # the data set could contain a filter for e.g. respiratory specimens
 #' antibiogram(example_isolates,
-#'             antibiotics = c(aminoglycosides(), carbapenems()),
-#'             syndromic_group = "ward")
-#' 
+#'   antibiotics = c(aminoglycosides(), carbapenems()),
+#'   syndromic_group = "ward"
+#' )
+#'
 #' # now define a data set with only E. coli
 #' ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
-#' 
+#'
 #' # with a custom language, though this will be determined automatically
 #' # (i.e., this table will be in Spanish on Spanish systems)
 #' antibiogram(ex1,
-#'             antibiotics = aminoglycosides(),
-#'             ab_transform = "name",
-#'             syndromic_group = ifelse(ex1$ward == "ICU",
-#'                                      "UCI", "No UCI"),
-#'             language = "es")
-#' 
-#' 
+#'   antibiotics = aminoglycosides(),
+#'   ab_transform = "name",
+#'   syndromic_group = ifelse(ex1$ward == "ICU",
+#'     "UCI", "No UCI"
+#'   ),
+#'   language = "es"
+#' )
+#'
+#'
 #' # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
-#' 
+#'
 #' # the data set could contain a filter for e.g. respiratory specimens
 #' antibiogram(example_isolates,
-#'             antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-#'             mo_transform = "gramstain",
-#'             minimum = 10, # this should be >= 30, but now just as example
-#'             syndromic_group = ifelse(example_isolates$age >= 65 &
-#'                                        example_isolates$gender == "M",
-#'                                      "WISCA Group 1", "WISCA Group 2"))
-#' 
-#' 
+#'   antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+#'   mo_transform = "gramstain",
+#'   minimum = 10, # this should be >= 30, but now just as example
+#'   syndromic_group = ifelse(example_isolates$age >= 65 &
+#'     example_isolates$gender == "M",
+#'   "WISCA Group 1", "WISCA Group 2"
+#'   )
+#' )
+#'
+#'
 #' # Generate plots with ggplot2 or base R --------------------------------
-#' 
+#'
 #' ab1 <- antibiogram(example_isolates,
-#'                    antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-#'                    mo_transform = "gramstain")
+#'   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
+#'   mo_transform = "gramstain"
+#' )
 #' ab2 <- antibiogram(example_isolates,
-#'                    antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-#'                    mo_transform = "gramstain",
-#'                    syndromic_group = "ward")
-#'                    
+#'   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
+#'   mo_transform = "gramstain",
+#'   syndromic_group = "ward"
+#' )
+#'
 #' plot(ab1)
-#' 
+#'
 #' if (requireNamespace("ggplot2")) {
 #'   ggplot2::autoplot(ab1)
 #' }
-#' 
+#'
 #' plot(ab2)
-#' 
+#'
 #' if (requireNamespace("ggplot2")) {
 #'   ggplot2::autoplot(ab2)
 #' }
@@ -241,7 +253,7 @@ antibiogram <- function(x,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(sep, allow_class = "character", has_length = 1)
-  
+
   # try to find columns based on type
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = interactive())
@@ -274,7 +286,7 @@ antibiogram <- function(x,
   } else {
     has_syndromic_group <- FALSE
   }
-  
+
   # get antibiotics
   if (tryCatch(is.character(antibiotics), error = function(e) FALSE)) {
     antibiotics <- strsplit(gsub(" ", "", antibiotics), "+", fixed = TRUE)
@@ -299,7 +311,7 @@ antibiogram <- function(x,
         # determine whether this new column should contain S, I, R, or NA
         if (isTRUE(combine_SI)) {
           S_values <- c("S", "I")
-        }else {
+        } else {
           S_values <- "S"
         }
         other_values <- setdiff(c("S", "I", "R"), S_values)
@@ -307,8 +319,10 @@ antibiogram <- function(x,
         if (isTRUE(only_all_tested)) {
           x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(anyNA(x), NA_character_, ifelse(any(x %in% S_values), "S", "R")), USE.NAMES = FALSE))
         } else {
-          x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(any(x %in% S_values, na.rm = TRUE), "S", ifelse(anyNA(x), NA_character_, "R")),
-                                          USE.NAMES = FALSE))
+          x[new_colname] <- as.sir(vapply(
+            FUN.VALUE = character(1), x_transposed, function(x) ifelse(any(x %in% S_values, na.rm = TRUE), "S", ifelse(anyNA(x), NA_character_, "R")),
+            USE.NAMES = FALSE
+          ))
         }
       }
       antibiotics[[i]] <- new_colname
@@ -317,32 +331,34 @@ antibiogram <- function(x,
   } else {
     antibiotics <- colnames(suppressWarnings(x[, antibiotics, drop = FALSE]))
   }
-  
+
   if (isTRUE(has_syndromic_group)) {
-    out <- x %pm>% 
-      pm_select(.syndromic_group, .mo, antibiotics) %pm>% 
+    out <- x %pm>%
+      pm_select(.syndromic_group, .mo, antibiotics) %pm>%
       pm_group_by(.syndromic_group)
   } else {
-    out <- x %pm>% 
+    out <- x %pm>%
       pm_select(.mo, antibiotics)
   }
-  
+
   # get numbers of S, I, R (per group)
-  out <- out %pm>% 
-    bug_drug_combinations(col_mo = ".mo",
-                          FUN = function(x) x)
+  out <- out %pm>%
+    bug_drug_combinations(
+      col_mo = ".mo",
+      FUN = function(x) x
+    )
   counts <- out
-  
+
   # regroup for summarising
   if (isTRUE(has_syndromic_group)) {
     colnames(out)[1] <- "syndromic_group"
-    out <- out %pm>% 
+    out <- out %pm>%
       pm_group_by(syndromic_group, mo, ab)
   } else {
-    out <- out %pm>% 
+    out <- out %pm>%
       pm_group_by(mo, ab)
   }
-  
+
   if (isTRUE(combine_SI)) {
     out$numerator <- out$S + out$I
   } else {
@@ -351,13 +367,13 @@ antibiogram <- function(x,
   out$minimum <- minimum
   if (any(out$total < out$minimum, na.rm = TRUE)) {
     message_("NOTE: ", sum(out$total < out$minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
-    out <- out %pm>% 
+    out <- out %pm>%
       subset(total >= minimum)
   }
-  
+
   out <- out %pm>%
     pm_summarise(SI = numerator / total)
-  
+
   # transform names of antibiotics
   ab_naming_function <- function(x, t, l, s) {
     x <- strsplit(x, s, fixed = TRUE)
@@ -379,24 +395,24 @@ antibiogram <- function(x,
     out
   }
   out$ab <- ab_naming_function(out$ab, t = ab_transform, l = language, s = sep)
-  
+
   # transform long to wide
   long_to_wide <- function(object, digs) {
     object$SI <- round(object$SI * 100, digits = digs)
     object <- object %pm>%
       # an unclassed data.frame is required for stats::reshape()
-      as.data.frame(stringsAsFactors = FALSE) %pm>% 
+      as.data.frame(stringsAsFactors = FALSE) %pm>%
       stats::reshape(direction = "wide", idvar = "mo", timevar = "ab", v.names = "SI")
     colnames(object) <- gsub("^SI?[.]", "", colnames(object))
     return(object)
   }
-  
+
   # ungroup for long -> wide transformation
   attr(out, "pm_groups") <- NULL
   attr(out, "groups") <- NULL
   class(out) <- class(out)[!class(out) %in% c("grouped_df", "grouped_data")]
   long <- out
-  
+
   if (isTRUE(has_syndromic_group)) {
     grps <- unique(out$syndromic_group)
     for (i in seq_len(length(grps))) {
@@ -404,8 +420,10 @@ antibiogram <- function(x,
       if (i == 1) {
         new_df <- long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits)
       } else {
-        new_df <- rbind2(new_df,
-                         long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits))
+        new_df <- rbind2(
+          new_df,
+          long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits)
+        )
       }
     }
     # sort rows
@@ -421,7 +439,7 @@ antibiogram <- function(x,
     new_df <- new_df[, c("mo", sort(colnames(new_df)[colnames(new_df) != "mo"])), drop = FALSE]
     colnames(new_df)[1] <- translate_AMR("Pathogen", language = language)
   }
-  
+
   # add total N if indicated
   if (isTRUE(add_total_n)) {
     if (isTRUE(has_syndromic_group)) {
@@ -442,10 +460,11 @@ antibiogram <- function(x,
     new_df[[edit_col]] <- paste0(new_df[[edit_col]], " (", count_group, ")")
     colnames(new_df)[edit_col] <- paste(colnames(new_df)[edit_col], "(N min-max)")
   }
-  
+
   structure(as_original_data_class(new_df, class(x), extra_class = "antibiogram"),
-            long = long,
-            combine_SI = combine_SI)
+    long = long,
+    combine_SI = combine_SI
+  )
 }
 
 #' @export
@@ -458,22 +477,24 @@ plot.antibiogram <- function(x, ...) {
     df$syndromic_group <- NULL
     df <- df[order(df$mo), , drop = FALSE]
   }
-  mo_levels = unique(df$mo)
+  mo_levels <- unique(df$mo)
   mfrow_old <- graphics::par()$mfrow
   sqrt_levels <- sqrt(length(mo_levels))
   graphics::par(mfrow = c(ceiling(sqrt_levels), floor(sqrt_levels)))
   for (i in seq_along(mo_levels)) {
     mo <- mo_levels[i]
     df_sub <- df[df$mo == mo, , drop = FALSE]
-    
-    barplot(height = df_sub$SI * 100,
-            xlab = NULL,
-            ylab = ifelse(isTRUE(attributes(x)$combine_SI), "%SI", "%S"),
-            names.arg = df_sub$ab,
-            col = "#aaaaaa",
-            beside = TRUE,
-            main = mo,
-            legend = NULL)
+
+    barplot(
+      height = df_sub$SI * 100,
+      xlab = NULL,
+      ylab = ifelse(isTRUE(attributes(x)$combine_SI), "%SI", "%S"),
+      names.arg = df_sub$ab,
+      col = "#aaaaaa",
+      beside = TRUE,
+      main = mo,
+      legend = NULL
+    )
   }
   graphics::par(mfrow = mfrow_old)
 }
@@ -490,22 +511,28 @@ barplot.antibiogram <- function(height, ...) {
 autoplot.antibiogram <- function(object, ...) {
   df <- attributes(object)$long
   ggplot2::ggplot(df) +
-    ggplot2::geom_col(ggplot2::aes(x = ab,
-                                   y = SI * 100,
-                                   fill = if ("syndromic_group" %in% colnames(df)) {
-                                     syndromic_group
-                                   } else {
-                                     NULL
-                                   }),
-                      position = ggplot2::position_dodge2(preserve = "single")) +
+    ggplot2::geom_col(
+      ggplot2::aes(
+        x = ab,
+        y = SI * 100,
+        fill = if ("syndromic_group" %in% colnames(df)) {
+          syndromic_group
+        } else {
+          NULL
+        }
+      ),
+      position = ggplot2::position_dodge2(preserve = "single")
+    ) +
     ggplot2::facet_wrap("mo") +
-    ggplot2::labs(y = ifelse(isTRUE(attributes(object)$combine_SI), "%SI", "%S"),
-                  x = NULL,
-                  fill = if ("syndromic_group" %in% colnames(df)) {
-                    colnames(object)[1]
-                  } else {
-                    NULL
-                  })
+    ggplot2::labs(
+      y = ifelse(isTRUE(attributes(object)$combine_SI), "%SI", "%S"),
+      x = NULL,
+      fill = if ("syndromic_group" %in% colnames(df)) {
+        colnames(object)[1]
+      } else {
+        NULL
+      }
+    )
 }
 
 #' @export
@@ -515,8 +542,8 @@ autoplot.antibiogram <- function(object, ...) {
 print.antibiogram <- function(x, as_kable = !interactive(), ...) {
   meet_criteria(as_kable, allow_class = "logical", has_length = 1)
   if (isTRUE(as_kable) &&
-      # be sure not to run kable in pkgdown for our website generation
-      !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
+    # be sure not to run kable in pkgdown for our website generation
+    !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
     stop_ifnot_installed("knitr")
     kable <- import_fn("kable", "knitr", error_on_fail = TRUE)
     kable(x, ...)

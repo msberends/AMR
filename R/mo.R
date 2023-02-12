@@ -325,7 +325,8 @@ as.mo <- function(x,
         result_mo <- NA_character_
       } else {
         result_mo <- AMR_env$MO_lookup$mo[match(top_hits[1], AMR_env$MO_lookup$fullname)]
-        AMR_env$mo_uncertainties <- rbind2(AMR_env$mo_uncertainties,
+        AMR_env$mo_uncertainties <- rbind2(
+          AMR_env$mo_uncertainties,
           data.frame(
             original_input = x_search,
             input = x_search_cleaned,
@@ -335,14 +336,17 @@ as.mo <- function(x,
             minimum_matching_score = ifelse(is.null(minimum_matching_score), "NULL", minimum_matching_score),
             keep_synonyms = keep_synonyms,
             stringsAsFactors = FALSE
-          ))
+          )
+        )
         # save to package env to save time for next time
-        AMR_env$mo_previously_coerced <- unique(rbind2(AMR_env$mo_previously_coerced,
+        AMR_env$mo_previously_coerced <- unique(rbind2(
+          AMR_env$mo_previously_coerced,
           data.frame(
             x = paste(x_search, minimum_matching_score),
             mo = result_mo,
             stringsAsFactors = FALSE
-          )))
+          )
+        ))
       }
       # the actual result:
       as.character(result_mo)
@@ -797,14 +801,14 @@ print.mo_uncertainties <- function(x, ...) {
   }
 
   cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
-  
+
   add_MO_lookup_to_AMR_env()
-  
+
   col_red <- function(x) font_rose_bg(font_black(x, collapse = NULL), collapse = NULL)
   col_orange <- function(x) font_orange_bg(font_black(x, collapse = NULL), collapse = NULL)
   col_yellow <- function(x) font_yellow_bg(font_black(x, collapse = NULL), collapse = NULL)
   col_green <- function(x) font_green_bg(font_black(x, collapse = NULL), collapse = NULL)
-  
+
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
       col_red(" 0.000-0.499 "),
@@ -814,7 +818,7 @@ print.mo_uncertainties <- function(x, ...) {
       add_fn = font_blue
     ), font_green_bg(" "), "\n", sep = "")
   }
-  
+
   score_set_colour <- function(text, scores) {
     # set colours to scores
     text[scores >= 0.7] <- col_green(text[scores >= 0.7])

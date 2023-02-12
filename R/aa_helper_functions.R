@@ -163,7 +163,7 @@ quick_case_when <- function(...) {
   out
 }
 
-rbind2 <- function (...) {
+rbind2 <- function(...) {
   # this is just rbind(), but then with the functionality of dplyr::bind_rows(),
   # to allow differences in available columns
   l <- list(...)

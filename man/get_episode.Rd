@@ -55,9 +55,13 @@ is_new_episode(df$date, episode_days = 60) # TRUE/FALSE
 df[which(get_episode(df$date, 60) == 3), ]
 
 # the functions also work for less than a day, e.g. to include one per hour:
-get_episode(c(Sys.time(),
-              Sys.time() + 60 * 60),
-            episode_days = 1 / 24)
+get_episode(
+  c(
+    Sys.time(),
+    Sys.time() + 60 * 60
+  ),
+  episode_days = 1 / 24
+)
 
 \donttest{
 if (require("dplyr")) {
@@ -71,7 +75,7 @@ if (require("dplyr")) {
     )) \%>\%
     group_by(patient, condition) \%>\%
     mutate(new_episode = is_new_episode(date, 365)) \%>\%
-    select(patient, date, condition, new_episode) \%>\% 
+    select(patient, date, condition, new_episode) \%>\%
     arrange(patient, condition, date)
 }
 
@@ -82,7 +86,7 @@ if (require("dplyr")) {
       patient,
       new_index = get_episode(date, 60),
       new_logical = is_new_episode(date, 60)
-    ) \%>\% 
+    ) \%>\%
     arrange(patient, ward, date)
 }
 
@@ -117,7 +121,6 @@ if (require("dplyr")) {
 # but is_new_episode() has a lot more flexibility than first_isolate(),
 # since you can now group on anything that seems relevant:
 if (require("dplyr")) {
-  
   df \%>\%
     group_by(patient, mo, ward) \%>\%
     mutate(flag_episode = is_new_episode(date, 365)) \%>\%

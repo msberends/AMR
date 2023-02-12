@@ -1161,8 +1161,10 @@ edit_sir <- function(x,
         )
         verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old) | is.na(new) & !is.na(old))
         # save changes to data set 'verbose_info'
-        track_changes$verbose_info <- rbind2(track_changes$verbose_info,
-          verbose_new)
+        track_changes$verbose_info <- rbind2(
+          track_changes$verbose_info,
+          verbose_new
+        )
         # count adds and changes
         track_changes$added <- track_changes$added + verbose_new %pm>%
           pm_filter(is.na(old)) %pm>%

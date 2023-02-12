@@ -47,7 +47,7 @@
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
 #' example_isolates
-#' 
+#'
 #' \donttest{
 #' x <- bug_drug_combinations(example_isolates)
 #' head(x)

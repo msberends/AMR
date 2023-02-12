@@ -56,7 +56,7 @@
 #' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination Therapy:
 #' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
-#' 
+#'
 #'
 #' ```
 #' --------------------------------------------------------------------
@@ -78,14 +78,14 @@
 #' ```
 #'
 #' Please note that, in combination therapies, for `only_all_tested = TRUE` applies that:
-#' 
+#'
 #' ```
 #'     count_S()    +   count_I()    +   count_R()    = count_all()
 #'   proportion_S() + proportion_I() + proportion_R() = 1
 #' ```
-#' 
+#'
 #' and that, in combination therapies, for `only_all_tested = FALSE` applies that:
-#' 
+#'
 #' ```
 #'     count_S()    +   count_I()    +   count_R()    >= count_all()
 #'   proportion_S() + proportion_I() + proportion_R() >= 1
@@ -103,8 +103,8 @@
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
 #' example_isolates
-#' 
-#' 
+#'
+#'
 #' # base R ------------------------------------------------------------
 #' # determines %R
 #' resistance(example_isolates$AMX)

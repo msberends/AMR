@@ -29,7 +29,7 @@
 
 #' Options for the AMR package
 #'
-#' This is an overview of all the package-specific [options()] you can set in the `AMR` package. 
+#' This is an overview of all the package-specific [options()] you can set in the `AMR` package.
 #' @section Options:
 #' * `AMR_custom_ab` \cr Allows to use custom antimicrobial drugs with this package. This is explained in [add_custom_antimicrobials()].
 #' * `AMR_custom_mo` \cr Allows to use custom microorganisms with this package. This is explained in [add_custom_microorganisms()].
@@ -41,37 +41,37 @@
 #' * `AMR_keep_synonyms` \cr A [logical] to use in [as.mo()] and all [`mo_*`][mo_property()] functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names.
 #' * `AMR_locale` \cr A language to use for the `AMR` package, can be one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' * `AMR_mo_source` \cr A file location for a manual code list to be used in [as.mo()] and all [`mo_*`][mo_property()] functions. This is explained in [set_mo_source()].
-#' 
+#'
 #' @section Saving Settings Between Sessions:
 #' Settings in \R are not saved globally and are thus lost when \R is exited. You can save your options to your own `.Rprofile` file, which is a user-specific file. You can edit it using:
-#' 
+#'
 #' ```r
 #'   utils::file.edit("~/.Rprofile")
 #' ```
-#' 
+#'
 #' In this file, you can set options such as:
-#' 
+#'
 #' ```r
 #'  options(AMR_locale = "pt")
 #'  options(AMR_include_PKPD = TRUE)
 #'  ```
-#'  
+#'
 #' to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with [as.sir()].
-#' 
+#'
 #' ### Share Options Within Team
-#' 
+#'
 #' For a more global approach, e.g. within a data team, save an options file to a remote file location, such as a shared network drive. This would work in this way:
-#' 
+#'
 #' 1. Save a plain text file to e.g. "X:/team_folder/R_options.R" and fill it with preferred settings.
-#' 
+#'
 #' 2. For each user, open the `.Rprofile` file using `utils::file.edit("~/.Rprofile")` and put in there:
-#' 
+#'
 #'    ```r
 #'      source("X:/team_folder/R_options.R")
 #'    ```
-#'    
+#'
 #' 3. Reload R/RStudio and check the settings with [getOption()], e.g. `getOption("AMR_locale")` if you have set that value.
-#' 
+#'
 #' Now the team settings are configured in only one place, and can be maintained there.
 #' @keywords internal
 #' @name AMR-options

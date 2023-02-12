@@ -153,39 +153,45 @@ example_isolates
 # Traditional antibiogram ----------------------------------------------
 
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()))
-            
+  antibiotics = c(aminoglycosides(), carbapenems())
+)
+
 antibiogram(example_isolates,
-            antibiotics = aminoglycosides(),
-            ab_transform = "atc",
-            mo_transform = "gramstain")
-            
+  antibiotics = aminoglycosides(),
+  ab_transform = "atc",
+  mo_transform = "gramstain"
+)
+
 antibiogram(example_isolates,
-            antibiotics = carbapenems(),
-            ab_transform = "name",
-            mo_transform = "name")
+  antibiotics = carbapenems(),
+  ab_transform = "name",
+  mo_transform = "name"
+)
 
 
 # Combined antibiogram -------------------------------------------------
 
 # combined antibiotics yield higher empiric coverage
 antibiogram(example_isolates,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-            mo_transform = "gramstain")
-            
+  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  mo_transform = "gramstain"
+)
+
 antibiogram(example_isolates,
-            antibiotics = c("TZP", "TZP+TOB"),
-            mo_transform = "gramstain",
-            ab_transform = "name",
-            sep = " & ")
+  antibiotics = c("TZP", "TZP+TOB"),
+  mo_transform = "gramstain",
+  ab_transform = "name",
+  sep = " & "
+)
 
 
 # Syndromic antibiogram ------------------------------------------------
 
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()),
-            syndromic_group = "ward")
+  antibiotics = c(aminoglycosides(), carbapenems()),
+  syndromic_group = "ward"
+)
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
@@ -193,35 +199,41 @@ ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Spanish on Spanish systems)
 antibiogram(ex1,
-            antibiotics = aminoglycosides(),
-            ab_transform = "name",
-            syndromic_group = ifelse(ex1$ward == "ICU",
-                                     "UCI", "No UCI"),
-            language = "es")
+  antibiotics = aminoglycosides(),
+  ab_transform = "name",
+  syndromic_group = ifelse(ex1$ward == "ICU",
+    "UCI", "No UCI"
+  ),
+  language = "es"
+)
 
 
 # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
-            antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-            mo_transform = "gramstain",
-            minimum = 10, # this should be >= 30, but now just as example
-            syndromic_group = ifelse(example_isolates$age >= 65 &
-                                       example_isolates$gender == "M",
-                                     "WISCA Group 1", "WISCA Group 2"))
+  antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+  mo_transform = "gramstain",
+  minimum = 10, # this should be >= 30, but now just as example
+  syndromic_group = ifelse(example_isolates$age >= 65 &
+    example_isolates$gender == "M",
+  "WISCA Group 1", "WISCA Group 2"
+  )
+)
 
 
 # Generate plots with ggplot2 or base R --------------------------------
 
 ab1 <- antibiogram(example_isolates,
-                   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-                   mo_transform = "gramstain")
+  antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
+  mo_transform = "gramstain"
+)
 ab2 <- antibiogram(example_isolates,
-                   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-                   mo_transform = "gramstain",
-                   syndromic_group = "ward")
-                   
+  antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
+  mo_transform = "gramstain",
+  syndromic_group = "ward"
+)
+
 plot(ab1)
 
 if (requireNamespace("ggplot2")) {

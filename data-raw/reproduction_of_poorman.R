@@ -19,7 +19,7 @@ files <- files[files %unlike% "(zzz|init)[.]R$"]
 files <- files[files %unlike% "/(between|coalesce|cumulative|fill|glimpse|group_cols|na_if|near|nest_by|check_filter|poorman-package|print|recode|reconstruct|replace_na|replace_with|rownames|slice|union_all|unite|window_rank|with_groups)[.]R$"]
 
 # add our prepend file, containing info about the source of the data
-intro <- readLines("data-raw/poorman_prepend.R") %>% 
+intro <- readLines("data-raw/poorman_prepend.R") %>%
   # add commit to intro part
   gsub("{commit}", commit, ., fixed = TRUE) %>%
   # add date to intro part
@@ -56,7 +56,6 @@ for (use in has_usemethods) {
   }
   # add pm_ prefix
   contents[relevant_row - 1] <- paste0("pm_", contents[relevant_row - 1])
-  
 }
 # correct for NextMethod
 contents <- gsub("NextMethod\\(\"(.*)\"\\)", "\\1.data.frame(...)", contents)
@@ -92,7 +91,7 @@ contents <- contents[trimws(contents) != ""]
 contents <- gsub("if (!missing(.before))", "if (!missing(.before) && !is.null(.before))", contents, fixed = TRUE)
 contents <- gsub("if (!missing(.after))", "if (!missing(.after) && !is.null(.after))", contents, fixed = TRUE)
 contents[which(contents %like% "reshape\\($") + 1] <- gsub("data", "as.data.frame(data, stringsAsFactors = FALSE)", contents[which(contents %like% "reshape\\($") + 1])
-contents <- gsub('pm_relocate(.data = long, values_to, .after = -1)', 'pm_relocate(.data = long, "value", .after = -1)', contents, fixed = TRUE)
+contents <- gsub("pm_relocate(.data = long, values_to, .after = -1)", 'pm_relocate(.data = long, "value", .after = -1)', contents, fixed = TRUE)
 
 # who needs US spelling?
 contents <- contents[contents %unlike% "summarize"]

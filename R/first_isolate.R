@@ -480,7 +480,7 @@ first_isolate <- function(x = NULL,
     ),
     use.names = FALSE
   )
-  
+
   if (!is.null(col_keyantimicrobials)) {
     # with key antibiotics
     x$other_key_ab <- !antimicrobials_equal(
@@ -501,20 +501,20 @@ first_isolate <- function(x = NULL,
       x$newvar_genus_species != "" &
       (x$other_pat_or_mo | x$more_than_episode_ago)
   }
-  
+
   # first one as TRUE
   x[row.start, "newvar_first_isolate"] <- TRUE
   # no tests that should be included, or ICU
   if (!is.null(col_testcode)) {
     x[which(x[, col_testcode] %in% tolower(testcodes_exclude)), "newvar_first_isolate"] <- FALSE
   }
-  
+
   if (!is.null(col_icu)) {
     if (icu_exclude == TRUE) {
       if (isTRUE(info)) {
         message_("Excluding ", format(sum(col_icu, na.rm = TRUE), big.mark = " "), " isolates from ICU.",
-                 add_fn = font_black,
-                 as_note = FALSE
+          add_fn = font_black,
+          as_note = FALSE
         )
       }
       x[which(col_icu), "newvar_first_isolate"] <- FALSE

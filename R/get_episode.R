@@ -34,8 +34,8 @@
 #' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
 #' @param ... ignored, only in place to allow future extensions
 #' @details The functions [get_episode()] and [is_new_episode()] differ in this way when setting `episode_days` to 365:
-#' 
-#' 
+#'
+#'
 #' | person_id | date       | `get_episode()` | `is_new_episode()` |
 #' |:---------:|:----------:|:---------------:|:------------------:|
 #' | A         | 2019-01-01 |               1 | TRUE               |
@@ -44,7 +44,7 @@
 #' | B         | 2008-01-01 |               1 | TRUE               |
 #' | B         | 2008-01-01 |               1 | FALSE              |
 #' | C         | 2020-01-01 |               1 | TRUE               |
-#' 
+#'
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #'
 #' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
@@ -68,9 +68,13 @@
 #' df[which(get_episode(df$date, 60) == 3), ]
 #'
 #' # the functions also work for less than a day, e.g. to include one per hour:
-#' get_episode(c(Sys.time(),
-#'               Sys.time() + 60 * 60),
-#'             episode_days = 1 / 24)
+#' get_episode(
+#'   c(
+#'     Sys.time(),
+#'     Sys.time() + 60 * 60
+#'   ),
+#'   episode_days = 1 / 24
+#' )
 #'
 #' \donttest{
 #' if (require("dplyr")) {
@@ -84,10 +88,10 @@
 #'     )) %>%
 #'     group_by(patient, condition) %>%
 #'     mutate(new_episode = is_new_episode(date, 365)) %>%
-#'     select(patient, date, condition, new_episode) %>% 
+#'     select(patient, date, condition, new_episode) %>%
 #'     arrange(patient, condition, date)
 #' }
-#' 
+#'
 #' if (require("dplyr")) {
 #'   df %>%
 #'     group_by(ward, patient) %>%
@@ -95,10 +99,10 @@
 #'       patient,
 #'       new_index = get_episode(date, 60),
 #'       new_logical = is_new_episode(date, 60)
-#'     ) %>% 
+#'     ) %>%
 #'     arrange(patient, ward, date)
 #' }
-#' 
+#'
 #' if (require("dplyr")) {
 #'   df %>%
 #'     group_by(ward) %>%
@@ -109,7 +113,7 @@
 #'       n_episodes_30 = sum(is_new_episode(date, episode_days = 30))
 #'     )
 #' }
-#' 
+#'
 #' # grouping on patients and microorganisms leads to the same
 #' # results as first_isolate() when using 'episode-based':
 #' if (require("dplyr")) {
@@ -126,11 +130,10 @@
 #'
 #'   identical(x, y)
 #' }
-#' 
+#'
 #' # but is_new_episode() has a lot more flexibility than first_isolate(),
 #' # since you can now group on anything that seems relevant:
 #' if (require("dplyr")) {
-#'   
 #'   df %>%
 #'     group_by(patient, mo, ward) %>%
 #'     mutate(flag_episode = is_new_episode(date, 365)) %>%
@@ -153,10 +156,10 @@ is_new_episode <- function(x, episode_days, ...) {
 
 exec_episode <- function(x, episode_days, ...) {
   x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
-  
+
   # since x is now in seconds, get seconds from episode_days as well
   episode_seconds <- episode_days * 60 * 60 * 24
-  
+
   if (length(x) == 1) { # this will also match 1 NA, which is fine
     return(1)
   } else if (length(x) == 2 && !all(is.na(x))) {
@@ -166,7 +169,7 @@ exec_episode <- function(x, episode_days, ...) {
       return(c(1, 1))
     }
   }
-  
+
   # we asked on StackOverflow:
   # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
   run_episodes <- function(x, episode_seconds) {
@@ -183,7 +186,7 @@ exec_episode <- function(x, episode_days, ...) {
     }
     indices
   }
-  
+
   ord <- order(x)
   out <- run_episodes(x[ord], episode_seconds)[order(ord)]
   out[is.na(x) & ord != 1] <- NA # every NA expect for the first must remain NA
