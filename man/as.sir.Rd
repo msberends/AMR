@@ -41,6 +41,7 @@ is_sir_eligible(x, threshold = 0.05)
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   ...
 )
@@ -53,6 +54,7 @@ is_sir_eligible(x, threshold = 0.05)
   uti = NULL,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   ...
 )
@@ -66,6 +68,7 @@ is_sir_eligible(x, threshold = 0.05)
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE)
 )
 
@@ -92,6 +95,8 @@ sir_interpretation_history(clean = FALSE)
 
 \item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
 
+\item{include_screening}{a \link{logical} to indicate that clinical breakpoints for screening are allowed, defaults to \code{FALSE}. Can also be set with the option \code{\link[=AMR-options]{AMR_include_screening}}.}
+
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to \code{TRUE}. Can also be set with the option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
@@ -103,6 +108,8 @@ Ordered \link{factor} with new class \code{sir}
 }
 \description{
 Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
+
+All breakpoints used for interpretation are publicly available in the \link{clinical_breakpoints} data set.
 }
 \details{
 \subsection{How it Works}{
@@ -154,7 +161,7 @@ You can set the default guideline with the option \code{\link[=AMR-options]{AMR_
 After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast_rules]{eucast_rules()}} defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 }
 
-\subsection{Machine-Readable Interpretation Guidelines}{
+\subsection{Machine-Readable Clinical Breakpoints}{
 
 The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 18 308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }

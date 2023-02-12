@@ -29,16 +29,19 @@
 
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
-#' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
+#' @description Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
+#' 
+#' All breakpoints used for interpretation are publicly available in the [clinical_breakpoints] data set.
 #' @rdname as.sir
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
 #' @param mo any (vector of) text that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
-#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [clinical_breakpoints] data set), but can be set with the option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
+#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
+#' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed, defaults to `FALSE`. Can also be set with the option [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to `TRUE`. Can also be set with the option [`AMR_include_PKPD`][AMR-options].
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
@@ -69,9 +72,9 @@
 #'
 #' ### Supported Guidelines
 #'
-#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
+#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
-#' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
+#' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #'
 #' You can set the default guideline with the option [`AMR_guideline`][AMR-options] (e.g. in your `.Rprofile` file), such as:
 #'
@@ -87,7 +90,7 @@
 #'
 #' After using [as.sir()], you can use the [eucast_rules()] defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'
-#' ### Machine-Readable Interpretation Guidelines
+#' ### Machine-Readable Clinical Breakpoints
 #'
 #' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::clinical_breakpoints), big.mark = " ")` rows and `r ncol(AMR::clinical_breakpoints)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
@@ -116,9 +119,9 @@
 #' @source
 #' For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 #'
-#' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
-#' - **M100 Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m100/>.
-#' - **Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
+#' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' - **M100 Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m100/>.
+#' - **Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' example_isolates
@@ -418,6 +421,7 @@ as.sir.mic <- function(x,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::clinical_breakpoints,
+                       include_screening = getOption("AMR_include_screening", FALSE),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        ...) {
   as_sir_method(
@@ -431,6 +435,7 @@ as.sir.mic <- function(x,
     conserve_capped_values = conserve_capped_values,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
+    include_screening = include_screening,
     include_PKPD = include_PKPD,
     ...
   )
@@ -445,6 +450,7 @@ as.sir.disk <- function(x,
                         uti = NULL,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::clinical_breakpoints,
+                        include_screening = getOption("AMR_include_screening", FALSE),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         ...) {
   as_sir_method(
@@ -458,6 +464,7 @@ as.sir.disk <- function(x,
     conserve_capped_values = FALSE,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
+    include_screening = include_screening,
     include_PKPD = include_PKPD,
     ...
   )
@@ -473,6 +480,7 @@ as.sir.data.frame <- function(x,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE,
                               reference_data = AMR::clinical_breakpoints,
+                              include_screening = getOption("AMR_include_screening", FALSE),
                               include_PKPD = getOption("AMR_include_PKPD", TRUE)) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
@@ -610,6 +618,7 @@ as.sir.data.frame <- function(x,
           conserve_capped_values = conserve_capped_values,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
+          include_screening = include_screening,
           include_PKPD = include_PKPD,
           is_data.frame = TRUE
         )
@@ -626,6 +635,7 @@ as.sir.data.frame <- function(x,
           uti = uti,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
+          include_screening = include_screening,
           include_PKPD = include_PKPD,
           is_data.frame = TRUE
         )
@@ -694,6 +704,7 @@ as_sir_method <- function(method_short,
                           conserve_capped_values,
                           add_intrinsic_resistance,
                           reference_data,
+                          include_screening,
                           include_PKPD,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
@@ -704,8 +715,9 @@ as_sir_method <- function(method_short,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
+  meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
-  check_reference_data(reference_data)
+  check_reference_data(reference_data, .call_depth = -2)
 
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
@@ -860,6 +872,11 @@ as_sir_method <- function(method_short,
       subset(method == method_coerced & ab == ab_coerced)
   }
 
+  if (isFALSE(include_screening)) {
+    # remove screening rules from the breakpoints table
+    breakpoints <- breakpoints %pm>%
+      subset(site %unlike% "screen" & ref_tbl %unlike% "screen")
+  }
   if (isFALSE(include_PKPD)) {
     # remove PKPD rules from the breakpoints table
     breakpoints <- breakpoints %pm>%
@@ -969,8 +986,11 @@ as_sir_method <- function(method_short,
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
 
-      if (breakpoints_current$mo == "UNKNOWN" | breakpoints_current$ref_tbl %like% "PK.*PD") {
+      if (any(breakpoints_current$mo == "UNKNOWN", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "PK.*PD", na.rm = TRUE)) {
         msgs <- c(msgs, "(Some) PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
+      }
+      if (any(breakpoints_current$site %like% "screen", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "screen", na.rm = TRUE)) {
+        msgs <- c(msgs, "(Some) screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
       }
 
       if (method == "mic") {
@@ -1254,16 +1274,15 @@ rep.sir <- function(x, ...) {
   y
 }
 
-check_reference_data <- function(reference_data) {
+check_reference_data <- function(reference_data, .call_depth) {
   if (!identical(reference_data, AMR::clinical_breakpoints)) {
-    class_sir <- vapply(FUN.VALUE = character(1), clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
+    class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
     class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_sir) == names(class_ref))) {
-      stop_("`reference_data` must have the same column names as the 'clinical_breakpoints' data set.", call = -2)
+      stop_("`reference_data` must have the same column names as the 'clinical_breakpoints' data set.", call = .call_depth)
     }
     if (!all(class_sir == class_ref)) {
-      class_sir[class_sir != class_ref][1]
-      stop_("`reference_data` must be the same structure as the 'clinical_breakpoints' data set. Column '", names(class_ref[class_sir != class_ref][1]), "' is of class ", class_ref[class_sir != class_ref][1], ", but should be of class ", class_sir[class_sir != class_ref][1], ".", call = -2)
+      stop_("`reference_data` must be the same structure as the 'clinical_breakpoints' data set. Column '", names(class_ref[class_sir != class_ref][1]), "' is of class ", class_ref[class_sir != class_ref][1], ", but should be of class ", class_sir[class_sir != class_ref][1], ".", call = .call_depth)
     }
   }
 }

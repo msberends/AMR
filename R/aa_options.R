@@ -37,6 +37,7 @@
 #' * `AMR_guideline` \cr Used for setting the default guideline for interpreting MIC values and disk diffusion diameters with [as.sir()]. Can be only the guideline name (e.g., `"CLSI"`) or the name with a year (e.g. `"CLSI 2019"`). The default is \code{"`r clinical_breakpoints$guideline[1]`"}. Supported guideline are currently EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #' * `AMR_ignore_pattern` \cr A [regular expression][base::regex] to define input that must be ignored in [as.mo()] and all [`mo_*`][mo_property()] functions.
 #' * `AMR_include_PKPD` \cr A [logical] to use in [as.sir()], to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to `TRUE`.
+#' * `AMR_include_screening` \cr A [logical] to use in [as.sir()], to indicate that clinical breakpoints for screening are allowed, defaults to `FALSE`.
 #' * `AMR_keep_synonyms` \cr A [logical] to use in [as.mo()] and all [`mo_*`][mo_property()] functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names.
 #' * `AMR_locale` \cr A language to use for the `AMR` package, can be one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' * `AMR_mo_source` \cr A file location for a manual code list to be used in [as.mo()] and all [`mo_*`][mo_property()] functions. This is explained in [set_mo_source()].
@@ -48,7 +49,14 @@
 #'   utils::file.edit("~/.Rprofile")
 #' ```
 #' 
-#' In this file, you can set options such as `options(AMR_locale = "pt")` for Portuguese language support of antibiotics.
+#' In this file, you can set options such as:
+#' 
+#' ```r
+#'  options(AMR_locale = "pt")
+#'  options(AMR_include_PKPD = TRUE)
+#'  ```
+#'  
+#' to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with [as.sir()].
 #' 
 #' ### Share Options Within Team
 #' 

@@ -1,4 +1,4 @@
-# AMR 1.8.2.9119
+# AMR 1.8.2.9120
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -37,6 +37,8 @@ Furthermore, different plotting methods were implemented to allow for graphical 
 ### Interpretation of MIC and disk diffusion values
 
 The clinical breakpoints and intrinsic resistance of EUCAST 2022 and CLSI 2022 have been added for `as.sir()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new `AMR_guideline` option, such as: `options(AMR_guideline = "CLSI 2020")`.
+
+With the new arguments `include_PKPD` (default: `TRUE`) and `include_screening` (default: `FALSE`), users can now specify whether breakpoints for screening and from the PK/PD table should be included when interpreting MICs and disks diffusion values. These options can be set globally, which can be read in [our new manual](https://msberends.github.io/AMR/reference/AMR-options.html).
  
 Interpretation guidelines older than 10 years were removed, the oldest now included guidelines of EUCAST and CLSI are from 2013.
 
@@ -132,6 +134,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
 * Cleaning columns with `as.sir()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
 * Fix for using `g.test()` with zeroes in a 2x2 table
+* `get_episode()` now returns class `integer` instead of `numeric` since they are always whole numbers
 
 ## Other
 

@@ -27,20 +27,31 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Determine (New) Episodes for Patients
+#' Determine (Clinical) Episodes
 #'
 #' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns `TRUE` for every new [get_episode()] index, and is thus equal to `!duplicated(get_episode(...))`.
 #' @param x vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
 #' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
 #' @param ... ignored, only in place to allow future extensions
-#' @details
+#' @details The functions [get_episode()] and [is_new_episode()] differ in this way when setting `episode_days` to 365:
+#' 
+#' 
+#' | person_id | date       | `get_episode()` | `is_new_episode()` |
+#' |:---------:|:----------:|:---------------:|:------------------:|
+#' | A         | 2019-01-01 |               1 | TRUE               |
+#' | A         | 2019-03-01 |               1 | FALSE              |
+#' | A         | 2021-01-01 |               2 | TRUE               |
+#' | B         | 2008-01-01 |               1 | TRUE               |
+#' | B         | 2008-01-01 |               1 | FALSE              |
+#' | C         | 2020-01-01 |               1 | TRUE               |
+#' 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #'
 #' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
 #'
 #' The `dplyr` package is not required for these functions to work, but these episode functions do support [variable grouping][dplyr::group_by()] and work conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
 #' @return
-#' * [get_episode()]: a [double] vector
+#' * [get_episode()]: an [integer] vector
 #' * [is_new_episode()]: a [logical] vector
 #' @seealso [first_isolate()]
 #' @rdname get_episode
@@ -68,12 +79,13 @@
 #'   df %>%
 #'     mutate(condition = sample(
 #'       x = c("A", "B", "C"),
-#'       size = 200,
+#'       size = 100,
 #'       replace = TRUE
 #'     )) %>%
-#'     group_by(condition) %>%
+#'     group_by(patient, condition) %>%
 #'     mutate(new_episode = is_new_episode(date, 365)) %>%
-#'     select(patient, date, condition, new_episode)
+#'     select(patient, date, condition, new_episode) %>% 
+#'     arrange(patient, condition, date)
 #' }
 #' 
 #' if (require("dplyr")) {
@@ -128,7 +140,7 @@
 get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
-  exec_episode(x, episode_days, ...)
+  as.integer(exec_episode(x, episode_days, ...))
 }
 
 #' @rdname get_episode

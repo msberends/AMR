@@ -3,7 +3,7 @@
 \name{get_episode}
 \alias{get_episode}
 \alias{is_new_episode}
-\title{Determine (New) Episodes for Patients}
+\title{Determine (Clinical) Episodes}
 \usage{
 get_episode(x, episode_days, ...)
 
@@ -18,7 +18,7 @@ is_new_episode(x, episode_days, ...)
 }
 \value{
 \itemize{
-\item \code{\link[=get_episode]{get_episode()}}: a \link{double} vector
+\item \code{\link[=get_episode]{get_episode()}}: an \link{integer} vector
 \item \code{\link[=is_new_episode]{is_new_episode()}}: a \link{logical} vector
 }
 }
@@ -26,6 +26,17 @@ is_new_episode(x, episode_days, ...)
 These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis. The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode per group, while the \code{\link[=is_new_episode]{is_new_episode()}} function returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index, and is thus equal to \code{!duplicated(get_episode(...))}.
 }
 \details{
+The functions \code{\link[=get_episode]{get_episode()}} and \code{\link[=is_new_episode]{is_new_episode()}} differ in this way when setting \code{episode_days} to 365:\tabular{cccc}{
+   person_id \tab date \tab \code{get_episode()} \tab \code{is_new_episode()} \cr
+   A \tab 2019-01-01 \tab 1 \tab TRUE \cr
+   A \tab 2019-03-01 \tab 1 \tab FALSE \cr
+   A \tab 2021-01-01 \tab 2 \tab TRUE \cr
+   B \tab 2008-01-01 \tab 1 \tab TRUE \cr
+   B \tab 2008-01-01 \tab 1 \tab FALSE \cr
+   C \tab 2020-01-01 \tab 1 \tab TRUE \cr
+}
+
+
 Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
@@ -55,12 +66,13 @@ if (require("dplyr")) {
   df \%>\%
     mutate(condition = sample(
       x = c("A", "B", "C"),
-      size = 200,
+      size = 100,
       replace = TRUE
     )) \%>\%
-    group_by(condition) \%>\%
+    group_by(patient, condition) \%>\%
     mutate(new_episode = is_new_episode(date, 365)) \%>\%
-    select(patient, date, condition, new_episode)
+    select(patient, date, condition, new_episode) \%>\% 
+    arrange(patient, condition, date)
 }
 
 if (require("dplyr")) {

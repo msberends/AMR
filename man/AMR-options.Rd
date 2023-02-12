@@ -15,6 +15,7 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \item \code{AMR_guideline} \cr Used for setting the default guideline for interpreting MIC values and disk diffusion diameters with \code{\link[=as.sir]{as.sir()}}. Can be only the guideline name (e.g., \code{"CLSI"}) or the name with a year (e.g. \code{"CLSI 2019"}). The default is \code{"EUCAST 2022"}. Supported guideline are currently EUCAST (2013-2022) and CLSI (2013-2022).
 \item \code{AMR_ignore_pattern} \cr A \link[base:regex]{regular expression} to define input that must be ignored in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions.
 \item \code{AMR_include_PKPD} \cr A \link{logical} to use in \code{\link[=as.sir]{as.sir()}}, to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to \code{TRUE}.
+\item \code{AMR_include_screening} \cr A \link{logical} to use in \code{\link[=as.sir]{as.sir()}}, to indicate that clinical breakpoints for screening are allowed, defaults to \code{FALSE}.
 \item \code{AMR_keep_synonyms} \cr A \link{logical} to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names.
 \item \code{AMR_locale} \cr A language to use for the \code{AMR} package, can be one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk).
 \item \code{AMR_mo_source} \cr A file location for a manual code list to be used in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions. This is explained in \code{\link[=set_mo_source]{set_mo_source()}}.
@@ -28,7 +29,13 @@ Settings in \R are not saved globally and are thus lost when \R is exited. You c
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{  utils::file.edit("~/.Rprofile")
 }\if{html}{\out{</div>}}
 
-In this file, you can set options such as \code{options(AMR_locale = "pt")} for Portuguese language support of antibiotics.
+In this file, you can set options such as:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ options(AMR_locale = "pt")
+ options(AMR_include_PKPD = TRUE)
+}\if{html}{\out{</div>}}
+
+to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with \code{\link[=as.sir]{as.sir()}}.
 \subsection{Share Options Within Team}{
 
 For a more global approach, e.g. within a data team, save an options file to a remote file location, such as a shared network drive. This would work in this way:
