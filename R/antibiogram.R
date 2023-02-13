@@ -136,7 +136,7 @@
 #' # run ?example_isolates for more info.
 #' example_isolates
 #'
-#'
+#' \donttest{
 #' # Traditional antibiogram ----------------------------------------------
 #'
 #' antibiogram(example_isolates,
@@ -231,6 +231,7 @@
 #'
 #' if (requireNamespace("ggplot2")) {
 #'   ggplot2::autoplot(ab2)
+#' }
 #' }
 antibiogram <- function(x,
                         antibiotics = where(is.sir),
@@ -543,12 +544,14 @@ autoplot.antibiogram <- function(object, ...) {
 #' @rdname antibiogram
 print.antibiogram <- function(x, as_kable = !interactive(), ...) {
   meet_criteria(as_kable, allow_class = "logical", has_length = 1)
-  if (isTRUE(as_kable) &&
-    # be sure not to run kable in pkgdown for our website generation
-    !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
-    stop_ifnot_installed("knitr")
-    kable <- import_fn("kable", "knitr", error_on_fail = TRUE)
+  
+  kable <- import_fn("kable", "knitr", error_on_fail = FALSE)
+  if (!is.null(kable) &&
+      isTRUE(as_kable) &&
+      # be sure not to run kable in pkgdown for our website generation
+      !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
     kable(x, ...)
+  
   } else {
     # remove 'antibiogram' class and print with default method
     class(x) <- class(x)[class(x) != "antibiogram"]

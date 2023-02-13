@@ -153,7 +153,7 @@ Printing the antibiogram in non-interactive sessions will be done by \code{\link
 # run ?example_isolates for more info.
 example_isolates
 
-
+\donttest{
 # Traditional antibiogram ----------------------------------------------
 
 antibiogram(example_isolates,
@@ -248,5 +248,6 @@ plot(ab2)
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab2)
+}
 }
 }
