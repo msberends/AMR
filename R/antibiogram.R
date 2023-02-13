@@ -29,7 +29,7 @@
 
 #' Generate Antibiogram: Traditional, Combined, Syndromic, or Weighted-Incidence Syndromic Combination (WISCA)
 #'
-#' Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker *et al.* (2021, \doi{10.1177/20499361211011373}) and Barbieri *et al.* (2021, \doi{10.1186/s13756-021-00939-2}), and allow reporting in e.g. R Markdown and Quarto as well.
+#' Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker *et al.* and Barbieri *et al.* (see *Source*), and allow reporting in e.g. R Markdown and Quarto as well.
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antibiotic results (class 'sir', see [as.sir()])
 #' @param antibiotics vector of column names, or (any combinations of) [antibiotic selectors][antibiotic_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be column names separated with `"+"`, such as "TZP+TOB" given that the data set contains columns "TZP" and "TOB". See *Examples*.
 #' @param mo_transform a character to transform microorganism input - must be "name", "shortname", "gramstain", or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
@@ -92,10 +92,14 @@
 #'    Code example:
 #'
 #'    ```r
-#'    antibiogram(your_data,
-#'                antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-#'                syndromic_group = ifelse(your_data$age >= 65 & your_data$gender == "Male",
-#'                                         "Group 1", "Group 2"))
+#'    library(dplyr)
+#'    your_data %>% 
+#'      filter(ward == "ICU" & specimen_type == "Respiratory") %>% 
+#'      antibiogram(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+#'                  syndromic_group = ifelse(.$age >= 65 &
+#'                                             .$gender == "Male" &
+#'                                             .$condition == "Heart Disease",
+#'                                           "Study Group", "Control Group"))
 #'    ```
 #'
 #' All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]) or printed into R Markdown / Quarto formats for reports. Use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. `flextable::as_flextable()` or `gt::gt()`.
@@ -193,11 +197,11 @@
 #'
 #' # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 #'
-#' # the data set could contain a filter for e.g. respiratory specimens
+#' # the data set could contain a filter for e.g. respiratory specimens/ICU
 #' antibiogram(example_isolates,
 #'   antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
 #'   mo_transform = "gramstain",
-#'   minimum = 10, # this should be >= 30, but now just as example
+#'   minimum = 10, # this should be >=30, but now just as example
 #'   syndromic_group = ifelse(example_isolates$age >= 65 &
 #'     example_isolates$gender == "M",
 #'   "WISCA Group 1", "WISCA Group 2"
@@ -348,7 +352,18 @@ antibiogram <- function(x,
       FUN = function(x) x
     )
   counts <- out
-
+  
+  if (isTRUE(combine_SI)) {
+    out$numerator <- out$S + out$I
+  } else {
+    out$numerator <- out$S
+  }
+  if (any(out$total < minimum, na.rm = TRUE)) {
+    message_("NOTE: ", sum(out$total < minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
+    out <- out %pm>%
+      subset(total >= minimum)
+  }
+  
   # regroup for summarising
   if (isTRUE(has_syndromic_group)) {
     colnames(out)[1] <- "syndromic_group"
@@ -358,19 +373,6 @@ antibiogram <- function(x,
     out <- out %pm>%
       pm_group_by(mo, ab)
   }
-
-  if (isTRUE(combine_SI)) {
-    out$numerator <- out$S + out$I
-  } else {
-    out$numerator <- out$S
-  }
-  out$minimum <- minimum
-  if (any(out$total < out$minimum, na.rm = TRUE)) {
-    message_("NOTE: ", sum(out$total < out$minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
-    out <- out %pm>%
-      subset(total >= minimum)
-  }
-
   out <- out %pm>%
     pm_summarise(SI = numerator / total)
 

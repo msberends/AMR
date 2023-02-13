@@ -70,7 +70,7 @@ antibiogram(
 \item{as_kable}{a \link{logical} to indicate whether the printing should be done using \code{\link[knitr:kable]{knitr::kable()}} (which is the default in non-interactive sessions)}
 }
 \description{
-Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker \emph{et al.} (2021, \doi{10.1177/20499361211011373}) and Barbieri \emph{et al.} (2021, \doi{10.1186/s13756-021-00939-2}), and allow reporting in e.g. R Markdown and Quarto as well.
+Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker \emph{et al.} and Barbieri \emph{et al.} (see \emph{Source}), and allow reporting in e.g. R Markdown and Quarto as well.
 }
 \details{
 This function returns a table with values between 0 and 100 for \emph{susceptibility}, not resistance.
@@ -113,10 +113,14 @@ Case example: Susceptibility of \emph{Pseudomonas aeruginosa} to TZP among respi
 
 Code example:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-            syndromic_group = ifelse(your_data$age >= 65 & your_data$gender == "Male",
-                                     "Group 1", "Group 2"))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
+your_data \%>\% 
+  filter(ward == "ICU" & specimen_type == "Respiratory") \%>\% 
+  antibiogram(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+              syndromic_group = ifelse(.$age >= 65 &
+                                         .$gender == "Male" &
+                                         .$condition == "Heart Disease",
+                                       "Study Group", "Control Group"))
 }\if{html}{\out{</div>}}
 }
 
@@ -210,11 +214,11 @@ antibiogram(ex1,
 
 # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 
-# the data set could contain a filter for e.g. respiratory specimens
+# the data set could contain a filter for e.g. respiratory specimens/ICU
 antibiogram(example_isolates,
   antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain",
-  minimum = 10, # this should be >= 30, but now just as example
+  minimum = 10, # this should be >=30, but now just as example
   syndromic_group = ifelse(example_isolates$age >= 65 &
     example_isolates$gender == "M",
   "WISCA Group 1", "WISCA Group 2"

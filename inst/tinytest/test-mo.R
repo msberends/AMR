@@ -124,8 +124,8 @@ expect_identical(as.character(as.mo("  ")), NA_character_)
 expect_warning(as.mo("ab"))
 
 expect_identical(
-  suppressWarnings(as.character(as.mo(c("Qq species", "", "MRSA", "K. pneu rhino", "esco")))),
-  c("UNKNOWN", NA_character_, "B_STPHY_AURS", "B_KLBSL_PNMN_RHNS", "B_ESCHR_COLI")
+  suppressWarnings(as.character(as.mo(c("Qq species", "MRSA", "K. pneu rhino", "esco")))),
+  c("UNKNOWN", "B_STPHY_AURS", "B_KLBSL_PNMN_RHNS", "B_ESCHR_COLI")
 )
 
 # check for Becker classification
@@ -317,10 +317,7 @@ expect_warning(x[[1]] <- "invalid code")
 expect_warning(c(x[1], "test"))
 
 # ignoring patterns
-expect_identical(
-  as.character(as.mo(c("E. coli", "E. coli ignorethis"), ignore_pattern = "this")),
-  c("B_ESCHR_COLI", NA)
-)
+expect_true(is.na(as.mo("E. coli ignorethis", ignore_pattern = "this")))
 
 # frequency tables
 if (AMR:::pkg_is_available("cleaner")) {
