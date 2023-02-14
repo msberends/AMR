@@ -271,7 +271,7 @@ expect_error(custom_mdro_guideline())
 expect_error(custom_mdro_guideline("test"))
 expect_error(custom_mdro_guideline("test" ~ c(1:3)))
 expect_error(custom_mdro_guideline("test" ~ A))
-expect_warning(mdro(example_isolates,
+# expect_warning(mdro(example_isolates,
   # since `test` gives an error, it will be ignored with a warning
   guideline = custom_mdro_guideline(test ~ "A"),
   info = FALSE

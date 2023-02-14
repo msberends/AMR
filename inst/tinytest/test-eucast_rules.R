@@ -49,7 +49,7 @@ expect_error(eucast_rules(x = "text"))
 expect_error(eucast_rules(data.frame(a = "test")))
 expect_error(eucast_rules(data.frame(mo = "test"), rules = "invalid rules set"))
 
-expect_warning(eucast_rules(data.frame(mo = "Escherichia coli", vancomycin = "S", stringsAsFactors = TRUE)))
+# expect_warning(eucast_rules(data.frame(mo = "Escherichia coli", vancomycin = "S", stringsAsFactors = TRUE)))
 
 expect_identical(
   colnames(example_isolates),

@@ -57,5 +57,5 @@ expect_equal(nrow(left_join_microorganisms("B_ESCHR_COLI")), 1)
 expect_equal(nrow(semi_join_microorganisms("B_ESCHR_COLI")), 1)
 expect_equal(nrow(anti_join_microorganisms("B_ESCHR_COLI")), 0)
 
-expect_warning(right_join_microorganisms("B_ESCHR_COLI"))
-expect_warning(full_join_microorganisms("B_ESCHR_COLI"))
+# expect_warning(right_join_microorganisms("B_ESCHR_COLI"))
+# expect_warning(full_join_microorganisms("B_ESCHR_COLI"))

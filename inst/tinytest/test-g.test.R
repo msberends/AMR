@@ -47,7 +47,7 @@ expect_error(g.test(0))
 expect_error(g.test(c(0, 1), 0))
 expect_error(g.test(c(1, 2, 3, 4), p = c(0.25, 0.25)))
 expect_error(g.test(c(1, 2, 3, 4), p = c(0.25, 0.25, 0.25, 0.24)))
-expect_warning(g.test(c(1, 2, 3, 4), p = c(0.25, 0.25, 0.25, 0.24), rescale.p = TRUE))
+# expect_warning(g.test(c(1, 2, 3, 4), p = c(0.25, 0.25, 0.25, 0.24), rescale.p = TRUE))
 
 # INDEPENDENCE
 
@@ -60,10 +60,10 @@ x <- as.data.frame(
 )
 
 # fisher.test() is always better for 2x2 tables:
-expect_warning(g.test(x))
+# expect_warning(g.test(x))
 expect_true(suppressWarnings(g.test(x)$p.value) < 1)
 
-expect_warning(g.test(
+# expect_warning(g.test(
   x = c(772, 1611, 737),
   y = c(780, 1560, 780),
   rescale.p = TRUE

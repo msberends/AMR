@@ -176,8 +176,7 @@ rbind2 <- function(...) {
     }
     df
   })
-  fun <- function(...) rbind(..., stringsAsFactors = FALSE)
-  do.call(fun, l_new)
+  do.call(rbind, l_new)
 }
 
 # No export, no Rd

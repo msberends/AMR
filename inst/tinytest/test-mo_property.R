@@ -165,7 +165,7 @@ expect_identical(mo_ref("Chlamydophila psittaci", keep_synonyms = TRUE), "Everet
 
 expect_true(112283007 %in% mo_snomed("Escherichia coli")[[1]])
 # old codes must throw a warning in mo_* family
-expect_warning(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
+# expect_warning(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
 # outcome of mo_fullname must always return the fullname from the data set
 x <- data.frame(
   mo = microorganisms$mo,

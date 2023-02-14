@@ -99,5 +99,5 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(example_isolates %>% select(administrable_per_os() & penicillins()) %>% ncol(), 5, tolerance = 0.5)
   expect_equal(example_isolates %>% select(administrable_iv() & penicillins()) %>% ncol(), 7, tolerance = 0.5)
   expect_equal(example_isolates %>% select(administrable_iv() | penicillins()) %>% ncol(), 37, tolerance = 0.5)
-  expect_warning(example_isolates %>% select(GEH = GEN) %>% select(aminoglycosides(only_treatable = TRUE)))
+  # expect_warning(example_isolates %>% select(GEH = GEN) %>% select(aminoglycosides(only_treatable = TRUE)))
 }

@@ -65,63 +65,6 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
       deparse1 <- AMR:::deparse1
     }
     
-    # temporary fix for tinytest, https://github.com/markvanderloo/tinytest/pull/114
-    expect_warning <- function (current, pattern = ".*", class = "warning", info = NA_character_, ...) {
-      messages <- list()
-      warnings <- list()
-      errors <- list()
-      tryCatch(withCallingHandlers(current, warning = function(w) {
-        warnings <<- append(warnings, list(w))
-        invokeRestart("muffleWarning")
-      }, message = function(m) {
-        messages <<- append(messages, list(m))
-        invokeRestart("muffleMessage")
-      }), error = function(e) errors <<- append(errors, list(e)))
-      nmsg <- length(messages)
-      nwrn <- length(warnings)
-      nerr <- length(errors)
-      results <- sapply(warnings, function(w) {
-        inherits(w, class) && any(grepl(pattern, w$message, ...), na.rm = TRUE)
-      })
-      if (any(results)) {
-        result <- TRUE
-        short <- diff <- NA_character_
-      }
-      else {
-        result <- FALSE
-        short <- "xcpt"
-        diff <- if (nwrn == 0) {
-          "No warning was emitted"
-        }
-        else {
-          n_right_class <- sum(sapply(warnings, function(w) inherits(w, 
-                                                                     class)))
-          if (n_right_class == 0) {
-            head <- sprintf("Found %d warning(s), but not of class '%s'.", 
-                            nwrn, class)
-            head <- paste(head, "Showing up to three warnings:\n")
-            body <- first_n(warnings)
-            paste(head, body)
-          }
-          else {
-            wrns <- Filter(function(w) inherits(w, class), 
-                           warnings)
-            head <- sprintf("Found %d warnings(s) of class '%s', but not matching '%s'.", 
-                            nwrn, class, pattern)
-            head <- paste(head, "\nShowing up to three warnings:\n")
-            body <- first_n(wrns)
-            paste(head, body)
-          }
-        }
-      }
-      if (!result && (nmsg > 0 || nerr > 0)) 
-        diff <- paste0(diff, sprintf("\nAlso found %d message(s) and %d error(s)", 
-                                     nmsg, nerr))
-      tinytest::tinytest(result, call = sys.call(sys.parent(1)), short = short, 
-               diff = diff, info = info)
-    }
-    
-    
     # start the unit tests
     out <- test_package("AMR",
       testdir = ifelse(dir.exists("inst/tinytest"),

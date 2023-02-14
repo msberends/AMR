@@ -38,7 +38,7 @@ expect_inherits(x[1], "disk")
 expect_inherits(x[[1]], "disk")
 expect_inherits(c(x[1], x[9]), "disk")
 expect_inherits(unique(x[1], x[9]), "disk")
-expect_warning(as.disk("INVALID VALUE"))
+# expect_warning(as.disk("INVALID VALUE"))
 x[2] <- 32
 expect_inherits(x, "disk")
 

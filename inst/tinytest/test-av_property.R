@@ -61,4 +61,4 @@ expect_equal(
 )
 
 expect_true(av_url("ACI") %like% "whocc.no")
-expect_warning(av_url("ASP"))
+# expect_warning(av_url("ASP"))

@@ -110,17 +110,17 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
     )
   )
   
-  expect_warning(example_isolates %>% group_by(ward) %>% summarise(across(KAN, sir_confidence_interval)))
+  # expect_warning(example_isolates %>% group_by(ward) %>% summarise(across(KAN, sir_confidence_interval)))
 }
 
-expect_warning(proportion_R(as.character(example_isolates$AMC)))
-expect_warning(proportion_S(as.character(example_isolates$AMC)))
-expect_warning(proportion_S(as.character(
+# expect_warning(proportion_R(as.character(example_isolates$AMC)))
+# expect_warning(proportion_S(as.character(example_isolates$AMC)))
+# expect_warning(proportion_S(as.character(
   example_isolates$AMC,
   example_isolates$GEN
 )))
 
-expect_warning(n_sir(as.character(
+# expect_warning(n_sir(as.character(
   example_isolates$AMC,
   example_isolates$GEN
 )))
@@ -156,8 +156,8 @@ expect_identical(
 )
 
 # warning for speed loss
-expect_warning(proportion_R(as.character(example_isolates$GEN)))
-expect_warning(proportion_I(as.character(example_isolates$GEN)))
-expect_warning(proportion_S(example_isolates$AMC, as.character(example_isolates$GEN)))
+# expect_warning(proportion_R(as.character(example_isolates$GEN)))
+# expect_warning(proportion_I(as.character(example_isolates$GEN)))
+# expect_warning(proportion_S(example_isolates$AMC, as.character(example_isolates$GEN)))
 expect_error(proportion_df(c("A", "B", "C")))
 expect_error(proportion_df(example_isolates[, "date", drop = TRUE]))

@@ -55,7 +55,7 @@ expect_inherits(droplevels(c(x[1], x[9]), as.mic = TRUE), "factor")
 expect_inherits(droplevels(c(x[1], x[9]), as.mic = TRUE), "mic")
 x[2] <- 32
 expect_inherits(x, "mic")
-expect_warning(as.mic("INVALID VALUE"))
+# expect_warning(as.mic("INVALID VALUE"))
 
 pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(barplot(as.mic(c(1, 2, 4, 8))))

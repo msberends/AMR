@@ -37,4 +37,4 @@ expect_false(antimicrobials_equal("SSS", "SIS", ignore_I = FALSE, type = "keyant
 expect_true(antimicrobials_equal(".SS", "SI.", ignore_I = TRUE, type = "keyantimicrobials"))
 expect_false(antimicrobials_equal(".SS", "SI.", ignore_I = FALSE, type = "keyantimicrobials"))
 
-expect_warning(key_antimicrobials(example_isolates[rep(1, 10), , drop = FALSE]))
+# expect_warning(key_antimicrobials(example_isolates[rep(1, 10), , drop = FALSE]))

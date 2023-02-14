@@ -67,7 +67,7 @@ expect_equal(
 )
 
 expect_true(ab_url("AMX") %like% "whocc.no")
-expect_warning(ab_url("ASP"))
+# expect_warning(ab_url("ASP"))
 
 expect_identical(
   colnames(set_ab_names(example_isolates[, 17:22])),

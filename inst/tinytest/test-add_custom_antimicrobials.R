@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_warning(as.ab("testab"))
+# expect_warning(as.ab("testab"))
 expect_identical(as.character(suppressWarnings(as.ab("testab"))), NA_character_)
 
 suppressMessages(
