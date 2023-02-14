@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9124</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9125</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,7 +142,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.2.9124" id="amr-1829124">AMR 1.8.2.9124<a class="anchor" aria-label="anchor" href="#amr-1829124"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.2.9125" id="amr-1829125">AMR 1.8.2.9125<a class="anchor" aria-label="anchor" href="#amr-1829125"></a></h2>
 <p><em>(this beta version will eventually become v2.0! We’re happy to reach a new major milestone soon!)</em></p>
 <p>This is a new major release of the AMR package, with great new additions but also some breaking changes for current users. These are all listed below.</p>
 <p><strong><a href="https://en.wikipedia.org/wiki/TL;DR" class="external-link">TL;DR</a></strong></p>
@@ -156,32 +156,32 @@
 <li>Now available in 20 languages</li>
 <li>Many small bug fixes</li>
 </ul><div class="section level3">
-<h3 id="new-1-8-2-9124">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9124"></a></h3>
+<h3 id="new-1-8-2-9125">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9125"></a></h3>
 <div class="section level4">
-<h4 id="sir-vs-rsi-1-8-2-9124">SIR vs. RSI<a class="anchor" aria-label="anchor" href="#sir-vs-rsi-1-8-2-9124"></a></h4>
+<h4 id="sir-vs-rsi-1-8-2-9125">SIR vs. RSI<a class="anchor" aria-label="anchor" href="#sir-vs-rsi-1-8-2-9125"></a></h4>
 <p>For this milestone version, we replaced all mentions of RSI with SIR, to comply with what is actually being commonly used in the field of clinical microbiology when it comes to this tri-form regarding AMR.</p>
 <p>While existing functions such as <code><a href="../reference/AMR-deprecated.html">as.rsi()</a></code>, <code><a href="../reference/AMR-deprecated.html">rsi_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">ggplot_rsi()</a></code> still work, their replacements <code><a href="../reference/as.sir.html">as.sir()</a></code>, <code><a href="../reference/proportion.html">sir_df()</a></code>, <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code> are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set <code>rsi_translation</code> is now called <code>clinical_breakpoints</code> to better reflect its content.</p>
 <p>The ‘RSI functions’ will be removed in a future version, but not before late 2023 / early 2024.</p>
 </div>
 <div class="section level4">
-<h4 id="new-antibiogram-function-1-8-2-9124">New antibiogram function<a class="anchor" aria-label="anchor" href="#new-antibiogram-function-1-8-2-9124"></a></h4>
+<h4 id="new-antibiogram-function-1-8-2-9125">New antibiogram function<a class="anchor" aria-label="anchor" href="#new-antibiogram-function-1-8-2-9125"></a></h4>
 <p>With the new <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function, users can now generate traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA). With this, we follow the logic in the previously described work of Klinker <em>et al.</em> (2021, DOI <a href="https://doi.org/10.1177/20499361211011373" class="external-link">10.1177/20499361211011373</a>) and Barbieri <em>et al.</em> (2021, DOI <a href="https://doi.org/10.1186/s13756-021-00939-2" class="external-link">10.1186/s13756-021-00939-2</a>).</p>
 <p>The help page for <code><a href="../reference/antibiogram.html">antibiogram()</a></code> extensively elaborates on use cases, and <code><a href="../reference/antibiogram.html">antibiogram()</a></code> also supports printing in R Markdown and Quarto, with support for 20 languages.</p>
 <p>Furthermore, different plotting methods were implemented to allow for graphical visualisations as well.</p>
 </div>
 <div class="section level4">
-<h4 id="interpretation-of-mic-and-disk-diffusion-values-1-8-2-9124">Interpretation of MIC and disk diffusion values<a class="anchor" aria-label="anchor" href="#interpretation-of-mic-and-disk-diffusion-values-1-8-2-9124"></a></h4>
+<h4 id="interpretation-of-mic-and-disk-diffusion-values-1-8-2-9125">Interpretation of MIC and disk diffusion values<a class="anchor" aria-label="anchor" href="#interpretation-of-mic-and-disk-diffusion-values-1-8-2-9125"></a></h4>
 <p>The clinical breakpoints and intrinsic resistance of EUCAST 2022 and CLSI 2022 have been added for <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new <code>AMR_guideline</code> option, such as: <code>options(AMR_guideline = "CLSI 2020")</code>.</p>
 <p>With the new arguments <code>include_PKPD</code> (default: <code>TRUE</code>) and <code>include_screening</code> (default: <code>FALSE</code>), users can now specify whether breakpoints for screening and from the PK/PD table should be included when interpreting MICs and disks diffusion values. These options can be set globally, which can be read in <a href="https://msberends.github.io/AMR/reference/AMR-options.html">our new manual</a>.</p>
 <p>Interpretation guidelines older than 10 years were removed, the oldest now included guidelines of EUCAST and CLSI are from 2013.</p>
 </div>
 <div class="section level4">
-<h4 id="supported-languages-1-8-2-9124">Supported languages<a class="anchor" aria-label="anchor" href="#supported-languages-1-8-2-9124"></a></h4>
+<h4 id="supported-languages-1-8-2-9125">Supported languages<a class="anchor" aria-label="anchor" href="#supported-languages-1-8-2-9125"></a></h4>
 <p>We added support for the following ten languages: Chinese (simplified), Czech, Finnish, Greek, Japanese, Norwegian (bokmål), Polish, Romanian, Turkish and Ukrainian. All antibiotic names are now available in these languages, and the AMR package will automatically determine a supported language based on the user’s system language.</p>
 <p>We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 20 languages in total, and according to download stats used in almost all countries in the world!</p>
 </div>
 <div class="section level4">
-<h4 id="microbiological-taxonomy-1-8-2-9124">Microbiological taxonomy<a class="anchor" aria-label="anchor" href="#microbiological-taxonomy-1-8-2-9124"></a></h4>
+<h4 id="microbiological-taxonomy-1-8-2-9125">Microbiological taxonomy<a class="anchor" aria-label="anchor" href="#microbiological-taxonomy-1-8-2-9125"></a></h4>
 <p>The <code>microorganisms</code> data set no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the ‘backbone taxonomy’ from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.</p>
 <p>We previously relied on our own experience to categorise species into pathogenic groups, but we were very happy to encounter the very recent work of Bartlett <em>et al.</em> (2022, DOI <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">10.1099/mic.0.001269</a>) who extensively studied medical-scientific literature to categorise all bacterial species into groups. See <code><a href="../reference/mo_matching_score.html">mo_matching_score()</a></code> on how their work was incorporated into the <code>prevalence</code> column of the <code>microorganisms</code> data set. Using their results, the <code><a href="../reference/as.mo.html">as.mo()</a></code> and all <code>mo_*()</code> functions are now much better capable of converting user input to valid taxonomic records.</p>
 <p>The new function <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> allows users to add custom microorganisms to the <code>AMR</code> package.</p>
@@ -205,7 +205,7 @@
 <li>The <code>microorganisms.old</code> data set was removed, and all previously accepted names are now included in the <code>microorganisms</code> data set. A new column <code>status</code> contains <code>"accepted"</code> for currently accepted names and <code>"synonym"</code> for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="antibiotic-agents-and-selectors-1-8-2-9124">Antibiotic agents and selectors<a class="anchor" aria-label="anchor" href="#antibiotic-agents-and-selectors-1-8-2-9124"></a></h4>
+<h4 id="antibiotic-agents-and-selectors-1-8-2-9125">Antibiotic agents and selectors<a class="anchor" aria-label="anchor" href="#antibiotic-agents-and-selectors-1-8-2-9125"></a></h4>
 <p>The new function <code><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code> allows users to add custom antimicrobial codes and names to the <code>AMR</code> package.</p>
 <p>The <code>antibiotics</code> data set was greatly updated:</p>
 <ul><li>The following 20 antibiotics have been added (also includes the <a href="https://www.whocc.no/atc_ddd_index/?code=J01RA&amp;showdescription=no" class="external-link">new J01RA ATC group</a>): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)</li>
@@ -217,14 +217,14 @@
 </ul><p>Also, we added support for using antibiotic selectors in scoped <code>dplyr</code> verbs (with or without using <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>), such as in: <code>... %&gt;% summarise_at(aminoglycosides(), resistance)</code>, please see <code><a href="../reference/proportion.html">resistance()</a></code> for examples.</p>
 </div>
 <div class="section level4">
-<h4 id="antiviral-agents-1-8-2-9124">Antiviral agents<a class="anchor" aria-label="anchor" href="#antiviral-agents-1-8-2-9124"></a></h4>
+<h4 id="antiviral-agents-1-8-2-9125">Antiviral agents<a class="anchor" aria-label="anchor" href="#antiviral-agents-1-8-2-9125"></a></h4>
 <p>We now added extensive support for antiviral agents! For the first time, the <code>AMR</code> package has extensive support for antiviral drugs and to work with their names, codes and other data in any way.</p>
 <ul><li>The <code>antivirals</code> data set has been extended with 18 new drugs (also from the <a href="https://www.whocc.no/atc_ddd_index/?code=J05AJ&amp;showdescription=no" class="external-link">new J05AJ ATC group</a>) and now also contains antiviral identifiers and LOINC codes</li>
 <li>A new data type <code>av</code> (<em>antivirals</em>) has been added, which is functionally similar to <code>ab</code> for antibiotics</li>
 <li>Functions <code><a href="../reference/as.av.html">as.av()</a></code>, <code><a href="../reference/av_property.html">av_name()</a></code>, <code><a href="../reference/av_property.html">av_atc()</a></code>, <code><a href="../reference/av_property.html">av_synonyms()</a></code>, <code><a href="../reference/av_from_text.html">av_from_text()</a></code> have all been added as siblings to their <code>ab_*()</code> equivalents</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-new-functions-1-8-2-9124">Other new functions<a class="anchor" aria-label="anchor" href="#other-new-functions-1-8-2-9124"></a></h4>
+<h4 id="other-new-functions-1-8-2-9125">Other new functions<a class="anchor" aria-label="anchor" href="#other-new-functions-1-8-2-9125"></a></h4>
 <ul><li>Function <code><a href="../reference/proportion.html">sir_confidence_interval()</a></code> to add confidence intervals in AMR calculation. This is now also included in <code><a href="../reference/proportion.html">sir_df()</a></code> and <code><a href="../reference/proportion.html">proportion_df()</a></code>.</li>
 <li>Function <code><a href="../reference/mean_amr_distance.html">mean_amr_distance()</a></code> to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.</li>
 <li>Function <code><a href="../reference/as.sir.html">sir_interpretation_history()</a></code> to view the history of previous runs of <code><a href="../reference/as.sir.html">as.sir()</a></code> (previously <code><a href="../reference/AMR-deprecated.html">as.rsi()</a></code>). This returns a ‘logbook’ with the selected guideline, reference table and specific interpretation of each row in a data set on which <code><a href="../reference/as.sir.html">as.sir()</a></code> was run.</li>
@@ -233,7 +233,7 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="changes-1-8-2-9124">Changes<a class="anchor" aria-label="anchor" href="#changes-1-8-2-9124"></a></h3>
+<h3 id="changes-1-8-2-9125">Changes<a class="anchor" aria-label="anchor" href="#changes-1-8-2-9125"></a></h3>
 <ul><li>Argument <code>combine_IR</code> has been removed from this package (affecting functions <code><a href="../reference/count.html">count_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code>, and <code><a href="../reference/proportion.html">sir_df()</a></code> and some plotting functions), since it was replaced with <code>combine_SI</code> three years ago</li>
 <li>Using <code>units</code> in <code>ab_ddd(..., units = "...")</code> had been deprecated for some time and is now not supported anymore. Use <code><a href="../reference/ab_property.html">ab_ddd_units()</a></code> instead.</li>
 <li>Support for <code>data.frame</code>-enhancing R packages, more specifically: <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a></code>, <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html" class="external-link">janitor::tabyl</a></code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code>, and <code><a href="https://tsibble.tidyverts.org/reference/tsibble.html" class="external-link">tsibble::tsibble</a></code>. AMR package functions that have a data set as output (such as <code><a href="../reference/proportion.html">sir_df()</a></code> and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>), will now return the same data type as the input.</li>
@@ -275,7 +275,7 @@
 <code><a href="../reference/get_episode.html">get_episode()</a></code> now returns class <code>integer</code> instead of <code>numeric</code> since they are always whole numbers</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-1-8-2-9124">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9124"></a></h3>
+<h3 id="other-1-8-2-9125">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9125"></a></h3>
 <ul><li>Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, Andrew Norgan, Jonas Salm, and Anita Williams as contributors, to thank them for their valuable input</li>
 <li>New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
