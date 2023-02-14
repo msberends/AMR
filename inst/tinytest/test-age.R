@@ -49,15 +49,8 @@ expect_error(age(
   reference = c("2019-01-01", "2019-01-01")
 ))
 
-# expect_warning(age(
-  x = c("1980-01-01", "1985-01-01", "1990-01-01"),
-  reference = "1975-01-01"
-))
-
-# expect_warning(age(
-  x = c("1800-01-01", "1805-01-01", "1810-01-01"),
-  reference = "2019-01-01"
-))
+# expect_warning(age(x = c("1980-01-01", "1985-01-01", "1990-01-01"), reference = "1975-01-01"))
+# expect_warning(age(x = c("1800-01-01", "1805-01-01", "1810-01-01"), reference = "2019-01-01"))
 
 expect_equal(
   length(age(x = c("2019-01-01", NA), na.rm = TRUE)),

@@ -115,15 +115,9 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
 
 # expect_warning(proportion_R(as.character(example_isolates$AMC)))
 # expect_warning(proportion_S(as.character(example_isolates$AMC)))
-# expect_warning(proportion_S(as.character(
-  example_isolates$AMC,
-  example_isolates$GEN
-)))
+# expect_warning(proportion_S(as.character(example_isolates$AMC, example_isolates$GEN)))
 
-# expect_warning(n_sir(as.character(
-  example_isolates$AMC,
-  example_isolates$GEN
-)))
+# expect_warning(n_sir(as.character(example_isolates$AMC, example_isolates$GEN)))
 expect_equal(
   suppressWarnings(n_sir(as.character(
     example_isolates$AMC,

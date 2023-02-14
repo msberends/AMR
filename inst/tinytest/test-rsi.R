@@ -236,10 +236,7 @@ expect_inherits(
   ))$amoxi),
   "sir"
 )
-# expect_warning(as.sir(data.frame(
-  mo = "E. coli",
-  NIT = c("<= 2", 32)
-)))
+# expect_warning(as.sir(data.frame(mo = "E. coli", NIT = c("<= 2", 32))))
 expect_message(as.sir(data.frame(
   mo = "E. coli",
   NIT = c("<= 2", 32),

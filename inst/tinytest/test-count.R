@@ -47,10 +47,7 @@ expect_equal(
 # warning for speed loss
 # expect_warning(count_resistant(as.character(example_isolates$AMC)))
 
-# expect_warning(count_resistant(
-  example_isolates$AMC,
-  as.character(example_isolates$GEN)
-))
+# expect_warning(count_resistant(example_isolates$AMC, as.character(example_isolates$GEN)))
 
 # check for errors
 expect_error(count_resistant("test", minimum = "test"))

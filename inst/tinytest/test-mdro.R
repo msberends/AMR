@@ -272,10 +272,10 @@ expect_error(custom_mdro_guideline("test"))
 expect_error(custom_mdro_guideline("test" ~ c(1:3)))
 expect_error(custom_mdro_guideline("test" ~ A))
 # expect_warning(mdro(example_isolates,
-  # since `test` gives an error, it will be ignored with a warning
-  guideline = custom_mdro_guideline(test ~ "A"),
-  info = FALSE
-))
+#   # since `test` gives an error, it will be ignored with a warning
+#   guideline = custom_mdro_guideline(test ~ "A"),
+#   info = FALSE
+# ))
 
 # print groups
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {

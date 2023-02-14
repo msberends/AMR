@@ -63,11 +63,7 @@ x <- as.data.frame(
 # expect_warning(g.test(x))
 expect_true(suppressWarnings(g.test(x)$p.value) < 1)
 
-# expect_warning(g.test(
-  x = c(772, 1611, 737),
-  y = c(780, 1560, 780),
-  rescale.p = TRUE
-))
+# expect_warning(g.test(x = c(772, 1611, 737), y = c(780, 1560, 780), rescale.p = TRUE))
 
 expect_error(g.test(matrix(data = c(-1, -2, -3, -4), ncol = 2, byrow = TRUE)))
 expect_error(g.test(matrix(data = c(0, 0, 0, 0), ncol = 2, byrow = TRUE)))
