@@ -890,11 +890,12 @@ get_current_data <- function(arg_name, call) {
     !is.null(x) && is.data.frame(x)
   }
 
-  # try a manual (base R) method, by going over all underlying environments with sys.frames()
-  for (env in sys.frames()) {
-
-    # dplyr support ----
-    if (!is.null(env$mask) && is.function(env$mask$current_rows) && (valid_df(env$data) || valid_df(env$`.data`))) {
+  frms <- sys.frames()
+  
+  # check dplyr environments to support dplyr groups
+  with_mask <- vapply(FUN.VALUE = logical(1), frms, function(e) !is.null(e$mask))
+  for (env in frms[which(with_mask)]) {
+    if (is.function(env$mask$current_rows) && (valid_df(env$data) || valid_df(env$`.data`))) {
       # an element `.data` or `data` (containing all data) and `mask` (containing functions) will be in the environment when using dplyr verbs
       # we use their mask$current_rows() to get the group rows, since dplyr::cur_data_all() is deprecated and will be removed in the future
       # e.g. for `example_isolates %>% group_by(ward) %>% mutate(first = first_isolate(.))`
@@ -907,21 +908,28 @@ get_current_data <- function(arg_name, call) {
       }
       rows <- tryCatch(env$mask$current_rows(), error = function(e) seq_len(NROW(df)))
       return(df[rows, , drop = FALSE])
-      
-      # base R support ----
-    } else if (!is.null(env$`.Generic`)) {
-      # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
+    }
+  }
 
-      if (valid_df(env$xx)) {
-        # an element `xx` will be in the environment for rows + cols in base R, e.g. `example_isolates[c(1:3), carbapenems()]`
-        return(env$xx)
-      } else if (valid_df(env$x)) {
-        # an element `x` will be in the environment for only cols in base R, e.g. `example_isolates[, carbapenems()]`
-        return(env$x)
-      }
-      
-      # scoped dplyr support ----
-    } else if (!is.null(names(env)) && all(c(".tbl", ".vars", ".cols") %in% names(env), na.rm = TRUE) && valid_df(env$`.tbl`)) {
+  # now go over all underlying environments looking for other dplyr and base R selection environments
+  with_generic <- vapply(FUN.VALUE = logical(1), frms, function(e) !is.null(e$`.Generic`))
+  for (env in frms[which(with_generic)]) {
+    if (valid_df(env$`.data`)) {
+      # an element `.data` will be in the environment when using dplyr::select()
+      return(env$`.data`)
+    } else if (valid_df(env$xx)) {
+      # an element `xx` will be in the environment for rows + cols in base R, e.g. `example_isolates[c(1:3), carbapenems()]`
+      return(env$xx)
+    } else if (valid_df(env$x)) {
+      # an element `x` will be in the environment for only cols in base R, e.g. `example_isolates[, carbapenems()]`
+      return(env$x)
+    }
+  }
+  
+  # now a special case for dplyr's 'scoped' variants
+  with_tbl <- vapply(FUN.VALUE = logical(1), frms, function(e) valid_df(e$`.tbl`))
+  for (env in frms[which(with_tbl)]) {
+    if (!is.null(names(env)) && all(c(".tbl", ".vars", ".cols") %in% names(env), na.rm = TRUE)) {
       # an element `.tbl` will be in the environment when using scoped dplyr variants, with or without `dplyr::vars()`
       # (e.g. `dplyr::summarise_at()` or `dplyr::mutate_at()`)
       return(env$`.tbl`)
