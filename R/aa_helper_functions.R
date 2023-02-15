@@ -900,12 +900,14 @@ get_current_data <- function(arg_name, call) {
       # e.g. for `example_isolates %>% group_by(ward) %>% mutate(first = first_isolate(.))`
       if (valid_df(env$data)) {
         # support for dplyr 1.1.x
-        return(env$data[env$mask$current_rows(), , drop = FALSE])
+        df <- env$data
       } else {
         # support for dplyr 1.0.x
-        return(env$`.data`[env$mask$current_rows(), , drop = FALSE])
+        df <- env$`.data`
       }
-
+      rows <- tryCatch(env$mask$current_rows(), error = function(e) seq_len(NROW(df)))
+      return(df[rows, , drop = FALSE])
+      
       # base R support ----
     } else if (!is.null(env$`.Generic`)) {
       # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
