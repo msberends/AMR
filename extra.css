@@ -54,10 +54,13 @@ mark, .mark {
   background: rgba(17, 143, 118, 0.25) !important;
 }
 
+/* smaller tables */
+.table {
+  font-size: 0.9em !important;
+}
 
 /* SYNTAX */
 /* These are simple changes for the syntax highlighting */
-
 pre {
   font-size: 0.8em !important;
 }

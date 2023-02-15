@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9126</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9131</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,7 +279,7 @@
 <span>                                         <span class="va">.</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"Male"</span> <span class="op">&amp;</span></span>
 <span>                                         <span class="va">.</span><span class="op">$</span><span class="va">condition</span> <span class="op">==</span> <span class="st">"Heart Disease"</span>,</span>
 <span>                                       <span class="st">"Study Group"</span>, <span class="st">"Control Group"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div></li>
-</ol><p>All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> or base <span style="R">R</span> <code><a href="plot.html">plot()</a></code>/<code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code>) or printed into R Markdown / Quarto formats for reports. Use functions from specific 'table reporting' packages to transform the output of <code>antibiogram()</code> to your needs, e.g. <code>flextable::as_flextable()</code> or <code>gt::gt()</code>.</p>
+</ol><p>All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> or base <span style="R">R</span> <code><a href="plot.html">plot()</a></code>/<code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code>) or printed into R Markdown / Quarto formats for reports using <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>. Use functions from specific 'table reporting' packages to transform the output of <code>antibiogram()</code> to your needs, e.g. <code>flextable::as_flextable()</code> or <code>gt::gt()</code>.</p>
 <p>Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the <code>only_all_tested</code> argument (defaults to <code>FALSE</code>). See this example for two antibiotics, Drug A and Drug B, about how <code>antibiogram()</code> works to calculate the %SI:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">--------------------------------------------------------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    only_all_tested <span class="ot">=</span> <span class="cn">FALSE</span>  only_all_tested <span class="ot">=</span> <span class="cn">TRUE</span></span>
