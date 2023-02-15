@@ -124,7 +124,7 @@ your_data \%>\%
 }\if{html}{\out{</div>}}
 }
 
-All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}) or printed into R Markdown / Quarto formats for reports. Use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. \code{flextable::as_flextable()} or \code{gt::gt()}.
+All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}) or printed into R Markdown / Quarto formats for reports using \code{print()}. Use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. \code{flextable::as_flextable()} or \code{gt::gt()}.
 
 Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the \code{only_all_tested} argument (defaults to \code{FALSE}). See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=antibiogram]{antibiogram()}} works to calculate the \%SI:
 

@@ -78,7 +78,7 @@ This base R snippet will work in any version of R since April 2013 (R-3.0).
 
 The `AMR` package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).
 
-If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
+If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.) when using `print()` on an antibiogram object.
 
 ```r
 antibiogram(example_isolates,
@@ -110,6 +110,21 @@ antibiogram(example_isolates,
 |:------------------------|---:|---------:|---------:|
 |Gram-negative (641-693)  |  88|        99|        98|
 |Gram-positive (345-1044) |  86|        98|        95|
+
+Like many other functions in this package, `antibiograms()` comes with support for 20 languages that are often detected automatically based on system language:
+
+```r
+antibiogram(example_isolates,
+            antibiotics = c("CIP", "TOB", "GEN"),
+            mo_transform = "gramstain",
+            ab_transform = "name",
+            language = "uk") # Ukrainian
+```
+
+|Збудник (N min-max)      | Гентаміцин| Тобраміцин| Ципрофлоксацин|
+|:------------------------|----------:|----------:|--------------:|
+|Грамнегативні (684-686)  |         96|         96|             91|
+|Грампозитивні (665-1170) |         63|         34|             77|
 
 
 #### Calculating resistance per group
