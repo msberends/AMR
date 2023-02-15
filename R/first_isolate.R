@@ -177,7 +177,7 @@ first_isolate <- function(x = NULL,
                           include_untested_sir = TRUE,
                           ...) {
   if (is_null_or_grouped_tbl(x)) {
-    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)
     # is also fix for using a grouped df as input (a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
@@ -634,7 +634,7 @@ filter_first_isolate <- function(x = NULL,
                                  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
                                  ...) {
   if (is_null_or_grouped_tbl(x)) {
-    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)
     # is also fix for using a grouped df as input (a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }

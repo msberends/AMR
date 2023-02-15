@@ -178,7 +178,7 @@ mdro <- function(x = NULL,
                  only_sir_columns = FALSE,
                  ...) {
   if (is_null_or_grouped_tbl(x)) {
-    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)
     # is also a fix for using a grouped df as input (i.e., a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }

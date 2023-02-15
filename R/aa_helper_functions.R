@@ -889,34 +889,36 @@ get_current_data <- function(arg_name, call) {
   valid_df <- function(x) {
     !is.null(x) && is.data.frame(x)
   }
-  # try dplyr::cur_data_all() first to support dplyr groups
-  # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
-  # not useful (throws error) with e.g. dplyr::select(), dplyr::across(), or dplyr::vars(),
-  # but that will be caught later on in this function
-  cur_data_all <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_data_all)) {
-    out <- tryCatch(cur_data_all(), error = function(e) NULL)
-    if (valid_df(out)) {
-      return(out)
-    }
-  }
 
   # try a manual (base R) method, by going over all underlying environments with sys.frames()
   for (env in sys.frames()) {
-    if (!is.null(env$`.Generic`)) {
+
+    # dplyr support ----
+    if (!is.null(env$mask) && is.function(env$mask$current_rows) && (valid_df(env$data) || valid_df(env$`.data`))) {
+      # an element `.data` or `data` (containing all data) and `mask` (containing functions) will be in the environment when using dplyr verbs
+      # we use their mask$current_rows() to get the group rows, since dplyr::cur_data_all() is deprecated and will be removed in the future
+      # e.g. for `example_isolates %>% group_by(ward) %>% mutate(first = first_isolate(.))`
+      if (valid_df(env$data)) {
+        # support for dplyr 1.1.x
+        return(env$data[env$mask$current_rows(), , drop = FALSE])
+      } else {
+        # support for dplyr 1.0.x
+        return(env$`.data`[env$mask$current_rows(), , drop = FALSE])
+      }
+
+      # base R support ----
+    } else if (!is.null(env$`.Generic`)) {
       # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
 
-      if (valid_df(env$`.data`)) {
-        # an element `.data` will be in the environment when using `dplyr::select()`
-        # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
-        return(env$`.data`)
-      } else if (valid_df(env$xx)) {
-        # an element `xx` will be in the environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
+      if (valid_df(env$xx)) {
+        # an element `xx` will be in the environment for rows + cols in base R, e.g. `example_isolates[c(1:3), carbapenems()]`
         return(env$xx)
       } else if (valid_df(env$x)) {
-        # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
+        # an element `x` will be in the environment for only cols in base R, e.g. `example_isolates[, carbapenems()]`
         return(env$x)
       }
+      
+      # scoped dplyr support ----
     } else if (!is.null(names(env)) && all(c(".tbl", ".vars", ".cols") %in% names(env), na.rm = TRUE) && valid_df(env$`.tbl`)) {
       # an element `.tbl` will be in the environment when using scoped dplyr variants, with or without `dplyr::vars()`
       # (e.g. `dplyr::summarise_at()` or `dplyr::mutate_at()`)
