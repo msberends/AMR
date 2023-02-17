@@ -27,7 +27,8 @@ antibiogram(
   language = get_AMR_locale(),
   minimum = 30,
   combine_SI = TRUE,
-  sep = " + "
+  sep = " + ",
+  info = interactive()
 )
 
 \method{plot}{antibiogram}(x, ...)
@@ -62,6 +63,8 @@ antibiogram(
 \item{combine_SI}{a \link{logical} to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (defaults to \code{TRUE})}
 
 \item{sep}{a separating character for antibiotic columns in combination antibiograms}
+
+\item{info}{a \link{logical} to indicate info should be printed, defaults to \code{TRUE} only in interactive mode}
 
 \item{...}{when used in \code{\link[=print]{print()}}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 

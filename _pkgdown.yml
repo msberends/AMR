@@ -41,6 +41,10 @@ template:
     # the green "success" colour of this bootstrap theme should be the same as the green in our logo
     success: "#128f76"
     link-color: "#128f76"
+    light: "#128f76a6" # this is success with 60% alpha
+    # the template "info" is blue - this should be a green fitting our theme
+    info: "#60a799"
+    # make top bar a bit wider
     navbar-padding-y: "0.5rem"
   opengraph:
     twitter:

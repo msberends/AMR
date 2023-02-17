@@ -43,6 +43,7 @@
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (defaults to `TRUE`)
 #' @param sep a separating character for antibiotic columns in combination antibiograms
+#' @param info 	a [logical] to indicate info should be printed, defaults to `TRUE` only in interactive mode
 #' @param object an [antibiogram()] object
 #' @param ... when used in [print()]: arguments passed on to [knitr::kable()] (otherwise, has no use)
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
@@ -253,7 +254,8 @@ antibiogram <- function(x,
                         language = get_AMR_locale(),
                         minimum = 30,
                         combine_SI = TRUE,
-                        sep = " + ") {
+                        sep = " + ",
+                        info = interactive()) {
   meet_criteria(x, allow_class = "data.frame", contains_column_class = "sir")
   meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE)
   meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antibiotics), allow_NULL = TRUE)
@@ -266,7 +268,8 @@ antibiogram <- function(x,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(sep, allow_class = "character", has_length = 1)
-
+  meet_criteria(info, allow_class = "logical", has_length = 1)
+  
   # try to find columns based on type
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = interactive())
@@ -368,11 +371,13 @@ antibiogram <- function(x,
     out$numerator <- out$S
   }
   if (any(out$total < minimum, na.rm = TRUE)) {
-    message_("NOTE: ", sum(out$total < minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
+    if (isTRUE(info)) {
+      message_("NOTE: ", sum(out$total < minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
+    }
     out <- out %pm>%
       subset(total >= minimum)
   }
-  
+
   # regroup for summarising
   if (isTRUE(has_syndromic_group)) {
     colnames(out)[1] <- "syndromic_group"
