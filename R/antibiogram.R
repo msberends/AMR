@@ -44,7 +44,7 @@
 #' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (defaults to `TRUE`)
 #' @param sep a separating character for antibiotic columns in combination antibiograms
 #' @param object an [antibiogram()] object
-#' @param ... method extensions
+#' @param ... when used in [print()]: arguments passed on to [knitr::kable()] (otherwise, has no use)
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
@@ -208,7 +208,16 @@
 #'   )
 #' )
 #'
-#'
+#' # Print the output for R Markdown / Quarto -----------------------------
+#' 
+#' ureido <- antibiogram(example_isolates,
+#'                       antibiotics = ureidopenicillins(),
+#'                       ab_transform = "name")
+#' 
+#' # in an Rmd file, you would just need print(ureido), but to be explicit:
+#' print(ureido, as_kable = TRUE, format = "markdown", italicise = TRUE)
+#' 
+#' 
 #' # Generate plots with ggplot2 or base R --------------------------------
 #'
 #' ab1 <- antibiogram(example_isolates,
@@ -221,17 +230,16 @@
 #'   syndromic_group = "ward"
 #' )
 #'
-#' plot(ab1)
-#'
 #' if (requireNamespace("ggplot2")) {
 #'   ggplot2::autoplot(ab1)
 #' }
-#'
-#' plot(ab2)
-#'
 #' if (requireNamespace("ggplot2")) {
 #'   ggplot2::autoplot(ab2)
 #' }
+#' 
+#' plot(ab1)
+#' plot(ab2)
+#'
 #' }
 antibiogram <- function(x,
                         antibiotics = where(is.sir),
@@ -540,18 +548,37 @@ autoplot.antibiogram <- function(object, ...) {
 
 #' @export
 #' @param as_kable a [logical] to indicate whether the printing should be done using [knitr::kable()] (which is the default in non-interactive sessions)
+#' @param italicise a [logical] to indicate whether the microorganism names in the output table should be made italic, using [italicise_taxonomy()]. This only works when the output format is markdown, such as in HTML output.
 #' @details Printing the antibiogram in non-interactive sessions will be done by [knitr::kable()], with support for [all their implemented formats][knitr::kable()], such as "markdown". The knitr format will be automatically determined if printed inside a knitr document (LaTeX, HTML, etc.).
 #' @rdname antibiogram
-print.antibiogram <- function(x, as_kable = !interactive(), ...) {
+print.antibiogram <- function(x, as_kable = !interactive(), italicise = TRUE, ...) {
   meet_criteria(as_kable, allow_class = "logical", has_length = 1)
-  
-  kable <- import_fn("kable", "knitr", error_on_fail = FALSE)
-  if (!is.null(kable) &&
-      isTRUE(as_kable) &&
+  meet_criteria(italicise, allow_class = "logical", has_length = 1)
+
+  if (isTRUE(as_kable) &&
       # be sure not to run kable in pkgdown for our website generation
-      !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
-    kable(x, ...)
-  
+      !(missing(as_kable) && identical(Sys.getenv("IN_PKGDOWN"), "true"))) {
+    out <- knitr::kable(x, ...)
+    format <- attributes(out)$format
+    if (!is.null(format) && format %in% c("markdown", "pipe")) {
+      # try to italicise the output
+      rows_with_txt <- which(out %like% "[a-z]")
+      rows_without_txt <- setdiff(seq_len(length(out)), rows_with_txt)
+      out[rows_with_txt] <- gsub("^[|]", "| ", out[rows_with_txt])
+      # put hyphen directly after second character
+      out[rows_without_txt] <- gsub("^[|](.)", "|\\1-", out[rows_without_txt])
+      out_ita <- italicise_taxonomy(as.character(out), type = "markdown")
+      if (length(unique(nchar(out_ita))) != 1) {
+        # so there has been alterations done by italicise_taxonomy()
+        to_fill <- which(nchar(out_ita) < max(nchar(out_ita)))
+        out_ita[intersect(to_fill, rows_with_txt)] <- gsub("(^[|].*?)([|])(.*)", "\\1  \\2\\3", out_ita[intersect(to_fill, rows_with_txt)], perl = TRUE)
+        out_ita[intersect(to_fill, rows_without_txt)] <- gsub("(^[|].*?)([|])(.*)", "\\1--\\2\\3", out_ita[intersect(to_fill, rows_without_txt)], perl = TRUE)
+      }
+      attributes(out_ita) <- attributes(out)
+      out <- out_ita
+    }
+    out
+
   } else {
     # remove 'antibiogram' class and print with default method
     class(x) <- class(x)[class(x) != "antibiogram"]

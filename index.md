@@ -85,18 +85,18 @@ antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()))
 ```
 
-|Pathogen (N min-max)   | AMK| GEN| IPM| KAN| MEM| TOB|
-|:----------------------|---:|---:|---:|---:|---:|---:|
-|CoNS (43-309)          |   0|  86|  52|   0|  52|  22|
-|E. coli (0-462)        | 100|  98| 100|  NA| 100|  97|
-|E. faecalis (0-39)     |   0|   0| 100|   0|  NA|   0|
-|K. pneumoniae (0-58)   |  NA|  90| 100|  NA| 100|  90|
-|P. aeruginosa (17-30)  |  NA| 100|  NA|   0|  NA| 100|
-|P. mirabilis (0-34)    |  NA|  94|  94|  NA|  NA|  94|
-|S. aureus (2-233)      |  NA|  99|  NA|  NA|  NA|  98|
-|S. epidermidis (8-163) |   0|  79|  NA|   0|  NA|  51|
-|S. hominis (3-80)      |  NA|  92|  NA|  NA|  NA|  85|
-|S. pneumoniae (11-117) |   0|   0|  NA|   0|  NA|   0|
+|Pathogen (N min-max)     | AMK| GEN| IPM| KAN| MEM| TOB|
+|:------------------------|---:|---:|---:|---:|---:|---:|
+|CoNS (43-309)            |   0|  86|  52|   0|  52|  22|
+|*E. coli* (0-462)        | 100|  98| 100|    | 100|  97|
+|*E. faecalis* (0-39)     |   0|   0| 100|   0|    |   0|
+|*K. pneumoniae* (0-58)   |    |  90| 100|    | 100|  90|
+|*P. aeruginosa* (17-30)  |    | 100|    |   0|    | 100|
+|*P. mirabilis* (0-34)    |    |  94|  94|    |    |  94|
+|*S. aureus* (2-233)      |    |  99|    |    |    |  98|
+|*S. epidermidis* (8-163) |   0|  79|    |   0|    |  51|
+|*S. hominis* (3-80)      |    |  92|    |    |    |  85|
+|*S. pneumoniae* (11-117) |   0|   0|    |   0|    |   0|
 
 In combination antibiograms, it is clear that combined antibiotics yield higher empiric coverage:
 
@@ -111,7 +111,7 @@ antibiogram(example_isolates,
 |Gram-negative (641-693)  |  88|        99|        98|
 |Gram-positive (345-1044) |  86|        98|        95|
 
-Like many other functions in this package, `antibiograms()` comes with support for 20 languages that are often detected automatically based on system language:
+Like many other functions in this package, `antibiogram()` comes with support for 20 languages that are often detected automatically based on system language:
 
 ```r
 antibiogram(example_isolates,
@@ -128,6 +128,8 @@ antibiogram(example_isolates,
 
 
 #### Calculating resistance per group
+
+For a manual approach, you can use the `resistance` or `susceptibility()` function:
 
 ```r
 library(AMR)
@@ -147,7 +149,7 @@ out
 |:-----------|------:|------:|------:|------:|------:|
 | Clinical   | 0.229 | 0.315 | 0.626 |     1 | 0.780 |
 | ICU        | 0.290 | 0.400 | 0.662 |     1 | 0.857 |
-| Outpatient | 0.200 | 0.368 | 0.605 |    NA | 0.889 |
+| Outpatient | 0.200 | 0.368 | 0.605 |       | 0.889 |
 
 ```r
 # transform the antibiotic columns to names:
@@ -158,7 +160,7 @@ out %>% set_ab_names()
 |:-----------|-----------:|-----------:|----------|----------:|----------:|
 | Clinical   | 0.229      | 0.315      | 0.626    |     1     | 0.780     |
 | ICU        | 0.290      | 0.400      | 0.662    |     1     | 0.857     |
-| Outpatient | 0.200      | 0.368      | 0.605    |    NA     | 0.889     |
+| Outpatient | 0.200      | 0.368      | 0.605    |           | 0.889     |
 
 ```r
 # transform the antibiotic column to ATC codes:
@@ -169,7 +171,7 @@ out %>% set_ab_names(property = "atc")
 |:-----------|-----------:|-----------:|----------|----------:|----------:|
 | Clinical   | 0.229      | 0.315      | 0.626    |     1     | 0.780     |
 | ICU        | 0.290      | 0.400      | 0.662    |     1     | 0.857     |
-| Outpatient | 0.200      | 0.368      | 0.605    |    NA     | 0.889     |
+| Outpatient | 0.200      | 0.368      | 0.605    |           | 0.889     |
 
 ### What else can you do with this package?
 

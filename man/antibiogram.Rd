@@ -34,7 +34,7 @@ antibiogram(
 
 \method{autoplot}{antibiogram}(object, ...)
 
-\method{print}{antibiogram}(x, as_kable = !interactive(), ...)
+\method{print}{antibiogram}(x, as_kable = !interactive(), italicise = TRUE, ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antibiotic results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
@@ -63,11 +63,13 @@ antibiogram(
 
 \item{sep}{a separating character for antibiotic columns in combination antibiograms}
 
-\item{...}{method extensions}
+\item{...}{when used in \code{\link[=print]{print()}}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 
 \item{object}{an \code{\link[=antibiogram]{antibiogram()}} object}
 
 \item{as_kable}{a \link{logical} to indicate whether the printing should be done using \code{\link[knitr:kable]{knitr::kable()}} (which is the default in non-interactive sessions)}
+
+\item{italicise}{a \link{logical} to indicate whether the microorganism names in the output table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}. This only works when the output format is markdown, such as in HTML output.}
 }
 \description{
 Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker \emph{et al.} and Barbieri \emph{et al.} (see \emph{Source}), and allow reporting in e.g. R Markdown and Quarto as well.
@@ -225,6 +227,15 @@ antibiogram(example_isolates,
   )
 )
 
+# Print the output for R Markdown / Quarto -----------------------------
+
+ureido <- antibiogram(example_isolates,
+                      antibiotics = ureidopenicillins(),
+                      ab_transform = "name")
+
+# in an Rmd file, you would just need print(ureido), but to be explicit:
+print(ureido, as_kable = TRUE, format = "markdown", italicise = TRUE)
+
 
 # Generate plots with ggplot2 or base R --------------------------------
 
@@ -238,16 +249,15 @@ ab2 <- antibiogram(example_isolates,
   syndromic_group = "ward"
 )
 
-plot(ab1)
-
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)
 }
-
-plot(ab2)
-
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab2)
 }
+
+plot(ab1)
+plot(ab2)
+
 }
 }
