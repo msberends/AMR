@@ -51,7 +51,7 @@
 
 /* marked words for after using the search box */
 mark, .mark {
-  background: rgba(17, 143, 118, 0.25) !important;
+  background: var(--bs-light) !important;
 }
 
 /* smaller tables */
@@ -82,17 +82,18 @@ pre .fu, .fu {
 }
 pre .st, .st {
   /* strings, regular text */
-  color: #60a799 !important;
+  color: var(--bs-info) !important;
 }
 pre .co, .co {
   /* comments */
-  color: #999999 !important;
+  color: var(--bs-success) !important;
   font-style: italic !important;
 }
 pre code .r-out,
 pre code .r-msg {
   /* output of functions */
-  color: #555555 !important;
+  color: var(--bs-gray-600) !important;
+  font-style: normal !important;
 }
 code a[href],
 a[href] code,

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9132</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9133</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -201,30 +201,31 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sir</span> <span class="op">&lt;-</span> <span class="fu"><a href="random.html">random_sir</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sir</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] S R S R R R I I S S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] R I I S I I R R S I</span>
 <span class="r-in"><span><span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">sir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.7745967  1.1618950 -0.7745967  1.1618950  1.1618950  1.1618950</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -0.7745967 -0.7745967 -0.7745967 -0.7745967</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.449138 -0.621059 -0.621059 -0.621059 -0.621059 -0.621059  1.449138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8]  1.449138 -0.621059 -0.621059</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">mic</span> <span class="op">&lt;-</span> <span class="fu"><a href="random.html">random_mic</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mic</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.005  0.002  0.025  1      64     0.0625 0.025  0.001  16     0.25  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1       0.005   2       128     0.125   4       64      0.005   &lt;=0.002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] 0.5    </span>
 <span class="r-in"><span><span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">mic</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.8096905 -1.0573468 -0.3746895  0.6223458  1.7464143 -0.1270332</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -0.3746895 -1.2446916  1.3717248  0.2476563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.2188173 -1.1461872  0.3973926  1.4688449 -0.3169088  0.5759680</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  1.2902695 -1.1461872 -1.3822510  0.0402419</span>
 <span class="r-in"><span><span class="co"># equal to the Z-score of their log2:</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">mic</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">mic</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">mic</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.8096905 -1.0573468 -0.3746895  0.6223458  1.7464143 -0.1270332</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -0.3746895 -1.2446916  1.3717248  0.2476563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.2188173 -1.1461872  0.3973926  1.4688449 -0.3169088  0.5759680</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  1.2902695 -1.1461872 -1.3822510  0.0402419</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">disk</span> <span class="op">&lt;-</span> <span class="fu"><a href="random.html">random_disk</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">disk</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'disk'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 10 22 14 48 42 42 49 25 10 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 10 33 46 15 27 48  6 15 12 44</span>
 <span class="r-in"><span><span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">disk</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -1.1569176 -0.3899004 -0.9012452  1.2719702  0.8884616  0.8884616</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  1.3358883 -0.1981461 -1.1569176 -0.5816547</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.96532813  0.45791206  1.26235218 -0.65592809  0.08663201  1.38611219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -1.21284817 -0.65592809 -0.84156812  1.13859216</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,</span></span>
@@ -234,22 +235,22 @@
 <span class="r-in"><span>  tobr <span class="op">=</span> <span class="fu"><a href="random.html">random_mic</a></span><span class="op">(</span><span class="fl">10</span>, ab <span class="op">=</span> <span class="st">"tobr"</span>, mo <span class="op">=</span> <span class="st">"Escherichia coli"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">y</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    id amox cipr   gent  tobr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   A    R   26    0.5     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   B    S   17 &lt;=0.25     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C    R   27      1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   D    I   17    &gt;=2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   E    I   20    0.5 &lt;=0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   F    I   29 &lt;=0.25     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   G    R   20    0.5     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   H    S   20    &gt;=2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   I    R   27    0.5 &lt;=0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  J    R   17    0.5     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id amox cipr   gent tobr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   A    R   20    0.5    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   B    I   28 &lt;=0.25    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   C    R   20      1 0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   D    R   29      8  0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   E    I   18      8  0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   F    S   26      4    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   G    S   31      2    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   H    S   23 &lt;=0.25    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   I    I   18      1 0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  J    S   20 &lt;=0.25  0.5</span>
 <span class="r-in"><span><span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Calculating mean AMR distance based on columns "amox", "cipr", "gent" and</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   "tobr"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.64170105 -0.76377032  0.49004949 -0.05578894 -0.80988224 -0.13053253</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  0.32508215  0.10252050  0.03384812  0.16677271</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.29766161 -0.07440712 -0.14767835  0.83786596 -0.24885180  0.46766889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  0.60068160 -0.19036005 -0.76871271 -0.77386803</span>
 <span class="r-in"><span><span class="va">y</span><span class="op">$</span><span class="va">amr_distance</span> <span class="op">&lt;-</span> <span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .subset(x, j):</span> invalid subscript type 'list'</span>
 <span class="r-in"><span><span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">y</span><span class="op">$</span><span class="va">amr_distance</span><span class="op">)</span>, <span class="op">]</span></span></span>
@@ -265,17 +266,17 @@
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Calculating mean AMR distance based on columns "amox", "cipr", "gent" and</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   "tobr"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    id amox cipr   gent  tobr amr_distance check_id_C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   C    R   27      1     1   0.49004949  0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   A    R   26    0.5     4   0.64170105  0.1516516</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   G    R   20    0.5     4   0.32508215  0.1649673</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   J    R   17    0.5     4   0.16677271  0.3232768</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   H    S   20    &gt;=2     2   0.10252050  0.3875290</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   I    R   27    0.5 &lt;=0.5   0.03384812  0.4562014</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   D    I   17    &gt;=2     2  -0.05578894  0.5458384</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   F    I   29 &lt;=0.25     2  -0.13053253  0.6205820</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   B    S   17 &lt;=0.25     2  -0.76377032  1.2538198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  E    I   20    0.5 &lt;=0.5  -0.80988224  1.2999317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id amox cipr   gent tobr amr_distance check_id_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   C    R   20      1 0.25  -0.14767835 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   H    S   23 &lt;=0.25    4  -0.19036005 0.04268170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   B    I   28 &lt;=0.25    2  -0.07440712 0.07327123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   E    I   18      8  0.5  -0.24885180 0.10117345</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   A    R   20    0.5    4   0.29766161 0.44533996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   F    S   26      4    4   0.46766889 0.61534723</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   I    I   18      1 0.25  -0.76871271 0.62103437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   J    S   20 &lt;=0.25  0.5  -0.77386803 0.62618968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   G    S   31      2    4   0.60068160 0.74835994</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  D    R   29      8  0.5   0.83786596 0.98554431</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># support for groups</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
