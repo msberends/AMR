@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9131</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9132</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -372,84 +372,93 @@
 <td align="right">22</td>
 </tr>
 <tr class="even">
-<td align="left">E. coli (0-462)</td>
+<td align="left">
+<em>E. coli</em> (0-462)</td>
 <td align="right">100</td>
 <td align="right">98</td>
 <td align="right">100</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">100</td>
 <td align="right">97</td>
 </tr>
 <tr class="odd">
-<td align="left">E. faecalis (0-39)</td>
+<td align="left">
+<em>E. faecalis</em> (0-39)</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">100</td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">K. pneumoniae (0-58)</td>
-<td align="right">NA</td>
+<td align="left">
+<em>K. pneumoniae</em> (0-58)</td>
+<td align="right"></td>
 <td align="right">90</td>
 <td align="right">100</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">100</td>
 <td align="right">90</td>
 </tr>
 <tr class="odd">
-<td align="left">P. aeruginosa (17-30)</td>
-<td align="right">NA</td>
+<td align="left">
+<em>P. aeruginosa</em> (17-30)</td>
+<td align="right"></td>
 <td align="right">100</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">100</td>
 </tr>
 <tr class="even">
-<td align="left">P. mirabilis (0-34)</td>
-<td align="right">NA</td>
+<td align="left">
+<em>P. mirabilis</em> (0-34)</td>
+<td align="right"></td>
 <td align="right">94</td>
 <td align="right">94</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right"></td>
+<td align="right"></td>
 <td align="right">94</td>
 </tr>
 <tr class="odd">
-<td align="left">S. aureus (2-233)</td>
-<td align="right">NA</td>
+<td align="left">
+<em>S. aureus</em> (2-233)</td>
+<td align="right"></td>
 <td align="right">99</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
 <td align="right">98</td>
 </tr>
 <tr class="even">
-<td align="left">S. epidermidis (8-163)</td>
+<td align="left">
+<em>S. epidermidis</em> (8-163)</td>
 <td align="right">0</td>
 <td align="right">79</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">51</td>
 </tr>
 <tr class="odd">
-<td align="left">S. hominis (3-80)</td>
-<td align="right">NA</td>
+<td align="left">
+<em>S. hominis</em> (3-80)</td>
+<td align="right"></td>
 <td align="right">92</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
 <td align="right">85</td>
 </tr>
 <tr class="even">
-<td align="left">S. pneumoniae (11-117)</td>
+<td align="left">
+<em>S. pneumoniae</em> (11-117)</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -481,7 +490,7 @@
 </tr>
 </tbody>
 </table>
-<p>Like many other functions in this package, <code>antibiograms()</code> comes with support for 20 languages that are often detected automatically based on system language:</p>
+<p>Like many other functions in this package, <code><a href="reference/antibiogram.html">antibiogram()</a></code> comes with support for 20 languages that are often detected automatically based on system language:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CIP"</span>, <span class="st">"TOB"</span>, <span class="st">"GEN"</span><span class="op">)</span>,</span>
@@ -514,6 +523,7 @@
 <div class="section level4">
 <h4 id="calculating-resistance-per-group">Calculating resistance per group<a class="anchor" aria-label="anchor" href="#calculating-resistance-per-group"></a>
 </h4>
+<p>For a manual approach, you can use the <code>resistance</code> or <code><a href="reference/proportion.html">susceptibility()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -557,7 +567,7 @@
 <td align="right">0.200</td>
 <td align="right">0.368</td>
 <td align="right">0.605</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.889</td>
 </tr>
 </tbody>
@@ -604,7 +614,7 @@
 <td align="right">0.200</td>
 <td align="right">0.368</td>
 <td>0.605</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.889</td>
 </tr>
 </tbody>
@@ -651,7 +661,7 @@
 <td align="right">0.200</td>
 <td align="right">0.368</td>
 <td>0.605</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.889</td>
 </tr>
 </tbody>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9131</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9132</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,7 +171,7 @@
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for antibiogram</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, as_kable <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, as_kable <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, italicise <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -236,7 +236,7 @@
 
 
 <dt>...</dt>
-<dd><p>method extensions</p></dd>
+<dd><p>when used in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use)</p></dd>
 
 
 <dt>object</dt>
@@ -245,6 +245,10 @@
 
 <dt>as_kable</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the printing should be done using <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (which is the default in non-interactive sessions)</p></dd>
+
+
+<dt>italicise</dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the microorganism names in the output table should be made italic, using <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code>. This only works when the output format is markdown, such as in HTML output.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -484,6 +488,25 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> WISCA Group 1     Gram-positive (123-406)    76          89    81          95</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> WISCA Group 2     Gram-positive (222-732)    76          89    88          95</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Print the output for R Markdown / Quarto -----------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ureido</span> <span class="op">&lt;-</span> <span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
+<span class="r-in"><span>                      antibiotics <span class="op">=</span> <span class="fu"><a href="antibiotic_class_selectors.html">ureidopenicillins</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                      ab_transform <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For ureidopenicillins() using column 'TZP' (piperacillin/tazobactam)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ 86 combinations had less than minimum = 30 results and were ignored</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># in an Rmd file, you would just need print(ureido), but to be explicit:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ureido</span>, as_kable <span class="op">=</span> <span class="cn">TRUE</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, italicise <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | Pathogen (N min-max)      | Piperacillin/tazobactam|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:--------------------------|-----------------------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | CoNS (33-33)              |                      30|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | *E. coli* (416-416)       |                      94|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | *K. pneumoniae* (53-53)   |                      89|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | *S. pneumoniae* (112-112) |                     100|</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
@@ -499,21 +522,20 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ 16 combinations had less than minimum = 30 results and were ignored</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="antibiogram-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="antibiogram-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ab2</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="antibiogram-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
+<span class="r-plt img"><img src="antibiogram-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ab2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="antibiogram-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="antibiogram-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ab2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="antibiogram-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
