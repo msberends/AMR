@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9133</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9135</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -198,54 +198,54 @@ is currently being developed.</strong></p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span>
-<span><span class="co"># Rows: 2,000</span></span>
-<span><span class="co"># Columns: 46</span></span>
-<span><span class="co"># $ date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2002-01-02, 2002-01-03, 2002-01-07, 2002-01-07, 2002-01-13, 2…</span></span>
-<span><span class="co"># $ patient <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "A77334", "A77334", "067927", "067927", "067927", "067927", "4…</span></span>
-<span><span class="co"># $ age     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 65, 65, 45, 45, 45, 45, 78, 78, 45, 79, 67, 67, 71, 71, 75, 50…</span></span>
-<span><span class="co"># $ gender  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F", "F", "F", "F", "F", "F", "M", "M", "F", "F", "M", "M", "M…</span></span>
-<span><span class="co"># $ ward    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Clinical", "Clinical", "ICU", "ICU", "ICU", "ICU", "Clinical"…</span></span>
-<span><span class="co"># $ mo      <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span> "B_ESCHR_COLI", "B_ESCHR_COLI", "B_STPHY_EPDR", "B_STPHY_EPDR",…</span></span>
-<span><span class="co"># $ PEN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, S,…</span></span>
-<span><span class="co"># $ OXA     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ FLC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, R, R, R, R, S, S, R, S, S, S, NA, NA, NA, NA, NA, R, R…</span></span>
-<span><span class="co"># $ AMX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, R, R, NA, NA, NA, NA, NA, NA, R, NA, N…</span></span>
-<span><span class="co"># $ AMC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> I, I, NA, NA, NA, NA, S, S, NA, NA, S, S, I, I, R, I, I, NA, N…</span></span>
-<span><span class="co"># $ AMP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, R, R, NA, NA, NA, NA, NA, NA, R, NA, N…</span></span>
-<span><span class="co"># $ TZP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ CZO     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, NA,…</span></span>
-<span><span class="co"># $ FEP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ CXM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> I, I, R, R, R, R, S, S, R, S, S, S, S, S, NA, S, S, R, R, S, S…</span></span>
-<span><span class="co"># $ FOX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, NA,…</span></span>
-<span><span class="co"># $ CTX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, S, S…</span></span>
-<span><span class="co"># $ CAZ     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, S, S, R, R, …</span></span>
-<span><span class="co"># $ CRO     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, S, S…</span></span>
-<span><span class="co"># $ GEN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ TOB     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA, S, S, NA, NA, NA…</span></span>
-<span><span class="co"># $ AMK     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ KAN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ TMP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, R, R, R, R, S, S, NA, NA, S, S, S, S, S, R, R, R, …</span></span>
-<span><span class="co"># $ SXT     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, NA, NA, NA, NA, S, S, NA, NA, S, S, S, S, S, NA, N…</span></span>
-<span><span class="co"># $ NIT     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R,…</span></span>
-<span><span class="co"># $ FOS     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ LNZ     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span>
-<span><span class="co"># $ CIP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA, NA, S, S…</span></span>
-<span><span class="co"># $ MFX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ VAN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, S, S, S, S, S, S, NA, NA, R, R, R, R, R, S, S, S, …</span></span>
-<span><span class="co"># $ TEC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span>
-<span><span class="co"># $ TCY     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, S, S, S, S, S, I, S, S, NA, NA, I, R, R, S, I, R, …</span></span>
-<span><span class="co"># $ TGC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R, R, S, NA…</span></span>
-<span><span class="co"># $ DOX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R, R, S, NA…</span></span>
-<span><span class="co"># $ ERY     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R, R, R, S,…</span></span>
-<span><span class="co"># $ CLI     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, R, NA, NA, NA, NA, NA, NA, R, R, R, R, R, NA…</span></span>
-<span><span class="co"># $ AZM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R, R, R, S,…</span></span>
-<span><span class="co"># $ IPM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, S, S…</span></span>
-<span><span class="co"># $ MEM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ MTR     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ CHL     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ COL     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, R, R, R, R, …</span></span>
-<span><span class="co"># $ MUP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co"># $ RIF     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 2,000</span></span>
+<span><span class="co">#&gt; Columns: 46</span></span>
+<span><span class="co">#&gt; $ date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2002-01-02, 2002-01-03, 2002-01-07, 2002-01-07, 2002-01-13, 2…</span></span>
+<span><span class="co">#&gt; $ patient <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "A77334", "A77334", "067927", "067927", "067927", "067927", "4…</span></span>
+<span><span class="co">#&gt; $ age     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 65, 65, 45, 45, 45, 45, 78, 78, 45, 79, 67, 67, 71, 71, 75, 50…</span></span>
+<span><span class="co">#&gt; $ gender  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F", "F", "F", "F", "F", "F", "M", "M", "F", "F", "M", "M", "M…</span></span>
+<span><span class="co">#&gt; $ ward    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Clinical", "Clinical", "ICU", "ICU", "ICU", "ICU", "Clinical"…</span></span>
+<span><span class="co">#&gt; $ mo      <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span> "B_ESCHR_COLI", "B_ESCHR_COLI", "B_STPHY_EPDR", "B_STPHY_EPDR",…</span></span>
+<span><span class="co">#&gt; $ PEN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, S,…</span></span>
+<span><span class="co">#&gt; $ OXA     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ FLC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, R, R, R, R, S, S, R, S, S, S, NA, NA, NA, NA, NA, R, R…</span></span>
+<span><span class="co">#&gt; $ AMX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, R, R, NA, NA, NA, NA, NA, NA, R, NA, N…</span></span>
+<span><span class="co">#&gt; $ AMC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> I, I, NA, NA, NA, NA, S, S, NA, NA, S, S, I, I, R, I, I, NA, N…</span></span>
+<span><span class="co">#&gt; $ AMP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, R, R, NA, NA, NA, NA, NA, NA, R, NA, N…</span></span>
+<span><span class="co">#&gt; $ TZP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ CZO     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, NA,…</span></span>
+<span><span class="co">#&gt; $ FEP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ CXM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> I, I, R, R, R, R, S, S, R, S, S, S, S, S, NA, S, S, R, R, S, S…</span></span>
+<span><span class="co">#&gt; $ FOX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, NA,…</span></span>
+<span><span class="co">#&gt; $ CTX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, S, S…</span></span>
+<span><span class="co">#&gt; $ CAZ     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, S, S, R, R, …</span></span>
+<span><span class="co">#&gt; $ CRO     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, S, S…</span></span>
+<span><span class="co">#&gt; $ GEN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ TOB     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA, S, S, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ AMK     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ KAN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ TMP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, R, R, R, R, S, S, NA, NA, S, S, S, S, S, R, R, R, …</span></span>
+<span><span class="co">#&gt; $ SXT     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, NA, NA, NA, NA, S, S, NA, NA, S, S, S, S, S, NA, N…</span></span>
+<span><span class="co">#&gt; $ NIT     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R,…</span></span>
+<span><span class="co">#&gt; $ FOS     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ LNZ     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span>
+<span><span class="co">#&gt; $ CIP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA, NA, S, S…</span></span>
+<span><span class="co">#&gt; $ MFX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ VAN     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, S, S, S, S, S, S, NA, NA, R, R, R, R, R, S, S, S, …</span></span>
+<span><span class="co">#&gt; $ TEC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span>
+<span><span class="co">#&gt; $ TCY     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, S, S, S, S, S, S, S, I, S, S, NA, NA, I, R, R, S, I, R, …</span></span>
+<span><span class="co">#&gt; $ TGC     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R, R, S, NA…</span></span>
+<span><span class="co">#&gt; $ DOX     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R, R, S, NA…</span></span>
+<span><span class="co">#&gt; $ ERY     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R, R, R, S,…</span></span>
+<span><span class="co">#&gt; $ CLI     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, R, NA, NA, NA, NA, NA, NA, R, R, R, R, R, NA…</span></span>
+<span><span class="co">#&gt; $ AZM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R, R, R, S,…</span></span>
+<span><span class="co">#&gt; $ IPM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, S, S…</span></span>
+<span><span class="co">#&gt; $ MEM     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ MTR     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ CHL     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ COL     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, R, R, R, R, …</span></span>
+<span><span class="co">#&gt; $ MUP     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">#&gt; $ RIF     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span></code></pre></div>
 <p>Now to transform this to a data set with only resistance percentages
 per taxonomic order and genus:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -261,16 +261,16 @@ per taxonomic order and genus:</p>
 <span>  <span class="op">)</span> <span class="co"># and select only relevant columns</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">resistance_data</span><span class="op">)</span></span>
-<span><span class="co"># <span style="color: #949494;"># A tibble: 6 × 10</span></span></span>
-<span><span class="co"># <span style="color: #949494;"># Groups:   order [5]</span></span></span>
-<span><span class="co">#   order             genus          AMC   CXM   CTX   CAZ   GEN   TOB   TMP   SXT</span></span>
-<span><span class="co">#   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">1</span> (unknown order)   (unknown ge…    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">2</span> Actinomycetales   Schaalia        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">3</span> Bacteroidales     Bacteroides     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">4</span> Campylobacterales Campylobact…    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">5</span> Caryophanales     Gemella         <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">6</span> Caryophanales     Listeria        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 10</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   order [5]</span></span></span>
+<span><span class="co">#&gt;   order             genus          AMC   CXM   CTX   CAZ   GEN   TOB   TMP   SXT</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (unknown order)   (unknown ge…    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Actinomycetales   Schaalia        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Bacteroidales     Bacteroides     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Campylobacterales Campylobact…    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Caryophanales     Gemella         <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Caryophanales     Listeria        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="perform-principal-component-analysis">Perform principal component analysis<a class="anchor" aria-label="anchor" href="#perform-principal-component-analysis"></a>
@@ -280,21 +280,21 @@ that contain numeric values in all selected variables, so we now only
 need to do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pca_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pca.html">pca</a></span><span class="op">(</span><span class="va">resistance_data</span><span class="op">)</span></span>
-<span><span class="co"># ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP"</span></span>
-<span><span class="co">#   and "TOB". Total observations available: 7.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP"</span></span>
+<span><span class="co">#&gt;   and "TOB". Total observations available: 7.</span></span></code></pre></div>
 <p>The result can be reviewed with the good old <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>
 function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></span>
-<span><span class="co"># Groups (n=4, named as 'order'):</span></span>
-<span><span class="co"># [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"</span></span>
-<span><span class="co"># Importance of components:</span></span>
-<span><span class="co">#                           PC1    PC2    PC3     PC4     PC5     PC6       PC7</span></span>
-<span><span class="co"># Standard deviation     2.1539 1.6807 0.6138 0.33879 0.20808 0.03140 9.577e-17</span></span>
-<span><span class="co"># Proportion of Variance 0.5799 0.3531 0.0471 0.01435 0.00541 0.00012 0.000e+00</span></span>
-<span><span class="co"># Cumulative Proportion  0.5799 0.9330 0.9801 0.99446 0.99988 1.00000 1.000e+00</span></span></code></pre></div>
-<pre><code><span><span class="co"># Groups (n=4, named as 'order'):</span></span>
-<span><span class="co"># [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"</span></span></code></pre>
+<span><span class="co">#&gt; Groups (n=4, named as 'order'):</span></span>
+<span><span class="co">#&gt; [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"</span></span>
+<span><span class="co">#&gt; Importance of components:</span></span>
+<span><span class="co">#&gt;                           PC1    PC2    PC3     PC4     PC5     PC6       PC7</span></span>
+<span><span class="co">#&gt; Standard deviation     2.1539 1.6807 0.6138 0.33879 0.20808 0.03140 1.232e-16</span></span>
+<span><span class="co">#&gt; Proportion of Variance 0.5799 0.3531 0.0471 0.01435 0.00541 0.00012 0.000e+00</span></span>
+<span><span class="co">#&gt; Cumulative Proportion  0.5799 0.9330 0.9801 0.99446 0.99988 1.00000 1.000e+00</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Groups (n=4, named as 'order'):</span></span>
+<span><span class="co">#&gt; [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"</span></span></code></pre>
 <p>Good news. The first two components explain a total of 93.3% of the
 variance (see the PC1 and PC2 values of the <em>Proportion of
 Variance</em>. We can create a so-called biplot with the base R

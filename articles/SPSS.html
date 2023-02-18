@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9133</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9135</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,7 +178,7 @@
                         <h4 data-toc-skip class="author">Dr. Matthijs
 Berends</h4>
             
-            <h4 data-toc-skip class="date">17 February 2023</h4>
+            <h4 data-toc-skip class="date">18 February 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/SPSS.Rmd" class="external-link"><code>vignettes/SPSS.Rmd</code></a></small>
       <div class="d-none name"><code>SPSS.Rmd</code></div>
@@ -324,15 +324,15 @@ would be of any better use than R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># not all values are valid MIC values:</span></span>
 <span><span class="fu"><a href="../reference/as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">0.125</span><span class="op">)</span></span>
-<span><span class="co"># Class 'mic'</span></span>
-<span><span class="co"># [1] 0.125</span></span>
+<span><span class="co">#&gt; Class 'mic'</span></span>
+<span><span class="co">#&gt; [1] 0.125</span></span>
 <span><span class="fu"><a href="../reference/as.mic.html">as.mic</a></span><span class="op">(</span><span class="st">"testvalue"</span><span class="op">)</span></span>
-<span><span class="co"># Class 'mic'</span></span>
-<span><span class="co"># [1] &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; Class 'mic'</span></span>
+<span><span class="co">#&gt; [1] &lt;NA&gt;</span></span>
 <span></span>
 <span><span class="co"># the Gram stain is available for all bacteria:</span></span>
 <span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "Gram-negative"</span></span>
+<span><span class="co">#&gt; [1] "Gram-negative"</span></span>
 <span></span>
 <span><span class="co"># Klebsiella is intrinsic resistant to amoxicillin, according to EUCAST:</span></span>
 <span><span class="va">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -341,22 +341,22 @@ would be of any better use than R.</p>
 <span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">klebsiella_test</span> <span class="co"># (our original data)</span></span>
-<span><span class="co">#           mo amox</span></span>
-<span><span class="co"># 1 klebsiella    S</span></span>
+<span><span class="co">#&gt;           mo amox</span></span>
+<span><span class="co">#&gt; 1 klebsiella    S</span></span>
 <span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">klebsiella_test</span>, info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># (the edited data by EUCAST rules)</span></span>
-<span><span class="co">#           mo amox</span></span>
-<span><span class="co"># 1 klebsiella    R</span></span>
+<span><span class="co">#&gt;           mo amox</span></span>
+<span><span class="co">#&gt; 1 klebsiella    R</span></span>
 <span></span>
 <span><span class="co"># hundreds of trade names can be translated to a name, trade name or an ATC code:</span></span>
 <span><span class="fu"><a href="../reference/ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"floxapen"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "Flucloxacillin"</span></span>
+<span><span class="co">#&gt; [1] "Flucloxacillin"</span></span>
 <span><span class="fu"><a href="../reference/ab_property.html">ab_tradenames</a></span><span class="op">(</span><span class="st">"floxapen"</span><span class="op">)</span></span>
-<span><span class="co">#  [1] "culpen"               "floxacillin"          "floxacillin sodium"  </span></span>
-<span><span class="co">#  [4] "floxapen"             "floxapen sodium salt" "fluclox"             </span></span>
-<span><span class="co">#  [7] "flucloxacilina"       "flucloxacillin"       "flucloxacilline"     </span></span>
-<span><span class="co"># [10] "flucloxacillinum"     "fluorochloroxacillin" "staphylex"</span></span>
+<span><span class="co">#&gt;  [1] "culpen"               "floxacillin"          "floxacillin sodium"  </span></span>
+<span><span class="co">#&gt;  [4] "floxapen"             "floxapen sodium salt" "fluclox"             </span></span>
+<span><span class="co">#&gt;  [7] "flucloxacilina"       "flucloxacillin"       "flucloxacilline"     </span></span>
+<span><span class="co">#&gt; [10] "flucloxacillinum"     "fluorochloroxacillin" "staphylex"</span></span>
 <span><span class="fu"><a href="../reference/ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"floxapen"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "J01CF05"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "J01CF05"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="import-data-from-spsssasstata">Import data from SPSS/SAS/Stata<a class="anchor" aria-label="anchor" href="#import-data-from-spsssasstata"></a>

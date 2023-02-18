@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9133</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9135</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -238,20 +238,20 @@ number of observations, the actual observed resistance, the estimated
 resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predict_TZP</span></span>
-<span><span class="co"># <span style="color: #949494;"># A tibble: 32 × 7</span></span></span>
-<span><span class="co">#     year  value se_min se_max observations observed estimated</span></span>
-<span><span class="co">#  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>002 0.2        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           15   0.2       0.056<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>003 0.062<span style="text-decoration: underline;">5</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           32   0.062<span style="text-decoration: underline;">5</span>    0.061<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>004 0.085<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           82   0.085<span style="text-decoration: underline;">4</span>    0.067<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005 0.05       <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           60   0.05      0.074<span style="text-decoration: underline;">1</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>006 0.050<span style="text-decoration: underline;">8</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           59   0.050<span style="text-decoration: underline;">8</span>    0.081<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>007 0.121      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           66   0.121     0.088<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>008 0.041<span style="text-decoration: underline;">7</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           72   0.041<span style="text-decoration: underline;">7</span>    0.097<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>009 0.016<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           61   0.016<span style="text-decoration: underline;">4</span>    0.106 </span></span>
-<span><span class="co"># <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>010 0.056<span style="text-decoration: underline;">6</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           53   0.056<span style="text-decoration: underline;">6</span>    0.116 </span></span>
-<span><span class="co"># <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>011 0.183      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           93   0.183     0.127 </span></span>
-<span><span class="co"># <span style="color: #949494;"># … with 22 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 7</span></span></span>
+<span><span class="co">#&gt;     year  value se_min se_max observations observed estimated</span></span>
+<span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>002 0.2        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           15   0.2       0.056<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>003 0.062<span style="text-decoration: underline;">5</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           32   0.062<span style="text-decoration: underline;">5</span>    0.061<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>004 0.085<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           82   0.085<span style="text-decoration: underline;">4</span>    0.067<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005 0.05       <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           60   0.05      0.074<span style="text-decoration: underline;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>006 0.050<span style="text-decoration: underline;">8</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           59   0.050<span style="text-decoration: underline;">8</span>    0.081<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>007 0.121      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           66   0.121     0.088<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>008 0.041<span style="text-decoration: underline;">7</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           72   0.041<span style="text-decoration: underline;">7</span>    0.097<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>009 0.016<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           61   0.016<span style="text-decoration: underline;">4</span>    0.106 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>010 0.056<span style="text-decoration: underline;">6</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           53   0.056<span style="text-decoration: underline;">6</span>    0.116 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>011 0.183      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           93   0.183     0.127 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 22 more rows</span></span></span></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be
 extended by other packages to depend the output based on the type of
 input. We extended its function to cope with resistance predictions:</p>
@@ -342,14 +342,14 @@ model might be more appropriate:</p>
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span><span class="op">$</span><span class="va">model</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">family</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># Family: binomial </span></span>
-<span><span class="co"># Link function: logit</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Family: binomial </span></span>
+<span><span class="co">#&gt; Link function: logit</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span>
-<span><span class="co">#                  Estimate  Std. Error   z value     Pr(&gt;|z|)</span></span>
-<span><span class="co"># (Intercept) -200.67944891 46.17315349 -4.346237 1.384932e-05</span></span>
-<span><span class="co"># year           0.09883005  0.02295317  4.305725 1.664395e-05</span></span></code></pre></div>
+<span><span class="co">#&gt;                  Estimate  Std. Error   z value     Pr(&gt;|z|)</span></span>
+<span><span class="co">#&gt; (Intercept) -200.67944891 46.17315349 -4.346237 1.384932e-05</span></span>
+<span><span class="co">#&gt; year           0.09883005  0.02295317  4.305725 1.664395e-05</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
