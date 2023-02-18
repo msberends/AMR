@@ -36,8 +36,8 @@ if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_hook.R')"
     currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
-    echo "-> Adding files in 'data-raw' and 'man' to this commit"
-    git add data-raw/*
+    echo "- Adding changed files in ./data-raw and ./man to this commit"
+    git add data-raw/* --quiet
     git add man/*
     git add R/sysdata.rda
     git add NAMESPACE
@@ -65,7 +65,7 @@ if [ "$currenttag" = "" ]; then
   # there is no tag, so set tag to 0.0.1 and commit index to current count
   currenttag="0.0.1"
   currentcommit=$(git rev-list --count ${defaultbranch})
-  echo "- no git tags found, create one in format 'v(x).(y).(z)' - curently ${currentcommit} previous commits in ${defaultbranch}"
+  echo "- no git tags found, create one in format 'v(x).(y).(z)' - curently ${currentcommit} previous commits in '${defaultbranch}'"
 else
   # there is a tag, so base version number on that
   currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
@@ -73,7 +73,7 @@ else
     # tag is new, so this must become the version number
     currentversion="$currenttag"
   fi
-  echo "- latest tag is '${currenttagfull}', with ${currentcommit} previous commits in ${defaultbranch}"
+  echo "- latest tag is '${currenttagfull}', with ${currentcommit} previous commits in '${defaultbranch}'"
 fi
 if [ "$currentversion" = "" ]; then
   # combine tag (e.g. 1.2.3) and commit number (like 5) increased by 9000 to indicate beta version
@@ -84,7 +84,7 @@ echo "- ${currentpkg} pkg version set to ${currentversion}"
 # set version number and date to DESCRIPTION file
 sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
 sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
-echo "- updated DESCRIPTION"
+echo "- updated version number and date in ./DESCRIPTION"
 # remove leftover on macOS
 rm -f DESCRIPTION--
 # add to commit
@@ -96,7 +96,7 @@ if [ -e "NEWS.md" ]; then
     currentpkg=""
   fi
   sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
-  echo "- updated NEWS.md"
+  echo "- updated version number in ./NEWS.md"
   # remove leftover on macOS
   rm -f NEWS.md--
   # add to commit
