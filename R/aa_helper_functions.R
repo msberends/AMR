@@ -1139,7 +1139,7 @@ try_colour <- function(..., before, after, collapse = " ") {
 }
 is_dark <- function() {
   if (is.null(AMR_env$is_dark_theme)) {
-    AMR_env$is_dark_theme <- tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
+    !has_colour() || AMR_env$is_dark_theme <- tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
   }
   isTRUE(AMR_env$is_dark_theme)
 }

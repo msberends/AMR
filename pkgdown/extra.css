@@ -36,7 +36,10 @@
   }
 }
 @media (max-width: 575.98px) {
-  footer .pkgdown-footer-right {
+  footer .pkgdown-footer-left {
+    text-align: center;
+  }
+    footer .pkgdown-footer-right {
     text-align: center;
   }
 }

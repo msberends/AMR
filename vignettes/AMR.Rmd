@@ -1,7 +1,5 @@
 ---
 title: "How to conduct AMR data analysis"
-author: "Dr. Matthijs Berends"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -18,7 +16,7 @@ editor_options:
 knitr::opts_chunk$set(
   warning = FALSE,
   collapse = TRUE,
-  comment = "#",
+  comment = "#>",
   fig.width = 7.5,
   fig.height = 5
 )
@@ -586,13 +584,13 @@ autoplot(
 
 The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practise AMR data analysis.
 
-We will compare the resistance to amoxicillin/clavulanic acid (column `FOS`) between an ICU and other clinical wards. The input for the `fisher.test()` can be retrieved with a transformation like this:
+We will compare the resistance to amoxicillin/clavulanic acid (column `AMC`) between an ICU and other clinical wards. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
 ```{r, results = 'markup'}
 # use package 'tidyr' to pivot data:
 library(tidyr)
 
-check_FOS <- example_isolates %>%
+check_AMC <- example_isolates %>%
   filter(ward %in% c("ICU", "Clinical")) %>% # filter on only these wards
   select(ward, AMC) %>% # select the wards and amoxi/clav
   group_by(ward) %>% # group on the wards
@@ -604,14 +602,18 @@ check_FOS <- example_isolates %>%
   select(ICU, Clinical) %>% # and only select these columns
   as.matrix() # transform to a good old matrix for fisher.test()
 
-check_FOS
+check_AMC
 ```
 
 We can apply the test now with:
 
 ```{r}
 # do Fisher's Exact Test
-fisher.test(check_FOS)
+fisher.test(check_AMC)
 ```
 
-As can be seen, the p value is practically zero (`r format(fisher.test(check_FOS)$p.value, scientific = FALSE)`), which means that the amoxicillin/clavulanic acid resistance found in isolates between patients in ICUs and other clinical wards are really different.
+As can be seen, the p value is practically zero (`r format(fisher.test(check_AMC)$p.value, scientific = FALSE)`), which means that the amoxicillin/clavulanic acid resistance found in isolates between patients in ICUs and other clinical wards are really different.
+
+----
+
+*Author: Dr. Matthijs Berends*

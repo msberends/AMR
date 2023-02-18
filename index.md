@@ -7,7 +7,7 @@
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC** and **SNOMED CT**
 * Works on Windows, macOS and Linux with **all versions of R** since R-3.0 and is completely **dependency-free**, highly suitable for places with **limited resources**
 
-<div style="display: flex;">
+<div style="display: flex; font-size: 0.8em;">
 <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
 <p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03">https://doi.org/10.18637/jss.v104.i03</a></small></p>
 </div>

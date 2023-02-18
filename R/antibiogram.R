@@ -477,7 +477,9 @@ antibiogram <- function(x,
     colnames(new_df)[edit_col] <- paste(colnames(new_df)[edit_col], "(N min-max)")
   }
 
-  structure(as_original_data_class(new_df, class(x), extra_class = "antibiogram"),
+  out <- as_original_data_class(new_df, class(x), extra_class = "antibiogram")
+  rownames(out) <- NULL
+  structure(out,
     long = long,
     combine_SI = combine_SI
   )
