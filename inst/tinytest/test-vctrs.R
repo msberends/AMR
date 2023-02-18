@@ -28,12 +28,12 @@
 # ==================================================================== #
 
 # extra tests for {vctrs} pkg support
-if (AMR:::pkg_is_available("dplyr", also_load = FALSE)) {
-  test <- dplyr::tibble(ab = as.ab("CIP"),
-                        mo = as.mo("Escherichia coli"),
-                        mic = as.mic(2),
-                        disk = as.disk(20),
-                        sir = as.sir("S"))
+if (AMR:::pkg_is_available("tibble")) {
+  test <- tibble::tibble(ab = as.ab("CIP"),
+                         mo = as.mo("Escherichia coli"),
+                         mic = as.mic(2),
+                         disk = as.disk(20),
+                         sir = as.sir("S"))
   check1 <- lapply(test, class)
   test[1, "ab"] <- "GEN"
   test[1, "mo"] <- "B_KLBSL_PNMN"
@@ -46,8 +46,8 @@ if (AMR:::pkg_is_available("dplyr", also_load = FALSE)) {
   check2 <- lapply(test, class)
   expect_identical(check1, check2)
   
-  test <- dplyr::tibble(cipro = as.sir("S"),
-                        variable = "test")
+  test <- tibble::tibble(cipro = as.sir("S"),
+                         variable = "test")
   expect_equal(nrow(test[quinolones() == "S", ]), 1)
   expect_equal(nrow(test[quinolones() == "R", ]), 0)
 }

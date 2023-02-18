@@ -198,7 +198,7 @@ expect_equal(
   mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")),
   "Escherichia coli"
 )
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
     730,
     tolerance = 0.5

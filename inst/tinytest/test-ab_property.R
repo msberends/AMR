@@ -82,7 +82,7 @@ expect_identical(
   c("J01DC01", "J01DD01", "J01DD02", "J01DD04", "J01GB03", "J01GB01")
 )
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_identical(
     example_isolates %>% set_ab_names(),
     example_isolates %>% rename_with(set_ab_names)

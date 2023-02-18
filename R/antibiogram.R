@@ -563,6 +563,7 @@ print.antibiogram <- function(x, as_kable = !interactive(), italicise = TRUE, ..
   meet_criteria(italicise, allow_class = "logical", has_length = 1)
 
   if (isTRUE(as_kable) &&
+      pkg_is_available("knitr") &&
       # be sure not to run kable in pkgdown for our website generation
       !(missing(as_kable) && identical(Sys.getenv("IN_PKGDOWN"), "true"))) {
     out <- knitr::kable(x, ...)

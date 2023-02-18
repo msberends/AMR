@@ -139,7 +139,7 @@ expect_error(first_isolate(example_isolates,
   col_mo = "mo"
 ))
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   # if mo is not an mo class, result should be the same
   expect_identical(
     example_isolates %>%

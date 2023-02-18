@@ -130,7 +130,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   add_MO_lookup_to_AMR_env()
 
   if (!is.data.frame(x)) {
-    if (pkg_is_available("tibble", also_load = FALSE)) {
+    if (pkg_is_available("tibble")) {
       x <- import_fn("tibble", "tibble")(mo = x)
     } else {
       x <- data.frame(mo = x, stringsAsFactors = FALSE)

@@ -51,7 +51,7 @@ expect_equal(
   c(1, 2, 2, 2, 3)
 )
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_identical(
     test_df %>% group_by(patient_id) %>% mutate(f = is_new_episode(date, 365)) %>% pull(f),
     c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE)

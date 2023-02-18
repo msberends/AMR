@@ -112,7 +112,7 @@ if (utf8_supported && !is_latex) {
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "sir")
   # Support for skim() from the skimr package
-  if (pkg_is_available("skimr", also_load = FALSE, min_version = "2.0.0")) {
+  if (pkg_is_available("skimr", min_version = "2.0.0")) {
     s3_register("skimr::get_skimmers", "mo")
     s3_register("skimr::get_skimmers", "sir")
     s3_register("skimr::get_skimmers", "mic")
@@ -178,7 +178,7 @@ if (utf8_supported && !is_latex) {
     try(invisible(get_mo_source()), silent = TRUE)
   }
   # be sure to print tibbles as tibbles
-  if (pkg_is_available("tibble", also_load = FALSE)) {
+  if (pkg_is_available("tibble")) {
     try(loadNamespace("tibble"), silent = TRUE)
   }
 

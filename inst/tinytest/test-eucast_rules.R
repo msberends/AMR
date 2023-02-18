@@ -98,7 +98,7 @@ b <- data.frame(
 expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
 
 # piperacillin must be R in Enterobacteriaceae when tica is R
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_equal(
     suppressWarnings(
       example_isolates %>%
@@ -150,7 +150,7 @@ expect_equal(
 )
 
 # also test norf
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_stdout(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
 }
 

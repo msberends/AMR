@@ -388,7 +388,7 @@ stop_ifnot_installed <- function(package) {
   }
 }
 
-pkg_is_available <- function(pkg, also_load = TRUE, min_version = NULL) {
+pkg_is_available <- function(pkg, also_load = FALSE, min_version = NULL) {
   if (also_load == TRUE) {
     out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE))
   } else {
@@ -1318,14 +1318,14 @@ create_pillar_column <- function(x, ...) {
 }
 
 as_original_data_class <- function(df, old_class = NULL, extra_class = NULL) {
-  if ("tbl_df" %in% old_class && pkg_is_available("tibble", also_load = FALSE)) {
+  if ("tbl_df" %in% old_class && pkg_is_available("tibble")) {
     # this will then also remove groups
     fn <- import_fn("as_tibble", "tibble")
-  } else if ("tbl_ts" %in% old_class && pkg_is_available("tsibble", also_load = FALSE)) {
+  } else if ("tbl_ts" %in% old_class && pkg_is_available("tsibble")) {
     fn <- import_fn("as_tsibble", "tsibble")
-  } else if ("data.table" %in% old_class && pkg_is_available("data.table", also_load = FALSE)) {
+  } else if ("data.table" %in% old_class && pkg_is_available("data.table")) {
     fn <- import_fn("as.data.table", "data.table")
-  } else if ("tabyl" %in% old_class && pkg_is_available("janitor", also_load = FALSE)) {
+  } else if ("tabyl" %in% old_class && pkg_is_available("janitor")) {
     fn <- import_fn("as_tabyl", "janitor")
   } else {
     fn <- function(x) base::as.data.frame(df, stringsAsFactors = FALSE)

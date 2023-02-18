@@ -1219,7 +1219,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 12.0)
   rownames(out) <- NULL
   out$ab <- ab
   out$name <- ab_name(ab, language = NULL)
-  if (pkg_is_available("tibble", also_load = FALSE)) {
+  if (pkg_is_available("tibble")) {
     import_fn("as_tibble", "tibble")(out)
   } else {
     out

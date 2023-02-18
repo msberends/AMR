@@ -37,7 +37,7 @@ if command -v Rscript > /dev/null; then
     Rscript -e "source('data-raw/_pre_commit_hook.R')"
     currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
     echo "- Adding changed files in ./data-raw and ./man to this commit"
-    git add data-raw/* --quiet
+    git add data-raw/* --ignore-missing
     git add man/*
     git add R/sysdata.rda
     git add NAMESPACE

@@ -95,7 +95,7 @@ expect_identical(
   c("gen", "tobra")
 )
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_equal(example_isolates %>% select(administrable_per_os() & penicillins()) %>% ncol(), 5, tolerance = 0.5)
   expect_equal(example_isolates %>% select(administrable_iv() & penicillins()) %>% ncol(), 7, tolerance = 0.5)
   expect_equal(example_isolates %>% select(administrable_iv() | penicillins()) %>% ncol(), 37, tolerance = 0.5)

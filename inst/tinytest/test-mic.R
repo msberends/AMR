@@ -63,16 +63,16 @@ expect_silent(plot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), expand = FALSE))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), mo = "Escherichia coli", ab = "cipr"))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(autoplot(as.mic(c(1, 2, 4, 8))), "gg")
-  expect_inherits(autoplot(as.mic(c(1, 2, 4, 8)), expand = FALSE), "gg")
-  expect_inherits(autoplot(as.mic(c(1, 2, 4, 8, 32)), mo = "Escherichia coli", ab = "cipr"), "gg")
+  expect_inherits(ggplot2::autoplot(as.mic(c(1, 2, 4, 8))), "gg")
+  expect_inherits(ggplot2::autoplot(as.mic(c(1, 2, 4, 8)), expand = FALSE), "gg")
+  expect_inherits(ggplot2::autoplot(as.mic(c(1, 2, 4, 8, 32)), mo = "Escherichia coli", ab = "cipr"), "gg")
 }
 expect_stdout(print(as.mic(c(1, 2, 4, 8))))
 
 expect_inherits(summary(as.mic(c(2, 8))), c("summaryDefault", "table"))
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  expect_stdout(print(tibble(m = as.mic(2:4))))
+if (AMR:::pkg_is_available("tibble")) {
+  expect_stdout(print(tibble::tibble(m = as.mic(2:4))))
 }
 
 # all mathematical operations

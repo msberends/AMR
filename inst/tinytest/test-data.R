@@ -55,7 +55,7 @@ expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$m
 # antibiotic names must always be coercible to their original AB code
 expect_identical(as.ab(antibiotics$name), antibiotics$ab)
 
-if (AMR:::pkg_is_available("tibble", also_load = FALSE)) {
+if (AMR:::pkg_is_available("tibble")) {
   # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
   datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
   for (i in seq_len(length(datasets))) {

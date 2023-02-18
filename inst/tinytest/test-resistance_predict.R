@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_stdout(AMX_R <- example_isolates %>%
     filter(mo == "B_ESCHR_COLI") %>%
     sir_predict(
@@ -52,7 +52,7 @@ pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(plot(x))
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_silent(ggplot_sir_predict(x))
-  expect_silent(autoplot(x))
+  expect_silent(ggplot2::autoplot(x))
   expect_error(ggplot_sir_predict(example_isolates))
 }
 expect_stdout(sir_predict(

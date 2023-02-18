@@ -1080,7 +1080,7 @@ sir_interpretation_history <- function(clean = FALSE) {
   # sort descending on time
   out <- out[order(out$datetime, decreasing = TRUE), , drop = FALSE]
 
-  if (pkg_is_available("tibble", also_load = FALSE)) {
+  if (pkg_is_available("tibble")) {
     import_fn("as_tibble", "tibble")(out)
   } else {
     out

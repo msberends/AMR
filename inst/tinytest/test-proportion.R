@@ -47,7 +47,7 @@ expect_equal(
   proportion_SI(example_isolates$AMX)
 )
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_equal(example_isolates %>% proportion_SI(AMC),
     0.7626397,
     tolerance = 0.0001

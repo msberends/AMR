@@ -278,7 +278,7 @@ expect_error(custom_mdro_guideline("test" ~ A))
 # ))
 
 # print groups
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_stdout(x <- mdro(example_isolates %>% group_by(ward), info = TRUE, pct_required_classes = 0))
   expect_stdout(x <- mdro(example_isolates %>% group_by(ward), guideline = custom, info = TRUE))
 }

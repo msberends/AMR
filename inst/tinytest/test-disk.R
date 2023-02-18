@@ -48,12 +48,12 @@ expect_silent(plot(as.disk(c(10, 20, 40))))
 expect_silent(plot(as.disk(c(10, 20, 40)), expand = FALSE))
 expect_silent(plot(as.disk(c(10, 20, 40)), mo = "Escherichia coli", ab = "cipr"))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(autoplot(as.disk(c(10, 20, 40))), "gg")
-  expect_inherits(autoplot(as.disk(c(10, 20, 40)), expand = FALSE), "gg")
-  expect_inherits(autoplot(as.disk(c(10, 20, 40)), mo = "Escherichia coli", ab = "cipr"), "gg")
+  expect_inherits(ggplot2::autoplot(as.disk(c(10, 20, 40))), "gg")
+  expect_inherits(ggplot2::autoplot(as.disk(c(10, 20, 40)), expand = FALSE), "gg")
+  expect_inherits(ggplot2::autoplot(as.disk(c(10, 20, 40)), mo = "Escherichia coli", ab = "cipr"), "gg")
 }
 expect_stdout(print(as.disk(12)))
 
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  expect_stdout(print(tibble(d = as.disk(12))))
+if (AMR:::pkg_is_available("tibble")) {
+  expect_stdout(print(tibble::tibble(d = as.disk(12))))
 }

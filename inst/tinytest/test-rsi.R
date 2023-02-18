@@ -45,7 +45,7 @@ pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(barplot(as.sir(c("S", "I", "R"))))
 expect_silent(plot(as.sir(c("S", "I", "R"))))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(autoplot(as.sir(c("S", "I", "R"))), "gg")
+  expect_inherits(ggplot2::autoplot(as.sir(c("S", "I", "R"))), "gg")
 }
 expect_stdout(print(as.sir(c("S", "I", "R"))))
 expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
@@ -68,7 +68,7 @@ expect_identical(
 expect_error(as.sir.mic(as.mic(16)))
 expect_error(as.sir.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   # 40 sir columns
   expect_equal(
     example_isolates %>%
@@ -88,12 +88,12 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
                 pull(MEM) %>% 
                 is.sir())
 }
-if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
+if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
   expect_inherits(
     skim(example_isolates),
     "data.frame"
   )
-  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     expect_inherits(
       example_isolates %>%
         mutate(
@@ -146,7 +146,7 @@ expect_equal(
   suppressMessages(as.sir(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
   as.sir("R")
 )
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_true(suppressWarnings(example_isolates %>%
     mutate(amox_mic = as.mic(2)) %>%
     select(mo, amox_mic) %>%
@@ -188,7 +188,7 @@ expect_equal(
   ),
   "R"
 )
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_true(example_isolates %>%
     mutate(amox_disk = as.disk(15)) %>%
     select(mo, amox_disk) %>%
