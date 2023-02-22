@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,7 +178,7 @@
 <li><p><code>Inducible clindamycin resistance</code><br> Clindamycin can be induced?</p></li>
 <li><p><code>Comment</code><br> Other comments</p></li>
 <li><p><code>Date of data entry</code><br><a href="https://rdrr.io/r/base/Dates.html" class="external-link">Date</a> this data was entered in WHONET</p></li>
-<li><p><code>AMP_ND10:CIP_EE</code><br> 0 different antibiotics. You can lookup the abbreviations in the <a href="antibiotics.html">antibiotics</a> data set, or use e.g. <code><a href="ab_property.html">ab_name("AMP")</a></code> to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using <code><a href="as.sir.html">as.sir()</a></code>.</p></li>
+<li><p><code>AMP_ND10:CIP_EE</code><br> 28 different antibiotics. You can lookup the abbreviations in the <a href="antibiotics.html">antibiotics</a> data set, or use e.g. <code><a href="ab_property.html">ab_name("AMP")</a></code> to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using <code><a href="as.sir.html">as.sir()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -188,89 +188,8 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">WHONET</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> columns to 'sir' with as.sir(), e.g.:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 'rsi' class has been replaced with 'sir'. Transform your 'rsi' columns</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> to 'sir' with as.sir(), e.g.:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   your_data %&gt;% mutate_if(is.rsi, as.sir)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 500 × 53</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Identif…¹ Speci…² Organ…³ Country Labor…⁴ Last …⁵ First…⁶ Sex     Age Age c…⁷</span>
@@ -291,7 +210,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Organism type` &lt;chr&gt;, Serotype &lt;chr&gt;, `Beta-lactamase` &lt;lgl&gt;, ESBL &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Carbapenemase &lt;lgl&gt;, `MRSA screening test` &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Inducible clindamycin resistance` &lt;lgl&gt;, Comment &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Date of data entry` &lt;date&gt;, AMP_ND10 &lt;rsi[!]&gt;, AMC_ED20 &lt;rsi[!]&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Date of data entry` &lt;date&gt;, AMP_ND10 &lt;rsi&gt;, AMC_ED20 &lt;rsi&gt;, …</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

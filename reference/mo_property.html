@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -389,7 +389,7 @@
 
 
 <dt>keep_synonyms</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
 
 
 <dt>...</dt>
@@ -405,7 +405,7 @@
 
 
 <dt>property</dt>
-<dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed", or must be <code>"shortname"</code></p></dd>
+<dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be <code>"shortname"</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -433,7 +433,7 @@
 <p>Determination of intrinsic resistance (<code>mo_is_intrinsic_resistant()</code>) will be based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, which is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021). The <code>mo_is_intrinsic_resistant()</code> function can be vectorised over both argument <code>x</code> (input for microorganisms) and <code>ab</code> (input for antibiotics).</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
 <p>SNOMED codes (<code>mo_snomed()</code>) are from the version of 1 July, 2021. See <em>Source</em> and the <a href="microorganisms.html">microorganisms</a> data set for more info.</p>
-<p>Old taxonomic names (so-called 'synonyms') can be retrieved with <code>mo_synonyms()</code>, the current taxonomic name can be retrieved with <code>mo_current()</code>. Both functions return full names.</p>
+<p>Old taxonomic names (so-called 'synonyms') can be retrieved with <code>mo_synonyms()</code> (which will have the scientific reference as <a href="https://rdrr.io/r/base/names.html" class="external-link">name</a>), the current taxonomic name can be retrieved with <code>mo_current()</code>. Both functions return full names.</p>
 <p>All output <a href="translate.html">will be translated</a> where possible.</p>
     </div>
     <div class="section level2">
@@ -527,18 +527,19 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># scientific reference -----------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">mo_ref</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Trevisan, 1887"</span>
-<span class="r-in"><span><span class="fu">mo_authors</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Trevisan"</span>
-<span class="r-in"><span><span class="fu">mo_year</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1887</span>
-<span class="r-in"><span><span class="fu">mo_lpsn</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "777151"</span>
-<span class="r-in"><span><span class="fu">mo_gbif</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3221874"</span>
-<span class="r-in"><span><span class="fu">mo_synonyms</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span><span class="fu">mo_ref</span><span class="op">(</span><span class="st">"Klebsiella aerogenes"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Tindall et al., 2017"</span>
+<span class="r-in"><span><span class="fu">mo_authors</span><span class="op">(</span><span class="st">"Klebsiella aerogenes"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Tindall et al."</span>
+<span class="r-in"><span><span class="fu">mo_year</span><span class="op">(</span><span class="st">"Klebsiella aerogenes"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2017</span>
+<span class="r-in"><span><span class="fu">mo_lpsn</span><span class="op">(</span><span class="st">"Klebsiella aerogenes"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "777146"</span>
+<span class="r-in"><span><span class="fu">mo_gbif</span><span class="op">(</span><span class="st">"Klebsiella aerogenes"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "9281703"</span>
+<span class="r-in"><span><span class="fu">mo_synonyms</span><span class="op">(</span><span class="st">"Klebsiella aerogenes"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Hormaeche et al., 1960     Bascomb et al., 1971 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Enterobacter aerogenes"     "Klebsiella mobilis" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># abbreviations known in the field -----------------------------------------</span></span></span>
@@ -554,8 +555,10 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">mo_genus</span><span class="op">(</span><span class="st">"EHEC"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Escherichia"</span>
-<span class="r-in"><span><span class="fu">mo_species</span><span class="op">(</span><span class="st">"EHEC"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mo_species</span><span class="op">(</span><span class="st">"EIEC"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "coli"</span>
+<span class="r-in"><span><span class="fu">mo_name</span><span class="op">(</span><span class="st">"UPEC"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Escherichia coli"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># known subspecies ---------------------------------------------------------</span></span></span>

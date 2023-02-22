@@ -12,7 +12,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,11 +196,11 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
 
 <dt>language</dt>
-<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the option <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language of the returned text - the default is the current system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 
 
 <dt>combine_SI</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to <code>TRUE</code></p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -355,7 +355,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>    <span class="fu">count_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin) and 'KAN' (kanamycin)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ward       antibiotic interpretation value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>

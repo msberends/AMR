@@ -12,7 +12,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -238,7 +238,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
 
 
 <dt>guideline</dt>
-<dd><p>defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set), but can be set with the option <code><a href="AMR-options.html">AMR_guideline</a></code>. Currently supports EUCAST (2013-2022) and CLSI (2013-2022), see <em>Details</em>.</p></dd>
+<dd><p>defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set), but can be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_guideline</a></code>. Currently supports EUCAST (2013-2022) and CLSI (2013-2022), see <em>Details</em>.</p></dd>
 
 
 <dt>uti</dt>
@@ -258,15 +258,15 @@ All breakpoints used for interpretation are publicly available in the clinical_b
 
 
 <dt>include_screening</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that clinical breakpoints for screening are allowed, defaults to <code>FALSE</code>. Can also be set with the option <code><a href="AMR-options.html">AMR_include_screening</a></code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that clinical breakpoints for screening are allowed - the default is <code>FALSE</code>. Can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_include_screening</a></code>.</p></dd>
 
 
 <dt>include_PKPD</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to <code>TRUE</code>. Can also be set with the option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
 
 
 <dt>col_mo</dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt>clean</dt>
@@ -308,7 +308,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
 
 <p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022).</p>
 <p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2022"</code> or <code>"CLSI 2022"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
-<p>You can set the default guideline with the option <code><a href="AMR-options.html">AMR_guideline</a></code> (e.g. in your <code>.Rprofile</code> file), such as:</p>
+<p>You can set the default guideline with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_guideline</a></code> (e.g. in your <code>.Rprofile</code> file), such as:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI 2018"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"EUCAST 2020"</span>)</span>
@@ -534,16 +534,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 17</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input ab_guid…¹ mo_in…² mo_guideline     guide…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-02-18 <span style="color: #949494;">14:03:27</span>     1 TOB      TOB       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-02-18 <span style="color: #949494;">14:03:26</span>     1 GEN      GEN       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-02-18 <span style="color: #949494;">14:03:26</span>     1 CIP      CIP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-02-18 <span style="color: #949494;">14:03:25</span>     1 AMP      AMP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-02-18 <span style="color: #949494;">14:03:20</span>     1 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-02-18 <span style="color: #949494;">14:03:20</span>     2 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-02-18 <span style="color: #949494;">14:03:20</span>     3 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-02-18 <span style="color: #949494;">14:03:20</span>     4 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-02-18 <span style="color: #949494;">14:03:20</span>     5 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-02-18 <span style="color: #949494;">14:03:20</span>     6 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-02-22 <span style="color: #949494;">13:45:00</span>     1 TOB      TOB       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-02-22 <span style="color: #949494;">13:44:59</span>     1 GEN      GEN       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-02-22 <span style="color: #949494;">13:44:59</span>     1 CIP      CIP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-02-22 <span style="color: #949494;">13:44:58</span>     1 AMP      AMP       Escher… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-02-22 <span style="color: #949494;">13:44:54</span>     1 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-02-22 <span style="color: #949494;">13:44:54</span>     2 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-02-22 <span style="color: #949494;">13:44:54</span>     3 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-02-22 <span style="color: #949494;">13:44:54</span>     4 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-02-22 <span style="color: #949494;">13:44:54</span>     5 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-02-22 <span style="color: #949494;">13:44:54</span>     6 CIP      CIP       B_ESCH… B_[ORD]_ENTRBCTR EUCAST…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows, 10 more variables: ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   input &lt;dbl&gt;, outcome &lt;sir&gt;, breakpoint_S_R &lt;chr&gt;, ab_considered &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   mo_considered &lt;lgl&gt;, breakpoint_S &lt;lgl&gt;, breakpoint_R &lt;lgl&gt;,</span></span>
@@ -725,7 +725,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in as.sir(): 3 results in column '24' truncated (50%) that were invalid</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B" and "C"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B", and "C"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    I    R    &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="st">"&lt;= 0.002; S"</span><span class="op">)</span> <span class="co"># will return "S"</span></span></span>

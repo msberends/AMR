@@ -12,7 +12,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,15 +188,15 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt>col_mo</dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt>info</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console - the default is only print while in interactive sessions</p></dd>
 
 
 <dt>rules</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expert")</code>. The default value can be set to another value using the option <code><a href="AMR-options.html">AMR_eucastrules</a></code>: <code>options(AMR_eucastrules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expert")</code>. The default value can be set to another value using the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_eucastrules</a></code>: <code>options(AMR_eucastrules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
 
 
 <dt>verbose</dt>
@@ -204,19 +204,19 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt>version_breakpoints</dt>
-<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0" or "10.0".</p></dd>
+<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0", or "10.0".</p></dd>
 
 
 <dt>version_expertrules</dt>
-<dd><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2" or "3.1".</p></dd>
+<dd><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2", or "3.1".</p></dd>
 
 
 <dt>ampc_cephalosporin_resistance</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code> and higher; these version of '<em>EUCAST Expert Rules on Enterobacterales</em>' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of <code>NA</code> (the default) for this argument will remove results for these three drugs, while e.g. a value of <code>"R"</code> will make the results for these drugs resistant. Use <code>NULL</code> or <code>FALSE</code> to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using <code>TRUE</code> is equal to using <code>"R"</code>. <br> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Citrobacter braakii</em>, <em>Citrobacter freundii</em>, <em>Citrobacter gillenii</em>, <em>Citrobacter murliniae</em>, <em>Citrobacter rodenticum</em>, <em>Citrobacter sedlakii</em>, <em>Citrobacter werkmanii</em>, <em>Citrobacter youngae</em>, <em>Enterobacter</em>, <em>Hafnia alvei</em>, <em>Klebsiella aerogenes</em>, <em>Morganella morganii</em>, <em>Providencia</em> and <em>Serratia</em>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code> and higher; these version of '<em>EUCAST Expert Rules on Enterobacterales</em>' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of <code>NA</code> (the default) for this argument will remove results for these three drugs, while e.g. a value of <code>"R"</code> will make the results for these drugs resistant. Use <code>NULL</code> or <code>FALSE</code> to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using <code>TRUE</code> is equal to using <code>"R"</code>. <br> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Citrobacter braakii</em>, <em>Citrobacter freundii</em>, <em>Citrobacter gillenii</em>, <em>Citrobacter murliniae</em>, <em>Citrobacter rodenticum</em>, <em>Citrobacter sedlakii</em>, <em>Citrobacter werkmanii</em>, <em>Citrobacter youngae</em>, <em>Enterobacter</em>, <em>Hafnia alvei</em>, <em>Klebsiella aerogenes</em>, <em>Morganella morganii</em>, <em>Providencia</em>, and <em>Serratia</em>.</p></dd>
 
 
 <dt>only_sir_columns</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antibiotic columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (defaults to <code>FALSE</code>)</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antibiotic columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (default is <code>FALSE</code>)</p></dd>
 
 
 <dt>custom_rules</dt>
@@ -232,7 +232,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt>administration</dt>
-<dd><p>route of administration, either "im", "iv" or "oral"</p></dd>
+<dd><p>route of administration, either "im", "iv", or "oral"</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -262,7 +262,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <p>Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:</p><ol><li><p>A drug <strong>with</strong> enzyme inhibitor will be set to S if the same drug <strong>without</strong> enzyme inhibitor is S</p></li>
 <li><p>A drug <strong>without</strong> enzyme inhibitor will be set to R if the same drug <strong>with</strong> enzyme inhibitor is R</p></li>
 </ol><p>Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.</p>
-<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the option <code><a href="AMR-options.html">AMR_eucastrules</a></code>, i.e. run <code>options(AMR_eucastrules = "all")</code>.</p>
+<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_eucastrules</a></code>, i.e. run <code>options(AMR_eucastrules = "all")</code>.</p>
 </div>
 
     </div>
@@ -365,6 +365,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tobra"</span>, <span class="st">"genta"</span>, <span class="st">"cipro"</span><span class="op">)</span>, <span class="st">"iv"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Dosages for antimicrobial drugs, as meant for 'EUCAST Clinical Breakpoint</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Tables' v12.0 (2022). This note will be shown once per session.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "here"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "here"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ab   name          standard_dosage  high_dosage </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -254,7 +254,7 @@
 
 
 <dt>guideline</dt>
-<dd><p>interpretation guideline to use, defaults to the latest included EUCAST guideline, see <em>Details</em></p></dd>
+<dd><p>interpretation guideline to use - the default is the latest included EUCAST guideline, see <em>Details</em></p></dd>
 
 
 <dt>main, title</dt>
@@ -270,7 +270,7 @@
 
 
 <dt>language</dt>
-<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the option <code><a href="AMR-options.html">AMR_locale</a></code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_locale</a></code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 
 
 <dt>expand</dt>
@@ -293,7 +293,7 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.</p>
-<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "EUCAST 2022", "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "CLSI 2022", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014" and "CLSI 2013".</p>
+<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "EUCAST 2022", "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "CLSI 2022", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", and "CLSI 2013".</p>
 <p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline.</p>
     </div>
 

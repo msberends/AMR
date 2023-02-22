@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,7 +174,7 @@
 
 
 <dt>translate_ab</dt>
-<dd><p>if <code>type = "drug"</code>: a column name of the <a href="antibiotics.html">antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code>. Defaults to <code>FALSE</code>. Using <code>TRUE</code> is equal to using "name".</p></dd>
+<dd><p>if <code>type = "drug"</code>: a column name of the <a href="antibiotics.html">antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code>. The default is <code>FALSE</code>. Using <code>TRUE</code> is equal to using "name".</p></dd>
 
 
 <dt>thorough_search</dt>
@@ -182,7 +182,7 @@
 
 
 <dt>info</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a progress bar should be printed, defaults to <code>TRUE</code> only in interactive mode</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a progress bar should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
 
 
 <dt>...</dt>
@@ -224,12 +224,15 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># mind the bad spelling of amoxicillin in this line,</span></span></span>
 <span class="r-in"><span><span class="co"># straight from a true health care record:</span></span></span>
 <span class="r-in"><span><span class="fu">ab_from_text</span><span class="op">(</span><span class="st">"28/03/2020 regular amoxicilliin 500mg po tid"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "here"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'ab'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] AMX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">ab_from_text</span><span class="op">(</span><span class="st">"500 mg amoxi po and 400mg cipro iv"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "here"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "here"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'ab'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] AMX CIP</span>
