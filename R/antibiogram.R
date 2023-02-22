@@ -313,15 +313,19 @@ antibiogram <- function(x,
     df_ab <- get_column_abx(x, verbose = FALSE, info = FALSE)
     # get antibiotics from user
     user_ab <- suppressMessages(suppressWarnings(lapply(antibiotics, as.ab, flag_multiple_results = FALSE, info = FALSE)))
-    user_ab <- lapply(user_ab, function(x) unname(df_ab[match(x, names(df_ab))]))
-
-    # remove non-existing columns
-    # non_existing <- unlist(antibiotics)[is.na(unlist(abx_ab))]
-    # if (length(non_existing) > 0) {
-    #   warning_("The following antibiotics were not available and ignored: ", vector_and(non_existing, sort = FALSE))
-    #   abx_user <- Map(antibiotics, abx_user, f = function(input, ab) input[!is.na(ab)])
-    # }
+    non_existing <- character(0)
+    user_ab <- lapply(user_ab, function(x) {
+      out <- unname(df_ab[match(x, names(df_ab))])
+      non_existing <<- c(non_existing, x[is.na(out) & !is.na(x)])
+      # remove non-existing columns
+      out[!is.na(out)]
+    })
+    user_ab <- user_ab[unlist(lapply(user_ab, length)) > 0]
     
+    if (length(non_existing) > 0) {
+      warning_("The following antibiotics were not available and ignored: ", vector_and(ab_name(non_existing, language = NULL, tolower = TRUE), quotes = FALSE))
+    }
+
     # make list unique
     antibiotics <- unique(user_ab)
     # go through list to set AMR in combinations

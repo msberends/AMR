@@ -115,7 +115,7 @@ Like many other functions in this package, `antibiogram()` comes with support fo
 
 ```r
 antibiogram(example_isolates,
-            antibiotics = c("CIP", "TOB", "GEN"),
+            antibiotics = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
             mo_transform = "gramstain",
             ab_transform = "name",
             language = "uk") # Ukrainian
