@@ -188,12 +188,11 @@
 #' # with a custom language, though this will be determined automatically
 #' # (i.e., this table will be in Spanish on Spanish systems)
 #' antibiogram(ex1,
-#'   antibiotics = aminoglycosides(),
-#'   ab_transform = "name",
-#'   syndromic_group = ifelse(ex1$ward == "ICU",
-#'     "UCI", "No UCI"
-#'   ),
-#'   language = "es"
+#'             antibiotics = aminoglycosides(),
+#'             ab_transform = "name",
+#'             syndromic_group = ifelse(ex1$ward == "ICU",
+#'                                      "UCI", "No UCI"),
+#'             language = "es"
 #' )
 #'
 #'
@@ -201,13 +200,13 @@
 #'
 #' # the data set could contain a filter for e.g. respiratory specimens/ICU
 #' antibiogram(example_isolates,
-#'   antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-#'   mo_transform = "gramstain",
-#'   minimum = 10, # this should be >=30, but now just as example
-#'   syndromic_group = ifelse(example_isolates$age >= 65 &
-#'     example_isolates$gender == "M",
-#'   "WISCA Group 1", "WISCA Group 2"
-#'   )
+#'             antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+#'             mo_transform = "gramstain",
+#'             minimum = 10, # this should be >=30, but now just as example
+#'             syndromic_group = ifelse(example_isolates$age >= 65 &
+#'                                        example_isolates$gender == "M",
+#'                                      "WISCA Group 1", "WISCA Group 2"
+#'             )
 #' )
 #'
 #' # Print the output for R Markdown / Quarto -----------------------------
@@ -488,8 +487,15 @@ antibiogram <- function(x,
       count_group <- n_per_mo$count[match(new_df[[1]], n_per_mo$mo)]
       edit_col <- 1
     }
-    new_df[[edit_col]] <- paste0(new_df[[edit_col]], " (", count_group, ")")
-    colnames(new_df)[edit_col] <- paste(colnames(new_df)[edit_col], "(N min-max)")
+    if (NCOL(new_df) == edit_col + 1) {
+      # only 1 antibiotic
+      new_df[[edit_col]] <- paste0(new_df[[edit_col]], " (", unlist(lapply(strsplit(count_group, "-"), function(x) x[1])), ")")
+      colnames(new_df)[edit_col] <- paste(colnames(new_df)[edit_col], "(N)")
+    } else {
+      # more than 1 antibiotic
+      new_df[[edit_col]] <- paste0(new_df[[edit_col]], " (", count_group, ")")
+      colnames(new_df)[edit_col] <- paste(colnames(new_df)[edit_col], "(N min-max)")
+    }
   }
 
   out <- as_original_data_class(new_df, class(x), extra_class = "antibiogram")
