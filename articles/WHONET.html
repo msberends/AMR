@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9138</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9139</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -230,13 +230,7 @@ In other words, they should only contain values <code>"S"</code>,
 <span>  <span class="co"># get microbial ID based on given organism</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="va">Organism</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `sir` class</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP_ND10</span><span class="op">:</span><span class="va">CIP_EE</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: There was 1 warning in `mutate()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `AMP_ND10 = (function (x, ...) ...`.</span></span>
-<span><span class="co">#&gt; Caused by warning:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The 'rsi' class has been replaced with 'sir'. Transform your 'rsi' columns</span></span>
-<span><span class="co">#&gt; to 'sir' with as.sir(), e.g.:</span></span>
-<span><span class="co">#&gt;   your_data %&gt;% mutate_if(is.rsi, as.sir)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP_ND10</span><span class="op">:</span><span class="va">CIP_EE</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span></span></code></pre></div>
 <p>No errors or warnings, so all values are transformed succesfully.</p>
 <p>We also created a package dedicated to data cleaning and checking,
 called the <code>cleaner</code> package. Its <code><a href="https://msberends.github.io/cleaner/reference/freq.html" class="external-link">freq()</a></code>
@@ -358,11 +352,14 @@ Longest: 40</p>
 <span><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://msberends.github.io/cleaner/reference/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">AMC_ND2</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Frequency table</strong></p>
-<p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
+<p>Class: factor &gt; ordered &gt; sir (numeric)<br>
 Length: 500<br>
 Levels: 3: S &lt; I &lt; R<br>
 Available: 481 (96.2%, NA: 19 = 3.8%)<br>
 Unique: 3</p>
+<p>Drug: Amoxicillin/clavulanic acid (AMC, J01CR02)<br>
+Drug group: Beta-lactams/penicillins<br>
+%SI: 78.59%</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
