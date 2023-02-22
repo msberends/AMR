@@ -31,7 +31,7 @@
 #'
 #' Calculates age in years based on a reference date, which is the system date at default.
 #' @param x date(s), [character] (vectors) will be coerced with [as.POSIXlt()]
-#' @param reference reference date(s) (defaults to today), [character] (vectors) will be coerced with [as.POSIXlt()]
+#' @param reference reference date(s) (default is today), [character] (vectors) will be coerced with [as.POSIXlt()]
 #' @param exact a [logical] to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
 #' @param na.rm a [logical] to indicate whether missing values should be removed
 #' @param ... arguments passed on to [as.POSIXlt()], such as `origin`
@@ -130,7 +130,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #'
 #' Split ages into age groups defined by the `split` argument. This allows for easier demographic (antimicrobial resistance) analysis.
 #' @param x age, e.g. calculated with [age()]
-#' @param split_at values to split `x` at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See *Details*.
+#' @param split_at values to split `x` at - the default is age groups 0-11, 12-24, 25-54, 55-74 and 75+. See *Details*.
 #' @param na.rm a [logical] to indicate whether missing values should be removed
 #' @details To split ages, the input for the `split_at` argument can be:
 #'

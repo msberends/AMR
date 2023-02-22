@@ -9,7 +9,7 @@ availability(tbl, width = NULL)
 \arguments{
 \item{tbl}{a \link{data.frame} or \link{list}}
 
-\item{width}{number of characters to present the visual availability, defaults to filling the width of the console}
+\item{width}{number of characters to present the visual availability - the default is filling the width of the console}
 }
 \value{
 \link{data.frame} with column names of \code{tbl} as row names

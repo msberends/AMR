@@ -35,36 +35,42 @@ antibiogram(
 
 \method{autoplot}{antibiogram}(object, ...)
 
-\method{print}{antibiogram}(x, as_kable = !interactive(), italicise = TRUE, ...)
+\method{print}{antibiogram}(
+  x,
+  as_kable = !interactive(),
+  italicise = TRUE,
+  na = getOption("knitr.kable.NA", default = ""),
+  ...
+)
 }
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antibiotic results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
 
 \item{antibiotics}{vector of column names, or (any combinations of) \link[=antibiotic_class_selectors]{antibiotic selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be column names separated with \code{"+"}, such as "TZP+TOB" given that the data set contains columns "TZP" and "TOB". See \emph{Examples}.}
 
-\item{mo_transform}{a character to transform microorganism input - must be "name", "shortname", "gramstain", or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed". Can also be \code{NULL} to not transform the input.}
+\item{mo_transform}{a character to transform microorganism input - must be "name", "shortname", "gramstain", or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input.}
 
-\item{ab_transform}{a character to transform antibiotic input - must be one of the column names of the \link{antibiotics} data set: "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units" or "loinc". Can also be \code{NULL} to not transform the input.}
+\item{ab_transform}{a character to transform antibiotic input - must be one of the column names of the \link{antibiotics} data set: "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be \code{NULL} to not transform the input.}
 
 \item{syndromic_group}{a column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case_when]{case_when()}}. See \emph{Examples}.}
 
-\item{add_total_n}{a \link{logical} to indicate whether total available numbers per pathogen should be added to the table (defaults to \code{TRUE}). This will add the lowest and highest number of available isolate per antibiotic (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").}
+\item{add_total_n}{a \link{logical} to indicate whether total available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolate per antibiotic (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").}
 
 \item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antibiotics, see \emph{Details}}
 
 \item{digits}{number of digits to use for rounding}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{language}{language to translate text, which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{a \link{logical} to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (defaults to \code{TRUE})}
+\item{combine_SI}{a \link{logical} to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (default is \code{TRUE})}
 
 \item{sep}{a separating character for antibiotic columns in combination antibiograms}
 
-\item{info}{a \link{logical} to indicate info should be printed, defaults to \code{TRUE} only in interactive mode}
+\item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 
 \item{...}{when used in \code{\link[=print]{print()}}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 
@@ -72,7 +78,9 @@ antibiogram(
 
 \item{as_kable}{a \link{logical} to indicate whether the printing should be done using \code{\link[knitr:kable]{knitr::kable()}} (which is the default in non-interactive sessions)}
 
-\item{italicise}{a \link{logical} to indicate whether the microorganism names in the output table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}. This only works when the output format is markdown, such as in HTML output.}
+\item{italicise}{(only when \code{as_kable = TRUE}) a \link{logical} to indicate whether the microorganism names in the output table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}. This only works when the output format is markdown, such as in HTML output.}
+
+\item{na}{(only when \code{as_kable = TRUE}) character to use for showing \code{NA} values}
 }
 \description{
 Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker \emph{et al.} and Barbieri \emph{et al.} (see \emph{Source}), and allow reporting in e.g. R Markdown and Quarto as well.
@@ -131,7 +139,7 @@ your_data \%>\%
 
 All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}) or printed into R Markdown / Quarto formats for reports using \code{print()}. Use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. \code{flextable::as_flextable()} or \code{gt::gt()}.
 
-Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the \code{only_all_tested} argument (defaults to \code{FALSE}). See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=antibiogram]{antibiogram()}} works to calculate the \%SI:
+Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the \code{only_all_tested} argument (default is \code{FALSE}). See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=antibiogram]{antibiogram()}} works to calculate the \%SI:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE

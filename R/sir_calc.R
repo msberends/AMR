@@ -223,7 +223,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
                         combine_SI = TRUE,
                         confidence_level = 0.95) {
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)

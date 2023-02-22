@@ -27,23 +27,23 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Transform Input to a Microorganism Code
+#' Transform Arbitrary Input to Valid Microbial Taxonomy
 #'
-#' Use this function to determine a valid microorganism code ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms `r vector_and(unique(microorganisms$kingdom[which(!grepl("(unknown|Fungi)", microorganisms$kingdom))]), quotes = FALSE)`, and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
+#' Use this function to get a valid microorganism code ([`mo`]) based on arbitrary user input. Determination is done using intelligent rules and the complete taxonomic tree of the kingdoms `r vector_and(unique(microorganisms$kingdom[which(!grepl("(unknown|Fungi)", microorganisms$kingdom))]), quotes = FALSE)`, and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
 #' @param x a [character] vector or a [data.frame] with one or two columns
-#' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (see Source).
+#' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (see *Source*). Please see *Details* for a full list of staphylococcal species that will be converted.
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
-#' @param Lancefield a [logical] to indicate whether a beta-haemolytic *Streptococcus* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see Source). These streptococci will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
+#' @param Lancefield a [logical] to indicate whether a beta-haemolytic *Streptococcus* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see *Source*). These streptococci will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L. . Please see *Details* for a full list of streptococcal species that will be converted.
 #'
 #' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
 #' @param minimum_matching_score a numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()].
-#' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE`, which will return a note if old taxonomic names were processed. The default can be set with the option [`AMR_keep_synonyms`][AMR-options], i.e. `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
+#' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE`, which will return a note if old taxonomic names were processed. The default can be set with the [package option][AMR-options] [`AMR_keep_synonyms`][AMR-options], i.e. `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
-#' @param ignore_pattern a [regular expression][base::regex] (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option [`AMR_ignore_pattern`][AMR-options], e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
-#' @param remove_from_input a [regular expression][base::regex] (case-insensitive) to clean the input of `x`. Everything matched in `x` will be removed. At default, this is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar".
+#' @param ignore_pattern a Perl-compatible [regular expression][base::regex] (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the [package option][AMR-options] [`AMR_ignore_pattern`][AMR-options], e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
+#' @param cleaning_regex a Perl-compatible [regular expression][base::regex] (case-insensitive) to clean the input of `x`. Every matched part in `x` will be removed. At default, this is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the [package option][AMR-options] [`AMR_cleaning_regex`][AMR-options].
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()])
-#' @param info a [logical] to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to `TRUE` only in interactive mode
+#' @param info a [logical] to indicate if a progress bar should be printed if more than 25 items are to be coerced - the default is `TRUE` only in interactive mode
 #' @param ... other arguments passed on to functions
 #' @rdname as.mo
 #' @aliases mo
@@ -68,13 +68,17 @@
 #'
 #' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see *Examples*.
 #'
-#' The [as.mo()] function uses a novel [matching score algorithm][mo_matching_score()] (see *Matching Score for Microorganisms* below) to match input against the [available microbial taxonomy][microorganisms] in this package. This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first. The algorithm uses data from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see [microorganisms]).
+#' The [as.mo()] function uses a novel [matching score algorithm][mo_matching_score()] (see *Matching Score for Microorganisms* below) to match input against the [available microbial taxonomy][microorganisms] in this package. This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first.
+#' 
+#' With `Becker = TRUE`, the following `r length(MO_CONS[MO_CONS != "B_STPHY_CONS"])` staphylococci will be converted to the **coagulase-negative group**: `r vector_and(gsub("Staphylococcus", "S.", mo_name(MO_CONS[MO_CONS != "B_STPHY_CONS"], keep_synonyms = TRUE)), quotes = "*")`.\cr The following `r length(MO_COPS[MO_COPS != "B_STPHY_COPS"])` staphylococci will be converted to the **coagulase-positive group**: `r vector_and(gsub("Staphylococcus", "S.", mo_name(MO_COPS[MO_COPS != "B_STPHY_COPS"], keep_synonyms = TRUE)), quotes = "*")`.
+#' 
+#' With `Lancefield = TRUE`, the following streptococci will be converted to their corresponding Lancefield group: `r vector_and(gsub("Streptococcus", "S.", paste0("*", mo_name(MO_LANCEFIELD, keep_synonyms = TRUE), "* (", mo_species(MO_LANCEFIELD, keep_synonyms = TRUE, Lancefield = TRUE), ")")), quotes = FALSE)`.
 #'
 #' ### Coping with Uncertain Results
 #'
 #' Results of non-exact taxonomic input are based on their [matching score][mo_matching_score()]. The lowest allowed score can be set with the `minimum_matching_score` argument. At default this will be determined based on the character length of the input, and the [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()] of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to evaluate the results with [mo_uncertainties()], which returns a [data.frame] with all specifications.
 #'
-#' To increase the quality of matching, the `remove_from_input` argument can be used to clean the input (i.e., `x`). This must be a [regular expression][base::regex] that matches parts of the input that should be removed before the input is matched against the [available microbial taxonomy][microorganisms]. It will be matched Perl-compatible and case-insensitive. The default value of `remove_from_input` is the outcome of the helper function [mo_cleaning_regex()].
+#' To increase the quality of matching, the `cleaning_regex` argument can be used to clean the input (i.e., `x`). This must be a [regular expression][base::regex] that matches parts of the input that should be removed before the input is matched against the [available microbial taxonomy][microorganisms]. It will be matched Perl-compatible and case-insensitive. The default value of `cleaning_regex` is the outcome of the helper function [mo_cleaning_regex()].
 #'
 #' There are three helper functions that can be run after using the [as.mo()] function:
 #' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
@@ -150,17 +154,18 @@ as.mo <- function(x,
                   keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
                   reference_df = get_mo_source(),
                   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
-                  remove_from_input = mo_cleaning_regex(),
+                  cleaning_regex = getOption("AMR_cleaning_regex", mo_cleaning_regex()),
                   language = get_AMR_locale(),
                   info = interactive(),
                   ...) {
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
-  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
   meet_criteria(minimum_matching_score, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive_or_zero = TRUE, is_finite = TRUE)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
   meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(cleaning_regex, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
@@ -174,7 +179,6 @@ as.mo <- function(x,
     return(set_clean_class(x, new_class = c("mo", "character")))
   }
 
-
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
@@ -185,7 +189,7 @@ as.mo <- function(x,
   x_lower <- tolower(x)
 
   complexes <- x[trimws2(x_lower) %like_case% " (complex|group)$"]
-  if (length(complexes) > 0 && identical(remove_from_input, mo_cleaning_regex()) && !any(AMR_env$MO_lookup$fullname[which(AMR_env$MO_lookup$source == "Added by user")] %like% "(group|complex)", na.rm = TRUE)) {
+  if (length(complexes) > 0 && identical(cleaning_regex, mo_cleaning_regex()) && !any(AMR_env$MO_lookup$fullname[which(AMR_env$MO_lookup$source == "Added by user")] %like% "(group|complex)", na.rm = TRUE)) {
     warning_("in `as.mo()`: 'complex' and 'group' were ignored from the input in ", length(complexes), " case", ifelse(length(complexes) > 1, "s", ""), ", as they are currently not supported.\nYou can add your own microorganism with `add_custom_microorganisms()`.", call = FALSE)
   }
 
@@ -256,8 +260,8 @@ as.mo <- function(x,
 
       # some required cleaning steps
       x_out <- trimws2(x_search)
-      # this applies the `remove_from_input` argument, which defaults to mo_cleaning_regex()
-      x_out <- gsub(remove_from_input, " ", x_out, ignore.case = TRUE, perl = TRUE)
+      # this applies the `cleaning_regex` argument, which defaults to mo_cleaning_regex()
+      x_out <- gsub(cleaning_regex, " ", x_out, ignore.case = TRUE, perl = TRUE)
       x_out <- trimws2(gsub(" +", " ", x_out, perl = TRUE))
       x_search_cleaned <- x_out
       x_out <- tolower(x_out)

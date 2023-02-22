@@ -148,11 +148,12 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
 }
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
-MO_STREP_ABCG <- AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$genus == "Streptococcus" &
-  AMR_env$MO_lookup$species %in% c(
+MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms$genus == "Streptococcus" &
+  tolower(AMR::microorganisms$species) %in% c(
     "pyogenes", "agalactiae", "dysgalactiae", "equi", "canis",
-    "group A", "group B", "group C", "group G"
+    "group a", "group b", "group c", "group g"
   ))]
+MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
 MO_PREVALENT_GENERA <- c(
   "Absidia", "Acanthamoeba", "Acremonium", "Aedes", "Alternaria", "Amoeba", "Ancylostoma", "Angiostrongylus",
   "Anisakis", "Anopheles", "Apophysomyces", "Aspergillus", "Aureobasidium", "Basidiobolus", "Beauveria",
@@ -285,6 +286,7 @@ suppressMessages(usethis::use_data(EUCAST_RULES_DF,
   MO_CONS,
   MO_COPS,
   MO_STREP_ABCG,
+  MO_LANCEFIELD,
   MO_PREVALENT_GENERA,
   AB_LOOKUP,
   AV_LOOKUP,

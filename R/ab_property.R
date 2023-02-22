@@ -33,7 +33,7 @@
 #' @param x any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
 #' @param property one of the column names of one of the [antibiotics] data set: `vector_or(colnames(antibiotics), sort = FALSE)`.
-#' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can also be set with the option [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param language language of the returned text - the default is the current system language (see [get_AMR_locale()]) and can also be set with the [package option][AMR-options] [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... in case of [set_ab_names()] and `data` is a [data.frame]: columns to select (supports tidy selection such as `column1:column4`), otherwise other arguments passed on to [as.ab()]

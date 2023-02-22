@@ -20,7 +20,7 @@ amr_distance_from_row(amr_distance, row)
 
 \item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=ab_selector]{antibiotic selectors}}
 
-\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant), defaults to \code{TRUE}}
+\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
 
 \item{amr_distance}{the outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}}
 

@@ -35,7 +35,7 @@ ggplot_rsi(...)
 
 ggplot_rsi_predict(...)
 
-is.rsi(x, ...)
+is.rsi(...)
 
 is.rsi.eligible(...)
 

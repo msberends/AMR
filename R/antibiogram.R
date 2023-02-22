@@ -35,15 +35,15 @@
 #' @param mo_transform a character to transform microorganism input - must be "name", "shortname", "gramstain", or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param ab_transform a character to transform antibiotic input - must be one of the column names of the [antibiotics] data set: `r vector_or(colnames(antibiotics), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group a column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
-#' @param add_total_n a [logical] to indicate whether total available numbers per pathogen should be added to the table (defaults to `TRUE`). This will add the lowest and highest number of available isolate per antibiotic (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").
+#' @param add_total_n a [logical] to indicate whether total available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolate per antibiotic (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").
 #' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antibiotics, see *Details*
 #' @param digits number of digits to use for rounding
-#' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
+#' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param language language to translate text, which defaults to the system language (see [get_AMR_locale()])
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-#' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (defaults to `TRUE`)
+#' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (default is `TRUE`)
 #' @param sep a separating character for antibiotic columns in combination antibiograms
-#' @param info 	a [logical] to indicate info should be printed, defaults to `TRUE` only in interactive mode
+#' @param info 	a [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
 #' @param object an [antibiogram()] object
 #' @param ... when used in [print()]: arguments passed on to [knitr::kable()] (otherwise, has no use)
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
@@ -105,7 +105,7 @@
 #'
 #' All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]) or printed into R Markdown / Quarto formats for reports using `print()`. Use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. `flextable::as_flextable()` or `gt::gt()`.
 #'
-#' Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (defaults to `FALSE`). See this example for two antibiotics, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
+#' Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (default is `FALSE`). See this example for two antibiotics, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
 #'
 #' ```
 #' --------------------------------------------------------------------
@@ -256,7 +256,7 @@ antibiogram <- function(x,
                         combine_SI = TRUE,
                         sep = " + ",
                         info = interactive()) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = "sir")
+  meet_criteria(x, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
   meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE)
   meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antibiotics), allow_NULL = TRUE)
   meet_criteria(syndromic_group, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
@@ -305,14 +305,33 @@ antibiogram <- function(x,
 
   # get antibiotics
   if (tryCatch(is.character(antibiotics), error = function(e) FALSE)) {
+    antibiotics.bak <- antibiotics
+    # split antibiotics on separator and make it a list
     antibiotics <- strsplit(gsub(" ", "", antibiotics), "+", fixed = TRUE)
-    non_existing <- unlist(antibiotics)[!unlist(antibiotics) %in% colnames(x)]
+    # get available antibiotics in data set
+    df_ab <- get_column_abx(x, verbose = FALSE, info = FALSE)
+    # get antibiotics from user
+    user_ab <- suppressMessages(suppressWarnings(lapply(antibiotics, as.ab, flag_multiple_results = FALSE, info = FALSE)))
+    user_ab <- lapply(user_ab, function(x) unname(df_ab[match(x, names(df_ab))]))
+    # 
+    # names(user_ab) <- antibiotics.bak
+    # user_ab <- user_ab
+    return(1)
+    # cols <- 
+    # convert antibiotics to valid AB codes
+    abx_ab <- suppressMessages(suppressWarnings(lapply(antibiotics, as.ab, flag_multiple_results = FALSE, info = FALSE)))
+    # match them to existing column names
+    abx_user <- lapply(abx_ab, function(a) unname(names(cols)[match(a, names(cols))]))
+    
+    # remove non-existing columns
+    non_existing <- unlist(antibiotics)[is.na(unlist(abx_ab))]
     if (length(non_existing) > 0) {
       warning_("The following antibiotics were not available and ignored: ", vector_and(non_existing, sort = FALSE))
-      antibiotics <- lapply(antibiotics, function(ab) ab[!ab %in% non_existing])
+      abx_user <- Map(antibiotics, abx_user, f = function(input, ab) input[!is.na(ab)])
     }
     # make list unique
-    antibiotics <- unique(antibiotics)
+    antibiotics <- unique(abx_user)
+    print(antibiotics)
     # go through list to set AMR in combinations
     for (i in seq_len(length(antibiotics))) {
       abx <- antibiotics[[i]]
@@ -555,17 +574,22 @@ autoplot.antibiogram <- function(object, ...) {
 
 #' @export
 #' @param as_kable a [logical] to indicate whether the printing should be done using [knitr::kable()] (which is the default in non-interactive sessions)
-#' @param italicise a [logical] to indicate whether the microorganism names in the output table should be made italic, using [italicise_taxonomy()]. This only works when the output format is markdown, such as in HTML output.
+#' @param italicise (only when `as_kable = TRUE`) a [logical] to indicate whether the microorganism names in the output table should be made italic, using [italicise_taxonomy()]. This only works when the output format is markdown, such as in HTML output.
+#' @param na (only when `as_kable = TRUE`) character to use for showing `NA` values
 #' @details Printing the antibiogram in non-interactive sessions will be done by [knitr::kable()], with support for [all their implemented formats][knitr::kable()], such as "markdown". The knitr format will be automatically determined if printed inside a knitr document (LaTeX, HTML, etc.).
 #' @rdname antibiogram
-print.antibiogram <- function(x, as_kable = !interactive(), italicise = TRUE, ...) {
+print.antibiogram <- function(x, as_kable = !interactive(), italicise = TRUE, na = getOption("knitr.kable.NA", default = ""), ...) {
   meet_criteria(as_kable, allow_class = "logical", has_length = 1)
   meet_criteria(italicise, allow_class = "logical", has_length = 1)
+  meet_criteria(na, allow_class = "character", has_length = 1, allow_NA = TRUE)
 
   if (isTRUE(as_kable) &&
       pkg_is_available("knitr") &&
       # be sure not to run kable in pkgdown for our website generation
       !(missing(as_kable) && identical(Sys.getenv("IN_PKGDOWN"), "true"))) {
+    old_option <- getOption("knitr.kable.NA")
+    options(knitr.kable.NA = na)
+    on.exit(options(knitr.kable.NA = old_option))
     out <- knitr::kable(x, ...)
     format <- attributes(out)$format
     if (!is.null(format) && format %in% c("markdown", "pipe")) {

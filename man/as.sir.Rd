@@ -85,7 +85,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}.}
+\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -95,11 +95,11 @@ sir_interpretation_history(clean = FALSE)
 
 \item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
 
-\item{include_screening}{a \link{logical} to indicate that clinical breakpoints for screening are allowed, defaults to \code{FALSE}. Can also be set with the option \code{\link[=AMR-options]{AMR_include_screening}}.}
+\item{include_screening}{a \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_screening}}.}
 
-\item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort, defaults to \code{TRUE}. Can also be set with the option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
+\item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{clean}{a \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
 }
@@ -146,7 +146,7 @@ For interpreting MIC values as well as disk diffusion diameters, currently imple
 
 Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2022"} or \code{"CLSI 2022"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 
-You can set the default guideline with the option \code{\link[=AMR-options]{AMR_guideline}} (e.g. in your \code{.Rprofile} file), such as:
+You can set the default guideline with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}} (e.g. in your \code{.Rprofile} file), such as:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
   options(AMR_guideline = "CLSI 2018")

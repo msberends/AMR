@@ -31,10 +31,10 @@
 #'
 #' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publishable/printable format, see *Examples*.
 #' @inheritParams eucast_rules
-#' @param combine_SI a [logical] to indicate whether values S and I should be summed, so resistance will be based on only R, defaults to `TRUE`
+#' @param combine_SI a [logical] to indicate whether values S and I should be summed, so resistance will be based on only R - the default is `TRUE`
 #' @param add_ab_group a [logical] to indicate where the group of the antimicrobials must be included as a first column
 #' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
-#' @param FUN the function to call on the `mo` column to transform the microorganism codes, defaults to [mo_shortname()]
+#' @param FUN the function to call on the `mo` column to transform the microorganism codes - the default is [mo_shortname()]
 #' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams sir_df
@@ -71,7 +71,7 @@ bug_drug_combinations <- function(x,
                                   col_mo = NULL,
                                   FUN = mo_shortname,
                                   ...) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = "sir")
+  meet_criteria(x, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), has_length = 1, allow_NULL = TRUE)
   meet_criteria(FUN, allow_class = "function", has_length = 1)
 

@@ -35,7 +35,7 @@ antimicrobials_equal(
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank to determine automatically}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{universal}{names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs}
 
@@ -45,7 +45,7 @@ antimicrobials_equal(
 
 \item{antifungal}{names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs}
 
-\item{only_sir_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_sir_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
 
 \item{...}{ignored, only in place to allow future extensions}
 

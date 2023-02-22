@@ -19,7 +19,7 @@ A \link[tibble:tibble]{tibble} with 52 142 observations and 22 variables:
 \item \code{gbif}\cr Identifier ('taxonID') of the Global Biodiversity Information Facility (GBIF)
 \item \code{gbif_parent}\cr GBIF identifier of the parent taxon
 \item \code{gbif_renamed_to}\cr GBIF identifier of the currently valid taxon
-\item \code{source}\cr Either "GBIF", "LPSN" or "manually added" (see \emph{Source})
+\item \code{source}\cr Either "GBIF", "LPSN", or "manually added" (see \emph{Source})
 \item \code{prevalence}\cr Prevalence of the microorganism according to Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}), see \code{\link[=mo_matching_score]{mo_matching_score()}} for the full explanation
 \item \code{snomed}\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of 1 July, 2021 (see \emph{Source}). Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }

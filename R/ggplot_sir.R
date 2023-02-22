@@ -40,7 +40,7 @@
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
 #' @param colours a named vactor with colour to be used for filling. The default colours are colour-blind friendly.
-#' @param aesthetics aesthetics to apply the colours to, defaults to "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
+#' @param aesthetics aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
 #' @param datalabels show datalabels using [labels_sir_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
@@ -193,7 +193,7 @@ ggplot_sir <- function(data,
                        y.title = "Proportion",
                        ...) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)

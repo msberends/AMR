@@ -9,7 +9,7 @@ age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...)
 \arguments{
 \item{x}{date(s), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
 
-\item{reference}{reference date(s) (defaults to today), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
+\item{reference}{reference date(s) (default is today), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
 
 \item{exact}{a \link{logical} to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of \href{https://en.wikipedia.org/wiki/Year-to-date}{year-to-date} (YTD) of \code{x} by the number of days in the year of \code{reference} (either 365 or 366).}
 

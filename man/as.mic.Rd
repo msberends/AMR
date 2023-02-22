@@ -22,7 +22,7 @@ is.mic(x)
 
 \item{na.rm}{a \link{logical} indicating whether missing values should be removed}
 
-\item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept, defaults to \code{FALSE}}
+\item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{FALSE}}
 
 \item{...}{arguments passed on to methods}
 }

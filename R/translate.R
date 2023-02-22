@@ -34,7 +34,7 @@
 #' @param language language to choose. Use one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_and(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 #'
-#' To permanently silence the once-per-session language note on a non-English operating system, you can set the option [`AMR_locale`][AMR-options] in your `.Rprofile` file like this:
+#' To permanently silence the once-per-session language note on a non-English operating system, you can set the [package option][AMR-options] [`AMR_locale`][AMR-options] in your `.Rprofile` file like this:
 #'
 #' ```r
 #' # Open .Rprofile file
@@ -51,12 +51,12 @@
 #' ### Changing the Default Language
 #' The system language will be used at default (as returned by `Sys.getenv("LANG")` or, if `LANG` is not set, [`Sys.getlocale("LC_COLLATE")`][Sys.getlocale()]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 #'
-#'   1. Setting the option [`AMR_locale`][AMR-options], either by using e.g. `set_AMR_locale("German")` or by running e.g. `options(AMR_locale = "German")`.
+#'   1. Setting the [package option][AMR-options] [`AMR_locale`][AMR-options], either by using e.g. `set_AMR_locale("German")` or by running e.g. `options(AMR_locale = "German")`.
 #'
 #'      Note that setting an \R option only works in the same session. Save the command `options(AMR_locale = "(your language)")` to your `.Rprofile` file to apply it for every session. Run `utils::file.edit("~/.Rprofile")` to edit your `.Rprofile` file.
 #'   2. Setting the system variable `LANGUAGE` or `LANG`, e.g. by adding `LANGUAGE="de_DE.utf8"` to your `.Renviron` file in your home directory.
 #'
-#' Thus, if the option [`AMR_locale`][AMR-options] is set, the system variables `LANGUAGE` and `LANG` will be ignored.
+#' Thus, if the [package option][AMR-options] [`AMR_locale`][AMR-options] is set, the system variables `LANGUAGE` and `LANG` will be ignored.
 #' @rdname translate
 #' @name translate
 #' @export

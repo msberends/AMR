@@ -90,13 +90,10 @@ ggplot_rsi_predict <- function(...) {
 }
 #' @rdname AMR-deprecated
 #' @export
-is.rsi <- function(x, ...) {
-  # this is an exception, so mutate_if(is.rsi, as.sir) can be used
-  if (inherits(x, "data.frame")) {
-    unname(vapply(FUN.VALUE = logical(1), x, is.rsi))
-  } else {
-    inherits(x, "rsi")
-  }
+is.rsi <- function(...) {
+  # REMINDER: change as.sir() to remove the deprecation warning there
+  deprecation_warning("is.rsi", "is.sir")
+  is.sir(...)
 }
 #' @rdname AMR-deprecated
 #' @export
@@ -150,8 +147,10 @@ theme_rsi <- function(...) {
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.rsi <- pillar_shaft.sir
 type_sum.rsi <- function(x, ...) {
-  deprecation_warning(extra_msg = "* The 'rsi' class has been replaced with 'sir'. Transform your 'rsi' columns to 'sir' with `as.sir()`, e.g.:\n  your_data %>% mutate_if(is.rsi, as.sir)")
-  paste0("rsi", font_bold(font_red("[!]")))
+  if (message_not_thrown_before("type_sum.rsi")) {
+    deprecation_warning(extra_msg = "The 'rsi' class has been replaced with 'sir'. Transform your 'rsi' columns to 'sir' with `as.sir()`, e.g.:\n  your_data %>% mutate_if(is.rsi, as.sir)")
+  }
+  "rsi"
 }
 
 #' @method print rsi

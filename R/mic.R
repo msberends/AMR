@@ -286,7 +286,7 @@ as.numeric.mic <- function(x, ...) {
 
 #' @rdname as.mic
 #' @method droplevels mic
-#' @param as.mic a [logical] to indicate whether the `mic` class should be kept, defaults to `FALSE`
+#' @param as.mic a [logical] to indicate whether the `mic` class should be kept - the default is `FALSE`
 #' @export
 droplevels.mic <- function(x, as.mic = FALSE, ...) {
   x <- droplevels.factor(x, ...)

@@ -188,7 +188,7 @@ abx2 <- abx2 %>%
 
 abx2$abbr <- lapply(as.list(abx2$abbr), function(x) unlist(strsplit(x, "|", fixed = TRUE)))
 
-# Update Compound IDs and Trade Names ----
+# Update Compound IDs and Synonyms ----
 
 # vector with official names, returns vector with CIDs
 get_CID <- function(ab) {
@@ -307,6 +307,7 @@ get_synonyms <- function(CID, clean = TRUE) {
 # get brand names from PubChem (3-4 min)
 synonyms <- get_synonyms(CIDs)
 synonyms.bak <- synonyms
+
 # add existing ones (will be cleaned later)
 for (i in seq_len(length(synonyms))) {
   old <- antibiotics$synonyms[[i]]
@@ -317,6 +318,13 @@ for (i in seq_len(length(synonyms))) {
 }
 
 antibiotics$synonyms <- synonyms
+
+stop("remember to remove co-trimoxazole as synonyms from SXT (Sulfamethoxazole), so it only exists in SXT!")
+sulfa <- antibiotics[which(antibiotics$ab == "SMX"), "synonyms", drop = TRUE][[1]]
+cotrim <- antibiotics[which(antibiotics$ab == "SXT"), "synonyms", drop = TRUE][[1]]
+sulfa <- sulfa[!sulfa %in% cotrim]
+antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]][[1]] <- sulfa
+
 
 # now go to end of this file
 

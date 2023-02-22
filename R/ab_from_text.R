@@ -33,9 +33,9 @@
 #' @param text text to analyse
 #' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
 #' @param collapse a [character] to pass on to `paste(, collapse = ...)` to only return one [character] per element of `text`, see *Examples*
-#' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. Defaults to `FALSE`. Using `TRUE` is equal to using "name".
+#' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. The default is `FALSE`. Using `TRUE` is equal to using "name".
 #' @param thorough_search a [logical] to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
-#' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
+#' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
 #' @param ... arguments passed on to [as.ab()]
 #' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the [as.ab()] function may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 #'

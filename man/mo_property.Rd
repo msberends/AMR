@@ -270,7 +270,7 @@ mo_property(
 
 \item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
-\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
+\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
 \item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'}
 
@@ -278,7 +278,7 @@ mo_property(
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
 
-\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" or "snomed", or must be \code{"shortname"}}
+\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}}
 }
 \value{
 \itemize{
@@ -317,7 +317,7 @@ The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the o
 
 SNOMED codes (\code{\link[=mo_snomed]{mo_snomed()}}) are from the version of 1 July, 2021. See \emph{Source} and the \link{microorganisms} data set for more info.
 
-Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo_synonyms]{mo_synonyms()}}, the current taxonomic name can be retrieved with \code{\link[=mo_current]{mo_current()}}. Both functions return full names.
+Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo_synonyms]{mo_synonyms()}} (which will have the scientific reference as \link[base:names]{name}), the current taxonomic name can be retrieved with \code{\link[=mo_current]{mo_current()}}. Both functions return full names.
 
 All output \link[=translate]{will be translated} where possible.
 }
@@ -380,12 +380,12 @@ mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 
 # scientific reference -----------------------------------------------------
 
-mo_ref("Klebsiella pneumoniae")
-mo_authors("Klebsiella pneumoniae")
-mo_year("Klebsiella pneumoniae")
-mo_lpsn("Klebsiella pneumoniae")
-mo_gbif("Klebsiella pneumoniae")
-mo_synonyms("Klebsiella pneumoniae")
+mo_ref("Klebsiella aerogenes")
+mo_authors("Klebsiella aerogenes")
+mo_year("Klebsiella aerogenes")
+mo_lpsn("Klebsiella aerogenes")
+mo_gbif("Klebsiella aerogenes")
+mo_synonyms("Klebsiella aerogenes")
 
 
 # abbreviations known in the field -----------------------------------------
@@ -396,7 +396,8 @@ mo_shortname("VISA")
 mo_gramstain("VISA")
 
 mo_genus("EHEC")
-mo_species("EHEC")
+mo_species("EIEC")
+mo_name("UPEC")
 
 
 # known subspecies ---------------------------------------------------------

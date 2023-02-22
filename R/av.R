@@ -32,7 +32,7 @@
 #' Use this function to determine the antiviral drug code of one or more antiviral drugs. The data set [antivirals] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x a [character] vector to determine to antiviral drug ID
 #' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.
-#' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
+#' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.av
 #' @inheritSection WHOCC WHOCC

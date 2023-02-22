@@ -38,21 +38,21 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 \arguments{
 \item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{info}{a \link{logical} to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
+\item{info}{a \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions}
 
-\item{rules}{a \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value using the option \code{\link[=AMR-options]{AMR_eucastrules}}: \code{options(AMR_eucastrules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
+\item{rules}{a \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value using the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_eucastrules}}: \code{options(AMR_eucastrules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0" or "10.0".}
+\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0", or "10.0".}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2" or "3.1".}
+\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2", or "3.1".}
 
-\item{ampc_cephalosporin_resistance}{a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2} and higher; these version of '\emph{EUCAST Expert Rules on Enterobacterales}' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of \code{NA} (the default) for this argument will remove results for these three drugs, while e.g. a value of \code{"R"} will make the results for these drugs resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia} and \emph{Serratia}.}
+\item{ampc_cephalosporin_resistance}{a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2} and higher; these version of '\emph{EUCAST Expert Rules on Enterobacterales}' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of \code{NA} (the default) for this argument will remove results for these three drugs, while e.g. a value of \code{"R"} will make the results for these drugs resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia}, and \emph{Serratia}.}
 
-\item{only_sir_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_sir_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
 
 \item{custom_rules}{custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}}
 
@@ -60,7 +60,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{administration}{route of administration, either "im", "iv" or "oral"}
+\item{administration}{route of administration, either "im", "iv", or "oral"}
 }
 \value{
 The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.
@@ -96,7 +96,7 @@ Before further processing, two non-EUCAST rules about drug combinations can be a
 
 Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 
-Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the option \code{\link[=AMR-options]{AMR_eucastrules}}, i.e. run \code{options(AMR_eucastrules = "all")}.
+Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_eucastrules}}, i.e. run \code{options(AMR_eucastrules = "all")}.
 }
 }
 \section{Antibiotics}{

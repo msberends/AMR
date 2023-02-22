@@ -32,7 +32,7 @@
 #' Use this function to determine the antibiotic drug code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x a [character] vector to determine to antibiotic ID
 #' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.
-#' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
+#' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
@@ -133,11 +133,11 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   note_if_more_than_one_found <- function(found, index, from_text) {
     if (isTRUE(initial_search) && isTRUE(length(from_text) > 1)) {
       abnames <- ab_name(from_text, tolower = TRUE, initial_search = FALSE)
-      if (ab_name(found[1L], language = NULL) %like% "(clavulanic acid|avibactam)") {
-        abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam")]
+      if (ab_name(found[1L], language = NULL) %like% "(clavulanic acid|(avi|tazo|mono|vabor)bactam)") {
+        abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam", "tazobactam", "vaborbactam", "monobactam")]
       }
       if (length(abnames) > 1) {
-        warning_(
+        message_(
           "More than one result was found for item ", index, ": ",
           vector_and(abnames, quotes = FALSE)
         )
@@ -248,6 +248,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
+    
+    print("here")
 
     # length of input is quite long, and Levenshtein distance is only max 2
     if (nchar(x[i]) >= 10) {

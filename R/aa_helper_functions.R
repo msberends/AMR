@@ -531,10 +531,10 @@ warning_ <- function(...,
                      immediate = FALSE,
                      call = FALSE) {
   warning(
-    word_wrap(...,
+    trimws2(word_wrap(...,
       add_fn = add_fn,
       as_note = FALSE
-    ),
+    )),
     immediate. = immediate,
     call. = call
   )
@@ -554,7 +554,7 @@ stop_ <- function(..., call = TRUE) {
     }
     msg <- paste0("in ", call, "(): ", msg)
   }
-  msg <- word_wrap(msg, add_fn = list(), as_note = FALSE)
+  msg <- trimws2(word_wrap(msg, add_fn = list(), as_note = FALSE))
   stop(msg, call. = FALSE)
 }
 
@@ -702,6 +702,10 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   if (identical(v, c("I", "R", "S"))) {
     # class 'sir' should be sorted like this
     v <- c("S", "I", "R")
+  }
+  # oxford comma
+  if (last_sep %in% c(" or ", " and ") && length(v) > 2) {
+    last_sep <- paste0(",", last_sep)
   }
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
   paste0(
@@ -877,8 +881,8 @@ meet_criteria <- function(object,
         }
       ), na.rm = TRUE),
       "the data provided in argument `", obj_name,
-      "` must contain at least one column of class '", contains_column_class, "'. ",
-      "See ?as.", contains_column_class, ".",
+      "` must contain at least one column of class '", contains_column_class[1L], "'. ",
+      "See `?as.", contains_column_class[1L], "`.",
       call = call_depth
     )
   }

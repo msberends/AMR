@@ -58,7 +58,7 @@
 #'
 #' SNOMED codes ([mo_snomed()]) are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #'
-#' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()], the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
+#' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()] (which will have the scientific reference as [name][base::names()]), the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
 #'
 #' All output [will be translated][translate] where possible.
 #' @section Matching Score for Microorganisms:
@@ -108,13 +108,13 @@
 #'
 #' # scientific reference -----------------------------------------------------
 #'
-#' mo_ref("Klebsiella pneumoniae")
-#' mo_authors("Klebsiella pneumoniae")
-#' mo_year("Klebsiella pneumoniae")
-#' mo_lpsn("Klebsiella pneumoniae")
-#' mo_gbif("Klebsiella pneumoniae")
-#' mo_synonyms("Klebsiella pneumoniae")
-#'
+#' mo_ref("Klebsiella aerogenes")
+#' mo_authors("Klebsiella aerogenes")
+#' mo_year("Klebsiella aerogenes")
+#' mo_lpsn("Klebsiella aerogenes")
+#' mo_gbif("Klebsiella aerogenes")
+#' mo_synonyms("Klebsiella aerogenes")
+#' 
 #'
 #' # abbreviations known in the field -----------------------------------------
 #'
@@ -124,7 +124,8 @@
 #' mo_gramstain("VISA")
 #'
 #' mo_genus("EHEC")
-#' mo_species("EHEC")
+#' mo_species("EIEC")
+#' mo_name("UPEC")
 #'
 #'
 #' # known subspecies ---------------------------------------------------------
@@ -740,23 +741,22 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   syns <- lapply(x.mo, function(y) {
     gbif <- AMR_env$MO_lookup$gbif[match(y, AMR_env$MO_lookup$mo)]
     lpsn <- AMR_env$MO_lookup$lpsn[match(y, AMR_env$MO_lookup$mo)]
-    out <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$lpsn_renamed_to == lpsn | AMR_env$MO_lookup$gbif_renamed_to == gbif), "fullname", drop = TRUE]
-    if (length(out) == 0) {
+    fullname <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$lpsn_renamed_to == lpsn | AMR_env$MO_lookup$gbif_renamed_to == gbif), "fullname", drop = TRUE]
+    if (length(fullname) == 0) {
       NULL
     } else {
-      out
+      ref <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$lpsn_renamed_to == lpsn | AMR_env$MO_lookup$gbif_renamed_to == gbif), "ref", drop = TRUE]
+      names(fullname) <- ref
+      fullname
     }
   })
 
-  if (length(syns) > 1) {
-    names(syns) <- mo_name(x, language = language)
-    result <- syns
-  } else {
-    result <- unlist(syns)
+  if (length(syns) == 1) {
+    syns <- unlist(syns)
   }
-
+  
   load_mo_uncertainties(metadata)
-  result
+  syns
 }
 
 #' @rdname mo_property

@@ -15,7 +15,7 @@ is.av(x)
 
 \item{flag_multiple_results}{a \link{logical} to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.}
 
-\item{info}{a \link{logical} to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
+\item{info}{a \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
 
 \item{...}{arguments passed on to internal functions}
 }

@@ -31,13 +31,13 @@
 #'
 #' Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler *et al.* in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
 #' @param x a [data.frame] containing isolates. Can be left blank for automatic determination, see *Examples*.
-#' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
-#' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
-#' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
+#' @param col_date column name of the result date (or date that is was received on the lab) - the default is the first column with a date class
+#' @param col_patient_id column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive)
+#' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (such as test codes for screening). In that case `testcodes_exclude` will be ignored.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU). This can also be a [logical] vector with the same length as rows in `x`.
-#' @param col_keyantimicrobials (only useful when `method = "phenotype-based"`) column name of the key antimicrobials to determine first isolates, see [key_antimicrobials()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use `col_keyantimicrobials = FALSE` to prevent this. Can also be the output of [key_antimicrobials()].
+#' @param col_keyantimicrobials (only useful when `method = "phenotype-based"`) column name of the key antimicrobials to determine first isolates, see [key_antimicrobials()]. The default is the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use `col_keyantimicrobials = FALSE` to prevent this. Can also be the output of [key_antimicrobials()].
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see *Source*.
 #' @param testcodes_exclude a [character] vector with test codes that should be excluded (case-insensitive)
 #' @param icu_exclude a [logical] to indicate whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
@@ -46,7 +46,7 @@
 #' @param method the method to apply, either `"phenotype-based"`, `"episode-based"`, `"patient-based"` or `"isolate-based"` (can be abbreviated), see *Details*. The default is `"phenotype-based"` if antimicrobial test results are present in the data, and `"episode-based"` otherwise.
 #' @param ignore_I [logical] to indicate whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantimicrobials"`, see *Details*
 #' @param points_threshold minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when `type = "points"`, see *Details*
-#' @param info a [logical] to indicate info should be printed, defaults to `TRUE` only in interactive mode
+#' @param info a [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
 #' @param include_unknown a [logical] to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param include_untested_sir a [logical] to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_sir = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `sir` and consequently requires transforming columns with antibiotic results using [as.sir()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], otherwise arguments passed on to [key_antimicrobials()] (such as `universal`, `gram_negative`, `gram_positive`)

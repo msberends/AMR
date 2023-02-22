@@ -1,4 +1,4 @@
-# AMR 1.8.2.9137
+# AMR 1.8.2.9138
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -135,6 +135,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Cleaning columns with `as.sir()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
 * Fix for using `g.test()` with zeroes in a 2x2 table
 * `get_episode()` now returns class `integer` instead of `numeric` since they are always whole numbers
+* `mo_synonyns()` now contains the scientific reference as names
 
 ## Other
 

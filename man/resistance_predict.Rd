@@ -59,11 +59,11 @@ ggplot_sir_predict(
 
 \item{col_ab}{column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"})}
 
-\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class}
+\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already - the default is the first column of with a date class}
 
 \item{year_min}{lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}}
 
-\item{year_max}{highest year to use in the prediction model, defaults to 10 years after today}
+\item{year_max}{highest year to use in the prediction model - the default is 10 years after today}
 
 \item{year_every}{unit of sequence between lowest year found in the data and \code{year_max}}
 
