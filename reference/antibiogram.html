@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9140</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9141</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -459,12 +459,11 @@
 <span class="r-in"><span><span class="co"># with a custom language, though this will be determined automatically</span></span></span>
 <span class="r-in"><span><span class="co"># (i.e., this table will be in Spanish on Spanish systems)</span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">ex1</span>,</span></span>
-<span class="r-in"><span>  antibiotics <span class="op">=</span> <span class="fu"><a href="antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span></span>
-<span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">ex1</span><span class="op">$</span><span class="va">ward</span> <span class="op">==</span> <span class="st">"ICU"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"UCI"</span>, <span class="st">"No UCI"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  language <span class="op">=</span> <span class="st">"es"</span></span></span>
+<span class="r-in"><span>            antibiotics <span class="op">=</span> <span class="fu"><a href="antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span></span>
+<span class="r-in"><span>            syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">ex1</span><span class="op">$</span><span class="va">ward</span> <span class="op">==</span> <span class="st">"ICU"</span>,</span></span>
+<span class="r-in"><span>                                     <span class="st">"UCI"</span>, <span class="st">"No UCI"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            language <span class="op">=</span> <span class="st">"es"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
@@ -479,13 +478,13 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># the data set could contain a filter for e.g. respiratory specimens/ICU</span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
-<span class="r-in"><span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span></span>
-<span class="r-in"><span>  minimum <span class="op">=</span> <span class="fl">10</span>, <span class="co"># this should be &gt;=30, but now just as example</span></span></span>
-<span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">65</span> <span class="op">&amp;</span></span></span>
-<span class="r-in"><span>    <span class="va">example_isolates</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"M"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"WISCA Group 1"</span>, <span class="st">"WISCA Group 2"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span></span>
+<span class="r-in"><span>            minimum <span class="op">=</span> <span class="fl">10</span>, <span class="co"># this should be &gt;=30, but now just as example</span></span></span>
+<span class="r-in"><span>            syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">65</span> <span class="op">&amp;</span></span></span>
+<span class="r-in"><span>                                       <span class="va">example_isolates</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"M"</span>,</span></span>
+<span class="r-in"><span>                                     <span class="st">"WISCA Group 1"</span>, <span class="st">"WISCA Group 2"</span></span></span>
+<span class="r-in"><span>            <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Pathogen (N min-max)`    AMC `AMC + CIP`   TZP `TZP + TOB`</span>
@@ -506,12 +505,12 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ureido</span>, as_kable <span class="op">=</span> <span class="cn">TRUE</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, italicise <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | Pathogen (N min-max)      | Piperacillin/tazobactam|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:--------------------------|-----------------------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | CoNS (33-33)              |                      30|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | *E. coli* (416-416)       |                      94|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | *K. pneumoniae* (53-53)   |                      89|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | *S. pneumoniae* (112-112) |                     100|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | Pathogen (N)          | Piperacillin/tazobactam|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:----------------------|-----------------------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | CoNS (33)             |                      30|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | *E. coli* (416)       |                      94|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | *K. pneumoniae* (53)  |                      89|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | *S. pneumoniae* (112) |                     100|</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
