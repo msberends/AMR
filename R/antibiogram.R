@@ -31,7 +31,7 @@
 #'
 #' Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker *et al.* and Barbieri *et al.* (see *Source*), and allow reporting in e.g. R Markdown and Quarto as well.
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antibiotic results (class 'sir', see [as.sir()])
-#' @param antibiotics vector of column names, or (any combinations of) [antibiotic selectors][antibiotic_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be column names separated with `"+"`, such as "TZP+TOB" given that the data set contains columns "TZP" and "TOB". See *Examples*.
+#' @param antibiotics vector of any antibiotic name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antibiotic selectors][antibiotic_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as "TZP+TOB" or "cipro + genta", given that columns resembling such antibiotics exist in `x`. See *Examples*.
 #' @param mo_transform a character to transform microorganism input - must be "name", "shortname", "gramstain", or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param ab_transform a character to transform antibiotic input - must be one of the column names of the [antibiotics] data set: `r vector_or(colnames(antibiotics), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group a column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
@@ -165,8 +165,9 @@
 #'   mo_transform = "gramstain"
 #' )
 #'
+#' # names of antibiotics do not need to resemble columns exactly:
 #' antibiogram(example_isolates,
-#'   antibiotics = c("TZP", "TZP+TOB"),
+#'   antibiotics = c("Cipro", "cipro + genta"),
 #'   mo_transform = "gramstain",
 #'   ab_transform = "name",
 #'   sep = " & "
@@ -313,25 +314,16 @@ antibiogram <- function(x,
     # get antibiotics from user
     user_ab <- suppressMessages(suppressWarnings(lapply(antibiotics, as.ab, flag_multiple_results = FALSE, info = FALSE)))
     user_ab <- lapply(user_ab, function(x) unname(df_ab[match(x, names(df_ab))]))
-    # 
-    # names(user_ab) <- antibiotics.bak
-    # user_ab <- user_ab
-    return(1)
-    # cols <- 
-    # convert antibiotics to valid AB codes
-    abx_ab <- suppressMessages(suppressWarnings(lapply(antibiotics, as.ab, flag_multiple_results = FALSE, info = FALSE)))
-    # match them to existing column names
-    abx_user <- lapply(abx_ab, function(a) unname(names(cols)[match(a, names(cols))]))
-    
+
     # remove non-existing columns
-    non_existing <- unlist(antibiotics)[is.na(unlist(abx_ab))]
-    if (length(non_existing) > 0) {
-      warning_("The following antibiotics were not available and ignored: ", vector_and(non_existing, sort = FALSE))
-      abx_user <- Map(antibiotics, abx_user, f = function(input, ab) input[!is.na(ab)])
-    }
+    # non_existing <- unlist(antibiotics)[is.na(unlist(abx_ab))]
+    # if (length(non_existing) > 0) {
+    #   warning_("The following antibiotics were not available and ignored: ", vector_and(non_existing, sort = FALSE))
+    #   abx_user <- Map(antibiotics, abx_user, f = function(input, ab) input[!is.na(ab)])
+    # }
+    
     # make list unique
-    antibiotics <- unique(abx_user)
-    print(antibiotics)
+    antibiotics <- unique(user_ab)
     # go through list to set AMR in combinations
     for (i in seq_len(length(antibiotics))) {
       abx <- antibiotics[[i]]

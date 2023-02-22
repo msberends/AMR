@@ -300,7 +300,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 #' @export
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x, ...) {
-  if (is.sir(x)) {
+  if (inherits(x, "sir")) {
     return(x)
   }
 

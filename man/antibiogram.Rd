@@ -46,7 +46,7 @@ antibiogram(
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antibiotic results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
 
-\item{antibiotics}{vector of column names, or (any combinations of) \link[=antibiotic_class_selectors]{antibiotic selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be column names separated with \code{"+"}, such as "TZP+TOB" given that the data set contains columns "TZP" and "TOB". See \emph{Examples}.}
+\item{antibiotics}{vector of any antibiotic name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antibiotic_class_selectors]{antibiotic selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as "TZP+TOB" or "cipro + genta", given that columns resembling such antibiotics exist in \code{x}. See \emph{Examples}.}
 
 \item{mo_transform}{a character to transform microorganism input - must be "name", "shortname", "gramstain", or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input.}
 
@@ -194,8 +194,9 @@ antibiogram(example_isolates,
   mo_transform = "gramstain"
 )
 
+# names of antibiotics do not need to resemble columns exactly:
 antibiogram(example_isolates,
-  antibiotics = c("TZP", "TZP+TOB"),
+  antibiotics = c("Cipro", "cipro + genta"),
   mo_transform = "gramstain",
   ab_transform = "name",
   sep = " & "

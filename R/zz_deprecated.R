@@ -92,8 +92,7 @@ ggplot_rsi_predict <- function(...) {
 #' @export
 is.rsi <- function(...) {
   # REMINDER: change as.sir() to remove the deprecation warning there
-  deprecation_warning("is.rsi", "is.sir")
-  is.sir(...)
+  suppressWarnings(is.sir(...))
 }
 #' @rdname AMR-deprecated
 #' @export
