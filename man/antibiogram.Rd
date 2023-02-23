@@ -4,7 +4,7 @@
 \alias{antibiogram}
 \alias{plot.antibiogram}
 \alias{autoplot.antibiogram}
-\alias{print.antibiogram}
+\alias{knit_print.antibiogram}
 \title{Generate Antibiogram: Traditional, Combined, Syndromic, or Weighted-Incidence Syndromic Combination (WISCA)}
 \source{
 \itemize{
@@ -35,9 +35,8 @@ antibiogram(
 
 \method{autoplot}{antibiogram}(object, ...)
 
-\method{print}{antibiogram}(
+knit_print.antibiogram(
   x,
-  as_kable = !interactive(),
   italicise = TRUE,
   na = getOption("knitr.kable.NA", default = ""),
   ...
@@ -72,15 +71,13 @@ antibiogram(
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{...}{when used in \code{\link[=print]{print()}}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
+\item{...}{when used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 
 \item{object}{an \code{\link[=antibiogram]{antibiogram()}} object}
 
-\item{as_kable}{a \link{logical} to indicate whether the printing should be done using \code{\link[knitr:kable]{knitr::kable()}} (which is the default in non-interactive sessions)}
+\item{italicise}{a \link{logical} to indicate whether the microorganism names in the \link[knitr:kable]{knitr} table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}. This only works when the output format is markdown, such as in HTML output.}
 
-\item{italicise}{(only when \code{as_kable = TRUE}) a \link{logical} to indicate whether the microorganism names in the output table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}. This only works when the output format is markdown, such as in HTML output.}
-
-\item{na}{(only when \code{as_kable = TRUE}) character to use for showing \code{NA} values}
+\item{na}{character to use for showing \code{NA} values}
 }
 \description{
 Generate an antibiogram, and communicate the results in plots or tables. These functions follow the logic of Klinker \emph{et al.} and Barbieri \emph{et al.} (see \emph{Source}), and allow reporting in e.g. R Markdown and Quarto as well.
@@ -137,7 +134,7 @@ your_data \%>\%
 }\if{html}{\out{</div>}}
 }
 
-All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}) or printed into R Markdown / Quarto formats for reports using \code{print()}. Use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. \code{flextable::as_flextable()} or \code{gt::gt()}.
+All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}) or directly used into R Markdown / Quarto formats for reports (in the last case, \code{\link[knitr:kable]{knitr::kable()}} will be applied automatically). Use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. \code{flextable::as_flextable()} or \code{gt::gt()}.
 
 Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the \code{only_all_tested} argument (default is \code{FALSE}). See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=antibiogram]{antibiogram()}} works to calculate the \%SI:
 
@@ -158,8 +155,6 @@ Note that for combination antibiograms, it is important to realise that suscepti
   <NA>      <NA>        -            -            -            -
 --------------------------------------------------------------------
 }\if{html}{\out{</div>}}
-
-Printing the antibiogram in non-interactive sessions will be done by \code{\link[knitr:kable]{knitr::kable()}}, with support for \link[knitr:kable]{all their implemented formats}, such as "markdown". The knitr format will be automatically determined if printed inside a knitr document (LaTeX, HTML, etc.).
 }
 \examples{
 # example_isolates is a data set available in the AMR package.
@@ -244,8 +239,11 @@ ureido <- antibiogram(example_isolates,
                       antibiotics = ureidopenicillins(),
                       ab_transform = "name")
 
-# in an Rmd file, you would just need print(ureido), but to be explicit:
-print(ureido, as_kable = TRUE, format = "markdown", italicise = TRUE)
+# in an Rmd file, you would just need to return `ureido` in a chunk,
+# but to be explicit here:
+if (requireNamespace("knitr")) {
+  knitr::knit_print(ureido)
+}
 
 
 # Generate plots with ggplot2 or base R --------------------------------

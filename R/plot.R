@@ -146,18 +146,18 @@ plot.mic <- function(x,
     legend_txt <- character(0)
     legend_col <- character(0)
     if (any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
-      legend_txt <- "Susceptible"
+      legend_txt <- c(legend_txt, "(S) Susceptible")
       legend_col <- colours_SIR[1]
     }
     if (any(cols_sub$cols == colours_SIR[2] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, plot_name_of_I(cols_sub$guideline))
+      legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
       legend_col <- c(legend_col, colours_SIR[2])
     }
     if (any(cols_sub$cols == colours_SIR[3] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, "Resistant")
+      legend_txt <- c(legend_txt, "(R) Resistant")
       legend_col <- c(legend_col, colours_SIR[3])
     }
-
+    
     legend("top",
       x.intersp = 0.5,
       legend = translate_into_language(legend_txt, language = language),
@@ -272,23 +272,25 @@ autoplot.mic <- function(object,
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("mic", "count")
   df$cols <- cols_sub$cols
-  df$cols[df$cols == colours_SIR[1]] <- "Susceptible"
-  df$cols[df$cols == colours_SIR[2]] <- plot_name_of_I(cols_sub$guideline)
-  df$cols[df$cols == colours_SIR[3]] <- "Resistant"
+  df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
+  df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
+  df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
-    levels = translate_into_language(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
-      language = language
-    ),
-    ordered = TRUE
+                    levels = translate_into_language(c("(S) Susceptible",
+                                                       paste("(I)", plot_name_of_I(cols_sub$guideline)),
+                                                       "(R) Resistant"),
+                                                     language = language
+                    ),
+                    ordered = TRUE
   )
   p <- ggplot2::ggplot(df)
 
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
-      "Susceptible" = colours_SIR[1],
-      "Susceptible, incr. exp." = colours_SIR[2],
-      "Intermediate" = colours_SIR[2],
-      "Resistant" = colours_SIR[3]
+      "(S) Susceptible" = colours_SIR[1],
+      "(I) Susceptible, incr. exp." = colours_SIR[2],
+      "(I) Intermediate" = colours_SIR[2],
+      "(R) Resistant" = colours_SIR[3]
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
@@ -386,15 +388,15 @@ plot.disk <- function(x,
     legend_txt <- character(0)
     legend_col <- character(0)
     if (any(cols_sub$cols == colours_SIR[3] & cols_sub$count > 0)) {
-      legend_txt <- "Resistant"
+      legend_txt <- "(R) Resistant"
       legend_col <- colours_SIR[3]
     }
     if (any(cols_sub$cols == colours_SIR[2] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, plot_name_of_I(cols_sub$guideline))
+      legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
       legend_col <- c(legend_col, colours_SIR[2])
     }
     if (any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, "Susceptible")
+      legend_txt <- c(legend_txt, "(S) Susceptible")
       legend_col <- c(legend_col, colours_SIR[1])
     }
     legend("top",
@@ -512,11 +514,13 @@ autoplot.disk <- function(object,
   colnames(df) <- c("disk", "count")
   df$cols <- cols_sub$cols
 
-  df$cols[df$cols == colours_SIR[1]] <- "Susceptible"
-  df$cols[df$cols == colours_SIR[2]] <- plot_name_of_I(cols_sub$guideline)
-  df$cols[df$cols == colours_SIR[3]] <- "Resistant"
+  df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
+  df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
+  df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
-    levels = translate_into_language(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
+    levels = translate_into_language(c("(S) Susceptible",
+                                       paste("(I)", plot_name_of_I(cols_sub$guideline)),
+                                       "(R) Resistant"),
       language = language
     ),
     ordered = TRUE
@@ -525,10 +529,10 @@ autoplot.disk <- function(object,
 
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
-      "Susceptible" = colours_SIR[1],
-      "Susceptible, incr. exp." = colours_SIR[2],
-      "Intermediate" = colours_SIR[2],
-      "Resistant" = colours_SIR[3]
+      "(S) Susceptible" = colours_SIR[1],
+      "(I) Susceptible, incr. exp." = colours_SIR[2],
+      "(I) Intermediate" = colours_SIR[2],
+      "(R) Resistant" = colours_SIR[3]
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
