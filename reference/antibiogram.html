@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9141</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9142</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,10 +171,8 @@
 <span><span class="co"># S3 method for antibiogram</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for antibiogram</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span></span>
+<span><span class="fu">knit_print.antibiogram</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  as_kable <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  italicise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  na <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"knitr.kable.NA"</span>, default <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -247,23 +245,19 @@
 
 
 <dt>...</dt>
-<dd><p>when used in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use)</p></dd>
+<dd><p>when used in <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">R Markdown or Quarto</a>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use)</p></dd>
 
 
 <dt>object</dt>
 <dd><p>an <code>antibiogram()</code> object</p></dd>
 
 
-<dt>as_kable</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the printing should be done using <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (which is the default in non-interactive sessions)</p></dd>
-
-
 <dt>italicise</dt>
-<dd><p>(only when <code>as_kable = TRUE</code>) a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the microorganism names in the output table should be made italic, using <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code>. This only works when the output format is markdown, such as in HTML output.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the microorganism names in the <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr</a> table should be made italic, using <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code>. This only works when the output format is markdown, such as in HTML output.</p></dd>
 
 
 <dt>na</dt>
-<dd><p>(only when <code>as_kable = TRUE</code>) character to use for showing <code>NA</code> values</p></dd>
+<dd><p>character to use for showing <code>NA</code> values</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -298,7 +292,7 @@
 <span>                                         <span class="va">.</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"Male"</span> <span class="op">&amp;</span></span>
 <span>                                         <span class="va">.</span><span class="op">$</span><span class="va">condition</span> <span class="op">==</span> <span class="st">"Heart Disease"</span>,</span>
 <span>                                       <span class="st">"Study Group"</span>, <span class="st">"Control Group"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div></li>
-</ol><p>All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> or base <span style="R">R</span> <code><a href="plot.html">plot()</a></code>/<code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code>) or printed into R Markdown / Quarto formats for reports using <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>. Use functions from specific 'table reporting' packages to transform the output of <code>antibiogram()</code> to your needs, e.g. <code>flextable::as_flextable()</code> or <code>gt::gt()</code>.</p>
+</ol><p>All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> or base <span style="R">R</span> <code><a href="plot.html">plot()</a></code>/<code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code>) or directly used into R Markdown / Quarto formats for reports (in the last case, <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> will be applied automatically). Use functions from specific 'table reporting' packages to transform the output of <code>antibiogram()</code> to your needs, e.g. <code>flextable::as_flextable()</code> or <code>gt::gt()</code>.</p>
 <p>Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the <code>only_all_tested</code> argument (default is <code>FALSE</code>). See this example for two antibiotics, Drug A and Drug B, about how <code>antibiogram()</code> works to calculate the %SI:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">--------------------------------------------------------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    only_all_tested <span class="ot">=</span> <span class="cn">FALSE</span>  only_all_tested <span class="ot">=</span> <span class="cn">TRUE</span></span>
@@ -316,7 +310,6 @@
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   R        <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>        <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>      <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>        <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="sc">--------------------------------------------------------------------</span></span></code></pre><p></p></div>
-<p>Printing the antibiogram in non-interactive sessions will be done by <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code>, with support for <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">all their implemented formats</a>, such as "markdown". The knitr format will be automatically determined if printed inside a knitr document (LaTeX, HTML, etc.).</p>
     </div>
 
     <div class="section level2">
@@ -501,16 +494,16 @@
 <span class="r-in"><span>                      ab_transform <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For ureidopenicillins() using column 'TZP' (piperacillin/tazobactam)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># in an Rmd file, you would just need print(ureido), but to be explicit:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ureido</span>, as_kable <span class="op">=</span> <span class="cn">TRUE</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, italicise <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | Pathogen (N)          | Piperacillin/tazobactam|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:----------------------|-----------------------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | CoNS (33)             |                      30|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | *E. coli* (416)       |                      94|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | *K. pneumoniae* (53)  |                      89|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | *S. pneumoniae* (112) |                     100|</span>
+<span class="r-in"><span><span class="co"># in an Rmd file, you would just need to return `ureido` in a chunk,</span></span></span>
+<span class="r-in"><span><span class="co"># but to be explicit here:</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"knitr"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit_print.html" class="external-link">knit_print</a></span><span class="op">(</span><span class="va">ureido</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\n\n| Pathogen (N)          | Piperacillin/tazobactam|\n|:----------------------|-----------------------:|\n| CoNS (33)             |                      30|\n| *E. coli* (416)       |                      94|\n| *K. pneumoniae* (53)  |                      89|\n| *S. pneumoniae* (112) |                     100|"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_asis"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"knit_cacheable")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
