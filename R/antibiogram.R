@@ -50,7 +50,7 @@
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
 #' 
-#' All types of antibiograms as listed below can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]). The `antibiogram` object can also be used directly in R Markdown / Quarto (i.e., `knitr`) for reports. In this case, [knitr::kable()] will be applied automatically and microorganism names will even be printed in italics at default (see argument `italicise`). You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with [`as_flextable()`][flextable::as_flextable()] or [`gt()`][gt::gt()].
+#' All types of antibiograms as listed below can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]). The `antibiogram` object can also be used directly in R Markdown / Quarto (i.e., `knitr`) for reports. In this case, [knitr::kable()] will be applied automatically and microorganism names will even be printed in italics at default (see argument `italicise`). You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with `flextable::as_flextable()` or `gt::gt()`.
 #'
 #' ### Antibiogram Types
 #' 
