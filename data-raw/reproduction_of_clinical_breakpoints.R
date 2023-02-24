@@ -95,8 +95,8 @@ new_mo_codes <- breakpoints %>%
 new_mo_codes %>%
   mutate(code = toupper(ORGANISM_CODE)) %>%
   rename(mo_new = mo) %>%
-  left_join(microorganisms.codes) %>%
-  filter(mo != mo_new)
+  left_join(microorganisms.codes %>% rename(mo_old = mo)) %>%
+  filter(mo_old != mo_new)
 
 microorganisms.codes <- microorganisms.codes %>%
   filter(!code %in% toupper(new_mo_codes$ORGANISM_CODE)) %>%

@@ -3,16 +3,18 @@
 \name{get_episode}
 \alias{get_episode}
 \alias{is_new_episode}
-\title{Determine (Clinical) Episodes}
+\title{Determine (Clinical or Epidemic) Episodes}
 \usage{
-get_episode(x, episode_days, ...)
+get_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 
-is_new_episode(x, episode_days, ...)
+is_new_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 }
 \arguments{
 \item{x}{vector of dates (class \code{Date} or \code{POSIXt}), will be sorted internally to determine episodes}
 
-\item{episode_days}{required episode length in days, can also be less than a day or \code{Inf}, see \emph{Details}}
+\item{episode_days}{episode length in days, can also be less than a day or \code{Inf}, see \emph{Details}}
+
+\item{case_free_days}{length in days after which new episode will start, can also be less than a day or \code{Inf}, see \emph{Details}}
 
 \item{...}{ignored, only in place to allow future extensions}
 }
@@ -23,11 +25,47 @@ is_new_episode(x, episode_days, ...)
 }
 }
 \description{
-These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis. The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode per group, while the \code{\link[=is_new_episode]{is_new_episode()}} function returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index, and is thus equal to \code{!duplicated(get_episode(...))}.
+These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis. The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode per group, while the \code{\link[=is_new_episode]{is_new_episode()}} function returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index. Both absolute and relative episode determination are supported.
 }
 \details{
-The functions \code{\link[=get_episode]{get_episode()}} and \code{\link[=is_new_episode]{is_new_episode()}} differ in this way when setting \code{episode_days} to 365:\tabular{cccc}{
-   person_id \tab date \tab \code{get_episode()} \tab \code{is_new_episode()} \cr
+Episodes can be determined in two ways: absolute and relative.
+\enumerate{
+\item Absolute
+
+This method uses \code{episode_days} to define an episode length in days, after which a new episode will start. A common use case in AMR data analysis is microbial epidemiology: episodes of \emph{S. aureus} bacteraemia in ICU patients for example. The episode length could then be 30 days, so that new \emph{S. aureus} isolates after an ICU episode of 30 days will be considered a different (or new) episode.
+
+Thus, this method counts \strong{since the start of the previous episode}.
+\item Relative
+
+This method uses \code{case_free_days} to quantify the duration of (inter-epidemic) intervals, after which a new episode will start. A common use case is infectious disease epidemiology: episodes of norovirus outbreaks in a hospital for example. The case-free period could then be 14 days, so that new norovirus cases after that time will be considered a different (or new) episode.
+
+Thus, this methods counts \strong{since the last case in the previous episode}.
+}
+
+In a table:\tabular{ccc}{
+   Date \tab Using \code{episode_days = 7} \tab Using \code{case_free_days = 7} \cr
+   2023-01-01 \tab 1 \tab 1 \cr
+   2023-01-02 \tab 1 \tab 1 \cr
+   2023-01-05 \tab 1 \tab 1 \cr
+   2023-01-08 \tab 2\code{*} \tab 1 \cr
+   2023-02-21 \tab 3 \tab 2\code{**} \cr
+   2023-02-22 \tab 3 \tab 2 \cr
+   2023-02-23 \tab 3 \tab 2 \cr
+   2023-02-24 \tab 3 \tab 2 \cr
+   2023-03-01 \tab 4 \tab 2 \cr
+}
+
+
+\code{*} This marks the start of a new episode, because 8 January 2023 is more than 7 days since the start of the previous episode (1 January 2023). \cr
+\code{**} This marks the start of a new episode, because 21 January 2023 is more than 7 days since the last case in the previous episode (8 January 2023).
+\subsection{Difference between \code{get_episode()} and \code{is_new_episode()}}{
+
+The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode, so all cases/patients/isolates in the first episode will have the number 1, all cases/patients/isolates in the second episode will have the number 2, etc.
+
+The \code{\link[=is_new_episode]{is_new_episode()}} function returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index, and is thus equal to \code{!duplicated(get_episode(...))}.
+
+To specify, when setting \code{episode_days = 365} (using method 1 as explained above), this is how the two functions differ:\tabular{cccc}{
+   patient \tab date \tab \code{get_episode()} \tab \code{is_new_episode()} \cr
    A \tab 2019-01-01 \tab 1 \tab TRUE \cr
    A \tab 2019-03-01 \tab 1 \tab FALSE \cr
    A \tab 2021-01-01 \tab 2 \tab TRUE \cr
@@ -36,14 +74,34 @@ The functions \code{\link[=get_episode]{get_episode()}} and \code{\link[=is_new_
    C \tab 2020-01-01 \tab 1 \tab TRUE \cr
 }
 
+}
 
-Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
+\subsection{Other}{
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
 
 The \code{dplyr} package is not required for these functions to work, but these episode functions do support \link[dplyr:group_by]{variable grouping} and work conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
 }
+}
 \examples{
+# difference between absolute and relative determination of episodes:
+x <- data.frame(dates = as.Date(c(
+  "2021-01-01",
+  "2021-01-02",
+  "2021-01-05",
+  "2021-01-08",
+  "2021-02-21",
+  "2021-02-22",
+  "2021-02-23",
+  "2021-02-24",
+  "2021-03-01",
+  "2021-03-01"
+)))
+x$absolute <- get_episode(x$dates, episode_days = 7)
+x$relative <- get_episode(x$dates, case_free_days = 7)
+x
+
+
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates
 df <- example_isolates[sample(seq_len(2000), size = 100), ]

@@ -1,4 +1,4 @@
-# AMR 1.8.2.9144
+# AMR 1.8.2.9145
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -105,6 +105,11 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 ## Changes
 
+* `get_episode()` (and its wrapper `is_new_episode()`):
+  * Gained an argument `new_after_days` to determine episodes based on epidemic periods
+  * Fix for working with `NA` values
+  * Fix for unsorted dates of length 2
+  * Now returns class `integer` instead of `numeric` since they are always whole numbers
 * Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `sir_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
 * Using `units` in `ab_ddd(..., units = "...")` had been deprecated for some time and is now not supported anymore. Use `ab_ddd_units()` instead.
 * Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `sir_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
@@ -134,7 +139,6 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
 * Cleaning columns with `as.sir()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
 * Fix for using `g.test()` with zeroes in a 2x2 table
-* `get_episode()` now returns class `integer` instead of `numeric` since they are always whole numbers
 * `mo_synonyns()` now contains the scientific reference as names
 
 ## Other

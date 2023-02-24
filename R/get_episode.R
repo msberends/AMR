@@ -27,16 +27,53 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Determine (Clinical) Episodes
+#' Determine (Clinical or Epidemic) Episodes
 #'
-#' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns `TRUE` for every new [get_episode()] index, and is thus equal to `!duplicated(get_episode(...))`.
+#' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns `TRUE` for every new [get_episode()] index. Both absolute and relative episode determination are supported.
 #' @param x vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
-#' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
+#' @param episode_days episode length in days, can also be less than a day or `Inf`, see *Details*
+#' @param case_free_days length in days after which new episode will start, can also be less than a day or `Inf`, see *Details*
 #' @param ... ignored, only in place to allow future extensions
-#' @details The functions [get_episode()] and [is_new_episode()] differ in this way when setting `episode_days` to 365:
-#'
-#'
-#' | person_id | date       | `get_episode()` | `is_new_episode()` |
+#' @details Episodes can be determined in two ways: absolute and relative.
+#' 
+#' 1. Absolute
+#' 
+#'    This method uses `episode_days` to define an episode length in days, after which a new episode will start. A common use case in AMR data analysis is microbial epidemiology: episodes of *S. aureus* bacteraemia in ICU patients for example. The episode length could then be 30 days, so that new *S. aureus* isolates after an ICU episode of 30 days will be considered a different (or new) episode.
+#'    
+#'    Thus, this method counts **since the start of the previous episode**.
+#' 
+#' 2. Relative
+#' 
+#'    This method uses `case_free_days` to quantify the duration of (inter-epidemic) intervals, after which a new episode will start. A common use case is infectious disease epidemiology: episodes of norovirus outbreaks in a hospital for example. The case-free period could then be 14 days, so that new norovirus cases after that time will be considered a different (or new) episode.
+#'    
+#'    Thus, this methods counts **since the last case in the previous episode**.
+#'    
+#' In a table:
+#' 
+#' |    Date    | Using `episode_days = 7` | Using `case_free_days = 7` |
+#' |:----------:|:------------------------:|:--------------------------:|
+#' | 2023-01-01 |             1            |              1             |
+#' | 2023-01-02 |             1            |              1             |
+#' | 2023-01-05 |             1            |              1             |
+#' | 2023-01-08 |             2\code{*}    |              1             |
+#' | 2023-02-21 |             3            |              2\code{**}    |
+#' | 2023-02-22 |             3            |              2             |
+#' | 2023-02-23 |             3            |              2             |
+#' | 2023-02-24 |             3            |              2             |
+#' | 2023-03-01 |             4            |              2             |
+#' 
+#' \code{*} This marks the start of a new episode, because 8 January 2023 is more than 7 days since the start of the previous episode (1 January 2023). \cr
+#' \code{**} This marks the start of a new episode, because 21 January 2023 is more than 7 days since the last case in the previous episode (8 January 2023).
+#' 
+#' ### Difference between `get_episode()` and `is_new_episode()`
+#' 
+#' The [get_episode()] function returns the index number of the episode, so all cases/patients/isolates in the first episode will have the number 1, all cases/patients/isolates in the second episode will have the number 2, etc. 
+#'  
+#' The [is_new_episode()] function returns `TRUE` for every new [get_episode()] index, and is thus equal to `!duplicated(get_episode(...))`.
+#' 
+#' To specify, when setting `episode_days = 365` (using method 1 as explained above), this is how the two functions differ:
+#' 
+#' | patient   | date       | `get_episode()` | `is_new_episode()` |
 #' |:---------:|:----------:|:---------------:|:------------------:|
 #' | A         | 2019-01-01 |               1 | TRUE               |
 #' | A         | 2019-03-01 |               1 | FALSE              |
@@ -45,8 +82,8 @@
 #' | B         | 2008-01-01 |               1 | FALSE              |
 #' | C         | 2020-01-01 |               1 | TRUE               |
 #'
-#' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
-#'
+#' ### Other
+#' 
 #' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
 #'
 #' The `dplyr` package is not required for these functions to work, but these episode functions do support [variable grouping][dplyr::group_by()] and work conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
@@ -57,6 +94,24 @@
 #' @rdname get_episode
 #' @export
 #' @examples
+#' # difference between absolute and relative determination of episodes:
+#' x <- data.frame(dates = as.Date(c(
+#'   "2021-01-01",
+#'   "2021-01-02",
+#'   "2021-01-05",
+#'   "2021-01-08",
+#'   "2021-02-21",
+#'   "2021-02-22",
+#'   "2021-02-23",
+#'   "2021-02-24",
+#'   "2021-03-01",
+#'   "2021-03-01"
+#' )))
+#' x$absolute <- get_episode(x$dates, episode_days = 7)
+#' x$relative <- get_episode(x$dates, case_free_days = 7)
+#' x
+#' 
+#' 
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates
 #' df <- example_isolates[sample(seq_len(2000), size = 100), ]
@@ -140,55 +195,69 @@
 #'     select(group_vars(.), flag_episode)
 #' }
 #' }
-get_episode <- function(x, episode_days, ...) {
+get_episode <- function(x, episode_days = NULL, case_free_days = NULL, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
-  as.integer(exec_episode(x, episode_days, ...))
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE, allow_NULL = TRUE)
+  meet_criteria(case_free_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE, allow_NULL = TRUE)
+  as.integer(exec_episode(x, episode_days, case_free_days, ...))
 }
 
 #' @rdname get_episode
 #' @export
-is_new_episode <- function(x, episode_days, ...) {
+is_new_episode <- function(x, episode_days = NULL, case_free_days = NULL, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
-  !duplicated(exec_episode(x, episode_days, ...))
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE, allow_NULL = TRUE)
+  meet_criteria(case_free_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE, allow_NULL = TRUE)
+  !duplicated(exec_episode(x, episode_days, case_free_days, ...))
 }
 
-exec_episode <- function(x, episode_days, ...) {
-  x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
+exec_episode <- function(x, episode_days, case_free_days, ...) {
+  stop_if((is.null(episode_days) && is.null(case_free_days)) || (!is.null(episode_days) && !is.null(case_free_days)),
+          "either `episode_days` or `case_free_days` must be set.", call = -2)
 
-  # since x is now in seconds, get seconds from episode_days as well
-  episode_seconds <- episode_days * 60 * 60 * 24
+    x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
 
-  if (length(x) == 1) { # this will also match 1 NA, which is fine
-    return(1)
-  } else if (length(x) == 2 && !all(is.na(x))) {
-    if (max(x) - min(x) >= episode_seconds) {
-      return(c(1, 2))
-    } else {
-      return(c(1, 1))
-    }
-  }
+    # since x is now in seconds, get seconds from episode_days as well
+    episode_seconds <- episode_days * 60 * 60 * 24
+    case_free_seconds <- case_free_days * 60 * 60 * 24
 
-  # we asked on StackOverflow:
-  # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
-  run_episodes <- function(x, episode_seconds) {
-    indices <- integer()
-    start <- x[1]
-    ind <- 1
-    indices[1] <- 1
-    for (i in 2:length(x)) {
-      if (isTRUE((x[i] - start) >= episode_seconds)) {
-        ind <- ind + 1
-        start <- x[i]
+    if (length(x) == 1) { # this will also match 1 NA, which is fine
+      return(1)
+    } else if (length(x) == 2 && all(!is.na(x))) {
+      if ((length(episode_seconds) > 0 && (max(x) - min(x)) >= episode_seconds) ||
+          (length(case_free_seconds) > 0 && (max(x) - min(x)) >= case_free_seconds)) {
+        if (x[1] <= x[2]) {
+          return(c(1, 2))
+        } else {
+          return(c(2, 1))
+        }
+      } else {
+        return(c(1, 1))
       }
-      indices[i] <- ind
     }
-    indices
-  }
 
-  ord <- order(x)
-  out <- run_episodes(x[ord], episode_seconds)[order(ord)]
-  out[is.na(x) & ord != 1] <- NA # every NA expect for the first must remain NA
-  out
+    run_episodes <- function(x, episode_seconds, case_free) {
+      NAs <- which(is.na(x))
+      x[NAs] <- 0
+      
+      indices <- integer(length = length(x))
+      start <- x[1]
+      ind <- 1
+      indices[ind] <- 1
+      for (i in 2:length(x)) {
+        if ((length(episode_seconds) > 0 && (x[i] - start) >= episode_seconds) ||
+            (length(case_free_seconds) > 0 && (x[i] - x[i - 1]) >= case_free_seconds)) {
+          ind <- ind + 1
+          start <- x[i]
+        }
+        indices[i] <- ind
+      }
+      indices[NAs] <- NA
+      indices
+    }
+    
+    ord <- order(x)
+    out <- run_episodes(x[ord], episode_seconds, case_free_seconds)[order(ord)]
+    out[is.na(x) & ord != 1] <- NA # every NA expect for the first must remain NA
+    out
 }

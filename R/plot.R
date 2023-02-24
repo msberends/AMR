@@ -127,6 +127,7 @@ plot.mic <- function(x,
     colours_SIR = colours_SIR,
     fn = as.mic,
     language = language,
+    type = "MIC",
     ...
   )
   barplot(x,
@@ -267,6 +268,7 @@ autoplot.mic <- function(object,
     colours_SIR = colours_SIR,
     fn = as.mic,
     language = language,
+    type = "MIC",
     ...
   )
   df <- as.data.frame(x, stringsAsFactors = TRUE)
@@ -368,6 +370,7 @@ plot.disk <- function(x,
     colours_SIR = colours_SIR,
     fn = as.disk,
     language = language,
+    type = "disk",
     ...
   )
 
@@ -508,6 +511,7 @@ autoplot.disk <- function(object,
     colours_SIR = colours_SIR,
     fn = as.disk,
     language = language,
+    type = "disk",
     ...
   )
   df <- as.data.frame(x, stringsAsFactors = TRUE)
@@ -778,33 +782,44 @@ plot_name_of_I <- function(guideline) {
   }
 }
 
-plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, fn, language, ...) {
+plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, fn, language, type, ...) {
   guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
   if (!is.null(mo) && !is.null(ab)) {
     # interpret and give colour based on MIC values
     mo <- as.mo(mo)
-    ab <- as.ab(ab)
-    sir <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, ...)))
-    cols <- character(length = length(sir))
-    cols[is.na(sir)] <- "#BEBEBE"
-    cols[sir == "S"] <- colours_SIR[1]
-    cols[sir == "I"] <- colours_SIR[2]
-    cols[sir == "R"] <- colours_SIR[3]
     moname <- mo_name(mo, language = language)
+    ab <- as.ab(ab)
     abname <- ab_name(ab, language = language)
-    if (all(cols == "#BEBEBE")) {
-      message_(
-        "No ", guideline, " interpretations found for ",
-        ab_name(ab, language = NULL, tolower = TRUE), " in ", moname
-      )
-      guideline_txt <- ""
+
+    sir <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = FALSE, include_PKPD = TRUE, ...)))
+    guideline_txt <- guideline
+    if (all(is.na(sir))) {
+      sir_screening <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = TRUE, include_PKPD = TRUE, ...)))
+      if (!all(is.na(sir_screening))) {
+        message_(
+          "Only ", guideline, " ", type, " interpretations found for ",
+          ab_name(ab, language = NULL, tolower = TRUE), " in ", italicise(moname), " for screening"
+        )
+        sir <- sir_screening
+        guideline_txt <- paste0("(Screen, ", guideline_txt, ")")
+      } else {
+        message_(
+          "No ", guideline, " ", type, " interpretations found for ",
+          ab_name(ab, language = NULL, tolower = TRUE), " in ", italicise(moname)
+        )
+        guideline_txt <- ""
+      }
     } else {
-      guideline_txt <- guideline
       if (isTRUE(list(...)$uti)) {
         guideline_txt <- paste("UTIs,", guideline_txt)
       }
       guideline_txt <- paste0("(", guideline_txt, ")")
     }
+    cols <- character(length = length(sir))
+    cols[is.na(sir)] <- "#BEBEBE"
+    cols[sir == "S"] <- colours_SIR[1]
+    cols[sir == "I"] <- colours_SIR[2]
+    cols[sir == "R"] <- colours_SIR[3]
     sub <- bquote(.(abname) ~ "-" ~ italic(.(moname)) ~ .(guideline_txt))
   } else {
     cols <- "#BEBEBE"
