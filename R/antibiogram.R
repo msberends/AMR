@@ -49,7 +49,11 @@
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
+#' 
+#' All types of antibiograms as listed below can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]). The `antibiogram` object can also be used directly in R Markdown / Quarto (i.e., `knitr`) for reports. In this case, [knitr::kable()] will be applied automatically and microorganism names will even be printed in italics at default (see argument `italicise`). You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with [`as_flextable()`][flextable::as_flextable()] or [`gt()`][gt::gt()].
 #'
+#' ### Antibiogram Types
+#' 
 #' There are four antibiogram types, as proposed by Klinker *et al.* (2021, \doi{10.1177/20499361211011373}), and they are all supported by [antibiogram()]:
 #'
 #' 1. **Traditional Antibiogram**
@@ -103,8 +107,6 @@
 #'                                           "Study Group", "Control Group"))
 #'    ```
 #'
-#' All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]) or directly used into R Markdown / Quarto formats for reports (in the last case, [knitr::kable()] will be applied automatically). Use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. `flextable::as_flextable()` or `gt::gt()`.
-#'
 #' Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (default is `FALSE`). See this example for two antibiotics, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
 #'
 #' ```
@@ -125,6 +127,7 @@
 #'   <NA>      <NA>        -            -            -            -
 #' --------------------------------------------------------------------
 #' ```
+#' 
 #' @source
 #' * Klinker KP *et al.* (2021). **Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms**. *Therapeutic Advances in Infectious Disease*, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
 #' * Barbieri E *et al.* (2021). **Development of a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) to guide the choice of the empiric antibiotic treatment for urinary tract infection in paediatric patients: a Bayesian approach** *Antimicrobial Resistance & Infection Control* May 1;10(1):74; \doi{10.1186/s13756-021-00939-2}
@@ -208,6 +211,7 @@
 #'                                      "WISCA Group 1", "WISCA Group 2"
 #'             )
 #' )
+#' 
 #'
 #' # Print the output for R Markdown / Quarto -----------------------------
 #' 
@@ -504,6 +508,7 @@ antibiogram <- function(x,
   out <- as_original_data_class(new_df, class(x), extra_class = "antibiogram")
   rownames(out) <- NULL
   structure(out,
+    has_syndromic_group = has_syndromic_group,
     long = long,
     combine_SI = combine_SI
   )
@@ -578,39 +583,25 @@ autoplot.antibiogram <- function(object, ...) {
 }
 
 # will be exported in zzz.R
-#' @param italicise a [logical] to indicate whether the microorganism names in the [knitr][knitr::kable()] table should be made italic, using [italicise_taxonomy()]. This only works when the output format is markdown, such as in HTML output.
+#' @method knit_print antibiogram
+#' @param italicise a [logical] to indicate whether the microorganism names in the [knitr][knitr::kable()] table should be made italic, using [italicise_taxonomy()].
 #' @param na character to use for showing `NA` values
 #' @rdname antibiogram
 knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.kable.NA", default = ""), ...) {
   stop_ifnot_installed("knitr")
   meet_criteria(italicise, allow_class = "logical", has_length = 1)
   meet_criteria(na, allow_class = "character", has_length = 1, allow_NA = TRUE)
-  
+
+  if (isTRUE(italicise)) {
+    # make all microorganism names italic, according to nomenclature
+    names_col <- ifelse(isTRUE(attributes(x)$has_syndromic_group), 2, 1)
+    x[[names_col]] <- italicise_taxonomy(x[[names_col]], type = "markdown")
+  }
+
   old_option <- getOption("knitr.kable.NA")
   options(knitr.kable.NA = na)
   on.exit(options(knitr.kable.NA = old_option))
-  out <- knitr::kable(x, ..., output = FALSE)
-  
-  format <- attributes(out)$format
-  if (isTRUE(italicise) &&
-      !is.null(format) &&
-      format %in% c("markdown", "pipe")) {
-    # try to italicise the output
-    rows_with_txt <- which(out %like% "[a-z]")
-    rows_without_txt <- setdiff(seq_len(length(out)), rows_with_txt)
-    out[rows_with_txt] <- gsub("^[|]", "| ", out[rows_with_txt])
-    # put hyphen directly after second character
-    out[rows_without_txt] <- gsub("^[|](.)", "|\\1-", out[rows_without_txt])
-    out_ita <- italicise_taxonomy(as.character(out), type = "markdown")
-    if (length(unique(nchar(out_ita))) != 1) {
-      # so there has been alterations done by italicise_taxonomy()
-      to_fill <- which(nchar(out_ita) < max(nchar(out_ita)))
-      out_ita[intersect(to_fill, rows_with_txt)] <- gsub("(^[|].*?)([|])(.*)", "\\1  \\2\\3", out_ita[intersect(to_fill, rows_with_txt)], perl = TRUE)
-      out_ita[intersect(to_fill, rows_without_txt)] <- gsub("(^[|].*?)([|])(.*)", "\\1--\\2\\3", out_ita[intersect(to_fill, rows_without_txt)], perl = TRUE)
-    }
-    attributes(out_ita) <- attributes(out)
-    out <- out_ita
-  }
-  res <- paste(c("", "", out), collapse = "\n")
-  knitr::asis_output(res)
+
+  out <- paste(c("", "", knitr::kable(x, ..., output = FALSE)), collapse = "\n")
+  knitr::asis_output(out)
 }

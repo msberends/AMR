@@ -107,3 +107,4 @@ contents <- c(
 writeLines(contents, "R/aa_helper_pm_functions.R")
 
 # note: pm_left_join() will be overwritten by aaa_helper_functions.R, which contains a faster implementation
+# replace `res <- as.data.frame(res)` with  `res <- as.data.frame(res, stringsAsFactors = FALSE)`

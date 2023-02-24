@@ -39,7 +39,7 @@
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams sir_df
 #' @inheritParams base::formatC
-#' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S.
+#' @details The function [format()] calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S. This table can also directly be used in R Markdown / Quarto without the need for e.g. [knitr::kable()].
 #' @export
 #' @rdname bug_drug_combinations
 #' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
@@ -327,7 +327,15 @@ format.bug_drug_combinations <- function(x,
   }
 
   rownames(y) <- NULL
-  as_original_data_class(y, class(x.bak)) # will remove tibble groups
+  as_original_data_class(y, class(x.bak), extra_class = "formatted_bug_drug_combinations") # will remove tibble groups
+}
+
+# will be exported in zzz.R
+knit_print.formatted_bug_drug_combinations <- function(x, ...) {
+  stop_ifnot_installed("knitr")
+  # make columns with MO names italic according to nomenclature
+  colnames(x)[3:NCOL(x)] <- italicise_taxonomy(colnames(x)[3:NCOL(x)], type = "markdown")
+  knitr::asis_output(paste("", "", knitr::kable(x, ...), collapse = "\n"))
 }
 
 #' @method print bug_drug_combinations

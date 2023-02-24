@@ -35,7 +35,7 @@ antibiogram(
 
 \method{autoplot}{antibiogram}(object, ...)
 
-knit_print.antibiogram(
+\method{knit_print}{antibiogram}(
   x,
   italicise = TRUE,
   na = getOption("knitr.kable.NA", default = ""),
@@ -75,7 +75,7 @@ knit_print.antibiogram(
 
 \item{object}{an \code{\link[=antibiogram]{antibiogram()}} object}
 
-\item{italicise}{a \link{logical} to indicate whether the microorganism names in the \link[knitr:kable]{knitr} table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}. This only works when the output format is markdown, such as in HTML output.}
+\item{italicise}{a \link{logical} to indicate whether the microorganism names in the \link[knitr:kable]{knitr} table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}.}
 
 \item{na}{character to use for showing \code{NA} values}
 }
@@ -86,6 +86,9 @@ Generate an antibiogram, and communicate the results in plots or tables. These f
 This function returns a table with values between 0 and 100 for \emph{susceptibility}, not resistance.
 
 \strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set with one of the four available algorithms.
+
+All types of antibiograms as listed below can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}). The \code{antibiogram} object can also be used directly in R Markdown / Quarto (i.e., \code{knitr}) for reports. In this case, \code{\link[knitr:kable]{knitr::kable()}} will be applied automatically and microorganism names will even be printed in italics at default (see argument \code{italicise}). You can also use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. with \code{\link[flextable:as_flextable]{as_flextable()}} or \code{\link[gt:gt]{gt()}}.
+\subsection{Antibiogram Types}{
 
 There are four antibiogram types, as proposed by Klinker \emph{et al.} (2021, \doi{10.1177/20499361211011373}), and they are all supported by \code{\link[=antibiogram]{antibiogram()}}:
 \enumerate{
@@ -134,8 +137,6 @@ your_data \%>\%
 }\if{html}{\out{</div>}}
 }
 
-All types of antibiograms can be generated with the functions as described on this page, and can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R \code{\link[=plot]{plot()}}/\code{\link[=barplot]{barplot()}}) or directly used into R Markdown / Quarto formats for reports (in the last case, \code{\link[knitr:kable]{knitr::kable()}} will be applied automatically). Use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. \code{flextable::as_flextable()} or \code{gt::gt()}.
-
 Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the \code{only_all_tested} argument (default is \code{FALSE}). See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=antibiogram]{antibiogram()}} works to calculate the \%SI:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
@@ -155,6 +156,7 @@ Note that for combination antibiograms, it is important to realise that suscepti
   <NA>      <NA>        -            -            -            -
 --------------------------------------------------------------------
 }\if{html}{\out{</div>}}
+}
 }
 \examples{
 # example_isolates is a data set available in the AMR package.
@@ -232,6 +234,7 @@ antibiogram(example_isolates,
                                      "WISCA Group 1", "WISCA Group 2"
             )
 )
+
 
 # Print the output for R Markdown / Quarto -----------------------------
 

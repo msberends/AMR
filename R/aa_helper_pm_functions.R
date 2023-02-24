@@ -988,7 +988,7 @@ pm_summarise.default <- function(.data, ...) {
       if (is.list(x_res)) I(x_res) else x_res
     }
   )
-  res <- as.data.frame(res)
+  res <- as.data.frame(res, stringsAsFactors = FALSE)
   fn_names <- names(fns)
   colnames(res) <- if (is.null(fn_names)) fns else fn_names
   if (pm_groups_exist) res <- cbind(group, res, row.names = NULL)

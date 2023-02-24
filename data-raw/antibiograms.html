@@ -11,7 +11,7 @@
 
 <meta name="author" content="AMR package developers" />
 
-<meta name="date" content="2023-02-23" />
+<meta name="date" content="2023-02-24" />
 
 <title>Generating antibiograms with the AMR package</title>
 
@@ -299,23 +299,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -359,7 +353,7 @@ display: none;
 <h1 class="title toc-ignore">Generating antibiograms with the AMR
 package</h1>
 <h4 class="author">AMR package developers</h4>
-<h4 class="date">2023-02-23</h4>
+<h4 class="date">2023-02-24</h4>
 
 </div>
 
@@ -370,26 +364,25 @@ package</h1>
 looks like:</p>
 <pre class="r"><code>example_isolates</code></pre>
 <pre><code>## # A tibble: 2,000 × 46
-##    date       patient   age gender ward   mo           PEN  
-##    &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;mo&gt;         &lt;sir&gt;
-##  1 2002-01-02 A77334     65 F      Clini… B_ESCHR_COLI R    
-##  2 2002-01-03 A77334     65 F      Clini… B_ESCHR_COLI R    
-##  3 2002-01-07 067927     45 F      ICU    B_STPHY_EPDR R    
-##  4 2002-01-07 067927     45 F      ICU    B_STPHY_EPDR R    
-##  5 2002-01-13 067927     45 F      ICU    B_STPHY_EPDR R    
-##  6 2002-01-13 067927     45 F      ICU    B_STPHY_EPDR R    
-##  7 2002-01-14 462729     78 M      Clini… B_STPHY_AURS R    
-##  8 2002-01-14 462729     78 M      Clini… B_STPHY_AURS R    
-##  9 2002-01-16 067927     45 F      ICU    B_STPHY_EPDR R    
-## 10 2002-01-17 858515     79 F      ICU    B_STPHY_EPDR R    
-## # … with 1,990 more rows, and 39 more variables: OXA &lt;sir&gt;,
-## #   FLC &lt;sir&gt;, AMX &lt;sir&gt;, AMC &lt;sir&gt;, AMP &lt;sir&gt;, TZP &lt;sir&gt;,
-## #   CZO &lt;sir&gt;, FEP &lt;sir&gt;, CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;,
-## #   CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;, TOB &lt;sir&gt;, AMK &lt;sir&gt;,
-## #   KAN &lt;sir&gt;, TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;, FOS &lt;sir&gt;,
-## #   LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,
-## #   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, …
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+##    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
+##    &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;mo&gt;         &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt;
+##  1 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   
+##  2 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   
+##  3 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+##  4 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+##  5 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+##  6 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+##  7 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    
+##  8 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    
+##  9 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+## 10 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   
+## # … with 1,990 more rows, and 36 more variables: AMC &lt;sir&gt;, AMP &lt;sir&gt;,
+## #   TZP &lt;sir&gt;, CZO &lt;sir&gt;, FEP &lt;sir&gt;, CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;,
+## #   CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;, TOB &lt;sir&gt;, AMK &lt;sir&gt;, KAN &lt;sir&gt;,
+## #   TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;, FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;,
+## #   MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;, TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;,
+## #   ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;, IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;,
+## #   CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, RIF &lt;sir&gt;</code></pre>
 <div id="traditional-antibiogram" class="section level3">
 <h3>Traditional Antibiogram</h3>
 <pre class="r"><code>antibiogram(example_isolates,
@@ -397,7 +390,7 @@ looks like:</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Pathogeen (N min-max)</th>
+<th align="left">Pathogen (N min-max)</th>
 <th align="right">AMK</th>
 <th align="right">GEN</th>
 <th align="right">IPM</th>
@@ -408,7 +401,7 @@ looks like:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">CNS (43-309)</td>
+<td align="left">CoNS (43-309)</td>
 <td align="right">0</td>
 <td align="right">86</td>
 <td align="right">52</td>
@@ -507,7 +500,7 @@ looks like:</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Pathogeen (N min-max)</th>
+<th align="left">Pathogen (N min-max)</th>
 <th align="right">TZP</th>
 <th align="right">TZP + GEN</th>
 <th align="right">TZP + TOB</th>
@@ -515,7 +508,7 @@ looks like:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">CNS (29-274)</td>
+<td align="left">CoNS (29-274)</td>
 <td align="right">30</td>
 <td align="right">97</td>
 <td align="right"></td>
@@ -577,10 +570,20 @@ looks like:</p>
              antibiotics = c(aminoglycosides(), carbapenems()),
              syndromic_group = &quot;ward&quot;)</code></pre>
 <table>
+<colgroup>
+<col width="25%" />
+<col width="37%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Syndroomgroep</th>
-<th align="left">Pathogeen (N min-max)</th>
+<th align="left">Syndromic Group</th>
+<th align="left">Pathogen (N min-max)</th>
 <th align="right">AMK</th>
 <th align="right">GEN</th>
 <th align="right">IPM</th>
@@ -592,7 +595,7 @@ looks like:</p>
 <tbody>
 <tr class="odd">
 <td align="left">Clinical</td>
-<td align="left">CNS (23-205)</td>
+<td align="left">CoNS (23-205)</td>
 <td align="right"></td>
 <td align="right">89</td>
 <td align="right">57</td>
@@ -602,7 +605,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">ICU</td>
-<td align="left">CNS (10-73)</td>
+<td align="left">CoNS (10-73)</td>
 <td align="right"></td>
 <td align="right">79</td>
 <td align="right"></td>
@@ -612,7 +615,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">Outpatient</td>
-<td align="left">CNS (3-31)</td>
+<td align="left">CoNS (3-31)</td>
 <td align="right"></td>
 <td align="right">84</td>
 <td align="right"></td>
@@ -622,7 +625,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">E. <em>coli</em> (0-299)</td>
+<td align="left"><em>E. coli</em> (0-299)</td>
 <td align="right">100</td>
 <td align="right">98</td>
 <td align="right">100</td>
@@ -632,7 +635,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">ICU</td>
-<td align="left">E. <em>coli</em> (0-137)</td>
+<td align="left"><em>E. coli</em> (0-137)</td>
 <td align="right">100</td>
 <td align="right">99</td>
 <td align="right">100</td>
@@ -642,7 +645,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">K. <em>pneumoniae</em> (0-51)</td>
+<td align="left"><em>K. pneumoniae</em> (0-51)</td>
 <td align="right"></td>
 <td align="right">92</td>
 <td align="right">100</td>
@@ -652,7 +655,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">Clinical</td>
-<td align="left">P. <em>mirabilis</em> (0-30)</td>
+<td align="left"><em>P. mirabilis</em> (0-30)</td>
 <td align="right"></td>
 <td align="right">100</td>
 <td align="right"></td>
@@ -662,7 +665,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">S. <em>aureus</em> (2-150)</td>
+<td align="left"><em>S. aureus</em> (2-150)</td>
 <td align="right"></td>
 <td align="right">99</td>
 <td align="right"></td>
@@ -672,7 +675,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">ICU</td>
-<td align="left">S. <em>aureus</em> (0-66)</td>
+<td align="left"><em>S. aureus</em> (0-66)</td>
 <td align="right"></td>
 <td align="right">100</td>
 <td align="right"></td>
@@ -682,7 +685,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">S. <em>epidermidis</em> (4-79)</td>
+<td align="left"><em>S. epidermidis</em> (4-79)</td>
 <td align="right"></td>
 <td align="right">82</td>
 <td align="right"></td>
@@ -692,7 +695,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">ICU</td>
-<td align="left">S. <em>epidermidis</em> (4-75)</td>
+<td align="left"><em>S. epidermidis</em> (4-75)</td>
 <td align="right"></td>
 <td align="right">72</td>
 <td align="right"></td>
@@ -702,7 +705,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">S. <em>hominis</em> (1-45)</td>
+<td align="left"><em>S. hominis</em> (1-45)</td>
 <td align="right"></td>
 <td align="right">96</td>
 <td align="right"></td>
@@ -712,7 +715,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">Clinical</td>
-<td align="left">S. <em>pneumoniae</em> (5-78)</td>
+<td align="left"><em>S. pneumoniae</em> (5-78)</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right"></td>
@@ -722,7 +725,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">ICU</td>
-<td align="left">S. <em>pneumoniae</em> (5-30)</td>
+<td align="left"><em>S. pneumoniae</em> (5-30)</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right"></td>
@@ -742,9 +745,9 @@ looks like:</p>
             syndromic_group = ifelse(example_isolates$age &gt;= 65 &amp;
                                        example_isolates$gender == &quot;M&quot;,
                                      &quot;WISCA Group 1&quot;, &quot;WISCA Group 2&quot;))</code></pre>
-<table style="width:100%;">
+<table>
 <colgroup>
-<col width="22%" />
+<col width="23%" />
 <col width="35%" />
 <col width="5%" />
 <col width="14%" />
@@ -753,8 +756,8 @@ looks like:</p>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Syndroomgroep</th>
-<th align="left">Pathogeen (N min-max)</th>
+<th align="left">Syndromic Group</th>
+<th align="left">Pathogen (N min-max)</th>
 <th align="right">AMC</th>
 <th align="right">AMC + CIP</th>
 <th align="right">TZP</th>
@@ -764,7 +767,7 @@ looks like:</p>
 <tbody>
 <tr class="odd">
 <td align="left">WISCA Group 1</td>
-<td align="left">Gram-negatief (261-285)</td>
+<td align="left">Gram-negative (261-285)</td>
 <td align="right">76</td>
 <td align="right">95</td>
 <td align="right">89</td>
@@ -772,7 +775,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">WISCA Group 2</td>
-<td align="left">Gram-negatief (380-442)</td>
+<td align="left">Gram-negative (380-442)</td>
 <td align="right">76</td>
 <td align="right">98</td>
 <td align="right">88</td>
@@ -780,7 +783,7 @@ looks like:</p>
 </tr>
 <tr class="odd">
 <td align="left">WISCA Group 1</td>
-<td align="left">Gram-positief (123-406)</td>
+<td align="left">Gram-positive (123-406)</td>
 <td align="right">76</td>
 <td align="right">89</td>
 <td align="right">81</td>
@@ -788,7 +791,7 @@ looks like:</p>
 </tr>
 <tr class="even">
 <td align="left">WISCA Group 2</td>
-<td align="left">Gram-positief (222-732)</td>
+<td align="left">Gram-positive (222-732)</td>
 <td align="right">76</td>
 <td align="right">89</td>
 <td align="right">88</td>

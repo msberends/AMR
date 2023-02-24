@@ -55,7 +55,7 @@ The function \code{\link[=bug_drug_combinations]{bug_drug_combinations()}} retur
 Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{\link[=format]{format()}} on the result to prettify it to a publishable/printable format, see \emph{Examples}.
 }
 \details{
-The function \code{\link[=format]{format()}} calculates the resistance per bug-drug combination. Use \code{combine_SI = TRUE} (default) to test R vs. S+I and \code{combine_SI = FALSE} to test R+I vs. S.
+The function \code{\link[=format]{format()}} calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Use \code{combine_SI = TRUE} (default) to test R vs. S+I and \code{combine_SI = FALSE} to test R+I vs. S. This table can also directly be used in R Markdown / Quarto without the need for e.g. \code{\link[knitr:kable]{knitr::kable()}}.
 }
 \examples{
 # example_isolates is a data set available in the AMR package.

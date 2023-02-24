@@ -128,8 +128,9 @@ if (utf8_supported && !is_latex) {
   s3_register("ggplot2::fortify", "sir")
   s3_register("ggplot2::fortify", "mic")
   s3_register("ggplot2::fortify", "disk")
-  # Support for knitr / R Markdown
+  # Support for knitr (R Markdown/Quarto)
   s3_register("knitr::knit_print", "antibiogram")
+  s3_register("knitr::knit_print", "formatted_bug_drug_combinations")
   # Support vctrs package for use in e.g. dplyr verbs
   # S3: ab_selector
   s3_register("vctrs::vec_ptype2", "character.ab_selector")
