@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9146</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9147</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,11 +65,6 @@
     How to
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--how-to">
-    <a class="dropdown-item" href="reference/AMR-options.html">
-      <span class="fa fa-gear"></span>
-       
-      User- Or Team-specific Package Settings
-    </a>
     <a class="dropdown-item" href="articles/AMR.html">
       <span class="fa fa-directions"></span>
        
@@ -88,7 +83,12 @@
     <a class="dropdown-item" href="articles/datasets.html">
       <span class="fa fa-database"></span>
        
-      Data Sets for Download / Own Use
+      Download Data Sets for Own Use
+    </a>
+    <a class="dropdown-item" href="reference/AMR-options.html">
+      <span class="fa fa-gear"></span>
+       
+      Set User- Or Team-specific Package Settings
     </a>
     <a class="dropdown-item" href="articles/PCA.html">
       <span class="fa fa-compress"></span>
@@ -347,7 +347,7 @@
 <h4 id="generating-antibiograms">Generating antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
 </h4>
 <p>The <code>AMR</code> package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).</p>
-<p>If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.) when using <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> on an antibiogram object.</p>
+<p>If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
