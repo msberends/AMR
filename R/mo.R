@@ -336,7 +336,7 @@ as.mo <- function(x,
             input = x_search_cleaned,
             fullname = top_hits[1],
             mo = result_mo,
-            candidates = ifelse(length(top_hits) > 1, paste(top_hits[2:min(26, length(top_hits))], collapse = ", "), ""),
+            candidates = ifelse(length(top_hits) > 1, paste(top_hits[2:min(99, length(top_hits))], collapse = ", "), ""),
             minimum_matching_score = ifelse(is.null(minimum_matching_score), "NULL", minimum_matching_score),
             keep_synonyms = keep_synonyms,
             stringsAsFactors = FALSE
@@ -798,7 +798,7 @@ rep.mo <- function(x, ...) {
 #' @method print mo_uncertainties
 #' @export
 #' @noRd
-print.mo_uncertainties <- function(x, ...) {
+print.mo_uncertainties <- function(x, n = 10, ...) {
   if (NROW(x) == 0) {
     cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
     return(invisible(NULL))
@@ -833,9 +833,14 @@ print.mo_uncertainties <- function(x, ...) {
   }
 
   txt <- ""
+  any_maxed_out <- FALSE
   for (i in seq_len(nrow(x))) {
     if (x[i, ]$candidates != "") {
       candidates <- unlist(strsplit(x[i, ]$candidates, ", ", fixed = TRUE))
+      if (length(candidates) > n) {
+        any_maxed_out <- TRUE
+        candidates <- candidates[seq_len(n)]
+      }
       scores <- mo_matching_score(x = x[i, ]$input, n = candidates)
       n_candidates <- length(candidates)
 
@@ -856,10 +861,6 @@ print.mo_uncertainties <- function(x, ...) {
               font_blue(paste0(" (", scores_formatted, ")"), collapse = NULL)
             ),
             quotes = FALSE, sort = FALSE
-          ),
-          ifelse(n_candidates == 25,
-            font_grey(" [showing first 25]"),
-            ""
           )
         ),
         extra_indent = nchar("Also matched: "),
@@ -905,7 +906,11 @@ print.mo_uncertainties <- function(x, ...) {
     txt <- gsub("(^[\n]|[\n]$)", "", txt)
     txt <- paste0("\n", txt, "\n")
   }
+
   cat(txt)
+  if (isTRUE(any_maxed_out)) {
+    cat(font_blue(word_wrap("\nOnly the first ", n, " other matches of each record are shown. Run `print(mo_uncertainties(), n = ...)` to view more entries, or save `mo_uncertainties()` to an object.")))
+  }
 }
 
 #' @method print mo_renamed

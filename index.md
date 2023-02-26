@@ -78,7 +78,7 @@ This base R snippet will work in any version of R since April 2013 (R-3.0).
 
 The `AMR` package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).
 
-If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.) when using `print()` on an antibiogram object.
+If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
 
 ```r
 antibiogram(example_isolates,

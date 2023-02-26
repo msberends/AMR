@@ -1357,19 +1357,27 @@ taxonomy <- taxonomy %>%
 
 # set class <mo>
 class(taxonomy$mo) <- c("mo", "character")
+microorganisms <- taxonomy
 
-### this was previously needed?? Since 2022 M. catarrhalis seems to be "accepted" again
-# # Moraxella catarrhalis was named Branhamella catarrhalis (Catlin, 1970), but this is unaccepted in clinical microbiology
-# # we keep them both
-# taxonomy$status[which(taxonomy$fullname == "Moraxella catarrhalis")]
-# taxonomy$lpsn_renamed_to[which(taxonomy$fullname == "Moraxella catarrhalis")]
-# taxonomy$status[which(taxonomy$fullname == "Moraxella catarrhalis")] <- "accepted"
-# taxonomy$lpsn_renamed_to[which(taxonomy$fullname == "Moraxella catarrhalis")] <- NA_character_
+
+# Restore 'synonym' microorganisms to 'accepted' --------------------------
+
+# according to LPSN: Stenotrophomonas maltophilia is the correct name if this species is regarded as a separate species (i.e., if its nomenclatural type is not assigned to another species whose name is validly published, legitimate and not rejected and has priority) within a separate genus Stenotrophomonas.
+# https://lpsn.dsmz.de/species/stenotrophomonas-maltophilia
+
+# all MO's to keep as 'accepted', not as 'synonym':
+to_restore <- c("Stenotrophomonas maltophilia",
+                "Moraxella catarrhalis")
+all(to_restore %in% microorganisms$fullname)
+for (nm in to_restore) {
+  microorganisms$lpsn_renamed_to[which(microorganisms$fullname == nm)] <- NA
+  microorganisms$gbif_renamed_to[which(microorganisms$fullname == nm)] <- NA
+  microorganisms$status[which(microorganisms$fullname == nm)] <- "accepted"
+}
 
 
 # Save to package ---------------------------------------------------------
 
-microorganisms <- taxonomy
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
 rm(microorganisms)
 

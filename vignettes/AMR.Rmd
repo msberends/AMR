@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 Conducting AMR data analysis unfortunately requires in-depth knowledge from different scientific fields, which makes it hard to do right. At least, it requires:
 
-* Good questions (always start with those!)
+* Good questions (always start with those!) and reliable data
 * A thorough understanding of (clinical) epidemiology, to understand the clinical and epidemiological relevance and possible bias of results
 * A thorough understanding of (clinical) microbiology/infectious diseases, to understand which microorganisms are causal to which infections and the implications of pharmaceutical treatment, as well as understanding intrinsic and acquired microbial resistance
 * Experience with data analysis with microbiological tests and their results, to understand the determination and limitations of MIC values and their interpretations to SIR values
@@ -60,6 +60,7 @@ knitr::kable(
 ``` 
 
 ## Needed R packages
+
 As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by RStudio. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
 
 We will also use the `cleaner` package, that can be used for cleaning data and creating frequency tables.
@@ -68,156 +69,93 @@ We will also use the `cleaner` package, that can be used for cleaning data and c
 library(dplyr)
 library(ggplot2)
 library(AMR)
-library(cleaner)
 
 # (if not yet installed, install with:)
-# install.packages(c("dplyr", "ggplot2", "AMR", "cleaner"))
+# install.packages(c("dplyr", "ggplot2", "AMR"))
 ```
 
-# Creation of data
-We will create some fake example data to use for analysis. For AMR data analysis, we need at least: a patient ID, name or code of a microorganism, a date and antimicrobial results (an antibiogram). It could also include a specimen type (e.g. to filter on blood or urine), the ward type (e.g. to filter on ICUs). 
+The `AMR` package contains a data set `example_isolates_unclean`, which might look data that users have extracted from their laboratory systems:
 
-With additional columns (like a hospital name, the patients gender of even [well-defined] clinical properties) you can do a comparative analysis, as this tutorial will demonstrate too.
+```{r}
+example_isolates_unclean
 
-## Patients
-To start with patients, we need a unique list of patients. 
-
-```{r create patients}
-patients <- unlist(lapply(LETTERS, paste0, 1:10))
+# we will use 'our_data' as the data set name for this tutorial
+our_data <- example_isolates_unclean
 ```
 
-The `LETTERS` object is available in R - it's a vector with 26 characters: `A` to `Z`. The `patients` object we just created is now a vector of length `r length(patients)`, with values (patient IDs) varying from ``r patients[1]`` to ``r patients[length(patients)]``. Now we we also set the gender of our patients, by putting the ID and the gender in a table:
+For AMR data analysis, we would like the microorganism column to contain valid, up-to-date taxonomy, and the antibiotic columns to be cleaned as SIR values as well.
 
-```{r create gender}
-patients_table <- data.frame(
-  patient_id = patients,
-  gender = c(
-    rep("M", 135),
-    rep("F", 125)
-  )
-)
+## Taxonomy of microorganisms
+
+With `as.mo()`, users can transform arbitrary microorganism names or codes to current taxonomy. The `AMR` package contains up-to-date taxonomic data. To be specific, currently included data were retrieved on `r format(AMR:::TAXONOMY_VERSION$LPSN$accessed_date, "%d %b %Y")`. 
+
+The codes of the AMR packages that come from `as.mo()` are short, but still human readable. More importantly, `as.mo()`  supports all kinds of input:
+
+```{r, message = FALSE}
+as.mo("Klebsiella pneumoniae")
+as.mo("K. pneumoniae")
+as.mo("KLEPNE")
+as.mo("KLPN")
 ```
 
-The first 135 patient IDs are now male, the other 125 are female.
+The first character in above codes denote their taxonomic kingdom, such as Bacteria (B), Fungi (F), and Protozoa (P).
 
-## Dates
-Let's pretend that our data consists of blood cultures isolates from between 1 January 2010 and 1 January 2018. 
+The `AMR` package also contain functions to directly retrieve taxonomic properties, such as the name, genus, species, family, order, and even Gram-stain. They all start with `mo_` and they use `as.mo()` internally, so that still any arbitrary user input can be used:
 
-```{r create dates}
-dates <- seq(as.Date("2010-01-01"), as.Date("2018-01-01"), by = "day")
+```{r, message = FALSE}
+mo_family("K. pneumoniae")
+mo_genus("K. pneumoniae")
+mo_species("K. pneumoniae")
+
+mo_gramstain("Klebsiella pneumoniae")
+
+mo_ref("K. pneumoniae")
+
+mo_snomed("K. pneumoniae")
 ```
 
-This `dates` object now contains all days in our date range.
+Now we can thus clean our data:
 
-#### Microorganisms
-For this tutorial, we will uses four different microorganisms: *Escherichia coli*, *Staphylococcus aureus*, *Streptococcus pneumoniae*, and *Klebsiella pneumoniae*:
-
-```{r mo}
-bacteria <- c(
-  "Escherichia coli", "Staphylococcus aureus",
-  "Streptococcus pneumoniae", "Klebsiella pneumoniae"
-)
+```{r, echo = FALSE, message = FALSE}
+mo_reset_session()
 ```
 
-## Put everything together
-
-Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results, using the `random_sir()` function.
-
-```{r merge data}
-sample_size <- 20000
-data <- data.frame(
-  date = sample(dates, size = sample_size, replace = TRUE),
-  patient_id = sample(patients, size = sample_size, replace = TRUE),
-  hospital = sample(
-    c(
-      "Hospital A",
-      "Hospital B",
-      "Hospital C",
-      "Hospital D"
-    ),
-    size = sample_size, replace = TRUE,
-    prob = c(0.30, 0.35, 0.15, 0.20)
-  ),
-  bacteria = sample(bacteria,
-    size = sample_size, replace = TRUE,
-    prob = c(0.50, 0.25, 0.15, 0.10)
-  ),
-  AMX = random_sir(sample_size, prob_sir = c(0.35, 0.60, 0.05)),
-  AMC = random_sir(sample_size, prob_sir = c(0.15, 0.75, 0.10)),
-  CIP = random_sir(sample_size, prob_sir = c(0.20, 0.80, 0.00)),
-  GEN = random_sir(sample_size, prob_sir = c(0.08, 0.92, 0.00))
-)
+```{r, message = TRUE}
+our_data$bacteria <- as.mo(our_data$bacteria, info = TRUE)
 ```
 
-Using the `left_join()` function from the `dplyr` package, we can 'map' the gender to the patient ID using the `patients_table` object we created earlier:
+Apparently, there was some uncertainty about the translation to taxonomic codes. Let's check this:
 
-```{r merge data 2, message = FALSE, warning = FALSE}
-data <- data %>% left_join(patients_table)
+```{r}
+mo_uncertainties()
 ```
 
-The resulting data set contains `r format(nrow(data), big.mark = " ")` blood culture isolates. With the `head()` function we can preview the first 6 rows of this data set:
+That's all good.
 
-```{r preview data set 1, eval = FALSE}
-head(data)
+## Antibiotic results
+
+The column with antibiotic test results must also be cleaned. The `AMR` package comes with three new data types to work with such test results: `mic` for minimal inhibitory concentrations (MIC), `disk` for disk diffusion diameters, and `sir` for SIR data that have been interpreted already. This package can also determine SIR values based on MIC or disk diffusion values, read more about that on the `as.sir()` page.
+
+For now, we will just clean the SIR columns in our data using dplyr:
+
+```{r}
+# method 1, be explicit about the columns:
+our_data <- our_data %>% 
+  mutate_at(vars(AMX:GEN), as.sir)
+
+# method 2, let the AMR package determine the eligible columns
+our_data <- our_data %>% 
+  mutate_if(is_sir_eligible, as.sir)
+
+# result:
+our_data
 ```
 
-```{r preview data set 2, echo = FALSE, results = 'asis'}
-knitr::kable(head(data), align = "c")
-```
-
-Now, let's start the cleaning and the analysis!
-
-# Cleaning the data
-
-We also created a package dedicated to data cleaning and checking, called the `cleaner` package. It `freq()` function can be used to create frequency tables.
-
-For example, for the `gender` variable:
-
-```{r freq gender 1, results="asis"}
-data %>% freq(gender)
-```
-
-So, we can draw at least two conclusions immediately. From a data scientists perspective, the data looks clean: only values `M` and `F`. From a researchers perspective: there are slightly more men. Nothing we didn't already know.
-
-The data is already quite clean, but we still need to transform some variables. The `bacteria` column now consists of text, and we want to add more variables based on microbial IDs later on. So, we will transform this column to valid IDs. The `mutate()` function of the `dplyr` package makes this really easy:
-
-```{r transform mo 1}
-data <- data %>%
-  mutate(bacteria = as.mo(bacteria))
-```
-
-We also want to transform the antibiotics, because in real life data we don't know if they are really clean. The `as.sir()` function ensures reliability and reproducibility in these kind of variables. The `is_sir_eligible()` can check which columns are probably columns with SIR test results. Using `mutate()` and `across()`, we can apply the transformation to the formal `<rsi>` class:
-
-```{r transform abx}
-is_sir_eligible(data)
-colnames(data)[is_sir_eligible(data)]
-
-data <- data %>%
-  mutate(across(where(is_sir_eligible), as.sir))
-```
-
-Finally, we will apply [EUCAST rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
-
-Because the amoxicillin (column `AMX`) and amoxicillin/clavulanic acid (column `AMC`) in our data were generated randomly, some rows will undoubtedly contain AMX = S and AMC = R, which is technically impossible. The `eucast_rules()` fixes this:
-
-```{r eucast, warning = FALSE, message = FALSE}
-data <- eucast_rules(data, col_mo = "bacteria", rules = "all")
-```
-
-# Adding new variables
-Now that we have the microbial ID, we can add some taxonomic properties:
-
-```{r new taxo}
-data <- data %>%
-  mutate(
-    gramstain = mo_gramstain(bacteria),
-    genus = mo_genus(bacteria),
-    species = mo_species(bacteria)
-  )
-```
+This is basically it for the cleaning, time to start the data inclusion.
 
 ## First isolates
-We also need to know which isolates we can *actually* use for analysis.
+
+We need to know which isolates we can *actually* use for analysis without repetition bias.
 
 To conduct an analysis of antimicrobial resistance, you must [only include the first isolate of every patient per episode](https:/pubmed.ncbi.nlm.nih.gov/17304462/) (Hindler *et al.*, Clin Infect Dis. 2007). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following weeks (yes, some countries like the Netherlands have these blood drawing policies). The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would clearly be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
 
@@ -226,116 +164,143 @@ The Clinical and Laboratory Standards Institute (CLSI) appoints this as follows:
 > *(...) When preparing a cumulative antibiogram to guide clinical decisions about empirical antimicrobial therapy of initial infections, **only the first isolate of a given species per patient, per analysis period (eg, one year) should be included, irrespective of body site, antimicrobial susceptibility profile, or other phenotypical characteristics (eg, biotype)**. The first isolate is easily identified, and cumulative antimicrobial susceptibility test data prepared using the first isolate are generally comparable to cumulative antimicrobial susceptibility test data calculated by other methods, providing duplicate isolates are excluded.*
 <br>[M39-A4 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition. CLSI, 2014. Chapter 6.4](https://clsi.org/standards/products/microbiology/documents/m39/)
 
-This `AMR` package includes this methodology with the `first_isolate()` function and is able to apply the four different methods as defined by [Hindler *et al.* in 2007](https://academic.oup.com/cid/article/44/6/867/364325): phenotype-based, episode-based, patient-based, isolate-based. The right method depends on your goals and analysis, but the default phenotype-based method is in any case the method to properly correct for most duplicate isolates. This method also takes into account the antimicrobial susceptibility test results using `all_microbials()`. Read more about the methods on the `first_isolate()` page.
+This `AMR` package includes this methodology with the `first_isolate()` function and is able to apply the four different methods as defined by [Hindler *et al.* in 2007](https://academic.oup.com/cid/article/44/6/867/364325): phenotype-based, episode-based, patient-based, isolate-based. The right method depends on your goals and analysis, but the default phenotype-based method is in any case the method to properly correct for most duplicate isolates. Read more about the methods on the `first_isolate()` page.
 
 The outcome of the function can easily be added to our data:
 
 ```{r 1st isolate}
-data <- data %>%
+our_data <- our_data %>%
   mutate(first = first_isolate(info = TRUE))
 ```
 
-So only `r percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
+So only `r round((sum(our_data$first) / nrow(our_data) * 100))`% is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
 
 ```{r 1st isolate filter}
-data_1st <- data %>%
+our_data_1st <- our_data %>%
   filter(first == TRUE)
 ```
 
 For future use, the above two syntaxes can be shortened:
 
 ```{r 1st isolate filter 2}
-data_1st <- data %>%
+our_data_1st <- our_data %>%
   filter_first_isolate()
 ```
 
-So we end up with `r format(nrow(data_1st), big.mark = " ")` isolates for analysis. Now our data looks like:
+So we end up with `r format(nrow(our_data_1st), big.mark = " ")` isolates for analysis. Now our data looks like:
 
-```{r preview data set 3, eval = FALSE}
-head(data_1st)
+```{r preview data set 3}
+our_data_1st
 ```
 
-```{r preview data set 4, echo = FALSE, results = 'asis'}
-knitr::kable(head(data_1st), align = "c")
-```
-
-Time for the analysis!
+Time for the analysis.
 
 # Analysing the data
-You might want to start by getting an idea of how the data is distributed. It's an important start, because it also decides how you will continue your analysis. Although this package contains a convenient function to make frequency tables, exploratory data analysis (EDA) is not the primary scope of this package. Use a package like [`DataExplorer`](https://cran.r-project.org/package=DataExplorer) for that, or read the free online book [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/) by Roger D. Peng.
 
-## Dispersion of species
-To just get an idea how the species are distributed, create a frequency table with our `freq()` function. We created the `genus` and `species` column earlier based on the microbial ID. With `paste()`, we can concatenate them together.
+The base R `summary()` function gives a good first impression, as it comes with support for the new `mo` and `sir` classes that we now have in our data set:
 
-The `freq()` function can be used like the base R language was intended:
+```{r}
+summary(our_data_1st)
 
-```{r freq 1, eval = FALSE}
-freq(paste(data_1st$genus, data_1st$species))
+glimpse(our_data_1st)
+
+# number of unique values per column:
+sapply(our_data_1st, n_distinct)
 ```
 
-Or can be used like the `dplyr` way, which is easier readable:
+## Availability of species
 
-```{r freq 2a, eval = FALSE}
-data_1st %>% freq(genus, species)
+To just get an idea how the species are distributed, create a frequency table with `count()` based on the name of the microorganisms:
+
+```{r freq 1}
+our_data %>% 
+  count(mo_name(bacteria), sort = TRUE)
+
+our_data_1st %>% 
+  count(mo_name(bacteria), sort = TRUE)
 ```
-```{r freq 2b, results = 'asis', echo = FALSE}
-data_1st %>%
-  freq(genus, species, header = TRUE)
-```
 
-## Overview of different bug/drug combinations
+## Select and filter with antibiotic selectors
 
-Using [tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select or filter columns based on the antibiotic class they are in:
+Using so-called antibiotic class selectors, you can select or filter columns based on the antibiotic class that your antibiotic results are in:
 
-```{r bug_drg 2a, eval = FALSE}
-data_1st %>%
+```{r bug_drg 2a}
+our_data_1st %>%
+  select(date, aminoglycosides())
+
+our_data_1st %>%
+  select(bacteria, betalactams())
+
+our_data_1st %>%
+  select(bacteria, where(is.sir))
+
+# filtering using AB selectors is also possible:
+our_data_1st %>%
   filter(any(aminoglycosides() == "R"))
+
+our_data_1st %>%
+  filter(all(betalactams() == "R"))
+
+# even works in base R (since R 3.0):
+our_data_1st[all(betalactams() == "R"), ]
 ```
 
-```{r bug_drg 2b, echo = FALSE, results = 'asis'}
-knitr::kable(
-  data_1st %>%
-    filter(any(aminoglycosides() == "R")) %>%
-    head(),
-  align = "c"
-)
+## Generate antibiograms
+
+This package comes with `antibiogram()`, a function that automatically generates traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA). For R Markdown (such as this page) it automatically prints in the right table format.
+
+Below are some suggestions for how to generate the different antibiograms:
+
+```{r}
+# traditional:
+antibiogram(our_data_1st)
+antibiogram(our_data_1st,
+            ab_transform = "name")
+antibiogram(our_data_1st,
+            ab_transform = "name",
+            language = "es") # support for 20 languages
+
 ```
 
-If you want to get a quick glance of the number of isolates in different bug/drug combinations, you can use the `bug_drug_combinations()` function:
-
-```{r bug_drg 1a, eval = FALSE}
-data_1st %>%
-  bug_drug_combinations() %>%
-  head() # show first 6 rows
+```{r}
+# combined:
+antibiogram(our_data_1st,
+            antibiotics = c("AMC", "AMC+CIP", "AMC+GEN"))
 ```
 
-```{r bug_drg 1b, echo = FALSE, results = 'asis'}
-knitr::kable(
-  data_1st %>%
-    bug_drug_combinations() %>%
-    head(),
-  align = "c"
-)
+```{r}
+# for a syndromic antibiogram, we must fake some clinical conditions:
+our_data_1st$condition <- sample(c("Cardial", "Respiratory", "Rheumatic"),
+                                 size = nrow(our_data_1st),
+                                 replace = TRUE)
+
+# syndromic:
+antibiogram(our_data_1st,
+            syndromic_group = "condition")
+antibiogram(our_data_1st,
+            # you can use AB selectors here as well:
+            antibiotics = c(penicillins(), aminoglycosides()),
+            syndromic_group = "condition",
+            mo_transform = "gramstain")
 ```
 
-
-```{r bug_drg 3a, eval = FALSE}
-data_1st %>%
-  select(bacteria, aminoglycosides()) %>%
-  bug_drug_combinations()
+```{r}
+# WISCA: 
+# (we lack some details, but it could contain a filter on e.g. >65 year-old males)
+wisca <- antibiogram(our_data_1st,
+                     antibiotics = c("AMC", "AMC+CIP", "AMC+GEN"),
+                     syndromic_group = "condition",
+                     mo_transform = "gramstain")
+wisca
 ```
 
+Antibiograms can be plotted using `autoplot()` from the `ggplot2` packages, since this package provides an extension to that function:
 
-```{r bug_drg 3b, echo = FALSE, results = 'asis'}
-knitr::kable(
-  data_1st %>%
-    select(bacteria, aminoglycosides()) %>%
-    bug_drug_combinations(),
-  align = "c"
-)
+```{r}
+autoplot(wisca)
 ```
 
-This will only give you the crude numbers in the data. To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
+To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
 
 ## Resistance percentages
 
@@ -346,274 +311,17 @@ All these functions contain a `minimum` argument, denoting the minimum required 
 As per the EUCAST guideline of 2019, we calculate resistance as the proportion of R (`proportion_R()`, equal to `resistance()`) and susceptibility as the proportion of S and I (`proportion_SI()`, equal to `susceptibility()`). These functions can be used on their own:
 
 ```{r}
-data_1st %>% resistance(AMX)
+our_data_1st %>% resistance(AMX)
 ```
 
 Or can be used in conjunction with `group_by()` and `summarise()`, both from the `dplyr` package:
 
-```{r, eval = FALSE}
-data_1st %>%
+```{r}
+our_data_1st %>%
   group_by(hospital) %>%
   summarise(amoxicillin = resistance(AMX))
 ```
-```{r, echo = FALSE}
-data_1st %>%
-  group_by(hospital) %>%
-  summarise(amoxicillin = resistance(AMX)) %>%
-  knitr::kable(align = "c", big.mark = " ")
-```
-
-Of course it would be very convenient to know the number of isolates responsible for the percentages. For that purpose the `n_sir()` can be used, which works exactly like `n_distinct()` from the `dplyr` package. It counts all isolates available for every group (i.e. values S, I or R):
-
-```{r, eval = FALSE}
-data_1st %>%
-  group_by(hospital) %>%
-  summarise(
-    amoxicillin = resistance(AMX),
-    available = n_sir(AMX)
-  )
-```
-```{r, echo = FALSE}
-data_1st %>%
-  group_by(hospital) %>%
-  summarise(
-    amoxicillin = resistance(AMX),
-    available = n_sir(AMX)
-  ) %>%
-  knitr::kable(align = "c", big.mark = " ")
-```
-
-These functions can also be used to get the proportion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:
-
-```{r, eval = FALSE}
-data_1st %>%
-  group_by(genus) %>%
-  summarise(
-    amoxiclav = susceptibility(AMC),
-    gentamicin = susceptibility(GEN),
-    amoxiclav_genta = susceptibility(AMC, GEN)
-  )
-```
-```{r, echo = FALSE}
-data_1st %>%
-  group_by(genus) %>%
-  summarise(
-    amoxiclav = susceptibility(AMC),
-    gentamicin = susceptibility(GEN),
-    amoxiclav_genta = susceptibility(AMC, GEN)
-  ) %>%
-  knitr::kable(align = "c", big.mark = " ")
-```
-
-Or if you are curious for the resistance within certain antibiotic classes, use a antibiotic class selector such as `penicillins()`, which automatically will include the columns `AMX` and `AMC` of our data:
-
-```{r, eval = FALSE}
-data_1st %>%
-  # group by hospital
-  group_by(hospital) %>%
-  #                / -> select all penicillins in the data for calculation
-  #                |              / -> use resistance() for all peni's per hospital
-  #                |              |           / -> print as percentages
-  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>%
-  # format the antibiotic column names, using so-called snake case,
-  # so 'Amoxicillin/clavulanic acid' becomes 'amoxicillin_clavulanic_acid'
-  rename_with(set_ab_names, penicillins())
-```
-```{r, echo = FALSE, message = FALSE}
-data_1st %>%
-  group_by(hospital) %>%
-  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>%
-  rename_with(set_ab_names, penicillins()) %>%
-  knitr::kable(align = "lrr")
-```
-
-To make a transition to the next part, let's see how differences in the previously calculated combination therapies could be plotted:
-
-```{r plot 1}
-data_1st %>%
-  group_by(genus) %>%
-  summarise(
-    "1. Amoxi/clav" = susceptibility(AMC),
-    "2. Gentamicin" = susceptibility(GEN),
-    "3. Amoxi/clav + genta" = susceptibility(AMC, GEN)
-  ) %>%
-  # pivot_longer() from the tidyr package "lengthens" data:
-  tidyr::pivot_longer(-genus, names_to = "antibiotic") %>%
-  ggplot(aes(
-    x = genus,
-    y = value,
-    fill = antibiotic
-  )) +
-  geom_col(position = "dodge2")
-```
-
-## Plots
-
-To show results in plots, most R users would nowadays use the `ggplot2` package. This package lets you create plots in layers. You can read more about it [on their website](https://ggplot2.tidyverse.org/). A quick example would look like these syntaxes:
-
-```{r plot 2, eval = FALSE}
-ggplot(
-  data = a_data_set,
-  mapping = aes(
-    x = year,
-    y = value
-  )
-) +
-  geom_col() +
-  labs(
-    title = "A title",
-    subtitle = "A subtitle",
-    x = "My X axis",
-    y = "My Y axis"
-  )
-
-# or as short as:
-ggplot(a_data_set) +
-  geom_bar(aes(year))
-```
-
-The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_sir()`. It automatically transforms data with `count_df()` or `proportion_df()` and show results in stacked bars. Its simplest and shortest example:
-
-```{r plot 3}
-ggplot(data_1st) +
-  geom_sir(translate_ab = FALSE)
-```
-
-Omit the `translate_ab = FALSE` to have the antibiotic codes (AMX, AMC, CIP, GEN) translated to official WHO names (amoxicillin, amoxicillin/clavulanic acid, ciprofloxacin, gentamicin).
-
-If we group on e.g. the `genus` column and add some additional functions from our package, we can create this:
-
-```{r plot 4}
-# group the data on `genus`
-ggplot(data_1st %>% group_by(genus)) +
-  # create bars with genus on x axis
-  # it looks for variables with class `sir`,
-  # of which we have 4 (earlier created with `as.sir`)
-  geom_sir(x = "genus") +
-  # split plots on antibiotic
-  facet_sir(facet = "antibiotic") +
-  # set colours to the SIR interpretations (colour-blind friendly)
-  scale_sir_colours() +
-  # show percentages on y axis
-  scale_y_percent(breaks = 0:4 * 25) +
-  # turn 90 degrees, to make it bars instead of columns
-  coord_flip() +
-  # add labels
-  labs(
-    title = "Resistance per genus and antibiotic",
-    subtitle = "(this is fake data)"
-  ) +
-  # and print genus in italic to follow our convention
-  # (is now y axis because we turned the plot)
-  theme(axis.text.y = element_text(face = "italic"))
-```
-
-To simplify this, we also created the `ggplot_sir()` function, which combines almost all above functions:
-
-```{r plot 5}
-data_1st %>%
-  group_by(genus) %>%
-  ggplot_sir(
-    x = "genus",
-    facet = "antibiotic",
-    breaks = 0:4 * 25,
-    datalabels = FALSE
-  ) +
-  coord_flip()
-```
-
-### Plotting MIC and disk diffusion values
-
-The AMR package also extends the `plot()` and `ggplot2::autoplot()` functions for plotting minimum inhibitory concentrations (MIC, created with `as.mic()`) and disk diffusion diameters (created with `as.disk()`).
-
-With the `random_mic()` and `random_disk()` functions, we can generate sampled values for the new data types (S3 classes) `<mic>` and `<disk>`:
-
-```{r, results='markup'}
-mic_values <- random_mic(size = 100)
-mic_values
-```
-
-```{r mic_plots}
-# base R:
-plot(mic_values)
-# ggplot2:
-autoplot(mic_values)
-```
-
-But we could also be more specific, by generating MICs that are likely to be found in *E. coli* for ciprofloxacin:
-
-```{r, results = 'markup', message = FALSE, warning = FALSE}
-mic_values <- random_mic(size = 100, mo = "E. coli", ab = "cipro")
-```
-
-For the `plot()` and `autoplot()` function, we can define the microorganism and an antimicrobial agent the same way. This will add the interpretation of those values according to a chosen guidelines (defaults to the latest EUCAST guideline).
-
-Default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red:
-
-```{r mic_plots_mo_ab, message = FALSE, warning = FALSE}
-# base R:
-plot(mic_values, mo = "E. coli", ab = "cipro")
-# ggplot2:
-autoplot(mic_values, mo = "E. coli", ab = "cipro")
-```
-
-For disk diffusion values, there is not much of a difference in plotting:
-
-```{r, results = 'markup'}
-disk_values <- random_disk(size = 100, mo = "E. coli", ab = "cipro")
-disk_values
-```
-
-```{r disk_plots, message = FALSE, warning = FALSE}
-# base R:
-plot(disk_values, mo = "E. coli", ab = "cipro")
-```
-
-And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Susceptible, incr. exp." has changed to "Intermediate"):
-
-```{r disk_plots_mo_ab, message = FALSE, warning = FALSE}
-autoplot(
-  disk_values,
-  mo = "E. coli",
-  ab = "cipro",
-  guideline = "CLSI"
-)
-```
-
-## Independence test
-
-The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practise AMR data analysis.
-
-We will compare the resistance to amoxicillin/clavulanic acid (column `AMC`) between an ICU and other clinical wards. The input for the `fisher.test()` can be retrieved with a transformation like this:
-
-```{r, results = 'markup'}
-# use package 'tidyr' to pivot data:
-library(tidyr)
-
-check_AMC <- example_isolates %>%
-  filter(ward %in% c("ICU", "Clinical")) %>% # filter on only these wards
-  select(ward, AMC) %>% # select the wards and amoxi/clav
-  group_by(ward) %>% # group on the wards
-  count_df(combine_SI = TRUE) %>% # count all isolates per group (ward)
-  pivot_wider(
-    names_from = ward, # transform output so "ICU" and "Clinical" are columns
-    values_from = value
-  ) %>%
-  select(ICU, Clinical) %>% # and only select these columns
-  as.matrix() # transform to a good old matrix for fisher.test()
-
-check_AMC
-```
-
-We can apply the test now with:
-
-```{r}
-# do Fisher's Exact Test
-fisher.test(check_AMC)
-```
-
-As can be seen, the p value is practically zero (`r format(fisher.test(check_AMC)$p.value, scientific = FALSE)`), which means that the amoxicillin/clavulanic acid resistance found in isolates between patients in ICUs and other clinical wards are really different.
 
 ----
 
-*Author: Dr. Matthijs Berends*
+*Author: Dr. Matthijs Berends, 26th Feb 2023*
