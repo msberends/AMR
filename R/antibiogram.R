@@ -49,11 +49,11 @@
 #' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
-#' 
+#'
 #' All types of antibiograms as listed below can be plotted (using [ggplot2::autoplot()] or base \R [plot()]/[barplot()]). The `antibiogram` object can also be used directly in R Markdown / Quarto (i.e., `knitr`) for reports. In this case, [knitr::kable()] will be applied automatically and microorganism names will even be printed in italics at default (see argument `italicise`). You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with `flextable::as_flextable()` or `gt::gt()`.
 #'
 #' ### Antibiogram Types
-#' 
+#'
 #' There are four antibiogram types, as proposed by Klinker *et al.* (2021, \doi{10.1177/20499361211011373}), and they are all supported by [antibiogram()]:
 #'
 #' 1. **Traditional Antibiogram**
@@ -98,8 +98,8 @@
 #'
 #'    ```r
 #'    library(dplyr)
-#'    your_data %>% 
-#'      filter(ward == "ICU" & specimen_type == "Respiratory") %>% 
+#'    your_data %>%
+#'      filter(ward == "ICU" & specimen_type == "Respiratory") %>%
 #'      antibiogram(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
 #'                  syndromic_group = ifelse(.$age >= 65 &
 #'                                             .$gender == "Male" &
@@ -127,7 +127,7 @@
 #'   <NA>      <NA>        -            -            -            -
 #' --------------------------------------------------------------------
 #' ```
-#' 
+#'
 #' @source
 #' * Klinker KP *et al.* (2021). **Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms**. *Therapeutic Advances in Infectious Disease*, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
 #' * Barbieri E *et al.* (2021). **Development of a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) to guide the choice of the empiric antibiotic treatment for urinary tract infection in paediatric patients: a Bayesian approach** *Antimicrobial Resistance & Infection Control* May 1;10(1):74; \doi{10.1186/s13756-021-00939-2}
@@ -191,11 +191,12 @@
 #' # with a custom language, though this will be determined automatically
 #' # (i.e., this table will be in Spanish on Spanish systems)
 #' antibiogram(ex1,
-#'             antibiotics = aminoglycosides(),
-#'             ab_transform = "name",
-#'             syndromic_group = ifelse(ex1$ward == "ICU",
-#'                                      "UCI", "No UCI"),
-#'             language = "es"
+#'   antibiotics = aminoglycosides(),
+#'   ab_transform = "name",
+#'   syndromic_group = ifelse(ex1$ward == "ICU",
+#'     "UCI", "No UCI"
+#'   ),
+#'   language = "es"
 #' )
 #'
 #'
@@ -203,29 +204,30 @@
 #'
 #' # the data set could contain a filter for e.g. respiratory specimens/ICU
 #' antibiogram(example_isolates,
-#'             antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-#'             mo_transform = "gramstain",
-#'             minimum = 10, # this should be >=30, but now just as example
-#'             syndromic_group = ifelse(example_isolates$age >= 65 &
-#'                                        example_isolates$gender == "M",
-#'                                      "WISCA Group 1", "WISCA Group 2"
-#'             )
+#'   antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+#'   mo_transform = "gramstain",
+#'   minimum = 10, # this should be >=30, but now just as example
+#'   syndromic_group = ifelse(example_isolates$age >= 65 &
+#'     example_isolates$gender == "M",
+#'   "WISCA Group 1", "WISCA Group 2"
+#'   )
 #' )
-#' 
+#'
 #'
 #' # Print the output for R Markdown / Quarto -----------------------------
-#' 
+#'
 #' ureido <- antibiogram(example_isolates,
-#'                       antibiotics = ureidopenicillins(),
-#'                       ab_transform = "name")
-#' 
+#'   antibiotics = ureidopenicillins(),
+#'   ab_transform = "name"
+#' )
+#'
 #' # in an Rmd file, you would just need to return `ureido` in a chunk,
 #' # but to be explicit here:
 #' if (requireNamespace("knitr")) {
 #'   knitr::knit_print(ureido)
 #' }
-#' 
-#' 
+#'
+#'
 #' # Generate plots with ggplot2 or base R --------------------------------
 #'
 #' ab1 <- antibiogram(example_isolates,
@@ -244,10 +246,9 @@
 #' if (requireNamespace("ggplot2")) {
 #'   ggplot2::autoplot(ab2)
 #' }
-#' 
+#'
 #' plot(ab1)
 #' plot(ab2)
-#'
 #' }
 antibiogram <- function(x,
                         antibiotics = where(is.sir),
@@ -276,7 +277,7 @@ antibiogram <- function(x,
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(sep, allow_class = "character", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-  
+
   # try to find columns based on type
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = interactive())
@@ -327,7 +328,7 @@ antibiogram <- function(x,
       out[!is.na(out)]
     })
     user_ab <- user_ab[unlist(lapply(user_ab, length)) > 0]
-    
+
     if (length(non_existing) > 0) {
       warning_("The following antibiotics were not available and ignored: ", vector_and(ab_name(non_existing, language = NULL, tolower = TRUE), quotes = FALSE))
     }
@@ -385,7 +386,7 @@ antibiogram <- function(x,
       FUN = function(x) x
     )
   counts <- out
-  
+
   if (isTRUE(combine_SI)) {
     out$numerator <- out$S + out$I
   } else {

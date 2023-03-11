@@ -64,7 +64,7 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
     if (getRversion() < "4.0.0") {
       deparse1 <- AMR:::deparse1
     }
-    
+
     # start the unit tests
     out <- test_package("AMR",
       testdir = ifelse(dir.exists("inst/tinytest"),

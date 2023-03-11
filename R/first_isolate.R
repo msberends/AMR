@@ -226,6 +226,10 @@ first_isolate <- function(x = NULL,
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
+  if ("include_untested_rsi" %in% names(list(...))) {
+    deprecation_warning("include_untested_rsi", "include_untested_sir", is_function = FALSE)
+    include_untested_sir <- list(...)$include_untested_rsi
+  }
   meet_criteria(include_untested_sir, allow_class = "logical", has_length = 1)
 
   # remove data.table, grouping from tibbles, etc.

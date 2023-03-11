@@ -114,7 +114,7 @@
 #' mo_lpsn("Klebsiella aerogenes")
 #' mo_gbif("Klebsiella aerogenes")
 #' mo_synonyms("Klebsiella aerogenes")
-#' 
+#'
 #'
 #' # abbreviations known in the field -----------------------------------------
 #'
@@ -754,7 +754,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   if (length(syns) == 1) {
     syns <- unlist(syns)
   }
-  
+
   load_mo_uncertainties(metadata)
   syns
 }

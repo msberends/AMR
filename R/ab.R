@@ -248,7 +248,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-    
+
     # length of input is quite long, and Levenshtein distance is only max 2
     if (nchar(x[i]) >= 10) {
       levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name))

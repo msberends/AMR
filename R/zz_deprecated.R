@@ -189,21 +189,33 @@ summary.rsi <- summary.sir
 #' @export
 unique.rsi <- unique.sir
 
-# WHEN REMOVING RSI, DON'T FORGET TO REMOVE THE "rsi_df" CLASS FROM R/sir_calc.R
+# WHEN REMOVING RSI, DON'T FORGET TO REMOVE :
+# - THE "rsi_df" CLASS FROM R/sir_calc.R
+# - CODE CONTAINING only_rsi_columns, colours_RSI, include_untested_rsi, prob_RSI
 
-deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL) {
+deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_function = TRUE) {
   if (is.null(old)) {
     warning_(extra_msg)
   } else {
     env <- paste0("deprecated_", old)
     if (!env %in% names(AMR_env)) {
       AMR_env[[paste0("deprecated_", old)]] <- 1
+      if (isTRUE(is_function)) {
+        old <- paste0(old, "()")
+        new <- paste0(new, "()")
+        type <- "function"
+      } else {
+        type <- "argument"
+      }
       warning_(
         ifelse(is.null(new),
-          paste0("The `", old, "()` function is no longer in use"),
-          paste0("The `", old, "()` function has been replaced with `", new, "()`")
+          paste0("The `", old, "` ", type, " is no longer in use"),
+          paste0("The `", old, "` ", type, " has been replaced with `", new, "`")
         ),
-        ", see `?AMR-deprecated`.",
+        ifelse(type == "argument",
+          ". While the old argument still works, it will be removed in a future version, so please update your code.",
+          ", see `?AMR-deprecated`."
+        ),
         ifelse(!is.null(extra_msg),
           paste0(" ", extra_msg),
           ""

@@ -181,6 +181,10 @@ ab_class <- function(ab_class,
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec(NULL, only_sir_columns = only_sir_columns, ab_class_args = ab_class, only_treatable = only_treatable)
 }
 
@@ -193,6 +197,10 @@ ab_selector <- function(filter,
                         ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
 
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
@@ -224,6 +232,10 @@ ab_selector <- function(filter,
 aminoglycosides <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("aminoglycosides", only_sir_columns = only_sir_columns, only_treatable = only_treatable)
 }
 
@@ -231,6 +243,10 @@ aminoglycosides <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...
 #' @export
 aminopenicillins <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("aminopenicillins", only_sir_columns = only_sir_columns)
 }
 
@@ -238,6 +254,10 @@ aminopenicillins <- function(only_sir_columns = FALSE, ...) {
 #' @export
 antifungals <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("antifungals", only_sir_columns = only_sir_columns)
 }
 
@@ -245,6 +265,10 @@ antifungals <- function(only_sir_columns = FALSE, ...) {
 #' @export
 antimycobacterials <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("antimycobacterials", only_sir_columns = only_sir_columns)
 }
 
@@ -253,6 +277,10 @@ antimycobacterials <- function(only_sir_columns = FALSE, ...) {
 betalactams <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("betalactams", only_sir_columns = only_sir_columns, only_treatable = only_treatable)
 }
 
@@ -261,6 +289,10 @@ betalactams <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
 carbapenems <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("carbapenems", only_sir_columns = only_sir_columns, only_treatable = only_treatable)
 }
 
@@ -268,6 +300,10 @@ carbapenems <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
 #' @export
 cephalosporins <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("cephalosporins", only_sir_columns = only_sir_columns)
 }
 
@@ -275,6 +311,10 @@ cephalosporins <- function(only_sir_columns = FALSE, ...) {
 #' @export
 cephalosporins_1st <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("cephalosporins_1st", only_sir_columns = only_sir_columns)
 }
 
@@ -282,6 +322,10 @@ cephalosporins_1st <- function(only_sir_columns = FALSE, ...) {
 #' @export
 cephalosporins_2nd <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("cephalosporins_2nd", only_sir_columns = only_sir_columns)
 }
 
@@ -289,6 +333,10 @@ cephalosporins_2nd <- function(only_sir_columns = FALSE, ...) {
 #' @export
 cephalosporins_3rd <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("cephalosporins_3rd", only_sir_columns = only_sir_columns)
 }
 
@@ -296,6 +344,10 @@ cephalosporins_3rd <- function(only_sir_columns = FALSE, ...) {
 #' @export
 cephalosporins_4th <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("cephalosporins_4th", only_sir_columns = only_sir_columns)
 }
 
@@ -303,6 +355,10 @@ cephalosporins_4th <- function(only_sir_columns = FALSE, ...) {
 #' @export
 cephalosporins_5th <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("cephalosporins_5th", only_sir_columns = only_sir_columns)
 }
 
@@ -310,6 +366,10 @@ cephalosporins_5th <- function(only_sir_columns = FALSE, ...) {
 #' @export
 fluoroquinolones <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("fluoroquinolones", only_sir_columns = only_sir_columns)
 }
 
@@ -317,6 +377,10 @@ fluoroquinolones <- function(only_sir_columns = FALSE, ...) {
 #' @export
 glycopeptides <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("glycopeptides", only_sir_columns = only_sir_columns)
 }
 
@@ -324,6 +388,10 @@ glycopeptides <- function(only_sir_columns = FALSE, ...) {
 #' @export
 lincosamides <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("lincosamides", only_sir_columns = only_sir_columns)
 }
 
@@ -331,6 +399,10 @@ lincosamides <- function(only_sir_columns = FALSE, ...) {
 #' @export
 lipoglycopeptides <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("lipoglycopeptides", only_sir_columns = only_sir_columns)
 }
 
@@ -338,6 +410,10 @@ lipoglycopeptides <- function(only_sir_columns = FALSE, ...) {
 #' @export
 macrolides <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("macrolides", only_sir_columns = only_sir_columns)
 }
 
@@ -345,6 +421,10 @@ macrolides <- function(only_sir_columns = FALSE, ...) {
 #' @export
 oxazolidinones <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("oxazolidinones", only_sir_columns = only_sir_columns)
 }
 
@@ -352,6 +432,10 @@ oxazolidinones <- function(only_sir_columns = FALSE, ...) {
 #' @export
 penicillins <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("penicillins", only_sir_columns = only_sir_columns)
 }
 
@@ -360,6 +444,10 @@ penicillins <- function(only_sir_columns = FALSE, ...) {
 polymyxins <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("polymyxins", only_sir_columns = only_sir_columns, only_treatable = only_treatable)
 }
 
@@ -367,6 +455,10 @@ polymyxins <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
 #' @export
 streptogramins <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("streptogramins", only_sir_columns = only_sir_columns)
 }
 
@@ -374,6 +466,10 @@ streptogramins <- function(only_sir_columns = FALSE, ...) {
 #' @export
 quinolones <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("quinolones", only_sir_columns = only_sir_columns)
 }
 
@@ -381,6 +477,10 @@ quinolones <- function(only_sir_columns = FALSE, ...) {
 #' @export
 tetracyclines <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("tetracyclines", only_sir_columns = only_sir_columns)
 }
 
@@ -388,6 +488,10 @@ tetracyclines <- function(only_sir_columns = FALSE, ...) {
 #' @export
 trimethoprims <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("trimethoprims", only_sir_columns = only_sir_columns)
 }
 
@@ -395,6 +499,10 @@ trimethoprims <- function(only_sir_columns = FALSE, ...) {
 #' @export
 ureidopenicillins <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   ab_select_exec("ureidopenicillins", only_sir_columns = only_sir_columns)
 }
 

@@ -757,7 +757,7 @@ format_class <- function(class, plural = FALSE) {
 }
 
 # a check for every single argument in all functions
-meet_criteria <- function(object,
+meet_criteria <- function(object, # can be literally `list(...)` for `allow_arguments_from`
                           allow_class = NULL,
                           has_length = NULL,
                           looks_like = NULL,
@@ -769,6 +769,7 @@ meet_criteria <- function(object,
                           allow_NULL = FALSE,
                           allow_NA = FALSE,
                           ignore.case = FALSE,
+                          allow_arguments_from = NULL, # 1 function, or a list of functions
                           .call_depth = 0) { # depth in calling
 
   obj_name <- deparse(substitute(object))
@@ -886,6 +887,24 @@ meet_criteria <- function(object,
       call = call_depth
     )
   }
+  if (!is.null(allow_arguments_from) && !is.null(names(object))) {
+    args_given <- names(object)
+    if (is.function(allow_arguments_from)) {
+      allow_arguments_from <- list(allow_arguments_from)
+    }
+    args_allowed <- sort(unique(unlist(lapply(allow_arguments_from, function(x) names(formals(x))))))
+    args_allowed <- args_allowed[args_allowed != "..."]
+    disallowed <- args_given[!args_given %in% args_allowed]
+    stop_if(length(disallowed) > 0,
+      ifelse(length(disallowed) == 1,
+        paste("the argument", vector_and(disallowed), "is"),
+        paste("the arguments", vector_and(disallowed), "are")
+      ),
+      " not valid. Valid arguments are: ",
+      vector_and(args_allowed), ".",
+      call = call_depth
+    )
+  }
   return(invisible())
 }
 
@@ -895,7 +914,7 @@ get_current_data <- function(arg_name, call) {
   }
 
   frms <- sys.frames()
-  
+
   # check dplyr environments to support dplyr groups
   with_mask <- vapply(FUN.VALUE = logical(1), frms, function(e) !is.null(e$mask))
   for (env in frms[which(with_mask)]) {
@@ -929,7 +948,7 @@ get_current_data <- function(arg_name, call) {
       return(env$x)
     }
   }
-  
+
   # now a special case for dplyr's 'scoped' variants
   with_tbl <- vapply(FUN.VALUE = logical(1), frms, function(e) valid_df(e$`.tbl`))
   for (env in frms[which(with_tbl)]) {

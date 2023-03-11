@@ -69,9 +69,9 @@
 #' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see *Examples*.
 #'
 #' The [as.mo()] function uses a novel [matching score algorithm][mo_matching_score()] (see *Matching Score for Microorganisms* below) to match input against the [available microbial taxonomy][microorganisms] in this package. This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first.
-#' 
+#'
 #' With `Becker = TRUE`, the following `r length(MO_CONS[MO_CONS != "B_STPHY_CONS"])` staphylococci will be converted to the **coagulase-negative group**: `r vector_and(gsub("Staphylococcus", "S.", mo_name(MO_CONS[MO_CONS != "B_STPHY_CONS"], keep_synonyms = TRUE)), quotes = "*")`.\cr The following `r length(MO_COPS[MO_COPS != "B_STPHY_COPS"])` staphylococci will be converted to the **coagulase-positive group**: `r vector_and(gsub("Staphylococcus", "S.", mo_name(MO_COPS[MO_COPS != "B_STPHY_COPS"], keep_synonyms = TRUE)), quotes = "*")`.
-#' 
+#'
 #' With `Lancefield = TRUE`, the following streptococci will be converted to their corresponding Lancefield group: `r vector_and(gsub("Streptococcus", "S.", paste0("*", mo_name(MO_LANCEFIELD, keep_synonyms = TRUE), "* (", mo_species(MO_LANCEFIELD, keep_synonyms = TRUE, Lancefield = TRUE), ")")), quotes = FALSE)`.
 #'
 #' ### Coping with Uncertain Results

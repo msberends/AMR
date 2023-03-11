@@ -775,7 +775,7 @@ as_sir_method <- function(method_short,
   } else {
     mo.bak <- mo
   }
-  # be sure to take current taxonomy, as the clinical_breakpoints data set only contains current taxonomy
+  # be sure to take current taxonomy, as the 'clinical_breakpoints' data set only contains current taxonomy
   mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, inf0 = FALSE)))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab)) {

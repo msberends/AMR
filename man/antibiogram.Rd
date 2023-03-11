@@ -127,8 +127,8 @@ Case example: Susceptibility of \emph{Pseudomonas aeruginosa} to TZP among respi
 Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
-your_data \%>\% 
-  filter(ward == "ICU" & specimen_type == "Respiratory") \%>\% 
+your_data \%>\%
+  filter(ward == "ICU" & specimen_type == "Respiratory") \%>\%
   antibiogram(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
               syndromic_group = ifelse(.$age >= 65 &
                                          .$gender == "Male" &
@@ -214,11 +214,12 @@ ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Spanish on Spanish systems)
 antibiogram(ex1,
-            antibiotics = aminoglycosides(),
-            ab_transform = "name",
-            syndromic_group = ifelse(ex1$ward == "ICU",
-                                     "UCI", "No UCI"),
-            language = "es"
+  antibiotics = aminoglycosides(),
+  ab_transform = "name",
+  syndromic_group = ifelse(ex1$ward == "ICU",
+    "UCI", "No UCI"
+  ),
+  language = "es"
 )
 
 
@@ -226,21 +227,22 @@ antibiogram(ex1,
 
 # the data set could contain a filter for e.g. respiratory specimens/ICU
 antibiogram(example_isolates,
-            antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-            mo_transform = "gramstain",
-            minimum = 10, # this should be >=30, but now just as example
-            syndromic_group = ifelse(example_isolates$age >= 65 &
-                                       example_isolates$gender == "M",
-                                     "WISCA Group 1", "WISCA Group 2"
-            )
+  antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+  mo_transform = "gramstain",
+  minimum = 10, # this should be >=30, but now just as example
+  syndromic_group = ifelse(example_isolates$age >= 65 &
+    example_isolates$gender == "M",
+  "WISCA Group 1", "WISCA Group 2"
+  )
 )
 
 
 # Print the output for R Markdown / Quarto -----------------------------
 
 ureido <- antibiogram(example_isolates,
-                      antibiotics = ureidopenicillins(),
-                      ab_transform = "name")
+  antibiotics = ureidopenicillins(),
+  ab_transform = "name"
+)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -270,6 +272,5 @@ if (requireNamespace("ggplot2")) {
 
 plot(ab1)
 plot(ab2)
-
 }
 }

@@ -149,6 +149,10 @@ key_antimicrobials <- function(x = NULL,
   meet_criteria(gram_positive, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(antifungal, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
 
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)

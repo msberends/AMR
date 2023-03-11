@@ -1366,8 +1366,10 @@ microorganisms <- taxonomy
 # https://lpsn.dsmz.de/species/stenotrophomonas-maltophilia
 
 # all MO's to keep as 'accepted', not as 'synonym':
-to_restore <- c("Stenotrophomonas maltophilia",
-                "Moraxella catarrhalis")
+to_restore <- c(
+  "Stenotrophomonas maltophilia",
+  "Moraxella catarrhalis"
+)
 all(to_restore %in% microorganisms$fullname)
 for (nm in to_restore) {
   microorganisms$lpsn_renamed_to[which(microorganisms$fullname == nm)] <- NA

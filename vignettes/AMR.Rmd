@@ -140,11 +140,11 @@ For now, we will just clean the SIR columns in our data using dplyr:
 
 ```{r}
 # method 1, be explicit about the columns:
-our_data <- our_data %>% 
+our_data <- our_data %>%
   mutate_at(vars(AMX:GEN), as.sir)
 
 # method 2, let the AMR package determine the eligible columns
-our_data <- our_data %>% 
+our_data <- our_data %>%
   mutate_if(is_sir_eligible, as.sir)
 
 # result:
@@ -213,10 +213,10 @@ sapply(our_data_1st, n_distinct)
 To just get an idea how the species are distributed, create a frequency table with `count()` based on the name of the microorganisms:
 
 ```{r freq 1}
-our_data %>% 
+our_data %>%
   count(mo_name(bacteria), sort = TRUE)
 
-our_data_1st %>% 
+our_data_1st %>%
   count(mo_name(bacteria), sort = TRUE)
 ```
 
@@ -255,42 +255,48 @@ Below are some suggestions for how to generate the different antibiograms:
 # traditional:
 antibiogram(our_data_1st)
 antibiogram(our_data_1st,
-            ab_transform = "name")
+  ab_transform = "name"
+)
 antibiogram(our_data_1st,
-            ab_transform = "name",
-            language = "es") # support for 20 languages
-
+  ab_transform = "name",
+  language = "es"
+) # support for 20 languages
 ```
 
 ```{r}
 # combined:
 antibiogram(our_data_1st,
-            antibiotics = c("AMC", "AMC+CIP", "AMC+GEN"))
+  antibiotics = c("AMC", "AMC+CIP", "AMC+GEN")
+)
 ```
 
 ```{r}
 # for a syndromic antibiogram, we must fake some clinical conditions:
 our_data_1st$condition <- sample(c("Cardial", "Respiratory", "Rheumatic"),
-                                 size = nrow(our_data_1st),
-                                 replace = TRUE)
+  size = nrow(our_data_1st),
+  replace = TRUE
+)
 
 # syndromic:
 antibiogram(our_data_1st,
-            syndromic_group = "condition")
+  syndromic_group = "condition"
+)
 antibiogram(our_data_1st,
-            # you can use AB selectors here as well:
-            antibiotics = c(penicillins(), aminoglycosides()),
-            syndromic_group = "condition",
-            mo_transform = "gramstain")
+  # you can use AB selectors here as well:
+  antibiotics = c(penicillins(), aminoglycosides()),
+  syndromic_group = "condition",
+  mo_transform = "gramstain"
+)
 ```
 
 ```{r}
-# WISCA: 
+# WISCA:
 # (we lack some details, but it could contain a filter on e.g. >65 year-old males)
 wisca <- antibiogram(our_data_1st,
-                     antibiotics = c("AMC", "AMC+CIP", "AMC+GEN"),
-                     syndromic_group = "condition",
-                     mo_transform = "gramstain")
+  antibiotics = c("AMC", "AMC+CIP", "AMC+GEN"),
+  syndromic_group = "condition",
+  mo_transform = "gramstain"
+)
 wisca
 ```
 

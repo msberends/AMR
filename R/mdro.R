@@ -192,6 +192,10 @@ mdro <- function(x = NULL,
   meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  if ("only_rsi_columns" %in% names(list(...))) {
+    deprecation_warning("only_rsi_columns", "only_sir_columns", is_function = FALSE)
+    only_sir_columns <- list(...)$only_rsi_columns
+  }
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
 
   if (!any(is_sir_eligible(x))) {

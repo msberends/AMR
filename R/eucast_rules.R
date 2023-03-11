@@ -181,6 +181,7 @@ eucast_rules <- function(x,
   meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "sir"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
+  if ("only_rsi_columns" %in% names(list(...))) only_sir_columns <- list(...)$only_rsi_columns
 
   add_MO_lookup_to_AMR_env()
 

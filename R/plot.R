@@ -88,8 +88,8 @@ plot.mic <- function(x,
                      ab = NULL,
                      guideline = "EUCAST",
                      main = deparse(substitute(x)),
-                     ylab = "Frequency",
-                     xlab = "Minimum Inhibitory Concentration (mg/L)",
+                     ylab = translate_AMR("Frequency", language = language),
+                     xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
                      colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                      language = get_AMR_locale(),
                      expand = TRUE,
@@ -100,17 +100,13 @@ plot.mic <- function(x,
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
@@ -158,7 +154,7 @@ plot.mic <- function(x,
       legend_txt <- c(legend_txt, "(R) Resistant")
       legend_col <- c(legend_col, colours_SIR[3])
     }
-    
+
     legend("top",
       x.intersp = 0.5,
       legend = translate_into_language(legend_txt, language = language),
@@ -180,8 +176,8 @@ barplot.mic <- function(height,
                         ab = NULL,
                         guideline = "EUCAST",
                         main = deparse(substitute(height)),
-                        ylab = "Frequency",
-                        xlab = "Minimum Inhibitory Concentration (mg/L)",
+                        ylab = translate_AMR("Frequency", language = language),
+                        xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
                         colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                         language = get_AMR_locale(),
                         expand = TRUE,
@@ -192,17 +188,13 @@ barplot.mic <- function(height,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
@@ -227,8 +219,8 @@ autoplot.mic <- function(object,
                          ab = NULL,
                          guideline = "EUCAST",
                          title = deparse(substitute(object)),
-                         ylab = "Frequency",
-                         xlab = "Minimum Inhibitory Concentration (mg/L)",
+                         ylab = translate_AMR("Frequency", language = language),
+                         xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
                          colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                          language = get_AMR_locale(),
                          expand = TRUE,
@@ -240,17 +232,13 @@ autoplot.mic <- function(object,
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -278,12 +266,15 @@ autoplot.mic <- function(object,
   df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
   df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
-                    levels = translate_into_language(c("(S) Susceptible",
-                                                       paste("(I)", plot_name_of_I(cols_sub$guideline)),
-                                                       "(R) Resistant"),
-                                                     language = language
-                    ),
-                    ordered = TRUE
+    levels = translate_into_language(
+      c(
+        "(S) Susceptible",
+        paste("(I)", plot_name_of_I(cols_sub$guideline)),
+        "(R) Resistant"
+      ),
+      language = language
+    ),
+    ordered = TRUE
   )
   p <- ggplot2::ggplot(df)
 
@@ -328,8 +319,8 @@ fortify.mic <- function(object, ...) {
 #' @rdname plot
 plot.disk <- function(x,
                       main = deparse(substitute(x)),
-                      ylab = "Frequency",
-                      xlab = "Disk diffusion diameter (mm)",
+                      ylab = translate_AMR("Frequency", language = language),
+                      xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
                       mo = NULL,
                       ab = NULL,
                       guideline = "EUCAST",
@@ -343,17 +334,13 @@ plot.disk <- function(x,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
@@ -420,8 +407,8 @@ plot.disk <- function(x,
 #' @noRd
 barplot.disk <- function(height,
                          main = deparse(substitute(height)),
-                         ylab = "Frequency",
-                         xlab = "Disk diffusion diameter (mm)",
+                         ylab = translate_AMR("Frequency", language = language),
+                         xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
                          mo = NULL,
                          ab = NULL,
                          guideline = "EUCAST",
@@ -435,17 +422,13 @@ barplot.disk <- function(height,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
@@ -469,8 +452,8 @@ autoplot.disk <- function(object,
                           mo = NULL,
                           ab = NULL,
                           title = deparse(substitute(object)),
-                          ylab = "Frequency",
-                          xlab = "Disk diffusion diameter (mm)",
+                          ylab = translate_AMR("Frequency", language = language),
+                          xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
                           guideline = "EUCAST",
                           colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                           language = get_AMR_locale(),
@@ -483,17 +466,13 @@ autoplot.disk <- function(object,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -522,9 +501,12 @@ autoplot.disk <- function(object,
   df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
   df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
-    levels = translate_into_language(c("(S) Susceptible",
-                                       paste("(I)", plot_name_of_I(cols_sub$guideline)),
-                                       "(R) Resistant"),
+    levels = translate_into_language(
+      c(
+        "(S) Susceptible",
+        paste("(I)", plot_name_of_I(cols_sub$guideline)),
+        "(R) Resistant"
+      ),
       language = language
     ),
     ordered = TRUE
@@ -571,22 +553,14 @@ fortify.disk <- function(object, ...) {
 #' @importFrom graphics plot text axis
 #' @rdname plot
 plot.sir <- function(x,
-                     ylab = "Percentage",
-                     xlab = "Antimicrobial Interpretation",
+                     ylab = translate_AMR("Percentage", language = language),
+                     xlab = translate_AMR("Antimicrobial Interpretation", language = language),
                      main = deparse(substitute(x)),
                      language = get_AMR_locale(),
                      ...) {
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   data <- as.data.frame(table(x), stringsAsFactors = FALSE)
   colnames(data) <- c("x", "n")
@@ -635,8 +609,8 @@ plot.sir <- function(x,
 #' @noRd
 barplot.sir <- function(height,
                         main = deparse(substitute(height)),
-                        xlab = "Antimicrobial Interpretation",
-                        ylab = "Frequency",
+                        xlab = translate_AMR("Antimicrobial Interpretation", language = language),
+                        ylab = translate_AMR("Frequency", language = language),
                         colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                         language = get_AMR_locale(),
                         expand = TRUE,
@@ -644,17 +618,13 @@ barplot.sir <- function(height,
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
+  if ("colours_RSI" %in% names(list(...))) {
+    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
+    colours_SIR <- list(...)$colours_RSI
+  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
@@ -678,8 +648,8 @@ barplot.sir <- function(height,
 # will be exported using s3_register() in R/zzz.R
 autoplot.sir <- function(object,
                          title = deparse(substitute(object)),
-                         xlab = "Antimicrobial Interpretation",
-                         ylab = "Frequency",
+                         xlab = translate_AMR("Antimicrobial Interpretation", language = language),
+                         ylab = translate_AMR("Frequency", language = language),
                          colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                          language = get_AMR_locale(),
                          ...) {
@@ -688,14 +658,6 @@ autoplot.sir <- function(object,
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
-
-  # translate if not specifically set
-  if (missing(ylab)) {
-    ylab <- translate_into_language(ylab, language = language)
-  }
-  if (missing(xlab)) {
-    xlab <- translate_into_language(xlab, language = language)
-  }
 
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
