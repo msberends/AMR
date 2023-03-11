@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9147</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9148</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,7 +187,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 26 February 2023.</p>
+generated on 11 March 2023.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -243,21 +243,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2023-02-26</td>
+<td align="center">2023-03-11</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2023-02-26</td>
+<td align="center">2023-03-11</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2023-02-26</td>
+<td align="center">2023-03-11</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -427,11 +427,11 @@ page.</p>
 dplyr:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># method 1, be explicit about the columns:</span></span>
-<span><span class="va">our_data</span> <span class="op">&lt;-</span> <span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">our_data</span> <span class="op">&lt;-</span> <span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">:</span><span class="va">GEN</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># method 2, let the AMR package determine the eligible columns</span></span>
-<span><span class="va">our_data</span> <span class="op">&lt;-</span> <span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">our_data</span> <span class="op">&lt;-</span> <span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is_sir_eligible</span>, <span class="va">as.sir</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># result:</span></span>
@@ -592,7 +592,7 @@ impression, as it comes with support for the new <code>mo</code> and
 frequency table with <code><a href="../reference/count.html">count()</a></code> based on the name of the
 microorganisms:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/count.html">count</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
 <span><span class="co">#&gt;   `mo_name(bacteria)`          n</span></span>
@@ -602,7 +602,7 @@ microorganisms:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Streptococcus pneumoniae   426</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae      326</span></span>
 <span></span>
-<span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/count.html">count</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
 <span><span class="co">#&gt;   `mo_name(bacteria)`          n</span></span>
@@ -788,7 +788,8 @@ antibiograms:</p>
 </table>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>            ab_transform <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></code></pre></div>
+<span>  ab_transform <span class="op">=</span> <span class="st">"name"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="28%">
@@ -841,8 +842,9 @@ antibiograms:</p>
 </table>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>            language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span> <span class="co"># support for 20 languages</span></span></code></pre></div>
+<span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>  language <span class="op">=</span> <span class="st">"es"</span></span>
+<span><span class="op">)</span> <span class="co"># support for 20 languages</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="27%">
@@ -896,7 +898,8 @@ antibiograms:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># combined:</span></span>
 <span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Pathogen (N min-max)</th>
@@ -938,12 +941,14 @@ antibiograms:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># for a syndromic antibiogram, we must fake some clinical conditions:</span></span>
 <span><span class="va">our_data_1st</span><span class="op">$</span><span class="va">condition</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cardial"</span>, <span class="st">"Respiratory"</span>, <span class="st">"Rheumatic"</span><span class="op">)</span>,</span>
-<span>                                 size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">our_data_1st</span><span class="op">)</span>,</span>
-<span>                                 replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">our_data_1st</span><span class="op">)</span>,</span>
+<span>  replace <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># syndromic:</span></span>
 <span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>            syndromic_group <span class="op">=</span> <span class="st">"condition"</span><span class="op">)</span></span></code></pre></div>
+<span>  syndromic_group <span class="op">=</span> <span class="st">"condition"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Syndromic Group</th>
@@ -957,119 +962,120 @@ antibiograms:</p>
 <tr class="odd">
 <td align="left">Cardial</td>
 <td align="left">
-<em>E. coli</em> (431-431)</td>
-<td align="right">63</td>
-<td align="right">54</td>
-<td align="right">57</td>
-<td align="right">63</td>
+<em>E. coli</em> (401-401)</td>
+<td align="right">67</td>
+<td align="right">61</td>
+<td align="right">59</td>
+<td align="right">65</td>
 </tr>
 <tr class="even">
 <td align="left">Respiratory</td>
 <td align="left">
-<em>E. coli</em> (396-396)</td>
-<td align="right">64</td>
-<td align="right">61</td>
-<td align="right">58</td>
-<td align="right">63</td>
+<em>E. coli</em> (403-403)</td>
+<td align="right">60</td>
+<td align="right">55</td>
+<td align="right">54</td>
+<td align="right">59</td>
 </tr>
 <tr class="odd">
 <td align="left">Rheumatic</td>
 <td align="left">
-<em>E. coli</em> (423-423)</td>
+<em>E. coli</em> (446-446)</td>
 <td align="right">65</td>
+<td align="right">59</td>
 <td align="right">60</td>
-<td align="right">58</td>
-<td align="right">63</td>
+<td align="right">64</td>
 </tr>
 <tr class="even">
 <td align="left">Cardial</td>
 <td align="left">
-<em>K. pneumoniae</em> (105-105)</td>
-<td align="right">63</td>
-<td align="right">54</td>
-<td align="right">59</td>
+<em>K. pneumoniae</em> (99-99)</td>
+<td align="right">65</td>
 <td align="right">61</td>
+<td align="right">60</td>
+<td align="right">59</td>
 </tr>
 <tr class="odd">
 <td align="left">Respiratory</td>
 <td align="left">
 <em>K. pneumoniae</em> (110-110)</td>
+<td align="right">62</td>
+<td align="right">49</td>
+<td align="right">56</td>
 <td align="right">60</td>
-<td align="right">54</td>
-<td align="right">55</td>
-<td align="right">63</td>
 </tr>
 <tr class="even">
 <td align="left">Rheumatic</td>
 <td align="left">
-<em>K. pneumoniae</em> (101-101)</td>
-<td align="right">66</td>
-<td align="right">50</td>
+<em>K. pneumoniae</em> (107-107)</td>
+<td align="right">63</td>
+<td align="right">49</td>
+<td align="right">61</td>
+<td align="right">62</td>
+</tr>
+<tr class="odd">
+<td align="left">Cardial</td>
+<td align="left">
+<em>S. aureus</em> (235-235)</td>
+<td align="right">64</td>
+<td align="right">55</td>
+<td align="right">61</td>
+<td align="right">57</td>
+</tr>
+<tr class="even">
+<td align="left">Respiratory</td>
+<td align="left">
+<em>S. aureus</em> (208-208)</td>
+<td align="right">62</td>
+<td align="right">61</td>
+<td align="right">57</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">Rheumatic</td>
+<td align="left">
+<em>S. aureus</em> (218-218)</td>
+<td align="right">67</td>
+<td align="right">55</td>
+<td align="right">53</td>
+<td align="right">67</td>
+</tr>
+<tr class="even">
+<td align="left">Cardial</td>
+<td align="left">
+<em>S. pneumoniae</em> (132-132)</td>
 <td align="right">62</td>
 <td align="right">56</td>
+<td align="right">62</td>
+<td align="right">68</td>
 </tr>
 <tr class="odd">
-<td align="left">Cardial</td>
-<td align="left">
-<em>S. aureus</em> (225-225)</td>
-<td align="right">66</td>
-<td align="right">57</td>
-<td align="right">53</td>
-<td align="right">61</td>
-</tr>
-<tr class="even">
 <td align="left">Respiratory</td>
 <td align="left">
-<em>S. aureus</em> (217-217)</td>
+<em>S. pneumoniae</em> (137-137)</td>
 <td align="right">60</td>
-<td align="right">55</td>
+<td align="right">54</td>
 <td align="right">61</td>
-<td align="right">64</td>
-</tr>
-<tr class="odd">
-<td align="left">Rheumatic</td>
-<td align="left">
-<em>S. aureus</em> (219-219)</td>
-<td align="right">67</td>
-<td align="right">58</td>
-<td align="right">58</td>
-<td align="right">64</td>
-</tr>
-<tr class="even">
-<td align="left">Cardial</td>
-<td align="left">
-<em>S. pneumoniae</em> (152-152)</td>
-<td align="right">67</td>
-<td align="right">57</td>
-<td align="right">64</td>
-<td align="right">63</td>
-</tr>
-<tr class="odd">
-<td align="left">Respiratory</td>
-<td align="left">
-<em>S. pneumoniae</em> (122-122)</td>
-<td align="right">67</td>
-<td align="right">57</td>
-<td align="right">64</td>
-<td align="right">67</td>
+<td align="right">61</td>
 </tr>
 <tr class="even">
 <td align="left">Rheumatic</td>
 <td align="left">
-<em>S. pneumoniae</em> (125-125)</td>
-<td align="right">57</td>
-<td align="right">53</td>
-<td align="right">50</td>
-<td align="right">67</td>
+<em>S. pneumoniae</em> (130-130)</td>
+<td align="right">70</td>
+<td align="right">58</td>
+<td align="right">56</td>
+<td align="right">68</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>            <span class="co"># you can use AB selectors here as well:</span></span>
-<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>            syndromic_group <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span>
+<span>  <span class="co"># you can use AB selectors here as well:</span></span>
+<span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  syndromic_group <span class="op">=</span> <span class="st">"condition"</span>,</span>
+<span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ For penicillins() using columns 'AMX' (amoxicillin) and 'AMC'</span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
 <span><span class="co">#&gt; ℹ For aminoglycosides() using column 'GEN' (gentamicin)</span></span></code></pre></div>
@@ -1084,55 +1090,56 @@ antibiograms:</p>
 <tbody>
 <tr class="odd">
 <td align="left">Cardial</td>
-<td align="left">Gram-negative (536-536)</td>
-<td align="right">63</td>
-<td align="right">54</td>
-<td align="right">62</td>
+<td align="left">Gram-negative (500-500)</td>
+<td align="right">66</td>
+<td align="right">61</td>
+<td align="right">64</td>
 </tr>
 <tr class="even">
 <td align="left">Respiratory</td>
-<td align="left">Gram-negative (506-506)</td>
-<td align="right">63</td>
+<td align="left">Gram-negative (513-513)</td>
+<td align="right">60</td>
+<td align="right">54</td>
 <td align="right">59</td>
-<td align="right">63</td>
 </tr>
 <tr class="odd">
 <td align="left">Rheumatic</td>
-<td align="left">Gram-negative (524-524)</td>
+<td align="left">Gram-negative (553-553)</td>
 <td align="right">65</td>
-<td align="right">58</td>
-<td align="right">62</td>
+<td align="right">57</td>
+<td align="right">64</td>
 </tr>
 <tr class="even">
 <td align="left">Cardial</td>
-<td align="left">Gram-positive (377-377)</td>
-<td align="right">67</td>
-<td align="right">57</td>
-<td align="right">62</td>
+<td align="left">Gram-positive (367-367)</td>
+<td align="right">63</td>
+<td align="right">55</td>
+<td align="right">61</td>
 </tr>
 <tr class="odd">
 <td align="left">Respiratory</td>
-<td align="left">Gram-positive (339-339)</td>
+<td align="left">Gram-positive (345-345)</td>
+<td align="right">61</td>
+<td align="right">58</td>
 <td align="right">63</td>
-<td align="right">56</td>
-<td align="right">65</td>
 </tr>
 <tr class="even">
 <td align="left">Rheumatic</td>
-<td align="left">Gram-positive (344-344)</td>
-<td align="right">63</td>
+<td align="left">Gram-positive (348-348)</td>
+<td align="right">68</td>
 <td align="right">56</td>
-<td align="right">65</td>
+<td align="right">67</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># WISCA: </span></span>
+<code class="sourceCode R"><span><span class="co"># WISCA:</span></span>
 <span><span class="co"># (we lack some details, but it could contain a filter on e.g. &gt;65 year-old males)</span></span>
 <span><span class="va">wisca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>                     antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span>,</span>
-<span>                     syndromic_group <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>                     mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span>
+<span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span>,</span>
+<span>  syndromic_group <span class="op">=</span> <span class="st">"condition"</span>,</span>
+<span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">wisca</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -1145,45 +1152,45 @@ antibiograms:</p>
 <tbody>
 <tr class="odd">
 <td align="left">Cardial</td>
-<td align="left">Gram-negative (536-536)</td>
-<td align="right">63</td>
-<td align="right">75</td>
-<td align="right">75</td>
+<td align="left">Gram-negative (500-500)</td>
+<td align="right">66</td>
+<td align="right">77</td>
+<td align="right">77</td>
 </tr>
 <tr class="even">
 <td align="left">Respiratory</td>
-<td align="left">Gram-negative (506-506)</td>
-<td align="right">63</td>
-<td align="right">77</td>
-<td align="right">75</td>
+<td align="left">Gram-negative (513-513)</td>
+<td align="right">60</td>
+<td align="right">72</td>
+<td align="right">71</td>
 </tr>
 <tr class="odd">
 <td align="left">Rheumatic</td>
-<td align="left">Gram-negative (524-524)</td>
+<td align="left">Gram-negative (553-553)</td>
 <td align="right">65</td>
+<td align="right">78</td>
 <td align="right">76</td>
-<td align="right">75</td>
 </tr>
 <tr class="even">
 <td align="left">Cardial</td>
-<td align="left">Gram-positive (377-377)</td>
-<td align="right">67</td>
-<td align="right">78</td>
+<td align="left">Gram-positive (367-367)</td>
+<td align="right">63</td>
+<td align="right">79</td>
 <td align="right">75</td>
 </tr>
 <tr class="odd">
 <td align="left">Respiratory</td>
-<td align="left">Gram-positive (339-339)</td>
-<td align="right">63</td>
-<td align="right">77</td>
+<td align="left">Gram-positive (345-345)</td>
+<td align="right">61</td>
 <td align="right">76</td>
+<td align="right">73</td>
 </tr>
 <tr class="even">
 <td align="left">Rheumatic</td>
-<td align="left">Gram-positive (344-344)</td>
-<td align="right">63</td>
+<td align="left">Gram-positive (348-348)</td>
+<td align="right">68</td>
 <td align="right">77</td>
-<td align="right">76</td>
+<td align="right">79</td>
 </tr>
 </tbody>
 </table>
