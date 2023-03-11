@@ -3,7 +3,7 @@
 \name{get_episode}
 \alias{get_episode}
 \alias{is_new_episode}
-\title{Determine (Clinical or Epidemic) Episodes}
+\title{Determine Clinical or Epidemic Episodes}
 \usage{
 get_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 
@@ -64,7 +64,7 @@ Either \code{episode_days} or \code{case_free_days} must be provided in the func
 
 The \code{\link[=get_episode]{get_episode()}} function returns the index number of the episode, so all cases/patients/isolates in the first episode will have the number 1, all cases/patients/isolates in the second episode will have the number 2, etc.
 
-The \code{\link[=is_new_episode]{is_new_episode()}} function returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index, and is thus equal to \code{!duplicated(get_episode(...))}.
+The \code{\link[=is_new_episode]{is_new_episode()}} function on the other hand, returns \code{TRUE} for every new \code{\link[=get_episode]{get_episode()}} index.
 
 To specify, when setting \code{episode_days = 365} (using method 1 as explained above), this is how the two functions differ:\tabular{cccc}{
    patient \tab date \tab \code{get_episode()} \tab \code{is_new_episode()} \cr

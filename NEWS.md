@@ -1,4 +1,4 @@
-# AMR 1.8.2.9148
+# AMR 1.8.2.9149
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -48,6 +48,12 @@ We added support for the following ten languages: Chinese (simplified), Czech, F
 
 We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 20 languages in total, and according to download stats used in almost all countries in the world!
 
+### Outbreak management
+
+For analysis in outbreak management, we updated the `get_episode()` and `is_new_episode()` functions: they now contain an argument `case_free_days`. This argument can be used to quantify the duration of case-free days (the inter-epidemic interval), after which a new episode will start. 
+
+This is common requirement in outbreak management, e.g. when determining the number of norovirus outbreaks in a hospital. The case-free period could then be 14 or 28 days, so that new norovirus cases after that time will be considered a different (or new) episode.
+
 ### Microbiological taxonomy
 
 The `microorganisms` data set no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
@@ -59,6 +65,7 @@ The new function `add_custom_microorganisms()` allows users to add custom microo
 We also made the following changes regarding the included taxonomy or microorganisms functions:
 
 * Updated full microbiological taxonomy according to the latest daily LPSN data set (December 2022) and latest yearly GBIF taxonomy backbone (November 2022)
+* Added function `mo_current()` to get the currently valid taxonomic name of a microorganism
 * Support for all 1,516 city-like serovars of *Salmonella*, such as *Salmonella* Goldcoast. Formally, these are serovars belonging to the *S. enterica* species, but they are reported with only the name of the genus and the city. For this reason, the serovars are in the `subspecies` column of the `microorganisms` data set and "enterica" is in the `species` column, but the full name does not contain the species name (*enterica*).
 * All new algorithm for `as.mo()` (and thus all `mo_*()` functions) while still following our original set-up as described in our recently published JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
@@ -100,13 +107,11 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Function `sir_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `sir_df()` and `proportion_df()`.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
 * Function `sir_interpretation_history()` to view the history of previous runs of `as.sir()` (previously `as.rsi()`). This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.sir()` was run.
-* Function `mo_current()` to get the currently valid taxonomic name of a microorganism
-* Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
+
 
 ## Changes
 
 * `get_episode()` (and its wrapper `is_new_episode()`):
-  * Gained an argument `new_after_days` to determine episodes based on epidemic periods
   * Fix for working with `NA` values
   * Fix for unsorted dates of length 2
   * Now returns class `integer` instead of `numeric` since they are always whole numbers

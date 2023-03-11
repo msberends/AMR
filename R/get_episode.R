@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Determine (Clinical or Epidemic) Episodes
+#' Determine Clinical or Epidemic Episodes
 #'
 #' These functions determine which items in a vector can be considered (the start of) a new episode. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns `TRUE` for every new [get_episode()] index. Both absolute and relative episode determination are supported.
 #' @param x vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
@@ -71,7 +71,7 @@
 #'
 #' The [get_episode()] function returns the index number of the episode, so all cases/patients/isolates in the first episode will have the number 1, all cases/patients/isolates in the second episode will have the number 2, etc.
 #'
-#' The [is_new_episode()] function returns `TRUE` for every new [get_episode()] index, and is thus equal to `!duplicated(get_episode(...))`.
+#' The [is_new_episode()] function on the other hand, returns `TRUE` for every new [get_episode()] index.
 #'
 #' To specify, when setting `episode_days = 365` (using method 1 as explained above), this is how the two functions differ:
 #'
@@ -214,8 +214,8 @@ is_new_episode <- function(x, episode_days = NULL, case_free_days = NULL, ...) {
 }
 
 exec_episode <- function(x, episode_days, case_free_days, ...) {
-  stop_if((is.null(episode_days) && is.null(case_free_days)) || (!is.null(episode_days) && !is.null(case_free_days)),
-    "either `episode_days` or `case_free_days` must be set.",
+  stop_if_not(is.null(episode_days) || is.null(case_free_days),
+    "either argument `episode_days` or argument `case_free_days` must be set.",
     call = -2
   )
 
