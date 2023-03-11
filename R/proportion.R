@@ -303,13 +303,14 @@ sir_confidence_interval <- function(...,
   }
   if (isTRUE(as_percent)) {
     out <- percentage(out, digits = 1)
-  } else {
-    out <- round(out, digits = 3)
   }
   if (!isFALSE(collapse) && length(out) > 1) {
+    if (is.numeric(out)) {
+      out <- round(out, digits = 3)
+    }
     out <- paste(out, collapse = ifelse(isTRUE(collapse), "-", collapse))
   }
-  
+
   if (n < minimum) {
     warning_("Introducing NA: ",
              ifelse(n == 0, "no", paste("only", n)),

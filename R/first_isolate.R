@@ -350,7 +350,7 @@ first_isolate <- function(x = NULL,
   x$newvar_mo <- as.mo(x[, col_mo, drop = TRUE])
   x$newvar_genus_species <- paste(mo_genus(x$newvar_mo), mo_species(x$newvar_mo))
   x$newvar_date <- x[, col_date, drop = TRUE]
-  x$newvar_patient_id <- x[, col_patient_id, drop = TRUE]
+  x$newvar_patient_id <- as.character(x[, col_patient_id, drop = TRUE])
 
   if (is.null(col_testcode)) {
     testcodes_exclude <- NULL
@@ -378,7 +378,7 @@ first_isolate <- function(x = NULL,
     }
   }
   if (!is.null(col_keyantimicrobials)) {
-    x$newvar_key_ab <- x[, col_keyantimicrobials, drop = TRUE]
+    x$newvar_key_ab <- as.character(x[, col_keyantimicrobials, drop = TRUE])
   }
 
   if (is.null(testcodes_exclude)) {
