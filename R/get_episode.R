@@ -214,7 +214,7 @@ is_new_episode <- function(x, episode_days = NULL, case_free_days = NULL, ...) {
 }
 
 exec_episode <- function(x, episode_days, case_free_days, ...) {
-  stop_if_not(is.null(episode_days) || is.null(case_free_days),
+  stop_ifnot(is.null(episode_days) || is.null(case_free_days),
     "either argument `episode_days` or argument `case_free_days` must be set.",
     call = -2
   )

@@ -43,6 +43,7 @@
 #' @param ab_result antibiotic results to test against, must be one or more values of "S", "I", or "R"
 #' @param confidence_level the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
 #' @param side the side of the confidence interval to return. The default is `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
+#' @param collapse a [logical] to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing
 #' @inheritSection as.sir Interpretation of SIR
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
@@ -111,6 +112,10 @@
 #' sir_confidence_interval(example_isolates$AMX)
 #' sir_confidence_interval(example_isolates$AMX,
 #'   confidence_level = 0.975
+#' )
+#' sir_confidence_interval(example_isolates$AMX,
+#'   confidence_level = 0.975,
+#'   collapse = ", "
 #' )
 #'
 #' # determines %S+I:
@@ -260,10 +265,16 @@ sir_confidence_interval <- function(...,
                                     as_percent = FALSE,
                                     only_all_tested = FALSE,
                                     confidence_level = 0.95,
-                                    side = "both") {
+                                    side = "both",
+                                    collapse = FALSE) {
   meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1, 2, 3), is_in = c("S", "I", "R"))
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
+  meet_criteria(as_percent, allow_class = "logical", has_length = 1)
+  meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
   meet_criteria(confidence_level, allow_class = "numeric", is_positive = TRUE, has_length = 1)
   meet_criteria(side, allow_class = "character", has_length = 1, is_in = c("both", "b", "left", "l", "lower", "lowest", "less", "min", "right", "r", "higher", "highest", "greater", "g", "max"))
+  meet_criteria(collapse, allow_class = c("logical", "character"), has_length = 1)
+  
   x <- tryCatch(
     sir_calc(...,
       ab_result = ab_result,
@@ -281,19 +292,7 @@ sir_confidence_interval <- function(...,
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 
-  if (n < minimum) {
-    warning_("Introducing NA: ",
-      ifelse(n == 0, "no", paste("only", n)),
-      " results available for `sir_confidence_interval()` (`minimum` = ", minimum, ").",
-      call = FALSE
-    )
-    if (as_percent == TRUE) {
-      return(NA_character_)
-    } else {
-      return(NA_real_)
-    }
-  }
-
+  # this applies the Clopper-Pearson method
   out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
   out <- set_clean_class(out, "double")
 
@@ -302,11 +301,29 @@ sir_confidence_interval <- function(...,
   } else if (side %in% c("right", "r", "higher", "highest", "greater", "g", "max")) {
     out <- out[2]
   }
-  if (as_percent == TRUE) {
-    percentage(out, digits = 1)
+  if (isTRUE(as_percent)) {
+    out <- percentage(out, digits = 1)
   } else {
-    out
+    out <- round(out, digits = 3)
   }
+  if (!isFALSE(collapse) && length(out) > 1) {
+    out <- paste(out, collapse = ifelse(isTRUE(collapse), "-", collapse))
+  }
+  
+  if (n < minimum) {
+    warning_("Introducing NA: ",
+             ifelse(n == 0, "no", paste("only", n)),
+             " results available for `sir_confidence_interval()` (`minimum` = ", minimum, ").",
+             call = FALSE
+    )
+    if (is.character(out)) {
+      return(NA_character_)
+    } else {
+      return(NA_real_)
+    }
+  }
+  
+  out
 }
 
 #' @rdname proportion

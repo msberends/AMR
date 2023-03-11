@@ -34,6 +34,8 @@ With the help of contributors from all corners of the world, the `AMR` package i
 
 #### Filtering and selecting data
 
+One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antibiotic columns. This can be done using the so-called [antibiotic class selectors](https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html) that work in base R, `dplyr` and `data.table`:
+
 ```r
 # AMR works great with dplyr, but it's not required or neccesary
 library(AMR)
@@ -41,8 +43,10 @@ library(dplyr)
 
 example_isolates %>%
   mutate(bacteria = mo_fullname()) %>%
+  # filtering functions for microorganisms:
   filter(mo_is_gram_negative(),
          mo_is_intrinsic_resistant(ab = "cefotax")) %>%
+  # antibiotic selectors:
   select(bacteria,
          aminoglycosides(),
          carbapenems())
@@ -66,13 +70,18 @@ With only having defined a row filter on Gram-negative bacteria with intrinsic r
 A base R equivalent would be:
 
 ```r
+library(AMR)
 example_isolates$bacteria <- mo_fullname(example_isolates$mo)
 example_isolates[which(mo_is_gram_negative() &
                          mo_is_intrinsic_resistant(ab = "cefotax")),
                  c("bacteria", aminoglycosides(), carbapenems())]
 ```
 
-This base R snippet will work in any version of R since April 2013 (R-3.0).
+This base R code will work in any version of R since April 2013 (R-3.0). Moreover, this code works identically with the `data.table` package, only by starting with:
+
+```r
+example_isolates <- data.table::as.data.table(example_isolates)
+```
 
 #### Generating antibiograms
 
@@ -132,14 +141,32 @@ antibiogram(example_isolates,
 For a manual approach, you can use the `resistance` or `susceptibility()` function:
 
 ```r
+example_isolates %>%
+  # group by ward:
+  group_by(ward) %>%
+  # calculate AMR using resistance() for gentamicin and tobramycin
+  # and get their 95% confidence intervals using sir_confidence_interval():
+  summarise(across(c(GEN, TOB),
+                   list(total_R = resistance,
+                        conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
+```
+
+|ward       | GEN_total_R|GEN_conf_int | TOB_total_R|TOB_conf_int |
+|:---------:|:----------:|:-----------:|:----------:|:-----------:|
+|Clinical   |   0.229    |0.205-0.254  |   0.315    |0.284-0.347  |
+|ICU        |   0.290    |0.253-0.330  |   0.400    |0.353-0.449  |
+|Outpatient |   0.200    |0.131-0.285  |   0.368    |0.254-0.493  |
+
+Or use [antibiotic class selectors](https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html) to select a series of antibiotic columns:
+
+```r
 library(AMR)
 library(dplyr)
 
 out <- example_isolates %>%
   # group by ward:
   group_by(ward) %>%
-  # calculate AMR using resistance(), over all aminoglycosides
-  # and polymyxins:
+  # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
 out

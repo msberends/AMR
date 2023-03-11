@@ -29,7 +29,8 @@ sir_confidence_interval(
   as_percent = FALSE,
   only_all_tested = FALSE,
   confidence_level = 0.95,
-  side = "both"
+  side = "both",
+  collapse = FALSE
 )
 
 proportion_R(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
@@ -76,6 +77,8 @@ sir_df(
 \item{confidence_level}{the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method.}
 
 \item{side}{the side of the confidence interval to return. The default is \code{"both"} for a length 2 vector, but can also be (abbreviated as) \code{"min"}/\code{"left"}/\code{"lower"}/\code{"less"} or \code{"max"}/\code{"right"}/\code{"higher"}/\code{"greater"}.}
+
+\item{collapse}{a \link{logical} to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing}
 
 \item{data}{a \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
 
@@ -171,6 +174,10 @@ resistance(example_isolates$AMX)
 sir_confidence_interval(example_isolates$AMX)
 sir_confidence_interval(example_isolates$AMX,
   confidence_level = 0.975
+)
+sir_confidence_interval(example_isolates$AMX,
+  confidence_level = 0.975,
+  collapse = ", "
 )
 
 # determines \%S+I:

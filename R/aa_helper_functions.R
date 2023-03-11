@@ -934,7 +934,7 @@ get_current_data <- function(arg_name, call) {
     }
   }
 
-  # now go over all underlying environments looking for other dplyr and base R selection environments
+  # now go over all underlying environments looking for other dplyr, data.table and base R selection environments
   with_generic <- vapply(FUN.VALUE = logical(1), frms, function(e) !is.null(e$`.Generic`))
   for (env in frms[which(with_generic)]) {
     if (valid_df(env$`.data`)) {
@@ -945,6 +945,7 @@ get_current_data <- function(arg_name, call) {
       return(env$xx)
     } else if (valid_df(env$x)) {
       # an element `x` will be in the environment for only cols in base R, e.g. `example_isolates[, carbapenems()]`
+      # this element will also be present in data.table environments where there's a .Generic available
       return(env$x)
     }
   }

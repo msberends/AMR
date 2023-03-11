@@ -118,10 +118,12 @@ not_intrinsic_resistant(
 (internally) a \link{character} vector of column names, with additional class \code{"ab_selector"}
 }
 \description{
-These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by \code{\link[=cephalosporins]{cephalosporins()}}.
+These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group (according to the \link{antibiotics} data set), without the need to define the columns or antibiotic abbreviations.
+
+In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up by \code{\link[=cephalosporins]{cephalosporins()}}.
 }
 \details{
-These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the \link[tidyselect:language]{Tidyverse selection helpers} such as \code{\link[tidyselect:everything]{everything()}}, but also work in base \R and not only in \code{dplyr} verbs. Nonetheless, they are very convenient to use with \code{dplyr} functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}, see \emph{Examples}.
+These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and \code{data.table}. They are heavily inspired by the \link[tidyselect:language]{Tidyverse selection helpers} such as \code{\link[tidyselect:everything]{everything()}}, but are not limited to \code{dplyr} verbs. Nonetheless, they are very convenient to use with \code{dplyr} functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}, see \emph{Examples}.
 
 All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antibiotics} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
@@ -174,6 +176,10 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR
 # See ?example_isolates.
 example_isolates
 
+
+# Examples sections below are split into 'base R', 'dplyr', and 'data.table':
+
+
 # base R ------------------------------------------------------------------
 
 # select columns 'IPM' (imipenem) and 'MEM' (meropenem)
@@ -196,7 +202,7 @@ example_isolates[all(carbapenems()), ]
 # filter with multiple antibiotic selectors using c()
 example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]
 
-# filter + select in one go: get penicillins in carbapenems-resistant strains
+# filter + select in one go: get penicillins in carbapenem-resistant strains
 example_isolates[any(carbapenems() == "R"), penicillins()]
 
 # You can combine selectors with '&' to be more specific. For example,
@@ -206,13 +212,19 @@ example_isolates[any(carbapenems() == "R"), penicillins()]
 # and erythromycin is not a penicillin:
 example_isolates[, penicillins() & administrable_per_os()]
 
-# ab_selector() applies a filter in the `antibiotics` data set and is thus very
-# flexible. For instance, to select antibiotic columns with an oral DDD of at
-# least 1 gram:
+# ab_selector() applies a filter in the `antibiotics` data set and is thus
+# very flexible. For instance, to select antibiotic columns with an oral DDD
+# of at least 1 gram:
 example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]
 
-# dplyr -------------------------------------------------------------------
 \donttest{
+# dplyr -------------------------------------------------------------------
+
+if (require("dplyr")) {
+  tibble(kefzol = random_sir(5)) \%>\%
+    select(cephalosporins())
+}
+
 if (require("dplyr")) {
   # get AMR for all aminoglycosides e.g., per ward:
   example_isolates \%>\%
@@ -292,6 +304,35 @@ if (require("dplyr")) {
   y <- example_isolates \%>\% filter(carbapenems() == "R")
   z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
   identical(x, y) && identical(y, z)
+}
+
+
+# data.table --------------------------------------------------------------
+
+# data.table is supported as well, just use it in the same way as with
+# base R, but add `with = FALSE` if using a single AB selector:
+
+if (require("data.table")) {
+  dt <- as.data.table(example_isolates)
+
+  print(
+    dt[, carbapenems()] # incorrect, returns column *names*
+  )
+  print(
+    dt[, carbapenems(), with = FALSE] # so `with = FALSE` is required
+  )
+  
+  # for multiple selections or AB selectors, `with = FALSE` is not needed:
+  print(
+    dt[, c("mo", aminoglycosides())]
+  )
+  print(
+    dt[, c(carbapenems(), aminoglycosides())]
+  )
+  
+  # row filters are also supported:
+  print(dt[any(carbapenems() == "S"), ])
+  print(dt[any(carbapenems() == "S"), penicillins(), with = FALSE])
 }
 }
 }
