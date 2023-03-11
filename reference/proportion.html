@@ -12,7 +12,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9150</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9151</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -344,11 +344,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span><span class="fu">resistance</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5955556</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.569 0.622</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5688204 0.6218738</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  confidence_level <span class="op">=</span> <span class="fl">0.975</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.565 0.626</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5650148 0.6255670</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  confidence_level <span class="op">=</span> <span class="fl">0.975</span>,</span></span>
 <span class="r-in"><span>  collapse <span class="op">=</span> <span class="st">", "</span></span></span>
@@ -361,7 +361,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  ab_result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"I"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.378 0.431</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3781262 0.4311796</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># be more specific</span></span></span>
 <span class="r-in"><span><span class="fu">proportion_S</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
@@ -403,9 +403,9 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ward       cipro_R ci_min ci_max</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical     0.147  0.124  0.173</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU          0.190  0.155  0.23 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient   0.161  0.093  0.252</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical     0.147 0.124   0.173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU          0.190 0.155   0.230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient   0.161 0.093<span style="text-decoration: underline;">2</span>  0.252</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># scoped dplyr verbs with antibiotic selectors</span></span></span>
 <span class="r-in"><span>  <span class="co"># (you could also use across() of course)</span></span></span>
