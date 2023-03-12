@@ -149,7 +149,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 
   df <- NULL
   if (path %like% "[.]rds$") {
-    df <- readRDS2(path)
+    df <- readRDS_AMR(path)
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
     stop_ifnot_installed("readxl")
@@ -248,7 +248,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     return(NULL)
   }
   if (is.null(AMR_env$mo_source)) {
-    AMR_env$mo_source <- readRDS2(path.expand(destination))
+    AMR_env$mo_source <- readRDS_AMR(path.expand(destination))
   }
 
   old_time <- attributes(AMR_env$mo_source)$mo_source_timestamp

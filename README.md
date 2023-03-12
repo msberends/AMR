@@ -27,26 +27,8 @@ install.packages("AMR")
 
 It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
-### Copyright
+----
 
-This R package is licensed under the [GNU General Public License (GPL) v2.0](https://github.com/msberends/AMR/blob/main/LICENSE). In a nutshell, this means that this package:
-
-- May be used for commercial purposes
-
-- May be used for private purposes
-
-- May **not** be used for patent purposes
-
-- May be modified, although:
-
-  - Modifications **must** be released under the same license when distributing the package
-  - Changes made to the code **must** be documented
-
-- May be distributed, although:
-
-  - Source code **must** be made available when the package is distributed
-  - A copy of the license and copyright notice **must** be included with the package.
-
-- Comes with a LIMITATION of liability
-
-- Comes with NO warranty
+<small>
+This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://msberends.github.io/AMR/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
+</small>

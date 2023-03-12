@@ -26,13 +26,13 @@ Note: to keep the package size as small as possible, we only included this vigne
 
 ----
 
-The `AMR` package is a [free and open-source](https://msberends.github.io/AMR/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
+The `AMR` package is a [free and open-source](https://msberends.github.io/AMR/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://msberends.github.io/AMR/authors.html) from around the globe are continually helping us to make this a successful and durable project!
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
 After installing this package, R knows `r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species and all `r AMR:::format_included_data_number(rbind(AMR::antibiotics[, "atc", drop = FALSE], AMR::antivirals[, "atc", drop = FALSE]))` antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral breakpoint guidelines from CLSI and EUCAST are included from the last 10 years. It supports and can read any data format, including WHONET data.
 
-The `AMR` package is available in English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
+With the help of contributors from all corners of the world, the `AMR` package is available in English, Czech, Chinese, Danish, Dutch, Finnish, French, German, Greek, Italian, Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Turkish, and Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 
 This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. Since its first public release in early 2018, this package has been downloaded from more than 175 countries.
 
@@ -57,7 +57,7 @@ This package can be used for:
   
 All reference data sets (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
 
-This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl), and is being [actively and durably maintained](./news) by two public healthcare organisations in the Netherlands.
+This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl), and is being [actively and durably maintained](https://msberends.github.io/AMR/news) by two public healthcare organisations in the Netherlands.
 
 ----
 

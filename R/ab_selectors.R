@@ -30,7 +30,7 @@
 #' Antibiotic Selectors
 #'
 #' @description These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group (according to the [antibiotics] data set), without the need to define the columns or antibiotic abbreviations.
-#' 
+#'
 #' In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
 #' @param ab_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
@@ -55,8 +55,8 @@
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #' example_isolates
-#' 
-#' 
+#'
+#'
 #' # Examples sections below are split into 'base R', 'dplyr', and 'data.table':
 #'
 #'
@@ -96,15 +96,15 @@
 #' # very flexible. For instance, to select antibiotic columns with an oral DDD
 #' # of at least 1 gram:
 #' example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]
-#' 
+#'
 #' \donttest{
 #' # dplyr -------------------------------------------------------------------
-#' 
+#'
 #' if (require("dplyr")) {
 #'   tibble(kefzol = random_sir(5)) %>%
 #'     select(cephalosporins())
 #' }
-#' 
+#'
 #' if (require("dplyr")) {
 #'   # get AMR for all aminoglycosides e.g., per ward:
 #'   example_isolates %>%
@@ -179,40 +179,44 @@
 #'     select(penicillins()) # only the 'J01CA01' column will be selected
 #' }
 #' if (require("dplyr")) {
-#'   # with recent versions of dplyr this is all equal:
+#'   # with recent versions of dplyr, this is all equal:
 #'   x <- example_isolates[carbapenems() == "R", ]
 #'   y <- example_isolates %>% filter(carbapenems() == "R")
 #'   z <- example_isolates %>% filter(if_all(carbapenems(), ~ .x == "R"))
 #'   identical(x, y) && identical(y, z)
 #' }
-#' 
-#' 
+#'
+#'
 #' # data.table --------------------------------------------------------------
-#' 
+#'
 #' # data.table is supported as well, just use it in the same way as with
-#' # base R, but add `with = FALSE` if using a single AB selector:
-#' 
+#' # base R, but add `with = FALSE` if using a single AB selector.
+#'
 #' if (require("data.table")) {
 #'   dt <- as.data.table(example_isolates)
-#' 
-#'   print(
-#'     dt[, carbapenems()] # incorrect, returns column *names*
-#'   )
-#'   print(
-#'     dt[, carbapenems(), with = FALSE] # so `with = FALSE` is required
-#'   )
-#'   
-#'   # for multiple selections or AB selectors, `with = FALSE` is not needed:
-#'   print(
-#'     dt[, c("mo", aminoglycosides())]
-#'   )
-#'   print(
-#'     dt[, c(carbapenems(), aminoglycosides())]
-#'   )
-#'   
-#'   # row filters are also supported:
-#'   print(dt[any(carbapenems() == "S"), ])
-#'   print(dt[any(carbapenems() == "S"), penicillins(), with = FALSE])
+#'
+#'   # this does not work, it returns column *names*
+#'   dt[, carbapenems()]
+#' }
+#' if (require("data.table")) {
+#'   # so `with = FALSE` is required
+#'   dt[, carbapenems(), with = FALSE]
+#' }
+#'
+#' # for multiple selections or AB selectors, `with = FALSE` is not needed:
+#' if (require("data.table")) {
+#'   dt[, c("mo", aminoglycosides())]
+#' }
+#' if (require("data.table")) {
+#'   dt[, c(carbapenems(), aminoglycosides())]
+#' }
+#'
+#' # row filters are also supported:
+#' if (require("data.table")) {
+#'   dt[any(carbapenems() == "S"), ]
+#' }
+#' if (require("data.table")) {
+#'   dt[any(carbapenems() == "S"), penicillins(), with = FALSE]
 #' }
 #' }
 ab_class <- function(ab_class,

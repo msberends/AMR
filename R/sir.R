@@ -999,7 +999,7 @@ as_sir_method <- function(method_short,
       }
 
       if (method == "mic") {
-        new_sir <- quick_case_when(
+        new_sir <- case_when_AMR(
           is.na(values) ~ NA_sir_,
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
@@ -1010,7 +1010,7 @@ as_sir_method <- function(method_short,
           TRUE ~ NA_sir_
         )
       } else if (method == "disk") {
-        new_sir <- quick_case_when(
+        new_sir <- case_when_AMR(
           is.na(values) ~ NA_sir_,
           as.double(values) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
@@ -1023,7 +1023,7 @@ as_sir_method <- function(method_short,
       }
 
       # write to verbose output
-      AMR_env$sir_interpretation_history <- rbind2(
+      AMR_env$sir_interpretation_history <- rbind_AMR(
         AMR_env$sir_interpretation_history,
         # recycling 1 to 2 rows does not seem to work, which is why rep() was added
         data.frame(

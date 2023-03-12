@@ -458,7 +458,7 @@ antibiogram <- function(x,
       if (i == 1) {
         new_df <- long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits)
       } else {
-        new_df <- rbind2(
+        new_df <- rbind_AMR(
           new_df,
           long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE], digs = digits)
         )

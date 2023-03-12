@@ -20,7 +20,7 @@ This function will fill in missing taxonomy for you, if specific taxonomic colum
 
 \strong{Important:} Due to how \R works, the \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} function has to be run in every \R session - added microorganisms are not stored between sessions and are thus lost when \R is exited.
 
-There are two ways to automate this process:
+There are two ways to circumvent this and automate the process of adding microorganisms:
 
 \strong{Method 1:} Using the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_custom_mo}}, which is the preferred method. To use this method:
 \enumerate{
@@ -34,7 +34,7 @@ options(AMR_custom_mo = "~/my_custom_mo.rds")
 Upon package load, this file will be loaded and run through the \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} function.
 }
 
-\strong{Method 2:} Loading the microorganism directly from your \code{.Rprofile} file. An important downside is that this requires the \code{AMR} package to be installed or else this method will fail. To use this method:
+\strong{Method 2:} Loading the microorganism directly from your \code{.Rprofile} file. Note that the definitions will be stored in a user-specific \R file, which is a suboptimal workflow. To use this method:
 \enumerate{
 \item Edit the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}.
 \item Add a text like below and save the file:
@@ -47,7 +47,7 @@ Upon package load, this file will be loaded and run through the \code{\link[=add
 }\if{html}{\out{</div>}}
 }
 
-Use \code{\link[=clear_custom_microorganisms]{clear_custom_microorganisms()}} to clear the previously added antimicrobials.
+Use \code{\link[=clear_custom_microorganisms]{clear_custom_microorganisms()}} to clear the previously added microorganisms.
 }
 \examples{
 \donttest{

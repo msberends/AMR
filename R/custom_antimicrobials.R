@@ -33,7 +33,7 @@
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
 #' @details **Important:** Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited.
 #'
-#' There are two ways to automate this process:
+#' There are two ways to circumvent this and automate the process of adding antimicrobials:
 #'
 #' **Method 1:** Using the [package option][AMR-options] [`AMR_custom_ab`][AMR-options], which is the preferred method. To use this method:
 #'
@@ -48,7 +48,7 @@
 #'
 #'       Upon package load, this file will be loaded and run through the [add_custom_antimicrobials()] function.
 #'
-#' **Method 2:** Loading the antimicrobial additions directly from your `.Rprofile` file. An important downside is that this requires the `AMR` package to be installed or else this method will fail. To use this method:
+#' **Method 2:** Loading the antimicrobial additions directly from your `.Rprofile` file. Note that the definitions will be stored in a user-specific \R file, which is a suboptimal workflow. To use this method:
 #'
 #'    1. Edit the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`.
 #'
@@ -153,7 +153,7 @@ add_custom_antimicrobials <- function(x) {
     # assign new values
     new_df[, col] <- x[, col, drop = TRUE]
   }
-  AMR_env$AB_lookup <- unique(rbind2(AMR_env$AB_lookup, new_df))
+  AMR_env$AB_lookup <- unique(rbind_AMR(AMR_env$AB_lookup, new_df))
 
   AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% x$ab), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")

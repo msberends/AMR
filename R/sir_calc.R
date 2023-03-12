@@ -322,7 +322,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
           }
           out_new <- cbind(group_values, out_new)
         }
-        out <- rbind2(out, out_new)
+        out <- rbind_AMR(out, out_new)
       }
     }
     out
@@ -331,7 +331,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   # based on pm_apply_grouped_function
   apply_group <- function(.data, fn, groups, drop = FALSE, ...) {
     grouped <- pm_split_into_groups(.data, groups, drop)
-    res <- do.call(rbind2, unname(lapply(grouped, fn, ...)))
+    res <- do.call(rbind_AMR, unname(lapply(grouped, fn, ...)))
     if (any(groups %in% colnames(res))) {
       class(res) <- c("grouped_data", class(res))
       res <- pm_set_groups(res, groups[groups %in% colnames(res)])

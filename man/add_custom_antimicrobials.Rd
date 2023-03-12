@@ -18,7 +18,7 @@ With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you c
 \details{
 \strong{Important:} Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited.
 
-There are two ways to automate this process:
+There are two ways to circumvent this and automate the process of adding antimicrobials:
 
 \strong{Method 1:} Using the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_custom_ab}}, which is the preferred method. To use this method:
 \enumerate{
@@ -32,7 +32,7 @@ options(AMR_custom_ab = "~/my_custom_ab.rds")
 Upon package load, this file will be loaded and run through the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function.
 }
 
-\strong{Method 2:} Loading the antimicrobial additions directly from your \code{.Rprofile} file. An important downside is that this requires the \code{AMR} package to be installed or else this method will fail. To use this method:
+\strong{Method 2:} Loading the antimicrobial additions directly from your \code{.Rprofile} file. Note that the definitions will be stored in a user-specific \R file, which is a suboptimal workflow. To use this method:
 \enumerate{
 \item Edit the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}.
 \item Add a text like below and save the file:

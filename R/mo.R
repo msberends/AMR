@@ -329,7 +329,7 @@ as.mo <- function(x,
         result_mo <- NA_character_
       } else {
         result_mo <- AMR_env$MO_lookup$mo[match(top_hits[1], AMR_env$MO_lookup$fullname)]
-        AMR_env$mo_uncertainties <- rbind2(
+        AMR_env$mo_uncertainties <- rbind_AMR(
           AMR_env$mo_uncertainties,
           data.frame(
             original_input = x_search,
@@ -343,7 +343,7 @@ as.mo <- function(x,
           )
         )
         # save to package env to save time for next time
-        AMR_env$mo_previously_coerced <- unique(rbind2(
+        AMR_env$mo_previously_coerced <- unique(rbind_AMR(
           AMR_env$mo_previously_coerced,
           data.frame(
             x = paste(x_search, minimum_matching_score),

@@ -274,7 +274,7 @@ sir_confidence_interval <- function(...,
   meet_criteria(confidence_level, allow_class = "numeric", is_positive = TRUE, has_length = 1)
   meet_criteria(side, allow_class = "character", has_length = 1, is_in = c("both", "b", "left", "l", "lower", "lowest", "less", "min", "right", "r", "higher", "highest", "greater", "g", "max"))
   meet_criteria(collapse, allow_class = c("logical", "character"), has_length = 1)
-  
+
   x <- tryCatch(
     sir_calc(...,
       ab_result = ab_result,
@@ -313,9 +313,9 @@ sir_confidence_interval <- function(...,
 
   if (n < minimum) {
     warning_("Introducing NA: ",
-             ifelse(n == 0, "no", paste("only", n)),
-             " results available for `sir_confidence_interval()` (`minimum` = ", minimum, ").",
-             call = FALSE
+      ifelse(n == 0, "no", paste("only", n)),
+      " results available for `sir_confidence_interval()` (`minimum` = ", minimum, ").",
+      call = FALSE
     )
     if (is.character(out)) {
       return(NA_character_)
@@ -323,7 +323,7 @@ sir_confidence_interval <- function(...,
       return(NA_real_)
     }
   }
-  
+
   out
 }
 

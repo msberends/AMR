@@ -1,6 +1,4 @@
-# AMR 1.8.2.9151
-
-*(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
+# AMR 1.8.2.9152
 
 This is a new major release of the AMR package, with great new additions but also some breaking changes for current users. These are all listed below.
 

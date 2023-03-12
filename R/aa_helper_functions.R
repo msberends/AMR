@@ -63,9 +63,9 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   merged
 }
 
-# support where() like tidyverse:
+# support where() like tidyverse (this function will also be used when running `antibiogram()`):
 where <- function(fn) {
-  # adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
+  # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
   if (!is.function(fn)) {
     stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
   }
@@ -90,7 +90,7 @@ where <- function(fn) {
 
 # copied and slightly rewritten from {poorman} under permissive license (2021-10-15)
 # https://github.com/nathaneastwood/poorman, MIT licensed, Nathan Eastwood, 2020
-quick_case_when <- function(...) {
+case_when_AMR <- function(...) {
   fs <- list(...)
   lapply(fs, function(x) {
     if (!inherits(x, "formula")) {
@@ -163,8 +163,8 @@ quick_case_when <- function(...) {
   out
 }
 
-rbind2 <- function(...) {
-  # this is just rbind(), but then with the functionality of dplyr::bind_rows(),
+rbind_AMR <- function(...) {
+  # this is just rbind(), but with the functionality of dplyr::bind_rows(),
   # to allow differences in available columns
   l <- list(...)
   l_names <- unique(unlist(lapply(l, names)))
@@ -633,7 +633,9 @@ documentation_date <- function(d) {
 }
 
 format_included_data_number <- function(data) {
-  if (is.data.frame(data)) {
+  if (is.numeric(data) && length(data) == 1) {
+    n <- data
+  } else if (is.data.frame(data)) {
     n <- nrow(data)
   } else {
     n <- length(unique(data))
@@ -1502,7 +1504,7 @@ trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u00
   trimws(..., whitespace = whitespace)
 }
 
-readRDS2 <- function(file, refhook = NULL) {
+readRDS_AMR <- function(file, refhook = NULL) {
   # this is readRDS with remote file support
   con <- file(file)
   on.exit(close(con))

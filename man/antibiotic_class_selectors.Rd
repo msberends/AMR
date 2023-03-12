@@ -299,7 +299,7 @@ if (require("dplyr")) {
     select(penicillins()) # only the 'J01CA01' column will be selected
 }
 if (require("dplyr")) {
-  # with recent versions of dplyr this is all equal:
+  # with recent versions of dplyr, this is all equal:
   x <- example_isolates[carbapenems() == "R", ]
   y <- example_isolates \%>\% filter(carbapenems() == "R")
   z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
@@ -310,29 +310,33 @@ if (require("dplyr")) {
 # data.table --------------------------------------------------------------
 
 # data.table is supported as well, just use it in the same way as with
-# base R, but add `with = FALSE` if using a single AB selector:
+# base R, but add `with = FALSE` if using a single AB selector.
 
 if (require("data.table")) {
   dt <- as.data.table(example_isolates)
 
-  print(
-    dt[, carbapenems()] # incorrect, returns column *names*
-  )
-  print(
-    dt[, carbapenems(), with = FALSE] # so `with = FALSE` is required
-  )
-  
-  # for multiple selections or AB selectors, `with = FALSE` is not needed:
-  print(
-    dt[, c("mo", aminoglycosides())]
-  )
-  print(
-    dt[, c(carbapenems(), aminoglycosides())]
-  )
-  
-  # row filters are also supported:
-  print(dt[any(carbapenems() == "S"), ])
-  print(dt[any(carbapenems() == "S"), penicillins(), with = FALSE])
+  # this does not work, it returns column *names*
+  dt[, carbapenems()]
+}
+if (require("data.table")) {
+  # so `with = FALSE` is required
+  dt[, carbapenems(), with = FALSE]
+}
+
+# for multiple selections or AB selectors, `with = FALSE` is not needed:
+if (require("data.table")) {
+  dt[, c("mo", aminoglycosides())]
+}
+if (require("data.table")) {
+  dt[, c(carbapenems(), aminoglycosides())]
+}
+
+# row filters are also supported:
+if (require("data.table")) {
+  dt[any(carbapenems() == "S"), ]
+}
+if (require("data.table")) {
+  dt[any(carbapenems() == "S"), penicillins(), with = FALSE]
 }
 }
 }
