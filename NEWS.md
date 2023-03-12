@@ -1,4 +1,4 @@
-# AMR 1.8.2.9152
+# AMR 2.0.0
 
 This is a new major release of the AMR package, with great new additions but also some breaking changes for current users. These are all listed below.
 
