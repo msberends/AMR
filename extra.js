@@ -52,7 +52,7 @@ $(document).ready(function() {
   // add doctoral titles to authors
   function doct_tit(x) {
     if (typeof(x) != "undefined") {
-      x = x.replace(/Author, maintainer/g, "Principle maintainer");
+      x = x.replace(/Author, maintainer/g, "Principal maintainer");
       x = x.replace(/Author, contributor/g, "Contributing maintainer");
       x = x.replace(/Thesis advisor/g, "(former) Doctoral advisor");
       // contributors

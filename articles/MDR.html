@@ -385,17 +385,17 @@ names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co">#&gt; 1          R         R            I          R            R            I</span></span>
-<span><span class="co">#&gt; 2          S         R            S          S            I            I</span></span>
-<span><span class="co">#&gt; 3          S         S            I          R            S            S</span></span>
-<span><span class="co">#&gt; 4          S         I            S          S            R            I</span></span>
-<span><span class="co">#&gt; 5          R         I            I          S            S            I</span></span>
-<span><span class="co">#&gt; 6          I         R            R          I            I            I</span></span>
+<span><span class="co">#&gt; 1          I         R            S          I            S            R</span></span>
+<span><span class="co">#&gt; 2          R         S            R          S            S            I</span></span>
+<span><span class="co">#&gt; 3          R         I            I          I            S            S</span></span>
+<span><span class="co">#&gt; 4          S         I            S          I            R            S</span></span>
+<span><span class="co">#&gt; 5          R         S            S          I            S            R</span></span>
+<span><span class="co">#&gt; 6          S         S            S          I            I            S</span></span>
 <span><span class="co">#&gt;   kanamycin</span></span>
 <span><span class="co">#&gt; 1         S</span></span>
 <span><span class="co">#&gt; 2         I</span></span>
-<span><span class="co">#&gt; 3         I</span></span>
-<span><span class="co">#&gt; 4         R</span></span>
+<span><span class="co">#&gt; 3         R</span></span>
+<span><span class="co">#&gt; 4         S</span></span>
 <span><span class="co">#&gt; 5         S</span></span>
 <span><span class="co">#&gt; 6         I</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can
@@ -438,40 +438,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3189</td>
-<td align="right">63.78%</td>
-<td align="right">3189</td>
-<td align="right">63.78%</td>
+<td align="right">3232</td>
+<td align="right">64.64%</td>
+<td align="right">3232</td>
+<td align="right">64.64%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">1007</td>
-<td align="right">20.14%</td>
-<td align="right">4196</td>
-<td align="right">83.92%</td>
+<td align="right">952</td>
+<td align="right">19.04%</td>
+<td align="right">4184</td>
+<td align="right">83.68%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">464</td>
-<td align="right">9.28%</td>
-<td align="right">4660</td>
-<td align="right">93.20%</td>
+<td align="right">465</td>
+<td align="right">9.30%</td>
+<td align="right">4649</td>
+<td align="right">92.98%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">242</td>
-<td align="right">4.84%</td>
-<td align="right">4902</td>
-<td align="right">98.04%</td>
+<td align="right">248</td>
+<td align="right">4.96%</td>
+<td align="right">4897</td>
+<td align="right">97.94%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">98</td>
-<td align="right">1.96%</td>
+<td align="right">103</td>
+<td align="right">2.06%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
