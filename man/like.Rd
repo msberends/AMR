@@ -46,6 +46,9 @@ These \code{\link[=like]{like()}} and \verb{\%like\%}/\verb{\%unlike\%} function
 Using RStudio? The \verb{\%like\%}/\verb{\%unlike\%} functions can also be directly inserted in your code from the Addins menu and can have its own keyboard shortcut like \code{Shift+Ctrl+L} or \code{Shift+Cmd+L} (see menu \code{Tools} > \verb{Modify Keyboard Shortcuts...}). If you keep pressing your shortcut, the inserted text will be iterated over \verb{\%like\%} -> \verb{\%unlike\%} -> \verb{\%like_case\%} -> \verb{\%unlike_case\%}.
 }
 \examples{
+# data.table has a more limited version of \%like\%, so:
+detach("package:data.table", unload = TRUE)
+
 a <- "This is a test"
 b <- "TEST"
 a \%like\% b

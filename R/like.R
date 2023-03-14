@@ -49,6 +49,9 @@
 #' @seealso [grepl()]
 
 #' @examples
+#' # data.table has a more limited version of %like%, so:
+#' detach("package:data.table", unload = TRUE)
+#' 
 #' a <- "This is a test"
 #' b <- "TEST"
 #' a %like% b
