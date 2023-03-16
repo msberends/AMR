@@ -670,10 +670,15 @@ create_eucast_ab_documentation <- function() {
   atcs <- ab_atc(ab, only_first = TRUE)
   # only keep ABx with an ATC code:
   ab <- ab[!is.na(atcs)]
+  atcs <- atcs[!is.na(atcs)]
+
+  # sort all vectors on name:
   ab_names <- ab_name(ab, language = NULL, tolower = TRUE)
   ab <- ab[order(ab_names)]
+  atcs <- atcs[order(ab_names)]
   ab_names <- ab_names[order(ab_names)]
-  atc_txt <- paste0("[", atcs[!is.na(atcs)], "](", ab_url(ab), ")")
+  # create the text:
+  atc_txt <- paste0("[", atcs, "](", ab_url(ab), ")")
   out <- paste0(ab_names, " (`", ab, "`, ", atc_txt, ")", collapse = ", ")
   substr(out, 1, 1) <- toupper(substr(out, 1, 1))
   out

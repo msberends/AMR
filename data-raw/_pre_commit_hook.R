@@ -31,6 +31,7 @@
 # source("data-raw/_pre_commit_hook.R")
 
 library(dplyr, warn.conflicts = FALSE)
+try(detach("package:data.table", unload = TRUE), silent = TRUE)
 devtools::load_all(quiet = TRUE)
 
 suppressMessages(set_AMR_locale("English"))

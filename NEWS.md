@@ -1,4 +1,10 @@
-# AMR 2.0.0.9002
+# AMR 2.0.0.9003
+
+## Changed
+* formatting fix for `sir_interpretation_history()`
+
+
+# AMR 2.0.0
 
 This is a new major release of the AMR package, with great new additions but also some breaking changes for current users. These are all listed below.
 
