@@ -57,7 +57,7 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
     before <- "*"
     after <- "*"
   } else if (type == "ansi") {
-    if (!has_colour()) {
+    if (!has_colour() && !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
       return(string)
     }
     before <- "\033[3m"

@@ -247,7 +247,7 @@ ureido <- antibiogram(example_isolates,
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
 if (requireNamespace("knitr")) {
-  knitr::knit_print(ureido)
+  cat(knitr::knit_print(ureido))
 }
 
 
