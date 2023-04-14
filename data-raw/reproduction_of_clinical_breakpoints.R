@@ -39,7 +39,9 @@ library(AMR)
 # and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
 # (for ASIARS-Net update, also copy C:\WHONET\Codes to the data-raw/WHONET/ folder)
 
-# Load source data ----
+
+# MICROORGANISMS WHONET CODES ----
+
 whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
   # remove old taxonomic names
   filter(TAXONOMIC_STATUS == "C") %>%
@@ -55,97 +57,49 @@ whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("
     ORGANISM = if_else(ORGANISM_CODE == "fne", "Fusobacterium necrophorum", ORGANISM),
     ORGANISM = if_else(ORGANISM_CODE == "fnu", "Fusobacterium nucleatum", ORGANISM),
     ORGANISM = if_else(ORGANISM_CODE == "sdy", "Streptococcus dysgalactiae", ORGANISM),
-    ORGANISM = if_else(ORGANISM_CODE == "axy", "Achromobacter xylosoxidans", ORGANISM)
+    ORGANISM = if_else(ORGANISM_CODE == "axy", "Achromobacter xylosoxidans", ORGANISM),
+    # and this one was called Issatchenkia orientalis, but it should be:
+    ORGANISM = if_else(ORGANISM_CODE == "ckr", "Candida krusei", ORGANISM)
   )
-whonet_breakpoints <- read_tsv("data-raw/WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
-  filter(BREAKPOINT_TYPE == "Human", GUIDELINES %in% c("CLSI", "EUCAST"))
-whonet_antibiotics <- read_tsv("data-raw/WHONET/Resources/Antibiotics.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
-  arrange(WHONET_ABX_CODE) %>%
-  distinct(WHONET_ABX_CODE, .keep_all = TRUE)
 
-
-# Transform data ----
-
+# add some general codes
 whonet_organisms <- whonet_organisms %>%
   bind_rows(data.frame(
     ORGANISM_CODE = c("ebc", "cof"),
     ORGANISM = c("Enterobacterales", "Campylobacter")
   ))
 
-mo_reset_session()
 whonet_organisms.bak <- whonet_organisms
+# generate the mo codes and add their names
 whonet_organisms <- whonet_organisms.bak %>% 
   mutate(mo = as.mo(gsub("(sero[a-z]*| complex| nontypable| non[-][a-zA-Z]+|var[.]| not .*|sp[.],.*|, .*variant.*|, .*toxin.*|, microaer.*| beta-haem[.])", "", ORGANISM),
                     keep_synonyms = TRUE,
                     language = "en"),
-         mo = as.mo(ifelse(ORGANISM %like% "Anaerobic", "B_ANAER", mo)),
+         mo = case_when(ORGANISM %like% "Anaerobic" & ORGANISM %like% "negative" ~ as.mo("B_ANAER-NEG"),
+                        ORGANISM %like% "Anaerobic" & ORGANISM %like% "positive" ~ as.mo("B_ANAER-POS"),
+                        ORGANISM %like% "Anaerobic" ~ as.mo("B_ANAER"),
+                        TRUE ~ mo),
          mo_name = mo_name(mo,
                            keep_synonyms = TRUE,
                            language = "en"))
-
-# update microorganisms.codes with the latest WHONET codes
+# check if coercion at least resembles the first part (genus)
 new_mo_codes <- whonet_organisms %>% 
   mutate(
     first_part = sapply(ORGANISM, function(x) strsplit(gsub("[^a-zA-Z _-]+", "", x), " ")[[1]][1], USE.NAMES = FALSE),
-    keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other")
+    keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other" | ORGANISM %like% "anaerobic")
+# update microorganisms.codes with the latest WHONET codes
 microorganisms.codes <- microorganisms.codes %>% 
   # remove all old WHONET codes, whether we (in the end) keep them or not
-  filter(!toupper(code) %in% toupper(new_mo_codes$ORGANISM_CODE)) %>% 
+  filter(!toupper(code) %in% toupper(whonet_organisms$ORGANISM_CODE)) %>% 
+  # and add the new ones
   bind_rows(new_mo_codes %>% 
               filter(keep == TRUE) %>% 
               transmute(code = toupper(ORGANISM_CODE),
                         mo = mo)) %>% 
   arrange(code)
-# save to package
-usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
-rm(microorganisms.codes)
-devtools::load_all()
 
-
-breakpoints <- whonet_breakpoints %>%
-  mutate(ORGANISM_CODE = tolower(ORGANISM_CODE)) %>%
-  left_join(whonet_organisms) %>%
-  filter(ORGANISM %unlike% "(^cdc |Gram.*variable|virus)")
-# this ones lack a MO name, they will become "UNKNOWN":
-breakpoints %>%
-  filter(is.na(ORGANISM)) %>%
-  pull(ORGANISM_CODE) %>%
-  unique()
-
-
-# Generate new lookup table for microorganisms ----
-
-new_mo_codes <- breakpoints %>%
-  distinct(ORGANISM_CODE, ORGANISM) %>%
-  mutate(ORGANISM = ORGANISM %>%
-    gsub("Issatchenkia orientalis", "Candida krusei", .) %>%
-    gsub(", nutritionally variant", "", .) %>%
-    gsub(", toxin-.*producing", "", .)) %>%
-  mutate(
-    mo = as.mo(ORGANISM, language = NULL, keep_synonyms = FALSE),
-    mo_name = mo_name(mo, language = NULL)
-  )
-
-
-# Update microorganisms.codes with the latest WHONET codes ----
-
-# these will be changed :
-new_mo_codes %>%
-  mutate(code = toupper(ORGANISM_CODE)) %>%
-  rename(mo_new = mo) %>%
-  left_join(microorganisms.codes %>% rename(mo_old = mo)) %>%
-  filter(mo_old != mo_new)
-
-microorganisms.codes <- microorganisms.codes %>%
-  filter(!code %in% toupper(new_mo_codes$ORGANISM_CODE)) %>%
-  bind_rows(new_mo_codes %>% transmute(code = toupper(ORGANISM_CODE), mo = mo) %>% filter(!is.na(mo))) %>%
-  arrange(code) %>%
-  as_tibble()
-usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
-rm(microorganisms.codes)
-devtools::load_all()
-
-# update ASIARS-Net?
+# Run this part to update ASIARS-Net:
+# start
 asiarsnet <- read_tsv("data-raw/WHONET/Codes/ASIARS_Net_Organisms_ForwardLookup.txt")
 asiarsnet <- asiarsnet %>%
   mutate(WHONET_Code = toupper(WHONET_Code)) %>%
@@ -167,20 +121,59 @@ microorganisms.codes <- microorganisms.codes %>%
   filter(!code %in% c(insert1$code, insert2$code)) %>%
   bind_rows(insert1, insert2) %>%
   arrange(code)
+# end
+
+# save to package
+usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
+rm(microorganisms.codes)
+devtools::load_all()
 
 
-# Create new breakpoint table ----
+# BREAKPOINTS ----
 
+# now that we have the right MO codes, get the breakpoints and convert them
+whonet_breakpoints <- read_tsv("data-raw/WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
+  filter(BREAKPOINT_TYPE == "Human", GUIDELINES %in% c("CLSI", "EUCAST"))
+whonet_antibiotics <- read_tsv("data-raw/WHONET/Resources/Antibiotics.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
+  arrange(WHONET_ABX_CODE) %>%
+  distinct(WHONET_ABX_CODE, .keep_all = TRUE)
+
+breakpoints <- whonet_breakpoints %>%
+  mutate(code = toupper(ORGANISM_CODE)) %>%
+  left_join(microorganisms.codes)
+# these ones lack a MO name, they cannot be used:
+unknown <- breakpoints %>%
+  filter(is.na(mo)) %>%
+  pull(code) %>%
+  unique()
+whonet_organisms %>% 
+  filter(toupper(ORGANISM_CODE) %in% unknown)
+breakpoints <- breakpoints %>% 
+  filter(!is.na(mo))
+
+# and these ones have unknown antibiotics according to WHONET itself:
+breakpoints %>% 
+  filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) %>% 
+  count(YEAR, GUIDELINES, WHONET_ABX_CODE) %>% 
+  arrange(desc(YEAR))
+# we cannot use them
+breakpoints <- breakpoints %>% 
+  filter(WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE)
+# now check with our own antibiotics
+breakpoints %>% 
+  filter(!toupper(WHONET_ABX_CODE) %in% antibiotics$ab) %>% 
+  pull(WHONET_ABX_CODE) %>% 
+  unique()
+# they are at the moment all old codes that have right replacements in `antibiotics`, so we can use as.ab()
+  
 breakpoints_new <- breakpoints %>%
-  # only last 10 years
-  filter(YEAR > as.double(format(Sys.Date(), "%Y")) - 10) %>%
-  # "all" and "gen" (general) must become UNKNOWNs:
-  mutate(ORGANISM_CODE = if_else(ORGANISM_CODE %in% c("all", "gen"), "UNKNOWN", ORGANISM_CODE)) %>%
+  # only last available 10 years
+  filter(YEAR > max(YEAR) - 10) %>%
   transmute(
     guideline = paste(GUIDELINES, YEAR),
     method = TEST_METHOD,
-    site = gsub("Urinary tract infection", "UTI", SITE_OF_INFECTION),
-    mo = as.mo(ORGANISM_CODE, keep_synonyms = FALSE),
+    site = gsub(".*(UTI|urinary|urine).*", "UTI", SITE_OF_INFECTION, ignore.case = TRUE),
+    mo,
     rank_index = case_when(
       mo_rank(mo) %like% "(infra|sub)" ~ 1,
       mo_rank(mo) == "species" ~ 2,
@@ -194,16 +187,21 @@ breakpoints_new <- breakpoints %>%
     disk_dose = POTENCY,
     breakpoint_S = S,
     breakpoint_R = R,
-    uti = SITE_OF_INFECTION %like% "(UTI|urinary|urine)"
+    uti = ifelse(is.na(site), FALSE, site == "UTI")
   ) %>%
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
-    gsub("μ", "u", ., fixed = TRUE) %>%
-    gsub("µ", "u", ., fixed = TRUE) %>% # this is another micro sign, although we cannot see it
+    gsub("μ", "u", ., fixed = TRUE) %>% # this is 'mu', \u03bc
+    gsub("µ", "u", ., fixed = TRUE) %>% # this is 'micro', u00b5 (yes, they look the same)
     gsub("–", "-", ., fixed = TRUE)) %>%
   arrange(desc(guideline), ab, mo, method) %>%
   filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>%
   distinct(guideline, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
+
+# check the strange duplicates
+breakpoints_new %>% 
+  mutate(id = paste(guideline, ab, mo, method, site)) %>% 
+  filter(id %in% .$id[which(duplicated(id))])
 
 # clean disk zones and MICs
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S", drop = TRUE]))
@@ -223,7 +221,7 @@ breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- m
 breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
-# EUCAST 2021 guideline: S <= 8 and R > 8
+# EUCAST 2022 guideline: S <= 8 and R > 8
 #           WHONET file: S <= 8 and R >= 16
 breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # this will make an MIC of 12 I, which should be R, so:

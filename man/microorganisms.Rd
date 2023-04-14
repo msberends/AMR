@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 52 149 Microorganisms}
+\title{Data Set with 52 151 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 52 149 observations and 22 variables:
+A \link[tibble:tibble]{tibble} with 52 151 observations and 22 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
@@ -66,7 +66,7 @@ For convenience, some entries were added manually:
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
-\item 6 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast, unknown fungus, and unknown anaerobic bacteria)
+\item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 }
 
 The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}.

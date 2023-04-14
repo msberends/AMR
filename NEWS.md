@@ -1,8 +1,8 @@
-# AMR 2.0.0.9005
+# AMR 2.0.0.9006
 
 ## Changed
 * formatting fix for `sir_interpretation_history()`
-* Fixed some WHONET codes for microorganisms
+* Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
 
 
 # AMR 2.0.0
