@@ -44,10 +44,18 @@ whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("
   # remove old taxonomic names
   filter(TAXONOMIC_STATUS == "C") %>%
   transmute(ORGANISM_CODE = tolower(WHONET_ORG_CODE), ORGANISM) %>%
-  # what's wrong here? 'sau' is both S. areus and S. aureus sp. aureus
   mutate(
+    # what's wrong here? all these are only in the table on subspecies level (where species == subspecies), not on species level
     ORGANISM = if_else(ORGANISM_CODE == "sau", "Staphylococcus aureus", ORGANISM),
-    ORGANISM = if_else(ORGANISM_CODE == "pam", "Pasteurella multocida", ORGANISM)
+    ORGANISM = if_else(ORGANISM_CODE == "pam", "Pasteurella multocida", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "kpn", "Klebsiella pneumoniae", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "caj", "Campylobacter jejuni", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "mmo", "Morganella morganii", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "sap", "Staphylococcus saprophyticus", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "fne", "Fusobacterium necrophorum", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "fnu", "Fusobacterium nucleatum", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "sdy", "Streptococcus dysgalactiae", ORGANISM),
+    ORGANISM = if_else(ORGANISM_CODE == "axy", "Achromobacter xylosoxidans", ORGANISM)
   )
 whonet_breakpoints <- read_tsv("data-raw/WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
   filter(BREAKPOINT_TYPE == "Human", GUIDELINES %in% c("CLSI", "EUCAST"))
@@ -63,6 +71,36 @@ whonet_organisms <- whonet_organisms %>%
     ORGANISM_CODE = c("ebc", "cof"),
     ORGANISM = c("Enterobacterales", "Campylobacter")
   ))
+
+mo_reset_session()
+whonet_organisms.bak <- whonet_organisms
+whonet_organisms <- whonet_organisms.bak %>% 
+  mutate(mo = as.mo(gsub("(sero[a-z]*| complex| nontypable| non[-][a-zA-Z]+|var[.]| not .*|sp[.],.*|, .*variant.*|, .*toxin.*|, microaer.*| beta-haem[.])", "", ORGANISM),
+                    keep_synonyms = TRUE,
+                    language = "en"),
+         mo = as.mo(ifelse(ORGANISM %like% "Anaerobic", "B_ANAER", mo)),
+         mo_name = mo_name(mo,
+                           keep_synonyms = TRUE,
+                           language = "en"))
+
+# update microorganisms.codes with the latest WHONET codes
+new_mo_codes <- whonet_organisms %>% 
+  mutate(
+    first_part = sapply(ORGANISM, function(x) strsplit(gsub("[^a-zA-Z _-]+", "", x), " ")[[1]][1], USE.NAMES = FALSE),
+    keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other")
+microorganisms.codes <- microorganisms.codes %>% 
+  # remove all old WHONET codes, whether we (in the end) keep them or not
+  filter(!toupper(code) %in% toupper(new_mo_codes$ORGANISM_CODE)) %>% 
+  bind_rows(new_mo_codes %>% 
+              filter(keep == TRUE) %>% 
+              transmute(code = toupper(ORGANISM_CODE),
+                        mo = mo)) %>% 
+  arrange(code)
+# save to package
+usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
+rm(microorganisms.codes)
+devtools::load_all()
+
 
 breakpoints <- whonet_breakpoints %>%
   mutate(ORGANISM_CODE = tolower(ORGANISM_CODE)) %>%

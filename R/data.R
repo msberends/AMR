@@ -120,8 +120,8 @@
 #' ### Manual additions
 #' For convenience, some entries were added manually:
 #'
-#' - `r format_included_data_number(which(microorganisms$genus == "Salmonella" & microorganisms$species == "enterica" & microorganisms$source == "manually added"))` entries for the city-like serovars of *Salmonellae*
-#' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
+#' - `r format_included_data_number(microorganisms[which(microorganisms$source == "manually added" & microorganisms$genus == "Salmonella"), , drop = FALSE])` entries of *Salmonella*, such as the city-like serovars and groups A to H
+#' - `r format_included_data_number(microorganisms[which(microorganisms$source == "manually added" & microorganisms$genus == "Streptococcus"), , drop = FALSE])` entries of *Streptococcus*, such as the beta-haemolytic groups A to K, viridans, and milleri
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 #' - 1 entry of *Blastocystis* (*B.  hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology

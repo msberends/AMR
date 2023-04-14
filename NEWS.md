@@ -1,7 +1,8 @@
-# AMR 2.0.0.9004
+# AMR 2.0.0.9005
 
 ## Changed
 * formatting fix for `sir_interpretation_history()`
+* Fixed some WHONET codes for microorganisms
 
 
 # AMR 2.0.0

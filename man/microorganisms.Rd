@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 52 142 Microorganisms}
+\title{Data Set with 52 149 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 52 142 observations and 22 variables:
+A \link[tibble:tibble]{tibble} with 52 149 observations and 22 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
@@ -51,7 +51,7 @@ Included taxonomic data are:
 \item All ~36 000 (sub)species from the kingdoms of Archaea and Bacteria
 \item ~7 900 (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
 \item ~5 100 (sub)species from the kingdom of Protozoa
-\item ~1 400 (sub)species from ~40 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
+\item ~1 400 (sub)species from 43 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
 \item All ~9 800 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 \item The identifier of the parent taxons
@@ -61,8 +61,8 @@ Included taxonomic data are:
 
 For convenience, some entries were added manually:
 \itemize{
-\item ~1 500 entries for the city-like serovars of \emph{Salmonellae}
-\item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
+\item ~1 500 entries of \emph{Salmonella}, such as the city-like serovars and groups A to H
+\item 15 entries of \emph{Streptococcus}, such as the beta-haemolytic groups A to K, viridans, and milleri
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology

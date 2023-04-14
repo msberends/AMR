@@ -644,10 +644,13 @@ format_included_data_number <- function(data) {
     rounder <- -3 # round on thousands
   } else if (n > 1000) {
     rounder <- -2 # round on hundreds
+  } else if (n < 50) {
+    # do not round
+    rounder <- 0
   } else {
     rounder <- -1 # round on tens
   }
-  paste0("~", format(round(n, rounder), decimal.mark = ".", big.mark = " "))
+  paste0(ifelse(rounder == 0, "", "~"), format(round(n, rounder), decimal.mark = ".", big.mark = " "))
 }
 
 # for eucast_rules() and mdro(), creates markdown output with URLs and names
