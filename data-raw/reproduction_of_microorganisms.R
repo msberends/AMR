@@ -1380,6 +1380,9 @@ for (nm in to_restore) {
 
 # Save to package ---------------------------------------------------------
 
+# set class <mo> if still needed (if you run only this part coming from other scripts)
+class(microorganisms$mo) <- c("mo", "character")
+microorganisms <- microorganisms %>% arrange(fullname)
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
 rm(microorganisms)
 

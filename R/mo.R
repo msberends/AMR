@@ -947,25 +947,25 @@ convert_colloquial_input <- function(x) {
   out <- rep(NA_character_, length(x))
 
   # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRPB)
-  out[x %like_case% "^g[abcdfghkl]s$"] <- gsub("g([abcdfghkl])s",
+out[x %like_case% "^g[abcdefghijkl]s$"] <- gsub("g([abcdefghijkl])s",
     "B_STRPT_GRP\\U\\1",
-    x[x %like_case% "^g[abcdfghkl]s$"],
+    x[x %like_case% "^g[abcdefghijkl]s$"],
     perl = TRUE
   )
   # Streptococci in different languages, like "estreptococos grupo B"
-  out[x %like_case% "strepto[ck]o[ck].* [abcdfghkl]$"] <- gsub(".*e?strepto[ck]o[ck].* ([abcdfghkl])$",
+  out[x %like_case% "strepto[ck]o[ck].* [abcdefghijkl]$"] <- gsub(".*e?strepto[ck]o[ck].* ([abcdefghijkl])$",
     "B_STRPT_GRP\\U\\1",
-    x[x %like_case% "strepto[ck]o[ck].* [abcdfghkl]$"],
+    x[x %like_case% "strepto[ck]o[ck].* [abcdefghijkl]$"],
     perl = TRUE
   )
-  out[x %like_case% "strep[a-z]* group [abcdfghkl]$"] <- gsub(".* ([abcdfghkl])$",
+  out[x %like_case% "strep[a-z]* group [abcdefghijkl]$"] <- gsub(".* ([abcdefghijkl])$",
     "B_STRPT_GRP\\U\\1",
-    x[x %like_case% "strep[a-z]* group [abcdfghkl]$"],
+    x[x %like_case% "strep[a-z]* group [abcdefghijkl]$"],
     perl = TRUE
   )
-  out[x %like_case% "group [abcdfghkl] strepto[ck]o[ck]"] <- gsub(".*group ([abcdfghkl]) strepto[ck]o[ck].*",
+  out[x %like_case% "group [abcdefghijkl] strepto[ck]o[ck]"] <- gsub(".*group ([abcdefghijkl]) strepto[ck]o[ck].*",
     "B_STRPT_GRP\\U\\1",
-    x[x %like_case% "group [abcdfghkl] strepto[ck]o[ck]"],
+    x[x %like_case% "group [abcdefghijkl] strepto[ck]o[ck]"],
     perl = TRUE
   )
   out[x %like_case% "ha?emoly.*strep"] <- "B_STRPT_HAEM"
@@ -975,14 +975,14 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "(viridans.* (strepto|^s).*|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
 
   # Salmonella in different languages, like "Salmonella grupo B"
-  out[x %like_case% "salmonella.* [abcd]$"] <- gsub(".*salmonella.* ([abcd])$",
+  out[x %like_case% "salmonella.* [abcdefgh]$"] <- gsub(".*salmonella.* ([abcdefgh])$",
     "B_SLMNL_GRP\\U\\1",
-    x[x %like_case% "salmonella.* [abcd]$"],
+    x[x %like_case% "salmonella.* [abcdefgh]$"],
     perl = TRUE
   )
-  out[x %like_case% "group [abcd] salmonella"] <- gsub(".*group ([abcd]) salmonella*",
+  out[x %like_case% "group [abcdefgh] salmonella"] <- gsub(".*group ([abcdefgh]) salmonella*",
     "B_SLMNL_GRP\\U\\1",
-    x[x %like_case% "group [abcd] salmonella"],
+    x[x %like_case% "group [abcdefgh] salmonella"],
     perl = TRUE
   )
 

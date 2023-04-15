@@ -280,7 +280,7 @@ expect_equal(length(summary(example_isolates$mo)), 6)
 
 # WHONET codes and NA/NaN
 expect_equal(
-  as.character(as.mo(c("xxx", "na", "nan"), debug = TRUE)),
+  as.character(as.mo(c("xxx", "na", "nan"))),
   rep(NA_character_, 3)
 )
 expect_equal(as.character(as.mo("con")), "UNKNOWN")
