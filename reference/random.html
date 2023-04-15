@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,42 +193,42 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] &lt;=0.001 &gt;=256   0.0625  0.25    1       0.025   0.002   0.005   1      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] 0.025   16      8       4       0.5     0.005   0.125   32      0.025  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] 0.5     &lt;=0.001 &lt;=0.001 1       0.0625  &gt;=256   0.01   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 128     8       2       64      64      0.002   4       0.025   &lt;=0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] 0.01    16      0.5     &lt;=0.001 1       64      0.5     0.002   0.125  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] 0.025   8       0.025   8       &gt;=256   0.005   0.5    </span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'disk'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 10 17 19 43 50 18 50 14 49 16 47 28 27 48 40 21 49 44 50 23 12 10 46 19 48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 17 34 17 49 40 28 47 24 44  6 31 46 41 47 36 15 48 49 44 50 18 49 44 20 27</span>
 <span class="r-in"><span><span class="fu">random_sir</span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] S R I R I R I I S R I I I R I R I I I I I R I S I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] S S S S S I S R R R I R I S R I I I S I S S I R S</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># make the random generation more realistic by setting a bug and/or drug:</span></span></span>
 <span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span> <span class="co"># range 0.0625-64</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.0625 0.001  0.001  64     0.025  0.25   1      0.0625 256    0.25  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 0.01   0.001  2      8      0.01   32     0.002  0.5    0.125  0.005 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] 4      32     0.25   0.5    0.005 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 64      0.25    0.125   &lt;=0.001 0.005   2       &lt;=0.001 0.005   16     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] 2       32      0.01    0.005   0.25    &lt;=0.001 0.125   2       16     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] 0.025   0.25    0.005   4       0.025   8       64     </span>
 <span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span>, <span class="st">"meropenem"</span><span class="op">)</span> <span class="co"># range 0.0625-16</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 16   1    8    2    1    &gt;=32 2    0.5  &gt;=32 &gt;=32 1    &gt;=32 4    &gt;=32 16  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] 1    0.5  0.5  4    0.5  8    1    1    &gt;=32 4   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2    4    &gt;=32 1    8    &gt;=32 0.5  4    4    8    0.5  16   8    4    4   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] 16   4    1    4    0.5  0.5  &gt;=32 2    &gt;=32 &gt;=32</span>
 <span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Streptococcus pneumoniae"</span>, <span class="st">"meropenem"</span><span class="op">)</span> <span class="co"># range 0.0625-4</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.125 0.125 0.125 0.25  0.125 0.25  2     0.25  0.25  2     0.5   4    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] 4     2     0.125 0.25  0.125 0.125 4     2     0.5   0.25  0.125 0.125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] 4    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 4      0.25   2      4      2      0.5    0.25   0.0625 0.125  &gt;=8   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 4      4      0.125  2      0.5    2      0.125  &gt;=8    1      2     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] 4      0.5    0.125  0.25   &gt;=8   </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span> <span class="co"># range 8-50</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'disk'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 43 25 43 32 45 42 10 14 23 47 22 15 32  9 20 39 40 24 17 10  9 24 32 15 37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 36 47 48 24 19 50 34 23 39 40 21 36 25 37 31 43  8 45 47 37 22 48 12 21 43</span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span>, <span class="st">"ampicillin"</span><span class="op">)</span> <span class="co"># range 11-17</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'disk'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 12 15 12 17 16 15 15 16 14 14 17 16 13 14 11 15 15 13 14 16 15 12 11 13 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 11 11 13 13 11 11 14 11 15 11 12 15 14 17 15 17 17 12 13 17 12 13 11 11 16</span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Streptococcus pneumoniae"</span>, <span class="st">"ampicillin"</span><span class="op">)</span> <span class="co"># range 12-27</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'disk'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 25 23 19 22 15 24 22 24 15 21 25 25 16 21 19 23 20 26 24 26 19 27 25 20 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 25 22 20 19 27 17 24 18 27 15 18 22 18 21 24 15 22 19 21 20 21 18 20 21 23</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

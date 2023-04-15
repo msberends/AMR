@@ -12,7 +12,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -327,7 +327,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
 <h3 id="machine-readable-clinical-breakpoints">Machine-Readable Clinical Breakpoints<a class="anchor" aria-label="anchor" href="#machine-readable-clinical-breakpoints"></a></h3>
 
 
-<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 18 308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
+<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 17 918 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
 </div>
 
 <div class="section">
@@ -534,16 +534,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input ab_guideline mo_input     mo_guideline    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-04-14 <span style="color: #949494;">09:19:49</span>     1 TOB      TOB          Escherichia… B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-04-14 <span style="color: #949494;">09:19:49</span>     1 GEN      GEN          Escherichia… B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-04-14 <span style="color: #949494;">09:19:49</span>     1 CIP      CIP          Escherichia… B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-04-14 <span style="color: #949494;">09:19:48</span>     1 AMP      AMP          Escherichia… B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-04-14 <span style="color: #949494;">09:19:42</span>     1 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-04-14 <span style="color: #949494;">09:19:42</span>     2 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-04-14 <span style="color: #949494;">09:19:42</span>     3 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-04-14 <span style="color: #949494;">09:19:42</span>     4 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-04-14 <span style="color: #949494;">09:19:42</span>     5 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-04-14 <span style="color: #949494;">09:19:42</span>     6 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-04-15 <span style="color: #949494;">05:20:24</span>     1 TOB      TOB          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-04-15 <span style="color: #949494;">05:20:23</span>     1 GEN      GEN          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-04-15 <span style="color: #949494;">05:20:23</span>     1 CIP      CIP          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-04-15 <span style="color: #949494;">05:20:23</span>     1 AMP      AMP          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-04-15 <span style="color: #949494;">05:20:16</span>     1 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-04-15 <span style="color: #949494;">05:20:16</span>     2 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-04-15 <span style="color: #949494;">05:20:16</span>     3 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-04-15 <span style="color: #949494;">05:20:16</span>     4 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-04-15 <span style="color: #949494;">05:20:16</span>     5 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-04-15 <span style="color: #949494;">05:20:16</span>     6 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: guideline &lt;chr&gt;, ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   input &lt;dbl&gt;, outcome &lt;sir&gt;, breakpoint_S_R &lt;chr&gt;</span></span>
