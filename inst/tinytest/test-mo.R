@@ -279,13 +279,8 @@ expect_equal(suppressWarnings(as.mo("Virus")), as.mo("UNKNOWN"))
 expect_equal(length(summary(example_isolates$mo)), 6)
 
 # WHONET codes and NA/NaN
-expect_equal(
-  as.character(as.mo(c("xxx", "na", "nan"))),
-  rep(NA_character_, 3)
-)
-expect_equal(as.character(as.mo("con")), "UNKNOWN")
-expect_equal(as.character(as.mo("xxx")), NA_character_)
-expect_equal(as.character(as.mo(c("xxx", "con", "eco"))), c(NA_character_, "UNKNOWN", "B_ESCHR_COLI"))
+expect_true(all(is.na(as.mo(c("xxx", "na", "nan")))))
+expect_equal(as.character(as.mo(c("con", "eco"))), c("UNKNOWN", "B_ESCHR_COLI"))
 expect_equal(
   as.character(suppressWarnings(as.mo(c("other", "none", "unknown")))),
   rep("UNKNOWN", 3)
