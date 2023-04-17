@@ -480,7 +480,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
     # but class Negativicutes (of phylum Bacillota) are Gram-negative!
     mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms) != "Negativicutes")
   # and of course our own ID for Gram-positives
-  | x.mo == "B_GRAMP"] <- "Gram-positive"
+  | x.mo %in% c("B_GRAMP", "B_ANAER-POS")] <- "Gram-positive"
 
   load_mo_uncertainties(metadata)
   translate_into_language(x, language = language, only_unknown = FALSE)

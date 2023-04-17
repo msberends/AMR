@@ -995,8 +995,10 @@ out[x %like_case% "^g[abcdefghijkl]s$"] <- gsub("g([abcdefghijkl])s",
   out[x %like_case% "( |^)gram[-]( |$)"] <- "B_GRAMN"
   out[x %like_case% "gram[ -]?pos.*"] <- "B_GRAMP"
   out[x %like_case% "( |^)gram[+]( |$)"] <- "B_GRAMP"
+  out[x %like_case% "anaerob[a-z]+ .*gram[ -]?neg.*"] <- "B_ANAER-NEG"
+  out[x %like_case% "anaerob[a-z]+ .*gram[ -]?pos.*"] <- "B_ANAER-POS"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
-
+  
   # yeasts and fungi
   out[x %like_case% "^yeast?"] <- "F_YEAST"
   out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
@@ -1006,7 +1008,7 @@ out[x %like_case% "^g[abcdefghijkl]s$"] <- gsub("g([abcdefghijkl])s",
   out[x %like_case% "gono[ck]o[ck]"] <- "B_NESSR_GNRR"
   out[x %like_case% "pneumo[ck]o[ck]"] <- "B_STRPT_PNMN"
 
-  # unexisting names (xxx and con are WHONET codes)
+  # unexisting names (con is the WHONET code for contamination)
   out[x %in% c("con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
 
   # WHONET has a lot of E. coli and Vibrio cholerae names
@@ -1017,18 +1019,23 @@ out[x %like_case% "^g[abcdefghijkl]s$"] <- gsub("g([abcdefghijkl])s",
 }
 
 italicise <- function(x) {
+  if (!has_colour()) {
+    return(x)
+  }
   out <- font_italic(x, collapse = NULL)
+  # city-like serovars of Salmonella (start with a capital)
   out[x %like_case% "Salmonella [A-Z]"] <- paste(
     font_italic("Salmonella"),
     gsub("Salmonella ", "", x[x %like_case% "Salmonella [A-Z]"])
   )
+  # streptococcal groups
   out[x %like_case% "Streptococcus [A-Z]"] <- paste(
     font_italic("Streptococcus"),
     gsub("Streptococcus ", "", x[x %like_case% "Streptococcus [A-Z]"])
   )
-  if (has_colour()) {
-    out <- gsub("(Group|group|Complex|complex)(\033\\[23m)?", "\033[23m\\1", out, perl = TRUE)
-  }
+  # be sure not to make these italic
+  out <- gsub("([ -]*)(Group|group|Complex|complex)(\033\\[23m)?", "\033[23m\\1\\2", out, perl = TRUE)
+  out <- gsub("(\033\\[3m)?(Beta[-]haemolytic|Coagulase[-](postive|negative)) ", "\\2 \033[3m", out, perl = TRUE)
   out
 }
 
