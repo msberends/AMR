@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -256,10 +256,12 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMX' (amoxicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    • Multiple breakpoints available for amoxicillin (AMX) in Streptococcus</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Meningitis'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming an unspecified body site.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] S</span>
 <span class="r-in"><span><span class="fu"><a href="as.sir.html">as.sir</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="fu">as.mic</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mo <span class="op">=</span> <span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"Streptococcus pneumoniae"</span><span class="op">)</span>,</span></span>
@@ -269,10 +271,12 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMX' (amoxicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    • Multiple breakpoints available for amoxicillin (AMX) in Streptococcus</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Meningitis'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming an unspecified body site.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] S R R R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] S S I I</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot MIC values, see ?plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">mic_data</span><span class="op">)</span></span></span>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 17 918 observations and 11 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 18 271 observations and 11 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
 <li><p><code>method</code><br> Either "DISK" or "MIC"</p></li>
 <li><p><code>site</code><br> Body site, e.g. "Oral" or "Respiratory"</p></li>
 <li><p><code>mo</code><br> Microbial ID, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
@@ -178,7 +178,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">clinical_breakpoints</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17,918 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18,271 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    guideline   method site  mo               rank_index ab   ref_tbl   disk_dose</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_ASPRG_MGTS              2 AMB  Aspergil… <span style="color: #BB0000;">NA</span>       </span>
@@ -191,7 +191,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD_TRPC              2 AMB  Candida   <span style="color: #BB0000;">NA</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CRYPT_NFRM              2 AMB  Candida   <span style="color: #BB0000;">NA</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2022 DISK   <span style="color: #BB0000;">NA</span>    B_[ORD]_ENTRBCTR          5 AMC  Enteroba… 20ug/10ug</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 17,908 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 18,261 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;, uti &lt;lgl&gt;</span></span>
 </code></pre></div>
     </div>
