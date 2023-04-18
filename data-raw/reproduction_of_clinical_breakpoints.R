@@ -33,7 +33,7 @@
 library(dplyr)
 library(readr)
 library(tidyr)
-library(AMR)
+devtools::load_all()
 
 # Install the WHONET 2022 software on Windows (http://www.whonet.org/software.html),
 # and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
@@ -140,14 +140,17 @@ whonet_antibiotics <- read_tsv("data-raw/WHONET/Resources/Antibiotics.txt", na =
 
 breakpoints <- whonet_breakpoints %>%
   mutate(code = toupper(ORGANISM_CODE)) %>%
-  left_join(microorganisms.codes)
+  left_join(bind_rows(microorganisms.codes,
+                      # GEN (Generic) and ALL (All) are PK/PD codes
+                      data.frame(code = c("ALL", "GEN"),
+                                 mo = rep(as.mo("UNKNOWN"), 2))))
 # these ones lack a MO name, they cannot be used:
 unknown <- breakpoints %>%
   filter(is.na(mo)) %>%
   pull(code) %>%
   unique()
-whonet_organisms %>% 
-  filter(toupper(ORGANISM_CODE) %in% unknown)
+breakpoints %>% 
+  filter(code %in% unknown)
 breakpoints <- breakpoints %>% 
   filter(!is.na(mo))
 
@@ -243,6 +246,11 @@ breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- b
 breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
 clinical_breakpoints %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+
+# check dimensions
+dim(breakpoints_new)
+dim(clinical_breakpoints)
+
 
 # Save to package ----
 

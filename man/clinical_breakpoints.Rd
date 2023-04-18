@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 17 918 observations and 11 variables:
+A \link[tibble:tibble]{tibble} with 18 271 observations and 11 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"
