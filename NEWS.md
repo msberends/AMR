@@ -1,9 +1,10 @@
-# AMR 2.0.0.9011
+# AMR 2.0.0.9012
 
 ## Changed
 * formatting fix for `sir_interpretation_history()`
 * Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
 * Added microbial codes for Gram-negative/positive anaerobic bacteria
+* `mo_rank()` now returns `NA` for 'unknown' microorganisms (`B_ANAER`, `B_ANAER-NEG`, `B_ANAER-POS`, `B_GRAMN`, `B_GRAMP`, `F_FUNGUS`, `F_YEAST`, and `UNKNOWN`)
 
 
 # AMR 2.0.0

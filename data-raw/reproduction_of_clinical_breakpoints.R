@@ -178,6 +178,7 @@ breakpoints_new <- breakpoints %>%
     site = gsub(".*(UTI|urinary|urine).*", "UTI", SITE_OF_INFECTION, ignore.case = TRUE),
     mo,
     rank_index = case_when(
+      is.na(mo_rank(mo)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
       mo_rank(mo) %like% "(infra|sub)" ~ 1,
       mo_rank(mo) == "species" ~ 2,
       mo_rank(mo) == "genus" ~ 3,
