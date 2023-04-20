@@ -12,7 +12,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -508,14 +508,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'CIP' (ciprofloxacin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'GEN' (gentamicin) according</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
@@ -531,23 +527,23 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Assigning class 'sir' to already clean column 'ERY' (erythromycin)...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   I   I   S   S   R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input ab_guideline mo_input   mo_guideline    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-04-18 <span style="color: #949494;">22:40:53</span>     1 TOB      TOB          Escherich… B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-04-18 <span style="color: #949494;">22:40:53</span>     1 GEN      GEN          Escherich… B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-04-18 <span style="color: #949494;">22:40:52</span>     1 CIP      CIP          Escherich…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-04-18 <span style="color: #949494;">22:40:52</span>     1 AMP      AMP          Escherich…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-04-18 <span style="color: #949494;">22:40:45</span>     1 CIP      CIP          B_ESCHR_C…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-04-18 <span style="color: #949494;">22:40:45</span>     2 CIP      CIP          B_ESCHR_C…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-04-18 <span style="color: #949494;">22:40:45</span>     3 CIP      CIP          B_ESCHR_C…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-04-18 <span style="color: #949494;">22:40:45</span>     4 CIP      CIP          B_ESCHR_C…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-04-18 <span style="color: #949494;">22:40:45</span>     5 CIP      CIP          B_ESCHR_C…   UNKNOWN       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-04-18 <span style="color: #949494;">22:40:45</span>     6 CIP      CIP          B_ESCHR_C…   UNKNOWN       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input ab_guideline mo_input     mo_guideline    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023-04-20 <span style="color: #949494;">13:25:38</span>     1 TOB      TOB          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023-04-20 <span style="color: #949494;">13:25:38</span>     1 GEN      GEN          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023-04-20 <span style="color: #949494;">13:25:37</span>     1 CIP      CIP          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023-04-20 <span style="color: #949494;">13:25:37</span>     1 AMP      AMP          Escherichia… B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023-04-20 <span style="color: #949494;">13:25:32</span>     1 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023-04-20 <span style="color: #949494;">13:25:32</span>     2 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023-04-20 <span style="color: #949494;">13:25:32</span>     3 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023-04-20 <span style="color: #949494;">13:25:32</span>     4 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023-04-20 <span style="color: #949494;">13:25:32</span>     5 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023-04-20 <span style="color: #949494;">13:25:32</span>     6 CIP      CIP          B_ESCHR_COLI B_[ORD]_ENTRBCTR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: guideline &lt;chr&gt;, ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   input &lt;dbl&gt;, outcome &lt;sir&gt;, breakpoint_S_R &lt;chr&gt;</span></span>
@@ -562,12 +558,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    • Multiple breakpoints available for ampicillin (AMP) in Streptococcus</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming an unspecified body site.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Non-meningitis'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
@@ -613,24 +607,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
@@ -645,24 +631,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      isolates are from urine. See ?as.sir.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
@@ -677,14 +655,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      isolates are from urine. See ?as.sir.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
@@ -699,14 +673,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      isolates are from urine. See ?as.sir.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
@@ -736,14 +706,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  * WARNING *</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Note:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    • (Some) PK/PD breakpoints were applied - use include_PKPD = FALSE to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      prevent this</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -751,7 +717,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   I   I   S   S   R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For CLEANING existing SIR values ------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,14 +142,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.0.9011" id="amr-2009011">AMR 2.0.0.9011<a class="anchor" aria-label="anchor" href="#amr-2009011"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.0.0.9012" id="amr-2009012">AMR 2.0.0.9012<a class="anchor" aria-label="anchor" href="#amr-2009012"></a></h2>
 <div class="section level3">
-<h3 id="changed-2-0-0-9011">Changed<a class="anchor" aria-label="anchor" href="#changed-2-0-0-9011"></a></h3>
+<h3 id="changed-2-0-0-9012">Changed<a class="anchor" aria-label="anchor" href="#changed-2-0-0-9012"></a></h3>
 <ul><li>formatting fix for <code><a href="../reference/as.sir.html">sir_interpretation_history()</a></code>
 </li>
 <li>Fixed some WHONET codes for microorganisms and consequently a couple of entries in <code>clinical_breakpoints</code>
 </li>
 <li>Added microbial codes for Gram-negative/positive anaerobic bacteria</li>
+<li>
+<code><a href="../reference/mo_property.html">mo_rank()</a></code> now returns <code>NA</code> for ‘unknown’ microorganisms (<code>B_ANAER</code>, <code>B_ANAER-NEG</code>, <code>B_ANAER-POS</code>, <code>B_GRAMN</code>, <code>B_GRAMP</code>, <code>F_FUNGUS</code>, <code>F_YEAST</code>, and <code>UNKNOWN</code>)</li>
 </ul></div>
 </div>
     <div class="section level2">
