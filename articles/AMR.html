@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,7 +187,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 20 April 2023.</p>
+generated on 21 April 2023.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -243,21 +243,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2023-04-20</td>
+<td align="center">2023-04-21</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2023-04-20</td>
+<td align="center">2023-04-21</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2023-04-20</td>
+<td align="center">2023-04-21</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -733,476 +733,589 @@ in:</p>
 <div class="section level3">
 <h3 id="generate-antibiograms">Generate antibiograms<a class="anchor" aria-label="anchor" href="#generate-antibiograms"></a>
 </h3>
-<p>This package comes with <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, a function that
-automatically generates traditional, combined, syndromic, and even
-weighted-incidence syndromic combination antibiograms (WISCA). For R
-Markdown (such as this page) it automatically prints in the right table
-format.</p>
-<p>Below are some suggestions for how to generate the different
-antibiograms:</p>
+<p>Since AMR v2.0 (March 2023), it is very easy to create different
+types of antibiograms, with support for 20 different languages.</p>
+<p>There are four antibiogram types, as proposed by Klinker <em>et
+al.</em> (2021, <a href="https://doi.org/10.1177/20499361211011373" class="external-link">DOI
+10.1177/20499361211011373</a>), and they are all supported by the new
+<code><a href="../reference/antibiogram.html">antibiogram()</a></code> function:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Traditional Antibiogram (TA)</strong> e.g, for the
+susceptibility of <em>Pseudomonas aeruginosa</em> to
+piperacillin/tazobactam (TZP)</li>
+<li>
+<strong>Combination Antibiogram (CA)</strong> e.g, for the
+sdditional susceptibility of <em>Pseudomonas aeruginosa</em> to TZP +
+tobramycin versus TZP alone</li>
+<li>
+<strong>Syndromic Antibiogram (SA)</strong> e.g, for the
+susceptibility of <em>Pseudomonas aeruginosa</em> to TZP among
+respiratory specimens (obtained among ICU patients only)</li>
+<li>
+<strong>Weighted-Incidence Syndromic Combination Antibiogram
+(WISCA)</strong> e.g, for the susceptibility of <em>Pseudomonas
+aeruginosa</em> to TZP among respiratory specimens (obtained among ICU
+patients only) for male patients age &gt;=65 years with heart
+failure</li>
+</ol>
+<p>In this section, we show how to use the <code><a href="../reference/antibiogram.html">antibiogram()</a></code>
+function to create any of the above antibiogram types. For starters,
+this is what the included <code>example_isolates</code> data set looks
+like:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># traditional:</span></span>
-<span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Pathogen (N min-max)</th>
-<th align="right">AMC</th>
-<th align="right">AMX</th>
-<th align="right">CIP</th>
-<th align="right">GEN</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">
-<em>E. coli</em> (1250-1250)</td>
-<td align="right">64</td>
-<td align="right">58</td>
-<td align="right">58</td>
-<td align="right">63</td>
-</tr>
-<tr class="even">
-<td align="left">
-<em>K. pneumoniae</em> (316-316)</td>
-<td align="right">63</td>
-<td align="right">53</td>
-<td align="right">59</td>
-<td align="right">60</td>
-</tr>
-<tr class="odd">
-<td align="left">
-<em>S. aureus</em> (661-661)</td>
-<td align="right">64</td>
-<td align="right">57</td>
-<td align="right">57</td>
-<td align="right">63</td>
-</tr>
-<tr class="even">
-<td align="left">
-<em>S. pneumoniae</em> (399-399)</td>
-<td align="right">64</td>
-<td align="right">56</td>
-<td align="right">60</td>
-<td align="right">66</td>
-</tr>
-</tbody>
-</table>
+<code class="sourceCode R"><span><span class="va">example_isolates</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,000 × 46</span></span></span>
+<span><span class="co">#&gt;    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,990 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 36 more variables: AMC &lt;sir&gt;, AMP &lt;sir&gt;, TZP &lt;sir&gt;, CZO &lt;sir&gt;, FEP &lt;sir&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;, CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   TOB &lt;sir&gt;, AMK &lt;sir&gt;, KAN &lt;sir&gt;, TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span></span></code></pre></div>
+<div class="section level4">
+<h4 id="traditional-antibiogram">Traditional Antibiogram<a class="anchor" aria-label="anchor" href="#traditional-antibiogram"></a>
+</h4>
+<p>To create a traditional antibiogram, simply state which antibiotics
+should be used. The <code>antibiotics</code> argument in the
+<code><a href="../reference/antibiogram.html">antibiogram()</a></code> function supports any (combination) of the
+previously mentioned antibiotic class selectors:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>  ab_transform <span class="op">=</span> <span class="st">"name"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span></code></pre></div>
 <table class="table">
-<colgroup>
-<col width="28%">
-<col width="13%">
-<col width="30%">
-<col width="15%">
-<col width="12%">
-</colgroup>
 <thead><tr class="header">
 <th align="left">Pathogen (N min-max)</th>
-<th align="right">Amoxicillin</th>
-<th align="right">Amoxicillin/clavulanic acid</th>
-<th align="right">Ciprofloxacin</th>
-<th align="right">Gentamicin</th>
+<th align="right">AMK</th>
+<th align="right">GEN</th>
+<th align="right">IPM</th>
+<th align="right">KAN</th>
+<th align="right">MEM</th>
+<th align="right">TOB</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">
-<em>E. coli</em> (1250-1250)</td>
-<td align="right">58</td>
-<td align="right">64</td>
-<td align="right">58</td>
-<td align="right">63</td>
+<td align="left">CoNS (43-309)</td>
+<td align="right">0</td>
+<td align="right">86</td>
+<td align="right">52</td>
+<td align="right">0</td>
+<td align="right">52</td>
+<td align="right">22</td>
 </tr>
 <tr class="even">
 <td align="left">
-<em>K. pneumoniae</em> (316-316)</td>
-<td align="right">53</td>
-<td align="right">63</td>
-<td align="right">59</td>
-<td align="right">60</td>
+<em>E. coli</em> (0-462)</td>
+<td align="right">100</td>
+<td align="right">98</td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">97</td>
 </tr>
 <tr class="odd">
 <td align="left">
-<em>S. aureus</em> (661-661)</td>
-<td align="right">57</td>
-<td align="right">64</td>
-<td align="right">57</td>
-<td align="right">63</td>
+<em>E. faecalis</em> (0-39)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">
-<em>S. pneumoniae</em> (399-399)</td>
-<td align="right">56</td>
-<td align="right">64</td>
-<td align="right">60</td>
-<td align="right">66</td>
+<em>K. pneumoniae</em> (0-58)</td>
+<td align="right"></td>
+<td align="right">90</td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">90</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<em>P. aeruginosa</em> (17-30)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">100</td>
+</tr>
+<tr class="even">
+<td align="left">
+<em>P. mirabilis</em> (0-34)</td>
+<td align="right"></td>
+<td align="right">94</td>
+<td align="right">94</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">94</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<em>S. aureus</em> (2-233)</td>
+<td align="right"></td>
+<td align="right">99</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">98</td>
+</tr>
+<tr class="even">
+<td align="left">
+<em>S. epidermidis</em> (8-163)</td>
+<td align="right">0</td>
+<td align="right">79</td>
+<td align="right"></td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<em>S. hominis</em> (3-80)</td>
+<td align="right"></td>
+<td align="right">92</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="left">
+<em>S. pneumoniae</em> (11-117)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
+<p>Notice that the <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function automatically
+prints in the right format when using Quarto or R Markdown (such as this
+page), and even applies italics for taxonomic names (by using
+<code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> internally).</p>
+<p>It also uses the language of your OS if this is either English,
+Chinese, Czech, Danish, Dutch, Finnish, French, German, Greek, Italian,
+Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish,
+Swedish, Turkish, or Ukrainian. In this next example, we force the
+language to be Spanish using the <code>language</code> argument:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>  language <span class="op">=</span> <span class="st">"es"</span></span>
-<span><span class="op">)</span> <span class="co"># support for 20 languages</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>            language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="27%">
-<col width="12%">
-<col width="31%">
+<col width="35%">
+<col width="14%">
+<col width="17%">
 <col width="15%">
-<col width="12%">
+<col width="17%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Patógeno (N min-max)</th>
-<th align="right">Amoxicilina</th>
-<th align="right">Amoxicilina/ácido clavulánico</th>
-<th align="right">Ciprofloxacina</th>
+<th align="right">Amikacina</th>
 <th align="right">Gentamicina</th>
+<th align="right">Kanamicina</th>
+<th align="right">Tobramicina</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">
-<em>E. coli</em> (1250-1250)</td>
-<td align="right">58</td>
-<td align="right">64</td>
-<td align="right">58</td>
-<td align="right">63</td>
+<td align="left">Gram negativo (35-686)</td>
+<td align="right">98</td>
+<td align="right">96</td>
+<td align="right">0</td>
+<td align="right">96</td>
 </tr>
 <tr class="even">
-<td align="left">
-<em>K. pneumoniae</em> (316-316)</td>
-<td align="right">53</td>
+<td align="left">Gram positivo (436-1170)</td>
+<td align="right">0</td>
 <td align="right">63</td>
-<td align="right">59</td>
-<td align="right">60</td>
-</tr>
-<tr class="odd">
-<td align="left">
-<em>S. aureus</em> (661-661)</td>
-<td align="right">57</td>
-<td align="right">64</td>
-<td align="right">57</td>
-<td align="right">63</td>
-</tr>
-<tr class="even">
-<td align="left">
-<em>S. pneumoniae</em> (399-399)</td>
-<td align="right">56</td>
-<td align="right">64</td>
-<td align="right">60</td>
-<td align="right">66</td>
+<td align="right">0</td>
+<td align="right">34</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level4">
+<h4 id="combined-antibiogram">Combined Antibiogram<a class="anchor" aria-label="anchor" href="#combined-antibiogram"></a>
+</h4>
+<p>To create a combined antibiogram, use antibiotic codes or names with
+a plus <code>+</code> character like this:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># combined:</span></span>
-<span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Pathogen (N min-max)</th>
-<th align="right">AMC</th>
-<th align="right">AMC + CIP</th>
-<th align="right">AMC + GEN</th>
+<th align="right">TZP</th>
+<th align="right">TZP + GEN</th>
+<th align="right">TZP + TOB</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">
-<em>E. coli</em> (1250-1250)</td>
-<td align="right">64</td>
-<td align="right">76</td>
-<td align="right">75</td>
+<td align="left">CoNS (29-274)</td>
+<td align="right">30</td>
+<td align="right">97</td>
+<td align="right"></td>
 </tr>
 <tr class="even">
 <td align="left">
-<em>K. pneumoniae</em> (316-316)</td>
-<td align="right">63</td>
-<td align="right">78</td>
-<td align="right">74</td>
+<em>E. coli</em> (416-461)</td>
+<td align="right">94</td>
+<td align="right">100</td>
+<td align="right">99</td>
 </tr>
 <tr class="odd">
 <td align="left">
-<em>S. aureus</em> (661-661)</td>
-<td align="right">64</td>
-<td align="right">77</td>
-<td align="right">75</td>
+<em>K. pneumoniae</em> (53-58)</td>
+<td align="right">89</td>
+<td align="right">93</td>
+<td align="right">93</td>
 </tr>
 <tr class="even">
 <td align="left">
-<em>S. pneumoniae</em> (399-399)</td>
-<td align="right">64</td>
-<td align="right">77</td>
-<td align="right">76</td>
+<em>P. aeruginosa</em> (27-30)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">100</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<em>P. mirabilis</em> (27-34)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">100</td>
+</tr>
+<tr class="even">
+<td align="left">
+<em>S. aureus</em> (7-231)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">100</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<em>S. epidermidis</em> (5-128)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">100</td>
+</tr>
+<tr class="even">
+<td align="left">
+<em>S. hominis</em> (0-74)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">100</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<em>S. pneumoniae</em> (112-112)</td>
+<td align="right">100</td>
+<td align="right">100</td>
+<td align="right">100</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level4">
+<h4 id="syndromic-antibiogram">Syndromic Antibiogram<a class="anchor" aria-label="anchor" href="#syndromic-antibiogram"></a>
+</h4>
+<p>To create a syndromic antibiogram, the <code>syndromic_group</code>
+argument must be used. This can be any column in the data, or e.g. an
+<code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code> with calculations based on certain columns:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># for a syndromic antibiogram, we must fake some clinical conditions:</span></span>
-<span><span class="va">our_data_1st</span><span class="op">$</span><span class="va">condition</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cardial"</span>, <span class="st">"Respiratory"</span>, <span class="st">"Rheumatic"</span><span class="op">)</span>,</span>
-<span>  size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">our_data_1st</span><span class="op">)</span>,</span>
-<span>  replace <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># syndromic:</span></span>
-<span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>  syndromic_group <span class="op">=</span> <span class="st">"condition"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            syndromic_group <span class="op">=</span> <span class="st">"ward"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="25%">
+<col width="37%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Syndromic Group</th>
 <th align="left">Pathogen (N min-max)</th>
-<th align="right">AMC</th>
-<th align="right">AMX</th>
-<th align="right">CIP</th>
+<th align="right">AMK</th>
 <th align="right">GEN</th>
+<th align="right">IPM</th>
+<th align="right">KAN</th>
+<th align="right">MEM</th>
+<th align="right">TOB</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Cardial</td>
-<td align="left">
-<em>E. coli</em> (394-394)</td>
-<td align="right">61</td>
-<td align="right">60</td>
-<td align="right">54</td>
-<td align="right">60</td>
+<td align="left">Clinical</td>
+<td align="left">CoNS (23-205)</td>
+<td align="right"></td>
+<td align="right">89</td>
+<td align="right">57</td>
+<td align="right"></td>
+<td align="right">57</td>
+<td align="right">26</td>
 </tr>
 <tr class="even">
-<td align="left">Respiratory</td>
-<td align="left">
-<em>E. coli</em> (448-448)</td>
-<td align="right">68</td>
-<td align="right">58</td>
-<td align="right">60</td>
-<td align="right">64</td>
+<td align="left">ICU</td>
+<td align="left">CoNS (10-73)</td>
+<td align="right"></td>
+<td align="right">79</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
 </tr>
 <tr class="odd">
-<td align="left">Rheumatic</td>
-<td align="left">
-<em>E. coli</em> (408-408)</td>
-<td align="right">62</td>
-<td align="right">56</td>
-<td align="right">59</td>
-<td align="right">65</td>
+<td align="left">Outpatient</td>
+<td align="left">CoNS (3-31)</td>
+<td align="right"></td>
+<td align="right">84</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
 </tr>
 <tr class="even">
-<td align="left">Cardial</td>
+<td align="left">Clinical</td>
 <td align="left">
-<em>K. pneumoniae</em> (93-93)</td>
-<td align="right">60</td>
-<td align="right">53</td>
+<em>E. coli</em> (0-299)</td>
+<td align="right">100</td>
+<td align="right">98</td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">98</td>
+</tr>
+<tr class="odd">
+<td align="left">ICU</td>
+<td align="left">
+<em>E. coli</em> (0-137)</td>
+<td align="right">100</td>
+<td align="right">99</td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">96</td>
+</tr>
+<tr class="even">
+<td align="left">Clinical</td>
+<td align="left">
+<em>K. pneumoniae</em> (0-51)</td>
+<td align="right"></td>
+<td align="right">92</td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right">92</td>
+</tr>
+<tr class="odd">
+<td align="left">Clinical</td>
+<td align="left">
+<em>P. mirabilis</em> (0-30)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">100</td>
+</tr>
+<tr class="even">
+<td align="left">Clinical</td>
+<td align="left">
+<em>S. aureus</em> (2-150)</td>
+<td align="right"></td>
+<td align="right">99</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">97</td>
+</tr>
+<tr class="odd">
+<td align="left">ICU</td>
+<td align="left">
+<em>S. aureus</em> (0-66)</td>
+<td align="right"></td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left">Clinical</td>
+<td align="left">
+<em>S. epidermidis</em> (4-79)</td>
+<td align="right"></td>
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
 <td align="right">55</td>
-<td align="right">54</td>
 </tr>
 <tr class="odd">
-<td align="left">Respiratory</td>
+<td align="left">ICU</td>
 <td align="left">
-<em>K. pneumoniae</em> (116-116)</td>
-<td align="right">67</td>
-<td align="right">53</td>
-<td align="right">63</td>
-<td align="right">66</td>
+<em>S. epidermidis</em> (4-75)</td>
+<td align="right"></td>
+<td align="right">72</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">41</td>
 </tr>
 <tr class="even">
-<td align="left">Rheumatic</td>
+<td align="left">Clinical</td>
 <td align="left">
-<em>K. pneumoniae</em> (107-107)</td>
-<td align="right">61</td>
-<td align="right">51</td>
-<td align="right">58</td>
-<td align="right">60</td>
+<em>S. hominis</em> (1-45)</td>
+<td align="right"></td>
+<td align="right">96</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">94</td>
 </tr>
 <tr class="odd">
-<td align="left">Cardial</td>
+<td align="left">Clinical</td>
 <td align="left">
-<em>S. aureus</em> (215-215)</td>
-<td align="right">67</td>
-<td align="right">57</td>
-<td align="right">57</td>
-<td align="right">67</td>
+<em>S. pneumoniae</em> (5-78)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">Respiratory</td>
+<td align="left">ICU</td>
 <td align="left">
-<em>S. aureus</em> (222-222)</td>
-<td align="right">62</td>
-<td align="right">59</td>
-<td align="right">59</td>
-<td align="right">58</td>
-</tr>
-<tr class="odd">
-<td align="left">Rheumatic</td>
-<td align="left">
-<em>S. aureus</em> (224-224)</td>
-<td align="right">65</td>
-<td align="right">54</td>
-<td align="right">57</td>
-<td align="right">65</td>
-</tr>
-<tr class="even">
-<td align="left">Cardial</td>
-<td align="left">
-<em>S. pneumoniae</em> (130-130)</td>
-<td align="right">62</td>
-<td align="right">58</td>
-<td align="right">58</td>
-<td align="right">65</td>
-</tr>
-<tr class="odd">
-<td align="left">Respiratory</td>
-<td align="left">
-<em>S. pneumoniae</em> (125-125)</td>
-<td align="right">65</td>
-<td align="right">54</td>
-<td align="right">59</td>
-<td align="right">63</td>
-</tr>
-<tr class="even">
-<td align="left">Rheumatic</td>
-<td align="left">
-<em>S. pneumoniae</em> (144-144)</td>
-<td align="right">65</td>
-<td align="right">56</td>
-<td align="right">61</td>
-<td align="right">68</td>
+<em>S. pneumoniae</em> (5-30)</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
+<td align="right"></td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level4">
+<h4 id="weighted-incidence-syndromic-combination-antibiogram-wisca">Weighted-Incidence Syndromic Combination Antibiogram (WISCA)<a class="anchor" aria-label="anchor" href="#weighted-incidence-syndromic-combination-antibiogram-wisca"></a>
+</h4>
+<p>To create a WISCA, you must state combination therapy in the
+<code>antibiotics</code> argument (similar to the Combination
+Antibiogram), define a syndromic group with the
+<code>syndromic_group</code> argument (similar to the Syndromic
+Antibiogram) in which cases are predefined based on clinical or
+demographic characteristics (e.g., endocarditis in 75+ females). This
+next example is a simplification without clinical characteristics, but
+just gives an idea of how a WISCA can be created:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>  <span class="co"># you can use AB selectors here as well:</span></span>
-<span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  syndromic_group <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ For penicillins() using columns 'AMX' (amoxicillin) and 'AMC'</span></span>
-<span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
-<span><span class="co">#&gt; ℹ For aminoglycosides() using column 'GEN' (gentamicin)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Syndromic Group</th>
-<th align="left">Pathogen (N min-max)</th>
-<th align="right">AMC</th>
-<th align="right">AMX</th>
-<th align="right">GEN</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Cardial</td>
-<td align="left">Gram-negative (487-487)</td>
-<td align="right">61</td>
-<td align="right">59</td>
-<td align="right">59</td>
-</tr>
-<tr class="even">
-<td align="left">Respiratory</td>
-<td align="left">Gram-negative (564-564)</td>
-<td align="right">68</td>
-<td align="right">57</td>
-<td align="right">64</td>
-</tr>
-<tr class="odd">
-<td align="left">Rheumatic</td>
-<td align="left">Gram-negative (515-515)</td>
-<td align="right">62</td>
-<td align="right">55</td>
-<td align="right">64</td>
-</tr>
-<tr class="even">
-<td align="left">Cardial</td>
-<td align="left">Gram-positive (345-345)</td>
-<td align="right">65</td>
-<td align="right">57</td>
-<td align="right">66</td>
-</tr>
-<tr class="odd">
-<td align="left">Respiratory</td>
-<td align="left">Gram-positive (347-347)</td>
-<td align="right">63</td>
-<td align="right">57</td>
-<td align="right">60</td>
-</tr>
-<tr class="even">
-<td align="left">Rheumatic</td>
-<td align="left">Gram-positive (368-368)</td>
-<td align="right">65</td>
-<td align="right">55</td>
-<td align="right">66</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># WISCA:</span></span>
-<span><span class="co"># (we lack some details, but it could contain a filter on e.g. &gt;65 year-old males)</span></span>
-<span><span class="va">wisca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">our_data_1st</span>,</span>
-<span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span>,</span>
-<span>  syndromic_group <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">wisca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>                     antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span><span class="op">)</span>,</span>
+<span>                     mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
+<span>                     minimum <span class="op">=</span> <span class="fl">10</span>, <span class="co"># this should be &gt;= 30, but now just as example</span></span>
+<span>                     syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">65</span> <span class="op">&amp;</span></span>
+<span>                                                <span class="va">example_isolates</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"M"</span>,</span>
+<span>                                              <span class="st">"WISCA Group 1"</span>, <span class="st">"WISCA Group 2"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">wisca</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="23%">
+<col width="35%">
+<col width="5%">
+<col width="14%">
+<col width="5%">
+<col width="14%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Syndromic Group</th>
 <th align="left">Pathogen (N min-max)</th>
 <th align="right">AMC</th>
 <th align="right">AMC + CIP</th>
-<th align="right">AMC + GEN</th>
+<th align="right">TZP</th>
+<th align="right">TZP + TOB</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Cardial</td>
-<td align="left">Gram-negative (487-487)</td>
-<td align="right">61</td>
-<td align="right">72</td>
-<td align="right">72</td>
+<td align="left">WISCA Group 1</td>
+<td align="left">Gram-negative (261-285)</td>
+<td align="right">76</td>
+<td align="right">95</td>
+<td align="right">89</td>
+<td align="right">99</td>
 </tr>
 <tr class="even">
-<td align="left">Respiratory</td>
-<td align="left">Gram-negative (564-564)</td>
-<td align="right">68</td>
-<td align="right">80</td>
-<td align="right">77</td>
+<td align="left">WISCA Group 2</td>
+<td align="left">Gram-negative (380-442)</td>
+<td align="right">76</td>
+<td align="right">98</td>
+<td align="right">88</td>
+<td align="right">98</td>
 </tr>
 <tr class="odd">
-<td align="left">Rheumatic</td>
-<td align="left">Gram-negative (515-515)</td>
-<td align="right">62</td>
-<td align="right">75</td>
-<td align="right">75</td>
+<td align="left">WISCA Group 1</td>
+<td align="left">Gram-positive (123-406)</td>
+<td align="right">76</td>
+<td align="right">89</td>
+<td align="right">81</td>
+<td align="right">95</td>
 </tr>
 <tr class="even">
-<td align="left">Cardial</td>
-<td align="left">Gram-positive (345-345)</td>
-<td align="right">65</td>
-<td align="right">77</td>
-<td align="right">78</td>
-</tr>
-<tr class="odd">
-<td align="left">Respiratory</td>
-<td align="left">Gram-positive (347-347)</td>
-<td align="right">63</td>
-<td align="right">77</td>
-<td align="right">72</td>
-</tr>
-<tr class="even">
-<td align="left">Rheumatic</td>
-<td align="left">Gram-positive (368-368)</td>
-<td align="right">65</td>
-<td align="right">78</td>
-<td align="right">77</td>
+<td align="left">WISCA Group 2</td>
+<td align="left">Gram-positive (222-732)</td>
+<td align="right">76</td>
+<td align="right">89</td>
+<td align="right">88</td>
+<td align="right">95</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level4">
+<h4 id="plotting-antibiograms">Plotting antibiograms<a class="anchor" aria-label="anchor" href="#plotting-antibiograms"></a>
+</h4>
 <p>Antibiograms can be plotted using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> from the
-<code>ggplot2</code> packages, since this package provides an extension
-to that function:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code>ggplot2</code> packages, since this <code>AMR</code> package
+provides an extension to that function:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">wisca</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_files/figure-html/unnamed-chunk-13-1.png" width="720"></p>
+<p><img src="AMR_files/figure-html/unnamed-chunk-10-1.png" width="720"></p>
 <p>To calculate antimicrobial resistance in a more sensible way, also by
 correcting for too few results, we use the <code><a href="../reference/proportion.html">resistance()</a></code> and
 <code><a href="../reference/proportion.html">susceptibility()</a></code> functions.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="resistance-percentages">Resistance percentages<a class="anchor" aria-label="anchor" href="#resistance-percentages"></a>
@@ -1225,12 +1338,12 @@ proportion of R (<code><a href="../reference/proportion.html">proportion_R()</a>
 I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equal to
 <code><a href="../reference/proportion.html">susceptibility()</a></code>). These functions can be used on their
 own:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.4318355</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span><span class="op">)</span></span>
