@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_identical(mo_genus("B_GRAMP", language = "pt"), "(Gram positivos desconhecidos)")
+expect_identical(mo_genus("B_GRAMP", language = "pt"), "(gênero desconhecido)")
 
 expect_identical(mo_fullname("CoNS", "cs"), "Koaguláza-negativní stafylokok (KNS)")
 expect_identical(mo_fullname("CoNS", "da"), "Koagulase-negative stafylokokker (KNS)")

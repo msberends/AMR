@@ -247,60 +247,79 @@ our_data_1st[all(betalactams() == "R"), ]
 
 ## Generate antibiograms
 
-This package comes with `antibiogram()`, a function that automatically generates traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA). For R Markdown (such as this page) it automatically prints in the right table format.
+Since AMR v2.0 (March 2023), it is very easy to create different types of antibiograms, with support for 20 different languages.
 
-Below are some suggestions for how to generate the different antibiograms:
+There are four antibiogram types, as proposed by Klinker *et al.* (2021, [DOI 10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)), and they are all supported by the new `antibiogram()` function:
+
+1. **Traditional Antibiogram (TA)** e.g, for the susceptibility of *Pseudomonas aeruginosa* to piperacillin/tazobactam (TZP)
+2. **Combination Antibiogram (CA)** e.g, for the sdditional susceptibility of *Pseudomonas aeruginosa* to TZP + tobramycin versus TZP alone
+3. **Syndromic Antibiogram (SA)** e.g, for the susceptibility of *Pseudomonas aeruginosa* to TZP among respiratory specimens (obtained among ICU patients only)
+4. **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)** e.g, for the susceptibility of *Pseudomonas aeruginosa* to TZP among respiratory specimens (obtained among ICU patients only) for male patients age >=65 years with heart failure
+
+In this section, we show how to use the `antibiogram()` function to create any of the above antibiogram types. For starters, this is what the included `example_isolates` data set looks like:
 
 ```{r}
-# traditional:
-antibiogram(our_data_1st)
-antibiogram(our_data_1st,
-  ab_transform = "name"
-)
-antibiogram(our_data_1st,
-  ab_transform = "name",
-  language = "es"
-) # support for 20 languages
+example_isolates
 ```
 
-```{r}
-# combined:
-antibiogram(our_data_1st,
-  antibiotics = c("AMC", "AMC+CIP", "AMC+GEN")
-)
+### Traditional Antibiogram
+
+To create a traditional antibiogram, simply state which antibiotics should be used. The `antibiotics` argument in the `antibiogram()` function supports any (combination) of the previously mentioned antibiotic class selectors:
+
+```{r trad}
+antibiogram(example_isolates,
+            antibiotics = c(aminoglycosides(), carbapenems()))
 ```
 
-```{r}
-# for a syndromic antibiogram, we must fake some clinical conditions:
-our_data_1st$condition <- sample(c("Cardial", "Respiratory", "Rheumatic"),
-  size = nrow(our_data_1st),
-  replace = TRUE
-)
+Notice that the `antibiogram()` function automatically prints in the right format when using Quarto or R Markdown (such as this page), and even applies italics for taxonomic names (by using `italicise_taxonomy()` internally).
 
-# syndromic:
-antibiogram(our_data_1st,
-  syndromic_group = "condition"
-)
-antibiogram(our_data_1st,
-  # you can use AB selectors here as well:
-  antibiotics = c(penicillins(), aminoglycosides()),
-  syndromic_group = "condition",
-  mo_transform = "gramstain"
-)
+It also uses the language of your OS if this is either `r AMR:::vector_or(vapply(FUN.VALUE = character(1), AMR:::LANGUAGES_SUPPORTED_NAMES, function(x) x$exonym), quotes = FALSE, sort = FALSE)`. In this next example, we force the language to be Spanish using the `language` argument:
+
+```{r trad2}
+antibiogram(example_isolates,
+            mo_transform = "gramstain",
+            antibiotics = aminoglycosides(),
+            ab_transform = "name",
+            language = "es")
 ```
 
-```{r}
-# WISCA:
-# (we lack some details, but it could contain a filter on e.g. >65 year-old males)
-wisca <- antibiogram(our_data_1st,
-  antibiotics = c("AMC", "AMC+CIP", "AMC+GEN"),
-  syndromic_group = "condition",
-  mo_transform = "gramstain"
-)
+### Combined Antibiogram
+
+To create a combined antibiogram, use antibiotic codes or names with a plus `+` character like this:
+
+```{r comb}
+antibiogram(example_isolates,
+            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+```
+
+### Syndromic Antibiogram
+
+To create a syndromic antibiogram, the `syndromic_group` argument must be used. This can be any column in the data, or e.g. an `ifelse()` with calculations based on certain columns:
+
+```{r synd}
+antibiogram(example_isolates,
+            antibiotics = c(aminoglycosides(), carbapenems()),
+            syndromic_group = "ward")
+```
+
+### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
+
+To create a WISCA, you must state combination therapy in the `antibiotics` argument (similar to the Combination Antibiogram), define a syndromic group with the `syndromic_group` argument (similar to the Syndromic Antibiogram) in which cases are predefined based on clinical or demographic characteristics (e.g., endocarditis in 75+ females).  This next example is a simplification without clinical characteristics, but just gives an idea of how a WISCA can be created:
+
+```{r wisca}
+wisca <- antibiogram(example_isolates,
+                     antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
+                     mo_transform = "gramstain",
+                     minimum = 10, # this should be >= 30, but now just as example
+                     syndromic_group = ifelse(example_isolates$age >= 65 &
+                                                example_isolates$gender == "M",
+                                              "WISCA Group 1", "WISCA Group 2"))
 wisca
 ```
 
-Antibiograms can be plotted using `autoplot()` from the `ggplot2` packages, since this package provides an extension to that function:
+### Plotting antibiograms
+
+Antibiograms can be plotted using `autoplot()` from the `ggplot2` packages, since this `AMR` package provides an extension to that function:
 
 ```{r}
 autoplot(wisca)
