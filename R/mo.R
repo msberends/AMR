@@ -214,10 +214,10 @@ as.mo <- function(x,
   # From known codes ----
   out[is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code] <- AMR::microorganisms.codes$mo[match(toupper(x)[is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code], AMR::microorganisms.codes$code)]
   # From SNOMED ----
-  if (any(is.na(out) & !is.na(x)) && any(is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed), na.rm = TRUE)) {
-    # found this extremely fast gem here: https://stackoverflow.com/a/11002456/4575331
-    out[is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed)] <- AMR_env$MO_lookup$mo[rep(seq_along(AMR_env$MO_lookup$snomed), vapply(FUN.VALUE = double(1), AMR_env$MO_lookup$snomed, length))[match(x[is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed)], unlist(AMR_env$MO_lookup$snomed))]]
-  }
+  # based on this extremely fast gem: https://stackoverflow.com/a/11002456/4575331
+  snomeds <- unlist(AMR_env$MO_lookup$snomed)
+  snomeds <- snomeds[!is.na(snomeds)]
+  out[is.na(out) & x %in% snomeds] <- AMR_env$MO_lookup$mo[rep(seq_along(AMR_env$MO_lookup$snomed), vapply(FUN.VALUE = double(1), AMR_env$MO_lookup$snomed, length))[match(x[is.na(out) & x %in% snomeds], snomeds)]]
   # From other familiar output ----
   # such as Salmonella groups, colloquial names, etc.
   out[is.na(out)] <- convert_colloquial_input(x[is.na(out)])

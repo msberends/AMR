@@ -31,7 +31,7 @@
 # source("data-raw/_pre_commit_hook.R")
 
 library(dplyr, warn.conflicts = FALSE)
-try(detach("package:data.table", unload = TRUE), silent = TRUE)
+try(detach("package:data.table", unload = TRUE), silent = TRUE) # to prevent like() to precede over AMR::like
 devtools::load_all(quiet = TRUE)
 
 suppressMessages(set_AMR_locale("English"))
@@ -165,12 +165,12 @@ MO_PREVALENT_GENERA <- c(
   "Halococcus", "Hendersonula", "Heterophyes", "Histomonas", "Histoplasma", "Hymenolepis", "Hypomyces",
   "Hysterothylacium", "Leishmania", "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma", "Microsporidium",
   "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Necator", "Nectria", "Ochroconis", "Oesophagostomum",
-  "Oidiodendron", "Opisthorchis", "Pediculus", "Phlebotomus", "Phoma", "Pichia", "Piedraia", "Pithomyces",
+  "Oidiodendron", "Opisthorchis", "Pediculus", "Penicillium", "Phlebotomus", "Phoma", "Pichia", "Piedraia", "Pithomyces",
   "Pityrosporum", "Pneumocystis", "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus",
   "Rhodotorula", "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra",
-  "Sporobolomyces", "Stachybotrys", "Strongyloides", "Syngamus", "Taenia", "Toxocara", "Trichinella", "Trichobilharzia",
-  "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium",
-  "Trombicula", "Trypanosoma", "Tunga", "Wuchereria"
+  "Sporobolomyces", "Stachybotrys", "Strongyloides", "Syngamus", "Taenia", "Talaromyces", "Toxocara", "Trichinella",
+  "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris",
+  "Tritirachium", "Trombicula", "Trypanosoma", "Tunga", "Wuchereria"
 )
 
 # antibiotic groups

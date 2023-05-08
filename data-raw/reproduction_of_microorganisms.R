@@ -147,23 +147,6 @@ df_remove_nonASCII <- function(df) {
     AMR:::dataset_UTF8_to_ASCII()
 }
 
-abbreviate_mo <- function(x, minlength = 5, prefix = "", hyphen_as_space = FALSE, ...) {
-  if (hyphen_as_space == TRUE) {
-    x <- gsub("-", " ", x, fixed = TRUE)
-  }
-  # keep a starting Latin ae
-  suppressWarnings(
-    gsub("^ae", "\u00E6\u00E6", x, ignore.case = TRUE) %>%
-      abbreviate(
-        minlength = minlength,
-        use.classes = TRUE,
-        method = "both.sides", ...
-      ) %>%
-      paste0(prefix, .) %>%
-      toupper() %>%
-      gsub("(\u00C6|\u00E6)+", "AE", .)
-  )
-}
 
 # to retrieve LPSN and authors from LPSN website
 get_lpsn_and_author <- function(rank, name) {
@@ -936,8 +919,8 @@ mo_phylum <- taxonomy %>%
   ) %>%
   group_by(kingdom) %>%
   mutate(
-    mo_phylum8 = abbreviate_mo(phylum, minlength = 8, prefix = "[PHL]_"),
-    mo_phylum9 = abbreviate_mo(phylum, minlength = 9, prefix = "[PHL]_"),
+    mo_phylum8 = AMR:::abbreviate_mo(phylum, minlength = 8, prefix = "[PHL]_"),
+    mo_phylum9 = AMR:::abbreviate_mo(phylum, minlength = 9, prefix = "[PHL]_"),
     mo_phylum = ifelse(!is.na(mo_old), mo_old, mo_phylum8),
     mo_duplicated = duplicated(mo_phylum),
     mo_phylum = ifelse(mo_duplicated, mo_phylum9, mo_phylum),
@@ -963,8 +946,8 @@ mo_class <- taxonomy %>%
   ) %>%
   group_by(kingdom) %>%
   mutate(
-    mo_class8 = abbreviate_mo(class, minlength = 8, prefix = "[CLS]_"),
-    mo_class9 = abbreviate_mo(class, minlength = 9, prefix = "[CLS]_"),
+    mo_class8 = AMR:::abbreviate_mo(class, minlength = 8, prefix = "[CLS]_"),
+    mo_class9 = AMR:::abbreviate_mo(class, minlength = 9, prefix = "[CLS]_"),
     mo_class = ifelse(!is.na(mo_old), mo_old, mo_class8),
     mo_duplicated = duplicated(mo_class),
     mo_class = ifelse(mo_duplicated, mo_class9, mo_class),
@@ -990,8 +973,8 @@ mo_order <- taxonomy %>%
   ) %>%
   group_by(kingdom) %>%
   mutate(
-    mo_order8 = abbreviate_mo(order, minlength = 8, prefix = "[ORD]_"),
-    mo_order9 = abbreviate_mo(order, minlength = 9, prefix = "[ORD]_"),
+    mo_order8 = AMR:::abbreviate_mo(order, minlength = 8, prefix = "[ORD]_"),
+    mo_order9 = AMR:::abbreviate_mo(order, minlength = 9, prefix = "[ORD]_"),
     mo_order = ifelse(!is.na(mo_old), mo_old, mo_order8),
     mo_duplicated = duplicated(mo_order),
     mo_order = ifelse(mo_duplicated, mo_order9, mo_order),
@@ -1017,8 +1000,8 @@ mo_family <- taxonomy %>%
   ) %>%
   group_by(kingdom) %>%
   mutate(
-    mo_family8 = abbreviate_mo(family, minlength = 8, prefix = "[FAM]_"),
-    mo_family9 = abbreviate_mo(family, minlength = 9, prefix = "[FAM]_"),
+    mo_family8 = AMR:::abbreviate_mo(family, minlength = 8, prefix = "[FAM]_"),
+    mo_family9 = AMR:::abbreviate_mo(family, minlength = 9, prefix = "[FAM]_"),
     mo_family = ifelse(!is.na(mo_old), mo_old, mo_family8),
     mo_duplicated = duplicated(mo_family),
     mo_family = ifelse(mo_duplicated, mo_family9, mo_family),
@@ -1046,11 +1029,11 @@ mo_genus <- taxonomy %>%
   group_by(kingdom) %>%
   # generate new MO codes for genus and set the right one
   mutate(
-    mo_genus_new5 = abbreviate_mo(genus, 5),
-    mo_genus_new5b = paste0(abbreviate_mo(genus, 5), 1),
-    mo_genus_new6 = abbreviate_mo(genus, 6),
-    mo_genus_new7 = abbreviate_mo(genus, 7),
-    mo_genus_new8 = abbreviate_mo(genus, 8),
+    mo_genus_new5 = AMR:::abbreviate_mo(genus, 5),
+    mo_genus_new5b = paste0(AMR:::abbreviate_mo(genus, 5), 1),
+    mo_genus_new6 = AMR:::abbreviate_mo(genus, 6),
+    mo_genus_new7 = AMR:::abbreviate_mo(genus, 7),
+    mo_genus_new8 = AMR:::abbreviate_mo(genus, 8),
     mo_genus_new = case_when(
       !is.na(mo_genus_old) ~ mo_genus_old,
       !mo_genus_new5 %in% mo_genus_old ~ mo_genus_new5,
@@ -1092,12 +1075,12 @@ mo_species <- taxonomy %>%
   distinct(kingdom, genus, species, .keep_all = TRUE) %>%
   group_by(kingdom, genus) %>%
   mutate(
-    mo_species_new4 = abbreviate_mo(species, 4, hyphen_as_space = TRUE),
-    mo_species_new5 = abbreviate_mo(species, 5, hyphen_as_space = TRUE),
-    mo_species_new5b = paste0(abbreviate_mo(species, 5, hyphen_as_space = TRUE), 1),
-    mo_species_new6 = abbreviate_mo(species, 6, hyphen_as_space = TRUE),
-    mo_species_new7 = abbreviate_mo(species, 7, hyphen_as_space = TRUE),
-    mo_species_new8 = abbreviate_mo(species, 8, hyphen_as_space = TRUE),
+    mo_species_new4 = AMR:::abbreviate_mo(species, 4, hyphen_as_space = TRUE),
+    mo_species_new5 = AMR:::abbreviate_mo(species, 5, hyphen_as_space = TRUE),
+    mo_species_new5b = paste0(AMR:::abbreviate_mo(species, 5, hyphen_as_space = TRUE), 1),
+    mo_species_new6 = AMR:::abbreviate_mo(species, 6, hyphen_as_space = TRUE),
+    mo_species_new7 = AMR:::abbreviate_mo(species, 7, hyphen_as_space = TRUE),
+    mo_species_new8 = AMR:::abbreviate_mo(species, 8, hyphen_as_space = TRUE),
     mo_species_new = case_when(
       !is.na(mo_species_old) ~ mo_species_old,
       !mo_species_new4 %in% mo_species_old ~ mo_species_new4,
@@ -1141,12 +1124,12 @@ mo_subspecies <- taxonomy %>%
   distinct(kingdom, genus, species, subspecies, .keep_all = TRUE) %>%
   group_by(kingdom, genus, species) %>%
   mutate(
-    mo_subspecies_new4 = abbreviate_mo(subspecies, 4, hyphen_as_space = TRUE),
-    mo_subspecies_new5 = abbreviate_mo(subspecies, 5, hyphen_as_space = TRUE),
-    mo_subspecies_new5b = paste0(abbreviate_mo(subspecies, 5, hyphen_as_space = TRUE), 1),
-    mo_subspecies_new6 = abbreviate_mo(subspecies, 6, hyphen_as_space = TRUE),
-    mo_subspecies_new7 = abbreviate_mo(subspecies, 7, hyphen_as_space = TRUE),
-    mo_subspecies_new8 = abbreviate_mo(subspecies, 8, hyphen_as_space = TRUE),
+    mo_subspecies_new4 = AMR:::abbreviate_mo(subspecies, 4, hyphen_as_space = TRUE),
+    mo_subspecies_new5 = AMR:::abbreviate_mo(subspecies, 5, hyphen_as_space = TRUE),
+    mo_subspecies_new5b = paste0(AMR:::abbreviate_mo(subspecies, 5, hyphen_as_space = TRUE), 1),
+    mo_subspecies_new6 = AMR:::abbreviate_mo(subspecies, 6, hyphen_as_space = TRUE),
+    mo_subspecies_new7 = AMR:::abbreviate_mo(subspecies, 7, hyphen_as_space = TRUE),
+    mo_subspecies_new8 = AMR:::abbreviate_mo(subspecies, 8, hyphen_as_space = TRUE),
     mo_subspecies_new = case_when(
       !is.na(mo_subspecies_old) ~ mo_subspecies_old,
       !mo_subspecies_new4 %in% mo_subspecies_old ~ mo_subspecies_new4,
@@ -1347,6 +1330,69 @@ snomed <- snomed %>%
 taxonomy <- taxonomy %>%
   left_join(snomed, by = "fullname")
 
+
+# Add oxygen tolerance (aerobe/anaerobe) ----------------------------------
+
+# We will use the BacDive data base for this:
+# - go to https://bacdive.dsmz.de/advsearch and filter 'Oxygen tolerance' on "*"
+# - click on the 'Download tabel as CSV' button
+# 
+bacdive <- vroom::vroom("data-raw/bacdive.csv", skip = 2) %>% 
+  select(species, oxygen = `Oxygen tolerance`)
+bacdive <- bacdive %>% 
+  # fill in missing species from previous rows
+  mutate(species = ifelse(is.na(species), lag(species), species)) %>%
+  filter(!is.na(species), !is.na(oxygen), oxygen %unlike% "tolerant")
+bacdive <- bacdive %>% 
+  # now determine type per species
+  group_by(species) %>%
+  summarise(oxygen_tolerance = case_when(any(oxygen %like% "facultative") ~ "facultative anaerobe",
+                                         all(oxygen == "microaerophile") ~ "microaerophile",
+                                         all(oxygen %in% c("anaerobe", "obligate anaerobe")) ~ "anaerobe",
+                                         all(oxygen %in% c("anaerobe", "obligate anaerobe", "microaerophile")) ~ "anaerobe/microaerophile",
+                                         all(oxygen %in% c("aerobe", "obligate aerobe")) ~ "aerobe",
+                                         all(!oxygen %in% c("anaerobe", "obligate anaerobe")) ~ "aerobe",
+                                         all(c("aerobe", "anaerobe") %in% oxygen) ~ "facultative anaerobe",
+                                         TRUE ~ NA_character_))
+
+bacdive_genus <- bacdive %>%
+  mutate(genus = gsub("^([A-Za-z]+) .*", "\\1", species), oxygen = oxygen_tolerance) %>%
+  group_by(species = genus) %>% 
+  summarise(oxygen_tolerance = case_when(any(oxygen == "facultative anaerobe") ~ "facultative anaerobe",
+                                         any(oxygen == "anaerobe/microaerophile") ~ "anaerobe/microaerophile",
+                                         all(oxygen == "microaerophile") ~ "microaerophile",
+                                         all(oxygen == "anaerobe") ~ "anaerobe",
+                                         all(oxygen == "aerobe") ~ "aerobe",
+                                         TRUE ~ "facultative anaerobe"))
+
+bacdive <- bacdive %>% 
+  filter(species %unlike% " sp[.]") %>% 
+  bind_rows(bacdive_genus) %>% 
+  arrange(species) %>% 
+  mutate(mo = as.mo(species, keep_synonyms = FALSE))
+
+other_species <- microorganisms %>%
+  filter(kingdom == "Bacteria", rank == "species", !mo %in% bacdive$mo, genus %in% bacdive$species) %>%
+  select(species = fullname, genus, mo2 = mo) %>%
+  left_join(bacdive, by = c("genus" = "species")) %>%
+  mutate(oxygen_tolerance = ifelse(oxygen_tolerance %in% c("aerobe", "anaerobe", "microaerophile", "anaerobe/microaerophile"),
+                                   oxygen_tolerance,
+                                   paste("likely", oxygen_tolerance))) %>% 
+  select(species, oxygen_tolerance, mo = mo2)
+
+bacdive <- bacdive %>% 
+  bind_rows(other_species) %>% 
+  arrange(species)
+
+taxonomy <- taxonomy %>%
+  left_join(
+    bacdive %>% 
+      select(-species),
+    by = "mo") %>% 
+  
+
+
+# TODO look up synonyms and fill them in as well
 
 # Clean data set ----------------------------------------------------------
 
