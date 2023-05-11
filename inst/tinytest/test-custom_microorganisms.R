@@ -41,3 +41,6 @@ suppressMessages(
 expect_identical(as.character(as.mo("ENT_ASB_CLO")), "ENT_ASB_CLO")
 expect_identical(mo_name("ENT_ASB_CLO"), "Enterobacter asburiae/cloacae")
 expect_identical(mo_gramstain("ENT_ASB_CLO", language = NULL), "Gram-negative")
+
+expect_identical(paste("B", AMR:::abbreviate_mo("Klebsiella"), AMR:::abbreviate_mo("pneumoniae", 4), sep = "_"),
+                 as.character(as.mo("Klebsiella pneumoniae")))

@@ -53,6 +53,8 @@
 #' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
 #'
 #' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
+#' 
+#' Determination of bacterial oxygen tolerance ([mo_oxygen_tolerance()]) will be based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicting an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #'
@@ -591,6 +593,40 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_s
 
 #' @rdname mo_property
 #' @export
+mo_oxygen_tolerance <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_oxygen_tolerance")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  mo_validate(x = x, property = "oxygen_tolerance", language = language, keep_synonyms = keep_synonyms, ...)
+}
+
+#' @rdname mo_property
+#' @export
+mo_is_anaerobic <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_is_anaerobic")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  metadata <- get_mo_uncertainties()
+  oxygen <- mo_oxygen_tolerance(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  load_mo_uncertainties(metadata)
+  out <- oxygen == "anaerobe" & !is.na(oxygen)
+  out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
+  out
+}
+
+#' @rdname mo_property
+#' @export
 mo_snomed <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an 'mo' column
@@ -791,9 +827,12 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
         status = mo_status(y, language = language, keep_synonyms = keep_synonyms),
         synonyms = mo_synonyms(y, keep_synonyms = keep_synonyms),
         gramstain = mo_gramstain(y, language = language, keep_synonyms = keep_synonyms),
+        oxygen_tolerance = mo_oxygen_tolerance(y, language = language, keep_synonyms = keep_synonyms),
         url = unname(mo_url(y, open = FALSE, keep_synonyms = keep_synonyms)),
         ref = mo_ref(y, keep_synonyms = keep_synonyms),
-        snomed = unlist(mo_snomed(y, keep_synonyms = keep_synonyms))
+        snomed = unlist(mo_snomed(y, keep_synonyms = keep_synonyms)),
+        lpsn = mo_lpsn(y, language = language, keep_synonyms = keep_synonyms),
+        gbif = mo_gbif(y, language = language, keep_synonyms = keep_synonyms)
       )
     )
   })

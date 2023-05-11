@@ -22,6 +22,8 @@
 \alias{mo_is_gram_positive}
 \alias{mo_is_yeast}
 \alias{mo_is_intrinsic_resistant}
+\alias{mo_oxygen_tolerance}
+\alias{mo_is_anaerobic}
 \alias{mo_snomed}
 \alias{mo_ref}
 \alias{mo_authors}
@@ -177,6 +179,20 @@ mo_is_intrinsic_resistant(
   ...
 )
 
+mo_oxygen_tolerance(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
+  ...
+)
+
+mo_is_anaerobic(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
+  ...
+)
+
 mo_snomed(
   x,
   language = get_AMR_locale(),
@@ -278,7 +294,7 @@ mo_property(
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
 
-\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}}
+\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}}
 }
 \value{
 \itemize{
@@ -313,6 +329,8 @@ Determination of yeasts (\code{\link[=mo_is_yeast]{mo_is_yeast()}}) will be base
 
 Determination of intrinsic resistance (\code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}) will be based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antibiotics).
 
+Determination of bacterial oxygen tolerance (\code{\link[=mo_oxygen_tolerance]{mo_oxygen_tolerance()}}) will be based on BacDive, see \emph{Source}. The function \code{\link[=mo_is_anaerobic]{mo_is_anaerobic()}} only returns \code{TRUE} if the oxygen tolerance is \code{"anaerobe"}, indicting an obligate anaerobic species or genus. It always returns \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
+
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 
 SNOMED codes (\code{\link[=mo_snomed]{mo_snomed()}}) are from the version of 1 July, 2021. See \emph{Source} and the \link{microorganisms} data set for more info.
@@ -332,13 +350,14 @@ This function uses \code{\link[=as.mo]{as.mo()}} internally, which uses an advan
 \item Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
 \item Becker K \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
 \item Becker K \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
-\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci}. \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-\item Berends MS \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019} \emph{Microorganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
+\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci.} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
+\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci.} \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
+\item Berends MS \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/} \emph{Micro.rganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
 \item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 11 December, 2022.
 \item GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on 11 December, 2022.
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 \item Bartlett A \emph{et al.} (2022). \strong{A comprehensive list of bacterial pathogens infecting humans} \emph{Microbiology} 168:001269; \doi{10.1099/mic.0.001269}
+\item Reimer \emph{et al.} (2022). \strong{\emph{BacDive} in 2022: the knowledge base for standardized bacterial and archaeal data.}  \emph{Nucleic Acids Res.} 2022 Jan 7;50(D1):D741-D746; \doi{10.1093/nar/gkab961}
 }
 }
 
