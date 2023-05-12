@@ -1342,11 +1342,13 @@ bacdive <- vroom::vroom("data-raw/bacdive.csv", skip = 2) %>%
 bacdive <- bacdive %>% 
   # fill in missing species from previous rows
   mutate(species = ifelse(is.na(species), lag(species), species)) %>%
-  filter(!is.na(species), !is.na(oxygen), oxygen %unlike% "tolerant")
+  filter(!is.na(species), !is.na(oxygen), oxygen %unlike% "tolerant", species %unlike% "unclassified") %>% 
+  mutate(mo = as.mo(species, keep_synonyms = FALSE))
 bacdive <- bacdive %>% 
   # now determine type per species
-  group_by(species) %>%
-  summarise(oxygen_tolerance = case_when(any(oxygen %like% "facultative") ~ "facultative anaerobe",
+  group_by(mo) %>%
+  summarise(species = first(species),
+            oxygen_tolerance = case_when(any(oxygen %like% "facultative") ~ "facultative anaerobe",
                                          all(oxygen == "microaerophile") ~ "microaerophile",
                                          all(oxygen %in% c("anaerobe", "obligate anaerobe")) ~ "anaerobe",
                                          all(oxygen %in% c("anaerobe", "obligate anaerobe", "microaerophile")) ~ "anaerobe/microaerophile",
@@ -1354,10 +1356,25 @@ bacdive <- bacdive %>%
                                          all(!oxygen %in% c("anaerobe", "obligate anaerobe")) ~ "aerobe",
                                          all(c("aerobe", "anaerobe") %in% oxygen) ~ "facultative anaerobe",
                                          TRUE ~ NA_character_))
+# now find all synonyms and copy them from their current taxonomic names
+synonyms <- as.mo(unique(unlist(mo_synonyms(bacdive$mo, keep_synonyms = TRUE))),
+                  keep_synonyms = TRUE)
+syns <- tibble(species = synonyms,
+               mo = synonyms %>% mo_current() %>% as.mo()) %>% 
+  filter(species != mo) %>% 
+  mutate(species = mo_name(species, keep_synonyms = TRUE)) %>% 
+  left_join(bacdive %>% select(mo, oxygen_tolerance)) %>% 
+  # set mo to mo of the synonym
+  mutate(mo = as.mo(species, keep_synonyms = TRUE)) %>% 
+  select(all_of(colnames(bacdive)))
+
+bacdive <- bacdive %>% 
+  bind_rows(syns) %>% 
+  distinct()
 
 bacdive_genus <- bacdive %>%
-  mutate(genus = gsub("^([A-Za-z]+) .*", "\\1", species), oxygen = oxygen_tolerance) %>%
-  group_by(species = genus) %>% 
+  mutate(oxygen = oxygen_tolerance) %>% 
+  group_by(species = mo_genus(mo)) %>% 
   summarise(oxygen_tolerance = case_when(any(oxygen == "facultative anaerobe") ~ "facultative anaerobe",
                                          any(oxygen == "anaerobe/microaerophile") ~ "anaerobe/microaerophile",
                                          all(oxygen == "microaerophile") ~ "microaerophile",
@@ -1369,7 +1386,7 @@ bacdive <- bacdive %>%
   filter(species %unlike% " sp[.]") %>% 
   bind_rows(bacdive_genus) %>% 
   arrange(species) %>% 
-  mutate(mo = as.mo(species, keep_synonyms = FALSE))
+  mutate(mo = as.mo(species, keep_synonyms = TRUE))
 
 other_species <- microorganisms %>%
   filter(kingdom == "Bacteria", rank == "species", !mo %in% bacdive$mo, genus %in% bacdive$species) %>%
@@ -1378,21 +1395,19 @@ other_species <- microorganisms %>%
   mutate(oxygen_tolerance = ifelse(oxygen_tolerance %in% c("aerobe", "anaerobe", "microaerophile", "anaerobe/microaerophile"),
                                    oxygen_tolerance,
                                    paste("likely", oxygen_tolerance))) %>% 
-  select(species, oxygen_tolerance, mo = mo2)
+  select(species, oxygen_tolerance, mo = mo2) %>% 
+  distinct(species, .keep_all = TRUE)
 
 bacdive <- bacdive %>% 
   bind_rows(other_species) %>% 
-  arrange(species)
+  arrange(species) %>% 
+  distinct(mo, .keep_all = TRUE) %>% 
+  select(-species)
 
 taxonomy <- taxonomy %>%
-  left_join(
-    bacdive %>% 
-      select(-species),
-    by = "mo") %>% 
-  
+  left_join(bacdive, by = "mo") %>% 
+  relocate(oxygen_tolerance, .after = ref)
 
-
-# TODO look up synonyms and fill them in as well
 
 # Clean data set ----------------------------------------------------------
 

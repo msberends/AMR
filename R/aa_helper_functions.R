@@ -505,7 +505,7 @@ word_wrap <- function(...,
 
   # clean introduced whitespace between fullstops
   msg <- gsub("[.] +[.]", "..", msg)
-  # remove extra space that was introduced (e.g. "Smith et al., 2022")
+  # remove extra space that was introduced (e.g. "Smith et al. , 2022")
   msg <- gsub(". ,", ".,", msg, fixed = TRUE)
   msg <- gsub("[ ,", "[,", msg, fixed = TRUE)
   msg <- gsub("/ /", "//", msg, fixed = TRUE)

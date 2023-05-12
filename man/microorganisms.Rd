@@ -5,7 +5,7 @@
 \alias{microorganisms}
 \title{Data Set with 52 151 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 52 151 observations and 22 variables:
+A \link[tibble:tibble]{tibble} with 52 151 observations and 23 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
@@ -14,6 +14,7 @@ A \link[tibble:tibble]{tibble} with 52 151 observations and 22 variables:
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, such as \code{"species"} or \code{"genus"}
 \item \code{ref}\cr Author(s) and year of related scientific publication. This contains only the \emph{first surname} and year of the \emph{latest} authors, e.g. "Wallis \emph{et al.} 2006 \emph{emend.} Smith and Jones 2018" becomes "Smith \emph{et al.}, 2018". This field is directly retrieved from the source specified in the column \code{source}. Moreover, accents were removed to comply with CRAN that only allows ASCII characters, e.g. "Váňová" becomes "Vanova".
 \item \code{lpsn}\cr Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set.
+\item \code{oxygen_tolerance} \cr Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 73.4\% of all ~36 000 bacteria in the data set contain an oxygen tolerance.
 \item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
 \item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
 \item \code{gbif}\cr Identifier ('taxonID') of the Global Biodiversity Information Facility (GBIF)
@@ -31,6 +32,7 @@ A \link[tibble:tibble]{tibble} with 52 151 observations and 22 variables:
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 \item Grimont \emph{et al.} (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on \emph{Salmonella} (WHOCC-SALM).
 \item Bartlett \emph{et al.} (2022). \strong{A comprehensive list of bacterial pathogens infecting humans} \emph{Microbiology} 168:001269; \doi{10.1099/mic.0.001269}
+\item Reimer \emph{et al.} (2022). \strong{\emph{BacDive} in 2022: the knowledge base for standardized bacterial and archaeal data.}  \emph{Nucleic Acids Res.} 2022 Jan 7;50(D1):D741-D746; \doi{10.1093/nar/gkab961}
 }
 }
 \usage{

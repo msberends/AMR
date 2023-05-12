@@ -96,12 +96,14 @@ expect_true(length(mo_synonyms("Candida albicans")) > 1)
 expect_inherits(mo_synonyms(c("Candida albicans", "Escherichia coli")), "list")
 expect_equal(names(mo_info("Escherichia coli")), c(
   "mo",
-  "kingdom", "phylum", "class", "order",
-  "family", "genus", "species", "subspecies",
-  "status", "synonyms", "gramstain", "url", "ref",
-  "snomed"
+  "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
+  "status", "synonyms", "gramstain", "oxygen_tolerance",
+  "url", "ref", "snomed", "lpsn", "gbif"
 ))
 expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
+
+expect_identical(mo_oxygen_tolerance(c("Klebsiella pneumoniae", "Clostridioides difficile")),
+                 c("aerobe", "anaerobe"))
 
 expect_equal(as.character(table(mo_pathogenicity(example_isolates$mo))),
              c("1561", "422", "1", "16"))
