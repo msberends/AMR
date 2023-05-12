@@ -10,6 +10,8 @@
 * Added microbial codes for Gram-negative/positive anaerobic bacteria
 * `mo_rank()` now returns `NA` for 'unknown' microorganisms (`B_ANAER`, `B_ANAER-NEG`, `B_ANAER-POS`, `B_GRAMN`, `B_GRAMP`, `F_FUNGUS`, `F_YEAST`, and `UNKNOWN`)
 * Fixed a bug for `as.mo()` that led to coercion of `NA` values when using custom microorganism codes
+* Added SAS Transport files (file extension `.xpt`) to [our download page](https://msberends.github.io/AMR/articles/datasets.html) to use in SAS software
+
 
 # AMR 2.0.0
 

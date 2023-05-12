@@ -50,6 +50,7 @@ download_txt <- function(filename) {
   feather <- paste0(filename, ".feather")
   parquet <- paste0(filename, ".parquet")
   sas <- paste0(filename, ".sas")
+  xpt <- paste0(filename, ".xpt")
   spss <- paste0(filename, ".sav")
   stata <- paste0(filename, ".dta")
   create_txt <- function(filename, type, software, exists) {
@@ -70,6 +71,7 @@ download_txt <- function(filename) {
     file.exists(feather),
     file.exists(parquet),
     file.exists(sas),
+    file.exists(xpt),
     file.exists(spss),
     file.exists(stata)
   )) {
@@ -80,7 +82,8 @@ download_txt <- function(filename) {
       create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
       create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
       create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
-      create_txt(sas, "sas", "SAS data file", file.exists(sas)),
+      create_txt(sas, "sas", "SAS data (SAS) file", file.exists(sas)),
+      create_txt(xpt, "xpt", "SAS transport (XPT) file", file.exists(xpt)),
       create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
       create_txt(stata, "dta", "Stata DTA file", file.exists(stata))
     )
@@ -123,7 +126,7 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 `r download_txt("microorganisms")`
 
-**NOTE: The exported files for SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
+**NOTE: The exported files for SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Their file structures and compression techniques are very inefficient. Advice? Use R instead. It's free and much better in many ways.
 
 The tab-separated text file and Microsoft Excel workbook both contain all SNOMED codes as comma separated values.
 
