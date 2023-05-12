@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,10 +142,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.0.9014" id="amr-2009014">AMR 2.0.0.9014<a class="anchor" aria-label="anchor" href="#amr-2009014"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.0.0.9015" id="amr-2009015">AMR 2.0.0.9015<a class="anchor" aria-label="anchor" href="#amr-2009015"></a></h2>
 <div class="section level3">
-<h3 id="changed-2-0-0-9014">Changed<a class="anchor" aria-label="anchor" href="#changed-2-0-0-9014"></a></h3>
-<ul><li>formatting fix for <code><a href="../reference/as.sir.html">sir_interpretation_history()</a></code>
+<h3 id="changed-2-0-0-9015">Changed<a class="anchor" aria-label="anchor" href="#changed-2-0-0-9015"></a></h3>
+<ul><li>Added oxygen tolerance to over 25,000 bacteria in the <code>microorganisms</code> data set
+<ul><li>Added <code><a href="../reference/mo_property.html">mo_oxygen_tolerance()</a></code> to retrieve the values</li>
+<li>Added <code><a href="../reference/mo_property.html">mo_is_anaerobic()</a></code> to determine which species are obligate anaerobic bacteria</li>
+</ul></li>
+<li>Added LPSN and GBIF identifiers, and oxygen tolerance to <code><a href="../reference/mo_property.html">mo_info()</a></code>
+</li>
+<li>formatting fix for <code><a href="../reference/as.sir.html">sir_interpretation_history()</a></code>
 </li>
 <li>Fixed some WHONET codes for microorganisms and consequently a couple of entries in <code>clinical_breakpoints</code>
 </li>
@@ -153,6 +159,7 @@
 <li>
 <code><a href="../reference/mo_property.html">mo_rank()</a></code> now returns <code>NA</code> for ‘unknown’ microorganisms (<code>B_ANAER</code>, <code>B_ANAER-NEG</code>, <code>B_ANAER-POS</code>, <code>B_GRAMN</code>, <code>B_GRAMP</code>, <code>F_FUNGUS</code>, <code>F_YEAST</code>, and <code>UNKNOWN</code>)</li>
 <li>Fixed a bug for <code><a href="../reference/as.mo.html">as.mo()</a></code> that led to coercion of <code>NA</code> values when using custom microorganism codes</li>
+<li>Added SAS Transport files (file extension <code>.xpt</code>) to <a href="https://msberends.github.io/AMR/articles/datasets.html">our download page</a> to use in SAS software</li>
 </ul></div>
 </div>
     <div class="section level2">

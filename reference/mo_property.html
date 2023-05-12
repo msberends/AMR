@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -289,6 +289,20 @@
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">mo_oxygen_tolerance</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  keep_synonyms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_keep_synonyms"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_is_anaerobic</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  keep_synonyms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_keep_synonyms"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">mo_snomed</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -405,7 +419,7 @@
 
 
 <dt>property</dt>
-<dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be <code>"shortname"</code></p></dd>
+<dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be <code>"shortname"</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -431,6 +445,7 @@
 <p>Determination of the Gram stain (<code>mo_gramstain()</code>) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, <a href="https://pubmed.ncbi.nlm.nih.gov/11837318/" class="external-link">PMID 11837318</a>), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, <a href="https://pubmed.ncbi.nlm.nih.gov/34694987/" class="external-link">PMID 34694987</a>). Bacteria in these phyla are considered Gram-positive in this <code>AMR</code> package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>. Functions <code>mo_is_gram_negative()</code> and <code>mo_is_gram_positive()</code> always return <code>TRUE</code> or <code>FALSE</code> (or <code>NA</code> when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
 <p>Determination of yeasts (<code>mo_is_yeast()</code>) will be based on the taxonomic kingdom and class. <em>Budding yeasts</em> are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). <em>True yeasts</em> are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return <code>TRUE</code>. It returns <code>FALSE</code> otherwise (or <code>NA</code> when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>).</p>
 <p>Determination of intrinsic resistance (<code>mo_is_intrinsic_resistant()</code>) will be based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, which is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021). The <code>mo_is_intrinsic_resistant()</code> function can be vectorised over both argument <code>x</code> (input for microorganisms) and <code>ab</code> (input for antibiotics).</p>
+<p>Determination of bacterial oxygen tolerance (<code>mo_oxygen_tolerance()</code>) will be based on BacDive, see <em>Source</em>. The function <code>mo_is_anaerobic()</code> only returns <code>TRUE</code> if the oxygen tolerance is <code>"anaerobe"</code>, indicting an obligate anaerobic species or genus. It always returns <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
 <p>SNOMED codes (<code>mo_snomed()</code>) are from the version of 1 July, 2021. See <em>Source</em> and the <a href="microorganisms.html">microorganisms</a> data set for more info.</p>
 <p>Old taxonomic names (so-called 'synonyms') can be retrieved with <code>mo_synonyms()</code> (which will have the scientific reference as <a href="https://rdrr.io/r/base/names.html" class="external-link">name</a>), the current taxonomic name can be retrieved with <code>mo_current()</code>. Both functions return full names.</p>
@@ -449,15 +464,16 @@
 <ol><li><p>Berends MS <em>et al.</em> (2022). <strong>AMR: An R Package for Working with Antimicrobial Resistance Data</strong>. <em>Journal of Statistical Software</em>, 104(3), 1-31; <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">doi:10.18637/jss.v104.i03</a></p></li>
 <li><p>Becker K <em>et al.</em> (2014). <strong>Coagulase-Negative Staphylococci.</strong> <em>Clin Microbiol Rev.</em> 27(4): 870-926; <a href="https://doi.org/10.1128/CMR.00109-13" class="external-link">doi:10.1128/CMR.00109-13</a></p></li>
 <li><p>Becker K <em>et al.</em> (2019). <strong>Implications of identifying the recently defined members of the <em>S. aureus</em> complex, <em>S. argenteus</em> and <em>S. schweitzeri</em>: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).</strong> <em>Clin Microbiol Infect</em>; <a href="https://doi.org/10.1016/j.cmi.2019.02.028" class="external-link">doi:10.1016/j.cmi.2019.02.028</a></p></li>
-<li><p>Becker K <em>et al.</em> (2020). <strong>Emergence of coagulase-negative staphylococci</strong> <em>Expert Rev Anti Infect Ther.</em> 18(4):349-366; <a href="https://doi.org/10.1080/14787210.2020.1730813" class="external-link">doi:10.1080/14787210.2020.1730813</a></p></li>
-<li><p>Lancefield RC (1933). <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. <em>J Exp Med.</em> 57(4): 571-95; <a href="https://doi.org/10.1084/jem.57.4.571" class="external-link">doi:10.1084/jem.57.4.571</a></p></li>
-<li><p>Berends MS <em>et al.</em> (2022). <strong>Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019</strong> <em>Microorganisms</em> 10(9), 1801; <a href="https://doi.org/10.3390/microorganisms10091801" class="external-link">doi:10.3390/microorganisms10091801</a></p></li>
+<li><p>Becker K <em>et al.</em> (2020). <strong>Emergence of coagulase-negative staphylococci.</strong> <em>Expert Rev Anti Infect Ther.</em> 18(4):349-366; <a href="https://doi.org/10.1080/14787210.2020.1730813" class="external-link">doi:10.1080/14787210.2020.1730813</a></p></li>
+<li><p>Lancefield RC (1933). <strong>A serological differentiation of human and other groups of hemolytic streptococci.</strong> <em>J Exp Med.</em> 57(4): 571-95; <a href="https://doi.org/10.1084/jem.57.4.571" class="external-link">doi:10.1084/jem.57.4.571</a></p></li>
+<li><p>Berends MS <em>et al.</em> (2022). <strong>Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/</strong> <em>Micro.rganisms</em> 10(9), 1801; <a href="https://doi.org/10.3390/microorganisms10091801" class="external-link">doi:10.3390/microorganisms10091801</a></p></li>
 <li><p>Parte, AC <em>et al.</em> (2020). <strong>List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.</strong> International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; <a href="https://doi.org/10.1099/ijsem.0.004332" class="external-link">doi:10.1099/ijsem.0.004332</a>
 . Accessed from <a href="https://lpsn.dsmz.de" class="external-link">https://lpsn.dsmz.de</a> on 11 December, 2022.</p></li>
 <li><p>GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset <a href="https://doi.org/10.15468/39omei" class="external-link">doi:10.15468/39omei</a>
 . Accessed from <a href="https://www.gbif.org" class="external-link">https://www.gbif.org</a> on 11 December, 2022.</p></li>
 <li><p>Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href="https://phinvads.cdc.gov" class="external-link">https://phinvads.cdc.gov</a></p></li>
 <li><p>Bartlett A <em>et al.</em> (2022). <strong>A comprehensive list of bacterial pathogens infecting humans</strong> <em>Microbiology</em> 168:001269; <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a></p></li>
+<li><p>Reimer <em>et al.</em> (2022). <strong><em>BacDive</em> in 2022: the knowledge base for standardized bacterial and archaeal data.</strong>  <em>Nucleic Acids Res.</em> 2022 Jan 7;50(D1):D741-D746; <a href="https://doi.org/10.1093/nar/gkab961" class="external-link">doi:10.1093/nar/gkab961</a></p></li>
 </ol></div>
     <div class="section level2">
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
@@ -750,6 +766,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $gramstain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gram-negative"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $oxygen_tolerance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "aerobe"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $url</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://lpsn.dsmz.de/species/klebsiella-pneumoniae"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -759,6 +778,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $snomed</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1098101000112102" "446870005"        "1098201000112108" "409801009"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "56415008"         "714315002"        "713926009"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lpsn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "777151"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gbif</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3221874"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

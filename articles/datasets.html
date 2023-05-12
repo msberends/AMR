@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,7 +176,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">08 May 2023</h4>
+            <h4 data-toc-skip class="date">12 May 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -197,47 +197,52 @@ of the data sets look like.</p>
 <h2 id="microorganisms-full-microbial-taxonomy">
 <code>microorganisms</code>: Full Microbial Taxonomy<a class="anchor" aria-label="anchor" href="#microorganisms-full-microbial-taxonomy"></a>
 </h2>
-<p>A data set with 52 151 rows and 22 columns, containing the following
+<p>A data set with 52 151 rows and 23 columns, containing the following
 column names:<br><em>mo</em>, <em>fullname</em>, <em>status</em>, <em>kingdom</em>,
 <em>phylum</em>, <em>class</em>, <em>order</em>, <em>family</em>,
 <em>genus</em>, <em>species</em>, <em>subspecies</em>, <em>rank</em>,
-<em>ref</em>, <em>source</em>, <em>lpsn</em>, <em>lpsn_parent</em>,
-<em>lpsn_renamed_to</em>, <em>gbif</em>, <em>gbif_parent</em>,
-<em>gbif_renamed_to</em>, <em>prevalence</em>, and <em>snomed</em>.</p>
+<em>ref</em>, <em>oxygen_tolerance</em>, <em>source</em>, <em>lpsn</em>,
+<em>lpsn_parent</em>, <em>lpsn_renamed_to</em>, <em>gbif</em>,
+<em>gbif_parent</em>, <em>gbif_renamed_to</em>, <em>prevalence</em>, and
+<em>snomed</em>.</p>
 <p>This data set is in R available as <code>microorganisms</code>, after
 you load the <code>AMR</code> package.</p>
-<p>It was last updated on 20 April 2023 13:20:41 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.html">here</a>.</p>
+<p>It was last updated on 11 May 2023 19:56:27 UTC. Find more info about
+the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.rds" class="external-link">original
 R Data Structure (RDS) file</a> (1.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.txt" class="external-link">tab-separated
-text file</a> (11.3 MB)<br>
+text file</a> (11.7 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.xlsx" class="external-link">Microsoft
-Excel workbook</a> (5 MB)<br>
+Excel workbook</a> (5.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.feather" class="external-link">Apache
-Feather file</a> (5.4 MB)<br>
+Feather file</a> (5.5 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.parquet" class="external-link">Apache
 Parquet file</a> (2.6 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.sas" class="external-link">SAS
-data file</a> (50.9 MB)<br>
+data (SAS) file</a> (50.9 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.xpt" class="external-link">SAS
+transport (XPT) file</a> (48.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.sav" class="external-link">IBM
-SPSS Statistics data file</a> (16.9 MB)<br>
+SPSS Statistics data file</a> (17.7 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.dta" class="external-link">Stata
-DTA file</a> (47.1 MB)</li>
+DTA file</a> (48.5 MB)</li>
 </ul>
 <p><strong>NOTE: The exported files for SAS, SPSS and Stata contain only
 the first 50 SNOMED codes per record, as their file size would otherwise
-exceed 100 MB; the file size limit of GitHub.</strong> Advice? Use R
-instead.</p>
+exceed 100 MB; the file size limit of GitHub.</strong> Their file
+structures and compression techniques are very inefficient. Advice? Use
+R instead. It’s free and much better in many ways.</p>
 <p>The tab-separated text file and Microsoft Excel workbook both contain
 all SNOMED codes as comma separated values.</p>
 <div class="section level3">
@@ -296,7 +301,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 </tbody>
 </table>
 <p>Example rows when filtering on genus <em>Escherichia</em>:</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
 <col width="3%">
 <col width="7%">
@@ -304,12 +309,13 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <col width="2%">
 <col width="4%">
 <col width="5%">
-<col width="5%">
+<col width="4%">
 <col width="5%">
 <col width="3%">
 <col width="4%">
 <col width="3%">
 <col width="2%">
+<col width="6%">
 <col width="7%">
 <col width="2%">
 <col width="2%">
@@ -319,7 +325,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <col width="3%">
 <col width="4%">
 <col width="3%">
-<col width="12%">
+<col width="11%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">mo</th>
@@ -335,6 +341,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <th align="center">subspecies</th>
 <th align="center">rank</th>
 <th align="center">ref</th>
+<th align="center">oxygen_tolerance</th>
 <th align="center">source</th>
 <th align="center">lpsn</th>
 <th align="center">lpsn_parent</th>
@@ -360,6 +367,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <td align="center"></td>
 <td align="center">genus</td>
 <td align="center">Castellani et al., 1919</td>
+<td align="center">facultative anaerobe</td>
 <td align="center">LPSN</td>
 <td align="center">515602</td>
 <td align="center">482</td>
@@ -384,6 +392,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <td align="center"></td>
 <td align="center">species</td>
 <td align="center">Leclerc, 1962</td>
+<td align="center">aerobe</td>
 <td align="center">LPSN</td>
 <td align="center">776052</td>
 <td align="center">515602</td>
@@ -408,6 +417,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <td align="center"></td>
 <td align="center">species</td>
 <td align="center">Huys et al., 2003</td>
+<td align="center">aerobe</td>
 <td align="center">LPSN</td>
 <td align="center">776053</td>
 <td align="center">515602</td>
@@ -432,6 +442,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <td align="center"></td>
 <td align="center">species</td>
 <td align="center">Burgess et al., 1973</td>
+<td align="center">likely facultative anaerobe</td>
 <td align="center">LPSN</td>
 <td align="center">776056</td>
 <td align="center">515602</td>
@@ -456,6 +467,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <td align="center"></td>
 <td align="center">species</td>
 <td align="center">Castellani et al., 1919</td>
+<td align="center">facultative anaerobe</td>
 <td align="center">LPSN</td>
 <td align="center">776057</td>
 <td align="center">515602</td>
@@ -480,6 +492,7 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 <td align="center"></td>
 <td align="center">species</td>
 <td align="center"></td>
+<td align="center">likely facultative anaerobe</td>
 <td align="center">GBIF</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -525,7 +538,10 @@ Feather file</a> (0.1 MB)<br>
 Parquet file</a> (97 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antibiotics.sas" class="external-link">SAS
-data file</a> (1.9 MB)<br>
+data (SAS) file</a> (1.9 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antibiotics.xpt" class="external-link">SAS
+transport (XPT) file</a> (1.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antibiotics.sav" class="external-link">IBM
 SPSS Statistics data file</a> (0.3 MB)<br>
@@ -725,7 +741,10 @@ Feather file</a> (15 kB)<br>
 Parquet file</a> (13 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.sas" class="external-link">SAS
-data file</a> (84 kB)<br>
+data (SAS) file</a> (84 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.xpt" class="external-link">SAS
+transport (XPT) file</a> (68 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.sav" class="external-link">IBM
 SPSS Statistics data file</a> (30 kB)<br>
@@ -903,7 +922,10 @@ Feather file</a> (0.7 MB)<br>
 Parquet file</a> (88 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.sas" class="external-link">SAS
-data file</a> (3.6 MB)<br>
+data (SAS) file</a> (3.6 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.xpt" class="external-link">SAS
+transport (XPT) file</a> (3.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.sav" class="external-link">IBM
 SPSS Statistics data file</a> (2.3 MB)<br>
@@ -1076,7 +1098,10 @@ Feather file</a> (1.2 MB)<br>
 Parquet file</a> (0.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.sas" class="external-link">SAS
-data file</a> (9.8 MB)<br>
+data (SAS) file</a> (9.8 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.xpt" class="external-link">SAS
+transport (XPT) file</a> (9.5 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.sav" class="external-link">IBM
 SPSS Statistics data file</a> (7.4 MB)<br>
@@ -1364,7 +1389,10 @@ Feather file</a> (16 kB)<br>
 Parquet file</a> (8 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.sas" class="external-link">SAS
-data file</a> (92 kB)<br>
+data (SAS) file</a> (92 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.xpt" class="external-link">SAS
+transport (XPT) file</a> (79 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.sav" class="external-link">IBM
 SPSS Statistics data file</a> (43 kB)<br>

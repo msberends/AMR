@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,13 +153,14 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 52 151 observations and 22 variables:</p><ul><li><p><code>mo</code><br> ID of microorganism as used by this package</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 52 151 observations and 23 variables:</p><ul><li><p><code>mo</code><br> ID of microorganism as used by this package</p></li>
 <li><p><code>fullname</code><br> Full name, like <code>"Escherichia coli"</code>. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.</p></li>
 <li><p><code>status</code> <br> Status of the taxon, either "accepted" or "synonym"</p></li>
 <li><p><code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code><br> Taxonomic rank of the microorganism</p></li>
 <li><p><code>rank</code><br> Text of the taxonomic rank of the microorganism, such as <code>"species"</code> or <code>"genus"</code></p></li>
 <li><p><code>ref</code><br> Author(s) and year of related scientific publication. This contains only the <em>first surname</em> and year of the <em>latest</em> authors, e.g. "Wallis <em>et al.</em> 2006 <em>emend.</em> Smith and Jones 2018" becomes "Smith <em>et al.</em>, 2018". This field is directly retrieved from the source specified in the column <code>source</code>. Moreover, accents were removed to comply with CRAN that only allows ASCII characters, e.g. "Váňová" becomes "Vanova".</p></li>
 <li><p><code>lpsn</code><br> Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, <em>Acetobacter ascendens</em> has LPSN Record number 7864 and 11011. Only the first is available in the <code>microorganisms</code> data set.</p></li>
+<li><p><code>oxygen_tolerance</code> <br> Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see <em>Source</em>). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 73.4% of all ~36 000 bacteria in the data set contain an oxygen tolerance.</p></li>
 <li><p><code>lpsn_parent</code><br> LPSN identifier of the parent taxon</p></li>
 <li><p><code>lpsn_renamed_to</code><br> LPSN identifier of the currently valid taxon</p></li>
 <li><p><code>gbif</code><br> Identifier ('taxonID') of the Global Biodiversity Information Facility (GBIF)</p></li>
@@ -180,6 +181,7 @@
 <li><p>Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href="https://phinvads.cdc.gov" class="external-link">https://phinvads.cdc.gov</a></p></li>
 <li><p>Grimont <em>et al.</em> (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on <em>Salmonella</em> (WHOCC-SALM).</p></li>
 <li><p>Bartlett <em>et al.</em> (2022). <strong>A comprehensive list of bacterial pathogens infecting humans</strong> <em>Microbiology</em> 168:001269; <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a></p></li>
+<li><p>Reimer <em>et al.</em> (2022). <strong><em>BacDive</em> in 2022: the knowledge base for standardized bacterial and archaeal data.</strong>  <em>Nucleic Acids Res.</em> 2022 Jan 7;50(D1):D741-D746; <a href="https://doi.org/10.1093/nar/gkab961" class="external-link">doi:10.1093/nar/gkab961</a></p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -236,24 +238,24 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">microorganisms</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 52,151 × 22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 52,151 × 23</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    mo               fullname      status kingdom phylum class order family genus</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_ANAER          (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_ANAER-NEG      (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_ANAER-POS      (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> F_FUNGUS         (unknown fun… accep… Fungi   (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_GRAMN          (unknown Gra… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> B_GRAMP          (unknown Gra… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_GRAMN          (unknown Gra… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_GRAMP          (unknown Gra… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_ANAER-NEG      (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> B_ANAER-POS      (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_ANAER          (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> F_FUNGUS         (unknown fun… accep… Fungi   (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   UNKNOWN        (unknown nam… accep… (unkno… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> F_YEAST          (unknown yea… accep… Fungi   (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> B_[FAM]_ABDTBCTR Abditibacter… accep… Bacter… Abdit… Abdi… Abdi… <span style="color: #949494;">"</span>Abdi… <span style="color: #949494;">""</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> B_[ORD]_ABDTBCTR Abditibacter… accep… Bacter… Abdit… Abdi… Abdi… <span style="color: #949494;">""</span>     <span style="color: #949494;">""</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 52,141 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: species &lt;chr&gt;, subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;, lpsn_renamed_to &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif &lt;chr&gt;, gbif_parent &lt;chr&gt;, gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   snomed &lt;list&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more variables: species &lt;chr&gt;, subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   oxygen_tolerance &lt;chr&gt;, source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn_renamed_to &lt;chr&gt;, gbif &lt;chr&gt;, gbif_parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;, snomed &lt;list&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

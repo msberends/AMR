@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,21 +196,23 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">left_join_microorganisms</span><span class="op">(</span><span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"K. pneumoniae"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 23</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mo           fullname   status kingdom phylum class order family genus species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> B_KLBSL_PNMN Klebsiell… accep… Bacter… Pseud… Gamm… Ente… Enter… Kleb… pneumo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more variables: subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;, source &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;, lpsn_renamed_to &lt;chr&gt;, gbif &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif_parent &lt;chr&gt;, gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;, snomed &lt;list&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   oxygen_tolerance &lt;chr&gt;, source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn_renamed_to &lt;chr&gt;, gbif &lt;chr&gt;, gbif_parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;, snomed &lt;list&gt;</span></span>
 <span class="r-in"><span><span class="fu">left_join_microorganisms</span><span class="op">(</span><span class="st">"B_KLBSL_PNMN"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 22</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 23</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mo           fullname   status kingdom phylum class order family genus species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> B_KLBSL_PNMN Klebsiell… accep… Bacter… Pseud… Gamm… Ente… Enter… Kleb… pneumo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more variables: subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;, source &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;, lpsn_renamed_to &lt;chr&gt;, gbif &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif_parent &lt;chr&gt;, gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;, snomed &lt;list&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   oxygen_tolerance &lt;chr&gt;, source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn_renamed_to &lt;chr&gt;, gbif &lt;chr&gt;, gbif_parent &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;, snomed &lt;list&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span></span></span>
@@ -229,12 +231,12 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df_joined</span> <span class="op">&lt;-</span> <span class="fu">left_join_microorganisms</span><span class="op">(</span><span class="va">df</span>, <span class="st">"bacteria"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df_joined</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"            "bacteria"        "fullname"        "status"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "kingdom"         "phylum"          "class"           "order"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "family"          "genus"           "species"         "subspecies"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "rank"            "ref"             "source"          "lpsn"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "lpsn_parent"     "lpsn_renamed_to" "gbif"            "gbif_parent"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "gbif_renamed_to" "prevalence"      "snomed"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"             "bacteria"         "fullname"         "status"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "kingdom"          "phylum"           "class"            "order"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "family"           "genus"            "species"          "subspecies"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "rank"             "ref"              "oxygen_tolerance" "source"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "lpsn"             "lpsn_parent"      "lpsn_renamed_to"  "gbif"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "gbif_parent"      "gbif_renamed_to"  "prevalence"       "snomed"          </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -243,23 +245,23 @@
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "mo"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"            "patient"         "age"             "gender"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward"            "mo"              "PEN"             "OXA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "FLC"             "AMX"             "AMC"             "AMP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "TZP"             "CZO"             "FEP"             "CXM"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "FOX"             "CTX"             "CAZ"             "CRO"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "GEN"             "TOB"             "AMK"             "KAN"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TMP"             "SXT"             "NIT"             "FOS"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "LNZ"             "CIP"             "MFX"             "VAN"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "TEC"             "TCY"             "TGC"             "DOX"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "ERY"             "CLI"             "AZM"             "IPM"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "MEM"             "MTR"             "CHL"             "COL"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MUP"             "RIF"             "fullname"        "status"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "kingdom"         "phylum"          "class"           "order"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "family"          "genus"           "species"         "subspecies"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [57] "rank"            "ref"             "source"          "lpsn"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "lpsn_parent"     "lpsn_renamed_to" "gbif"            "gbif_parent"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [65] "gbif_renamed_to" "prevalence"      "snomed"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"             "patient"          "age"              "gender"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward"             "mo"               "PEN"              "OXA"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "FLC"              "AMX"              "AMC"              "AMP"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "TZP"              "CZO"              "FEP"              "CXM"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "FOX"              "CTX"              "CAZ"              "CRO"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "GEN"              "TOB"              "AMK"              "KAN"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TMP"              "SXT"              "NIT"              "FOS"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "LNZ"              "CIP"              "MFX"              "VAN"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "TEC"              "TCY"              "TGC"              "DOX"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "ERY"              "CLI"              "AZM"              "IPM"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "MEM"              "MTR"              "CHL"              "COL"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MUP"              "RIF"              "fullname"         "status"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "kingdom"          "phylum"           "class"            "order"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "family"           "genus"            "species"          "subspecies"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [57] "rank"             "ref"              "oxygen_tolerance" "source"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "lpsn"             "lpsn_parent"      "lpsn_renamed_to"  "gbif"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [65] "gbif_parent"      "gbif_renamed_to"  "prevalence"       "snomed"          </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
