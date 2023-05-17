@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -338,13 +338,12 @@
 <span class="r-in"><span><span class="co"># See ?example_isolates.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span><span class="fu">first_isolate</span><span class="op">(</span>info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Determining first isolates using an episode length of 365 days</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Determining first isolates using an episode length of 365 days</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'date' as input for col_date.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'patient' as input for col_patient_id.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Basing inclusion on all antimicrobial results, using a points threshold of</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Including isolates from ICU.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluded 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Basing inclusion on all antimicrobial results, using a points threshold</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   of 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Found 1,379 'phenotype-based' first isolates (69.0% of total where a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    microbial ID was available)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,379 × 46</span></span>
@@ -397,11 +396,10 @@
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">first_isolate</span><span class="op">(</span>info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Determining first isolates using an episode length of 365 days</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Basing inclusion on all antimicrobial results, using a points threshold of</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Including isolates from ICU.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluded 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Determining first isolates using an episode length of 365 days</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Basing inclusion on all antimicrobial results, using a points threshold</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   of 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Found 1,379 'phenotype-based' first isolates (69.0% of total where a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    microbial ID was available)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,379 × 46</span></span>
@@ -456,25 +454,22 @@
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>first <span class="op">=</span> <span class="fu">first_isolate</span><span class="op">(</span>info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ward</span>, <span class="va">date</span>, <span class="va">patient</span>, <span class="va">mo</span>, <span class="va">first</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Determining first isolates using an episode length of 365 days</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Basing inclusion on all antimicrobial results, using a points threshold of</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Including isolates from ICU.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Determining first isolates using an episode length of 365 days</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Basing inclusion on all antimicrobial results, using a points threshold</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   of 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Group: ward = "Clinical"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluded 9 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluding 9 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Found 861 'phenotype-based' first isolates (69.8% of total where a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    microbial ID was available)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Including isolates from ICU.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Group: ward = "ICU"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluded 6 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluding 6 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Found 449 'phenotype-based' first isolates (69.6% within scope and 69.5%</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    of total where a microbial ID was available)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Including isolates from ICU.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Group: ward = "Outpatient"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluded 1 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Excluding 1 isolates with a microbial ID 'UNKNOWN' (in column 'mo')</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Found 98 'phenotype-based' first isolates (82.4% within scope and 81.7%</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    of total where a microbial ID was available)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 5</span></span>

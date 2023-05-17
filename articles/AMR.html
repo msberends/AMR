@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,7 +187,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 12 May 2023.</p>
+generated on 17 May 2023.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -243,21 +243,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2023-05-12</td>
+<td align="center">2023-05-17</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2023-05-12</td>
+<td align="center">2023-05-17</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2023-05-12</td>
+<td align="center">2023-05-17</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -492,13 +492,12 @@ the methods on the <code><a href="../reference/first_isolate.html">first_isolate
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data</span> <span class="op">&lt;-</span> <span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>first <span class="op">=</span> <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span>info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Determining first isolates using an episode length of 365 days</span></span>
+<span><span class="co">#&gt; ℹ Determining first isolates using an episode length of 365 days</span></span>
 <span><span class="co">#&gt; ℹ Using column 'bacteria' as input for col_mo.</span></span>
 <span><span class="co">#&gt; ℹ Using column 'date' as input for col_date.</span></span>
 <span><span class="co">#&gt; ℹ Using column 'patient_id' as input for col_patient_id.</span></span>
-<span><span class="co">#&gt; Basing inclusion on all antimicrobial results, using a points threshold of</span></span>
-<span><span class="co">#&gt; 2</span></span>
-<span><span class="co">#&gt; Including isolates from ICU.</span></span>
+<span><span class="co">#&gt; ℹ Basing inclusion on all antimicrobial results, using a points threshold</span></span>
+<span><span class="co">#&gt;   of 2</span></span>
 <span><span class="co">#&gt; =&gt; Found 2,626 'phenotype-based' first isolates (87.6% within scope and</span></span>
 <span><span class="co">#&gt;    87.5% of total where a microbial ID was available)</span></span></code></pre></div>
 <p>So only 88% is suitable for resistance analysis! We can now filter on
