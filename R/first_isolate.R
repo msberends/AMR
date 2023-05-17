@@ -191,13 +191,13 @@ first_isolate <- function(x = NULL,
   }
   meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   if (is.logical(col_icu)) {
-    meet_criteria(col_icu, allow_class = "logical", has_length = c(1, nrow(x)), allow_NULL = TRUE)
-    if (length(col_icu) == 1) {
-      col_icu <- rep(col_icu, nrow(x))
-    }
-  } else {
+    meet_criteria(col_icu, allow_class = "logical", has_length = c(1, nrow(x)), allow_NA = TRUE)
+    x$newvar_is_icu <- col_icu
+  } else if (!is.null(col_icu)) {
     meet_criteria(col_icu, allow_class = c("character", "logical"), has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-    col_icu <- x[, col_icu, drop = TRUE]
+    x$newvar_is_icu <- x[, col_icu, drop = TRUE]
+  } else {
+    x$newvar_is_icu <- NA_real_
   }
   # method
   method <- coerce_method(method)
@@ -251,14 +251,13 @@ first_isolate <- function(x = NULL,
         "Determining first isolates ",
         ifelse(method %in% c("episode-based", "phenotype-based"),
           ifelse(is.infinite(episode_days),
-            "without a specified episode length",
-            paste("using an episode length of", episode_days, "days")
+            paste(font_bold("without"), " a specified episode length"),
+            paste("using an episode length of", font_bold(paste(episode_days, "days")))
           ),
           ""
         )
       ),
-      as_note = FALSE,
-      add_fn = font_black
+      add_fn = font_red
     )
   }
 
@@ -358,8 +357,7 @@ first_isolate <- function(x = NULL,
   # remove testcodes
   if (!is.null(testcodes_exclude) && isTRUE(info) && message_not_thrown_before("first_isolate", "excludingtestcodes")) {
     message_("Excluding test codes: ", vector_and(testcodes_exclude, quotes = TRUE),
-      add_fn = font_black,
-      as_note = FALSE
+      add_fn = font_red
     )
   }
 
@@ -372,8 +370,7 @@ first_isolate <- function(x = NULL,
     check_columns_existance(col_specimen, x)
     if (isTRUE(info) && message_not_thrown_before("first_isolate", "excludingspecimen")) {
       message_("Excluding other than specimen group '", specimen_group, "'",
-        add_fn = font_black,
-        as_note = FALSE
+        add_fn = font_red
       )
     }
   }
@@ -455,15 +452,13 @@ first_isolate <- function(x = NULL,
         message_("Basing inclusion on key antimicrobials, ",
           ifelse(ignore_I == FALSE, "not ", ""),
           "ignoring I",
-          add_fn = font_black,
-          as_note = FALSE
+          add_fn = font_red
         )
       }
       if (type == "points") {
         message_("Basing inclusion on all antimicrobial results, using a points threshold of ",
           points_threshold,
-          add_fn = font_black,
-          as_note = FALSE
+          add_fn = font_red
         )
       }
     }
@@ -505,33 +500,27 @@ first_isolate <- function(x = NULL,
       x$newvar_genus_species != "" &
       (x$other_pat_or_mo | x$more_than_episode_ago)
   }
-
+  
+  decimal.mark <- getOption("OutDec")
+  big.mark <- ifelse(decimal.mark != ",", ",", " ")
+  
   # first one as TRUE
   x[row.start, "newvar_first_isolate"] <- TRUE
   # no tests that should be included, or ICU
   if (!is.null(col_testcode)) {
     x[which(x[, col_testcode] %in% tolower(testcodes_exclude)), "newvar_first_isolate"] <- FALSE
   }
-
-  if (!is.null(col_icu)) {
+  if (any(!is.na(x$newvar_is_icu)) && any(x$newvar_is_icu == TRUE, na.rm = TRUE)) {
     if (icu_exclude == TRUE) {
       if (isTRUE(info)) {
-        message_("Excluding ", format(sum(col_icu, na.rm = TRUE), big.mark = " "), " isolates from ICU.",
-          add_fn = font_black,
-          as_note = FALSE
-        )
+        message_("Excluding ", format(sum(x$newvar_is_icu, na.rm = TRUE), decimal.mark = decimal.mark, big.mark = big.mark), " isolates from ICU.",
+                 add_fn = font_red)
       }
-      x[which(col_icu), "newvar_first_isolate"] <- FALSE
+      x[which(x$newvar_is_icu), "newvar_first_isolate"] <- FALSE
     } else if (isTRUE(info)) {
-      message_("Including isolates from ICU.",
-        add_fn = font_black,
-        as_note = FALSE
-      )
+      message_("Including isolates from ICU.")
     }
   }
-
-  decimal.mark <- getOption("OutDec")
-  big.mark <- ifelse(decimal.mark != ",", ",", " ")
 
   if (isTRUE(info)) {
     # print group name if used in dplyr::group_by()
@@ -560,11 +549,12 @@ first_isolate <- function(x = NULL,
   # handle empty microorganisms
   if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) && isTRUE(info)) {
     message_(
-      ifelse(include_unknown == TRUE, "Included ", "Excluded "),
+      ifelse(include_unknown == TRUE, "Including ", "Excluding "),
       format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
       ),
-      " isolates with a microbial ID 'UNKNOWN' (in column '", font_bold(col_mo), "')"
+      " isolates with a microbial ID 'UNKNOWN' (in column '", font_bold(col_mo), "')",
+      add_fn = font_red
     )
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
@@ -572,10 +562,11 @@ first_isolate <- function(x = NULL,
   # exclude all NAs
   if (anyNA(x$newvar_mo) && isTRUE(info)) {
     message_(
-      "Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
+      "Excluding ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
       ),
-      " isolates with a microbial ID 'NA' (in column '", font_bold(col_mo), "')"
+      " isolates with a microbial ID `NA` (in column '", font_bold(col_mo), "')",
+      add_fn = font_red
     )
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE

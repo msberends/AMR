@@ -1,16 +1,17 @@
-# AMR 2.0.0.9015
+# AMR 2.0.0.9018
 
 ## Changed
 * Added oxygen tolerance to over 25,000 bacteria in the `microorganisms` data set
   * Added `mo_oxygen_tolerance()` to retrieve the values
   * Added `mo_is_anaerobic()` to determine which species are obligate anaerobic bacteria
 * Added LPSN and GBIF identifiers, and oxygen tolerance to `mo_info()`
-* formatting fix for `sir_interpretation_history()`
-* Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
+* Added SAS Transport files (file extension `.xpt`) to [our download page](https://msberends.github.io/AMR/articles/datasets.html) to use in SAS software
 * Added microbial codes for Gram-negative/positive anaerobic bacteria
 * `mo_rank()` now returns `NA` for 'unknown' microorganisms (`B_ANAER`, `B_ANAER-NEG`, `B_ANAER-POS`, `B_GRAMN`, `B_GRAMP`, `F_FUNGUS`, `F_YEAST`, and `UNKNOWN`)
+* Fixed formatting for `sir_interpretation_history()`
+* Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
 * Fixed a bug for `as.mo()` that led to coercion of `NA` values when using custom microorganism codes
-* Added SAS Transport files (file extension `.xpt`) to [our download page](https://msberends.github.io/AMR/articles/datasets.html) to use in SAS software
+* Fixed usage of `icu_exclude` in `first_isolates()`
 
 
 # AMR 2.0.0
