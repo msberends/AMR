@@ -30,6 +30,7 @@
 ^vignettes/datasets\.Rmd$
 ^vignettes/EUCAST\.Rmd$
 ^vignettes/MDR\.Rmd$
+^vignettes/other_pkg.*\.Rmd$
 ^vignettes/PCA\.Rmd$
 ^vignettes/resistance_predict\.Rmd$
 ^vignettes/SPSS\.Rmd$

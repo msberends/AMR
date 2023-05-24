@@ -1,4 +1,4 @@
-# AMR 2.0.0.9018
+# AMR 2.0.0.9019
 
 ## Changed
 * Added oxygen tolerance to over 25,000 bacteria in the `microorganisms` data set
@@ -12,6 +12,7 @@
 * Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
 * Fixed a bug for `as.mo()` that led to coercion of `NA` values when using custom microorganism codes
 * Fixed usage of `icu_exclude` in `first_isolates()`
+* Improved `as.mo()` algorithm for searching on only species names
 
 
 # AMR 2.0.0

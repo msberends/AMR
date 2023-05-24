@@ -191,13 +191,14 @@ first_isolate <- function(x = NULL,
   }
   meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   if (is.logical(col_icu)) {
-    meet_criteria(col_icu, allow_class = "logical", has_length = c(1, nrow(x)), allow_NA = TRUE)
+    meet_criteria(col_icu, allow_class = "logical", has_length = c(1, nrow(x)), allow_NA = TRUE, allow_NULL = TRUE)
     x$newvar_is_icu <- col_icu
   } else if (!is.null(col_icu)) {
+    # add "logical" to the allowed classes here, since it may give an error in certain user input, and should then also say that logicals can be used too
     meet_criteria(col_icu, allow_class = c("character", "logical"), has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
     x$newvar_is_icu <- x[, col_icu, drop = TRUE]
   } else {
-    x$newvar_is_icu <- NA_real_
+    x$newvar_is_icu <- NA
   }
   # method
   method <- coerce_method(method)

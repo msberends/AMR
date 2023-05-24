@@ -65,7 +65,11 @@ jobs:
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown
+          # add extra packages for website articles:
+          extra-packages: |
+            any::pkgdown
+            any::tidymodels
+            any::data.table
 
       # Send updates to repo using GH Actions bot
       - name: Create website in separate branch

@@ -69,7 +69,7 @@
 #' ab_atc_group2("AMX")
 #' ab_url("AMX")
 #'
-#' # smart lowercase tranformation
+#' # smart lowercase transformation
 #' ab_name(x = c("AMC", "PLB"))
 #' ab_name(x = c("AMC", "PLB"), tolower = TRUE)
 #'

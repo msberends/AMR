@@ -281,9 +281,16 @@ as.mo <- function(x,
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
 
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
-      if (length(x_parts) %in% c(2, 3)) {
+      if (length(x_parts) == 1) {
+        # for genus or species or subspecies
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts, 1, 1) |
+                         AMR_env$MO_lookup$species_first == substr(x_parts, 1, 1) |
+                         AMR_env$MO_lookup$subspecies_first == substr(x_parts, 1, 1))
+      } else if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) & (AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) | AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1)))
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) &
+                         (AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) |
+                            AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1)))
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)

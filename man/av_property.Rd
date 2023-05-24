@@ -92,7 +92,7 @@ av_tradenames("ACI")
 av_group("ACI")
 av_url("ACI")
 
-# smart lowercase tranformation
+# lowercase transformation
 av_name(x = c("ACI", "VALA"))
 av_name(x = c("ACI", "VALA"), tolower = TRUE)
 
