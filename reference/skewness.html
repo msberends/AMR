@@ -12,7 +12,7 @@ When negative ('left-skewed'): the left tail is longer; the mass of the distribu
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9019</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,14 +20,7 @@ When negative ('left-skewed'): the left tail is longer; the mass of the distribu
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item">
-  <a class="nav-link" href="../index.html">
-    <span class="fa fa-home"></span>
-     
-    Home
-  </a>
-</li>
-<li class="nav-item dropdown">
+      <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--how-to">
     <span class="fa fa-question-circle"></span>
      
@@ -74,11 +67,6 @@ When negative ('left-skewed'): the left tail is longer; the mass of the distribu
        
       Work with WHONET Data
     </a>
-    <a class="dropdown-item" href="../articles/SPSS.html">
-      <span class="fa fa-file-upload"></span>
-       
-      Import Data From SPSS/SAS/Stata
-    </a>
     <a class="dropdown-item" href="../articles/EUCAST.html">
       <span class="fa fa-exchange-alt"></span>
        
@@ -101,6 +89,35 @@ When negative ('left-skewed'): the left tail is longer; the mass of the distribu
     </a>
   </div>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--with-other-pkgs">
+    <span class="fa fa-circles-overlap"></span>
+     
+    With other pkgs
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdown--with-other-pkgs">
+    <a class="dropdown-item" href="../articles/other_pkg.html">
+      <span class="fa fa-circles-overlap"></span>
+       
+      AMR &amp; dplyr/tidyverse
+    </a>
+    <a class="dropdown-item" href="../articles/other_pkg.html">
+      <span class="fa fa-circles-overlap"></span>
+       
+      AMR &amp; data.table
+    </a>
+    <a class="dropdown-item" href="../articles/other_pkg.html">
+      <span class="fa fa-circles-overlap"></span>
+       
+      AMR &amp; tidymodels
+    </a>
+    <a class="dropdown-item" href="../articles/other_pkg.html">
+      <span class="fa fa-circles-overlap"></span>
+       
+      AMR &amp; base R
+    </a>
+  </div>
+</li>
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">
     <span class="fa fa-book-open"></span>
@@ -115,17 +132,17 @@ When negative ('left-skewed'): the left tail is longer; the mass of the distribu
     Authors
   </a>
 </li>
-<li class="nav-item">
+      </ul><form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
+
+      <ul class="navbar-nav"><li class="nav-item">
   <a class="nav-link" href="../news/index.html">
     <span class="far fa far fa-newspaper"></span>
      
     Changelog
   </a>
 </li>
-      </ul><form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
-
-      <ul class="navbar-nav"><li class="nav-item">
+<li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/msberends/AMR">
     <span class="fab fa fab fa-github"></span>
      
@@ -181,7 +198,7 @@ When negative ('left-skewed'): the left tail is longer; the mass of the distribu
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">skewness</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.04370586</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.02767595</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

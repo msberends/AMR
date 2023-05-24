@@ -5,20 +5,22 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Page not found (404) • AMR (for R)</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="https://msberends.github.io/AMR/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://msberends.github.io/AMR/favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://msberends.github.io/AMR/apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://msberends.github.io/AMR/apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://msberends.github.io/AMR/apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="https://msberends.github.io/AMR/apple-touch-icon-60x60.png">
-<script src="https://msberends.github.io/AMR/deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://msberends.github.io/AMR/deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="https://msberends.github.io/AMR/deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="https://msberends.github.io/AMR/deps/Fira_Code-0.4.6/font.css" rel="stylesheet">
+<meta name="description" content="AMR">
+<title>Using AMR with other packages: AMR &amp; dplyr/tidyverse • AMR (for R)</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Code-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="https://msberends.github.io/AMR/pkgdown.js"></script><link href="https://msberends.github.io/AMR/extra.css" rel="stylesheet">
-<script src="https://msberends.github.io/AMR/extra.js"></script><meta property="og:title" content="Page not found (404)">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<script src="../extra.js"></script><meta property="og:title" content="Using AMR with other packages: AMR &amp; dplyr/tidyverse">
+<meta property="og:description" content="AMR">
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@msberends">
@@ -29,12 +31,12 @@
 <![endif]-->
 </head>
 <body>
-    <a href="https://msberends.github.io/AMR/#main" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
-    <a class="navbar-brand me-2" href="https://msberends.github.io/AMR/index.html">AMR (for R)</a>
+    <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9019</small>
 
@@ -46,97 +48,97 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
-  <a href="https://msberends.github.io/AMR/#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--how-to">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--how-to">
     <span class="fa fa-question-circle"></span>
      
     How to
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--how-to">
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/AMR.html">
+    <a class="dropdown-item" href="../articles/AMR.html">
       <span class="fa fa-directions"></span>
        
       Conduct AMR Analysis
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/reference/antibiogram.html">
+    <a class="dropdown-item" href="../reference/antibiogram.html">
       <span class="fa fa-file-prescription"></span>
        
       Generate Antibiogram (Trad./Syndromic/WISCA)
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/resistance_predict.html">
+    <a class="dropdown-item" href="../articles/resistance_predict.html">
       <span class="fa fa-dice"></span>
        
       Predict Antimicrobial Resistance
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/datasets.html">
+    <a class="dropdown-item" href="../articles/datasets.html">
       <span class="fa fa-database"></span>
        
       Download Data Sets for Own Use
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/reference/AMR-options.html">
+    <a class="dropdown-item" href="../reference/AMR-options.html">
       <span class="fa fa-gear"></span>
        
       Set User- Or Team-specific Package Settings
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/PCA.html">
+    <a class="dropdown-item" href="../articles/PCA.html">
       <span class="fa fa-compress"></span>
        
       Conduct Principal Component Analysis for AMR
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/MDR.html">
+    <a class="dropdown-item" href="../articles/MDR.html">
       <span class="fa fa-skull-crossbones"></span>
        
       Determine Multi-Drug Resistance (MDR)
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/WHONET.html">
+    <a class="dropdown-item" href="../articles/WHONET.html">
       <span class="fa fa-globe-americas"></span>
        
       Work with WHONET Data
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/EUCAST.html">
+    <a class="dropdown-item" href="../articles/EUCAST.html">
       <span class="fa fa-exchange-alt"></span>
        
       Apply Eucast Rules
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/reference/mo_property.html">
+    <a class="dropdown-item" href="../reference/mo_property.html">
       <span class="fa fa-bug"></span>
        
       Get Taxonomy of a Microorganism
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/reference/ab_property.html">
+    <a class="dropdown-item" href="../reference/ab_property.html">
       <span class="fa fa-capsules"></span>
        
       Get Properties of an Antibiotic Drug
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/reference/av_property.html">
+    <a class="dropdown-item" href="../reference/av_property.html">
       <span class="fa fa-capsules"></span>
        
       Get Properties of an Antiviral Drug
     </a>
   </div>
 </li>
-<li class="nav-item dropdown">
-  <a href="https://msberends.github.io/AMR/#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--with-other-pkgs">
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--with-other-pkgs">
     <span class="fa fa-circles-overlap"></span>
      
     With other pkgs
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--with-other-pkgs">
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/other_pkg.html">
+    <a class="dropdown-item" href="../articles/other_pkg.html">
       <span class="fa fa-circles-overlap"></span>
        
       AMR &amp; dplyr/tidyverse
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/other_pkg.html">
+    <a class="dropdown-item" href="../articles/other_pkg.html">
       <span class="fa fa-circles-overlap"></span>
        
       AMR &amp; data.table
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/other_pkg.html">
+    <a class="dropdown-item" href="../articles/other_pkg.html">
       <span class="fa fa-circles-overlap"></span>
        
       AMR &amp; tidymodels
     </a>
-    <a class="dropdown-item" href="https://msberends.github.io/AMR/articles/other_pkg.html">
+    <a class="dropdown-item" href="../articles/other_pkg.html">
       <span class="fa fa-circles-overlap"></span>
        
       AMR &amp; base R
@@ -144,14 +146,14 @@
   </div>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="https://msberends.github.io/AMR/reference/index.html">
+  <a class="nav-link" href="../reference/index.html">
     <span class="fa fa-book-open"></span>
      
     Manual
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="https://msberends.github.io/AMR/authors.html">
+  <a class="nav-link" href="../authors.html">
     <span class="fa fa-users"></span>
      
     Authors
@@ -159,12 +161,12 @@
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="nav-link" href="https://msberends.github.io/AMR/news/index.html">
+  <a class="nav-link" href="../news/index.html">
     <span class="far fa far fa-newspaper"></span>
      
     Changelog
@@ -182,17 +184,28 @@
 
     
   </div>
-</nav><div class="container template-title-body">
+</nav><div class="container template-article">
+
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="https://msberends.github.io/AMR/logo.svg" class="logo" alt=""><h1>Page not found (404)</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Using AMR with other packages: AMR &amp; dplyr/tidyverse</h1>
+            
       
+      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/other_pkg.Rmd" class="external-link"><code>vignettes/other_pkg.Rmd</code></a></small>
+      <div class="d-none name"><code>other_pkg.Rmd</code></div>
     </div>
 
-Content not found. Please use links in the navbar.
-
+    
+    
+<p>This page will be updated shortly, to give explicit examples of how
+to work ideally with the <code>AMR</code> package, for those who are
+used to working in <code>dplyr</code> or other tidyverse packages.</p>
   </main>
 </div>
+
 
 
     <footer><div class="pkgdown-footer-left">

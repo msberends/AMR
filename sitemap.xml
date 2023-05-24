@@ -19,9 +19,6 @@
     <loc>https://msberends.github.io/AMR/articles/PCA.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/SPSS.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.github.io/AMR/articles/WHONET.html</loc>
   </url>
   <url>
@@ -29,6 +26,9 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.github.io/AMR/articles/other_pkg.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/articles/resistance_predict.html</loc>

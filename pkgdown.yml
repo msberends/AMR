@@ -6,12 +6,12 @@ articles:
   EUCAST: EUCAST.html
   MDR: MDR.html
   PCA: PCA.html
-  SPSS: SPSS.html
   WHONET: WHONET.html
   datasets: datasets.html
+  other_pkg: other_pkg.html
   resistance_predict: resistance_predict.html
   welcome_to_AMR: welcome_to_AMR.html
-last_built: 2023-05-17T20:16Z
+last_built: 2023-05-24T14:00Z
 urls:
   reference: https://msberends.github.io/AMR/reference
   article: https://msberends.github.io/AMR/articles
