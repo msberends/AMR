@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9022</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -204,7 +204,8 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># a combination of species is not formal taxonomy, so</span></span></span>
-<span class="r-in"><span><span class="co"># this will result in only "Enterobacter asburiae":</span></span></span>
+<span class="r-in"><span><span class="co"># this will result in "Enterobacter cloacae cloacae",</span></span></span>
+<span class="r-in"><span><span class="co"># since it resembles the input best:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Enterobacter asburiae/cloacae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacter cloacae cloacae"</span>
 <span class="r-in"><span></span></span>
@@ -309,7 +310,7 @@
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_rank</a></span><span class="op">(</span><span class="st">"BACTEROIDES / PARABACTEROIDES"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "genus"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># taxonomy still works, although a slashline genus was given as input:</span></span></span>
+<span class="r-in"><span><span class="co"># taxonomy still works, even though a slashline genus was given as input:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_family</a></span><span class="op">(</span><span class="st">"Bacteroides/Parabacteroides"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteroidaceae"</span>
 <span class="r-in"><span></span></span>
