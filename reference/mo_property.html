@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,28 +89,28 @@
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--with-other-pkgs">
-    <span class="fa fa-circles-overlap"></span>
+    <span class="fa fa-layer-plus"></span>
      
     With other pkgs
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--with-other-pkgs">
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; dplyr/tidyverse
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; data.table
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; tidymodels
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; base R
     </a>
@@ -464,7 +464,7 @@
 <p>Determination of intrinsic resistance (<code>mo_is_intrinsic_resistant()</code>) will be based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, which is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021). The <code>mo_is_intrinsic_resistant()</code> function can be vectorised over both argument <code>x</code> (input for microorganisms) and <code>ab</code> (input for antibiotics).</p>
 <p>Determination of bacterial oxygen tolerance (<code>mo_oxygen_tolerance()</code>) will be based on BacDive, see <em>Source</em>. The function <code>mo_is_anaerobic()</code> only returns <code>TRUE</code> if the oxygen tolerance is <code>"anaerobe"</code>, indicting an obligate anaerobic species or genus. It always returns <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
-<p>SNOMED codes (<code>mo_snomed()</code>) are from the version of 1 July, 2021. See <em>Source</em> and the <a href="microorganisms.html">microorganisms</a> data set for more info.</p>
+<p>SNOMED codes (<code>mo_snomed()</code>) are from the version of July 1st, 2021. See <em>Source</em> and the <a href="microorganisms.html">microorganisms</a> data set for more info.</p>
 <p>Old taxonomic names (so-called 'synonyms') can be retrieved with <code>mo_synonyms()</code> (which will have the scientific reference as <a href="https://rdrr.io/r/base/names.html" class="external-link">name</a>), the current taxonomic name can be retrieved with <code>mo_current()</code>. Both functions return full names.</p>
 <p>All output <a href="translate.html">will be translated</a> where possible.</p>
     </div>
@@ -485,12 +485,13 @@
 <li><p>Lancefield RC (1933). <strong>A serological differentiation of human and other groups of hemolytic streptococci.</strong> <em>J Exp Med.</em> 57(4): 571-95; <a href="https://doi.org/10.1084/jem.57.4.571" class="external-link">doi:10.1084/jem.57.4.571</a></p></li>
 <li><p>Berends MS <em>et al.</em> (2022). <strong>Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/</strong> <em>Micro.rganisms</em> 10(9), 1801; <a href="https://doi.org/10.3390/microorganisms10091801" class="external-link">doi:10.3390/microorganisms10091801</a></p></li>
 <li><p>Parte, AC <em>et al.</em> (2020). <strong>List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.</strong> International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; <a href="https://doi.org/10.1099/ijsem.0.004332" class="external-link">doi:10.1099/ijsem.0.004332</a>
-. Accessed from <a href="https://lpsn.dsmz.de" class="external-link">https://lpsn.dsmz.de</a> on 11 December, 2022.</p></li>
+. Accessed from <a href="https://lpsn.dsmz.de" class="external-link">https://lpsn.dsmz.de</a> on December 11th, 2022.</p></li>
 <li><p>GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset <a href="https://doi.org/10.15468/39omei" class="external-link">doi:10.15468/39omei</a>
-. Accessed from <a href="https://www.gbif.org" class="external-link">https://www.gbif.org</a> on 11 December, 2022.</p></li>
+. Accessed from <a href="https://www.gbif.org" class="external-link">https://www.gbif.org</a> on December 11th, 2022.</p></li>
+<li><p>Reimer, LC <em>et al.</em> (2022). <strong><em>BacDive</em> in 2022: the knowledge base for standardized bacterial and archaeal data.</strong> Nucleic Acids Res., 50(D1):D741-D74; <a href="https://doi.org/10.1093/nar/gkab961" class="external-link">doi:10.1093/nar/gkab961</a>
+. Accessed from <a href="https://bacdive.dsmz.de" class="external-link">https://bacdive.dsmz.de</a> on May 12th, 2023.</p></li>
 <li><p>Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href="https://phinvads.cdc.gov" class="external-link">https://phinvads.cdc.gov</a></p></li>
 <li><p>Bartlett A <em>et al.</em> (2022). <strong>A comprehensive list of bacterial pathogens infecting humans</strong> <em>Microbiology</em> 168:001269; <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a></p></li>
-<li><p>Reimer <em>et al.</em> (2022). <strong><em>BacDive</em> in 2022: the knowledge base for standardized bacterial and archaeal data.</strong>  <em>Nucleic Acids Res.</em> 2022 Jan 7;50(D1):D741-D746; <a href="https://doi.org/10.1093/nar/gkab961" class="external-link">doi:10.1093/nar/gkab961</a></p></li>
 </ol></div>
     <div class="section level2">
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>

@@ -12,7 +12,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,28 +91,28 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--with-other-pkgs">
-    <span class="fa fa-circles-overlap"></span>
+    <span class="fa fa-layer-plus"></span>
      
     With other pkgs
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--with-other-pkgs">
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; dplyr/tidyverse
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; data.table
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; tidymodels
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-circles-overlap"></span>
+      <span class="fa fa-layer-plus"></span>
        
       AMR &amp; base R
     </a>
@@ -261,7 +261,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Note:</strong> This function does not translate MIC values to SIR values. Use <code><a href="as.sir.html">as.sir()</a></code> for that. <br><strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. <br></p>
-<p>The file containing all EUCAST rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The <code>AMR</code> package contains the full microbial taxonomy updated until 11 December, 2022, see <a href="microorganisms.html">microorganisms</a>.</p><div class="section">
+<p>The file containing all EUCAST rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The <code>AMR</code> package contains the full microbial taxonomy updated until December 11th, 2022, see <a href="microorganisms.html">microorganisms</a>.</p><div class="section">
 <h3 id="custom-rules">Custom Rules<a class="anchor" aria-label="anchor" href="#custom-rules"></a></h3>
 
 
