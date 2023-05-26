@@ -81,6 +81,11 @@ TAXONOMY_VERSION <- list(
     citation = "Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
     url = "https://lpsn.dsmz.de"
   ),
+  BacDive = list(
+    accessed_date = as.Date("2023-05-12"),
+    citation = "Reimer, LC *et al.* (2022). ***BacDive* in 2022: the knowledge base for standardized bacterial and archaeal data.** Nucleic Acids Res., 50(D1):D741-D74; \\doi{10.1093/nar/gkab961}.",
+    url = "https://bacdive.dsmz.de"
+  ),
   SNOMED = list(
     accessed_date = as.Date("2021-07-01"),
     citation = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12).",

@@ -46,7 +46,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \source{
 \itemize{
 \item World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
-\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.73 (8 August, 2022). Accessed from \url{https://loinc.org} on 30 October, 2022.
+\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.73 (8 August, 2022). Accessed from \url{https://loinc.org} on October 30th, 2022.
 \item European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
 }
 }

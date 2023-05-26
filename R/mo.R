@@ -100,9 +100,9 @@
 #' 6. Berends MS *et al.* (2022). **Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/** *Micro.rganisms* 10(9), 1801; \doi{10.3390/microorganisms10091801}
 #' 7. `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
 #' 8. `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
-#' 9. `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
-#' 10. Bartlett A *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
-#' 11. Reimer *et al.* (2022). ***BacDive* in 2022: the knowledge base for standardized bacterial and archaeal data.**  *Nucleic Acids Res.* 2022 Jan 7;50(D1):D741-D746; \doi{10.1093/nar/gkab961}
+#' 9. `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
+#' 10. `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
+#' 11. Bartlett A *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
 #' @export
 #' @return A [character] [vector] with additional class [`mo`]
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
@@ -281,16 +281,12 @@ as.mo <- function(x,
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
 
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
-      if (length(x_parts) == 1) {
-        # for genus or species or subspecies
-        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts, 1, 1) |
-                         AMR_env$MO_lookup$species_first == substr(x_parts, 1, 1) |
-                         AMR_env$MO_lookup$subspecies_first == substr(x_parts, 1, 1))
-      } else if (length(x_parts) %in% c(2, 3)) {
+      if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) &
-                         (AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) |
-                            AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1)))
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) |
+                         AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) |
+                         AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1) |
+                         AMR_env$MO_lookup$subspecies_first == substr(x_parts[3], 1, 1))
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
@@ -305,7 +301,10 @@ as.mo <- function(x,
         msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE)))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
-        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_out, 1, 1))
+        # for genus or species or subspecies
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts, 1, 1) |
+                         AMR_env$MO_lookup$species_first == substr(x_parts, 1, 1) |
+                         AMR_env$MO_lookup$subspecies_first == substr(x_parts, 1, 1))
       }
       if (length(filtr) == 0) {
         mo_to_search <- AMR_env$MO_lookup$fullname
@@ -807,9 +806,13 @@ rep.mo <- function(x, ...) {
 #' @export
 #' @noRd
 print.mo_uncertainties <- function(x, n = 10, ...) {
+  more_than_50 <- FALSE
   if (NROW(x) == 0) {
     cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
     return(invisible(NULL))
+  } else if (NROW(x) > 50) {
+    more_than_50 <- TRUE
+    x <- x[1:50, , drop = FALSE]
   }
 
   cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
@@ -916,6 +919,9 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
   cat(txt)
   if (isTRUE(any_maxed_out)) {
     cat(font_blue(word_wrap("\nOnly the first ", n, " other matches of each record are shown. Run `print(mo_uncertainties(), n = ...)` to view more entries, or save `mo_uncertainties()` to an object.")))
+  }
+  if (isTRUE(more_than_50)) {
+    cat(font_blue(word_wrap("\nOnly the first 50 uncertainties are shown. Run `View(mo_uncertainties())` to view all entries, or save `mo_uncertainties()` to an object.")))
   }
 }
 

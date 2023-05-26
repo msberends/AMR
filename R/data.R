@@ -141,13 +141,13 @@
 #'
 #' * `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
 #'
+#' * `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
+#' 
 #' * `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
 #'
 #' * Grimont *et al.* (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on *Salmonella* (WHOCC-SALM).
 #'
 #' * Bartlett *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
-#' 
-#' * Reimer *et al.* (2022). ***BacDive* in 2022: the knowledge base for standardized bacterial and archaeal data.**  *Nucleic Acids Res.* 2022 Jan 7;50(D1):D741-D746; \doi{10.1093/nar/gkab961}
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 #' @examples
 #' microorganisms

@@ -1,9 +1,9 @@
-# AMR 2.0.0.9019
+# AMR 2.0.0.9020
 
 ## Changed
-* Added oxygen tolerance to over 25,000 bacteria in the `microorganisms` data set
+* Added oxygen tolerance from BacDive to over 25,000 bacteria in the `microorganisms` data set
   * Added `mo_oxygen_tolerance()` to retrieve the values
-  * Added `mo_is_anaerobic()` to determine which species are obligate anaerobic bacteria
+  * Added `mo_is_anaerobic()` to determine which genera/species are obligate anaerobic bacteria
 * Added LPSN and GBIF identifiers, and oxygen tolerance to `mo_info()`
 * Added SAS Transport files (file extension `.xpt`) to [our download page](https://msberends.github.io/AMR/articles/datasets.html) to use in SAS software
 * Added microbial codes for Gram-negative/positive anaerobic bacteria
@@ -13,6 +13,7 @@
 * Fixed a bug for `as.mo()` that led to coercion of `NA` values when using custom microorganism codes
 * Fixed usage of `icu_exclude` in `first_isolates()`
 * Improved `as.mo()` algorithm for searching on only species names
+* Updated the code table in `microorganisms.codes`
 
 
 # AMR 2.0.0

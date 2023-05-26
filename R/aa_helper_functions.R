@@ -629,7 +629,12 @@ dataset_UTF8_to_ASCII <- function(df) {
 }
 
 documentation_date <- function(d) {
-  paste0(trimws(format(d, "%e")), " ", month.name[as.integer(format(d, "%m"))], ", ", format(d, "%Y"))
+  day <- as.integer(format(d, "%e"))
+  suffix <- rep("th", length(day))
+  suffix[day %in% c(1, 21, 31)] <- "st"
+  suffix[day %in% c(2, 22)] <- "nd"
+  suffix[day %in% c(3, 23)] <- "rd"
+  paste0(month.name[as.integer(format(d, "%m"))], " ", day, suffix, ", ", format(d, "%Y"))
 }
 
 format_included_data_number <- function(data) {
