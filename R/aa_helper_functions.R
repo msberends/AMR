@@ -1009,7 +1009,7 @@ get_current_column <- function() {
 
   # cur_column() doesn't always work (only allowed for certain conditions set by dplyr), but it's probably still possible:
   frms <- lapply(sys.frames(), function(env) {
-    if (!is.null(env$i)) {
+    if (tryCatch(!is.null(env$i), error = function(e) FALSE)) {
       if (!is.null(env$tibble_vars)) {
         # for mutate_if()
         env$tibble_vars[env$i]

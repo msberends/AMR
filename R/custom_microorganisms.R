@@ -71,7 +71,8 @@
 #' @examples
 #' \donttest{
 #' # a combination of species is not formal taxonomy, so
-#' # this will result in only "Enterobacter asburiae":
+#' # this will result in "Enterobacter cloacae cloacae",
+#' # since it resembles the input best:
 #' mo_name("Enterobacter asburiae/cloacae")
 #'
 #' # now add a custom entry - it will be considered by as.mo() and
@@ -109,7 +110,7 @@
 #' mo_name("BACTEROIDES / PARABACTEROIDES")
 #' mo_rank("BACTEROIDES / PARABACTEROIDES")
 #'
-#' # taxonomy still works, although a slashline genus was given as input:
+#' # taxonomy still works, even though a slashline genus was given as input:
 #' mo_family("Bacteroides/Parabacteroides")
 #'
 #'

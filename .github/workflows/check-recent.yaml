@@ -52,21 +52,21 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # current development version:
+          # current development version, check all major OSes:
           - {os: macOS-latest,   r: 'devel', allowfail: false}
           - {os: windows-latest, r: 'devel', allowfail: false}
           - {os: ubuntu-latest,  r: 'devel', allowfail: false}
 
-          # current 'release' version:
-          - {os: macOS-latest,   r: '4.2', allowfail: false}
-          - {os: windows-latest, r: '4.2', allowfail: false}
-          - {os: ubuntu-latest,  r: '4.2', allowfail: false}
+          # current 'release' version, check all major OSes:
+          - {os: macOS-latest,   r: '4.3', allowfail: false}
+          - {os: windows-latest, r: '4.3', allowfail: false}
+          - {os: ubuntu-latest,  r: '4.3', allowfail: false}
 
           # older versions (see also check-old.yaml for even older versions):
+          - {os: ubuntu-latest, r: '4.2', allowfail: false}
           - {os: ubuntu-latest, r: '4.1', allowfail: false}
           - {os: ubuntu-latest, r: '4.0', allowfail: false}
-          - {os: ubuntu-latest, r: '3.6', allowfail: false}
-          - {os: ubuntu-latest, r: '3.5', allowfail: false} # when a new R releases, this one has to move to check-old.yaml
+          - {os: ubuntu-latest, r: '3.6', allowfail: false} # when a new R releases, this one has to move to check-old.yaml
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

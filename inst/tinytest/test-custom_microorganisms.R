@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 expect_identical(as.mo("Enterobacter asburiae/cloacae"),
-                 as.mo("Enterobacter asburiae"))
+                 as.mo("Enterobacter cloacae cloacae"))
 
 suppressMessages(
   add_custom_microorganisms(
