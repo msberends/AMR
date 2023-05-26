@@ -283,12 +283,19 @@ as.mo <- function(x,
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
       if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) |
-                         AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) |
-                         AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1) |
-                         AMR_env$MO_lookup$subspecies_first == substr(x_parts[3], 1, 1))
+        if (nchar(gsub("[^a-z]", "", x_parts[1], perl = TRUE)) <= 3) {
+          filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) &
+                           (AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) |
+                             AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1) |
+                             AMR_env$MO_lookup$subspecies_first == substr(x_parts[3], 1, 1)))
+        } else {
+          filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) |
+                           AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) |
+                           AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1) |
+                           AMR_env$MO_lookup$subspecies_first == substr(x_parts[3], 1, 1))
+        }
       } else if (length(x_parts) > 3) {
-        first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
+        first_chars <- paste0("(^| )[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO
