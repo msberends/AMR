@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9023</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,28 +89,28 @@
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--with-other-pkgs">
-    <span class="fa fa-layer-plus"></span>
+    <span class="fa fa-layer-group"></span>
      
     With other pkgs
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdown--with-other-pkgs">
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-layer-plus"></span>
+      <span class="fa fa-layer-group"></span>
        
       AMR &amp; dplyr/tidyverse
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-layer-plus"></span>
+      <span class="fa fa-layer-group"></span>
        
       AMR &amp; data.table
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-layer-plus"></span>
+      <span class="fa fa-layer-group"></span>
        
       AMR &amp; tidymodels
     </a>
     <a class="dropdown-item" href="../articles/other_pkg.html">
-      <span class="fa fa-layer-plus"></span>
+      <span class="fa fa-layer-group"></span>
        
       AMR &amp; base R
     </a>
@@ -199,6 +199,81 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1101  B_STRPT_VIRI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1102  B_STRPT_HAEM</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4,899 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 'ECO' or 'eco' is the WHONET code for E. coli:</span></span></span>
+<span class="r-in"><span><span class="va">microorganisms.codes</span><span class="op">[</span><span class="va">microorganisms.codes</span><span class="op">$</span><span class="va">code</span> <span class="op">==</span> <span class="st">"ECO"</span>, <span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   code  mo          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> ECO   B_ESCHR_COLI</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># and therefore, 'eco' will be understood as E. coli in this package:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_info</a></span><span class="op">(</span><span class="st">"eco"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "B_ESCHR_COLI"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $kingdom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $phylum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Pseudomonadota"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gammaproteobacteria"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $order</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacterales"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $family</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacteriaceae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $genus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Escherichia"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "coli"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $subspecies</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "accepted"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $synonyms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gramstain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gram-negative"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $oxygen_tolerance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "facultative anaerobe"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $url</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://lpsn.dsmz.de/species/escherichia-coli"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ref</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Castellani et al., 1919"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $snomed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1095001000112106" "715307006"        "737528008"        "416989002"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "116397003"        "414097009"        "414098004"        "414099007"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "414100004"        "116395006"        "735270003"        "116396007"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "83285000"         "116394005"        "112283007"        "710886005"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "710887001"        "710888006"        "710889003"        "414132004"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "721892009"        "416812001"        "416740004"        "417216001"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "457541006"        "710253004"        "416530004"        "417189006"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "409800005"        "713925008"        "444771000124108"  "838549008"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lpsn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "776057"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gbif</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "11286021"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># works for all AMR functions:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="st">"eco"</span>, ab <span class="op">=</span> <span class="st">"vancomycin"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
