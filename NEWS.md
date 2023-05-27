@@ -1,4 +1,4 @@
-# AMR 2.0.0.9022
+# AMR 2.0.0.9023
 
 ## Changed
 * Added oxygen tolerance from BacDive to over 25,000 bacteria in the `microorganisms` data set

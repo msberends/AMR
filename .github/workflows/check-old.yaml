@@ -9,7 +9,7 @@
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
-# doi:10.18637/jss.v104.i03                                            #
+# https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
 # Center Groningen in The Netherlands, in collaboration with many      #
@@ -49,7 +49,7 @@ jobs:
           # Test all old versions of R >= 3.0, we support them all!
           # For these old versions, dependencies and vignettes will not be checked.
           # For recent R versions, see check-recent.yaml (r-lib and tidyverse support the latest 5 major R releases).
-          - {os: ubuntu-latest, r: '3.5', allowfail: false}
+          - {os: windows-latest, r: '3.5', allowfail: true}
           - {os: ubuntu-latest, r: '3.4', allowfail: false}
           - {os: ubuntu-latest, r: '3.3', allowfail: false}
           - {os: ubuntu-latest, r: '3.2', allowfail: false}

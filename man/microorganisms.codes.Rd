@@ -22,6 +22,15 @@ Like all data sets in this package, this data set is publicly available for down
 }
 \examples{
 microorganisms.codes
+
+# 'ECO' or 'eco' is the WHONET code for E. coli:
+microorganisms.codes[microorganisms.codes$code == "ECO", ]
+
+# and therefore, 'eco' will be understood as E. coli in this package:
+mo_info("eco")
+
+# works for all AMR functions:
+mo_is_intrinsic_resistant("eco", ab = "vancomycin")
 }
 \seealso{
 \code{\link[=as.mo]{as.mo()}} \link{microorganisms}
