@@ -171,10 +171,11 @@ as.mo <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
   add_MO_lookup_to_AMR_env()
-
-  if (tryCatch(all(x %in% c(AMR_env$MO_lookup$mo, NA)) &&
-    isFALSE(Becker) &&
-    isFALSE(Lancefield), error = function(e) FALSE)) {
+  
+  if (tryCatch(all(x %in% c(AMR_env$MO_lookup$mo, NA)), error = function(e) FALSE) &&
+      isFALSE(Becker) &&
+      isFALSE(Lancefield) &&
+      isTRUE(keep_synonyms)) {
     # don't look into valid MO codes, just return them
     # is.mo() won't work - MO codes might change between package versions
     return(set_clean_class(x, new_class = c("mo", "character")))
@@ -297,15 +298,19 @@ as.mo <- function(x,
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
+      } else if (nchar(x_out) == 3) {
+        # no space and 3 characters - probably a code such as SAU or ECO
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", substr(x_out, 1, 1), AMR_env$dots, " ", substr(x_out, 2, 3), AMR_env$dots, "\""))
+        filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 1), ".* ", substr(x_out, 2, 3)))
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO
-        msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE)))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", substr(x_out, 1, 2), AMR_env$dots, " ", substr(x_out, 3, 4), AMR_env$dots, "\""))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
         second_part <- substr(x_out, 4, nchar(x_out))
-        msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE)))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", gsub("[a-z]*", AMR_env$dots, first_part, fixed = TRUE), " ", second_part, AMR_env$dots, "\""))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
         # for genus or species or subspecies
@@ -328,13 +333,16 @@ as.mo <- function(x,
         minimum_matching_score_current <- minimum_matching_score_current / AMR_env$MO_lookup$prevalence[match(mo_to_search, AMR_env$MO_lookup$fullname)]
         # correct back for kingdom
         minimum_matching_score_current <- minimum_matching_score_current / AMR_env$MO_lookup$kingdom_index[match(mo_to_search, AMR_env$MO_lookup$fullname)]
+        minimum_matching_score_current <- pmax(minimum_matching_score_current, m)
+        if (all(m <= 0.55, na.rm = TRUE)) {
+          # if the highest score is 0.5, we have nothing serious - 0.5 is the lowest for pathogenic group 1
+          # make everything NA so the results will get removed below
+          m[seq_len(length(m))] <- NA_real_
+        }
       } else {
+        # minimum_matching_score was set, so remove everything below it
+        m[m < minimum_matching_score] <- NA_real_
         minimum_matching_score_current <- minimum_matching_score
-      }
-
-      if (sum(m >= minimum_matching_score_current) > 10) {
-        # at least 10 are left over, make the ones under `m` NA
-        m[m < minimum_matching_score_current] <- NA_real_
       }
 
       top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
@@ -815,7 +823,7 @@ rep.mo <- function(x, ...) {
 print.mo_uncertainties <- function(x, n = 10, ...) {
   more_than_50 <- FALSE
   if (NROW(x) == 0) {
-    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
+    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call to `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
     return(invisible(NULL))
   } else if (NROW(x) > 50) {
     more_than_50 <- TRUE
@@ -833,20 +841,20 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
 
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
-      col_red(" 0.000-0.499 "),
-      col_orange(" 0.500-0.599 "),
-      col_yellow(" 0.600-0.699 "),
-      col_green(" 0.700-1.000"),
+      col_red(" 0.000-0.549 "),
+      col_orange(" 0.550-0.649 "),
+      col_yellow(" 0.650-0.749 "),
+      col_green(" 0.750-1.000"),
       add_fn = font_blue
     ), font_green_bg(" "), "\n", sep = "")
   }
 
   score_set_colour <- function(text, scores) {
     # set colours to scores
-    text[scores >= 0.7] <- col_green(text[scores >= 0.7])
-    text[scores >= 0.6 & scores < 0.7] <- col_yellow(text[scores >= 0.6 & scores < 0.7])
-    text[scores >= 0.5 & scores < 0.6] <- col_orange(text[scores >= 0.5 & scores < 0.6])
-    text[scores < 0.5] <- col_red(text[scores < 0.5])
+    text[scores >= 0.75] <- col_green(text[scores >= 0.75])
+    text[scores >= 0.65 & scores < 0.75] <- col_yellow(text[scores >= 0.65 & scores < 0.75])
+    text[scores >= 0.55 & scores < 0.65] <- col_orange(text[scores >= 0.55 & scores < 0.65])
+    text[scores < 0.55] <- col_red(text[scores < 0.55])
     text
   }
 

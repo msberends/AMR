@@ -83,9 +83,11 @@ if (utf8_supported && !is_latex) {
   # \u2139 is a symbol officially named 'information source'
   AMR_env$info_icon <- "\u2139"
   AMR_env$bullet_icon <- "\u2022"
+  AMR_env$dots <- "\u2026"
 } else {
   AMR_env$info_icon <- "i"
   AMR_env$bullet_icon <- "*"
+  AMR_env$dots <- "..."
 }
 
 .onLoad <- function(lib, pkg) {

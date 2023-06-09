@@ -32,9 +32,9 @@ library(readxl)
 library(cleaner)
 
 # URL:
-# https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/Dosages_v_11.0_Breakpoint_Tables.pdf
+# https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/Dosages_v_13.0_Breakpoint_Tables.pdf
 # download the PDF file, open in Adobe Acrobat and export as Excel workbook
-breakpoints_version <- 12
+breakpoints_version <- 13
 
 dosage_source <- read_excel("data-raw/Dosages_v_12.0_Breakpoint_Tables.xlsx", skip = 4, na = "None") %>%
   format_names(snake_case = TRUE, penicillins = "drug") %>%
@@ -170,10 +170,9 @@ dosage_new <- bind_rows(
   ) %>%
   arrange(name, administration, type) %>%
   filter(!is.na(dose), dose != ".") %>%
-  as.data.frame(stringsAsFactors = FALSE)
-rownames(dosage_new) <- NULL
-
-dosage <- bind_rows(dosage_new, AMR::dosage) %>%
+  # this makes it a tibble as well:
   dataset_UTF8_to_ASCII()
 
-usethis::use_data(dosage, internal = FALSE, overwrite = TRUE, version = 2)
+dosage <- bind_rows(dosage_new, AMR::dosage)
+
+usethis::use_data(dosage, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")

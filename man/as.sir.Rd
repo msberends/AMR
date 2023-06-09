@@ -18,9 +18,9 @@ An object of class \code{sir} (inherits from \code{ordered}, \code{factor}) of l
 \source{
 For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 \itemize{
-\item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2013-2022, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-\item \strong{M100 Performance Standard for Antimicrobial Susceptibility Testing}, 2013-2022, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
-\item \strong{Breakpoint tables for interpretation of MICs and zone diameters}, 2013-2022, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
+\item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\item \strong{M100 Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
+\item \strong{Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2023, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
 }
 }
 \usage{
@@ -85,7 +85,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}.}
+\item{guideline}{defaults to EUCAST 2023 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2023) and CLSI (2011-2023), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -142,9 +142,9 @@ your_data \%>\% mutate(across(where(is.disk), as.sir))
 
 \subsection{Supported Guidelines}{
 
-For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022).
+For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2023) and CLSI (2011-2023).
 
-Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2022"} or \code{"CLSI 2022"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
+Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2023"} or \code{"CLSI 2023"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 
 You can set the default guideline with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}} (e.g. in your \code{.Rprofile} file), such as:
 
@@ -163,7 +163,7 @@ After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast
 
 \subsection{Machine-Readable Clinical Breakpoints}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 18 271 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 42 599 rows and 12 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{

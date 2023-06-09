@@ -1,18 +1,26 @@
-# AMR 2.0.0.9023
+# AMR 2.0.0.9024
 
-## Changed
+## New
+* Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules.
+* The EUCAST dosage guideline of v13.0 as been added to the `dosage` data set
+* ECOFF: the `clinical_breakpoints` data set now contains the new column `ecoff`, in which the epidemiological cut-off (ECOFF) are available. These ECOFFs can now also be used in `as.sir()`, which is an important new addition for veterinary microbiology.
 * Added oxygen tolerance from BacDive to over 25,000 bacteria in the `microorganisms` data set
   * Added `mo_oxygen_tolerance()` to retrieve the values
   * Added `mo_is_anaerobic()` to determine which genera/species are obligate anaerobic bacteria
 * Added LPSN and GBIF identifiers, and oxygen tolerance to `mo_info()`
 * Added SAS Transport files (file extension `.xpt`) to [our download page](https://msberends.github.io/AMR/articles/datasets.html) to use in SAS software
 * Added microbial codes for Gram-negative/positive anaerobic bacteria
+
+## Changed
 * `mo_rank()` now returns `NA` for 'unknown' microorganisms (`B_ANAER`, `B_ANAER-NEG`, `B_ANAER-POS`, `B_GRAMN`, `B_GRAMP`, `F_FUNGUS`, `F_YEAST`, and `UNKNOWN`)
 * Fixed formatting for `sir_interpretation_history()`
 * Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
 * Fixed a bug for `as.mo()` that led to coercion of `NA` values when using custom microorganism codes
 * Fixed usage of `icu_exclude` in `first_isolates()`
-* Improved `as.mo()` algorithm for searching on only species names
+* Improved `as.mo()` algorithm:
+  * Now allows searching on only species names
+  * Fix for using the `keep_synonyms` argument when using MO codes as input
+  * Fix for using the `minimum_matching_score` argument
 * Updated the code table in `microorganisms.codes`
 
 

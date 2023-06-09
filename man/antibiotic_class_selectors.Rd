@@ -112,7 +112,7 @@ not_intrinsic_resistant(
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2", or "3.1".}
+\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2", "3.1", or "1.2".}
 }
 \value{
 (internally) a \link{character} vector of column names, with additional class \code{"ab_selector"}
@@ -133,7 +133,7 @@ The \code{\link[=ab_selector]{ab_selector()}} function can be used to internally
 
 The \code{\link[=administrable_per_os]{administrable_per_os()}} and \code{\link[=administrable_iv]{administrable_iv()}} functions also rely on the \link{antibiotics} data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the \link{antibiotics} data set.
 
-The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
+The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'Expected Resistant Phenotypes' v3.3} (2023) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
 }
 \section{Full list of supported (antibiotic) classes}{
 

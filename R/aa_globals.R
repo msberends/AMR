@@ -30,6 +30,12 @@
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and clinical_breakpoints
 # (sourcing "data-raw/_pre_commit_hook.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list(
+  "13.0" = list(
+    version_txt = "v13.0",
+    year = 2023,
+    title = "'EUCAST Clinical Breakpoint Tables'",
+    url = "https://www.eucast.org/clinical_breakpoints/"
+  ),
   "12.0" = list(
     version_txt = "v12.0",
     year = 2022,
@@ -50,10 +56,16 @@ EUCAST_VERSION_BREAKPOINTS <- list(
   )
 )
 EUCAST_VERSION_EXPERT_RULES <- list(
-  "3.1" = list(
-    version_txt = "v3.1",
-    year = 2016,
-    title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
+  "1.2" = list(
+    version_txt = "v3.3",
+    year = 2023,
+    title = "'EUCAST Expert Rules' and 'Expected Resistant Phenotypes'",
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+  ),
+  "3.3" = list(
+    version_txt = "v3.3",
+    year = 2021,
+    title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
   ),
   "3.2" = list(
@@ -62,10 +74,10 @@ EUCAST_VERSION_EXPERT_RULES <- list(
     title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
   ),
-  "3.3" = list(
-    version_txt = "v3.3",
-    year = 2021,
-    title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
+  "3.1" = list(
+    version_txt = "v3.1",
+    year = 2016,
+    title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
   )
 )

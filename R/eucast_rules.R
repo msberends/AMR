@@ -1185,7 +1185,7 @@ edit_sir <- function(x,
 
 #' @rdname eucast_rules
 #' @export
-eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 12.0) {
+eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 13.0) {
   meet_criteria(ab, allow_class = c("character", "numeric", "integer", "factor"))
   meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)], has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))

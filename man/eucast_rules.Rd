@@ -33,7 +33,7 @@ eucast_rules(
   ...
 )
 
-eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
+eucast_dosage(ab, administration = "iv", version_breakpoints = 13)
 }
 \arguments{
 \item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
@@ -46,9 +46,9 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0", or "10.0".}
+\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "13.0", "12.0", "11.0", or "10.0".}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2", or "3.1".}
+\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2", "3.1", or "1.2".}
 
 \item{ampc_cephalosporin_resistance}{a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2} and higher; these version of '\emph{EUCAST Expert Rules on Enterobacterales}' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of \code{NA} (the default) for this argument will remove results for these three drugs, while e.g. a value of \code{"R"} will make the results for these drugs resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia}, and \emph{Serratia}.}
 
