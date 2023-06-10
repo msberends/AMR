@@ -43,6 +43,7 @@
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the [package option][AMR-options] [`AMR_include_PKPD`][AMR-options].
+#' @param ecoff a [logical] to indicate that ECOFF (Epidemiological Cut-Off) values must be used - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_ecoff`][AMR-options].
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
@@ -428,6 +429,7 @@ as.sir.mic <- function(x,
                        reference_data = AMR::clinical_breakpoints,
                        include_screening = getOption("AMR_include_screening", FALSE),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                       ecoff = getOption("AMR_ecoff", FALSE),
                        ...) {
   as_sir_method(
     method_short = "mic",
@@ -442,6 +444,7 @@ as.sir.mic <- function(x,
     reference_data = reference_data,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
+    ecoff = ecoff,
     ...
   )
 }
@@ -457,6 +460,7 @@ as.sir.disk <- function(x,
                         reference_data = AMR::clinical_breakpoints,
                         include_screening = getOption("AMR_include_screening", FALSE),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                        ecoff = getOption("AMR_ecoff", FALSE),
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -471,6 +475,7 @@ as.sir.disk <- function(x,
     reference_data = reference_data,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
+    ecoff = ecoff,
     ...
   )
 }
@@ -486,7 +491,8 @@ as.sir.data.frame <- function(x,
                               add_intrinsic_resistance = FALSE,
                               reference_data = AMR::clinical_breakpoints,
                               include_screening = getOption("AMR_include_screening", FALSE),
-                              include_PKPD = getOption("AMR_include_PKPD", TRUE)) {
+                              include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                              ecoff = getOption("AMR_ecoff", FALSE)) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -494,6 +500,9 @@ as.sir.data.frame <- function(x,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
+  meet_criteria(include_screening, allow_class = "logical", has_length = 1)
+  meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
+  meet_criteria(ecoff, allow_class = "logical", has_length = 1)
 
   x.bak <- x
   for (i in seq_len(ncol(x))) {
@@ -625,6 +634,7 @@ as.sir.data.frame <- function(x,
           reference_data = reference_data,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
+          ecoff = ecoff,
           is_data.frame = TRUE
         )
     } else if (types[i] == "disk") {
@@ -642,6 +652,7 @@ as.sir.data.frame <- function(x,
           reference_data = reference_data,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
+          ecoff = ecoff,
           is_data.frame = TRUE
         )
     } else if (types[i] == "sir") {
@@ -711,6 +722,7 @@ as_sir_method <- function(method_short,
                           reference_data,
                           include_screening,
                           include_PKPD,
+                          ecoff,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE, .call_depth = -2)
@@ -722,6 +734,7 @@ as_sir_method <- function(method_short,
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
+  meet_criteria(ecoff, allow_class = "logical", has_length = 1, .call_depth = -2)
   check_reference_data(reference_data, .call_depth = -2)
 
   # for dplyr's across()

@@ -43,6 +43,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  ecoff = getOption("AMR_ecoff", FALSE),
   ...
 )
 
@@ -56,6 +57,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  ecoff = getOption("AMR_ecoff", FALSE),
   ...
 )
 
@@ -69,7 +71,8 @@ is_sir_eligible(x, threshold = 0.05)
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
-  include_PKPD = getOption("AMR_include_PKPD", TRUE)
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  ecoff = getOption("AMR_ecoff", FALSE)
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -98,6 +101,8 @@ sir_interpretation_history(clean = FALSE)
 \item{include_screening}{a \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_screening}}.}
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
+
+\item{ecoff}{a \link{logical} to indicate that ECOFF (Epidemiological Cut-Off) values must be used - the default is \code{FALSE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_ecoff}}.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 

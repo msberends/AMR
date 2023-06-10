@@ -17,7 +17,7 @@ A \link[tibble:tibble]{tibble} with 42 599 observations and 12 variables:
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R"
-\item \code{ecoff}\cr Epidemiological cut-off (ECOFF) value, used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi (use \link{as.sir(..., ecoff = TRUE)} to interpret raw data using ECOFF values)
+\item \code{ecoff}\cr Epidemiological cut-off (ECOFF) value, used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi (use \code{\link[=as.sir]{as.sir(..., ecoff = TRUE)}} to interpret raw data using ECOFF values)
 \item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
 }
 }

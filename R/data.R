@@ -257,7 +257,7 @@
 #' - `disk_dose`\cr Dose of the used disk diffusion method
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
-#' - `ecoff`\cr Epidemiological cut-off (ECOFF) value, used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi (use [as.sir(..., ecoff = TRUE)] to interpret raw data using ECOFF values)
+#' - `ecoff`\cr Epidemiological cut-off (ECOFF) value, used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi (use [`as.sir(..., ecoff = TRUE)`][as.sir()] to interpret raw data using ECOFF values)
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' @details
 #' Clinical breakpoints are validated through [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org).
