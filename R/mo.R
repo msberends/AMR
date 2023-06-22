@@ -267,6 +267,8 @@ as.mo <- function(x,
       x_out <- trimws2(gsub(" +", " ", x_out, perl = TRUE))
       x_search_cleaned <- x_out
       x_out <- tolower(x_out)
+      # when x_search_cleaned are only capitals (such as in codes), make them lowercase to increase matching score
+      x_search_cleaned[x_search_cleaned == toupper(x_search_cleaned)] <- x_out[x_search_cleaned == toupper(x_search_cleaned)]
 
       # first check if cleaning led to an exact result, case-insensitive
       if (x_out %in% AMR_env$MO_lookup$fullname_lower) {
@@ -334,7 +336,7 @@ as.mo <- function(x,
         # correct back for kingdom
         minimum_matching_score_current <- minimum_matching_score_current / AMR_env$MO_lookup$kingdom_index[match(mo_to_search, AMR_env$MO_lookup$fullname)]
         minimum_matching_score_current <- pmax(minimum_matching_score_current, m)
-        if (all(m <= 0.55, na.rm = TRUE)) {
+        if (length(m) > 1 && all(m <= 0.55, na.rm = TRUE)) {
           # if the highest score is 0.5, we have nothing serious - 0.5 is the lowest for pathogenic group 1
           # make everything NA so the results will get removed below
           m[seq_len(length(m))] <- NA_real_

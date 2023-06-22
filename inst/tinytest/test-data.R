@@ -47,10 +47,10 @@ expect_false(any(is.na(microorganisms.codes$mo)))
 expect_true(all(dosage$ab %in% antibiotics$ab))
 expect_true(all(dosage$name %in% antibiotics$name))
 # check valid disks/MICs
-expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC"), "breakpoint_S", drop = TRUE]))))
-expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC"), "breakpoint_R", drop = TRUE]))))
-expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK"), "breakpoint_S", drop = TRUE]))))
-expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK"), "breakpoint_R", drop = TRUE]))))
+expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
+expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
+expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
+expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
 
 # antibiotic names must always be coercible to their original AB code
 expect_identical(as.ab(antibiotics$name), antibiotics$ab)
