@@ -2,8 +2,8 @@
 
 ## New
 * Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules.
-* The EUCAST dosage guideline of v13.0 as been added to the `dosage` data set
-* ECOFF: the `clinical_breakpoints` data set now contains the new column `ecoff`, in which the epidemiological cut-off (ECOFF) are available. These ECOFFs can now also be used in `as.sir()`, which is an important new addition for veterinary microbiology.
+* The EUCAST dosage guideline of v13.0 has been added to the `dosage` data set
+* ECOFF: the `clinical_breakpoints` data set now contains the new column `ecoff`, in which the epidemiological cut-off (ECOFF) are available. These ECOFFs can be used for MIC/disk interpretation using `as.sir(..., ecoff = TRUE)`, which is an important new addition for veterinary microbiology.
 * Added oxygen tolerance from BacDive to over 25,000 bacteria in the `microorganisms` data set
   * Added `mo_oxygen_tolerance()` to retrieve the values
   * Added `mo_is_anaerobic()` to determine which genera/species are obligate anaerobic bacteria

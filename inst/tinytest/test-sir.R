@@ -143,6 +143,10 @@ expect_equal(
   as.sir("S")
 )
 expect_equal(
+  suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE)),
+  as.sir("S")
+)
+expect_equal(
   suppressMessages(as.sir(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
   as.sir("R")
 )

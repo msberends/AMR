@@ -102,7 +102,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{ecoff}{a \link{logical} to indicate that ECOFF (Epidemiological Cut-Off) values must be used - the default is \code{FALSE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_ecoff}}.}
+\item{ecoff}{a \link{logical} to indicate that ECOFF (Epidemiological Cut-Off) values must be used \strong{instead} of other clinical breakpoints - the default is \code{FALSE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_ecoff}}.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 

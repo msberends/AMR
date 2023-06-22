@@ -43,7 +43,7 @@
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the [package option][AMR-options] [`AMR_include_PKPD`][AMR-options].
-#' @param ecoff a [logical] to indicate that ECOFF (Epidemiological Cut-Off) values must be used - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_ecoff`][AMR-options].
+#' @param ecoff a [logical] to indicate that ECOFF (Epidemiological Cut-Off) values must be used **instead** of other clinical breakpoints - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_ecoff`][AMR-options].
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
@@ -831,15 +831,19 @@ as_sir_method <- function(method_short,
     )
   }
   message_("=> Interpreting ", method_long, " of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-    agent_formatted,
-    mo_var_found,
-    " according to ", ifelse(identical(reference_data, AMR::clinical_breakpoints),
-      font_bold(guideline_coerced),
-      "manually defined 'reference_data'"
-    ),
-    "... ",
-    appendLF = FALSE,
-    as_note = FALSE
+           agent_formatted,
+           mo_var_found,
+           " according to ", 
+           ifelse(isTRUE(ecoff),
+                  "ECOFF values of ",
+                  ""),
+           ifelse(identical(reference_data, AMR::clinical_breakpoints),
+                  font_bold(guideline_coerced),
+                  "manually defined 'reference_data'"
+           ),
+           "... ",
+           appendLF = FALSE,
+           as_note = FALSE
   )
 
   msg_note <- function(messages) {
@@ -876,7 +880,7 @@ as_sir_method <- function(method_short,
   method_coerced <- toupper(method)
   ab_coerced <- ab
   mo_coerced <- mo
-
+  
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
       subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
@@ -900,7 +904,17 @@ as_sir_method <- function(method_short,
     breakpoints <- breakpoints %pm>%
       subset(mo != "UNKNOWN" & ref_tbl %unlike% "PK.*PD")
   }
-
+  if (isFALSE(ecoff)) {
+    # remove ECOFF interpretations from the breakpoints table
+    breakpoints <- breakpoints %pm>%
+      subset(ref_tbl != "ECOFF")
+  } else {
+    # keep only ECOFF interpretations from the breakpoints table
+    breakpoints <- breakpoints %pm>%
+      subset(ref_tbl == "ECOFF") %pm>%
+      pm_mutate(breakpoint_S = ecoff, breakpoint_R = ecoff)
+  }
+  
   msgs <- character(0)
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
