@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 18 271 observations and 11 variables:
+A \link[tibble:tibble]{tibble} with 42 599 observations and 12 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"
@@ -17,6 +17,7 @@ A \link[tibble:tibble]{tibble} with 18 271 observations and 11 variables:
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R"
+\item \code{ecoff}\cr Epidemiological cut-off (ECOFF) value, used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi (use \code{\link[=as.sir]{as.sir(..., ecoff = TRUE)}} to interpret raw data using ECOFF values)
 \item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
 }
 }
@@ -24,9 +25,11 @@ A \link[tibble:tibble]{tibble} with 18 271 observations and 11 variables:
 clinical_breakpoints
 }
 \description{
-Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. Currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022). Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
+Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2023) and CLSI (2011-2023). Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
 }
 \details{
+Clinical breakpoints are validated through \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}.
+
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 
 They \strong{allow for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.

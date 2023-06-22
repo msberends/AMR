@@ -63,8 +63,9 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param info a [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions
 #' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value using the [package option][AMR-options] [`AMR_eucastrules`][AMR-options]: `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
-#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
-#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
+#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
+#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
+#' @param version_resistant_phenotypes the version number to use for the EUCAST Expected Resistant Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_RESISTANTPHENOTYPES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these version of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
@@ -167,6 +168,7 @@ eucast_rules <- function(x,
                          verbose = FALSE,
                          version_breakpoints = 12.0,
                          version_expertrules = 3.3,
+                         version_resistant_phenotypes = 1.2,
                          ampc_cephalosporin_resistance = NA,
                          only_sir_columns = FALSE,
                          custom_rules = NULL,
@@ -178,6 +180,7 @@ eucast_rules <- function(x,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
   meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
+  meet_criteria(version_resistant_phenotypes, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_RESISTANTPHENOTYPES)))
   meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "sir"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
@@ -205,7 +208,8 @@ eucast_rules <- function(x,
 
   breakpoints_info <- EUCAST_VERSION_BREAKPOINTS[[which(as.double(names(EUCAST_VERSION_BREAKPOINTS)) == version_breakpoints)]]
   expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
-
+  resistantphenotypes_info <- EUCAST_VERSION_RESISTANTPHENOTYPES[[which(as.double(names(EUCAST_VERSION_RESISTANTPHENOTYPES)) == version_resistant_phenotypes)]]
+  
   # support old setting (until AMR v1.3.0)
   if (missing(rules) && !is.null(getOption("AMR.eucast_rules"))) {
     rules <- getOption("AMR.eucast_rules")
@@ -1185,7 +1189,7 @@ edit_sir <- function(x,
 
 #' @rdname eucast_rules
 #' @export
-eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 12.0) {
+eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 13.0) {
   meet_criteria(ab, allow_class = c("character", "numeric", "integer", "factor"))
   meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)], has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))

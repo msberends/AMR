@@ -73,6 +73,7 @@ whonet_organisms.bak <- whonet_organisms
 # generate the mo codes and add their names
 whonet_organisms <- whonet_organisms.bak %>% 
   mutate(mo = as.mo(gsub("(sero[a-z]*| complex| nontypable| non[-][a-zA-Z]+|var[.]| not .*|sp[.],.*|, .*variant.*|, .*toxin.*|, microaer.*| beta-haem[.])", "", ORGANISM),
+                    minimum_matching_score = 0.6,
                     keep_synonyms = TRUE,
                     language = "en"),
          mo = case_when(ORGANISM %like% "Anaerobic" & ORGANISM %like% "negative" ~ as.mo("B_ANAER-NEG"),
@@ -86,17 +87,21 @@ whonet_organisms <- whonet_organisms.bak %>%
 new_mo_codes <- whonet_organisms %>% 
   mutate(
     first_part = sapply(ORGANISM, function(x) strsplit(gsub("[^a-zA-Z _-]+", "", x), " ")[[1]][1], USE.NAMES = FALSE),
-    keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other" | ORGANISM %like% "anaerobic")
+    keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other" | ORGANISM %like% "anaerobic") %>% 
+  filter(keep == TRUE) %>% 
+  transmute(code = toupper(ORGANISM_CODE),
+            mo = mo)
 # update microorganisms.codes with the latest WHONET codes
-microorganisms.codes <- microorganisms.codes %>% 
+microorganisms.codes2 <- microorganisms.codes %>% 
   # remove all old WHONET codes, whether we (in the end) keep them or not
-  filter(!toupper(code) %in% toupper(whonet_organisms$ORGANISM_CODE)) %>% 
+  filter(!toupper(code) %in% toupper(new_mo_codes$code)) %>% 
   # and add the new ones
-  bind_rows(new_mo_codes %>% 
-              filter(keep == TRUE) %>% 
-              transmute(code = toupper(ORGANISM_CODE),
-                        mo = mo)) %>% 
+  bind_rows(new_mo_codes) %>% 
   arrange(code)
+# new codes:
+microorganisms.codes2$code[which(!microorganisms.codes2$code %in% microorganisms.codes$code)]
+mo_name(microorganisms.codes2$mo[which(!microorganisms.codes2$code %in% microorganisms.codes$code)], keep_synonyms = TRUE)
+microorganisms.codes <- microorganisms.codes2
 
 # Run this part to update ASIARS-Net:
 # start
@@ -140,11 +145,11 @@ whonet_antibiotics <- read_tsv("data-raw/WHONET/Resources/Antibiotics.txt", na =
 
 breakpoints <- whonet_breakpoints %>%
   mutate(code = toupper(ORGANISM_CODE)) %>%
-  left_join(bind_rows(microorganisms.codes,
+  left_join(bind_rows(microorganisms.codes %>% filter(!code %in% c("ALL", "GEN")),
                       # GEN (Generic) and ALL (All) are PK/PD codes
                       data.frame(code = c("ALL", "GEN"),
                                  mo = rep(as.mo("UNKNOWN"), 2))))
-# these ones lack a MO name, they cannot be used:
+# these ones lack an MO name, they cannot be used:
 unknown <- breakpoints %>%
   filter(is.na(mo)) %>%
   pull(code) %>%
@@ -159,9 +164,13 @@ breakpoints %>%
   filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) %>% 
   count(YEAR, GUIDELINES, WHONET_ABX_CODE) %>% 
   arrange(desc(YEAR))
+breakpoints %>% 
+  filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) %>%
+  pull(WHONET_ABX_CODE) %>%
+  unique()
 # we cannot use them
-breakpoints <- breakpoints %>% 
-  filter(WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE)
+# breakpoints <- breakpoints %>% 
+#   filter(WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE)
 # now check with our own antibiotics
 breakpoints %>% 
   filter(!toupper(WHONET_ABX_CODE) %in% antibiotics$ab) %>% 
@@ -171,19 +180,19 @@ breakpoints %>%
   
 breakpoints_new <- breakpoints %>%
   # only last available 10 years
-  filter(YEAR > max(YEAR) - 10) %>%
+  # filter(YEAR > max(YEAR) - 10) %>%
   transmute(
     guideline = paste(GUIDELINES, YEAR),
     method = TEST_METHOD,
-    site = gsub(".*(UTI|urinary|urine).*", "UTI", SITE_OF_INFECTION, ignore.case = TRUE),
+    site = SITE_OF_INFECTION,
     mo,
     rank_index = case_when(
-      is.na(mo_rank(mo)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
-      mo_rank(mo) %like% "(infra|sub)" ~ 1,
-      mo_rank(mo) == "species" ~ 2,
-      mo_rank(mo) == "genus" ~ 3,
-      mo_rank(mo) == "family" ~ 4,
-      mo_rank(mo) == "order" ~ 5,
+      is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
+      mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
+      mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
+      mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
+      mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
+      mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
       TRUE ~ 6
     ),
     ab = as.ab(WHONET_ABX_CODE),
@@ -191,7 +200,7 @@ breakpoints_new <- breakpoints %>%
     disk_dose = POTENCY,
     breakpoint_S = S,
     breakpoint_R = R,
-    uti = ifelse(is.na(site), FALSE, site == "UTI")
+    uti = ifelse(is.na(site), FALSE, gsub(".*(UTI|urinary|urine).*", "UTI", site) == "UTI")
   ) %>%
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
@@ -206,8 +215,18 @@ breakpoints_new <- breakpoints %>%
 breakpoints_new %>% 
   mutate(id = paste(guideline, ab, mo, method, site)) %>% 
   filter(id %in% .$id[which(duplicated(id))])
+# remove duplicates
+breakpoints_new <- breakpoints_new %>% 
+  distinct(guideline, ab, mo, method, site, .keep_all = TRUE)
 
-# clean disk zones and MICs
+# fix reference table names
+breakpoints_new %>% filter(guideline %like% "EUCAST", is.na(ref_tbl))
+breakpoints_new <- breakpoints_new %>% 
+  mutate(ref_tbl = case_when(is.na(ref_tbl) & guideline %like% "EUCAST 202" ~ lead(ref_tbl),
+                             is.na(ref_tbl) ~ "Unknown",
+                             TRUE ~ ref_tbl))
+
+# clean disk zones
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S", drop = TRUE]))
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R", drop = TRUE]))
 
@@ -227,7 +246,7 @@ breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2022 guideline: S <= 8 and R > 8
 #           WHONET file: S <= 8 and R >= 16
-breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # this will make an MIC of 12 I, which should be R, so:
 breakpoints_new <- breakpoints_new %>%
   mutate(breakpoint_R = ifelse(guideline %like% "EUCAST" & method == "MIC" & log2(breakpoint_R) - log2(breakpoint_S) != 0,
@@ -235,6 +254,7 @@ breakpoints_new <- breakpoints_new %>%
     breakpoint_R
   ))
 # fix disks as well
+breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "DISK")
 breakpoints_new <- breakpoints_new %>%
   mutate(breakpoint_R = ifelse(guideline %like% "EUCAST" & method == "DISK" & breakpoint_S - breakpoint_R != 0,
     breakpoint_R + 1,
@@ -244,13 +264,79 @@ breakpoints_new <- breakpoints_new %>%
 breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
 
 # check again
-breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
 clinical_breakpoints %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 
 # check dimensions
 dim(breakpoints_new)
 dim(clinical_breakpoints)
+
+# ECOFFs ----
+
+# ECOFF = Epidemiological Cut-Off
+whonet_ecoff <- read_tsv("data-raw/WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
+  filter(BREAKPOINT_TYPE == "ECOFF", GUIDELINES %in% c("CLSI", "EUCAST"))
+
+ecoff <- whonet_ecoff %>% 
+  filter(!ORGANISM_CODE %in% c("clu", "BFX", "PFX", "kma", "cdh")) %>% 
+  transmute(guideline = paste(GUIDELINES, YEAR),
+            mo = as.mo(ORGANISM_CODE, keep_synonyms = TRUE),
+            ab = as.ab(WHONET_ABX_CODE),
+            method = TEST_METHOD,
+            ecoff = as.double(ECV_ECOFF)) %>% 
+  filter(!is.na(ecoff)) %>% 
+  distinct()
+
+# join to breakpoints
+breakpoints_new <- breakpoints_new %>%
+  bind_rows(breakpoints_new %>%
+              right_join(ecoff, by = c("guideline", "mo", "ab", "method"))) %>% 
+  mutate(ref_tbl = ifelse(is.na(ref_tbl), "ECOFF", ref_tbl)) %>% 
+  distinct(guideline, ab, mo, method, site, .keep_all = TRUE) %>% 
+  arrange(desc(guideline), ab, mo, method) %>% 
+  mutate(rank_index = case_when(
+    is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
+    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
+    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
+    mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
+    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
+    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
+    TRUE ~ 6
+  )) %>% 
+  mutate(uti = ifelse(is.na(uti), FALSE, uti)) %>% 
+  relocate(ecoff, .after = breakpoint_R)
+
+breakpoints_new.bak <- mutate(uti = ifelse(is.na(uti), FALSE, uti), .after = ecoff)
+
+# EXTEND CoNS/CoPS/GAS/GBS ----
+
+# extend all coagulase-postive/-negative staphylococci
+CoNS <- breakpoints_new %>% filter(mo == as.mo("CoNS"))
+for (m in MO_CONS[mo_subspecies(MO_CONS, keep_synonyms = TRUE) == ""]) {
+  breakpoints_new <- breakpoints_new %>% 
+    bind_rows(CoNS %>% 
+                mutate(mo = m))
+}
+CoPS <- breakpoints_new %>% filter(mo == as.mo("CoPS"))
+for (m in MO_COPS[mo_subspecies(MO_COPS, keep_synonyms = TRUE) == ""]) {
+  breakpoints_new <- breakpoints_new %>% 
+    bind_rows(CoPS %>% 
+                mutate(mo = m))
+}
+# do the same for group A and B streptococci
+breakpoints_new <- breakpoints_new %>% 
+  bind_rows(breakpoints_new %>%
+              filter(mo == as.mo("Streptococcus Group A")) %>% 
+              mutate(mo = as.mo("Streptococcus pyogenes"))) %>% 
+  bind_rows(breakpoints_new %>%
+              filter(mo == as.mo("Streptococcus Group B")) %>% 
+              mutate(mo = as.mo("Streptococcus agalactiae")))
+# remove duplicates again for CoNS/CoPS/GBS and arrange
+breakpoints_new <- breakpoints_new %>% 
+  mutate(mo = as.mo(mo, keep_synonyms = TRUE)) %>% 
+  distinct(guideline, ab, mo, method, site, .keep_all = TRUE) %>% 
+  arrange(desc(guideline), ab, mo, method)
 
 
 # Save to package ----

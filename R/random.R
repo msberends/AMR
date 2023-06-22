@@ -136,11 +136,11 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     # get highest/lowest +/- random 1 to 3 higher factors of two
     max_range <- mic_range[min(
       length(mic_range),
-      which(mic_range == max(df$breakpoint_R)) + sample(c(1:3), 1)
+      which(mic_range == max(df$breakpoint_R, na.rm = TRUE)) + sample(c(1:3), 1)
     )]
     min_range <- mic_range[max(
       1,
-      which(mic_range == min(df$breakpoint_S)) - sample(c(1:3), 1)
+      which(mic_range == min(df$breakpoint_S, na.rm = TRUE)) - sample(c(1:3), 1)
     )]
 
     mic_range_new <- mic_range[mic_range <= max_range & mic_range >= min_range]
@@ -158,8 +158,8 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     return(out)
   } else if (type == "DISK") {
     set_range <- seq(
-      from = as.integer(min(df$breakpoint_R) / 1.25),
-      to = as.integer(max(df$breakpoint_S) * 1.25),
+      from = as.integer(min(df$breakpoint_R, na.rm = TRUE) / 1.25),
+      to = as.integer(max(df$breakpoint_S, na.rm = TRUE) * 1.25),
       by = 1
     )
     out <- sample(set_range, size = size, replace = TRUE)

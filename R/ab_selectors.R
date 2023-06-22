@@ -620,7 +620,7 @@ administrable_iv <- function(only_sir_columns = FALSE, ...) {
 
 #' @rdname antibiotic_class_selectors
 #' @inheritParams eucast_rules
-#' @details The [not_intrinsic_resistant()] function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies `r format_eucast_version_nr(names(EUCAST_VERSION_EXPERT_RULES[length(EUCAST_VERSION_EXPERT_RULES)]))` to determine intrinsic resistance, using the [eucast_rules()] function internally. Because of this determination, this function is quite slow in terms of performance.
+#' @details The [not_intrinsic_resistant()] function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies `r format_eucast_version_nr(names(EUCAST_VERSION_EXPERT_RULES[1]))` to determine intrinsic resistance, using the [eucast_rules()] function internally. Because of this determination, this function is quite slow in terms of performance.
 #' @export
 not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, version_expertrules = 3.3, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)

@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 MOs <- subset(microorganisms, !is.na(mo) & nchar(mo) > 3)
-expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
+expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo, keep_synonyms = TRUE)))
 
 expect_identical(
   as.character(as.mo(c("E. coli", "H. influenzae"), keep_synonyms = FALSE)),

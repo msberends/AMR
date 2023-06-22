@@ -166,15 +166,13 @@ expect_identical(mo_ref("Chlamydia psittaci"), "Garcia-Lopez et al., 2019")
 expect_identical(mo_ref("Chlamydophila psittaci", keep_synonyms = TRUE), "Everett et al., 1999")
 
 expect_true(112283007 %in% mo_snomed("Escherichia coli")[[1]])
-# old codes must throw a warning in mo_* family
-# expect_warning(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
 # outcome of mo_fullname must always return the fullname from the data set
 x <- data.frame(
   mo = microorganisms$mo,
   # fullname from the original data:
   f1 = microorganisms$fullname,
   # newly created fullname based on MO code:
-  f2 = mo_fullname(microorganisms$mo, language = "en"),
+  f2 = mo_fullname(microorganisms$mo, language = "en", keep_synonyms = TRUE),
   stringsAsFactors = FALSE
 )
 expect_equal(nrow(subset(x, f1 != f2)), 0)
