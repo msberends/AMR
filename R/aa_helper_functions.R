@@ -1517,6 +1517,10 @@ trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u00
   trimws(..., whitespace = whitespace)
 }
 
+totitle <- function(x) {
+  gsub("^(.)", "\\U\\1", x, perl = TRUE)
+}
+
 readRDS_AMR <- function(file, refhook = NULL) {
   # this is readRDS with remote file support
   con <- file(file)

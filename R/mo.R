@@ -302,17 +302,17 @@ as.mo <- function(x,
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 3) {
         # no space and 3 characters - probably a code such as SAU or ECO
-        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", substr(x_out, 1, 1), AMR_env$dots, " ", substr(x_out, 2, 3), AMR_env$dots, "\""))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", totitle(substr(x_out, 1, 1)), AMR_env$dots, " ", substr(x_out, 2, 3), AMR_env$dots, "\""))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 1), ".* ", substr(x_out, 2, 3)))
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO
-        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", substr(x_out, 1, 2), AMR_env$dots, " ", substr(x_out, 3, 4), AMR_env$dots, "\""))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", totitle(substr(x_out, 1, 2)), AMR_env$dots, " ", substr(x_out, 3, 4), AMR_env$dots, "\""))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
         second_part <- substr(x_out, 4, nchar(x_out))
-        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", gsub("[a-z]*", AMR_env$dots, first_part, fixed = TRUE), " ", second_part, AMR_env$dots, "\""))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", gsub("[a-z]*", AMR_env$dots, totitle(first_part), fixed = TRUE), " ", second_part, AMR_env$dots, "\""))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
         # for genus or species or subspecies
@@ -336,9 +336,10 @@ as.mo <- function(x,
         # correct back for kingdom
         minimum_matching_score_current <- minimum_matching_score_current / AMR_env$MO_lookup$kingdom_index[match(mo_to_search, AMR_env$MO_lookup$fullname)]
         minimum_matching_score_current <- pmax(minimum_matching_score_current, m)
-        if (length(m) > 1 && all(m <= 0.55, na.rm = TRUE)) {
+        if (length(x_parts) > 1 && all(m <= 0.55, na.rm = TRUE)) {
           # if the highest score is 0.5, we have nothing serious - 0.5 is the lowest for pathogenic group 1
           # make everything NA so the results will get removed below
+          # (we added length(x_parts) > 1 to exclude microbial codes from this rule, such as "STAU")
           m[seq_len(length(m))] <- NA_real_
         }
       } else {
