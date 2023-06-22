@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9023</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9024</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,7 +193,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">27 May 2023</h4>
+            <h4 data-toc-skip class="date">22 June 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -913,67 +913,69 @@ inhibitors</td>
 <code>clinical_breakpoints</code>: Interpretation from MIC values
 &amp; disk diameters to SIR<a class="anchor" aria-label="anchor" href="#clinical_breakpoints-interpretation-from-mic-values-disk-diameters-to-sir"></a>
 </h2>
-<p>A data set with 18 271 rows and 11 columns, containing the following
+<p>A data set with 42 599 rows and 12 columns, containing the following
 column names:<br><em>guideline</em>, <em>method</em>, <em>site</em>, <em>mo</em>,
 <em>rank_index</em>, <em>ab</em>, <em>ref_tbl</em>, <em>disk_dose</em>,
-<em>breakpoint_S</em>, <em>breakpoint_R</em>, and <em>uti</em>.</p>
+<em>breakpoint_S</em>, <em>breakpoint_R</em>, <em>ecoff</em>, and
+<em>uti</em>.</p>
 <p>This data set is in R available as <code>clinical_breakpoints</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 20 April 2023 13:20:41 UTC. Find more info
+<p>It was last updated on 22 June 2023 13:10:59 UTC. Find more info
 about the structure of this data set <a href="https://msberends.github.io/AMR/reference/clinical_breakpoints.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.rds" class="external-link">original
-R Data Structure (RDS) file</a> (43 kB)<br>
+R Data Structure (RDS) file</a> (82 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.txt" class="external-link">tab-separated
-text file</a> (1.9 MB)<br>
+text file</a> (4.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.xlsx" class="external-link">Microsoft
-Excel workbook</a> (0.8 MB)<br>
+Excel workbook</a> (1.8 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.feather" class="external-link">Apache
-Feather file</a> (0.7 MB)<br>
+Feather file</a> (1.6 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.parquet" class="external-link">Apache
-Parquet file</a> (88 kB)<br>
+Parquet file</a> (0.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.sas" class="external-link">SAS
 data (SAS) file</a> (3.6 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.xpt" class="external-link">SAS
-transport (XPT) file</a> (3.4 MB)<br>
+transport (XPT) file</a> (10.6 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.sav" class="external-link">IBM
-SPSS Statistics data file</a> (2.3 MB)<br>
+SPSS Statistics data file</a> (5.8 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.dta" class="external-link">Stata
-DTA file</a> (3.3 MB)</li>
+DTA file</a> (10.5 MB)</li>
 </ul>
 <div class="section level3">
 <h3 id="source-3">Source<a class="anchor" aria-label="anchor" href="#source-3"></a>
 </h3>
 <p>This data set contains interpretation rules for MIC values and disk
-diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
-(2013-2022).</p>
+diffusion diameters. Included guidelines are CLSI (2011-2023) and EUCAST
+(2011-2023).</p>
 </div>
 <div class="section level3">
 <h3 id="example-content-3">Example content<a class="anchor" aria-label="anchor" href="#example-content-3"></a>
 </h3>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="8%">
-<col width="5%">
+<col width="7%">
+<col width="4%">
 <col width="3%">
 <col width="8%">
 <col width="14%">
 <col width="7%">
 <col width="3%">
-<col width="10%">
-<col width="8%">
+<col width="9%">
 <col width="7%">
+<col width="6%">
 <col width="8%">
 <col width="8%">
+<col width="4%">
 <col width="4%">
 </colgroup>
 <thead><tr class="header">
@@ -989,11 +991,12 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <th align="center">disk_dose</th>
 <th align="center">breakpoint_S</th>
 <th align="center">breakpoint_R</th>
+<th align="center">ecoff</th>
 <th align="center">uti</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">EUCAST 2022</td>
+<td align="center">EUCAST 2023</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">F_ASPRG_MGTS</td>
@@ -1005,10 +1008,11 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1</td>
+<td align="center"></td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">EUCAST 2022</td>
+<td align="center">EUCAST 2023</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">F_ASPRG_NIGR</td>
@@ -1020,10 +1024,11 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1</td>
+<td align="center"></td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="center">EUCAST 2022</td>
+<td align="center">EUCAST 2023</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">F_CANDD_ALBC</td>
@@ -1035,10 +1040,11 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1</td>
+<td align="center"></td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">EUCAST 2022</td>
+<td align="center">EUCAST 2023</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">F_CANDD_DBLN</td>
@@ -1050,10 +1056,11 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1</td>
+<td align="center"></td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="center">EUCAST 2022</td>
+<td align="center">EUCAST 2023</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">F_CANDD_GLBR</td>
@@ -1065,10 +1072,11 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1</td>
+<td align="center"></td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">EUCAST 2022</td>
+<td align="center">EUCAST 2023</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">F_CANDD_KRUS</td>
@@ -1080,6 +1088,7 @@ diffusion diameters. Included guidelines are CLSI (2013-2022) and EUCAST
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1</td>
+<td align="center"></td>
 <td align="center">FALSE</td>
 </tr>
 </tbody>
@@ -1380,13 +1389,13 @@ v3.3</a> (2021).</p>
 <h2 id="dosage-dosage-guidelines-from-eucast">
 <code>dosage</code>: Dosage Guidelines from EUCAST<a class="anchor" aria-label="anchor" href="#dosage-dosage-guidelines-from-eucast"></a>
 </h2>
-<p>A data set with 336 rows and 9 columns, containing the following
+<p>A data set with 503 rows and 9 columns, containing the following
 column names:<br><em>ab</em>, <em>name</em>, <em>type</em>, <em>dose</em>,
 <em>dose_times</em>, <em>administration</em>, <em>notes</em>,
 <em>original_txt</em>, and <em>eucast_version</em>.</p>
 <p>This data set is in R available as <code>dosage</code>, after you
 load the <code>AMR</code> package.</p>
-<p>It was last updated on 14 November 2022 14:20:39 UTC. Find more info
+<p>It was last updated on 22 June 2023 13:10:59 UTC. Find more info
 about the structure of this data set <a href="https://msberends.github.io/AMR/reference/dosage.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
@@ -1394,28 +1403,28 @@ about the structure of this data set <a href="https://msberends.github.io/AMR/re
 R Data Structure (RDS) file</a> (3 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.txt" class="external-link">tab-separated
-text file</a> (29 kB)<br>
+text file</a> (43 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.xlsx" class="external-link">Microsoft
-Excel workbook</a> (19 kB)<br>
+Excel workbook</a> (25 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.feather" class="external-link">Apache
-Feather file</a> (16 kB)<br>
+Feather file</a> (21 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.parquet" class="external-link">Apache
-Parquet file</a> (8 kB)<br>
+Parquet file</a> (9 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.sas" class="external-link">SAS
 data (SAS) file</a> (92 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.xpt" class="external-link">SAS
-transport (XPT) file</a> (79 kB)<br>
+transport (XPT) file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.sav" class="external-link">IBM
-SPSS Statistics data file</a> (43 kB)<br>
+SPSS Statistics data file</a> (64 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.dta" class="external-link">Stata
-DTA file</a> (82 kB)</li>
+DTA file</a> (0.1 MB)</li>
 </ul>
 <div class="section level3">
 <h3 id="source-5">Source<a class="anchor" aria-label="anchor" href="#source-5"></a>
@@ -1423,8 +1432,9 @@ DTA file</a> (82 kB)</li>
 <p>EUCAST breakpoints used in this package are based on the dosages in
 this data set.</p>
 <p>Currently included dosages in the data set are meant for: <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">‘EUCAST Clinical
-Breakpoint Tables’ v11.0</a> (2021) and <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">‘EUCAST Clinical
-Breakpoint Tables’ v12.0</a> (2022).</p>
+Breakpoint Tables’ v11.0</a> (2021), <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">‘EUCAST Clinical
+Breakpoint Tables’ v12.0</a> (2022), and <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">‘EUCAST Clinical
+Breakpoint Tables’ v13.0</a> (2023).</p>
 </div>
 <div class="section level3">
 <h3 id="example-content-5">Example content<a class="anchor" aria-label="anchor" href="#example-content-5"></a>
@@ -1462,7 +1472,7 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 <td align="center">iv</td>
 <td align="center"></td>
 <td align="center">25-30 mg/kg x 1 iv</td>
-<td align="center">12</td>
+<td align="center">13</td>
 </tr>
 <tr class="even">
 <td align="center">AMX</td>
@@ -1473,7 +1483,7 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 <td align="center">iv</td>
 <td align="center"></td>
 <td align="center">2 g x 6 iv</td>
-<td align="center">12</td>
+<td align="center">13</td>
 </tr>
 <tr class="odd">
 <td align="center">AMX</td>
@@ -1484,7 +1494,7 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 <td align="center">iv</td>
 <td align="center"></td>
 <td align="center">1 g x 3-4 iv</td>
-<td align="center">12</td>
+<td align="center">13</td>
 </tr>
 <tr class="even">
 <td align="center">AMX</td>
@@ -1495,7 +1505,7 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 <td align="center">oral</td>
 <td align="center"></td>
 <td align="center">0.75-1 g x 3 oral</td>
-<td align="center">12</td>
+<td align="center">13</td>
 </tr>
 <tr class="odd">
 <td align="center">AMX</td>
@@ -1506,7 +1516,7 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 <td align="center">oral</td>
 <td align="center"></td>
 <td align="center">0.5 g x 3 oral</td>
-<td align="center">12</td>
+<td align="center">13</td>
 </tr>
 <tr class="even">
 <td align="center">AMX</td>
@@ -1517,7 +1527,7 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 <td align="center">oral</td>
 <td align="center"></td>
 <td align="center">0.5 g x 3 oral</td>
-<td align="center">12</td>
+<td align="center">13</td>
 </tr>
 </tbody>
 </table>
