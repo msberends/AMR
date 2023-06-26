@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 52 151 Microorganisms}
+\title{Data Set with 52 158 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 52 151 observations and 23 variables:
+A \link[tibble:tibble]{tibble} with 52 158 observations and 23 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.

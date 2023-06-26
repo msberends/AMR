@@ -1217,7 +1217,7 @@ repair_reference_df <- function(reference_df) {
   reference_df[, "mo"] <- as.character(reference_df[, "mo", drop = TRUE])
 
   # some MO codes might be old
-  reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
+  reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE], reference_df = NULL)
   reference_df
 }
 

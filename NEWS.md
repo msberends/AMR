@@ -1,4 +1,4 @@
-# AMR 2.0.0.9025
+# AMR 2.0.0.9026
 
 ## New
 * Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules.
@@ -22,6 +22,7 @@
   * Fix for using the `keep_synonyms` argument when using MO codes as input
   * Fix for using the `minimum_matching_score` argument
 * Updated the code table in `microorganisms.codes`
+* Fixed an endless loop if using `reference_df` in `as.mo()`
 
 
 # AMR 2.0.0

@@ -43,7 +43,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  ecoff = getOption("AMR_ecoff", FALSE),
+  breakpoint_type = getOption("AMR_breakpoint_type", FALSE),
   ...
 )
 
@@ -57,7 +57,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  ecoff = getOption("AMR_ecoff", FALSE),
+  breakpoint_type = getOption("AMR_breakpoint_type", FALSE),
   ...
 )
 
@@ -72,7 +72,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  ecoff = getOption("AMR_ecoff", FALSE)
+  breakpoint_type = getOption("AMR_breakpoint_type", FALSE)
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -102,7 +102,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{ecoff}{a \link{logical} to indicate that ECOFF (Epidemiological Cut-Off) values must be used \strong{instead} of other clinical breakpoints - the default is \code{FALSE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_ecoff}}.}
+\item{breakpoint_type}{the type of breakpoints to use, either "". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -113,6 +113,8 @@ Ordered \link{factor} with new class \code{sir}
 }
 \description{
 Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
+
+Currently available \strong{breakpoint guidelines} are EUCAST 2011-2023 and CLSI 2011-2023, and available \strong{breakpoint types} are "".
 
 All breakpoints used for interpretation are publicly available in the \link{clinical_breakpoints} data set.
 }
