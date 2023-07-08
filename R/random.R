@@ -94,13 +94,14 @@ random_sir <- function(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...) {
   sample(as.sir(c("S", "I", "R")), size = size, replace = TRUE, prob = prob_SIR)
 }
 
-random_exec <- function(type, size, mo = NULL, ab = NULL) {
+random_exec <- function(method_type, size, mo = NULL, ab = NULL) {
   df <- AMR::clinical_breakpoints %pm>%
     pm_filter(guideline %like% "EUCAST") %pm>%
     pm_arrange(pm_desc(guideline)) %pm>%
     subset(guideline == max(guideline) &
-      method == type)
-
+      method == method_type &
+      type == "human")
+  
   if (!is.null(mo)) {
     mo_coerced <- as.mo(mo)
     mo_include <- c(
@@ -114,7 +115,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     if (nrow(df_new) > 0) {
       df <- df_new
     } else {
-      warning_("in `random_", tolower(type), "()`: no rows found that match mo '", mo, "', ignoring argument `mo`")
+      warning_("in `random_", tolower(method_type), "()`: no rows found that match mo '", mo, "', ignoring argument `mo`")
     }
   }
 
@@ -125,11 +126,11 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     if (nrow(df_new) > 0) {
       df <- df_new
     } else {
-      warning_("in `random_", tolower(type), "()`: no rows found that match ab '", ab, "', ignoring argument `ab`")
+      warning_("in `random_", tolower(method_type), "()`: no rows found that match ab '", ab, "' (", ab_name(ab_coerced, tolower = TRUE, language = NULL), "), ignoring argument `ab`")
     }
   }
 
-  if (type == "MIC") {
+  if (method_type == "MIC") {
     # set range
     mic_range <- c(0.001, 0.002, 0.005, 0.010, 0.025, 0.0625, 0.125, 0.250, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256)
 
@@ -156,7 +157,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
       out[out == max(out)] <- paste0(">=", out[out == max(out)])
     }
     return(out)
-  } else if (type == "DISK") {
+  } else if (method_type == "DISK") {
     set_range <- seq(
       from = as.integer(min(df$breakpoint_R, na.rm = TRUE) / 1.25),
       to = as.integer(max(df$breakpoint_S, na.rm = TRUE) * 1.25),

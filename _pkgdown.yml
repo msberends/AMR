@@ -233,6 +233,7 @@ reference:
     - "`example_isolates`"
     - "`microorganisms`"
     - "`microorganisms.codes`"
+    - "`microorganisms.groups`"
     - "`antibiotics`"
     - "`intrinsic_resistant`"
     - "`dosage`"
