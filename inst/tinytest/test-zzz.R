@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -59,6 +59,8 @@ import_functions <- c(
 call_functions <- c(
   # cleaner
   "freq.default" = "cleaner",
+  # cli
+  "symbol" = "cli",
   # readxl
   "read_excel" = "readxl",
   # ggplot2
@@ -126,4 +128,10 @@ for (i in seq_len(length(import_functions))) {
       )
     )
   }
+}
+
+if (AMR:::pkg_is_available("cli")) {
+  expect_true(!is.null(cli::symbol$info))
+  expect_true(!is.null(cli::symbol$bullet))
+  expect_true(!is.null(cli::symbol$ellipsis))
 }

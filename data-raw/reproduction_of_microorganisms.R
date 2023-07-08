@@ -869,7 +869,7 @@ taxonomy <- taxonomy %>%
     # other species from a genus in either group
     genus %in% nonbacterial_genera & rank %in% c("genus", "species", "subspecies") ~ 1.5,
     # we keep track of prevalent genera too of non-bacterial species
-    genus %in% AMR:::MO_PREVALENT_GENERA & kingdom != "Bacteria" & rank %in% c("genus", "species", "subspecies") ~ 1.5,
+    genus %in% AMR:::MO_PREVALENT_GENERA & kingdom != "Bacteria" & rank %in% c("genus", "species", "subspecies") ~ 1.25,
 
     # all others
     TRUE ~ 2.0
@@ -1296,6 +1296,15 @@ AMR::microorganisms %>%
 AMR::microorganisms %>%
   filter(!fullname %in% taxonomy$fullname) %>%
   View()
+
+
+# Some manual fixes -------------------------------------------------------
+
+# Candida haemulonis and C. duobushaemulonis should be Candida haemulonii and C. duobushaemulonii
+# not sure how this can be, but GBIF contained spelling errors?
+# see https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3486233/
+taxonomy$species[which(taxonomy$fullname %like% "^Candida .*haemulonis")] <- gsub("nis$", "nii", taxonomy$species[which(taxonomy$fullname %like% "^Candida .*haemulonis")])
+taxonomy$fullname[which(taxonomy$fullname %like% "^Candida .*haemulonis")] <- gsub("nis$", "nii", taxonomy$fullname[which(taxonomy$fullname %like% "^Candida .*haemulonis")])
 
 
 # Add SNOMED CT -----------------------------------------------------------

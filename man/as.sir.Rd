@@ -43,7 +43,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", FALSE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   ...
 )
 
@@ -57,7 +57,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", FALSE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   ...
 )
 
@@ -72,7 +72,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", FALSE)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human")
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -102,7 +102,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{breakpoint_type}{the type of breakpoints to use, either "". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
+\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -114,11 +114,12 @@ Ordered \link{factor} with new class \code{sir}
 \description{
 Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
 
-Currently available \strong{breakpoint guidelines} are EUCAST 2011-2023 and CLSI 2011-2023, and available \strong{breakpoint types} are "".
+Currently available \strong{breakpoint guidelines} are EUCAST 2011-2023 and CLSI 2011-2023, and available \strong{breakpoint types} are "ECOFF", "animal", and "human".
 
 All breakpoints used for interpretation are publicly available in the \link{clinical_breakpoints} data set.
 }
 \details{
+\emph{Note: The clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET} and the public use of this \code{AMR} package has been endorsed by CLSI and EUCAST, please see \link{clinical_breakpoints} for more information.}
 \subsection{How it Works}{
 
 The \code{\link[=as.sir]{as.sir()}} function works in four ways:
@@ -170,7 +171,7 @@ After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast
 
 \subsection{Machine-Readable Clinical Breakpoints}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 42 599 rows and 12 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 28 454 rows and 12 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{

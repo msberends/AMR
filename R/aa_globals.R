@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -30,12 +30,12 @@
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and clinical_breakpoints
 # (sourcing "data-raw/_pre_commit_hook.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list(
-  "13.0" = list(
-    version_txt = "v13.0",
-    year = 2023,
-    title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/clinical_breakpoints/"
-  ),
+  # "13.0" = list(
+  #   version_txt = "v13.0",
+  #   year = 2023,
+  #   title = "'EUCAST Clinical Breakpoint Tables'",
+  #   url = "https://www.eucast.org/clinical_breakpoints/"
+  # ),
   "12.0" = list(
     version_txt = "v12.0",
     year = 2022,
@@ -75,14 +75,14 @@ EUCAST_VERSION_EXPERT_RULES <- list(
     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
   )
 )
-EUCAST_VERSION_RESISTANTPHENOTYPES <- list(
-  "1.2" = list(
-    version_txt = "v1.2",
-    year = 2023,
-    title = "'Expected Resistant Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
-  )
-)
+# EUCAST_VERSION_RESISTANTPHENOTYPES <- list(
+#   "1.2" = list(
+#     version_txt = "v1.2",
+#     year = 2023,
+#     title = "'Expected Resistant Phenotypes'",
+#     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+#   )
+# )
 
 TAXONOMY_VERSION <- list(
   GBIF = list(

@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #

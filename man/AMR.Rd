@@ -51,7 +51,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Matthijs S. Berends \email{m.berends@certe.nl} (\href{https://orcid.org/0000-0001-7620-1800}{ORCID})
+\strong{Maintainer}: Matthijs S. Berends \email{m.s.berends@umcg.nl} (\href{https://orcid.org/0000-0001-7620-1800}{ORCID})
 
 Authors:
 \itemize{

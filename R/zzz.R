@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -75,15 +75,11 @@ AMR_env$custom_mo_codes <- character(0)
 AMR_env$is_dark_theme <- NULL
 
 # determine info icon for messages
-utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
-is_latex <- tryCatch(import_fn("is_latex_output", "knitr", error_on_fail = FALSE)(),
-  error = function(e) FALSE
-)
-if (utf8_supported && !is_latex) {
-  # \u2139 is a symbol officially named 'information source'
-  AMR_env$info_icon <- "\u2139"
-  AMR_env$bullet_icon <- "\u2022"
-  AMR_env$dots <- "\u2026"
+if (pkg_is_available("cli")) {
+  # let cli do the determination of supported symbols
+  AMR_env$info_icon <- import_fn("symbol", "cli")$info
+  AMR_env$bullet_icon <- import_fn("symbol", "cli")$bullet
+  AMR_env$dots <- import_fn("symbol", "cli")$ellipsis
 } else {
   AMR_env$info_icon <- "i"
   AMR_env$bullet_icon <- "*"

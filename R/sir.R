@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -30,6 +30,8 @@
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
 #' @description Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
+#' 
+#' Currently available **breakpoint guidelines** are EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, and available **breakpoint types** are `r vector_and(clinical_breakpoints$type)`.
 #'
 #' All breakpoints used for interpretation are publicly available in the [clinical_breakpoints] data set.
 #' @rdname as.sir
@@ -43,11 +45,13 @@
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the [package option][AMR-options] [`AMR_include_PKPD`][AMR-options].
-#' @param ecoff a [logical] to indicate that ECOFF (Epidemiological Cut-Off) values must be used **instead** of other clinical breakpoints - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_ecoff`][AMR-options].
+#' @param breakpoint_type the type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the [package option][AMR-options] [`AMR_breakpoint_type`][AMR-options].
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details
+#' *Note: The clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org) and the public use of this `AMR` package has been endorsed by CLSI and EUCAST, please see [clinical_breakpoints] for more information.*
+#' 
 #' ### How it Works
 #'
 #' The [as.sir()] function works in four ways:
@@ -429,7 +433,7 @@ as.sir.mic <- function(x,
                        reference_data = AMR::clinical_breakpoints,
                        include_screening = getOption("AMR_include_screening", FALSE),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
-                       ecoff = getOption("AMR_ecoff", FALSE),
+                       breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        ...) {
   as_sir_method(
     method_short = "mic",
@@ -444,7 +448,7 @@ as.sir.mic <- function(x,
     reference_data = reference_data,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
-    ecoff = ecoff,
+    breakpoint_type = breakpoint_type,
     ...
   )
 }
@@ -460,7 +464,7 @@ as.sir.disk <- function(x,
                         reference_data = AMR::clinical_breakpoints,
                         include_screening = getOption("AMR_include_screening", FALSE),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
-                        ecoff = getOption("AMR_ecoff", FALSE),
+                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -475,7 +479,7 @@ as.sir.disk <- function(x,
     reference_data = reference_data,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
-    ecoff = ecoff,
+    breakpoint_type = breakpoint_type,
     ...
   )
 }
@@ -492,7 +496,7 @@ as.sir.data.frame <- function(x,
                               reference_data = AMR::clinical_breakpoints,
                               include_screening = getOption("AMR_include_screening", FALSE),
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
-                              ecoff = getOption("AMR_ecoff", FALSE)) {
+                              breakpoint_type = getOption("AMR_breakpoint_type", "human")) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -502,7 +506,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(reference_data, allow_class = "data.frame")
   meet_criteria(include_screening, allow_class = "logical", has_length = 1)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
-  meet_criteria(ecoff, allow_class = "logical", has_length = 1)
+  meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
 
   x.bak <- x
   for (i in seq_len(ncol(x))) {
@@ -634,7 +638,7 @@ as.sir.data.frame <- function(x,
           reference_data = reference_data,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
-          ecoff = ecoff,
+          breakpoint_type = breakpoint_type,
           is_data.frame = TRUE
         )
     } else if (types[i] == "disk") {
@@ -652,7 +656,7 @@ as.sir.data.frame <- function(x,
           reference_data = reference_data,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
-          ecoff = ecoff,
+          breakpoint_type = breakpoint_type,
           is_data.frame = TRUE
         )
     } else if (types[i] == "sir") {
@@ -722,7 +726,7 @@ as_sir_method <- function(method_short,
                           reference_data,
                           include_screening,
                           include_PKPD,
-                          ecoff,
+                          breakpoint_type,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE, .call_depth = -2)
@@ -734,8 +738,8 @@ as_sir_method <- function(method_short,
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
-  meet_criteria(ecoff, allow_class = "logical", has_length = 1, .call_depth = -2)
   check_reference_data(reference_data, .call_depth = -2)
+  meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
 
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
@@ -792,8 +796,8 @@ as_sir_method <- function(method_short,
   mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, inf0 = FALSE)))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab)) {
-    message_("Returning NAs for unknown drug: '", font_bold(ab.bak),
-      "'. Rename this column to a drug name or code, and check the output with `as.ab()`.",
+    message_("Returning NAs for unknown antibiotic: '", font_bold(ab.bak),
+      "'. Rename this column to a valid name or code, and check the output with `as.ab()`.",
       add_fn = font_red,
       as_note = FALSE
     )
@@ -830,28 +834,23 @@ as_sir_method <- function(method_short,
       ), agent_name, ")"
     )
   }
-  message_("=> Interpreting ", method_long, " of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-           agent_formatted,
-           mo_var_found,
-           " according to ", 
-           ifelse(isTRUE(ecoff),
-                  "ECOFF values of ",
-                  ""),
-           ifelse(identical(reference_data, AMR::clinical_breakpoints),
-                  font_bold(guideline_coerced),
-                  "manually defined 'reference_data'"
-           ),
-           "... ",
-           appendLF = FALSE,
-           as_note = FALSE
-  )
-
+  
+  # this intro text will also be printed in the progress bar in the `progress` package is installed
+  intro_txt <- paste0("Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
+                      agent_formatted,
+                      mo_var_found,
+                      ifelse(identical(reference_data, AMR::clinical_breakpoints),
+                             paste0(", ", font_bold(guideline_coerced)),
+                             ""),
+                      "... ")
+  message_(intro_txt, appendLF = FALSE, as_note = FALSE)
+  
   msg_note <- function(messages) {
     for (i in seq_len(length(messages))) {
       messages[i] <- word_wrap(extra_indent = 5, messages[i])
     }
     message(
-      font_green(font_bold(" Note:\n")),
+      font_yellow(font_bold(paste0(" Note", ifelse(length(messages) > 1, "s", ""), ":\n"))),
       paste0("   ", font_black(AMR_env$bullet_icon), " ", font_black(messages, collapse = NULL), collapse = "\n")
     )
   }
@@ -894,6 +893,9 @@ as_sir_method <- function(method_short,
       subset(method == method_coerced & ab == ab_coerced)
   }
 
+  breakpoints <- breakpoints %pm>%
+    subset(type == breakpoint_type)
+
   if (isFALSE(include_screening)) {
     # remove screening rules from the breakpoints table
     breakpoints <- breakpoints %pm>%
@@ -904,17 +906,16 @@ as_sir_method <- function(method_short,
     breakpoints <- breakpoints %pm>%
       subset(mo != "UNKNOWN" & ref_tbl %unlike% "PK.*PD")
   }
-  if (isFALSE(ecoff)) {
-    # remove ECOFF interpretations from the breakpoints table
+  if (all(uti == FALSE, na.rm = TRUE)) {
+    # remove UTI breakpoints
     breakpoints <- breakpoints %pm>%
-      subset(ref_tbl != "ECOFF")
-  } else {
-    # keep only ECOFF interpretations from the breakpoints table
+      subset(is.na(uti) | uti == FALSE)
+  } else if (all(uti == TRUE, na.rm = TRUE)) {
+    # remove UTI breakpoints
     breakpoints <- breakpoints %pm>%
-      subset(ref_tbl == "ECOFF") %pm>%
-      pm_mutate(breakpoint_S = ecoff, breakpoint_R = ecoff)
+      subset(uti == TRUE)
   }
-  
+
   msgs <- character(0)
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
@@ -931,33 +932,33 @@ as_sir_method <- function(method_short,
     any_is_intrinsic_resistant <- FALSE
     add_intrinsic_resistance_to_AMR_env()
   }
+  
+  p <- progress_ticker(n = length(unique(df$mo)), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
+  on.exit(close(p))
 
   # run the rules
-  for (mo_unique in unique(df$mo)) {
-    rows <- which(df$mo == mo_unique)
+  for (mo_currrent in unique(df$mo)) {
+    p$tick()
+    rows <- which(df$mo == mo_currrent)
     values <- df[rows, "values", drop = TRUE]
     uti <- df[rows, "uti", drop = TRUE]
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties
-    mo_current_genus <- as.mo(mo_genus(mo_unique, language = NULL))
-    mo_current_family <- as.mo(mo_family(mo_unique, language = NULL))
-    mo_current_order <- as.mo(mo_order(mo_unique, language = NULL))
-    mo_current_class <- as.mo(mo_class(mo_unique, language = NULL))
-    if (mo_genus(mo_unique, language = NULL) == "Staphylococcus") {
-      mo_current_becker <- as.mo(mo_unique, Becker = TRUE)
+    mo_current_genus <- as.mo(mo_genus(mo_currrent, language = NULL))
+    mo_current_family <- as.mo(mo_family(mo_currrent, language = NULL))
+    mo_current_order <- as.mo(mo_order(mo_currrent, language = NULL))
+    mo_current_class <- as.mo(mo_class(mo_currrent, language = NULL))
+    if (mo_currrent %in% AMR::microorganisms.groups$mo) {
+      # get the species group
+      mo_current_species_group <- AMR::microorganisms.groups$mo_group[match(mo_currrent, AMR::microorganisms.groups$mo)]
     } else {
-      mo_current_becker <- mo_unique
-    }
-    if (mo_genus(mo_unique, language = NULL) == "Streptococcus") {
-      mo_current_lancefield <- as.mo(mo_unique, Lancefield = TRUE)
-    } else {
-      mo_current_lancefield <- mo_unique
+      mo_current_species_group <- mo_currrent
     }
     mo_current_other <- as.mo("UNKNOWN")
     # formatted for notes
-    mo_formatted <- suppressMessages(suppressWarnings(mo_fullname(mo_unique, language = NULL, keep_synonyms = FALSE)))
-    if (!mo_rank(mo_unique) %in% c("kingdom", "phylum", "class", "order")) {
+    mo_formatted <- suppressMessages(suppressWarnings(mo_fullname(mo_currrent, language = NULL, keep_synonyms = FALSE)))
+    if (!mo_rank(mo_currrent) %in% c("kingdom", "phylum", "class", "order")) {
       mo_formatted <- font_italic(mo_formatted)
     }
     ab_formatted <- paste0(
@@ -971,7 +972,7 @@ as_sir_method <- function(method_short,
       subset(mo %in% c(
         mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
-        mo_current_becker, mo_current_lancefield,
+        mo_current_species_group,
         mo_current_other
       ))
 
@@ -991,12 +992,12 @@ as_sir_method <- function(method_short,
       # only UTI breakpoints available
       warning_("in `as.sir()`: interpretation of ", font_bold(ab_formatted), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See `?as.sir`.")
       rise_warning <- TRUE
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_unique, ab_coerced)) {
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_currrent, ab_coerced)) {
       # both UTI and Non-UTI breakpoints available
       msgs <- c(msgs, paste0("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
       breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_unique, ab_coerced)) {
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_currrent, ab_coerced)) {
       # breakpoints for multiple body sites available
       site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
       if (is.na(site)) {
@@ -1008,7 +1009,7 @@ as_sir_method <- function(method_short,
     }
 
     # first check if mo is intrinsic resistant
-    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_unique, ab_coerced) %in% AMR_env$intrinsic_resistant) {
+    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_currrent, ab_coerced) %in% AMR_env$intrinsic_resistant) {
       msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
       new_sir <- rep(as.sir("R"), length(rows))
     } else if (nrow(breakpoints_current) == 0) {
@@ -1058,7 +1059,7 @@ as_sir_method <- function(method_short,
           index = rows,
           ab_input = rep(ab.bak, length(rows)),
           ab_guideline = rep(ab_coerced, length(rows)),
-          mo_input = rep(mo.bak[match(mo_unique, df$mo)][1], length(rows)),
+          mo_input = rep(mo.bak[match(mo_currrent, df$mo)][1], length(rows)),
           mo_guideline = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
           guideline = rep(guideline_coerced, length(rows)),
           ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
@@ -1073,7 +1074,14 @@ as_sir_method <- function(method_short,
 
     df[rows, "result"] <- new_sir
   }
+  
+  close(p)
 
+  # printing messages
+  if (!is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE))) {
+    # the progress bar has overwritten the intro text, so:
+    message_(intro_txt, appendLF = FALSE, as_note = FALSE)
+  }
   if (isTRUE(rise_warning)) {
     message(font_yellow(font_bold(" * WARNING *")))
   } else if (length(msgs) == 0) {

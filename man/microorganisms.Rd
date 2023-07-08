@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 52 158 Microorganisms}
+\title{Data Set with 52 169 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 52 158 observations and 23 variables:
+A \link[tibble:tibble]{tibble} with 52 169 observations and 23 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
@@ -64,8 +64,7 @@ Included taxonomic data are:
 For convenience, some entries were added manually:
 \itemize{
 \item ~1 500 entries of \emph{Salmonella}, such as the city-like serovars and groups A to H
-\item 15 entries of \emph{Streptococcus}, such as the beta-haemolytic groups A to K, viridans, and milleri
-\item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
+\item 34 species groups (such as the beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.), of which the group compositions are stored in the \link{microorganisms.groups} data set
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 \item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
@@ -91,6 +90,6 @@ The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comp
 microorganisms
 }
 \seealso{
-\code{\link[=as.mo]{as.mo()}}, \code{\link[=mo_property]{mo_property()}}, \link{microorganisms.codes}, \link{intrinsic_resistant}
+\code{\link[=as.mo]{as.mo()}}, \code{\link[=mo_property]{mo_property()}}, \link{microorganisms.groups}, \link{microorganisms.codes}, \link{intrinsic_resistant}
 }
 \keyword{datasets}

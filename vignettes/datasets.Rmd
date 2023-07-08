@@ -321,3 +321,44 @@ This data set contains randomised fictitious data, but reflects reality and can 
 example_isolates_unclean %>%
   print_df()
 ```
+
+
+## `microorganisms.groups`: Species Groups and Microbiological Complexes
+
+`r structure_txt(microorganisms.groups)`
+
+This data set is in R available as `microorganisms.groups`, after you load the `AMR` package.
+
+`r download_txt("microorganisms.groups")`
+
+### Source
+
+This data set contains species groups and microbiological complexes, which are used in the `clinical_breakpoints` data set.
+
+### Example content
+
+```{r, echo = FALSE}
+microorganisms.groups %>%
+  print_df()
+```
+
+
+## `microorganisms.codes`: Common Laboratory Codes
+
+`r structure_txt(microorganisms.codes)`
+
+This data set is in R available as `microorganisms.codes`, after you load the `AMR` package.
+
+`r download_txt("microorganisms.codes")`
+
+### Source
+
+This data set contains commonly used codes for microorganisms, from laboratory systems and [WHONET](https://whonet.org).
+
+### Example content
+
+```{r, echo = FALSE}
+microorganisms.codes %>%
+  print_df()
+```
+

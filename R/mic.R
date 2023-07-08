@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -165,7 +165,7 @@ valid_mic_levels <- c(
 #'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
 #' }
 as.mic <- function(x, na.rm = FALSE) {
-  meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
+  meet_criteria(x, allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
 
   if (is.mic(x)) {

@@ -392,6 +392,32 @@ if (changed_md5(microorganisms)) {
   try(arrow::write_parquet(microorganisms, "data-raw/microorganisms.parquet"), silent = TRUE)
 }
 
+if (changed_md5(microorganisms.codes)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms.codes')} to {usethis::ui_value('data-raw/')}"))
+  write_md5(microorganisms.codes)
+  try(saveRDS(microorganisms.codes, "data-raw/microorganisms.codes.rds", version = 2, compress = "xz"), silent = TRUE)
+  try(write.table(microorganisms.codes, "data-raw/microorganisms.codes.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(haven::write_xpt(microorganisms.codes, "data-raw/microorganisms.codes.xpt"), silent = TRUE)
+  try(haven::write_sav(microorganisms.codes, "data-raw/microorganisms.codes.sav"), silent = TRUE)
+  try(haven::write_dta(microorganisms.codes, "data-raw/microorganisms.codes.dta"), silent = TRUE)
+  try(openxlsx::write.xlsx(microorganisms.codes, "data-raw/microorganisms.codes.xlsx"), silent = TRUE)
+  try(arrow::write_feather(microorganisms.codes, "data-raw/microorganisms.codes.feather"), silent = TRUE)
+  try(arrow::write_parquet(microorganisms.codes, "data-raw/microorganisms.codes.parquet"), silent = TRUE)
+}
+
+if (changed_md5(microorganisms.groups)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms.groups')} to {usethis::ui_value('data-raw/')}"))
+  write_md5(microorganisms.groups)
+  try(saveRDS(microorganisms.groups, "data-raw/microorganisms.groups.rds", version = 2, compress = "xz"), silent = TRUE)
+  try(write.table(microorganisms.groups, "data-raw/microorganisms.groups.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(haven::write_xpt(microorganisms.groups, "data-raw/microorganisms.groups.xpt"), silent = TRUE)
+  try(haven::write_sav(microorganisms.groups, "data-raw/microorganisms.groups.sav"), silent = TRUE)
+  try(haven::write_dta(microorganisms.groups, "data-raw/microorganisms.groups.dta"), silent = TRUE)
+  try(openxlsx::write.xlsx(microorganisms.groups, "data-raw/microorganisms.groups.xlsx"), silent = TRUE)
+  try(arrow::write_feather(microorganisms.groups, "data-raw/microorganisms.groups.feather"), silent = TRUE)
+  try(arrow::write_parquet(microorganisms.groups, "data-raw/microorganisms.groups.parquet"), silent = TRUE)
+}
+
 ab <- dplyr::mutate_if(antibiotics, ~ !is.numeric(.), as.character)
 if (changed_md5(ab)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('antibiotics')} to {usethis::ui_value('data-raw/')}"))

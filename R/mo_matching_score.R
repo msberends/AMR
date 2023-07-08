@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -50,7 +50,7 @@
 #' * \eqn{l_n} is the length of \eqn{n};
 #' * \eqn{lev} is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance) (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};
 #' * \eqn{p_n} is the human pathogenic prevalence group of \eqn{n}, as described below;
-#' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.
+#' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Archaea = 2, others = 3.
 #'
 #' The grouping into human pathogenic prevalence \eqn{p} is based on recent work from Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
 #'
@@ -62,7 +62,7 @@
 #' - Any genus present in the **established** list also has `prevalence = 1.0` in the [microorganisms] data set;
 #' - Any other genus present in the **putative** list has `prevalence = 1.25` in the [microorganisms] data set;
 #' - Any other species or subspecies of which the genus is present in the two aforementioned groups, has `prevalence = 1.5` in the [microorganisms] data set;
-#' - Any *non-bacterial* genus, species or subspecies of which the genus is present in the following list, has `prevalence = 1.5` in the [microorganisms] data set: `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`;
+#' - Any *non-bacterial* genus, species or subspecies of which the genus is present in the following list, has `prevalence = 1.25` in the [microorganisms] data set: `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`;
 #' - All other records have `prevalence = 2.0` in the [microorganisms] data set.
 #'
 #' When calculating the matching score, all characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.

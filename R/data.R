@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -122,8 +122,7 @@
 #' For convenience, some entries were added manually:
 #'
 #' - `r format_included_data_number(microorganisms[which(microorganisms$source == "manually added" & microorganisms$genus == "Salmonella"), , drop = FALSE])` entries of *Salmonella*, such as the city-like serovars and groups A to H
-#' - `r format_included_data_number(microorganisms[which(microorganisms$source == "manually added" & microorganisms$genus == "Streptococcus"), , drop = FALSE])` entries of *Streptococcus*, such as the beta-haemolytic groups A to K, viridans, and milleri
-#' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
+#' - `r format_included_data_number(length(which(microorganisms$rank == "species group")))` species groups (such as the beta-haemolytic *Streptococcus* groups A to K, coagulase-negative *Staphylococcus* (CoNS), *Mycobacterium tuberculosis* complex, etc.), of which the group compositions are stored in the [microorganisms.groups] data set
 #' - 1 entry of *Blastocystis* (*B.  hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 #' - 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
@@ -148,14 +147,14 @@
 #' * Grimont *et al.* (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on *Salmonella* (WHOCC-SALM).
 #'
 #' * Bartlett *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
-#' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
+#' @seealso [as.mo()], [mo_property()], [microorganisms.groups], [microorganisms.codes], [intrinsic_resistant]
 #' @examples
 #' microorganisms
 "microorganisms"
 
 #' Data Set with `r format(nrow(microorganisms.codes), big.mark = " ")` Common Microorganism Codes
 #'
-#' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
+#' A data set containing commonly used codes for microorganisms, from laboratory systems and [WHONET](https://whonet.org). Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = " ")` observations and `r ncol(microorganisms.codes)` variables:
 #' - `code`\cr Commonly used code of a microorganism
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
@@ -174,6 +173,24 @@
 #' # works for all AMR functions:
 #' mo_is_intrinsic_resistant("eco", ab = "vancomycin")
 "microorganisms.codes"
+
+#' Data Set with `r format(nrow(microorganisms.groups), big.mark = " ")` Microorganisms In Species Groups
+#'
+#' A data set containing species groups and microbiological complexes, which are used in [the clinical breakpoints table][clinial_breakpoints].
+#' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.groups), big.mark = " ")` observations and `r ncol(microorganisms.groups)` variables:
+#' - `mo_group`\cr ID of the species group / microbiological complex
+#' - `mo`\cr ID of the microorganism belonging in the species group / microbiological complex
+#' - `mo_group_name`\cr Name of the species group / microbiological complex, as retrieved with [mo_name()]
+#' - `mo_name`\cr Name of the microorganism belonging in the species group / microbiological complex, as retrieved with [mo_name()]
+#' @details
+#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @seealso [as.mo()] [microorganisms]
+#' @examples
+#' microorganisms.groups
+#' 
+#' # these are all species in the Bacteroides fragilis group, as per WHONET:
+#' microorganisms.groups[microorganisms.groups$mo_group == "B_BCTRD_FRGL-C", ]
+"microorganisms.groups"
 
 #' Data Set with `r format(nrow(example_isolates), big.mark = " ")` Example Isolates
 #'
@@ -248,23 +265,33 @@
 #' Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. Currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`). Use [as.sir()] to transform MICs or disks measurements to SIR values.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(clinical_breakpoints), big.mark = " ")` observations and `r ncol(clinical_breakpoints)` variables:
 #' - `guideline`\cr Name of the guideline
-#' - `method`\cr Either `r vector_or(clinical_breakpoints$method)`
-#' - `site`\cr Body site, e.g. "Oral" or "Respiratory"
+#' - `type`\cr Breakpoint type, either `r vector_or(clinical_breakpoints$type)`
+#' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method)`
+#' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
 #' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
-#' - `ab`\cr Antibiotic ID, see [as.ab()]
+#' - `ab`\cr Antibiotic code as used by this package, EARS-Net and WHONET, see [as.ab()]
 #' - `ref_tbl`\cr Info about where the guideline rule can be found
 #' - `disk_dose`\cr Dose of the used disk diffusion method
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
-#' - `ecoff`\cr Epidemiological cut-off (ECOFF) value, used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi (use [`as.sir(..., ecoff = TRUE)`][as.sir()] to interpret raw data using ECOFF values)
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' @details
-#' Clinical breakpoints are validated through [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org).
+#' ### Different types of breakpoints
+#' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quote = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 #' 
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
-#'
-#' They **allow for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
+#' The default is `"human"`, which can also be set with the [package option][AMR-options] [`AMR_breakpoint_type`][AMR-options]. Use [`as.sir(..., breakpoint_type = ...)`][as.sir()] to interpret raw data using a specific breakpoint type, e.g. `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
+#' 
+#' ### Imported from WHONET
+#' Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their development on the WHONET software.
+#' 
+#' ### Response from CLSI and EUCAST
+#' The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, the WHO, and developers of WHONET and the `AMR` package.
+#' 
+#' ### Download
+#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw). They allow for machine reading EUCAST and CLSI guidelines, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI, though initiatives have started to overcome these burdens.
+#' 
+#' **NOTE:** this `AMR` package (and the WHONET software as well) contains internal methods to apply the guidelines, which is rather complex. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the [microorganisms.groups] data set). It is important that this is considered when using the breakpoints for own use.
 #' @seealso [intrinsic_resistant]
 #' @examples
 #' clinical_breakpoints

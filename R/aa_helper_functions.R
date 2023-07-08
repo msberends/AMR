@@ -1,11 +1,11 @@
 # ==================================================================== #
-# TITLE                                                                #
+# TITLE:                                                               #
 # AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
-# SOURCE                                                               #
+# SOURCE CODE:                                                         #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# CITE AS                                                              #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
 # Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
 # (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
@@ -1182,20 +1182,20 @@ is_dark <- function() {
   }
   isTRUE(AMR_env$is_dark_theme)
 }
-font_black <- function(..., collapse = " ") {
+font_black <- function(..., collapse = " ", adapt = TRUE) {
   before <- "\033[38;5;232m"
   after <- "\033[39m"
-  if (is_dark()) {
+  if (isTRUE(adapt) && is_dark()) {
     # white
     before <- "\033[37m"
     after <- "\033[39m"
   }
   try_colour(..., before = before, after = after, collapse = collapse)
 }
-font_white <- function(..., collapse = " ") {
+font_white <- function(..., collapse = " ", adapt = TRUE) {
   before <- "\033[37m"
   after <- "\033[39m"
-  if (is_dark()) {
+  if (isTRUE(adapt) && is_dark()) {
     # black
     before <- "\033[38;5;232m"
     after <- "\033[39m"
@@ -1283,7 +1283,7 @@ font_stripstyle <- function(x) {
   x
 }
 
-progress_ticker <- function(n = 1, n_min = 0, print = TRUE, ...) {
+progress_ticker <- function(n = 1, n_min = 0, print = TRUE, clear = TRUE, title = "", only_bar_percent = FALSE, ...) {
   if (print == FALSE || n < n_min) {
     # create fake/empty object
     pb <- list()
@@ -1299,9 +1299,11 @@ progress_ticker <- function(n = 1, n_min = 0, print = TRUE, ...) {
     progress_bar <- import_fn("progress_bar", "progress", error_on_fail = FALSE)
     if (!is.null(progress_bar)) {
       # so we use progress::progress_bar
-      # a close() method was also added, see below this function
+      # a close()-method was also added, see below for that
       pb <- progress_bar$new(
-        format = "[:bar] :percent (:current/:total,:eta)",
+        format = paste0(title,
+                        ifelse(only_bar_percent == TRUE, "[:bar] :percent", "[:bar] :percent (:current/:total,:eta)")),
+        clear = clear,
         total = n
       )
     } else {
@@ -1487,11 +1489,11 @@ add_MO_lookup_to_AMR_env <- function() {
 
     MO_lookup$kingdom_index <- NA_real_
     MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
-    MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
-    MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
-    MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
+    MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 1.25
+    MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 1.5
+    MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 2
     # all the rest
-    MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
+    MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 3
 
     # the fullname lowercase, important for the internal algorithms in as.mo()
     MO_lookup$fullname_lower <- tolower(trimws(paste(
