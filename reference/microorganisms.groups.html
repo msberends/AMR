@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -160,7 +160,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>A data set containing species groups and microbiological complexes, which are used in the clinical breakpoints table.</p>
+    <p>A data set containing species groups and microbiological complexes, which are used in <a href="clinical_breakpoints.html">the clinical breakpoints table</a>.</p>
     </div>
 
     <div class="section level2">
@@ -187,31 +187,11 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">microorganisms.groups</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 444 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mo_group       mo           mo_group_name                   mo_name          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_ACNTB_BMNN-C B_ACNTB_BMNN Acinetobacter baumannii complex Acinetobacter ba…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_ACNTB_BMNN-C B_ACNTB_CLCC Acinetobacter baumannii complex Acinetobacter ca…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_ACNTB_BMNN-C B_ACNTB_DJKS Acinetobacter baumannii complex Acinetobacter di…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> B_ACNTB_BMNN-C B_ACNTB_NSCM Acinetobacter baumannii complex Acinetobacter no…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_ACNTB_BMNN-C B_ACNTB_PITT Acinetobacter baumannii complex Acinetobacter pi…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> B_ACNTB_BMNN-C B_ACNTB_SFRT Acinetobacter baumannii complex Acinetobacter se…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> B_BCTRD_FRGL-C B_BCTRD_FRGL Bacteroides fragilis complex    Bacteroides frag…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> B_BCTRD_FRGL-C B_BCTRD_OVTS Bacteroides fragilis complex    Bacteroides ovat…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> B_BCTRD_FRGL-C B_BCTRD_THTT Bacteroides fragilis complex    Bacteroides thet…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> B_BCTRD_FRGL-C B_BCTRD_VLGT Bacteroides fragilis complex    Bacteroides vulg…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 434 more rows</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># these are all species in the Bacteroides fragilis group, as per WHONET:</span></span></span>
 <span class="r-in"><span><span class="va">microorganisms.groups</span><span class="op">[</span><span class="va">microorganisms.groups</span><span class="op">$</span><span class="va">mo_group</span> <span class="op">==</span> <span class="st">"B_BCTRD_FRGL-C"</span>, <span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mo_group       mo           mo_group_name                mo_name              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> B_BCTRD_FRGL-C B_BCTRD_FRGL Bacteroides fragilis complex Bacteroides fragilis </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> B_BCTRD_FRGL-C B_BCTRD_OVTS Bacteroides fragilis complex Bacteroides ovatus   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> B_BCTRD_FRGL-C B_BCTRD_THTT Bacteroides fragilis complex Bacteroides thetaiot…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> B_BCTRD_FRGL-C B_BCTRD_VLGT Bacteroides fragilis complex Bacteroides vulgatus </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> B_BCTRD_FRGL-C B_PRBCT_DSTS Bacteroides fragilis complex Parabacteroides dist…</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

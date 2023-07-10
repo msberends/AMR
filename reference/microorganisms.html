@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -255,24 +255,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">microorganisms</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 52,169 × 23</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mo               fullname      status kingdom phylum class order family genus</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_GRAMN          (unknown Gra… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_GRAMP          (unknown Gra… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_ANAER-NEG      (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> B_ANAER-POS      (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_ANAER          (unknown ana… accep… Bacter… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> F_FUNGUS         (unknown fun… accep… Fungi   (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   UNKNOWN        (unknown nam… accep… (unkno… (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> F_YEAST          (unknown yea… accep… Fungi   (unkn… (unk… (unk… <span style="color: #949494;">"</span>(unk… <span style="color: #949494;">"</span>(un…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> B_[FAM]_ABDTBCTR Abditibacter… accep… Bacter… Abdit… Abdi… Abdi… <span style="color: #949494;">"</span>Abdi… <span style="color: #949494;">""</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> B_[ORD]_ABDTBCTR Abditibacter… accep… Bacter… Abdit… Abdi… Abdi… <span style="color: #949494;">""</span>     <span style="color: #949494;">""</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 52,159 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more variables: species &lt;chr&gt;, subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   oxygen_tolerance &lt;chr&gt;, source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn_renamed_to &lt;chr&gt;, gbif &lt;chr&gt;, gbif_parent &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gbif_renamed_to &lt;chr&gt;, prevalence &lt;dbl&gt;, snomed &lt;list&gt;</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

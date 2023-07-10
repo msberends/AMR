@@ -12,7 +12,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -315,7 +315,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<a href="https://www.eucast.org/newsiandr/" class="external-link">https://www.eucast.org/newsiandr/</a>):</p><ul><li><p><strong>S - Susceptible, standard dosing regimen</strong><br>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<a href="https://www.eucast.org/newsiandr" class="external-link">https://www.eucast.org/newsiandr</a>):</p><ul><li><p><strong>S - Susceptible, standard dosing regimen</strong><br>
 A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
 <li><p><strong>I - Susceptible, increased exposure</strong> <em><br>
 A microorganism is categorised as "Susceptible, Increased exposure</em>" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
@@ -334,63 +334,44 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># example_isolates is a data set available in the AMR package.</span></span></span>
 <span class="r-in"><span><span class="co"># run ?example_isolates for more info.</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 36 more variables: AMC &lt;sir&gt;, AMP &lt;sir&gt;, TZP &lt;sir&gt;, CZO &lt;sir&gt;, FEP &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;, CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;sir&gt;, AMK &lt;sir&gt;, KAN &lt;sir&gt;, TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># base R ------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># determines %R</span></span></span>
 <span class="r-in"><span><span class="fu">resistance</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5955556</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in resistance(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5688204 0.6218738</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  confidence_level <span class="op">=</span> <span class="fl">0.975</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5650148 0.6255670</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  confidence_level <span class="op">=</span> <span class="fl">0.975</span>,</span></span>
 <span class="r-in"><span>  collapse <span class="op">=</span> <span class="st">", "</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.565, 0.626"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># determines %S+I:</span></span></span>
 <span class="r-in"><span><span class="fu">susceptibility</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4044444</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in susceptibility(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span>,</span></span>
 <span class="r-in"><span>  ab_result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"I"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3781262 0.4311796</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># be more specific</span></span></span>
 <span class="r-in"><span><span class="fu">proportion_S</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4022222</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in proportion_S(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">proportion_SI</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4044444</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in proportion_SI(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">proportion_I</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002222222</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in proportion_I(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">proportion_IR</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5977778</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in proportion_IR(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">proportion_R</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5955556</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in proportion_R(): NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># dplyr -------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
@@ -402,12 +383,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>      n <span class="op">=</span> <span class="fu"><a href="count.html">n_sir</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span> <span class="co"># n_sir works like n_distinct in dplyr, see ?n_sir</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ward           r     n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical   0.147   869</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU        0.190   447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient 0.161    93</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summarise(., r = resistance(CIP), n = n_sir(CIP)):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `r = resistance(CIP)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `ward = "Clinical"`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in resistance(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -417,12 +396,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>      ci_max <span class="op">=</span> <span class="fu">sir_confidence_interval</span><span class="op">(</span><span class="va">CIP</span>, side <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ward       cipro_R ci_min ci_max</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical     0.147 0.124   0.173</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU          0.190 0.155   0.230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient   0.161 0.093<span style="text-decoration: underline;">2</span>  0.252</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summarise(., cipro_R = resistance(CIP), ci_min = sir_confidence_interval(CIP,     side = "min"), ci_max = sir_confidence_interval(CIP, side = "max"),     ):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `cipro_R = resistance(CIP)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `ward = "Clinical"`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in resistance(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># scoped dplyr verbs with antibiotic selectors</span></span></span>
 <span class="r-in"><span>  <span class="co"># (you could also use across() of course)</span></span></span>
@@ -433,22 +410,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>      <span class="va">resistance</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `summarise()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `KAN = (function (..., minimum = 30, as_percent = FALSE,</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   only_all_tested = FALSE) ...`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 3: `ward = "Outpatient"`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Introducing NA: only 23 results available for KAN in group: ward =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Outpatient" (minimum = 30).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ward         GEN   TOB   AMK   KAN    IPM    MEM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical   0.229 0.315 0.626     1 0.049<span style="text-decoration: underline;">8</span> 0.045<span style="text-decoration: underline;">8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU        0.290 0.400 0.662     1 0.086<span style="text-decoration: underline;">2</span> 0.089<span style="text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient 0.2   0.368 0.605    <span style="color: #BB0000;">NA</span> 0.054<span style="text-decoration: underline;">1</span> 0.054<span style="text-decoration: underline;">1</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -511,21 +473,10 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">sir_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    ward       antibiotic interpretation value ci_min ci_max isolates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Clinical   AMX        SI             0.423 0.389   0.457      357</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Clinical   AMX        R              0.577 0.543   0.611      487</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Clinical   CIP        SI             0.853 0.827   0.876      741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Clinical   CIP        R              0.147 0.124   0.173      128</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ICU        AMX        SI             0.369 0.323   0.417      158</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ICU        AMX        R              0.631 0.583   0.677      270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ICU        CIP        SI             0.810 0.770   0.845      362</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ICU        CIP        R              0.190 0.155   0.230       85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Outpatient AMX        SI             0.397 0.288   0.515       31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Outpatient AMX        R              0.603 0.485   0.712       47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Outpatient CIP        SI             0.839 0.748   0.907       78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Outpatient CIP        R              0.161 0.093<span style="text-decoration: underline;">2</span>  0.252       15</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summarise(., R = resistance(CIP, as_percent = TRUE), SI = susceptibility(CIP,     as_percent = TRUE), n1 = count_all(CIP), n2 = n_sir(CIP),     total = n()):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `R = resistance(CIP, as_percent = TRUE)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `ward = "Clinical"`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in resistance(): NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

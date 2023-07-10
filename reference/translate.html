@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -210,51 +210,50 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Current settings (based on system language)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"Ciprofloxacin"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ciprofloxacin"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Coagulase-negative Staphylococcus (CoNS)"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Coagulase-negative Staphylococcus (CoNS)"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting another language</span></span></span>
 <span class="r-in"><span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="st">"Spanish"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using Spanish (Español) for the AMR package for this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"Ciprofloxacin"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ciprofloxacina"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Coagulase-negative Staphylococcus (CoNS)"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Staphylococcus coagulasa negativo (SCN)"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting yet another language</span></span></span>
 <span class="r-in"><span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="st">"Greek"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using Greek (Ελληνικά) for the AMR package for this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"Ciprofloxacin"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Σιπροφλοξασίνη"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Coagulase-negative Staphylococcus (CoNS)"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Σταφυλόκοκκος με αρνητική πηκτικότητα (CoNS)"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting yet another language</span></span></span>
 <span class="r-in"><span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="st">"Ukrainian"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using Ukrainian (Українська) for the AMR package for this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"Ciprofloxacin"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ципрофлоксацин"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Coagulase-negative Staphylococcus (CoNS)"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Коагулазонегативний стафілокок (КНС)"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># set_AMR_locale() understands endonyms, English exonyms, and ISO-639-1:</span></span></span>
 <span class="r-in"><span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="st">"Deutsch"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using German (Deutsch) for the AMR package for this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="st">"German"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using German (Deutsch) for the AMR package for this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="st">"de"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using German (Deutsch) for the AMR package for this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"amox/clav"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ More than one result was found for item 1: amoxicillin and clavulansäure</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Amoxicillin/Clavulansäure"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># reset to system default</span></span></span>
 <span class="r-in"><span><span class="fu">reset_AMR_locale</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using the English language (English) for the AMR package for this</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   session.</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"amox/clav"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Amoxicillin/clavulanic acid"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .Call(Cchin, x, table):</span> NULL value passed as symbol address</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

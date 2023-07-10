@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -374,6 +374,11 @@
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mo'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] B_URPLS_URLY B_URPLS_URLY B_URPLS_URLY B_URPLS_URLY</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># input will get cleaned up with the input given in the `cleaning_regex` argument,</span></span></span>
+<span class="r-in"><span><span class="co"># which defaults to `mo_cleaning_regex()`:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">mo_cleaning_regex</span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ([^A-Za-z- \(\)\[\]{}]+|([({]|\[).+([})]|\])|(^| )(e?spp([^a-z]+|$)|e?ssp([^a-z]+|$)|serogr.?up[a-z]*|e?ss([^a-z]+|$)|e?sp([^a-z]+|$)|var([^a-z]+|$)|serovar[a-z]*|sube?species|biovar[a-z]*|e?species|Ig[ADEGM]|e?subsp|biotype|titer|dummy)) </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Streptococcus group A"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mo'</span>
