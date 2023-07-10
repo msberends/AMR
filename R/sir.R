@@ -911,11 +911,12 @@ as_sir_method <- function(method_short,
   msgs <- character(0)
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
-    msg_note(paste0(
-      "No ", method_coerced, " breakpoints available for ",
-      suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
-      " (", ab_coerced, ")"
-    ))
+    message(
+      paste0(font_rose_bg(" WARNING "), "\n"),
+      font_black(paste0("  ", AMR_env$bullet_icon, " No ", method_coerced, " breakpoints available for ",
+        suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
+        " (", ab_coerced, ")")))
+    
     load_mo_uncertainties(metadata_mo)
     return(rep(NA_sir_, nrow(df)))
   }
@@ -1090,7 +1091,7 @@ as_sir_method <- function(method_short,
     message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   }
   if (isTRUE(rise_warning)) {
-    message(font_rose_bg(" * WARNING *"))
+    message(font_rose_bg(" WARNING "))
   } else if (length(msgs) == 0) {
     message(font_green_bg(" OK "))
   } else {

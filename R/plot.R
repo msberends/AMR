@@ -763,6 +763,12 @@ plot_name_of_I <- function(guideline) {
 
 plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, fn, language, method, breakpoint_type, include_PKPD, ...) {
   guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
+  
+  # store previous interpretations to backup
+  sir_history <- AMR_env$sir_interpretation_history
+  # and clear previous interpretations
+  AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
+  
   if (!is.null(mo) && !is.null(ab)) {
     # interpret and give colour based on MIC values
     mo <- as.mo(mo)
@@ -770,11 +776,6 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     ab <- as.ab(ab)
     abname <- ab_name(ab, language = language)
     
-    # store previous interpretations to backup
-    sir_history <- AMR_env$sir_interpretation_history
-    # and clear previous interpretations
-    AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
-
     sir <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = FALSE, include_PKPD = include_PKPD, breakpoint_type = breakpoint_type, ...)))
     guideline_txt <- guideline
     if (all(is.na(sir))) {
