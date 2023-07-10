@@ -40,6 +40,7 @@
 #' @param colours_SIR colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.
 #' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see [get_AMR_locale()]) and can be overwritten by setting the [package option][AMR-options] [`AMR_locale`][AMR-options], e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param expand a [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
+#' @inheritParams as.sir
 #' @details
 #' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 #'
@@ -93,6 +94,8 @@ plot.mic <- function(x,
                      colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                      language = get_AMR_locale(),
                      expand = TRUE,
+                     include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                     breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                      ...) {
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
@@ -123,7 +126,9 @@ plot.mic <- function(x,
     colours_SIR = colours_SIR,
     fn = as.mic,
     language = language,
-    type = "MIC",
+    method = "MIC",
+    include_PKPD = include_PKPD,
+    breakpoint_type = breakpoint_type,
     ...
   )
   barplot(x,
@@ -224,6 +229,8 @@ autoplot.mic <- function(object,
                          colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                          language = get_AMR_locale(),
                          expand = TRUE,
+                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                          ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
@@ -256,7 +263,9 @@ autoplot.mic <- function(object,
     colours_SIR = colours_SIR,
     fn = as.mic,
     language = language,
-    type = "MIC",
+    method = "MIC",
+    include_PKPD = include_PKPD,
+    breakpoint_type = breakpoint_type,
     ...
   )
   df <- as.data.frame(x, stringsAsFactors = TRUE)
@@ -327,6 +336,8 @@ plot.disk <- function(x,
                       colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                       language = get_AMR_locale(),
                       expand = TRUE,
+                      include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                      breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                       ...) {
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
@@ -357,7 +368,9 @@ plot.disk <- function(x,
     colours_SIR = colours_SIR,
     fn = as.disk,
     language = language,
-    type = "disk",
+    method = "disk",
+    include_PKPD = include_PKPD,
+    breakpoint_type = breakpoint_type,
     ...
   )
 
@@ -458,6 +471,8 @@ autoplot.disk <- function(object,
                           colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                           language = get_AMR_locale(),
                           expand = TRUE,
+                          include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                          breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                           ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
@@ -490,7 +505,9 @@ autoplot.disk <- function(object,
     colours_SIR = colours_SIR,
     fn = as.disk,
     language = language,
-    type = "disk",
+    method = "disk",
+    include_PKPD = include_PKPD,
+    breakpoint_type = breakpoint_type,
     ...
   )
   df <- as.data.frame(x, stringsAsFactors = TRUE)
@@ -744,7 +761,7 @@ plot_name_of_I <- function(guideline) {
   }
 }
 
-plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, fn, language, type, ...) {
+plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, fn, language, method, breakpoint_type, include_PKPD, ...) {
   guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
   if (!is.null(mo) && !is.null(ab)) {
     # interpret and give colour based on MIC values
@@ -752,30 +769,36 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     moname <- mo_name(mo, language = language)
     ab <- as.ab(ab)
     abname <- ab_name(ab, language = language)
+    
+    # store previous interpretations to backup
+    sir_history <- AMR_env$sir_interpretation_history
+    # and clear previous interpretations
+    AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
 
-    sir <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = FALSE, include_PKPD = TRUE, ...)))
+    sir <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = FALSE, include_PKPD = include_PKPD, breakpoint_type = breakpoint_type, ...)))
     guideline_txt <- guideline
     if (all(is.na(sir))) {
-      sir_screening <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = TRUE, include_PKPD = TRUE, ...)))
+      sir_screening <- suppressWarnings(suppressMessages(as.sir(fn(names(x)), mo = mo, ab = ab, guideline = guideline, include_screening = TRUE, include_PKPD = include_PKPD, breakpoint_type = breakpoint_type, ...)))
       if (!all(is.na(sir_screening))) {
         message_(
-          "Only ", guideline, " ", type, " interpretations found for ",
+          "Only ", guideline, " ", method, " interpretations found for ",
           ab_name(ab, language = NULL, tolower = TRUE), " in ", italicise(moname), " for screening"
         )
         sir <- sir_screening
         guideline_txt <- paste0("(Screen, ", guideline_txt, ")")
       } else {
         message_(
-          "No ", guideline, " ", type, " interpretations found for ",
+          "No ", guideline, " ", method, " interpretations found for ",
           ab_name(ab, language = NULL, tolower = TRUE), " in ", italicise(moname)
         )
-        guideline_txt <- ""
+        guideline_txt <- paste0("(", guideline_txt, ")")
       }
     } else {
       if (isTRUE(list(...)$uti)) {
         guideline_txt <- paste("UTIs,", guideline_txt)
       }
-      guideline_txt <- paste0("(", guideline_txt, ")")
+      ref_tbl <- paste0('"', unique(AMR_env$sir_interpretation_history$ref_table), '"', collapse = "/")
+      guideline_txt <- paste0("(", guideline_txt, ": ", ref_tbl, ")")
     }
     cols <- character(length = length(sir))
     cols[is.na(sir)] <- "#BEBEBE"
@@ -787,5 +810,9 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     cols <- "#BEBEBE"
     sub <- NULL
   }
+  
+  # restore previous interpretations to backup
+  AMR_env$sir_interpretation_history <- sir_history
+  
   list(cols = cols, count = as.double(x), sub = sub, guideline = guideline)
 }

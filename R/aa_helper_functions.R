@@ -1237,7 +1237,7 @@ font_grey_bg <- function(..., collapse = " ") {
 }
 font_red_bg <- function(..., collapse = " ") {
   # this is #ed553b (picked to be colourblind-safe with other SIR colours)
-  try_colour(font_black(..., collapse = collapse), before = "\033[48;5;203m", after = "\033[49m", collapse = collapse)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;203m", after = "\033[49m", collapse = collapse)
 }
 font_orange_bg <- function(..., collapse = " ") {
   # this is #f6d55c (picked to be colourblind-safe with other SIR colours)
@@ -1533,19 +1533,17 @@ readRDS_AMR <- function(file, refhook = NULL) {
 # Faster data.table implementations ----
 
 match <- function(x, table, ...) {
-  chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
-  if (!is.null(chmatch) && is.character(x) && is.character(table)) {
+  if (!is.null(AMR_env$chmatch) && inherits(x, "character") && inherits(table, "character")) {
     # data.table::chmatch() is much faster than base::match() for character
-    chmatch(x, table, ...)
+    AMR_env$chmatch(x, table, ...)
   } else {
     base::match(x, table, ...)
   }
 }
 `%in%` <- function(x, table) {
-  chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
-  if (!is.null(chin) && is.character(x) && is.character(table)) {
+  if (!is.null(AMR_env$chin) && inherits(x, "character") && inherits(table, "character")) {
     # data.table::`%chin%`() is much faster than base::`%in%`() for character
-    chin(x, table)
+    AMR_env$chin(x, table)
   } else {
     base::`%in%`(x, table)
   }

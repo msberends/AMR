@@ -1,4 +1,4 @@
-# AMR 2.0.0.9029
+# AMR 2.0.0.9030
 
 ## New
 * Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations
@@ -15,6 +15,10 @@
 ## Changed
 * Updated algorithm of `as.mo()` by giving more weight to fungi
 * `mo_rank()` now returns `NA` for 'unknown' microorganisms (`B_ANAER`, `B_ANAER-NEG`, `B_ANAER-POS`, `B_GRAMN`, `B_GRAMP`, `F_FUNGUS`, `F_YEAST`, and `UNKNOWN`)
+* When printing MO codes in a tibble, a mouse-hover now shows the full name of the microorganism
+* Plots for MIC and disk diffusion values:
+  * Now have settable arguments for breakpoint type and PK/PD, like `as.sir()`
+  * Will now contain the name of the guideline table in the subtitle of the plot
 * Fixed formatting for `sir_interpretation_history()`
 * Fixed some WHONET codes for microorganisms and consequently a couple of entries in `clinical_breakpoints`
 * Fixed a bug for `as.mo()` that led to coercion of `NA` values when using custom microorganism codes
@@ -26,6 +30,7 @@
 * Updated the code table in `microorganisms.codes`
 * Fixed an endless loop if using `reference_df` in `as.mo()`
 * Fixed bug for indicating UTIs in `as.sir()`
+* Greatly improved speed of `as.sir()`
 
 
 # AMR 2.0.0

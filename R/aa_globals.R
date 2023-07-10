@@ -60,19 +60,19 @@ EUCAST_VERSION_EXPERT_RULES <- list(
     version_txt = "v3.3",
     year = 2021,
     title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
   ),
   "3.2" = list(
     version_txt = "v3.2",
     year = 2020,
     title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
   ),
   "3.1" = list(
     version_txt = "v3.1",
     year = 2016,
     title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
   )
 )
 # EUCAST_VERSION_RESISTANTPHENOTYPES <- list(
@@ -80,7 +80,7 @@ EUCAST_VERSION_EXPERT_RULES <- list(
 #     version_txt = "v1.2",
 #     year = 2023,
 #     title = "'Expected Resistant Phenotypes'",
-#     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+#     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
 #   )
 # )
 

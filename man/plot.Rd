@@ -24,6 +24,8 @@
   colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   ...
 )
 
@@ -38,6 +40,8 @@
   colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   ...
 )
 
@@ -54,6 +58,8 @@
   colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   ...
 )
 
@@ -68,6 +74,8 @@
   colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(),
   expand = TRUE,
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   ...
 )
 
@@ -112,6 +120,10 @@
 \item{language}{language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_locale}}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{expand}{a \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
+
+\item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
+
+\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
 
 \item{...}{arguments passed on to methods}
 }

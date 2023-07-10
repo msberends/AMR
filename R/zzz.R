@@ -73,6 +73,8 @@ AMR_env$sir_interpretation_history <- data.frame(
 AMR_env$custom_ab_codes <- character(0)
 AMR_env$custom_mo_codes <- character(0)
 AMR_env$is_dark_theme <- NULL
+AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
+AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
 
 # determine info icon for messages
 if (pkg_is_available("cli")) {

@@ -793,7 +793,7 @@ as_sir_method <- function(method_short,
     mo.bak <- mo
   }
   # be sure to take current taxonomy, as the 'clinical_breakpoints' data set only contains current taxonomy
-  mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, inf0 = FALSE)))
+  mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, info = FALSE)))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab)) {
     message_("Returning NAs for unknown antibiotic: '", font_bold(ab.bak),
@@ -846,12 +846,13 @@ as_sir_method <- function(method_short,
   message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   
   msg_note <- function(messages) {
+    messages <- unique(messages)
     for (i in seq_len(length(messages))) {
       messages[i] <- word_wrap(extra_indent = 5, messages[i])
     }
     message(
       font_yellow_bg(paste0(" NOTE", ifelse(length(messages) > 1, "S", ""), " \n")),
-      paste0("   ", font_black(AMR_env$bullet_icon), " ", font_black(messages, collapse = NULL), collapse = "\n")
+      paste0("  ", font_black(AMR_env$bullet_icon), " ", font_black(messages, collapse = NULL), collapse = "\n")
     )
   }
 
@@ -879,7 +880,6 @@ as_sir_method <- function(method_short,
   rise_note <- FALSE
   method_coerced <- toupper(method)
   ab_coerced <- ab
-  mo_coerced <- mo
   
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
@@ -928,7 +928,7 @@ as_sir_method <- function(method_short,
   p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
-
+  
   # run the rules
   for (i in seq_len(nrow(df_unique))) {
     p$tick()
@@ -943,21 +943,23 @@ as_sir_method <- function(method_short,
     values <- df[rows, "values", drop = TRUE]
     new_sir <- rep(NA_sir_, length(rows))
 
-    # find different mo properties
-    mo_current_genus <- as.mo(mo_genus(mo_current, language = NULL))
-    mo_current_family <- as.mo(mo_family(mo_current, language = NULL))
-    mo_current_order <- as.mo(mo_order(mo_current, language = NULL))
-    mo_current_class <- as.mo(mo_class(mo_current, language = NULL))
+    # find different mo properties, as fast as possible
+    mo_current_genus <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$genus[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$genus)]
+    mo_current_family <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$family[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$family)]
+    mo_current_order <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$order[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$order)]
+    mo_current_class <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$class[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$class)]
+    mo_current_rank <- AMR_env$MO_lookup$rank[match(mo_current, AMR_env$MO_lookup$mo)]
+    mo_current_name <- AMR_env$MO_lookup$fullname[match(mo_current, AMR_env$MO_lookup$mo)]
     if (mo_current %in% AMR::microorganisms.groups$mo) {
       # get the species group
       mo_current_species_group <- AMR::microorganisms.groups$mo_group[match(mo_current, AMR::microorganisms.groups$mo)]
     } else {
       mo_current_species_group <- mo_current
     }
-    mo_current_other <- as.mo("UNKNOWN")
+    mo_current_other <- structure("UNKNOWN", class = c("mo", "character"))
     # formatted for notes
-    mo_formatted <- suppressMessages(suppressWarnings(mo_fullname(mo_current, language = NULL, keep_synonyms = FALSE)))
-    if (!mo_rank(mo_current) %in% c("kingdom", "phylum", "class", "order")) {
+    mo_formatted <- mo_current_name
+    if (!mo_current_rank %in% c("kingdom", "phylum", "class", "order")) {
       mo_formatted <- font_italic(mo_formatted)
     }
     ab_formatted <- paste0(
@@ -1106,8 +1108,7 @@ as_sir_method <- function(method_short,
 sir_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)
 
-  out.bak <- AMR_env$sir_interpretation_history
-  out <- out.bak
+  out <- AMR_env$sir_interpretation_history
   if (NROW(out) == 0) {
     message_("No results to return. Run `as.sir()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
     return(invisible(NULL))
@@ -1118,10 +1119,8 @@ sir_interpretation_history <- function(clean = FALSE) {
   # keep stored for next use
   if (isTRUE(clean)) {
     AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
-  } else {
-    AMR_env$sir_interpretation_history <- out.bak
   }
-
+  
   # sort descending on time
   out <- out[order(out$datetime, decreasing = TRUE), , drop = FALSE]
 
@@ -1141,7 +1140,11 @@ pillar_shaft.sir <- function(x, ...) {
     out[is.na(x)] <- font_grey("  NA")
     out[x == "S"] <- font_green_bg("  S  ")
     out[x == "I"] <- font_orange_bg("  I  ")
-    out[x == "R"] <- font_red_bg("  R  ")
+    if (is_dark()) {
+      out[x == "R"] <- font_red_bg("  R  ")
+    } else {
+      out[x == "R"] <- font_rose_bg("  R  ")
+    }
   }
   create_pillar_column(out, align = "left", width = 5)
 }
