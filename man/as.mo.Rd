@@ -201,6 +201,10 @@ as.mo(c(
   "Ureaplazma urealitycium"
 ))
 
+# input will get cleaned up with the input given in the `cleaning_regex` argument,
+# which defaults to `mo_cleaning_regex()`:
+cat(mo_cleaning_regex(), "\n")
+
 as.mo("Streptococcus group A")
 
 as.mo("S. epidermidis") # will remain species: B_STPHY_EPDR

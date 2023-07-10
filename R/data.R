@@ -176,7 +176,7 @@
 
 #' Data Set with `r format(nrow(microorganisms.groups), big.mark = " ")` Microorganisms In Species Groups
 #'
-#' A data set containing species groups and microbiological complexes, which are used in [the clinical breakpoints table][clinial_breakpoints].
+#' A data set containing species groups and microbiological complexes, which are used in [the clinical breakpoints table][clinical_breakpoints].
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.groups), big.mark = " ")` observations and `r ncol(microorganisms.groups)` variables:
 #' - `mo_group`\cr ID of the species group / microbiological complex
 #' - `mo`\cr ID of the microorganism belonging in the species group / microbiological complex

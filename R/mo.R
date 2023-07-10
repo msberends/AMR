@@ -134,6 +134,10 @@
 #'   "Ureaplasmium urealytica",
 #'   "Ureaplazma urealitycium"
 #' ))
+#' 
+#' # input will get cleaned up with the input given in the `cleaning_regex` argument,
+#' # which defaults to `mo_cleaning_regex()`:
+#' cat(mo_cleaning_regex(), "\n")
 #'
 #' as.mo("Streptococcus group A")
 #'
@@ -561,14 +565,17 @@ mo_reset_session <- function() {
 #' @rdname as.mo
 #' @export
 mo_cleaning_regex <- function() {
+  parts_to_remove <- c("e?spp([^a-z]+|$)", "e?ssp([^a-z]+|$)", "e?ss([^a-z]+|$)", "e?sp([^a-z]+|$)", "e?subsp", "sube?species", "e?species",
+                       "biovar[a-z]*", "biotype", "serovar[a-z]*", "var([^a-z]+|$)", "serogr.?up[a-z]*",
+                       "titer", "dummy", "Ig[ADEGM]")
   paste0(
     "(",
     "[^A-Za-z- \\(\\)\\[\\]{}]+",
     "|",
     "([({]|\\[).+([})]|\\])",
-    "|",
-    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|var|serogr.?up|e?species|titer|dummy)[.]*|( Ig[ADEGM])( |$))"
-  )
+    "|(^| )(",
+    paste0(parts_to_remove[order(1 - nchar(parts_to_remove))], collapse = "|"),
+  "))")
 }
 
 # UNDOCUMENTED METHODS ----------------------------------------------------
@@ -832,10 +839,10 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
   
   add_MO_lookup_to_AMR_env()
   
-  col_red <- function(x) font_rose_bg(font_black(x, collapse = NULL, adapt = FALSE), collapse = NULL)
-  col_orange <- function(x) font_orange_bg(font_black(x, collapse = NULL, adapt = FALSE), collapse = NULL)
-  col_yellow <- function(x) font_yellow_bg(font_black(x, collapse = NULL, adapt = FALSE), collapse = NULL)
-  col_green <- function(x) font_green_bg(font_black(x, collapse = NULL, adapt = FALSE), collapse = NULL)
+  col_red <- function(x) font_rose_bg(x, collapse = NULL)
+  col_orange <- function(x) font_orange_bg(x, collapse = NULL)
+  col_yellow <- function(x) font_yellow_bg(x, collapse = NULL)
+  col_green <- function(x) font_green_bg(x, collapse = NULL)
   
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
@@ -978,9 +985,9 @@ convert_colloquial_input <- function(x) {
                                                   perl = TRUE
   )
   # Streptococci in different languages, like "estreptococos grupo B"
-  out[x %like_case% "strepto[ck]o[ck][a-zA-Z]* [abcdefghijkl]$"] <- gsub(".*e?strepto[ck]o[ck].* ([abcdefghijkl])$",
+  out[x %like_case% "strepto[ck]o[ck][a-zA-Z ]* [abcdefghijkl]$"] <- gsub(".*e?strepto[ck]o[ck].* ([abcdefghijkl])$",
                                                                   "B_STRPT_GRP\\U\\1",
-                                                                  x[x %like_case% "strepto[ck]o[ck][a-zA-Z]* [abcdefghijkl]$"],
+                                                                  x[x %like_case% "strepto[ck]o[ck][a-zA-Z ]* [abcdefghijkl]$"],
                                                                   perl = TRUE
   )
   out[x %like_case% "strep[a-z]* group [abcdefghijkl]$"] <- gsub(".* ([abcdefghijkl])$",
@@ -994,6 +1001,7 @@ convert_colloquial_input <- function(x) {
                                                                      perl = TRUE
   )
   out[x %like_case% "ha?emoly.*strep"] <- "B_STRPT_HAEM"
+  out[x %like_case% "(strepto.* [abcg, ]{2,4}$)"] <- "B_STRPT_ABCG"
   out[x %like_case% "(strepto.* mil+er+i|^mgs[^a-z]*$)"] <- "B_STRPT_MILL"
   out[x %like_case% "mil+er+i gr"] <- "B_STRPT_MILL"
   out[x %like_case% "((strepto|^s).* viridans|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
@@ -1024,6 +1032,9 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "anaerob[a-z]+ .*gram[ -]?pos.*"] <- "B_ANAER-POS"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
   
+  # coryneform bacteria
+  out[x %like_case% "^coryneform"] <- "B_CORYNF"
+  
   # yeasts and fungi
   out[x %like_case% "^yeast?"] <- "F_YEAST"
   out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
@@ -1032,7 +1043,11 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "meningo[ck]o[ck]"] <- "B_NESSR_MNNG"
   out[x %like_case% "gono[ck]o[ck]"] <- "B_NESSR_GNRR"
   out[x %like_case% "pneumo[ck]o[ck]"] <- "B_STRPT_PNMN"
-  
+  out[x %like_case% "hacek"] <- "B_HACEK"
+  out[x %like_case% "haemophilus" & x %like_case% "aggregatibacter" & x %like_case% "cardiobacterium" & x %like_case% "eikenella" & x %like_case% "kingella"] <- "B_HACEK"
+  out[x %like_case% "slow.* grow.* mycobact"] <- "B_MYCBC_SGM"
+  out[x %like_case% "rapid.* grow.* mycobact"] <- "B_MYCBC_RGM"
+
   # unexisting names (con is the WHONET code for contamination)
   out[x %in% c("con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
   

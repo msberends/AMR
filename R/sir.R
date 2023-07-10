@@ -105,7 +105,7 @@
 #'
 #' The function [is_sir_eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:
-#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr/>):
+#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr>):
 #'
 #' - **S - Susceptible, standard dosing regimen**\cr
 #'   A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
@@ -850,7 +850,7 @@ as_sir_method <- function(method_short,
       messages[i] <- word_wrap(extra_indent = 5, messages[i])
     }
     message(
-      font_yellow(font_bold(paste0(" Note", ifelse(length(messages) > 1, "s", ""), ":\n"))),
+      font_yellow_bg(paste0(" NOTE", ifelse(length(messages) > 1, "S", ""), " \n")),
       paste0("   ", font_black(AMR_env$bullet_icon), " ", font_black(messages, collapse = NULL), collapse = "\n")
     )
   }
@@ -873,6 +873,7 @@ as_sir_method <- function(method_short,
     # when as.sir.disk is called directly
     df$values <- as.disk(df$values)
   }
+  df_unique <- unique(df[ , c("mo", "uti"), drop = FALSE])
 
   rise_warning <- FALSE
   rise_note <- FALSE
@@ -906,15 +907,6 @@ as_sir_method <- function(method_short,
     breakpoints <- breakpoints %pm>%
       subset(mo != "UNKNOWN" & ref_tbl %unlike% "PK.*PD")
   }
-  if (all(uti == FALSE, na.rm = TRUE)) {
-    # remove UTI breakpoints
-    breakpoints <- breakpoints %pm>%
-      subset(is.na(uti) | uti == FALSE)
-  } else if (all(uti == TRUE, na.rm = TRUE)) {
-    # remove UTI breakpoints
-    breakpoints <- breakpoints %pm>%
-      subset(uti == TRUE)
-  }
 
   msgs <- character(0)
   if (nrow(breakpoints) == 0) {
@@ -933,32 +925,39 @@ as_sir_method <- function(method_short,
     add_intrinsic_resistance_to_AMR_env()
   }
   
-  p <- progress_ticker(n = length(unique(df$mo)), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
+  p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
+  has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
 
   # run the rules
-  for (mo_currrent in unique(df$mo)) {
+  for (i in seq_len(nrow(df_unique))) {
     p$tick()
-    rows <- which(df$mo == mo_currrent)
+    mo_current <- df_unique[i, "mo", drop = TRUE]
+    uti_current <- df_unique[i, "uti", drop = TRUE]
+    if (is.na(uti_current)) {
+      # preference, so no filter on UTIs
+      rows <- which(df$mo == mo_current)
+    } else {
+      rows <- which(df$mo == mo_current & df$uti == uti_current)
+    }
     values <- df[rows, "values", drop = TRUE]
-    uti <- df[rows, "uti", drop = TRUE]
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties
-    mo_current_genus <- as.mo(mo_genus(mo_currrent, language = NULL))
-    mo_current_family <- as.mo(mo_family(mo_currrent, language = NULL))
-    mo_current_order <- as.mo(mo_order(mo_currrent, language = NULL))
-    mo_current_class <- as.mo(mo_class(mo_currrent, language = NULL))
-    if (mo_currrent %in% AMR::microorganisms.groups$mo) {
+    mo_current_genus <- as.mo(mo_genus(mo_current, language = NULL))
+    mo_current_family <- as.mo(mo_family(mo_current, language = NULL))
+    mo_current_order <- as.mo(mo_order(mo_current, language = NULL))
+    mo_current_class <- as.mo(mo_class(mo_current, language = NULL))
+    if (mo_current %in% AMR::microorganisms.groups$mo) {
       # get the species group
-      mo_current_species_group <- AMR::microorganisms.groups$mo_group[match(mo_currrent, AMR::microorganisms.groups$mo)]
+      mo_current_species_group <- AMR::microorganisms.groups$mo_group[match(mo_current, AMR::microorganisms.groups$mo)]
     } else {
-      mo_current_species_group <- mo_currrent
+      mo_current_species_group <- mo_current
     }
     mo_current_other <- as.mo("UNKNOWN")
     # formatted for notes
-    mo_formatted <- suppressMessages(suppressWarnings(mo_fullname(mo_currrent, language = NULL, keep_synonyms = FALSE)))
-    if (!mo_rank(mo_currrent) %in% c("kingdom", "phylum", "class", "order")) {
+    mo_formatted <- suppressMessages(suppressWarnings(mo_fullname(mo_current, language = NULL, keep_synonyms = FALSE)))
+    if (!mo_rank(mo_current) %in% c("kingdom", "phylum", "class", "order")) {
       mo_formatted <- font_italic(mo_formatted)
     }
     ab_formatted <- paste0(
@@ -976,40 +975,45 @@ as_sir_method <- function(method_short,
         mo_current_other
       ))
 
-    if (any(uti, na.rm = TRUE)) {
+    if (is.na(unique(uti_current))) {
       breakpoints_current <- breakpoints_current %pm>%
+        # this will put UTI = FALSE first, then UTI = TRUE, then UTI = NA
+        pm_arrange(rank_index, uti) # 'uti' is a column in data set 'clinical_breakpoints'  
+    } else if (unique(uti_current) == TRUE) {
+      breakpoints_current <- breakpoints_current %pm>%
+        subset(uti == TRUE) %pm>%
         # be as specific as possible (i.e. prefer species over genus):
-        # the below `pm_desc(uti)` will put `TRUE` on top and FALSE on bottom
-        pm_arrange(rank_index, pm_desc(uti)) # 'uti' is a column in data set 'clinical_breakpoints'
-    } else {
+        pm_arrange(rank_index)
+    } else if (unique(uti_current) == FALSE) {
       breakpoints_current <- breakpoints_current %pm>%
-        # sort UTI = FALSE first, then UTI = TRUE
-        pm_arrange(rank_index, uti)
+        subset(uti == FALSE) %pm>%
+        # be as specific as possible (i.e. prefer species over genus):
+        pm_arrange(rank_index)
     }
 
     # throw notes for different body sites
-    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_coerced)) {
+    site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
+    if (is.na(site)) {
+      site <- paste0("an unspecified body site")
+    } else {
+      site <- paste0("body site '", site, "'")
+    }
+    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti_current %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_coerced)) {
       # only UTI breakpoints available
       warning_("in `as.sir()`: interpretation of ", font_bold(ab_formatted), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See `?as.sir`.")
       rise_warning <- TRUE
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_currrent, ab_coerced)) {
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_coerced)) {
       # both UTI and Non-UTI breakpoints available
-      msgs <- c(msgs, paste0("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
+      msgs <- c(msgs, paste0("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
       breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_currrent, ab_coerced)) {
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_coerced)) {
       # breakpoints for multiple body sites available
-      site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
-      if (is.na(site)) {
-        site <- paste0("an unspecified body site")
-      } else {
-        site <- paste0("body site '", site, "'")
-      }
       msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
     }
 
     # first check if mo is intrinsic resistant
-    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_currrent, ab_coerced) %in% AMR_env$intrinsic_resistant) {
+    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_current, ab_coerced) %in% AMR_env$intrinsic_resistant) {
       msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
       new_sir <- rep(as.sir("R"), length(rows))
     } else if (nrow(breakpoints_current) == 0) {
@@ -1059,10 +1063,11 @@ as_sir_method <- function(method_short,
           index = rows,
           ab_input = rep(ab.bak, length(rows)),
           ab_guideline = rep(ab_coerced, length(rows)),
-          mo_input = rep(mo.bak[match(mo_currrent, df$mo)][1], length(rows)),
+          mo_input = rep(mo.bak[match(mo_current, df$mo)][1], length(rows)),
           mo_guideline = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
           guideline = rep(guideline_coerced, length(rows)),
           ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
+          uti = rep(breakpoints_current[, "uti", drop = TRUE], length(rows)),
           method = rep(method_coerced, length(rows)),
           input = as.double(values),
           outcome = as.sir(new_sir),
@@ -1078,14 +1083,14 @@ as_sir_method <- function(method_short,
   close(p)
 
   # printing messages
-  if (!is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE))) {
+  if (has_progress_bar == TRUE) {
     # the progress bar has overwritten the intro text, so:
     message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   }
   if (isTRUE(rise_warning)) {
-    message(font_yellow(font_bold(" * WARNING *")))
+    message(font_rose_bg(" * WARNING *"))
   } else if (length(msgs) == 0) {
-    message(font_green(" OK."))
+    message(font_green_bg(" OK "))
   } else {
     msg_note(sort(msgs))
   }

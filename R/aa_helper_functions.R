@@ -1241,20 +1241,20 @@ font_red_bg <- function(..., collapse = " ") {
 }
 font_orange_bg <- function(..., collapse = " ") {
   # this is #f6d55c (picked to be colourblind-safe with other SIR colours)
-  try_colour(font_black(..., collapse = collapse), before = "\033[48;5;222m", after = "\033[49m", collapse = collapse)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;222m", after = "\033[49m", collapse = collapse)
 }
 font_yellow_bg <- function(..., collapse = " ") {
-  try_colour(font_black(..., collapse = collapse), before = "\033[48;5;228m", after = "\033[49m", collapse = collapse)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;228m", after = "\033[49m", collapse = collapse)
 }
 font_green_bg <- function(..., collapse = " ") {
   # this is #3caea3 (picked to be colourblind-safe with other SIR colours)
-  try_colour(font_black(..., collapse = collapse), before = "\033[48;5;79m", after = "\033[49m", collapse = collapse)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;79m", after = "\033[49m", collapse = collapse)
 }
 font_purple_bg <- function(..., collapse = " ") {
-  try_colour(font_black(..., collapse = collapse), before = "\033[48;5;89m", after = "\033[49m", collapse = collapse)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;89m", after = "\033[49m", collapse = collapse)
 }
 font_rose_bg <- function(..., collapse = " ") {
-  try_colour(font_black(..., collapse = collapse), before = "\033[48;5;217m", after = "\033[49m", collapse = collapse)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;217m", after = "\033[49m", collapse = collapse)
 }
 font_na <- function(..., collapse = " ") {
   font_red(..., collapse = collapse)

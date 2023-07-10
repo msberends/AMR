@@ -133,8 +133,11 @@ organisms <- organisms %>%
   select(-group) %>% 
   distinct()
 
-# 2023-07-08 SGM must be Slowly-growing Mycobacterium, not Strep Gamma, not sure why this went wrong
-
+# 2023-07-08 SGM is also Strep gamma in WHONET, must only be Slowly-growing Mycobacterium
+organisms <- organisms %>% 
+  filter(!(code == "SGM" & name %like% "Streptococcus"))
+# this must be empty:
+organisms$code[organisms$code %>% duplicated()]
 
 saveRDS(organisms, "data-raw/organisms.rds", version = 2)
 
@@ -223,7 +226,7 @@ breakpoints %>%
   filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) %>%
   pull(WHONET_ABX_CODE) %>%
   unique()
-# they are at the moment all old codes that have right replacements in `antibiotics`, so we can use as.ab()
+# they are at the moment all old codes that have the right replacements in `antibiotics`, so we can use as.ab()
 
 
 ## Build new breakpoints table ----
@@ -260,7 +263,7 @@ breakpoints_new <- breakpoints %>%
     gsub("–", "-", ., fixed = TRUE)) %>%
   arrange(desc(guideline), mo, ab, type, method) %>%
   filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>%
-  distinct(guideline, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
+  distinct(guideline, type, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
 
 # check the strange duplicates
 breakpoints_new %>% 
@@ -268,7 +271,7 @@ breakpoints_new %>%
   filter(id %in% .$id[which(duplicated(id))])
 # remove duplicates
 breakpoints_new <- breakpoints_new %>% 
-  distinct(guideline, ab, mo, method, site, .keep_all = TRUE)
+  distinct(guideline, type, ab, mo, method, site, .keep_all = TRUE)
 
 # fix reference table names
 breakpoints_new %>% filter(guideline %like% "EUCAST", is.na(ref_tbl)) %>% View()
@@ -289,10 +292,10 @@ breakpoints_new[which(breakpoints_new$method == "MIC" &
 breakpoints_new[which(breakpoints_new$method == "MIC" &
   is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- max(m)
 # raise these one higher valid MIC factor level:
-breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- m[which(m == 128) + 1]
-breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- m[which(m == 256) + 1]
-breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
-breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- 128
+breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- 256
+breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- 513
+breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- 1024
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2022 guideline: S <= 8 and R > 8
@@ -318,6 +321,9 @@ breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- b
 breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
 clinical_breakpoints %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+
+# must have "human" and "ECOFF"
+breakpoints_new %>% filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCAST 2020", method == "MIC")
 
 # check dimensions
 dim(breakpoints_new)
