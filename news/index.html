@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9031</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9032</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,9 +159,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.0.9031" id="amr-2009031">AMR 2.0.0.9031<a class="anchor" aria-label="anchor" href="#amr-2009031"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.0.0.9032" id="amr-2009032">AMR 2.0.0.9032<a class="anchor" aria-label="anchor" href="#amr-2009032"></a></h2>
 <div class="section level3">
-<h3 id="new-2-0-0-9031">New<a class="anchor" aria-label="anchor" href="#new-2-0-0-9031"></a></h3>
+<h3 id="new-2-0-0-9032">New<a class="anchor" aria-label="anchor" href="#new-2-0-0-9032"></a></h3>
 <ul><li>Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations</li>
 <li>The EUCAST dosage guideline of v13.0 has been added to the <code>dosage</code> data set</li>
 <li>ECOFF: the <code>clinical_breakpoints</code> data set now contains epidemiological cut-off (ECOFF) values. These ECOFFs can be used for MIC/disk interpretation using <code>as.sir(..., breakpoint_type = "ECOFF")</code>, which is an important new addition for veterinary microbiology.</li>
@@ -176,7 +176,7 @@
 <li>Added microbial codes for Gram-negative/positive anaerobic bacteria</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-0-0-9031">Changed<a class="anchor" aria-label="anchor" href="#changed-2-0-0-9031"></a></h3>
+<h3 id="changed-2-0-0-9032">Changed<a class="anchor" aria-label="anchor" href="#changed-2-0-0-9032"></a></h3>
 <ul><li>Updated algorithm of <code><a href="../reference/as.mo.html">as.mo()</a></code> by giving more weight to fungi</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_rank()</a></code> now returns <code>NA</code> for ‘unknown’ microorganisms (<code>B_ANAER</code>, <code>B_ANAER-NEG</code>, <code>B_ANAER-POS</code>, <code>B_GRAMN</code>, <code>B_GRAMP</code>, <code>F_FUNGUS</code>, <code>F_YEAST</code>, and <code>UNKNOWN</code>)</li>
