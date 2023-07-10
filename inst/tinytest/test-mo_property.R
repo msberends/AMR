@@ -131,7 +131,7 @@ for (l in AMR:::LANGUAGES_SUPPORTED[-1]) {
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
 fullnames <- microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi|[(]class[)]|[{]")]
 to_dutch <- suppressWarnings(mo_name(fullnames, language = "nl", keep_synonyms = TRUE))
-back_to_english <- suppressWarnings(mo_name(dutch, language = NULL, keep_synonyms = TRUE))
+back_to_english <- suppressWarnings(mo_name(to_dutch, language = NULL, keep_synonyms = TRUE))
 diffs <- paste0('"', fullnames[fullnames != back_to_english], '"', collapse = ", ")
 expect_identical(fullnames, back_to_english, info = diffs) # gigantic test - will run ALL names
 
