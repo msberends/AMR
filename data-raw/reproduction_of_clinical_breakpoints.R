@@ -294,7 +294,7 @@ breakpoints_new[which(breakpoints_new$method == "MIC" &
 # raise these one higher valid MIC factor level:
 breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- 128
 breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- 256
-breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- 513
+breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- 512
 breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- 1024
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:

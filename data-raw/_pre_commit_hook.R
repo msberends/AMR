@@ -365,7 +365,7 @@ if (changed_md5(clin_break)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('clinical_breakpoints')} to {usethis::ui_value('data-raw/')}"))
   write_md5(clin_break)
   try(saveRDS(clin_break, "data-raw/clinical_breakpoints.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(write.table(clin_break, "data-raw/clinical_breakpoints.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(write.table(clinical_breakpoints, "data-raw/clinical_breakpoints.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
   try(haven::write_xpt(clin_break, "data-raw/clinical_breakpoints.xpt"), silent = TRUE)
   try(haven::write_sav(clin_break, "data-raw/clinical_breakpoints.sav"), silent = TRUE)
   try(haven::write_dta(clin_break, "data-raw/clinical_breakpoints.dta"), silent = TRUE)
