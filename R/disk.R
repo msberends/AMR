@@ -70,7 +70,7 @@
 #' # interpret whole data set, pretend to be all from urinary tract infections:
 #' as.sir(df, uti = TRUE)
 as.disk <- function(x, na.rm = FALSE) {
-  meet_criteria(x, allow_class = c("disk", "character", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(x, allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
 
   if (!is.disk(x)) {

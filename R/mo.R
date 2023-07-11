@@ -630,7 +630,7 @@ pillar_shaft.mo <- function(x, ...) {
   
   # add the names to the bugs as mouse-over!
   if (tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE)) {
-    out[!x %in% c("UNKNOWN", NA)] <- font_url(url = mo_name(x[!x %in% c("UNKNOWN", NA)], language = NULL, keep_synonyms = TRUE),
+    out[!x %in% c("UNKNOWN", NA)] <- font_url(url = mo_name(x[!x %in% c("UNKNOWN", NA)], keep_synonyms = TRUE),
                                               txt = out[!x %in% c("UNKNOWN", NA)])
   }
   

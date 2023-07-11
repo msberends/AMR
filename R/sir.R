@@ -741,8 +741,10 @@ as_sir_method <- function(method_short,
   check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
 
+  guideline_coerced <- get_guideline(guideline, reference_data)
+  
   if (message_not_thrown_before("as.sir", "sir_interpretation_history")) {
-    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations.\n\n")  
+    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations. Note that some microorganisms might not have breakpoints for each antimicrobial drug in ", guideline_coerced, ".\n\n")  
   }
   
   # for dplyr's across()
@@ -798,7 +800,6 @@ as_sir_method <- function(method_short,
   }
   # be sure to take current taxonomy, as the 'clinical_breakpoints' data set only contains current taxonomy
   mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, info = FALSE)))
-  guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab)) {
     message_("Returning NAs for unknown antibiotic: '", font_bold(ab.bak),
       "'. Rename this column to a valid name or code, and check the output with `as.ab()`.",
@@ -919,7 +920,7 @@ as_sir_method <- function(method_short,
       paste0(font_rose_bg(" WARNING "), "\n"),
       font_black(paste0("  ", AMR_env$bullet_icon, " No ", method_coerced, " breakpoints available for ",
         suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
-        " (", ab_coerced, ")")))
+        " (", ab_coerced, ").")))
     
     load_mo_uncertainties(metadata_mo)
     return(rep(NA_sir_, nrow(df)))
@@ -1017,8 +1018,11 @@ as_sir_method <- function(method_short,
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_coerced)) {
       # breakpoints for multiple body sites available
       msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
+    } else if (nrow(breakpoints_current) == 0) {
+      # # do not note - it's already in the header before the interpretation starts
+      next
     }
-
+    
     # first check if mo is intrinsic resistant
     if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_current, ab_coerced) %in% AMR_env$intrinsic_resistant) {
       msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
@@ -1031,10 +1035,10 @@ as_sir_method <- function(method_short,
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
 
       if (any(breakpoints_current$mo == "UNKNOWN", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "PK.*PD", na.rm = TRUE)) {
-        msgs <- c(msgs, "(Some) PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
+        msgs <- c(msgs, "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
       }
       if (any(breakpoints_current$site %like% "screen", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "screen", na.rm = TRUE)) {
-        msgs <- c(msgs, "(Some) screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
+        msgs <- c(msgs, "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
       }
 
       if (method == "mic") {
