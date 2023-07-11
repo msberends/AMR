@@ -38,6 +38,8 @@ expect_identical(class(antibiotics$ab), c("ab", "character"))
 # check cross table reference
 expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
 expect_true(all(example_isolates$mo %in% microorganisms$mo))
+expect_true(all(microorganisms.groups$mo %in% microorganisms$mo))
+expect_true(all(microorganisms.groups$mo_group %in% microorganisms$mo))
 expect_true(all(clinical_breakpoints$mo %in% microorganisms$mo))
 expect_true(all(clinical_breakpoints$ab %in% antibiotics$ab))
 expect_true(all(intrinsic_resistant$mo %in% microorganisms$mo))

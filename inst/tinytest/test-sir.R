@@ -108,6 +108,18 @@ if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
 
 expect_equal(as.sir(c("", "-", NA, "NULL")), c(NA_sir_, NA_sir_, NA_sir_, NA_sir_))
 
+mics <- as.mic(2 ^ c(-2:5)) # 0.25 to 32 in factors of 2
+expect_identical(as.character(as.sir(mics, mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
+                                     uti = FALSE, include_PKPD = FALSE)),
+                 c("S", "S", "S", "S", "S", "S", "R", "R"))
+expect_identical(as.character(as.sir(mics, mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
+                                     uti = TRUE, include_PKPD = FALSE)),
+                 c("S", "S", "S", "S", "S", "S", "S", "S"))
+expect_identical(as.character(as.sir(mics, mo = "Escherichia coli", ab = "AMC", guideline = "EUCAST 2022",
+                                     uti = FALSE, include_PKPD = FALSE)),
+                 c("S", "S", "S", "S", "S", "S", "R", "R"))
+
+
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
 expect_equal(suppressMessages(
   as.character(

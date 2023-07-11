@@ -741,6 +741,10 @@ as_sir_method <- function(method_short,
   check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
 
+  if (message_not_thrown_before("as.sir", "sir_interpretation_history")) {
+    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations.\n\n")  
+  }
+  
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
   if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0)), error = function(e) FALSE)) {
@@ -879,7 +883,7 @@ as_sir_method <- function(method_short,
   rise_warning <- FALSE
   rise_note <- FALSE
   method_coerced <- toupper(method)
-  ab_coerced <- ab
+  ab_coerced <- as.ab(ab)
   
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
@@ -945,10 +949,10 @@ as_sir_method <- function(method_short,
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties, as fast as possible
-    mo_current_genus <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$genus[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$genus)]
-    mo_current_family <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$family[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$family)]
-    mo_current_order <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$order[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$order)]
-    mo_current_class <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$class[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$class)]
+    mo_current_genus <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$genus[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
+    mo_current_family <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$family[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
+    mo_current_order <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$order[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
+    mo_current_class <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$class[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
     mo_current_rank <- AMR_env$MO_lookup$rank[match(mo_current, AMR_env$MO_lookup$mo)]
     mo_current_name <- AMR_env$MO_lookup$fullname[match(mo_current, AMR_env$MO_lookup$mo)]
     if (mo_current %in% AMR::microorganisms.groups$mo) {
@@ -1064,17 +1068,17 @@ as_sir_method <- function(method_short,
         data.frame(
           datetime = rep(Sys.time(), length(rows)),
           index = rows,
-          ab_input = rep(ab.bak, length(rows)),
-          ab_guideline = rep(ab_coerced, length(rows)),
-          mo_input = rep(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          mo_guideline = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
+          ab_user = rep(ab.bak, length(rows)),
+          mo_user = rep(mo.bak[match(mo_current, df$mo)][1], length(rows)),
+          ab = rep(ab_coerced, length(rows)),
+          mo = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
+          input = as.double(values),
+          outcome = as.sir(new_sir),
+          method = rep(method_coerced, length(rows)),
+          breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
           guideline = rep(guideline_coerced, length(rows)),
           ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
           uti = rep(breakpoints_current[, "uti", drop = TRUE], length(rows)),
-          method = rep(method_coerced, length(rows)),
-          input = as.double(values),
-          outcome = as.sir(new_sir),
-          breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
           stringsAsFactors = FALSE
         )
       )
@@ -1114,8 +1118,6 @@ sir_interpretation_history <- function(clean = FALSE) {
     message_("No results to return. Run `as.sir()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
     return(invisible(NULL))
   }
-  out$ab_guideline <- as.ab(out$ab_guideline)
-  out$mo_guideline <- as.mo(out$mo_guideline)
   out$outcome <- as.sir(out$outcome)
   # keep stored for next use
   if (isTRUE(clean)) {

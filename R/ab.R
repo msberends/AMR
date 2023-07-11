@@ -545,6 +545,13 @@ is.ab <- function(x) {
 pillar_shaft.ab <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- font_na(NA)
+  
+  # add the names to the drugs as mouse-over!
+  if (tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE)) {
+    out[!is.na(x)] <- font_url(url = ab_name(x[!is.na(x)], language = NULL),
+                               txt = out[!is.na(x)])
+  }
+  
   create_pillar_column(out, align = "left", min_width = 4)
 }
 

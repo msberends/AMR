@@ -58,18 +58,19 @@ AMR_env$av_previously_coerced <- data.frame(
 AMR_env$sir_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
-  ab_input = character(0),
-  ab_guideline = set_clean_class(character(0), c("ab", "character")),
-  mo_input = character(0),
-  mo_guideline = set_clean_class(character(0), c("mo", "character")),
-  guideline = character(0),
-  ref_table = character(0),
-  method = character(0),
+  ab_user = character(0),
+  mo_user = character(0),
+  ab = set_clean_class(character(0), c("ab", "character")),
+  mo = set_clean_class(character(0), c("mo", "character")),
   input = double(0),
   outcome = NA_sir_[0],
+  method = character(0),
   breakpoint_S_R = character(0),
+  guideline = character(0),
+  ref_table = character(0),
   stringsAsFactors = FALSE
 )
+
 AMR_env$custom_ab_codes <- character(0)
 AMR_env$custom_mo_codes <- character(0)
 AMR_env$is_dark_theme <- NULL
