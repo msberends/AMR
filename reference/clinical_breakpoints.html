@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9035</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9038</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,7 +170,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 28 885 observations and 12 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 29 747 observations and 12 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
 <li><p><code>type</code><br> Breakpoint type, either "ECOFF", "animal", or "human"</p></li>
 <li><p><code>method</code><br> Testing method, either "DISK" or "MIC"</p></li>
 <li><p><code>site</code><br> Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"</p></li>
@@ -225,20 +225,20 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">clinical_breakpoints</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 28,885 × 12</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29,747 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    guideline type  method site  mo            rank_index ab   ref_tbl  disk_dose</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_DNTR          2 MEM  A. xylo… 10ug     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_DNTR          2 MEM  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_DNTR          2 SXT  A. xylo… 1.25ug/2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_DNTR          2 SXT  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_DNTR          2 TZP  A. xylo… 30ug/6ug </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_DNTR          2 TZP  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 MEM  A. xylo… 10ug     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 MEM  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 SXT  A. xylo… 1.25ug/2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 SXT  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 28,875 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 MEM  A. xylo… 10ug     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 MEM  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 SXT  A. xylo… 1.25ug/2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 SXT  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 TZP  A. xylo… 30ug/6ug </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACHRMB_XYLS          2 TZP  A. xylo… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> EUCAST 2… human DISK   <span style="color: #BB0000;">NA</span>    B_ACNTB                3 AMK  Acineto… 30ug     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2… human DISK   Unco… B_ACNTB                3 AMK  Acineto… 30ug     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2… human MIC    <span style="color: #BB0000;">NA</span>    B_ACNTB                3 AMK  Acineto… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2… human MIC    Unco… B_ACNTB                3 AMK  Acineto… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 29,737 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;, uti &lt;lgl&gt;</span></span>
 </code></pre></div>
     </div>
