@@ -8,9 +8,9 @@
 \format{
 \subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 483 observations and 14 variables:}{
 \itemize{
-\item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
-\item \code{cid}\cr Compound ID as found in PubChem
-\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
+\item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{This is a unique identifier.}
+\item \code{cid}\cr Compound ID as found in PubChem. \emph{This is a unique identifier.}
+\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{This is a unique identifier.}
 \item \code{group}\cr A short and concise group name, based on WHONET and WHOCC definitions
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
 \item \code{atc_group1}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}
@@ -27,10 +27,10 @@
 
 \subsection{For the \link{antivirals} data set: a \link[tibble:tibble]{tibble} with 120 observations and 11 variables:}{
 \itemize{
-\item \code{av}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
-\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
+\item \code{av}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{This is a unique identifier.}
+\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{This is a unique identifier.}
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
-\item \code{cid}\cr Compound ID as found in PubChem
+\item \code{cid}\cr Compound ID as found in PubChem. \emph{This is a unique identifier.}
 \item \code{atc_group}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
 \item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment

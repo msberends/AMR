@@ -1,10 +1,10 @@
-# AMR 2.0.0.9040
+# AMR 2.0.0.9041
 
 ## New
 * Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations
 * The EUCAST dosage guideline of v13.0 has been added to the `dosage` data set
-* ECOFF: the `clinical_breakpoints` data set now contains epidemiological cut-off (ECOFF) values. These ECOFFs can be used for MIC/disk interpretation using `as.sir(..., breakpoint_type = "ECOFF")`, which is an important new addition for veterinary microbiology.
-* Added support for 29 species groups / complexes. They are gathered in a new data set `microorganisms.groups` and are used in clinical breakpoint interpretation. For example, CLSI 2023 contains breakpoints for the RGM group (Rapidly Growing Mycobacterium, containing over 80 species) which is now supported by our package.
+* ECOFF and animal breakpoints: the `clinical_breakpoints` data set now contains epidemiological cut-off (ECOFF) values and CLSI animal breakpoints. These two new breakpoint types can be used for MIC/disk interpretation using `as.sir(..., breakpoint_type = "ECOFF")` or`as.sir(..., breakpoint_type = "animal")`, which is an important new addition for veterinary microbiology.
+* Added support for 30 species groups / complexes. They are gathered in a new data set `microorganisms.groups` and are used in clinical breakpoint interpretation. For example, CLSI 2023 contains breakpoints for the RGM group (Rapidly Growing Mycobacterium, containing over 80 species) which is now supported by our package.
 * Added oxygen tolerance from BacDive to over 25,000 bacteria in the `microorganisms` data set
   * Added `mo_oxygen_tolerance()` to retrieve the values
   * Added `mo_is_anaerobic()` to determine which genera/species are obligate anaerobic bacteria
@@ -14,6 +14,7 @@
 
 ## Changed
 * Updated algorithm of `as.mo()` by giving more weight to fungi
+* Fixed clinical breakpoints errors introduced by the source we import the rules from
 * `mo_rank()` now returns `NA` for 'unknown' microorganisms (`B_ANAER`, `B_ANAER-NEG`, `B_ANAER-POS`, `B_GRAMN`, `B_GRAMP`, `F_FUNGUS`, `F_YEAST`, and `UNKNOWN`)
 * When printing microorganism or antibiotic codes in a tibble, a mouse-hover now shows the full name of the code
 * Plots for MIC and disk diffusion values:

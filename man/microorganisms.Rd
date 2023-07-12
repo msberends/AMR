@@ -7,8 +7,8 @@
 \format{
 A \link[tibble:tibble]{tibble} with 52 169 observations and 23 variables:
 \itemize{
-\item \code{mo}\cr ID of microorganism as used by this package
-\item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
+\item \code{mo}\cr ID of microorganism as used by this package. \emph{This is a unique identifier.}
+\item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{This is a unique identifier.}
 \item \code{status} \cr Status of the taxon, either "accepted" or "synonym"
 \item \code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}\cr Taxonomic rank of the microorganism
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, such as \code{"species"} or \code{"genus"}

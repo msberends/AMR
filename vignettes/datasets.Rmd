@@ -221,6 +221,12 @@ This data set is in R available as `clinical_breakpoints`, after you load the `A
 
 This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`).
 
+Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their development on the WHONET software.
+
+The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, the WHO, and developers of WHONET and the `AMR` package.
+
+**NOTE:** this `AMR` package (and the WHONET software as well) contains internal methods to apply the guidelines, which is rather complex. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the `microorganisms.groups` data set). It is important that this is considered when using the breakpoints for own use.
+
 ### Example content
 
 ```{r, echo = FALSE}

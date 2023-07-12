@@ -42,7 +42,7 @@ Clinical breakpoints in this package were validated through and imported from \h
 
 \subsection{Response from CLSI and EUCAST}{
 
-The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this \code{AMR} package in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, the WHO, and developers of WHONET and the \code{AMR} package.
+The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this \code{AMR} package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, the WHO, and developers of WHONET and the \code{AMR} package.
 }
 
 \subsection{Download}{
