@@ -941,7 +941,7 @@ as_sir_method <- function(method_short,
     mo_current <- df_unique[i, "mo", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
     if (is.na(uti_current)) {
-      # preference, so no filter on UTIs
+      # no preference, so no filter on UTIs
       rows <- which(df$mo == mo_current)
     } else {
       rows <- which(df$mo == mo_current & df$uti == uti_current)
@@ -957,10 +957,10 @@ as_sir_method <- function(method_short,
     mo_current_rank <- AMR_env$MO_lookup$rank[match(mo_current, AMR_env$MO_lookup$mo)]
     mo_current_name <- AMR_env$MO_lookup$fullname[match(mo_current, AMR_env$MO_lookup$mo)]
     if (mo_current %in% AMR::microorganisms.groups$mo) {
-      # get the species group
-      mo_current_species_group <- AMR::microorganisms.groups$mo_group[match(mo_current, AMR::microorganisms.groups$mo)]
+      # get the species group (might be more than 1 entry)
+      mo_current_species_group <- AMR::microorganisms.groups$mo_group[which(AMR::microorganisms.groups$mo == mo_current)]
     } else {
-      mo_current_species_group <- mo_current
+      mo_current_species_group <- NULL
     }
     mo_current_other <- structure("UNKNOWN", class = c("mo", "character"))
     # formatted for notes
@@ -977,7 +977,7 @@ as_sir_method <- function(method_short,
     # (this will prefer species breakpoints over order breakpoints)
     breakpoints_current <- breakpoints %pm>%
       subset(mo %in% c(
-        mo_current_genus, mo_current_family,
+        mo_current, mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
         mo_current_species_group,
         mo_current_other

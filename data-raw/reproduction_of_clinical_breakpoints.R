@@ -297,6 +297,9 @@ breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- 2
 breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- 512
 breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- 1024
 
+# fix streptococci in WHONET table of EUCAST: Strep A, B, C and G now includes all streptococci:
+clinical_breakpoints$mo[clinical_breakpoints$mo == "B_STRPT" & clinical_breakpoints$ref_tbl %like% "strep.* a.* b.*c.*g"] <- as.mo("B_STRPT_ABCG")
+
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2022 guideline: S <= 8 and R > 8
 #           WHONET file: S <= 8 and R >= 16

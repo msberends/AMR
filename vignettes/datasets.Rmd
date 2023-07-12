@@ -49,7 +49,6 @@ download_txt <- function(filename) {
   excel <- paste0(filename, ".xlsx")
   feather <- paste0(filename, ".feather")
   parquet <- paste0(filename, ".parquet")
-  sas <- paste0(filename, ".sas")
   xpt <- paste0(filename, ".xpt")
   spss <- paste0(filename, ".sav")
   stata <- paste0(filename, ".dta")
@@ -70,7 +69,6 @@ download_txt <- function(filename) {
     file.exists(excel),
     file.exists(feather),
     file.exists(parquet),
-    file.exists(sas),
     file.exists(xpt),
     file.exists(spss),
     file.exists(stata)
@@ -82,7 +80,6 @@ download_txt <- function(filename) {
       create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
       create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
       create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
-      create_txt(sas, "sas", "SAS data (SAS) file", file.exists(sas)),
       create_txt(xpt, "xpt", "SAS transport (XPT) file", file.exists(xpt)),
       create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
       create_txt(stata, "dta", "Stata DTA file", file.exists(stata))

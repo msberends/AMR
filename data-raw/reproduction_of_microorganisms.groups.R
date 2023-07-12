@@ -112,7 +112,7 @@ microorganisms.groups <- whonet_organisms %>%
                    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SLVR(_|$)")])) %>%
   # and for EUCAST: Strep group A, B, C, G
   bind_rows(tibble(mo_group = as.mo("Streptococcus Group A, B, C, G"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(PYGN|AGLC|DYSG|EQUI|CANS)(_|$)")])) %>%
+                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(PYGN|AGLC|DYSG|EQUI|CANS|GRPA|GRPB|GRPC|GRPG)(_|$)")])) %>%
   # HACEK is:
   # - Haemophilus species
   # - Aggregatibacter species
@@ -133,8 +133,8 @@ microorganisms.groups <- whonet_organisms %>%
   bind_rows(tibble(mo_group = as.mo("B_MYCBC_RGM"),
                    mo = paste("Mycobacterium", c( "abscessus abscessus", "abscessus bolletii", "abscessus massiliense", "agri", "aichiense", "algericum", "alvei", "anyangense", "arabiense", "aromaticivorans", "aubagnense", "aubagnense", "aurum", "austroafricanum", "bacteremicum", "boenickei", "bourgelatii", "brisbanense", "brumae", "canariasense", "celeriflavum", "chelonae", "chitae", "chlorophenolicum", "chubuense", "confluentis", "cosmeticum", "crocinum", "diernhoferi", "duvalii", "elephantis", "fallax", "flavescens", "fluoranthenivorans", "fortuitum", "franklinii", "frederiksbergense", "gadium", "gilvum", "goodii", "hassiacum", "hippocampi", "hodleri", "holsaticum", "houstonense", "immunogenum", "insubricum", "iranicum", "komossense", "litorale", "llatzerense", "madagascariense", "mageritense", "monacense", "moriokaense", "mucogenicum", "mucogenicum", "murale", "neoaurum", "neworleansense", "novocastrense", "obuense", "pallens", "parafortuitum", "peregrinum", "phlei", "phocaicum", "phocaicum", "porcinum", "poriferae", "psychrotolerans", "pyrenivorans", "rhodesiae", "rufum", "rutilum", "salmoniphilum", "sediminis", "senegalense", "septicum", "setense", "smegmatis", "sphagni", "thermoresistibile", "tokaiense", "vaccae", "vanbaalenii", "wolinskyi")) %>% as.mo(keep_synonyms = TRUE))) %>%
   # add full names
-  mutate(mo_group_name = mo_name(mo_group, keep_synonyms = TRUE),
-         mo_name = mo_name(mo, keep_synonyms = TRUE)) %>% 
+  mutate(mo_group_name = mo_name(mo_group, keep_synonyms = TRUE, language = NULL),
+         mo_name = mo_name(mo, keep_synonyms = TRUE, language = NULL)) %>% 
   arrange(mo_group_name, mo_name) %>% 
   filter(mo_group != mo) %>% 
   distinct() %>% 
@@ -145,31 +145,4 @@ class(microorganisms.groups$mo_group) <- c("mo", "character")
 class(microorganisms.groups$mo) <- c("mo", "character")
 usethis::use_data(microorganisms.groups, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
 rm(microorganisms.groups)
-devtools::load_all()
-
-
-# 
-# microorganisms <- microorganisms %>% 
-#   mutate(mo = as.character(mo)) %>% 
-#   bind_rows(
-#     microorganisms %>% filter(mo == "B_STRPT_HAEM") %>% 
-#       mutate(mo = as.character(mo),
-#              mo = "B_STRPT_ABCG",
-#              fullname = "Streptococcus Group A, B, C, G",
-#              species = "Group A, B, C, G")) %>% 
-#   arrange(fullname) %>% 
-#   dataset_UTF8_to_ASCII()
-# 
-# microorganisms$rank[which(microorganisms$fullname %like% "^Streptococcus Group")] <- "species group"
-# microorganisms$lpsn_parent[which(microorganisms$fullname %like% "^Streptococcus Group")] <- 517118
-# microorganisms$gbif_parent[which(microorganisms$fullname %like% "^Streptococcus Group")] <- 3223465
-# microorganisms$ref[which(microorganisms$fullname %like% "^Streptococcus Group")] <- "Lancefield, 1933"
-# microorganisms$prevalence[which(microorganisms$fullname %like% "^Streptococcus Group")] <- 1.5
-# microorganisms$oxygen_tolerance[which(microorganisms$fullname %like% "^Streptococcus Group")] <- "likely facultative anaerobe"
-# 
-
-
-class(microorganisms$mo) <- c("mo", "character")
-usethis::use_data(microorganisms, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
-rm(microorganisms)
 devtools::load_all()
