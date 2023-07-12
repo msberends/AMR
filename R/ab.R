@@ -548,7 +548,7 @@ pillar_shaft.ab <- function(x, ...) {
   
   # add the names to the drugs as mouse-over!
   if (tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE)) {
-    out[!is.na(x)] <- font_url(url = ab_name(x[!is.na(x)]),
+    out[!is.na(x)] <- font_url(url = paste0(x[!is.na(x)], ": ", ab_name(x[!is.na(x)])),
                                txt = out[!is.na(x)])
   }
   

@@ -583,7 +583,7 @@ mo_cleaning_regex <- function() {
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.mo <- function(x, ...) {
   add_MO_lookup_to_AMR_env()
-  out <- format(x)
+  out <- trimws(format(x))
   # grey out the kingdom (part until first "_")
   out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
   # and grey out every _
@@ -630,7 +630,8 @@ pillar_shaft.mo <- function(x, ...) {
   
   # add the names to the bugs as mouse-over!
   if (tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE)) {
-    out[!x %in% c("UNKNOWN", NA)] <- font_url(url = mo_name(x[!x %in% c("UNKNOWN", NA)], keep_synonyms = TRUE),
+    out[!x %in% c("UNKNOWN", NA)] <- font_url(url = paste0(x[!x %in% c("UNKNOWN", NA)], ": ",
+                                                           mo_name(x[!x %in% c("UNKNOWN", NA)], keep_synonyms = TRUE)),
                                               txt = out[!x %in% c("UNKNOWN", NA)])
   }
   
