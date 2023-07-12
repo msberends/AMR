@@ -297,8 +297,22 @@ breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- 2
 breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- 512
 breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- 1024
 
-# fix streptococci in WHONET table of EUCAST: Strep A, B, C and G now includes all streptococci:
-clinical_breakpoints$mo[clinical_breakpoints$mo == "B_STRPT" & clinical_breakpoints$ref_tbl %like% "strep.* a.* b.*c.*g"] <- as.mo("B_STRPT_ABCG")
+# fix streptococci in WHONET table of EUCAST: Strep A, B, C and G must only include these groups and not all streptococci:
+clinical_breakpoints$mo[clinical_breakpoints$mo == "B_STRPT" & clinical_breakpoints$ref_tbl %like% "^strep.* a.* b.*c.*g"] <- as.mo("B_STRPT_ABCG")
+# Haemophilus same error (must only be H. influenzae)
+clinical_breakpoints$mo[clinical_breakpoints$mo == "B_HMPHL" & clinical_breakpoints$ref_tbl %like% "^h.* influenzae"] <- as.mo("B_HMPHL_INFL")
+# EUCAST says that for H. parainfluenzae the H. influenza rules can be used, so add them
+clinical_breakpoints <- clinical_breakpoints %>% 
+  bind_rows(
+    clinical_breakpoints %>%
+      filter(guideline %like% "EUCAST", mo == "B_HMPHL_INFL") %>% 
+      mutate(mo = as.mo("B_HMPHL_PRNF"))
+  ) %>% 
+  arrange(desc(guideline), mo, ab, type, method)
+# Achromobacter denitrificans is in WHONET included in their A. xylosoxidans table, must be removed
+clinical_breakpoints <- clinical_breakpoints %>% filter(mo != as.mo("Achromobacter denitrificans"))
+# WHONET contains gentamicin breakpoints for viridans streptocci, which are intrinsic R - they meant genta-high, which is ALSO in their table, so we just remove gentamicin in viridans streptococci
+clinical_breakpoints <- clinical_breakpoints %>% filter(!(mo == as.mo("Streptococcus viridans") & ab == "GEN"))
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2022 guideline: S <= 8 and R > 8
