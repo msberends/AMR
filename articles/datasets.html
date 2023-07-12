@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9040</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9041</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -945,6 +945,26 @@ DTA file</a> (7.8 MB)</li>
 <p>This data set contains interpretation rules for MIC values and disk
 diffusion diameters. Included guidelines are CLSI (2011-2023) and EUCAST
 (2011-2023).</p>
+<p>Clinical breakpoints in this package were validated through and
+imported from <a href="https://whonet.org" class="external-link">WHONET</a>, a free desktop
+Windows application developed and supported by the WHO Collaborating
+Centre for Surveillance of Antimicrobial Resistance. More can be read on
+<a href="https://whonet.org" class="external-link">their website</a>. The developers of WHONET
+and this <code>AMR</code> package have been in contact about sharing
+their work. We highly appreciate their development on the WHONET
+software.</p>
+<p>The CEO of CLSI and the chairman of EUCAST have endorsed the work and
+public use of this <code>AMR</code> package (and consequently the use of
+their breakpoints) in June 2023, when future development of distributing
+clinical breakpoints was discussed in a meeting between CLSI, EUCAST,
+the WHO, and developers of WHONET and the <code>AMR</code> package.</p>
+<p><strong>NOTE:</strong> this <code>AMR</code> package (and the WHONET
+software as well) contains internal methods to apply the guidelines,
+which is rather complex. For example, some breakpoints must be applied
+on certain species groups (which are in case of this package available
+through the <code>microorganisms.groups</code> data set). It is
+important that this is considered when using the breakpoints for own
+use.</p>
 </div>
 <div class="section level3">
 <h3 id="example-content-3">Example content<a class="anchor" aria-label="anchor" href="#example-content-3"></a>

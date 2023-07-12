@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9040</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9041</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,8 +170,8 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 52 169 observations and 23 variables:</p><ul><li><p><code>mo</code><br> ID of microorganism as used by this package</p></li>
-<li><p><code>fullname</code><br> Full name, like <code>"Escherichia coli"</code>. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 52 169 observations and 23 variables:</p><ul><li><p><code>mo</code><br> ID of microorganism as used by this package. <em>This is a unique identifier.</em></p></li>
+<li><p><code>fullname</code><br> Full name, like <code>"Escherichia coli"</code>. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. <em>This is a unique identifier.</em></p></li>
 <li><p><code>status</code> <br> Status of the taxon, either "accepted" or "synonym"</p></li>
 <li><p><code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code><br> Taxonomic rank of the microorganism</p></li>
 <li><p><code>rank</code><br> Text of the taxonomic rank of the microorganism, such as <code>"species"</code> or <code>"genus"</code></p></li>
