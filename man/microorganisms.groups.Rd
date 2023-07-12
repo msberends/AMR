@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms.groups}
 \alias{microorganisms.groups}
-\title{Data Set with 444 Microorganisms In Species Groups}
+\title{Data Set with 448 Microorganisms In Species Groups}
 \format{
-A \link[tibble:tibble]{tibble} with 444 observations and 4 variables:
+A \link[tibble:tibble]{tibble} with 448 observations and 4 variables:
 \itemize{
 \item \code{mo_group}\cr ID of the species group / microbiological complex
 \item \code{mo}\cr ID of the microorganism belonging in the species group / microbiological complex
