@@ -52,7 +52,7 @@
 #'
 #' * `guideline = "CMI2012"` (default)
 #'
-#'   Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) ([link](https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext))
+#'   Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\doi{10.1111/j.1469-0691.2011.03570.x})
 #'
 #' * `guideline = "EUCAST3.3"` (or simply `guideline = "EUCAST"`)
 #'

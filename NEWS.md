@@ -1,4 +1,4 @@
-# AMR 2.0.0.9038
+# AMR 2.0.0.9039
 
 ## New
 * Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations

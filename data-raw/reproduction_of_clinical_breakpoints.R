@@ -313,6 +313,21 @@ clinical_breakpoints <- clinical_breakpoints %>%
 clinical_breakpoints <- clinical_breakpoints %>% filter(mo != as.mo("Achromobacter denitrificans"))
 # WHONET contains gentamicin breakpoints for viridans streptocci, which are intrinsic R - they meant genta-high, which is ALSO in their table, so we just remove gentamicin in viridans streptococci
 clinical_breakpoints <- clinical_breakpoints %>% filter(!(mo == as.mo("Streptococcus viridans") & ab == "GEN"))
+# Nitrofurantoin in Staph (EUCAST) only applies to S. saprophyticus, while WHONET has the DISK correct but the MIC on genus level
+clinical_breakpoints$mo[clinical_breakpoints$mo == "B_STPHY" & clinical_breakpoints$ab == "NIT" & clinical_breakpoints$guideline %like% "EUCAST"] <- as.mo("B_STPHY_SPRP")
+# determine rank again
+clinical_breakpoints <- clinical_breakpoints %>% 
+  mutate(rank_index = case_when(
+    is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
+    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
+    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
+    mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
+    mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
+    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
+    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
+    TRUE ~ 6
+  ))
+
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2022 guideline: S <= 8 and R > 8
@@ -349,6 +364,7 @@ dim(clinical_breakpoints)
 # SAVE TO PACKAGE ----
 
 clinical_breakpoints <- breakpoints_new
+clinical_breakpoints <- clinical_breakpoints %>% dataset_UTF8_to_ASCII()
 usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)
 rm(clinical_breakpoints)
 devtools::load_all(".")
