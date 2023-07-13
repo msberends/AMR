@@ -22,7 +22,6 @@
 ^public$
 ^data-raw$
 ^\.lintr$
-^inst/tinytest$
 ^tests/testthat/_snaps$
 ^vignettes/AMR\.Rmd$
 ^vignettes/AMR_intro\.png$
