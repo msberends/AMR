@@ -66,13 +66,15 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
     }
 
     # start the unit tests
-    out <- test_package("AMR",
-      testdir = ifelse(dir.exists("inst/tinytest"),
-        "inst/tinytest",
-        "tinytest"
-      ),
-      verbose = 99,
-      color = FALSE
+    suppressMessages(
+      out <- test_package("AMR",
+        testdir = ifelse(dir.exists("inst/tinytest"),
+          "inst/tinytest",
+          "tinytest"
+        ),
+        verbose = 99,
+        color = FALSE
+      )
     )
     cat("\n\nSUMMARY:\n")
     print(summary(out))

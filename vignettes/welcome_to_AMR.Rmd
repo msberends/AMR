@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Note: to keep the package size as small as possible, we only included this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST rules, and much more: <https://msberends.github.io/AMR/articles/>.
+Note: to keep the package size as small as possible, we only include this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST and CLSI breakpoints, and much more: <https://msberends.github.io/AMR/articles/>.
 
 ----
 
