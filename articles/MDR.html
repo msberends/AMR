@@ -402,19 +402,19 @@ names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co">#&gt; 1          S         R            S          I            R            R</span></span>
-<span><span class="co">#&gt; 2          S         R            I          I            S            S</span></span>
-<span><span class="co">#&gt; 3          R         S            R          S            R            I</span></span>
-<span><span class="co">#&gt; 4          S         I            I          S            S            R</span></span>
-<span><span class="co">#&gt; 5          S         I            I          I            R            R</span></span>
-<span><span class="co">#&gt; 6          I         S            S          R            I            S</span></span>
+<span><span class="co">#&gt; 1          R         I            R          S            R            S</span></span>
+<span><span class="co">#&gt; 2          R         S            I          S            S            S</span></span>
+<span><span class="co">#&gt; 3          R         R            I          R            I            R</span></span>
+<span><span class="co">#&gt; 4          I         S            I          R            R            I</span></span>
+<span><span class="co">#&gt; 5          R         I            R          I            R            S</span></span>
+<span><span class="co">#&gt; 6          I         I            I          I            S            I</span></span>
 <span><span class="co">#&gt;   kanamycin</span></span>
-<span><span class="co">#&gt; 1         I</span></span>
+<span><span class="co">#&gt; 1         S</span></span>
 <span><span class="co">#&gt; 2         I</span></span>
-<span><span class="co">#&gt; 3         I</span></span>
+<span><span class="co">#&gt; 3         S</span></span>
 <span><span class="co">#&gt; 4         I</span></span>
-<span><span class="co">#&gt; 5         I</span></span>
-<span><span class="co">#&gt; 6         R</span></span></code></pre></div>
+<span><span class="co">#&gt; 5         S</span></span>
+<span><span class="co">#&gt; 6         I</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can
 use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -455,40 +455,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3194</td>
-<td align="right">63.88%</td>
-<td align="right">3194</td>
-<td align="right">63.88%</td>
+<td align="right">3216</td>
+<td align="right">64.32%</td>
+<td align="right">3216</td>
+<td align="right">64.32%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">1012</td>
-<td align="right">20.24%</td>
-<td align="right">4206</td>
-<td align="right">84.12%</td>
+<td align="right">988</td>
+<td align="right">19.76%</td>
+<td align="right">4204</td>
+<td align="right">84.08%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">448</td>
-<td align="right">8.96%</td>
-<td align="right">4654</td>
-<td align="right">93.08%</td>
+<td align="right">464</td>
+<td align="right">9.28%</td>
+<td align="right">4668</td>
+<td align="right">93.36%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">247</td>
-<td align="right">4.94%</td>
-<td align="right">4901</td>
-<td align="right">98.02%</td>
+<td align="right">235</td>
+<td align="right">4.70%</td>
+<td align="right">4903</td>
+<td align="right">98.06%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">99</td>
-<td align="right">1.98%</td>
+<td align="right">97</td>
+<td align="right">1.94%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
