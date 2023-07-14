@@ -502,19 +502,24 @@ word_wrap <- function(...,
 
   # format backticks
   if (pkg_is_available("cli") &&
-      tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) return(FALSE))) {
+      tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE) &&
+      tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) return(FALSE)) && 
+      tryCatch(getExportedValue("versionInfo", ns = asNamespace("rstudioapi"))()$version > "2023.6.0.0", error = function(e) return(FALSE))) {
+    # we are in a recent version of RStudio, so do something nice: add links to our help pages in the console.
     parts <- strsplit(msg, "`", fixed = TRUE)[[1]]
     cmds <- parts %in% paste0(ls(envir = asNamespace("AMR")), "()")
     # functions with a dot are not allowed: https://github.com/rstudio/rstudio/issues/11273#issuecomment-1156193252
+    # lead them to the help page of our package
     parts[cmds & parts %like% "[.]"] <- font_url(url = paste0("ide:help:AMR::", gsub("()", "", parts[cmds & parts %like% "[.]"], fixed = TRUE)),
                                                  txt = parts[cmds & parts %like% "[.]"])
+    # otherwise, give a 'click to run' popup
     parts[cmds & parts %unlike% "[.]"] <- font_url(url = paste0("ide:run:AMR::", parts[cmds & parts %unlike% "[.]"]),
                                                    txt = parts[cmds & parts %unlike% "[.]"])
     msg <- paste0(parts, collapse = "`")
   }
   msg <- gsub("`(.+?)`", font_grey_bg("\\1"), msg)
   
-  # clean introduced whitespace between fullstops
+  # clean introduced whitespace in between fullstops
   msg <- gsub("[.] +[.]", "..", msg)
   # remove extra space that was introduced (e.g. "Smith et al. , 2022")
   msg <- gsub(". ,", ".,", msg, fixed = TRUE)

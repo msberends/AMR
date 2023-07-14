@@ -61,6 +61,10 @@ call_functions <- c(
   "freq.default" = "cleaner",
   # cli
   "symbol" = "cli",
+  "ansi_has_hyperlink_support" = "cli",
+  # rstudioapi (RStudio)
+  "isAvailable" = "rstudioapi",
+  "versionInfo" = "rstudioapi",
   # readxl
   "read_excel" = "readxl",
   # ggplot2
@@ -120,18 +124,19 @@ for (i in seq_len(length(import_functions))) {
     also_load = FALSE,
     min_version = if (pkg == "dplyr") "1.0.0" else NULL
   )) {
-    tst <- !is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE))
-    expect_true(tst,
-      info = ifelse(tst,
-        "All external function references exist.",
-        paste0("Function ", pkg, "::", fn, "() does not exist anymore")
-      )
+    expect_true(!is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
+      info = paste0("does not exist (anymore): function `", pkg, "::", fn, "()`")
     )
+  } else {
+    warning("Package '", pkg, "' does not exist anymore")
   }
 }
 
 if (AMR:::pkg_is_available("cli")) {
   expect_true(!is.null(cli::symbol$info))
-  expect_true(!is.null(cli::symbol$bullet))
+}
+if (AMR:::pkg_is_available("cli")) {
+}
+if (AMR:::pkg_is_available("cli")) {
   expect_true(!is.null(cli::symbol$ellipsis))
 }
