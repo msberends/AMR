@@ -38,6 +38,13 @@ devtools::load_all()
 # Install the WHONET software on Windows (http://www.whonet.org/software.html),
 # and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
 
+
+# BACTERIAL COMPLEXES
+# find all bacterial complex in the NCBI Taxonomy Browser here:
+# https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Undef&id=2&lvl=6&lin=f&keep=1&srchmode=1&unlock
+# and search the page for 'complex', then follow the link and add the missing ones in this R file
+
+
 # READ DATA ----
 
 whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
@@ -131,6 +138,16 @@ microorganisms.groups <- whonet_organisms %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Eikenella corrodens", keep_synonyms = TRUE))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Kingella") %>% pull(mo))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Actinobacillus actinomycetemcomitans", keep_synonyms = TRUE))) %>%
+  # Citrobacter freundii complex in the NCBI Taxonomy Browser:
+  # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1344959
+  filter(mo_group != "B_CTRBC_FRND-C") %>% 
+  bind_rows(tibble(mo_group = as.mo("B_CTRBC_FRND-C"),
+                   mo = paste("Citrobacter", c("freundii", "braakii", "gillenii", "murliniae", "portucalensis", "sedlakii", "werkmanii", "youngae")) %>% as.mo(keep_synonyms = TRUE))) %>% 
+  # Yersinia pseudotuberculosis complex in the NCBI Taxonomy Browser:
+  # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1649845
+  filter(mo_group != "B_YERSN_PSDT-C") %>% 
+  bind_rows(tibble(mo_group = as.mo("B_YERSN_PSDT-C"),
+                   mo = paste("Yersinia", c("pseudotuberculosis", "pestis", "similis", "wautersii")) %>% as.mo(keep_synonyms = TRUE))) %>% 
   # RGM are Rapidly-grwoing Mycobacteria, see https://pubmed.ncbi.nlm.nih.gov/28084211/
   filter(mo_group != "B_MYCBC_RGM") %>% 
   bind_rows(tibble(mo_group = as.mo("B_MYCBC_RGM"),

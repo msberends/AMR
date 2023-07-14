@@ -67,8 +67,8 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
 
     # start the unit tests
     suppressMessages(
-      out <- run_test_dir(
-        ifelse(dir.exists("inst/tinytest"),
+      out <- test_package("AMR",
+        testdir = ifelse(dir.exists("inst/tinytest"),
           "inst/tinytest",
           "tinytest"
         ),

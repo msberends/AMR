@@ -185,7 +185,7 @@ if (pkg_is_available("cli")) {
     try(loadNamespace("tibble"), silent = TRUE)
   }
 
-  # reference data - they have additional to improve algorithm speed
+  # reference data - they have additional data to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)

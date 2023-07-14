@@ -1,9 +1,10 @@
-# AMR 2.0.0.9044
+# AMR 2.0.0.9045
 
 ## New
-* Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added for `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations
-* The EUCAST dosage guideline of v13.0 has been added to the `dosage` data set
-* ECOFF and animal breakpoints: the `clinical_breakpoints` data set now contains epidemiological cut-off (ECOFF) values and CLSI animal breakpoints. These two new breakpoint types can be used for MIC/disk interpretation using `as.sir(..., breakpoint_type = "ECOFF")` or`as.sir(..., breakpoint_type = "animal")`, which is an important new addition for veterinary microbiology.
+* Regarding clinical breakpoints:
+  * Clinical breakpoints and intrinsic resistance of EUCAST 2023 and CLSI 2023 have been added to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2023 (v13.0) is now the new default guideline for all MIC and disks diffusion interpretations
+  * The EUCAST dosage guideline of v13.0 has been added to the `dosage` data set
+  * The `clinical_breakpoints` data set now also contains epidemiological cut-off (ECOFF) values and CLSI animal breakpoints. These two new breakpoint types can be used for MIC/disk interpretation using `as.sir(..., breakpoint_type = "ECOFF")` or`as.sir(..., breakpoint_type = "animal")`, which is an important new addition for veterinary microbiology.
 * Added support for 30 species groups / complexes. They are gathered in a new data set `microorganisms.groups` and are used in clinical breakpoint interpretation. For example, CLSI 2023 contains breakpoints for the RGM group (Rapidly Growing Mycobacterium, containing over 80 species) which is now supported by our package.
 * Added oxygen tolerance from BacDive to over 25,000 bacteria in the `microorganisms` data set
   * Added `mo_oxygen_tolerance()` to retrieve the values

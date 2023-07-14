@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 52 169 Microorganisms}
+\title{Data Set with 52 171 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 52 169 observations and 23 variables:
+A \link[tibble:tibble]{tibble} with 52 171 observations and 23 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{This is a unique identifier.}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{This is a unique identifier.}
@@ -14,7 +14,7 @@ A \link[tibble:tibble]{tibble} with 52 169 observations and 23 variables:
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, such as \code{"species"} or \code{"genus"}
 \item \code{ref}\cr Author(s) and year of related scientific publication. This contains only the \emph{first surname} and year of the \emph{latest} authors, e.g. "Wallis \emph{et al.} 2006 \emph{emend.} Smith and Jones 2018" becomes "Smith \emph{et al.}, 2018". This field is directly retrieved from the source specified in the column \code{source}. Moreover, accents were removed to comply with CRAN that only allows ASCII characters, e.g. "Váňová" becomes "Vanova".
 \item \code{lpsn}\cr Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set.
-\item \code{oxygen_tolerance} \cr Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 73.4\% of all ~36 000 bacteria in the data set contain an oxygen tolerance.
+\item \code{oxygen_tolerance} \cr Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 73.4\% of all ~37 000 bacteria in the data set contain an oxygen tolerance.
 \item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
 \item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
 \item \code{gbif}\cr Identifier ('taxonID') of the Global Biodiversity Information Facility (GBIF)
@@ -50,7 +50,7 @@ For example, \emph{Staphylococcus pettenkoferi} was described for the first time
 
 Included taxonomic data are:
 \itemize{
-\item All ~36 000 (sub)species from the kingdoms of Archaea and Bacteria
+\item All ~37 000 (sub)species from the kingdoms of Archaea and Bacteria
 \item ~7 900 (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
 \item ~5 100 (sub)species from the kingdom of Protozoa
 \item ~1 400 (sub)species from 43 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
@@ -64,7 +64,7 @@ Included taxonomic data are:
 For convenience, some entries were added manually:
 \itemize{
 \item ~1 500 entries of \emph{Salmonella}, such as the city-like serovars and groups A to H
-\item 34 species groups (such as the beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.), of which the group compositions are stored in the \link{microorganisms.groups} data set
+\item 36 species groups (such as the beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.), of which the group compositions are stored in the \link{microorganisms.groups} data set
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 \item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
