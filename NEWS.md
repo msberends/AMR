@@ -1,4 +1,4 @@
-# AMR 2.0.0.9045
+# AMR 2.1.0
 
 ## New
 * Regarding clinical breakpoints:
