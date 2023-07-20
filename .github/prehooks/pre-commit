@@ -69,16 +69,10 @@ if [ "$currenttag" = "" ]; then
 else
   # there is a tag, so base version number on that
   currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
-  if (( "$currentcommit" == 0 )); then
-    # tag is new, so this must become the version number
-    currentversion="$currenttag"
-  fi
   echo "- latest tag is '${currenttagfull}', with ${currentcommit} previous commits in '${defaultbranch}'"
 fi
-if [ "$currentversion" = "" ]; then
-  # combine tag (e.g. 1.2.3) and commit number (like 5) increased by 9000 to indicate beta version
-  currentversion="$currenttag.$((currentcommit + 9001))" # results in e.g. 1.2.3.9005
-fi
+# combine tag (e.g. 1.2.3) and commit number (like 5) increased by 9000 to indicate beta version
+currentversion="$currenttag.$((currentcommit + 9001))" # results in e.g. 1.2.3.9005
 echo "- ${currentpkg} pkg version set to ${currentversion}"
 
 # set version number and date to DESCRIPTION file

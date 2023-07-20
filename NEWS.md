@@ -1,3 +1,8 @@
+# AMR 2.1.0.9001
+
+* Fix rounding MICs on latest R beta ('R-devel')
+
+
 # AMR 2.1.0
 
 ## New

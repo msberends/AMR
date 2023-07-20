@@ -503,8 +503,8 @@ trunc.mic <- function(x, ...) {
 #' @method round mic
 #' @export
 #' @noRd
-round.mic <- function(x, digits = 0) {
-  round(as.double(x), digits = digits)
+round.mic <- function(x, digits = 0, ...) {
+  round(as.double(x), digits = digits, ...)
 }
 #' @method signif mic
 #' @export
