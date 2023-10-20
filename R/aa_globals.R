@@ -102,7 +102,7 @@ TAXONOMY_VERSION <- list(
   ),
   SNOMED = list(
     accessed_date = as.Date("2021-07-01"),
-    citation = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12).",
+    citation = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microorganism', OID 2.16.840.1.114222.4.11.1009 (v12).",
     url = "https://phinvads.cdc.gov"
   ),
   LOINC = list(
@@ -113,6 +113,7 @@ TAXONOMY_VERSION <- list(
 )
 
 globalVariables(c(
+  ".GenericCallEnv",
   ".mo",
   ".rowid",
   ".syndromic_group",

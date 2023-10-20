@@ -45,6 +45,19 @@ expect_equal(
   1373
 )
 
+# for phenotype determination
+expect_equal(AMR:::duplicated_antibiogram("SSSS", points_threshold = 2, ignore_I = TRUE, type = "points"),
+             FALSE)
+expect_equal(AMR:::duplicated_antibiogram(c("RRR", "SSS"),
+                                          points_threshold = 2, ignore_I = TRUE, type = "points"),
+             c(FALSE, FALSE))
+expect_equal(AMR:::duplicated_antibiogram(c("RRR", "RRR", "SSS"),
+                                          points_threshold = 2, ignore_I = TRUE, type = "points"),
+             c(FALSE, TRUE, FALSE))
+expect_equal(AMR:::duplicated_antibiogram(c("RRR", "RSS", "SSS", "RSS", "RRR", "RRR", "SSS", "RSS", "RSR", "RRR"),
+                                          points_threshold = 2, ignore_I = TRUE, type = "points"),
+             c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+
 # Phenotype-based, using key antimicrobials
 expect_equal(
   sum(first_isolate(

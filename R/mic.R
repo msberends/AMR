@@ -184,6 +184,8 @@ as.mic <- function(x, na.rm = FALSE) {
 
     # comma to period
     x <- gsub(",", ".", x, fixed = TRUE)
+    # transform scientific notation
+    x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"] <- as.double(x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"])
     # transform Unicode for >= and <=
     x <- gsub("\u2264", "<=", x, fixed = TRUE)
     x <- gsub("\u2265", ">=", x, fixed = TRUE)

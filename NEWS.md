@@ -1,10 +1,10 @@
-# AMR 2.1.0.9003
+# AMR 2.1.0.9004
 
 * Fix for selecting first isolates using the phenotype-based method
   * This included too many isolates when patients had altering antibiograms within the same bacterial species
   * See for more info [our issue #122](https://github.com/msberends/AMR/issues/122)
 * Added 1,366 LOINC codes to the `antibiotics` data set and updated to the latest version (LOINC v2.76)
-* MICs can now be used in complex number calculations
+* MICs can now be used in complex number calculations and allow scientific number format as input (e.g., `as.mic("1.28e-2")`)
 * Fix rounding MICs on latest R beta ('R-devel')
 * Removed unneeded note about the used language when option `AMR_locale` is set
 * Fixed non-ASCII characters in documentation, according to CRAN maintainers
