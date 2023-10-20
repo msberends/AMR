@@ -45,10 +45,10 @@
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(antibiotics$iv_ddd))` drugs
 #' - `iv_units`\cr Units of `iv_ddd`
-#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
+#' - `loinc`\cr All codes associated with the name of the antimicrobial drug from `r TAXONOMY_VERSION$LOINC$citation` Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
 #' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
-#' - `av`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. *This is a unique identifier.*
+#' - `av`\cr Antiviral ID as used in this package (such as `ACI`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. *This is a unique identifier.* Combinations are codes that contain a `+` to indicate this, such as `ATA+COBI` for atazanavir/cobicistat.
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. *This is a unique identifier.*
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 #' - `cid`\cr Compound ID as found in PubChem. *This is a unique identifier.*
@@ -58,7 +58,7 @@
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
 #' - `iv_units`\cr Units of `iv_ddd`
-#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug.
+#' - `loinc`\cr All codes associated with the name of the antiviral drug from `r TAXONOMY_VERSION$LOINC$citation` Use [av_loinc()] to retrieve them quickly, see [av_property()].
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
 #' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and consequently only available where a CID is available.
@@ -91,7 +91,7 @@
 #' - `status` \cr Status of the taxon, either `r vector_or(microorganisms$status)`
 #' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism
 #' - `rank`\cr Text of the taxonomic rank of the microorganism, such as `"species"` or `"genus"`
-#' - `ref`\cr Author(s) and year of related scientific publication. This contains only the *first surname* and year of the *latest* authors, e.g. "Wallis *et al.* 2006 *emend.* Smith and Jones 2018" becomes "Smith *et al.*, 2018". This field is directly retrieved from the source specified in the column `source`. Moreover, accents were removed to comply with CRAN that only allows ASCII characters, e.g. "V`r "\u00e1\u0148ov\u00e1"`" becomes "Vanova".
+#' - `ref`\cr Author(s) and year of related scientific publication. This contains only the *first surname* and year of the *latest* authors, e.g. "Wallis *et al.* 2006 *emend.* Smith and Jones 2018" becomes "Smith *et al.*, 2018". This field is directly retrieved from the source specified in the column `source`. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.
 #' - `lpsn`\cr Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, *Acetobacter ascendens* has LPSN Record number 7864 and 11011. Only the first is available in the `microorganisms` data set.
 #' - `oxygen_tolerance` \cr Oxygen tolerance, either `r vector_or(microorganisms$oxygen_tolerance)`. These data were retrieved from BacDive (see *Source*). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently `r round(length(microorganisms$oxygen_tolerance[which(!is.na(microorganisms$oxygen_tolerance))]) / nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]) * 100, 1)`% of all `r format_included_data_number(nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]))` bacteria in the data set contain an oxygen tolerance.
 #' - `lpsn_parent`\cr LPSN identifier of the parent taxon

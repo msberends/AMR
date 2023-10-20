@@ -142,33 +142,7 @@ antivirals <- bind_cols(
 class(antivirals$av) <- c("av", "character")
 antivirals <- antivirals %>% AMR:::dataset_UTF8_to_ASCII()
 
-# add loinc, see 'data-raw/loinc.R'
-loinc_df <- read.csv("data-raw/Loinc.csv",
-  row.names = NULL,
-  stringsAsFactors = FALSE
-)
-
-loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
-av_names <- antivirals %>%
-  pull(name) %>%
-  paste0(collapse = "|") %>%
-  paste0("(", ., ")")
-
-antivirals$loinc <- as.list(rep(NA_character_, nrow(antivirals)))
-for (i in seq_len(nrow(antivirals))) {
-  message(i)
-  loinc_ab <- loinc_df %>%
-    filter(COMPONENT %like% paste0("^", antivirals$name[i])) %>%
-    pull(LOINC_NUM)
-  if (length(loinc_ab) > 0) {
-    antivirals$loinc[i] <- list(loinc_ab)
-  }
-}
-# sort and fix for empty values
-for (i in 1:nrow(antivirals)) {
-  loinc <- as.character(sort(unique(tolower(antivirals[i, "loinc", drop = TRUE][[1]]))))
-  antivirals[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
-}
+# ! add loinc, run 'data-raw/loinc.R' !
 
 # de-duplicate synonyms
 for (i in 1:nrow(antivirals)) {

@@ -42,7 +42,7 @@ expect_equal(
 )
 expect_equal(
   sum(first_isolate(x = example_isolates, method = "phenotype-based", info = TRUE), na.rm = TRUE),
-  1379
+  1373
 )
 
 # Phenotype-based, using key antimicrobials
@@ -53,7 +53,7 @@ expect_equal(
     type = "keyantimicrobials",
     antifungal = NULL, info = TRUE
   ), na.rm = TRUE),
-  1395
+  1376
 )
 expect_equal(
   sum(first_isolate(
@@ -62,7 +62,7 @@ expect_equal(
     type = "keyantimicrobials",
     antifungal = NULL, info = TRUE, ignore_I = FALSE
   ), na.rm = TRUE),
-  1418
+  1396
 )
 
 
@@ -93,7 +93,7 @@ expect_true(
     col_specimen = "specimen",
     filter_specimen = "Urine",
     info = TRUE
-  ), na.rm = TRUE) < 1501
+  ), na.rm = TRUE) < 1400
 )
 # same, but now exclude ICU
 expect_true(
@@ -107,7 +107,7 @@ expect_true(
     col_icu = x$ward == "ICU",
     icu_exclude = TRUE,
     info = TRUE
-  ), na.rm = TRUE) < 1501
+  ), na.rm = TRUE) < 1000
 )
 
 # "No isolates found"
@@ -193,7 +193,7 @@ expect_equal(
     ),
     na.rm = TRUE
   ),
-  1382
+  1376
 )
 
 # unknown MOs
@@ -201,23 +201,23 @@ test_unknown <- example_isolates
 test_unknown$mo <- ifelse(test_unknown$mo == "B_ESCHR_COLI", "UNKNOWN", test_unknown$mo)
 expect_equal(
   sum(first_isolate(test_unknown, include_unknown = FALSE)),
-  1108
+  1106
 )
 expect_equal(
   sum(first_isolate(test_unknown, include_unknown = TRUE)),
-  1591
+  1589
 )
 
 test_unknown$mo <- ifelse(test_unknown$mo == "UNKNOWN", NA, test_unknown$mo)
 expect_equal(
   sum(first_isolate(test_unknown)),
-  1108
+  1106
 )
 
 # empty sir results
 expect_equal(
   sum(first_isolate(example_isolates, include_untested_sir = FALSE)),
-  1366
+  1360
 )
 
 # shortcuts

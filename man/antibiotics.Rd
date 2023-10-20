@@ -21,13 +21,13 @@
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 146 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}
-\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug. Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
+\item \code{loinc}\cr All codes associated with the name of the antimicrobial drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }
 }
 
 \subsection{For the \link{antivirals} data set: a \link[tibble:tibble]{tibble} with 120 observations and 11 variables:}{
 \itemize{
-\item \code{av}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{This is a unique identifier.}
+\item \code{av}\cr Antiviral ID as used in this package (such as \code{ACI}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{This is a unique identifier.} Combinations are codes that contain a \code{+} to indicate this, such as \code{ATA+COBI} for atazanavir/cobicistat.
 \item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{This is a unique identifier.}
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{This is a unique identifier.}
@@ -37,7 +37,7 @@
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
 \item \code{iv_units}\cr Units of \code{iv_ddd}
-\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug.
+\item \code{loinc}\cr All codes associated with the name of the antiviral drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use \code{\link[=av_loinc]{av_loinc()}} to retrieve them quickly, see \code{\link[=av_property]{av_property()}}.
 }
 }
 
@@ -46,7 +46,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \source{
 \itemize{
 \item World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
-\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.73 (8 August, 2022). Accessed from \url{https://loinc.org} on October 30th, 2022.
+\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Accessed from \url{https://loinc.org} on October 19th, 2023.
 \item European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
 }
 }

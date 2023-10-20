@@ -72,7 +72,7 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
           "inst/tinytest",
           "tinytest"
         ),
-        verbose = 99,
+        verbose = FALSE,
         color = FALSE
       )
     )

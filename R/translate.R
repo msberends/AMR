@@ -66,17 +66,12 @@
 #' mo_name("Coagulase-negative Staphylococcus (CoNS)")
 #'
 #' # setting another language
-#' set_AMR_locale("Spanish")
+#' set_AMR_locale("Dutch")
 #' ab_name("Ciprofloxacin")
 #' mo_name("Coagulase-negative Staphylococcus (CoNS)")
 #'
 #' # setting yet another language
-#' set_AMR_locale("Greek")
-#' ab_name("Ciprofloxacin")
-#' mo_name("Coagulase-negative Staphylococcus (CoNS)")
-#'
-#' # setting yet another language
-#' set_AMR_locale("Ukrainian")
+#' set_AMR_locale("German")
 #' ab_name("Ciprofloxacin")
 #' mo_name("Coagulase-negative Staphylococcus (CoNS)")
 #'
@@ -266,7 +261,7 @@ translate_into_language <- function(from,
   # a kind of left join to get all results back
   out <- from_unique_translated[match(from.bak, from_unique)]
 
-  if (!identical(from.bak, out) && get_AMR_locale() == lang && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
+  if (!identical(from.bak, out) && get_AMR_locale() == lang && is.null(getOption("AMR_locale", default = NULL)) && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
     message(word_wrap(
       "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
       LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this once-per-session note.",

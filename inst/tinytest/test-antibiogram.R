@@ -78,19 +78,19 @@ ab6 <- antibiogram(example_isolates,
                    syndromic_group = "ward")
 
 # with a custom language, though this will be determined automatically
-# (i.e., this table will be in Spanish on Spanish systems)
+# (i.e., this table will be in Dutch on Dutch systems)
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
 ab7 <- antibiogram(ex1,
                    antibiotics = aminoglycosides(),
                    ab_transform = "name",
                    syndromic_group = ifelse(ex1$ward == "ICU",
-                                            "UCI", "No UCI"),
-                   language = "es")
+                                            "IC", "Geen IC"),
+                   language = "nl")
 
 expect_inherits(ab6, "antibiogram")
 expect_inherits(ab7, "antibiogram")
 expect_equal(colnames(ab6), c("Syndromic Group", "Pathogen (N min-max)", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
-expect_equal(colnames(ab7), c("Grupo sindrómico", "Patógeno (N min-max)", "Amikacina", "Gentamicina", "Tobramicina"))
+expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikacine", "Gentamicine", "Tobramycine"))
 
 # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 

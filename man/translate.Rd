@@ -58,17 +58,12 @@ ab_name("Ciprofloxacin")
 mo_name("Coagulase-negative Staphylococcus (CoNS)")
 
 # setting another language
-set_AMR_locale("Spanish")
+set_AMR_locale("Dutch")
 ab_name("Ciprofloxacin")
 mo_name("Coagulase-negative Staphylococcus (CoNS)")
 
 # setting yet another language
-set_AMR_locale("Greek")
-ab_name("Ciprofloxacin")
-mo_name("Coagulase-negative Staphylococcus (CoNS)")
-
-# setting yet another language
-set_AMR_locale("Ukrainian")
+set_AMR_locale("German")
 ab_name("Ciprofloxacin")
 mo_name("Coagulase-negative Staphylococcus (CoNS)")
 

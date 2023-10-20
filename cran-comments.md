@@ -1,4 +1,6 @@
-The email address of the maintainer has changed - not the person.
+**On the 15th of October, 2023, we received an email from Prof Ripley about an issue in UTF-8 strings in our documentation. This version contains a fix to this issue.**
+
+Previous comments:
 
 As with all previous >20 releases, some CHECKs might return a NOTE for *just* hitting the installation size limit, though its size has been brought down to a minimum in collaboration with CRAN maintainers previously.
 

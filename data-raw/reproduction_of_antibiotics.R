@@ -851,6 +851,8 @@ antibiotics <- dataset_UTF8_to_ASCII(as.data.frame(antibiotics, stringsAsFactors
 class(antibiotics$ab) <- c("ab", "character")
 antibiotics <- dplyr::arrange(antibiotics, name)
 
+# REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
+
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
 for (i in 1:nrow(antibiotics)) {
   abb <- as.character(sort(unique(tolower(antibiotics[i, "abbreviations", drop = TRUE][[1]]))))
@@ -866,7 +868,6 @@ for (i in 1:nrow(antibiotics)) {
   }
 }
 
-# REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
 
 usethis::use_data(antibiotics, overwrite = TRUE, version = 2, compress = "xz")
 rm(antibiotics)

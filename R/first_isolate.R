@@ -347,8 +347,8 @@ first_isolate <- function(x = NULL,
 
   # create original row index
   x$newvar_row_index <- seq_len(nrow(x))
-  x$newvar_mo <- as.mo(x[, col_mo, drop = TRUE])
-  x$newvar_genus_species <- paste(mo_genus(x$newvar_mo), mo_species(x$newvar_mo))
+  x$newvar_mo <- as.mo(x[, col_mo, drop = TRUE], keep_synonyms = TRUE, info = FALSE)
+  x$newvar_genus_species <- paste(mo_genus(x$newvar_mo, keep_synonyms = TRUE, info = FALSE), mo_species(x$newvar_mo, keep_synonyms = TRUE, info = FALSE))
   x$newvar_date <- x[, col_date, drop = TRUE]
   x$newvar_patient_id <- as.character(x[, col_patient_id, drop = TRUE])
 
@@ -443,7 +443,7 @@ first_isolate <- function(x = NULL,
   # did find some isolates - add new index numbers of rows
   x$newvar_row_index_sorted <- seq_len(nrow(x))
 
-  scope.size <- nrow(x[which(x$newvar_row_index_sorted %in% c(row.start + 1:row.end) &
+  scope.size <- nrow(x[which(x$newvar_row_index_sorted %in% seq(row.start, row.end, 1) &
     !is.na(x$newvar_mo)), , drop = FALSE])
 
   # Analysis of first isolate ----
@@ -467,40 +467,44 @@ first_isolate <- function(x = NULL,
 
   x$other_pat_or_mo <- !(x$newvar_patient_id == pm_lag(x$newvar_patient_id) & x$newvar_genus_species == pm_lag(x$newvar_genus_species))
 
-  x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
-
+  x$newvar_episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
+  
   x$more_than_episode_ago <- unlist(
     lapply(
       split(
         x$newvar_date,
-        x$episode_group
+        x$newvar_episode_group
       ),
       is_new_episode,
-      episode_days = episode_days
+      episode_days = episode_days,
+      drop = FALSE
     ),
     use.names = FALSE
   )
-
+  
   if (!is.null(col_keyantimicrobials)) {
-    # with key antibiotics
-    x$other_key_ab <- !antimicrobials_equal(
-      y = x$newvar_key_ab,
-      z = pm_lag(x$newvar_key_ab),
-      type = type,
-      ignore_I = ignore_I,
-      points_threshold = points_threshold
+    # using phenotypes
+    x$different_antibiogram <- !unlist(
+      lapply(
+        split(
+          x$newvar_key_ab,
+          x$newvar_episode_group
+        ),
+        duplicated_antibiogram,
+        points_threshold = points_threshold,
+        ignore_I = ignore_I,
+        type = type
+      ),
+      use.names = FALSE
     )
-    x$newvar_first_isolate <- x$newvar_row_index_sorted >= row.start &
-      x$newvar_row_index_sorted <= row.end &
-      x$newvar_genus_species != "" &
-      (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab)
   } else {
-    # no key antibiotics
-    x$newvar_first_isolate <- x$newvar_row_index_sorted >= row.start &
-      x$newvar_row_index_sorted <= row.end &
-      x$newvar_genus_species != "" &
-      (x$other_pat_or_mo | x$more_than_episode_ago)
+    x$different_antibiogram <- FALSE
   }
+  
+  x$newvar_first_isolate <- x$newvar_row_index_sorted >= row.start &
+    x$newvar_row_index_sorted <= row.end &
+    x$newvar_genus_species != "" &
+    (x$other_pat_or_mo | x$more_than_episode_ago | x$different_antibiogram)
   
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", " ")
@@ -663,4 +667,49 @@ coerce_method <- function(method) {
   method[method %like% "^pat"] <- "patient-based"
   method[method %like% "^(i$|iso)"] <- "isolate-based"
   method
+}
+
+duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type) {
+  if (length(antibiogram) == 1) {
+    # fast return, only 1 isolate
+    return(FALSE)
+  }
+  out <- rep(NA, length(antibiogram))
+  out[1] <- FALSE
+  out[2] <- antimicrobials_equal(antibiogram[1], antibiogram[2],
+                                 ignore_I = ignore_I, points_threshold = points_threshold,
+                                 type = type)
+  if (length(antibiogram) == 2) {
+    # fast return, no further check required
+    return(out)
+  }
+  
+  # sort after the second one (since we already determined AB equality of the first two)
+  original_sort <- c(1, 2, rank(antibiogram[3:length(antibiogram)]) + 2)
+  antibiogram.bak <- antibiogram
+  antibiogram <- c(antibiogram[1:2], sort(antibiogram[3:length(antibiogram)]))
+  
+  # we can skip the duplicates - they are never unique antibiograms of course
+  duplicates <- duplicated(antibiogram)
+  out[3:length(out)][duplicates[3:length(out)] == TRUE] <- TRUE
+  if (all(duplicates[3:length(out)] == TRUE, na.rm = TRUE)) {
+    # fast return, no further check required
+    return(c(out[1:2], rep(TRUE, length(out) - 2)))
+  }
+  
+  for (na in antibiogram[is.na(out)]) {
+    # check if this antibiogram has any change with other antibiograms
+    out[which(antibiogram == na)] <- all(
+      vapply(FUN.VALUE = logical(1),
+             antibiogram[!is.na(out) & antibiogram != na],
+             function(y) antimicrobials_equal(y = y, z = na,
+                                              ignore_I = ignore_I, points_threshold = points_threshold,
+                                              type = type)))
+  }
+  
+  out <- out[original_sort]
+  # rerun duplicated again
+  duplicates <- duplicated(antibiogram.bak)
+  out[duplicates == TRUE] <- TRUE
+  out
 }

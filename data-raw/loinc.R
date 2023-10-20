@@ -31,8 +31,8 @@
 
 # Steps to reproduce:
 # 1. Create a fake account at https://loinc.org (sad you have to create one...)
-# 2. Download the CSV from https://loinc.org/download/loinc-complete/ (Loinc_2.67_Text_2.67.zip)
-# 3. Read Loinc.csv that's in zip folder LoincTable
+# 2. Download the CSV from https://loinc.org/download/loinc-complete/ 
+# 3. Read file LoincTable/Loinc.csv
 loinc_df <- read.csv("data-raw/Loinc.csv",
   row.names = NULL,
   stringsAsFactors = FALSE
@@ -42,31 +42,62 @@ loinc_df <- read.csv("data-raw/Loinc.csv",
 library(dplyr)
 library(cleaner)
 library(AMR)
-loinc_df %>% freq(CLASS) # to find the drugs
-loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
-ab_names <- antibiotics %>%
-  pull(name) %>%
-  paste0(collapse = "|") %>%
-  paste0("(", ., ")")
+# to find the drugs:
+loinc_df %>%
+  filter(COMPONENT %like% "ampicillin|fluconazol|meropenem") %>%
+  count(CLASS, sort = TRUE)
+loinc_df <- loinc_df %>%
+  filter(CLASS %in% c("DRUG/TOX", "ABXBACT")) %>% 
+  mutate(name = generalise_antibiotic_name(COMPONENT), .before = 1)
 
+# antibiotics
 antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
 for (i in seq_len(nrow(antibiotics))) {
   message(i)
   loinc_ab <- loinc_df %>%
-    filter(COMPONENT %like% paste0("^", antibiotics$name[i])) %>%
+    filter(name %like% paste0("^", generalise_antibiotic_name(antibiotics$name[i]))) %>%
     pull(LOINC_NUM)
   if (length(loinc_ab) > 0) {
     antibiotics$loinc[i] <- list(loinc_ab)
   }
 }
+
+# antivirals
+antivirals$loinc <- as.list(rep(NA_character_, nrow(antivirals)))
+for (i in seq_len(nrow(antivirals))) {
+  message(i)
+  loinc_ab <- loinc_df %>%
+    filter(name %like% paste0("^", generalise_antibiotic_name(antivirals$name[i]))) %>%
+    pull(LOINC_NUM)
+  if (length(loinc_ab) > 0) {
+    antivirals$loinc[i] <- list(loinc_ab)
+  }
+}
+
 # sort and fix for empty values
 for (i in 1:nrow(antibiotics)) {
-  loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
-  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
+  loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc", drop = TRUE][[1]]))))
+  loinc <- loinc[loinc != ""]
+  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
 }
+for (i in 1:nrow(antivirals)) {
+  loinc <- as.character(sort(unique(tolower(antivirals[i, "loinc", drop = TRUE][[1]]))))
+  loinc <- loinc[loinc != ""]
+  antivirals[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
+}
+
+antibiotics <- dataset_UTF8_to_ASCII(as.data.frame(antibiotics, stringsAsFactors = FALSE))
+antibiotics <- dplyr::arrange(antibiotics, name)
+
+antivirals <- dataset_UTF8_to_ASCII(as.data.frame(antivirals, stringsAsFactors = FALSE))
+antivirals <- dplyr::arrange(antivirals, name)
 
 # remember to update R/aa_globals.R for the documentation
 
 dim(antibiotics) # for R/data.R
-usethis::use_data(antibiotics, overwrite = TRUE)
+usethis::use_data(antibiotics, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
 rm(antibiotics)
+
+dim(antivirals) # for R/data.R
+usethis::use_data(antivirals, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
+rm(antivirals)

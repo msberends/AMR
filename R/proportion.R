@@ -46,13 +46,13 @@
 #' @param collapse a [logical] to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing
 #' @inheritSection as.sir Interpretation of SIR
 #' @details
+#' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
+#' 
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
 #'
 #' Use [sir_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
 #'
-#' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
-#'
-#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` argument).*
+#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count_*()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to [count_susceptible()]` / `[count_all()]. *Low counts can influence the outcome - the `proportion_*()` functions may camouflage this, since they only return the proportion (albeit dependent on the `minimum` argument).*
 #'
 #' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination Therapy:

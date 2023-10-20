@@ -462,399 +462,46 @@ quantile.mic <- function(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
   quantile(as.double(x), probs = probs, na.rm = na.rm, names = names, type = type, ...)
 }
 
-# Math (see ?groupGeneric) ----------------------------------------------
+# Math (see ?groupGeneric) ------------------------------------------------
 
-#' @method abs mic
 #' @export
-#' @noRd
-abs.mic <- function(x) {
-  abs(as.double(x))
-}
-#' @method sign mic
-#' @export
-#' @noRd
-sign.mic <- function(x) {
-  sign(as.double(x))
-}
-#' @method sqrt mic
-#' @export
-#' @noRd
-sqrt.mic <- function(x) {
-  sqrt(as.double(x))
-}
-#' @method floor mic
-#' @export
-#' @noRd
-floor.mic <- function(x) {
-  floor(as.double(x))
-}
-#' @method ceiling mic
-#' @export
-#' @noRd
-ceiling.mic <- function(x) {
-  ceiling(as.double(x))
-}
-#' @method trunc mic
-#' @export
-#' @noRd
-trunc.mic <- function(x, ...) {
-  trunc(as.double(x), ...)
-}
-#' @method round mic
-#' @export
-#' @noRd
-round.mic <- function(x, digits = 0, ...) {
-  round(as.double(x), digits = digits, ...)
-}
-#' @method signif mic
-#' @export
-#' @noRd
-signif.mic <- function(x, digits = 6) {
-  signif(as.double(x), digits = digits)
-}
-#' @method exp mic
-#' @export
-#' @noRd
-exp.mic <- function(x) {
-  exp(as.double(x))
-}
-#' @method log mic
-#' @export
-#' @noRd
-log.mic <- function(x, base = exp(1)) {
-  log(as.double(x), base = base)
-}
-#' @method log10 mic
-#' @export
-#' @noRd
-log10.mic <- function(x) {
-  log10(as.double(x))
-}
-#' @method log2 mic
-#' @export
-#' @noRd
-log2.mic <- function(x) {
-  log2(as.double(x))
-}
-#' @method expm1 mic
-#' @export
-#' @noRd
-expm1.mic <- function(x) {
-  expm1(as.double(x))
-}
-#' @method log1p mic
-#' @export
-#' @noRd
-log1p.mic <- function(x) {
-  log1p(as.double(x))
-}
-#' @method cos mic
-#' @export
-#' @noRd
-cos.mic <- function(x) {
-  cos(as.double(x))
-}
-#' @method sin mic
-#' @export
-#' @noRd
-sin.mic <- function(x) {
-  sin(as.double(x))
-}
-#' @method tan mic
-#' @export
-#' @noRd
-tan.mic <- function(x) {
-  tan(as.double(x))
-}
-#' @method cospi mic
-#' @export
-#' @noRd
-cospi.mic <- function(x) {
-  cospi(as.double(x))
-}
-#' @method sinpi mic
-#' @export
-#' @noRd
-sinpi.mic <- function(x) {
-  sinpi(as.double(x))
-}
-#' @method tanpi mic
-#' @export
-#' @noRd
-tanpi.mic <- function(x) {
-  tanpi(as.double(x))
-}
-#' @method acos mic
-#' @export
-#' @noRd
-acos.mic <- function(x) {
-  acos(as.double(x))
-}
-#' @method asin mic
-#' @export
-#' @noRd
-asin.mic <- function(x) {
-  asin(as.double(x))
-}
-#' @method atan mic
-#' @export
-#' @noRd
-atan.mic <- function(x) {
-  atan(as.double(x))
-}
-#' @method cosh mic
-#' @export
-#' @noRd
-cosh.mic <- function(x) {
-  cosh(as.double(x))
-}
-#' @method sinh mic
-#' @export
-#' @noRd
-sinh.mic <- function(x) {
-  sinh(as.double(x))
-}
-#' @method tanh mic
-#' @export
-#' @noRd
-tanh.mic <- function(x) {
-  tanh(as.double(x))
-}
-#' @method acosh mic
-#' @export
-#' @noRd
-acosh.mic <- function(x) {
-  acosh(as.double(x))
-}
-#' @method asinh mic
-#' @export
-#' @noRd
-asinh.mic <- function(x) {
-  asinh(as.double(x))
-}
-#' @method atanh mic
-#' @export
-#' @noRd
-atanh.mic <- function(x) {
-  atanh(as.double(x))
-}
-#' @method lgamma mic
-#' @export
-#' @noRd
-lgamma.mic <- function(x) {
-  lgamma(as.double(x))
-}
-#' @method gamma mic
-#' @export
-#' @noRd
-gamma.mic <- function(x) {
-  gamma(as.double(x))
-}
-#' @method digamma mic
-#' @export
-#' @noRd
-digamma.mic <- function(x) {
-  digamma(as.double(x))
-}
-#' @method trigamma mic
-#' @export
-#' @noRd
-trigamma.mic <- function(x) {
-  trigamma(as.double(x))
-}
-#' @method cumsum mic
-#' @export
-#' @noRd
-cumsum.mic <- function(x) {
-  cumsum(as.double(x))
-}
-#' @method cumprod mic
-#' @export
-#' @noRd
-cumprod.mic <- function(x) {
-  cumprod(as.double(x))
-}
-#' @method cummax mic
-#' @export
-#' @noRd
-cummax.mic <- function(x) {
-  cummax(as.double(x))
-}
-#' @method cummin mic
-#' @export
-#' @noRd
-cummin.mic <- function(x) {
-  cummin(as.double(x))
+Math.mic <- function(x, ...) {
+  x <- as.double(x)
+  # set class to numeric, because otherwise NextMethod will be factor (since mic is a factor)
+  .Class <- class(x)
+  NextMethod(.Generic)
 }
 
-# Ops (see ?groupGeneric) -----------------------------------------------
+# Ops (see ?groupGeneric) -------------------------------------------------
 
-is_greater <- function(el) {
-  el %like_case% ">[0-9]"
-}
-is_lower <- function(el) {
-  el %like_case% "<[0-9]"
-}
-
-#' @method + mic
 #' @export
-#' @noRd
-`+.mic` <- function(e1, e2) {
-  as.double(e1) + as.double(e2)
+Ops.mic <- function(e1, e2) {
+  e1 <- as.double(e1)
+  if (!missing(e2)) {
+    # when e1 is `!`, e2 is missing
+    e2 <- as.double(e2)
+  }
+  # set class to numeric, because otherwise NextMethod will be factor (since mic is a factor)
+  .Class <- class(e1)
+  NextMethod(.Generic)
 }
 
-#' @method - mic
+# Complex (see ?groupGeneric) ---------------------------------------------
+
 #' @export
-#' @noRd
-`-.mic` <- function(e1, e2) {
-  as.double(e1) - as.double(e2)
+Complex.mic <- function(z) {
+  z <- as.double(z)
+  # set class to numeric, because otherwise NextMethod will be factor (since mic is a factor)
+  .Class <- class(z)
+  NextMethod(.Generic)
 }
 
-#' @method * mic
-#' @export
-#' @noRd
-`*.mic` <- function(e1, e2) {
-  as.double(e1) * as.double(e2)
-}
+# Summary (see ?groupGeneric) ---------------------------------------------
 
-#' @method / mic
 #' @export
-#' @noRd
-`/.mic` <- function(e1, e2) {
-  as.double(e1) / as.double(e2)
-}
-
-#' @method ^ mic
-#' @export
-#' @noRd
-`^.mic` <- function(e1, e2) {
-  as.double(e1)^as.double(e2)
-}
-
-#' @method %% mic
-#' @export
-#' @noRd
-`%%.mic` <- function(e1, e2) {
-  as.double(e1) %% as.double(e2)
-}
-
-#' @method %/% mic
-#' @export
-#' @noRd
-`%/%.mic` <- function(e1, e2) {
-  as.double(e1) %/% as.double(e2)
-}
-
-#' @method & mic
-#' @export
-#' @noRd
-`&.mic` <- function(e1, e2) {
-  as.double(e1) & as.double(e2)
-}
-
-#' @method | mic
-#' @export
-#' @noRd
-`|.mic` <- function(e1, e2) {
-  as.double(e1) | as.double(e2)
-}
-
-#' @method ! mic
-#' @export
-#' @noRd
-`!.mic` <- function(x) {
-  !as.double(x)
-}
-
-#' @method == mic
-#' @export
-#' @noRd
-`==.mic` <- function(e1, e2) {
-  as.double(e1) == as.double(e2)
-}
-
-#' @method != mic
-#' @export
-#' @noRd
-`!=.mic` <- function(e1, e2) {
-  as.double(e1) != as.double(e2)
-}
-
-#' @method < mic
-#' @export
-#' @noRd
-`<.mic` <- function(e1, e2) {
-  as.double(e1) < as.double(e2)
-}
-
-#' @method <= mic
-#' @export
-#' @noRd
-`<=.mic` <- function(e1, e2) {
-  as.double(e1) <= as.double(e2)
-}
-
-#' @method >= mic
-#' @export
-#' @noRd
-`>=.mic` <- function(e1, e2) {
-  as.double(e1) >= as.double(e2)
-}
-
-#' @method > mic
-#' @export
-#' @noRd
-`>.mic` <- function(e1, e2) {
-  as.double(e1) > as.double(e2)
-  # doesn't work...
-  # nolint start
-  # as.double(e1) > as.double(e2) |
-  #   (as.double(e1) == as.double(e2) & is_lower(e2) & !is_lower(e1)) |
-  #   (as.double(e1) == as.double(e2) & is_greater(e1) & !is_greater(e2))
-  # nolint end
-}
-
-# Summary (see ?groupGeneric) -------------------------------------------
-
-#' @method all mic
-#' @export
-#' @noRd
-all.mic <- function(..., na.rm = FALSE) {
-  all(as.double(c(...)), na.rm = na.rm)
-}
-#' @method any mic
-#' @export
-#' @noRd
-any.mic <- function(..., na.rm = FALSE) {
-  any(as.double(c(...)), na.rm = na.rm)
-}
-#' @method sum mic
-#' @export
-#' @noRd
-sum.mic <- function(..., na.rm = FALSE) {
-  sum(as.double(c(...)), na.rm = na.rm)
-}
-#' @method prod mic
-#' @export
-#' @noRd
-prod.mic <- function(..., na.rm = FALSE) {
-  prod(as.double(c(...)), na.rm = na.rm)
-}
-#' @method min mic
-#' @export
-#' @noRd
-min.mic <- function(..., na.rm = FALSE) {
-  min(as.double(c(...)), na.rm = na.rm)
-}
-#' @method max mic
-#' @export
-#' @noRd
-max.mic <- function(..., na.rm = FALSE) {
-  max(as.double(c(...)), na.rm = na.rm)
-}
-#' @method range mic
-#' @export
-#' @noRd
-range.mic <- function(..., na.rm = FALSE) {
-  range(as.double(c(...)), na.rm = na.rm)
+Summary.mic <- function(..., na.rm = FALSE) {
+  # NextMethod() cannot be called from an anonymous function (`...`), so we get() the generic directly:
+  fn <- get(.Generic, envir = .GenericCallEnv)
+  fn(as.double(c(...)),
+     na.rm = na.rm)
 }

@@ -221,11 +221,11 @@ exec_episode <- function(x, episode_days, case_free_days, ...) {
 
   # running as.double() on a POSIXct object will return its number of seconds since 1970-01-01
   x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
-
+  
   # since x is now in seconds, get seconds from episode_days as well
   episode_seconds <- episode_days * 60 * 60 * 24
   case_free_seconds <- case_free_days * 60 * 60 * 24
-
+  
   if (length(x) == 1) { # this will also match 1 NA, which is fine
     return(1)
   } else if (length(x) == 2 && all(!is.na(x))) {
@@ -241,7 +241,7 @@ exec_episode <- function(x, episode_days, case_free_days, ...) {
     }
   }
 
-  run_episodes <- function(x, episode_seconds, case_free) {
+  run_episodes <- function(x, episode_sec, case_free_sec) {
     NAs <- which(is.na(x))
     x[NAs] <- 0
 
@@ -250,8 +250,8 @@ exec_episode <- function(x, episode_days, case_free_days, ...) {
     ind <- 1
     indices[ind] <- 1
     for (i in 2:length(x)) {
-      if ((length(episode_seconds) > 0 && (x[i] - start) >= episode_seconds) ||
-        (length(case_free_seconds) > 0 && (x[i] - x[i - 1]) >= case_free_seconds)) {
+      if ((length(episode_sec) > 0 && (x[i] - start) >= episode_sec) ||
+        (length(case_free_sec) > 0 && (x[i] - x[i - 1]) >= case_free_sec)) {
         ind <- ind + 1
         start <- x[i]
       }

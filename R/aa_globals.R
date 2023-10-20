@@ -106,8 +106,8 @@ TAXONOMY_VERSION <- list(
     url = "https://phinvads.cdc.gov"
   ),
   LOINC = list(
-    accessed_date = as.Date("2022-10-30"),
-    citation = "Logical Observation Identifiers Names and Codes (LOINC), Version 2.73 (8 August, 2022).",
+    accessed_date = as.Date("2023-10-19"),
+    citation = "Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023).",
     url = "https://loinc.org"
   )
 )

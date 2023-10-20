@@ -203,7 +203,7 @@ mdro <- function(x = NULL,
   }
 
   info.bak <- info
-  # don't thrown info's more than once per call
+  # don't throw info's more than once per call
   if (isTRUE(info)) {
     info <- message_not_thrown_before("mdro")
   }
@@ -1611,10 +1611,12 @@ mdro <- function(x = NULL,
     function(y) all(is.na(y))
   ))
   if (length(rows_empty) > 0) {
-    cat(font_italic(paste0(" (", length(rows_empty), " isolates had no test results)\n")))
+    if (isTRUE(info.bak)) {
+      cat(font_italic(paste0(" (", length(rows_empty), " isolates had no test results)\n")))
+    }
     x[rows_empty, "MDRO"] <- NA
     x[rows_empty, "reason"] <- "none of the antibiotics have test results"
-  } else {
+  } else if (isTRUE(info.bak)) {
     cat("\n")
   }
 
