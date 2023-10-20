@@ -15699,7 +15699,7 @@
 "CLSI 2023"	"human"	"DISK"		"B_[ORD]_ENTRBCTR"	5	"PLZ"	"Table 2A"	"30ug"	18	14	FALSE
 "CLSI 2023"	"human"	"MIC"		"B_[ORD]_ENTRBCTR"	5	"PLZ"	"Table 2A"		2	8	FALSE
 "CLSI 2023"	"human"	"DISK"		"B_[ORD]_ENTRBCTR"	5	"SAM"	"Table 2A"	"10ug/10ug"	15	11	FALSE
-"CLSI 2023"	"human"	"MIC"		"B_[ORD]_ENTRBCTR"	5	"SAM"	"Table 2A"		16	32	FALSE
+"CLSI 2023"	"human"	"MIC"		"B_[ORD]_ENTRBCTR"	5	"SAM"	"Table 2A"		8	32	FALSE
 "CLSI 2023"	"human"	"DISK"		"B_[ORD]_ENTRBCTR"	5	"SMX"	"Table 2A"	"200ug/300ug"	17	12	FALSE
 "CLSI 2023"	"human"	"MIC"		"B_[ORD]_ENTRBCTR"	5	"SMX"	"Table 2A"		256	512	FALSE
 "CLSI 2023"	"human"	"DISK"		"B_[ORD]_ENTRBCTR"	5	"SOX"	"Table 2A"	"200ug/300ug"	17	12	FALSE

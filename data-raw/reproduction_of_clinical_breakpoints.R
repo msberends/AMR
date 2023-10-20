@@ -192,7 +192,7 @@ devtools::load_all()
 
 # BREAKPOINTS ----
 
-# now that we have the right MO codes, get the breakpoints and convert them
+# now that we have the correct MO codes, get the breakpoints and convert them
 
 whonet_breakpoints %>% 
   count(GUIDELINES, BREAKPOINT_TYPE) %>% 
@@ -213,7 +213,7 @@ unknown <- breakpoints %>%
 breakpoints %>% 
   filter(code %in% unknown) %>% 
   count(GUIDELINES, YEAR, ORGANISM_CODE, BREAKPOINT_TYPE, sort = TRUE)
-# these codes are currently (2023-07-08): clu, kma. No clue, so remove them:
+# these codes are currently (2023-07-08): clu, kma. No clue (are not in MO list of WHONET), so remove them:
 breakpoints <- breakpoints %>% 
   filter(!is.na(mo))
 
@@ -284,6 +284,9 @@ breakpoints_new <- breakpoints_new %>%
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S", drop = TRUE]))
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R", drop = TRUE]))
 
+
+# FIXES FOR WHONET ERRORS ----
+
 # WHONET has no >1024 but instead uses 1025, 513, etc, so as.mic() cannot be used to clean.
 # instead, clean based on MIC factor levels
 m <- unique(as.double(as.mic(levels(as.mic(1)))))
@@ -315,7 +318,9 @@ clinical_breakpoints <- clinical_breakpoints %>% filter(mo != as.mo("Achromobact
 clinical_breakpoints <- clinical_breakpoints %>% filter(!(mo == as.mo("Streptococcus viridans") & ab == "GEN"))
 # Nitrofurantoin in Staph (EUCAST) only applies to S. saprophyticus, while WHONET has the DISK correct but the MIC on genus level
 clinical_breakpoints$mo[clinical_breakpoints$mo == "B_STPHY" & clinical_breakpoints$ab == "NIT" & clinical_breakpoints$guideline %like% "EUCAST"] <- as.mo("B_STPHY_SPRP")
-# determine rank again
+# WHONET sets the 2023 breakpoints for SAM to MIC of 16/32 for Enterobacterales, should be MIC 8/32 like AMC (see issue #123 on github.com/msberends/AMR)
+clinical_breakpoints$breakpoint_S[clinical_breakpoints$mo == "B_[ORD]_ENTRBCTR" & clinical_breakpoints$ab == "SAM" & clinical_breakpoints$guideline %like% "CLSI 2023" & clinical_breakpoints$method == "MIC"] <- 8
+# determine rank again now that some changes were made on taxonomic level (genus -> species)
 clinical_breakpoints <- clinical_breakpoints %>% 
   mutate(rank_index = case_when(
     is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
@@ -327,7 +332,6 @@ clinical_breakpoints <- clinical_breakpoints %>%
     mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
     TRUE ~ 6
   ))
-
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2022 guideline: S <= 8 and R > 8
@@ -349,6 +353,9 @@ breakpoints_new <- breakpoints_new %>%
 # fix missing R breakpoint where there is an S breakpoint
 breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
 
+
+# CHECKS AND SAVE TO PACKAGE ----
+
 # check again
 breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
@@ -360,8 +367,6 @@ breakpoints_new %>% filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCA
 # check dimensions
 dim(breakpoints_new)
 dim(clinical_breakpoints)
-
-# SAVE TO PACKAGE ----
 
 clinical_breakpoints <- breakpoints_new
 clinical_breakpoints <- clinical_breakpoints %>% dataset_UTF8_to_ASCII()

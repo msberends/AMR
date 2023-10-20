@@ -57,7 +57,7 @@ expect_stdout(print(av_name("acic", language = NULL)))
 expect_equal(av_name("29113-8", language = NULL), "Abacavir")
 expect_equal(
   av_loinc("Abacavir"),
-  c("29113-8", "78772-1", "78773-9", "79134-3", "80118-3")
+  c("29113-8", "30273-7", "30287-7", "30303-2", "78772-1", "78773-9", "79134-3", "80118-3")
 )
 
 expect_true(av_url("ACI") %like% "whocc.no")
