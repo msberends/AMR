@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,14 +159,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.0.9003" id="amr-2109003">AMR 2.1.0.9003<a class="anchor" aria-label="anchor" href="#amr-2109003"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.0.9004" id="amr-2109004">AMR 2.1.0.9004<a class="anchor" aria-label="anchor" href="#amr-2109004"></a></h2>
 <ul><li>Fix for selecting first isolates using the phenotype-based method
 <ul><li>This included too many isolates when patients had altering antibiograms within the same bacterial species</li>
 <li>See for more info <a href="https://github.com/msberends/AMR/issues/122" class="external-link">our issue </a><a href="https://github.com/msberends/AMR/issues/122" class="external-link">#122</a>
 </li>
 </ul></li>
 <li>Added 1,366 LOINC codes to the <code>antibiotics</code> data set and updated to the latest version (LOINC v2.76)</li>
-<li>MICs can now be used in complex number calculations</li>
+<li>MICs can now be used in complex number calculations and allow scientific number format as input (e.g., <code>as.mic("1.28e-2")</code>)</li>
 <li>Fix rounding MICs on latest R beta (‘R-devel’)</li>
 <li>Removed unneeded note about the used language when option <code>AMR_locale</code> is set</li>
 <li>Fixed non-ASCII characters in documentation, according to CRAN maintainers</li>
