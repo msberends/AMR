@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,8 +159,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.0.9001" id="amr-2109001">AMR 2.1.0.9001<a class="anchor" aria-label="anchor" href="#amr-2109001"></a></h2>
-<ul><li>Fix rounding MICs on latest R beta (‘R-devel’)</li>
+<h2 class="pkg-version" data-toc-text="2.1.0.9002" id="amr-2109002">AMR 2.1.0.9002<a class="anchor" aria-label="anchor" href="#amr-2109002"></a></h2>
+<ul><li>Fix for selecting first isolates using the phenotype-based method
+<ul><li>This included too many isolates when patients had altering antibiograms within the same bacterial species</li>
+<li>See for more info <a href="https://github.com/msberends/AMR/issues/122" class="external-link">our issue </a><a href="https://github.com/msberends/AMR/issues/122" class="external-link">#122</a>
+</li>
+</ul></li>
+<li>Added 1,366 LOINC codes to the <code>antibiotics</code> data set and updated to the latest version (LOINC v2.76)</li>
+<li>MICs can now be used in complex number calculations</li>
+<li>Fix rounding MICs on latest R beta (‘R-devel’)</li>
+<li>Removed unneeded note about the used language when option <code>AMR_locale</code> is set</li>
+<li>Fixed non-ASCII characters in documentation, according to CRAN maintainers</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.1.0" id="amr-210">AMR 2.1.0<a class="anchor" aria-label="anchor" href="#amr-210"></a></h2><p class="text-muted">CRAN release: 2023-07-16</p>
@@ -364,7 +373,7 @@
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
 <li>Set scalar conditional expressions (<code>&amp;&amp;</code> and <code>||</code>) where possible to comply with the upcoming R 4.3</li>
 <li>An enormous lot of code cleaning, fixing some small bugs along the way</li>
-</ul><hr><p>This changelog only contains changes from AMR v2.0 and later. For prior versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our archive</a>.</p>
+</ul><hr><p>This changelog only contains changes from AMR v2.0 (January 2023) and later. For prior versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our archive</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

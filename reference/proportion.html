@@ -12,7 +12,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -276,10 +276,10 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
+    <p><strong>Remember that you should filter your data to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href="first_isolate.html">first_isolate()</a></code> to determine them in your data set with one of the four available algorithms.</p>
+<p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
 <p>Use <code>sir_confidence_interval()</code> to calculate the confidence interval, which relies on <code><a href="https://rdrr.io/r/stats/binom.test.html" class="external-link">binom.test()</a></code>, i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial <em>resistance</em>. Change the <code>side</code> argument to "left"/"min" or "right"/"max" to return a single value, and change the <code>ab_result</code> argument to e.g. <code>c("S", "I")</code> to test for antimicrobial <em>susceptibility</em>, see Examples.</p>
-<p><strong>Remember that you should filter your data to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href="first_isolate.html">first_isolate()</a></code> to determine them in your data set with one of the four available algorithms.</p>
-<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href="count.html">count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> argument).</em></p>
+<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href="count.html">count_*()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code><a href="count.html">count_susceptible()</a></code><code>/</code><code><a href="count.html">count_all()</a></code>. <em>Low counts can influence the outcome - the <code>proportion_*()</code> functions may camouflage this, since they only return the proportion (albeit dependent on the <code>minimum</code> argument).</em></p>
 <p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href="as.sir.html">sir</a></code> class (created with <code><a href="as.sir.html">as.sir()</a></code>) and calculates the proportions S, I, and R. It also supports grouped variables. The function <code>sir_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     </div>
     <div class="section level2">

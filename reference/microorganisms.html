@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,7 +175,7 @@
 <li><p><code>status</code> <br> Status of the taxon, either "accepted" or "synonym"</p></li>
 <li><p><code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code><br> Taxonomic rank of the microorganism</p></li>
 <li><p><code>rank</code><br> Text of the taxonomic rank of the microorganism, such as <code>"species"</code> or <code>"genus"</code></p></li>
-<li><p><code>ref</code><br> Author(s) and year of related scientific publication. This contains only the <em>first surname</em> and year of the <em>latest</em> authors, e.g. "Wallis <em>et al.</em> 2006 <em>emend.</em> Smith and Jones 2018" becomes "Smith <em>et al.</em>, 2018". This field is directly retrieved from the source specified in the column <code>source</code>. Moreover, accents were removed to comply with CRAN that only allows ASCII characters, e.g. "Váňová" becomes "Vanova".</p></li>
+<li><p><code>ref</code><br> Author(s) and year of related scientific publication. This contains only the <em>first surname</em> and year of the <em>latest</em> authors, e.g. "Wallis <em>et al.</em> 2006 <em>emend.</em> Smith and Jones 2018" becomes "Smith <em>et al.</em>, 2018". This field is directly retrieved from the source specified in the column <code>source</code>. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.</p></li>
 <li><p><code>lpsn</code><br> Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, <em>Acetobacter ascendens</em> has LPSN Record number 7864 and 11011. Only the first is available in the <code>microorganisms</code> data set.</p></li>
 <li><p><code>oxygen_tolerance</code> <br> Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see <em>Source</em>). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 73.4% of all ~37 000 bacteria in the data set contain an oxygen tolerance.</p></li>
 <li><p><code>lpsn_parent</code><br> LPSN identifier of the parent taxon</p></li>

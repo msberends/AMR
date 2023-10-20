@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -189,13 +189,13 @@
 <li><p><code>oral_units</code><br> Units of <code>oral_ddd</code></p></li>
 <li><p><code>iv_ddd</code><br> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 146 drugs</p></li>
 <li><p><code>iv_units</code><br> Units of <code>iv_ddd</code></p></li>
-<li><p><code>loinc</code><br> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug. Use <code><a href="ab_property.html">ab_loinc()</a></code> to retrieve them quickly, see <code><a href="ab_property.html">ab_property()</a></code>.</p></li>
+<li><p><code>loinc</code><br> All codes associated with the name of the antimicrobial drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use <code><a href="ab_property.html">ab_loinc()</a></code> to retrieve them quickly, see <code><a href="ab_property.html">ab_property()</a></code>.</p></li>
 </ul></div>
 
 <div class="section">
 <h3 id="for-the-antivirals-data-set-a-tibble-with-observations-and-variables-">For the antivirals data set: a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 120 observations and 11 variables:<a class="anchor" aria-label="anchor" href="#for-the-antivirals-data-set-a-tibble-with-observations-and-variables-"></a></h3>
 
-<ul><li><p><code>av</code><br> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. <em>This is a unique identifier.</em></p></li>
+<ul><li><p><code>av</code><br> Antiviral ID as used in this package (such as <code>ACI</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. <em>This is a unique identifier.</em> Combinations are codes that contain a <code>+</code> to indicate this, such as <code>ATA+COBI</code> for atazanavir/cobicistat.</p></li>
 <li><p><code>name</code><br> Official name as used by WHONET/EARS-Net or the WHO. <em>This is a unique identifier.</em></p></li>
 <li><p><code>atc</code><br> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br> Compound ID as found in PubChem. <em>This is a unique identifier.</em></p></li>
@@ -205,7 +205,7 @@
 <li><p><code>oral_units</code><br> Units of <code>oral_ddd</code></p></li>
 <li><p><code>iv_ddd</code><br> Defined Daily Dose (DDD), parenteral treatment</p></li>
 <li><p><code>iv_units</code><br> Units of <code>iv_ddd</code></p></li>
-<li><p><code>loinc</code><br> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug.</p></li>
+<li><p><code>loinc</code><br> All codes associated with the name of the antiviral drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use <code><a href="av_property.html">av_loinc()</a></code> to retrieve them quickly, see <code><a href="av_property.html">av_property()</a></code>.</p></li>
 </ul></div>
 
 <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 120 rows and 11 columns.</p>
@@ -214,7 +214,7 @@
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
     
 <ul><li><p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <a href="https://www.whocc.no/atc_ddd_index/" class="external-link">https://www.whocc.no/atc_ddd_index/</a></p></li>
-<li><p>Logical Observation Identifiers Names and Codes (LOINC), Version 2.73 (8 August, 2022). Accessed from <a href="https://loinc.org" class="external-link">https://loinc.org</a> on October 30th, 2022.</p></li>
+<li><p>Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Accessed from <a href="https://loinc.org" class="external-link">https://loinc.org</a> on October 19th, 2023.</p></li>
 <li><p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href="https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm" class="external-link">https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm</a></p></li>
 </ul></div>
     <div class="section level2">
