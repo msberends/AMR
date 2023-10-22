@@ -114,9 +114,6 @@ if (require("ggplot2")) {
 if (require("ggplot2")) {
   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
 }
-if (require("ggplot2")) {
-  autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
-}
 }
 \seealso{
 \code{\link[=as.sir]{as.sir()}}

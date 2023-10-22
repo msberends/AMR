@@ -1,4 +1,4 @@
-# AMR 2.1.0.9004
+# AMR 2.1.1
 
 * Fix for selecting first isolates using the phenotype-based method
   * This included too many isolates when patients had altering antibiograms within the same bacterial species

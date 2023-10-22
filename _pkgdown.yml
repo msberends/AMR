@@ -145,6 +145,12 @@ navbar:
       href: "https://github.com/msberends/AMR"
 
 reference:
+  - title: "Introduction to the package"
+    desc: >
+      Please find the introduction to (and some general information about) our package here.
+    contents:
+    - "`AMR`"
+    
   - title: "Preparing data: microorganisms"
     desc: >
       These functions are meant to get taxonomically valid properties of microorganisms from any input, but
@@ -229,7 +235,6 @@ reference:
       Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
       for more information about how to work with functions in this package.
     contents:
-    - "`AMR`"
     - "`example_isolates`"
     - "`microorganisms`"
     - "`microorganisms.codes`"
