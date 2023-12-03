@@ -2,10 +2,13 @@
 % Please edit documentation in R/plot.R
 \name{plot}
 \alias{plot}
+\alias{scale_x_mic}
+\alias{scale_y_mic}
+\alias{scale_colour_mic}
+\alias{scale_fill_mic}
 \alias{plot.mic}
 \alias{autoplot.mic}
 \alias{fortify.mic}
-\alias{scale_x_mic}
 \alias{plot.disk}
 \alias{autoplot.disk}
 \alias{fortify.disk}
@@ -14,6 +17,14 @@
 \alias{fortify.sir}
 \title{Plotting for Classes \code{sir}, \code{mic} and \code{disk}}
 \usage{
+scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
+
+scale_y_mic(keep_operators = "edges", mic_range = NULL, ...)
+
+scale_colour_mic(keep_operators = "edges", mic_range = NULL, ...)
+
+scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
+
 \method{plot}{mic}(
   x,
   mo = NULL,
@@ -47,16 +58,6 @@
 )
 
 \method{fortify}{mic}(object, ...)
-
-scale_x_mic(
-  keep_operators = "edges",
-  mic_range = NULL,
-  ...,
-  drop = FALSE,
-  guide = waiver(),
-  position = "bottom",
-  na.translate = TRUE
-)
 
 \method{plot}{disk}(
   x,
@@ -114,6 +115,12 @@ scale_x_mic(
 \method{fortify}{sir}(object, ...)
 }
 \arguments{
+\item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
+
+\item{mic_range}{a manual range to plot the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+
+\item{...}{arguments passed on to methods}
+
 \item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
 
 \item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
@@ -135,14 +142,6 @@ scale_x_mic(
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
 \item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
-
-\item{...}{arguments passed on to methods}
-
-\item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
-
-\item{mic_range}{a manual range to plot the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
-
-\item{drop, guide, position, na.translate}{arguments passed on to \code{\link[ggplot2:scale_discrete]{ggplot2::scale_x_discrete()}}}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
@@ -152,7 +151,7 @@ The \code{fortify()} functions return a \link{data.frame} as an extension for us
 \description{
 Functions to plot classes \code{sir}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
 
-Especially \code{\link[=scale_x_mic]{scale_x_mic()}} is a relevant wrapper to plot MIC values for \code{ggplot2}. It allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+Especially the \code{\link[=scale_*_mic]{scale_*_mic()}} functions are relevant wrappers to plot MIC values for \code{ggplot2}. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 }
 \details{
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
@@ -175,17 +174,6 @@ plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
 plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 
-\donttest{
-if (require("ggplot2")) {
-  autoplot(some_mic_values)
-}
-if (require("ggplot2")) {
-  autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
-}
-if (require("ggplot2")) {
-  autoplot(some_sir_values)
-}
-}
 
 # Plotting using scale_x_mic()
 \donttest{
@@ -211,6 +199,16 @@ if (require("ggplot2")) {
   mic_plot +
     scale_x_mic(mic_range = c(1, 128)) +
     labs(title = "with scale_x_mic() using a manual range")
+}
+
+if (require("ggplot2")) {
+  autoplot(some_mic_values)
+}
+if (require("ggplot2")) {
+  autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+}
+if (require("ggplot2")) {
+  autoplot(some_sir_values)
 }
 }
 }

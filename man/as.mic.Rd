@@ -4,16 +4,19 @@
 \name{as.mic}
 \alias{as.mic}
 \alias{mic}
-\alias{NA_mic_}
 \alias{is.mic}
+\alias{NA_mic_}
+\alias{rescale_mic}
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
 as.mic(x, na.rm = FALSE, keep_operators = "all")
 
+is.mic(x)
+
 NA_mic_
 
-is.mic(x)
+rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
 
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
@@ -23,6 +26,8 @@ is.mic(x)
 \item{na.rm}{a \link{logical} indicating whether missing values should be removed}
 
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
+
+\item{mic_range}{a manual range to plot the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
 \item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{FALSE}}
 
@@ -77,6 +82,8 @@ Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numer
 
 Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \code{mic} class.
 
+With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be rescaled to a defined range of MIC values. This can be useful to better compare MIC distributions.
+
 \code{NA_mic_} is a missing value of the new \code{mic} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
 \examples{
@@ -91,6 +98,9 @@ as.mic("<=0.002; S")
 fivenum(mic_data)
 quantile(mic_data)
 all(mic_data < 512)
+
+# rescale MICs using rescale_mic()
+rescale_mic(mic_data, mic_range = c(4, 16))
 
 # interpret MIC values
 as.sir(

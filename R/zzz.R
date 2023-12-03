@@ -98,14 +98,12 @@ if (pkg_is_available("cli")) {
   s3_register("pillar::pillar_shaft", "av")
   s3_register("pillar::pillar_shaft", "mo")
   s3_register("pillar::pillar_shaft", "sir")
-  s3_register("pillar::pillar_shaft", "rsi") # remove in a later version
   s3_register("pillar::pillar_shaft", "mic")
   s3_register("pillar::pillar_shaft", "disk")
   s3_register("pillar::type_sum", "ab")
   s3_register("pillar::type_sum", "av")
   s3_register("pillar::type_sum", "mo")
   s3_register("pillar::type_sum", "sir")
-  s3_register("pillar::type_sum", "rsi") # remove in a later version
   s3_register("pillar::type_sum", "mic")
   s3_register("pillar::type_sum", "disk")
   # Support for frequency tables from the cleaner package

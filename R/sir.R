@@ -237,12 +237,7 @@ is.sir <- function(x) {
   if (inherits(x, "data.frame")) {
     unname(vapply(FUN.VALUE = logical(1), x, is.sir))
   } else {
-    rsi <- inherits(x, "rsi")
-    sir <- inherits(x, "sir")
-    if (isTRUE(rsi) && message_not_thrown_before("is.sir-rsi")) {
-      deprecation_warning(extra_msg = "The 'rsi' class has been replaced with 'sir'. Transform your 'rsi' columns to 'sir' with `as.sir()`, e.g.:\n  your_data %>% mutate_if(is.rsi, as.sir)")
-    }
-    isTRUE(rsi) || isTRUE(sir)
+    isTRUE(inherits(x, "sir"))
   }
 }
 

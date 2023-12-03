@@ -83,10 +83,6 @@ random_disk <- function(size = NULL, mo = NULL, ab = NULL, ...) {
 #' @export
 random_sir <- function(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...) {
   meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
-  if ("prob_RSI" %in% names(list(...))) {
-    deprecation_warning("prob_RSI", "prob_SIR", is_function = FALSE)
-    prob_SIR <- list(...)$prob_RSI
-  }
   meet_criteria(prob_SIR, allow_class = c("numeric", "integer"), has_length = 3)
   if (is.null(size)) {
     size <- NROW(get_current_data(arg_name = "size", call = -3))

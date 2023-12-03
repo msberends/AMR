@@ -174,7 +174,7 @@ reference:
     - "`atc_online_property`"
     - "`add_custom_antimicrobials`"
 
-  - title: "Preparing data: antimicrobial resistance"
+  - title: "Preparing data"
     desc: >
       With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
       Use `as.sir()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines.
@@ -186,7 +186,7 @@ reference:
     - "`eucast_rules`"
     - "`custom_eucast_rules`"
 
-  - title: "Analysing data: antimicrobial resistance"
+  - title: "Analysing data"
     desc: >
       Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
       With `antibiogram()`, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination
@@ -202,13 +202,24 @@ reference:
     - "`key_antimicrobials`"
     - "`mdro`"
     - "`count`"
-    - "`plot`"
-    - "`ggplot_sir`"
     - "`bug_drug_combinations`"
     - "`antibiotic_class_selectors`"
     - "`mean_amr_distance`"
     - "`resistance_predict`"
     - "`guess_ab_col`"
+    
+  - title: "Plotting data"
+    desc: >
+      Use these functions for the plotting part. The `scale_*_mic()` functions extend the ggplot2 package to allow plotting of 
+      MIC values, even within a manually set range.
+      If using `plot()` (base R) or `autoplot()` (ggplot2) on MIC values or disk diffusion values, the user can
+      set the interpretation guideline to give the bars the right SIR colours.
+      The `ggplot_sir()` function is a short wrapper for users not much accustomed to ggplot2 yet.
+      The `ggplot_pca()` function is a specific function to plot so-called biplots for PCA (principal component analysis).
+    contents:
+    - "`plot`"
+    - "`ggplot_sir`"
+    - "`ggplot_pca`"
     
   - title: "Other: AMR-specific options"
     desc: >
@@ -257,7 +268,6 @@ reference:
     - "`age`"
     - "`availability`"
     - "`get_AMR_locale`"
-    - "`ggplot_pca`"
     - "`italicise_taxonomy`"
     - "`join`"
     - "`like`"
@@ -273,10 +283,10 @@ reference:
     - "`kurtosis`"
     - "`skewness`"
 
-  - title: "Other: deprecated functions"
-    desc: >
-      These functions are deprecated, meaning that they will still
-      work but show a warning with every use and will be removed
-      in a future version.
-    contents:
-    - "`AMR-deprecated`"
+  # - title: "Other: deprecated functions"
+  #   desc: >
+  #     These functions are deprecated, meaning that they will still
+  #     work but show a warning with every use and will be removed
+  #     in a future version.
+  #   contents:
+  #   - "`AMR-deprecated`"

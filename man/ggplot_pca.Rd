@@ -130,16 +130,18 @@ if (require("dplyr")) {
   summary(pca_result)
 
   # old base R plotting method:
-  biplot(pca_result)
+  biplot(pca_result, main = "Base R biplot")
 
   # new ggplot2 plotting method using this package:
   if (require("ggplot2")) {
-    ggplot_pca(pca_result)
-
+    ggplot_pca(pca_result) +
+      labs(title = "ggplot2 biplot")
+  }
+  if (require("ggplot2")) {
     # still extendible with any ggplot2 function
     ggplot_pca(pca_result) +
       scale_colour_viridis_d() +
-      labs(title = "Title here")
+      labs(title = "ggplot2 biplot")
   }
 }
 }

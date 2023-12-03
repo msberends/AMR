@@ -1,4 +1,4 @@
-# AMR 2.1.1.9001
+# AMR 2.1.1.9002
 
 ## New
 * Function `scale_x_mic()`, an advanced function to use in ggplot, to allow plotting of MIC values on the x axis. It allow for manual range definition and plotting missing intermediate log2 levels.

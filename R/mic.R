@@ -29,7 +29,7 @@
 
 # these are allowed MIC values and will become [factor] levels
 operators <- c("<", "<=", "", ">=", ">")
-valid_mic_levels <- c(
+VALID_MIC_LEVELS <- c(
   c(t(vapply(
     FUN.VALUE = character(6), operators,
     function(x) paste0(x, "0.000", c(1:4, 6, 8))
@@ -121,6 +121,8 @@ valid_mic_levels <- c(
 #' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
 #'
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
+#' 
+#' With [rescale_mic()], existing MIC ranges can be rescaled to a defined range of MIC values. This can be useful to better compare MIC distributions.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
 #' @export
@@ -137,6 +139,9 @@ valid_mic_levels <- c(
 #' fivenum(mic_data)
 #' quantile(mic_data)
 #' all(mic_data < 512)
+#' 
+#' # rescale MICs using rescale_mic()
+#' rescale_mic(mic_data, mic_range = c(4, 16))
 #'
 #' # interpret MIC values
 #' as.sir(
@@ -231,7 +236,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
     x[x.bak != "" & x == ""] <- "invalid"
 
     na_before <- x[is.na(x) | x == ""] %pm>% length()
-    x[!x %in% valid_mic_levels] <- NA
+    x[!x %in% VALID_MIC_LEVELS] <- NA
     na_after <- x[is.na(x) | x == ""] %pm>% length()
 
     if (na_before != na_after) {
@@ -261,34 +266,78 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
       x[!x %in% keep] <- gsub("[>=<]", "", x[!x %in% keep])
     }
 
-    set_clean_class(factor(x, levels = valid_mic_levels, ordered = TRUE),
+    set_clean_class(factor(x, levels = VALID_MIC_LEVELS, ordered = TRUE),
       new_class = c("mic", "ordered", "factor")
     )
   }
 }
 
-all_valid_mics <- function(x) {
-  if (!inherits(x, c("mic", "character", "factor", "numeric", "integer"))) {
-    return(FALSE)
-  }
-  x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
-    error = function(e) NA
-  )
-  !any(is.na(x_mic)) && !all(is.na(x))
+#' @rdname as.mic
+#' @export
+is.mic <- function(x) {
+  inherits(x, "mic")
 }
 
 #' @rdname as.mic
 #' @details `NA_mic_` is a missing value of the new `mic` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @format NULL
 #' @export
-NA_mic_ <- set_clean_class(factor(NA, levels = valid_mic_levels, ordered = TRUE),
+NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE),
   new_class = c("mic", "ordered", "factor")
 )
 
 #' @rdname as.mic
+#' @param mic_range a manual range to plot the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
-is.mic <- function(x) {
-  inherits(x, "mic")
+rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
+  stop_ifnot(all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
+             "Values in `mic_range` must be valid MIC values. Unvalid: ", vector_and(mic_range[mic_range %in% c(levels(as.mic(1)), NA)]))
+  x <- as.mic(x)
+  if (is.null(mic_range)) {
+    mic_range <- c(NA, NA)
+  }
+  mic_range <- as.mic(mic_range)
+  
+  min_mic <- mic_range[1]
+  max_mic <- mic_range[2]
+  if (!is.na(min_mic)) {
+    x[x < min_mic] <- min_mic
+  }
+  if (!is.na(max_mic)) {
+    x[x > max_mic] <- max_mic
+  }
+  
+  x <- as.mic(x, keep_operators = ifelse(keep_operators == "edges", "none", keep_operators))
+  
+  if (isTRUE(as.mic)) {
+    if (keep_operators == "edges") {
+      x[x == min(x, na.rm = TRUE)] <- paste0("<=", x[x == min(x, na.rm = TRUE)])
+      x[x == max(x, na.rm = TRUE)] <- paste0(">=", x[x == max(x, na.rm = TRUE)])
+    }
+    return(x)
+  }
+  
+  # create a manual factor with levels only within desired range
+  expanded <- range_as_table(x,
+                                 expand = TRUE,
+                                 keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
+                                 mic_range = mic_range)
+  if (keep_operators == "edges") {
+    names(expanded)[1] <- paste0("<=", names(expanded)[1])
+    names(expanded)[length(expanded)] <- paste0(">=", names(expanded)[length(expanded)])
+  }
+  # MICs contain all MIC levels, so strip this to only existing levels and their intermediate values
+  out <- factor(names(expanded),
+                levels = names(expanded),
+                ordered = TRUE)
+  # and only keep the ones in the data
+  if (keep_operators == "edges") {
+    out <- out[match(x, as.double(as.mic(out, keep_operators = "all")))]  
+  } else {
+    out <- out[match(x, out)]  
+  }
+  out
 }
 
 #' @method as.double mic
@@ -317,6 +366,16 @@ droplevels.mic <- function(x, as.mic = FALSE, ...) {
   x
 }
 
+all_valid_mics <- function(x) {
+  if (!inherits(x, c("mic", "character", "factor", "numeric", "integer"))) {
+    return(FALSE)
+  }
+  x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
+                    error = function(e) NA
+  )
+  !any(is.na(x_mic)) && !all(is.na(x))
+}
+
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.mic <- function(x, ...) {
   crude_numbers <- as.double(x)
@@ -339,7 +398,7 @@ type_sum.mic <- function(x, ...) {
 #' @noRd
 print.mic <- function(x, ...) {
   cat("Class 'mic'",
-    ifelse(length(levels(x)) < length(valid_mic_levels), font_red(" with dropped levels"), ""),
+    ifelse(length(levels(x)) < length(VALID_MIC_LEVELS), font_red(" with dropped levels"), ""),
     "\n",
     sep = ""
   )

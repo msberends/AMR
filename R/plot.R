@@ -32,7 +32,7 @@
 #' @description
 #' Functions to plot classes `sir`, `mic` and `disk`, with support for base \R and `ggplot2`.
 #' 
-#' Especially [scale_x_mic()] is a relevant wrapper to plot MIC values for `ggplot2`. It allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+#' Especially the [scale_*_mic()] functions are relevant wrappers to plot MIC values for `ggplot2`. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 #' @param x,object values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()])
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
@@ -68,8 +68,34 @@
 #' plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
 #' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 #' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
-#'
+#' 
+#' 
+#' # Plotting using scale_x_mic()
 #' \donttest{
+#' if (require("ggplot2")) {
+#'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.125, "<=4", 4, 8, 32, ">=32")),
+#'                                 counts = c(1, 1, 2, 2, 3, 3)),
+#'                      aes(mics, counts)) +
+#'     geom_col()
+#'   mic_plot +
+#'     labs(title = "without scale_x_mic()")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic() +
+#'     labs(title = "with scale_x_mic()")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic(keep_operators = "all") +
+#'     labs(title = "with scale_x_mic() keeping all operators")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic(mic_range = c(1, 128)) +
+#'     labs(title = "with scale_x_mic() using a manual range")
+#' }
+#' 
 #' if (require("ggplot2")) {
 #'   autoplot(some_mic_values)
 #' }
@@ -81,6 +107,54 @@
 #' }
 #' }
 NULL
+
+#' @export
+#' @inheritParams as.mic
+#' @rdname plot
+scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  stop_ifnot_installed("ggplot2")
+  scale <- ggplot2::scale_x_discrete(...)
+  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
+    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+  }
+  scale
+}
+
+#' @export
+#' @inheritParams as.mic
+#' @rdname plot
+scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  stop_ifnot_installed("ggplot2")
+  scale <- ggplot2::scale_y_discrete(...)
+  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
+    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+  }
+  scale
+}
+
+#' @export
+#' @inheritParams as.mic
+#' @rdname plot
+scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  stop_ifnot_installed("ggplot2")
+  scale <- ggplot2::scale_colour_discrete(...)
+  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
+    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+  }
+  scale
+}
+
+#' @export
+#' @inheritParams as.mic
+#' @rdname plot
+scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  stop_ifnot_installed("ggplot2")
+  scale <- ggplot2::scale_fill_discrete(...)
+  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
+    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+  }
+  scale
+}
 
 #' @method plot mic
 #' @importFrom graphics barplot axis mtext legend
@@ -105,10 +179,6 @@ plot.mic <- function(x,
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -118,8 +188,7 @@ plot.mic <- function(x,
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
-  x <- plot_prepare_table(x, expand = expand)
-
+  x <- range_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -195,10 +264,6 @@ barplot.mic <- function(height,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -241,10 +306,6 @@ autoplot.mic <- function(object,
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -256,7 +317,7 @@ autoplot.mic <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
-  x <- plot_prepare_table(object, expand = expand)
+  x <- range_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -319,93 +380,11 @@ autoplot.mic <- function(object,
 # will be exported using s3_register() in R/zzz.R
 fortify.mic <- function(object, ...) {
   stats::setNames(
-    as.data.frame(plot_prepare_table(object, expand = FALSE)),
+    as.data.frame(range_as_table(object, expand = FALSE)),
     c("x", "y")
   )
 }
 
-#' @export
-#' @inheritParams as.mic
-#' @param mic_range a manual range to plot the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
-#' @param drop,guide,position,na.translate arguments passed on to [ggplot2::scale_x_discrete()]
-#' @rdname plot
-#' @examples
-#' 
-#' # Plotting using scale_x_mic()
-#' \donttest{
-#' if (require("ggplot2")) {
-#'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.125, "<=4", 4, 8, 32, ">=32")),
-#'                                 counts = c(1, 1, 2, 2, 3, 3)),
-#'                      aes(mics, counts)) +
-#'     geom_col()
-#'   mic_plot +
-#'     labs(title = "without scale_x_mic()")
-#' }
-#' if (require("ggplot2")) {
-#'   mic_plot +
-#'     scale_x_mic() +
-#'     labs(title = "with scale_x_mic()")
-#' }
-#' if (require("ggplot2")) {
-#'   mic_plot +
-#'     scale_x_mic(keep_operators = "all") +
-#'     labs(title = "with scale_x_mic() keeping all operators")
-#' }
-#' if (require("ggplot2")) {
-#'   mic_plot +
-#'     scale_x_mic(mic_range = c(1, 128)) +
-#'     labs(title = "with scale_x_mic() using a manual range")
-#' }
-#' }
-scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ..., drop = FALSE, guide = waiver(), position = "bottom", na.translate = TRUE) {
-  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
-  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
-  stop_ifnot(all(mic_range %in% c(levels(as.mic(1)), NA)),
-             "Values in `mic_range` must be valid MIC values")
-  stop_ifnot_installed("ggplot2")
-  
-  ggplot2::ggproto(NULL, ggplot2::ScaleDiscretePosition,
-                   aesthetics = c("x", "xmin", "xmax", "xend"), 
-                   na.translate = na.translate,
-                   drop = drop,
-                   guide = guide,
-                   position = position,
-                   transform = function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-                     if (!is.null(mic_rng)) {
-                       min_mic <- mic_rng[1]
-                       max_mic <- mic_rng[2]
-                       if (!is.na(min_mic)) {
-                         x[x < as.mic(min_mic)] <- as.mic(min_mic)
-                       }
-                       if (!is.na(max_mic)) {
-                         x[x > as.mic(max_mic)] <- as.mic(max_mic)
-                       }
-                     }
-                     # transform MICs to only keep required operators
-                     x <- as.mic(x, keep_operators = ifelse(keep_ops == "edges", "none", keep_ops))
-                     # get range betwen min and max of MICs
-                     expanded <- plot_prepare_table(x,
-                                                    expand = TRUE,
-                                                    keep_operators = ifelse(keep_ops == "edges", "none", keep_ops),
-                                                    mic_range = mic_rng)
-                     if (keep_ops == "edges") {
-                       names(expanded)[1] <- paste0("<=", names(expanded)[1])
-                       names(expanded)[length(expanded)] <- paste0(">=", names(expanded)[length(expanded)])
-                     }
-                     # MICs contain all MIC levels, so strip this to only existing levels and their intermediate values
-                     out <- factor(names(expanded),
-                                   levels = names(expanded),
-                                   ordered = TRUE)
-                     # and only keep the ones in the data
-                     if (keep_ops == "edges") {
-                       out <- out[match(x, as.double(as.mic(out, keep_operators = "all")))]  
-                     } else {
-                       out <- out[match(x, out)]  
-                     }
-                     out
-                   },
-                   ...)
-}
 
 #' @method plot disk
 #' @export
@@ -430,10 +409,6 @@ plot.disk <- function(x,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -443,8 +418,7 @@ plot.disk <- function(x,
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
-  x <- plot_prepare_table(x, expand = expand)
-
+  x <- range_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -520,10 +494,6 @@ barplot.disk <- function(height,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -566,10 +536,6 @@ autoplot.disk <- function(object,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -581,7 +547,7 @@ autoplot.disk <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
-  x <- plot_prepare_table(object, expand = expand)
+  x <- range_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -645,7 +611,7 @@ autoplot.disk <- function(object,
 # will be exported using s3_register() in R/zzz.R
 fortify.disk <- function(object, ...) {
   stats::setNames(
-    as.data.frame(plot_prepare_table(object, expand = FALSE)),
+    as.data.frame(range_as_table(object, expand = FALSE)),
     c("x", "y")
   )
 }
@@ -720,10 +686,6 @@ barplot.sir <- function(height,
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
-  if ("colours_RSI" %in% names(list(...))) {
-    deprecation_warning(extra_msg = "The 'colours_RSI' argument has been replaced with 'colours_SIR'.")
-    colours_SIR <- list(...)$colours_RSI
-  }
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -799,9 +761,8 @@ fortify.sir <- function(object, ...) {
   )
 }
 
-plot_prepare_table <- function(x, expand, keep_operators = "all", mic_range = NULL) {
+range_as_table <- function(x, expand, keep_operators = "all", mic_range = NULL) {
   x <- x[!is.na(x)]
-  stop_if(length(x) == 0, "no observations to plot", call = FALSE)
   if (is.mic(x)) {
     x <- as.mic(x, keep_operators = keep_operators)
     if (expand == TRUE) {
@@ -847,6 +808,15 @@ plot_prepare_table <- function(x, expand, keep_operators = "all", mic_range = NU
   as.table(x)
 }
 
+ggplot2_get_from_dots <- function(arg, default, ...) {
+  dots <- list(...)
+  if (!arg %in% names(dots)) {
+    default
+  } else {
+    dots[[arg]]
+  }
+}
+
 plot_name_of_I <- function(guideline) {
   if (guideline %unlike% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
     # interpretation since 2019
@@ -858,6 +828,8 @@ plot_name_of_I <- function(guideline) {
 }
 
 plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, fn, language, method, breakpoint_type, include_PKPD, ...) {
+  stop_if(length(x) == 0, "no observations to plot", call = FALSE)
+  
   guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
   
   # store previous interpretations to backup
