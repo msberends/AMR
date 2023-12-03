@@ -64,10 +64,10 @@ valid_mic_levels <- c(
     FUN.VALUE = character(45), operators,
     function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])
   ))),
-  c(t(vapply(
-    FUN.VALUE = character(17), operators,
-    function(x) paste0(x, sort(c(2^c(7:11), 192, 80 * c(2:12))))
-  )))
+  unique(c(t(vapply(
+    FUN.VALUE = character(22), operators,
+    function(x) paste0(x, sort(c(2^c(7:12), 192 * c(1:5), 80 * c(2:12))))
+  ))))
 )
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
@@ -76,6 +76,7 @@ valid_mic_levels <- c(
 #' @rdname as.mic
 #' @param x a [character] or [numeric] vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
+#' @param keep_operators a [character] specifying how to handle operators (such as `>` and `<=`) in the input. Accepts one of three values: `"all"` (or `TRUE`) to keep all operators, `"none"` (or `FALSE`) to remove all operators, or `"edges"` to keep operators only at both ends of the range.
 #' @param ... arguments passed on to methods
 #' @details To interpret MIC values as SIR values, use [as.sir()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
@@ -161,15 +162,24 @@ valid_mic_levels <- c(
 #' if (require("ggplot2")) {
 #'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
 #' }
-as.mic <- function(x, na.rm = FALSE) {
+as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
-
-  if (is.mic(x)) {
+  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  if (isTRUE(keep_operators)) {
+    keep_operators <- "all"
+  } else if (isFALSE(keep_operators)) {
+    keep_operators <- "none"
+  }
+  
+  if (is.mic(x) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
     x
   } else {
+    x.bak <- NULL
     if (is.numeric(x)) {
-      x <- format(x, scientific = FALSE)
+      x.bak <- format(x, scientific = FALSE)
+      # MICs never need more than 4 decimals, so:
+      x <- format(round(x, 4), scientific = FALSE)
     } else {
       x <- as.character(unlist(x))
     }
@@ -177,7 +187,9 @@ as.mic <- function(x, na.rm = FALSE) {
       x <- x[!is.na(x)]
     }
     x[trimws2(x) == ""] <- NA
-    x.bak <- x
+    if (is.null(x.bak)) {
+      x.bak <- x
+    }
 
     # comma to period
     x <- gsub(",", ".", x, fixed = TRUE)
@@ -237,6 +249,16 @@ as.mic <- function(x, na.rm = FALSE) {
         list_missing,
         call = FALSE
       )
+    }
+    
+    if (keep_operators == "none" && !all(is.na(x))) {
+      x <- gsub("[>=<]", "", x)
+    } else if (keep_operators == "edges" && !all(is.na(x))) {
+      dbls <- as.double(gsub("[>=<]", "", x))
+      x[dbls == min(dbls, na.rm = TRUE)] <- paste0("<=", min(dbls, na.rm = TRUE))
+      x[dbls == max(dbls, na.rm = TRUE)] <- paste0(">=", max(dbls, na.rm = TRUE))
+      keep <- x[dbls == max(dbls, na.rm = TRUE) | dbls == min(dbls, na.rm = TRUE)]
+      x[!x %in% keep] <- gsub("[>=<]", "", x[!x %in% keep])
     }
 
     set_clean_class(factor(x, levels = valid_mic_levels, ordered = TRUE),
@@ -302,8 +324,8 @@ pillar_shaft.mic <- function(x, ...) {
   operators[!is.na(operators) & operators != ""] <- font_silver(operators[!is.na(operators) & operators != ""], collapse = NULL)
   out <- trimws(paste0(operators, trimws(format(crude_numbers))))
   out[is.na(x)] <- font_na(NA)
-  # maketrailing zeroes almost invisible
-  out[out %like% "[.]"] <- gsub("([.]?0+)$", font_white("\\1"), out[out %like% "[.]"], perl = TRUE)
+  # make trailing zeroes less visible
+  out[out %like% "[.]"] <- gsub("([.]?0+)$", font_silver("\\1"), out[out %like% "[.]"], perl = TRUE)
   create_pillar_column(out, align = "right", width = max(nchar(font_stripstyle(out))))
 }
 

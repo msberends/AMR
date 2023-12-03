@@ -862,12 +862,20 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
       object <- tolower(object)
       is_in <- tolower(is_in)
     }
-    stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name, "` ",
+    is_in.bak <- is_in
+    if ("logical" %in% allow_class) {
+      is_in <- is_in[!is_in %in% c("TRUE", "FALSE")]
+    }
+    or_values <- vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class)))
+    if ("logical" %in% allow_class) {
+      or_values <- paste0(or_values, ", or TRUE or FALSE")
+    }
+    stop_ifnot(all(object %in% is_in.bak, na.rm = TRUE), "argument `", obj_name, "` ",
       ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
         "must be either ",
         "must only contain values "
       ),
-      vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class))),
+      or_values,
       ifelse(allow_NA == TRUE, ", or NA", ""),
       call = call_depth
     )
@@ -1551,7 +1559,7 @@ readRDS_AMR <- function(file, refhook = NULL) {
 match <- function(x, table, ...) {
   if (!is.null(AMR_env$chmatch) && inherits(x, "character") && inherits(table, "character")) {
     # data.table::chmatch() is much faster than base::match() for character
-    AMR_env$chmatch(x, table, ...)
+    tryCatch(AMR_env$chmatch(x, table, ...), error = function(e) base::match(x, table, ...))
   } else {
     base::match(x, table, ...)
   }
@@ -1559,7 +1567,7 @@ match <- function(x, table, ...) {
 `%in%` <- function(x, table) {
   if (!is.null(AMR_env$chin) && inherits(x, "character") && inherits(table, "character")) {
     # data.table::`%chin%`() is much faster than base::`%in%`() for character
-    AMR_env$chin(x, table)
+    tryCatch(AMR_env$chin(x, table), error = function(e) base::`%in%`(x, table))
   } else {
     base::`%in%`(x, table)
   }

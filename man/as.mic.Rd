@@ -9,7 +9,7 @@
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
-as.mic(x, na.rm = FALSE)
+as.mic(x, na.rm = FALSE, keep_operators = "all")
 
 NA_mic_
 
@@ -21,6 +21,8 @@ is.mic(x)
 \item{x}{a \link{character} or \link{numeric} vector}
 
 \item{na.rm}{a \link{logical} indicating whether missing values should be removed}
+
+\item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
 \item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{FALSE}}
 

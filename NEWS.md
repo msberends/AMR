@@ -1,3 +1,14 @@
+# AMR 2.1.1.9001
+
+## New
+* Function `scale_x_mic()`, an advanced function to use in ggplot, to allow plotting of MIC values on the x axis. It allow for manual range definition and plotting missing intermediate log2 levels.
+
+### Changed
+* For MICs:
+  * Added 4096 and 5 powers of 192 as valid levels (192, 384, 576, 768, 960)
+  * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`.
+
+
 # AMR 2.1.1
 
 * Fix for selecting first isolates using the phenotype-based method

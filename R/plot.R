@@ -29,8 +29,10 @@
 
 #' Plotting for Classes `sir`, `mic` and `disk`
 #'
+#' @description
 #' Functions to plot classes `sir`, `mic` and `disk`, with support for base \R and `ggplot2`.
-
+#' 
+#' Especially [scale_x_mic()] is a relevant wrapper to plot MIC values for `ggplot2`. It allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 #' @param x,object values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()])
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
@@ -320,6 +322,89 @@ fortify.mic <- function(object, ...) {
     as.data.frame(plot_prepare_table(object, expand = FALSE)),
     c("x", "y")
   )
+}
+
+#' @export
+#' @inheritParams as.mic
+#' @param mic_range a manual range to plot the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
+#' @param drop,guide,position,na.translate arguments passed on to [ggplot2::scale_x_discrete()]
+#' @rdname plot
+#' @examples
+#' 
+#' # Plotting using scale_x_mic()
+#' \donttest{
+#' if (require("ggplot2")) {
+#'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.125, "<=4", 4, 8, 32, ">=32")),
+#'                                 counts = c(1, 1, 2, 2, 3, 3)),
+#'                      aes(mics, counts)) +
+#'     geom_col()
+#'   mic_plot +
+#'     labs(title = "without scale_x_mic()")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic() +
+#'     labs(title = "with scale_x_mic()")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic(keep_operators = "all") +
+#'     labs(title = "with scale_x_mic() keeping all operators")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic(mic_range = c(1, 128)) +
+#'     labs(title = "with scale_x_mic() using a manual range")
+#' }
+#' }
+scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ..., drop = FALSE, guide = waiver(), position = "bottom", na.translate = TRUE) {
+  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
+  stop_ifnot(all(mic_range %in% c(levels(as.mic(1)), NA)),
+             "Values in `mic_range` must be valid MIC values")
+  stop_ifnot_installed("ggplot2")
+  
+  ggplot2::ggproto(NULL, ggplot2::ScaleDiscretePosition,
+                   aesthetics = c("x", "xmin", "xmax", "xend"), 
+                   na.translate = na.translate,
+                   drop = drop,
+                   guide = guide,
+                   position = position,
+                   transform = function(x, keep_ops = keep_operators, mic_rng = mic_range) {
+                     if (!is.null(mic_rng)) {
+                       min_mic <- mic_rng[1]
+                       max_mic <- mic_rng[2]
+                       if (!is.na(min_mic)) {
+                         x[x < as.mic(min_mic)] <- as.mic(min_mic)
+                       }
+                       if (!is.na(max_mic)) {
+                         x[x > as.mic(max_mic)] <- as.mic(max_mic)
+                       }
+                     }
+                     # transform MICs to only keep required operators
+                     x <- as.mic(x, keep_operators = ifelse(keep_ops == "edges", "none", keep_ops))
+                     # get range betwen min and max of MICs
+                     expanded <- plot_prepare_table(x,
+                                                    expand = TRUE,
+                                                    keep_operators = ifelse(keep_ops == "edges", "none", keep_ops),
+                                                    mic_range = mic_rng)
+                     if (keep_ops == "edges") {
+                       names(expanded)[1] <- paste0("<=", names(expanded)[1])
+                       names(expanded)[length(expanded)] <- paste0(">=", names(expanded)[length(expanded)])
+                     }
+                     # MICs contain all MIC levels, so strip this to only existing levels and their intermediate values
+                     out <- factor(names(expanded),
+                                   levels = names(expanded),
+                                   ordered = TRUE)
+                     # and only keep the ones in the data
+                     if (keep_ops == "edges") {
+                       out <- out[match(x, as.double(as.mic(out, keep_operators = "all")))]  
+                     } else {
+                       out <- out[match(x, out)]  
+                     }
+                     out
+                   },
+                   ...)
 }
 
 #' @method plot disk
@@ -714,15 +799,26 @@ fortify.sir <- function(object, ...) {
   )
 }
 
-plot_prepare_table <- function(x, expand) {
+plot_prepare_table <- function(x, expand, keep_operators = "all", mic_range = NULL) {
   x <- x[!is.na(x)]
   stop_if(length(x) == 0, "no observations to plot", call = FALSE)
   if (is.mic(x)) {
+    x <- as.mic(x, keep_operators = keep_operators)
     if (expand == TRUE) {
       # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
       valid_lvls <- levels(x)
-      extra_range <- max(x) / 2
-      while (min(extra_range) / 2 > min(x)) {
+      extra_range <- max(x)
+      min_range <- min(x)
+      if (!is.null(mic_range)) {
+        if (!is.na(mic_range[2])) {
+          extra_range <- as.mic(mic_range[2]) * 2
+        }
+        if (!is.na(mic_range[1])) {
+          min_range <- as.mic(mic_range[1])
+        }
+      }
+      extra_range <- extra_range / 2
+      while (min(extra_range) / 2 > min_range) {
         extra_range <- c(min(extra_range) / 2, extra_range)
       }
       nms <- extra_range
