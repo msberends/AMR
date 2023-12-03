@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -241,7 +241,7 @@
         </dt>
         <dd>Add Custom Antimicrobials</dd>
       </dl></div><div class="section level2">
-      <h2 id="preparing-data-antimicrobial-resistance">Preparing data: antimicrobial resistance<a class="anchor" aria-label="anchor" href="#preparing-data-antimicrobial-resistance"></a></h2>
+      <h2 id="preparing-data">Preparing data<a class="anchor" aria-label="anchor" href="#preparing-data"></a></h2>
       
       <p class="section-desc"></p><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST rules</a> with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</p>
 
@@ -258,7 +258,7 @@
         <dd>Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data</dd>
       </dl><dl><dt>
           
-          <code><a href="as.mic.html">as.mic()</a></code> <code><a href="as.mic.html">NA_mic_</a></code> <code><a href="as.mic.html">is.mic()</a></code> <code><a href="as.mic.html">droplevels(<i>&lt;mic&gt;</i>)</a></code> 
+          <code><a href="as.mic.html">as.mic()</a></code> <code><a href="as.mic.html">is.mic()</a></code> <code><a href="as.mic.html">NA_mic_</a></code> <code><a href="as.mic.html">rescale_mic()</a></code> <code><a href="as.mic.html">droplevels(<i>&lt;mic&gt;</i>)</a></code> 
         </dt>
         <dd>Transform Input to Minimum Inhibitory Concentrations (MIC)</dd>
       </dl><dl><dt>
@@ -277,7 +277,7 @@
         </dt>
         <dd>Define Custom EUCAST Rules</dd>
       </dl></div><div class="section level2">
-      <h2 id="analysing-data-antimicrobial-resistance">Analysing data: antimicrobial resistance<a class="anchor" aria-label="anchor" href="#analysing-data-antimicrobial-resistance"></a></h2>
+      <h2 id="analysing-data">Analysing data<a class="anchor" aria-label="anchor" href="#analysing-data"></a></h2>
       
       <p class="section-desc"></p><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. With <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination antibiogram(WISCA). This function also comes with support for R Markdown and Quarto. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/antibiotic_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p>
 
@@ -324,16 +324,6 @@
         <dd>Determine Multidrug-Resistant Organisms (MDRO)</dd>
       </dl><dl><dt>
           
-          <code><a href="plot.html">plot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">scale_x_mic()</a></code> <code><a href="plot.html">plot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;sir&gt;</i>)</a></code> 
-        </dt>
-        <dd>Plotting for Classes <code>sir</code>, <code>mic</code> and <code>disk</code></dd>
-      </dl><dl><dt>
-          
-          <code><a href="ggplot_sir.html">ggplot_sir()</a></code> <code><a href="ggplot_sir.html">geom_sir()</a></code> <code><a href="ggplot_sir.html">facet_sir()</a></code> <code><a href="ggplot_sir.html">scale_y_percent()</a></code> <code><a href="ggplot_sir.html">scale_sir_colours()</a></code> <code><a href="ggplot_sir.html">theme_sir()</a></code> <code><a href="ggplot_sir.html">labels_sir_count()</a></code> 
-        </dt>
-        <dd>AMR Plots with <code>ggplot2</code></dd>
-      </dl><dl><dt>
-          
           <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code> <code><a href="bug_drug_combinations.html">format(<i>&lt;bug_drug_combinations&gt;</i>)</a></code> 
         </dt>
         <dd>Determine Bug-Drug Combinations</dd>
@@ -357,6 +347,32 @@
           <code><a href="guess_ab_col.html">guess_ab_col()</a></code> 
         </dt>
         <dd>Guess Antibiotic Column</dd>
+      </dl></div><div class="section level2">
+      <h2 id="plotting-data">Plotting data<a class="anchor" aria-label="anchor" href="#plotting-data"></a></h2>
+      
+      <p class="section-desc"></p><p>Use these functions for the plotting part. The <code>scale_*_mic()</code> functions extend the ggplot2 package to allow plotting of MIC values, even within a manually set range. If using <code><a href="../reference/plot.html">plot()</a></code> (base R) or <code>autoplot()</code> (ggplot2) on MIC values or disk diffusion values, the user can set the interpretation guideline to give the bars the right SIR colours. The <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code> function is a short wrapper for users not much accustomed to ggplot2 yet. The <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> function is a specific function to plot so-called biplots for PCA (principal component analysis).</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="plot.html">scale_x_mic()</a></code> <code><a href="plot.html">scale_y_mic()</a></code> <code><a href="plot.html">scale_colour_mic()</a></code> <code><a href="plot.html">scale_fill_mic()</a></code> <code><a href="plot.html">plot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;sir&gt;</i>)</a></code> 
+        </dt>
+        <dd>Plotting for Classes <code>sir</code>, <code>mic</code> and <code>disk</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="ggplot_sir.html">ggplot_sir()</a></code> <code><a href="ggplot_sir.html">geom_sir()</a></code> <code><a href="ggplot_sir.html">facet_sir()</a></code> <code><a href="ggplot_sir.html">scale_y_percent()</a></code> <code><a href="ggplot_sir.html">scale_sir_colours()</a></code> <code><a href="ggplot_sir.html">theme_sir()</a></code> <code><a href="ggplot_sir.html">labels_sir_count()</a></code> 
+        </dt>
+        <dd>AMR Plots with <code>ggplot2</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="ggplot_pca.html">ggplot_pca()</a></code> 
+        </dt>
+        <dd>PCA Biplot with <code>ggplot2</code></dd>
       </dl></div><div class="section level2">
       <h2 id="other-amr-specific-options">Other: AMR-specific options<a class="anchor" aria-label="anchor" href="#other-amr-specific-options"></a></h2>
       
@@ -498,11 +514,6 @@
         <dd>Translate Strings from the AMR Package</dd>
       </dl><dl><dt>
           
-          <code><a href="ggplot_pca.html">ggplot_pca()</a></code> 
-        </dt>
-        <dd>PCA Biplot with <code>ggplot2</code></dd>
-      </dl><dl><dt>
-          
           <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code> <code><a href="italicise_taxonomy.html">italicize_taxonomy()</a></code> 
         </dt>
         <dd>Italicise Taxonomic Families, Genera, Species, Subspecies</dd>
@@ -557,22 +568,6 @@
           <code><a href="skewness.html">skewness()</a></code> 
         </dt>
         <dd>Skewness of the Sample</dd>
-      </dl></div><div class="section level2">
-      <h2 id="other-deprecated-functions">Other: deprecated functions<a class="anchor" aria-label="anchor" href="#other-deprecated-functions"></a></h2>
-      
-      <p class="section-desc"></p><p>These functions are deprecated, meaning that they will still work but show a warning with every use and will be removed in a future version.</p>
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="AMR-deprecated.html">NA_rsi_</a></code> <code><a href="AMR-deprecated.html">as.rsi()</a></code> <code><a href="AMR-deprecated.html">facet_rsi()</a></code> <code><a href="AMR-deprecated.html">geom_rsi()</a></code> <code><a href="AMR-deprecated.html">ggplot_rsi()</a></code> <code><a href="AMR-deprecated.html">ggplot_rsi_predict()</a></code> <code><a href="AMR-deprecated.html">is.rsi()</a></code> <code><a href="AMR-deprecated.html">is.rsi.eligible()</a></code> <code><a href="AMR-deprecated.html">labels_rsi_count()</a></code> <code><a href="AMR-deprecated.html">n_rsi()</a></code> <code><a href="AMR-deprecated.html">random_rsi()</a></code> <code><a href="AMR-deprecated.html">rsi_df()</a></code> <code><a href="AMR-deprecated.html">rsi_predict()</a></code> <code><a href="AMR-deprecated.html">scale_rsi_colours()</a></code> <code><a href="AMR-deprecated.html">theme_rsi()</a></code> 
-        </dt>
-        <dd>Deprecated Functions</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
