@@ -1,7 +1,11 @@
-# AMR 2.1.1.9002
+# AMR 2.1.1.9003
+
+## Breaking
+* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents a year ago
 
 ## New
-* Function `scale_x_mic()`, an advanced function to use in ggplot, to allow plotting of MIC values on the x axis. It allow for manual range definition and plotting missing intermediate log2 levels.
+* Function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
+* Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
 
 ### Changed
 * For MICs:

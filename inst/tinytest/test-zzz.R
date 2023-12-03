@@ -86,10 +86,14 @@ call_functions <- c(
   "ggplot" = "ggplot2",
   "labs" = "ggplot2",
   "layer" = "ggplot2",
-  "position_fill" = "ggplot2",
   "position_dodge2" = "ggplot2",
+  "position_fill" = "ggplot2",
+  "scale_colour_discrete" = "ggplot2",
+  "scale_fill_discrete" = "ggplot2",
   "scale_fill_manual" = "ggplot2",
+  "scale_x_discrete" = "ggplot2",
   "scale_y_continuous" = "ggplot2",
+  "scale_y_discrete" = "ggplot2",
   "theme" = "ggplot2",
   "theme_minimal" = "ggplot2",
   "unit" = "ggplot2",
@@ -127,7 +131,7 @@ for (i in seq_len(length(import_functions))) {
     expect_true(!is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
       info = paste0("does not exist (anymore): function `", pkg, "::", fn, "()`")
     )
-  } else {
+  } else if (pkg != "rstudioapi") {
     warning("Package '", pkg, "' does not exist anymore")
   }
 }
@@ -140,3 +144,12 @@ if (AMR:::pkg_is_available("cli")) {
 if (AMR:::pkg_is_available("cli")) {
   expect_true(!is.null(cli::symbol$ellipsis))
 }
+if (AMR:::pkg_is_available("ggplot2")) {
+  # the scale_*_mic() functions rely on these
+  expect_true(is.function(ggplot2::scale_x_discrete()$transform))
+  expect_true(is.function(ggplot2::scale_y_discrete()$transform))
+  expect_true(is.function(ggplot2::scale_colour_discrete()$transform))
+  expect_true(is.function(ggplot2::scale_fill_discrete()$transform))
+}
+
+

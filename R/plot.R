@@ -110,10 +110,12 @@ NULL
 
 #' @export
 #' @inheritParams as.mic
+#' @param drop a [logical] to remove intermediate MIC values, defaults to `FALSE`
 #' @rdname plot
-scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
   stop_ifnot_installed("ggplot2")
-  scale <- ggplot2::scale_x_discrete(...)
+  meet_criteria(drop, allow_class = "logical", has_length = 1)
+  scale <- ggplot2::scale_x_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
     rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
@@ -123,9 +125,10 @@ scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 #' @export
 #' @inheritParams as.mic
 #' @rdname plot
-scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
   stop_ifnot_installed("ggplot2")
-  scale <- ggplot2::scale_y_discrete(...)
+  meet_criteria(drop, allow_class = "logical", has_length = 1)
+  scale <- ggplot2::scale_y_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
     rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
@@ -135,9 +138,10 @@ scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 #' @export
 #' @inheritParams as.mic
 #' @rdname plot
-scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
   stop_ifnot_installed("ggplot2")
-  scale <- ggplot2::scale_colour_discrete(...)
+  meet_criteria(drop, allow_class = "logical", has_length = 1)
+  scale <- ggplot2::scale_colour_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
     rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
@@ -147,9 +151,10 @@ scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 #' @export
 #' @inheritParams as.mic
 #' @rdname plot
-scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
   stop_ifnot_installed("ggplot2")
-  scale <- ggplot2::scale_fill_discrete(...)
+  meet_criteria(drop, allow_class = "logical", has_length = 1)
+  scale <- ggplot2::scale_fill_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
     rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }

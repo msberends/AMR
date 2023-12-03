@@ -27,38 +27,4 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-sir <- random_sir(100)
-rsi <- sir
-class(rsi) <- gsub("sir", "rsi", class(rsi))
-mic <- random_mic(100)
-disk <- random_disk(100)
 
-expect_identical(summary(sir), summary(rsi))
-expect_identical(c(sir), c(rsi))
-
-expect_identical(suppressWarnings(suppressMessages(as.rsi(as.character(rsi)))),
-                 suppressWarnings(suppressMessages(as.sir(as.character(sir)))))
-expect_identical(suppressWarnings(suppressMessages(as.rsi(mic, mo = "Escherichia coli", ab = "CIP"))),
-                 suppressWarnings(suppressMessages(as.sir(mic, mo = "Escherichia coli", ab = "CIP"))))
-expect_identical(suppressWarnings(suppressMessages(as.rsi(disk, mo = "Escherichia coli", ab = "CIP"))),
-                 suppressWarnings(suppressMessages(as.sir(disk, mo = "Escherichia coli", ab = "CIP"))))
-expect_identical(suppressWarnings(suppressMessages(as.rsi(data.frame(CIP = mic, mo = "Escherichia coli")))),
-                 suppressWarnings(suppressMessages(as.sir(data.frame(CIP = mic, mo = "Escherichia coli")))))
-
-expect_identical(suppressWarnings(n_rsi(example_isolates$CIP)),
-                 suppressWarnings(n_sir(example_isolates$CIP)))
-
-expect_identical(suppressWarnings(rsi_df(example_isolates)),
-                 suppressWarnings(sir_df(example_isolates)))
-
-expect_identical(suppressWarnings(is.rsi.eligible(example_isolates)),
-                 suppressWarnings(is_sir_eligible(example_isolates)))
-
-if (AMR:::pkg_is_available("ggplot2")) {
-  expect_equal(suppressWarnings(ggplot_rsi(example_isolates[, c("CIP", "GEN", "TOB")])),
-               suppressWarnings(ggplot_sir(example_isolates[, c("CIP", "GEN", "TOB")])))
-  
-  p <- ggplot2::ggplot(example_isolates[, c("CIP", "GEN", "TOB")])
-  expect_equal(suppressWarnings(p + geom_rsi() + scale_rsi_colours() + labels_rsi_count() + facet_rsi() + theme_rsi()),
-               suppressWarnings(p + geom_sir() + scale_sir_colours() + labels_sir_count() + facet_sir() + theme_sir()))
-}

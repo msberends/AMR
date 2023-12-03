@@ -17,13 +17,13 @@
 \alias{fortify.sir}
 \title{Plotting for Classes \code{sir}, \code{mic} and \code{disk}}
 \usage{
-scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
+scale_x_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 
-scale_y_mic(keep_operators = "edges", mic_range = NULL, ...)
+scale_y_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 
-scale_colour_mic(keep_operators = "edges", mic_range = NULL, ...)
+scale_colour_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 
-scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
+scale_fill_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 
 \method{plot}{mic}(
   x,
@@ -118,6 +118,8 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
 \item{mic_range}{a manual range to plot the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+
+\item{drop}{a \link{logical} to remove intermediate MIC values, defaults to \code{FALSE}}
 
 \item{...}{arguments passed on to methods}
 
