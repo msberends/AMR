@@ -123,6 +123,8 @@ VALID_MIC_LEVELS <- c(
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 #' 
 #' With [rescale_mic()], existing MIC ranges can be rescaled to a defined range of MIC values. This can be useful to better compare MIC distributions.
+#'
+#' For `ggplot2`, use one of the [`scale_*_mic()`][scale_x_mic()] functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
 #' @export

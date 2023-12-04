@@ -153,7 +153,7 @@ The \code{fortify()} functions return a \link{data.frame} as an extension for us
 \description{
 Functions to plot classes \code{sir}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
 
-Especially the \code{\link[=scale_*_mic]{scale_*_mic()}} functions are relevant wrappers to plot MIC values for \code{ggplot2}. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC values for \code{ggplot2}. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 }
 \details{
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.

@@ -32,7 +32,7 @@
 #' @description
 #' Functions to plot classes `sir`, `mic` and `disk`, with support for base \R and `ggplot2`.
 #' 
-#' Especially the [scale_*_mic()] functions are relevant wrappers to plot MIC values for `ggplot2`. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+#' Especially the `scale_*_mic()` functions are relevant wrappers to plot MIC values for `ggplot2`. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 #' @param x,object values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()])
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]

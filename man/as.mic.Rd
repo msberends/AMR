@@ -84,6 +84,8 @@ Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, i
 
 With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be rescaled to a defined range of MIC values. This can be useful to better compare MIC distributions.
 
+For \code{ggplot2}, use one of the \code{\link[=scale_x_mic]{scale_*_mic()}} functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+
 \code{NA_mic_} is a missing value of the new \code{mic} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
 \examples{
