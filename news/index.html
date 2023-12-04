@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,17 +159,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9003" id="amr-2119003">AMR 2.1.1.9003<a class="anchor" aria-label="anchor" href="#amr-2119003"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9004" id="amr-2119004">AMR 2.1.1.9004<a class="anchor" aria-label="anchor" href="#amr-2119004"></a></h2>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9003">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9003"></a></h3>
+<h3 id="breaking-2-1-1-9004">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9004"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9003">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9003"></a></h3>
+<h3 id="new-2-1-1-9004">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9004"></a></h3>
 <ul><li>Function group <code>scale_*_mic()</code>, namely: <code><a href="../reference/plot.html">scale_x_mic()</a></code>, <code><a href="../reference/plot.html">scale_y_mic()</a></code>, <code><a href="../reference/plot.html">scale_colour_mic()</a></code> and <code><a href="../reference/plot.html">scale_fill_mic()</a></code>. They are advanced ggplot2 extensions to allow plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.</li>
 <li>Function <code><a href="../reference/as.mic.html">rescale_mic()</a></code>, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the <code>scale_*_mic()</code> functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.</li>
 </ul><div class="section level4">
-<h4 id="changed-2-1-1-9003">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9003"></a></h4>
+<h4 id="changed-2-1-1-9004">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9004"></a></h4>
 <ul><li>For MICs:
 <ul><li>Added 4096 and 5 powers of 192 as valid levels (192, 384, 576, 768, 960)</li>
 <li>Added new argument <code>keep_operators</code> to <code><a href="../reference/as.mic.html">as.mic()</a></code>. This can be <code>"all"</code> (default), <code>"none"</code>, or <code>"edges"</code>.</li>
