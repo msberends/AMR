@@ -41,3 +41,7 @@ if (AMR:::has_colour()) {
     "test for \033[3mE. coli\033[23m"
   )
 }
+expect_identical(
+  italicise_taxonomy("test for E. coli", "html"),
+  "test for <i>E. coli</i>"
+)

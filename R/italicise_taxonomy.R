@@ -31,11 +31,11 @@
 #'
 #' According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.
 #' @param string a [character] (vector)
-#' @param type type of conversion of the taxonomic names, either "markdown" or "ansi", see *Details*
+#' @param type type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see *Details*
 #' @details
 #' This function finds the taxonomic names and makes them italic based on the [microorganisms] data set.
 #'
-#' The taxonomic names can be italicised using markdown (the default) by adding `*` before and after the taxonomic names, or using ANSI colours by adding `\033[3m` before and `\033[23m` after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.
+#' The taxonomic names can be italicised using markdown (the default) by adding `*` before and after the taxonomic names, or `<i>` and `</i>` when using html. When using 'ansi', ANSI colours will be added using `\033[3m` before and `\033[23m` after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.
 #'
 #' This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".
 #' @export
@@ -44,18 +44,21 @@
 #' italicise_taxonomy("An overview of S. aureus isolates")
 #'
 #' cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
-italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
+italicise_taxonomy <- function(string, type = c("markdown", "ansi", "html")) {
   if (missing(type)) {
     type <- "markdown"
   }
   meet_criteria(string, allow_class = "character")
-  meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("markdown", "ansi"))
+  meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("markdown", "ansi", "html"))
 
   add_MO_lookup_to_AMR_env()
 
   if (type == "markdown") {
     before <- "*"
     after <- "*"
+  } else if (type == "html") {
+    before <- "<i>"
+    after <- "</i>"
   } else if (type == "ansi") {
     if (!has_colour() && !identical(Sys.getenv("IN_PKGDOWN"), "true")) {
       return(string)
@@ -134,7 +137,7 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
 
 #' @rdname italicise_taxonomy
 #' @export
-italicize_taxonomy <- function(string, type = c("markdown", "ansi")) {
+italicize_taxonomy <- function(string, type = c("markdown", "ansi", "html")) {
   if (missing(type)) {
     type <- "markdown"
   }

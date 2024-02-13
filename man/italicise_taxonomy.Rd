@@ -5,14 +5,14 @@
 \alias{italicize_taxonomy}
 \title{Italicise Taxonomic Families, Genera, Species, Subspecies}
 \usage{
-italicise_taxonomy(string, type = c("markdown", "ansi"))
+italicise_taxonomy(string, type = c("markdown", "ansi", "html"))
 
-italicize_taxonomy(string, type = c("markdown", "ansi"))
+italicize_taxonomy(string, type = c("markdown", "ansi", "html"))
 }
 \arguments{
 \item{string}{a \link{character} (vector)}
 
-\item{type}{type of conversion of the taxonomic names, either "markdown" or "ansi", see \emph{Details}}
+\item{type}{type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see \emph{Details}}
 }
 \description{
 According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.
@@ -20,7 +20,7 @@ According to the binomial nomenclature, the lowest four taxonomic levels (family
 \details{
 This function finds the taxonomic names and makes them italic based on the \link{microorganisms} data set.
 
-The taxonomic names can be italicised using markdown (the default) by adding \code{*} before and after the taxonomic names, or using ANSI colours by adding \verb{\\033[3m} before and \verb{\\033[23m} after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.
+The taxonomic names can be italicised using markdown (the default) by adding \code{*} before and after the taxonomic names, or \verb{<i>} and \verb{</i>} when using html. When using 'ansi', ANSI colours will be added using \verb{\\033[3m} before and \verb{\\033[23m} after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.
 
 This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".
 }
