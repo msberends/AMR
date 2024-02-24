@@ -6,7 +6,7 @@
 \alias{mic}
 \alias{is.mic}
 \alias{NA_mic_}
-\alias{rescale_mic}
+\alias{limit_mic_range}
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
@@ -16,7 +16,7 @@ is.mic(x)
 
 NA_mic_
 
-rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
+limit_mic_range(x, mic_range, keep_operators = "edges", as.mic = TRUE)
 
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
@@ -27,14 +27,14 @@ rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
 
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to plot the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
 \item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{FALSE}}
 
 \item{...}{arguments passed on to methods}
 }
 \value{
-Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
+Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as a \link{numeric} vector. Bear in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
 }
 \description{
 This transforms vectors to a new class \code{\link{mic}}, which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
@@ -76,13 +76,13 @@ subset(df, x > 4) # or with dplyr: df \%>\% filter(x > 4)
 #> 10    16        A
 }\if{html}{\out{</div>}}
 
-The following \link[=groupGeneric]{generic functions} are implemented for the MIC class: \code{!}, \code{!=}, \code{\%\%}, \code{\%/\%}, \code{&}, \code{*}, \code{+}, \code{-}, \code{/}, \code{<}, \code{<=}, \code{==}, \code{>}, \code{>=}, \code{^}, \code{|}, \code{\link[=abs]{abs()}}, \code{\link[=acos]{acos()}}, \code{\link[=acosh]{acosh()}}, \code{\link[=all]{all()}}, \code{\link[=any]{any()}}, \code{\link[=asin]{asin()}}, \code{\link[=asinh]{asinh()}}, \code{\link[=atan]{atan()}}, \code{\link[=atanh]{atanh()}}, \code{\link[=ceiling]{ceiling()}}, \code{\link[=cos]{cos()}}, \code{\link[=cosh]{cosh()}}, \code{\link[=cospi]{cospi()}}, \code{\link[=cummax]{cummax()}}, \code{\link[=cummin]{cummin()}}, \code{\link[=cumprod]{cumprod()}}, \code{\link[=cumsum]{cumsum()}}, \code{\link[=digamma]{digamma()}}, \code{\link[=exp]{exp()}}, \code{\link[=expm1]{expm1()}}, \code{\link[=floor]{floor()}}, \code{\link[=gamma]{gamma()}}, \code{\link[=lgamma]{lgamma()}}, \code{\link[=log]{log()}}, \code{\link[=log1p]{log1p()}}, \code{\link[=log2]{log2()}}, \code{\link[=log10]{log10()}}, \code{\link[=max]{max()}}, \code{\link[=mean]{mean()}}, \code{\link[=min]{min()}}, \code{\link[=prod]{prod()}}, \code{\link[=range]{range()}}, \code{\link[=round]{round()}}, \code{\link[=sign]{sign()}}, \code{\link[=signif]{signif()}}, \code{\link[=sin]{sin()}}, \code{\link[=sinh]{sinh()}}, \code{\link[=sinpi]{sinpi()}}, \code{\link[=sqrt]{sqrt()}}, \code{\link[=sum]{sum()}}, \code{\link[=tan]{tan()}}, \code{\link[=tanh]{tanh()}}, \code{\link[=tanpi]{tanpi()}}, \code{\link[=trigamma]{trigamma()}} and \code{\link[=trunc]{trunc()}}. Some functions of the \code{stats} package are also implemented: \code{\link[=median]{median()}}, \code{\link[=quantile]{quantile()}}, \code{\link[=mad]{mad()}}, \code{\link[=IQR]{IQR()}}, \code{\link[=fivenum]{fivenum()}}. Also, \code{\link[=boxplot.stats]{boxplot.stats()}} is supported. Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
+All so-called \link[=groupGeneric]{group generic functions} are implemented for the MIC class (such as \code{!}, \code{!=}, \code{<}, \code{>=}, \code{\link[=exp]{exp()}}, \code{\link[=log2]{log2()}}). Some functions of the \code{stats} package are also implemented (such as \code{\link[=quantile]{quantile()}}, \code{\link[=median]{median()}}, \code{\link[=fivenum]{fivenum()}}). Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
 
 Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numeric()}} on MIC values will remove the operators and return a numeric vector. Do \strong{not} use \code{\link[=as.integer]{as.integer()}} on MIC values as by the \R convention on \link{factor}s, it will return the index of the factor levels (which is often useless for regular users).
 
 Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \code{mic} class.
 
-With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be rescaled to a defined range of MIC values. This can be useful to better compare MIC distributions.
+With \code{\link[=limit_mic_range]{limit_mic_range()}}, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
 
 For \code{ggplot2}, use one of the \code{\link[=scale_x_mic]{scale_*_mic()}} functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 
@@ -101,8 +101,8 @@ fivenum(mic_data)
 quantile(mic_data)
 all(mic_data < 512)
 
-# rescale MICs using rescale_mic()
-rescale_mic(mic_data, mic_range = c(4, 16))
+# limit MICs using limit_mic_range()
+limit_mic_range(mic_data, mic_range = c(4, 16))
 
 # interpret MIC values
 as.sir(

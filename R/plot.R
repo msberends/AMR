@@ -117,7 +117,7 @@ scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE
   meet_criteria(drop, allow_class = "logical", has_length = 1)
   scale <- ggplot2::scale_x_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+    limit_mic_range(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
   scale
 }
@@ -130,7 +130,7 @@ scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE
   meet_criteria(drop, allow_class = "logical", has_length = 1)
   scale <- ggplot2::scale_y_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+    limit_mic_range(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
   scale
 }
@@ -143,7 +143,7 @@ scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, drop = 
   meet_criteria(drop, allow_class = "logical", has_length = 1)
   scale <- ggplot2::scale_colour_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+    limit_mic_range(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
   scale
 }
@@ -156,7 +156,7 @@ scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FA
   meet_criteria(drop, allow_class = "logical", has_length = 1)
   scale <- ggplot2::scale_fill_discrete(drop = drop, ...)
   scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+    limit_mic_range(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
   }
   scale
 }

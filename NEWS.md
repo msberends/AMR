@@ -1,16 +1,30 @@
-# AMR 2.1.1.9004
+# AMR 2.1.1.9006
+
+*(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
+
+## A New Milestone: One Health Support (= Human + Veterinary + Environmental)
+This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
+* `as.sir()` now supports animal breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
+* The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://msberends.github.io/AMR/articles/datasets.html).
+* The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
+* `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
+* `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 
 ## Breaking
-* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents a year ago
+* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over a year ago
 
-## New
-* Function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
-* Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
+## New functions
+* The group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
+* `limit_mic_range()`, which allows to limit MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
 
 ### Changed
 * For MICs:
-  * Added 4096 and 5 powers of 192 as valid levels (192, 384, 576, 768, 960)
-  * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`.
+  * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
+  * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `limit_mic_range()` and `scale_*_mic()` functions.
+* Updated `italicise_taxonomy()` to support HTML
+* Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that `dplyr::rowwise()` and `dplyr::c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
+* Updated all ATC codes from WHOCC
+* Updated all antibiotic DDDs from WHOCC
 
 
 # AMR 2.1.1

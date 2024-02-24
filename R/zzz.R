@@ -55,6 +55,7 @@ AMR_env$av_previously_coerced <- data.frame(
   av = character(0),
   stringsAsFactors = FALSE
 )
+AMR_env$host_preferred_order <- names(sort(table(AMR::clinical_breakpoints$host[!AMR::clinical_breakpoints$host %in% AMR::clinical_breakpoints$type]), decreasing = TRUE))
 AMR_env$sir_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
@@ -67,6 +68,7 @@ AMR_env$sir_interpretation_history <- data.frame(
   method = character(0),
   breakpoint_S_R = character(0),
   guideline = character(0),
+  host = character(0),
   ref_table = character(0),
   stringsAsFactors = FALSE
 )
@@ -130,32 +132,33 @@ if (pkg_is_available("cli")) {
   s3_register("knitr::knit_print", "antibiogram")
   s3_register("knitr::knit_print", "formatted_bug_drug_combinations")
   # Support vctrs package for use in e.g. dplyr verbs
+  # NOTE 2024-02-22 this is the right way - it should be 2 S3 classes in the second argument
   # S3: ab_selector
-  s3_register("vctrs::vec_ptype2", "character.ab_selector")
-  s3_register("vctrs::vec_ptype2", "ab_selector.character")
+  s3_register("vctrs::vec_ptype2", "ab_selector.default")
+  s3_register("vctrs::vec_ptype2", "ab_selector.ab_selector")
   s3_register("vctrs::vec_cast", "character.ab_selector")
   # S3: ab_selector_any_all
-  s3_register("vctrs::vec_ptype2", "logical.ab_selector_any_all")
-  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.logical")
+  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.default")
+  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.ab_selector_any_all")
   s3_register("vctrs::vec_cast", "logical.ab_selector_any_all")
   # S3: ab
-  s3_register("vctrs::vec_ptype2", "character.ab")
-  s3_register("vctrs::vec_ptype2", "ab.character")
+  s3_register("vctrs::vec_ptype2", "ab.default")
+  s3_register("vctrs::vec_ptype2", "ab.ab")
   s3_register("vctrs::vec_cast", "character.ab")
   s3_register("vctrs::vec_cast", "ab.character")
   # S3: av
-  s3_register("vctrs::vec_ptype2", "character.av")
-  s3_register("vctrs::vec_ptype2", "av.character")
+  s3_register("vctrs::vec_ptype2", "av.default")
+  s3_register("vctrs::vec_ptype2", "av.av")
   s3_register("vctrs::vec_cast", "character.av")
   s3_register("vctrs::vec_cast", "av.character")
   # S3: mo
-  s3_register("vctrs::vec_ptype2", "character.mo")
-  s3_register("vctrs::vec_ptype2", "mo.character")
+  s3_register("vctrs::vec_ptype2", "mo.default")
+  s3_register("vctrs::vec_ptype2", "mo.mo")
   s3_register("vctrs::vec_cast", "character.mo")
   s3_register("vctrs::vec_cast", "mo.character")
   # S3: disk
-  s3_register("vctrs::vec_ptype2", "integer.disk")
-  s3_register("vctrs::vec_ptype2", "disk.integer")
+  s3_register("vctrs::vec_ptype2", "disk.default")
+  s3_register("vctrs::vec_ptype2", "disk.disk")
   s3_register("vctrs::vec_cast", "integer.disk")
   s3_register("vctrs::vec_cast", "disk.integer")
   s3_register("vctrs::vec_cast", "double.disk")
@@ -163,14 +166,19 @@ if (pkg_is_available("cli")) {
   s3_register("vctrs::vec_cast", "character.disk")
   s3_register("vctrs::vec_cast", "disk.character")
   # S3: mic
+  s3_register("vctrs::vec_ptype2", "mic.default")
+  s3_register("vctrs::vec_ptype2", "mic.mic")
   s3_register("vctrs::vec_cast", "character.mic")
   s3_register("vctrs::vec_cast", "double.mic")
+  s3_register("vctrs::vec_cast", "integer.mic")
   s3_register("vctrs::vec_cast", "mic.character")
   s3_register("vctrs::vec_cast", "mic.double")
+  s3_register("vctrs::vec_cast", "mic.integer")
   s3_register("vctrs::vec_math", "mic")
+  s3_register("vctrs::vec_arith", "mic")
   # S3: sir
-  s3_register("vctrs::vec_ptype2", "character.sir")
-  s3_register("vctrs::vec_ptype2", "sir.character")
+  s3_register("vctrs::vec_ptype2", "sir.default")
+  s3_register("vctrs::vec_ptype2", "sir.sir")
   s3_register("vctrs::vec_cast", "character.sir")
   s3_register("vctrs::vec_cast", "sir.character")
 
@@ -192,26 +200,34 @@ if (pkg_is_available("cli")) {
 .onAttach <- function(lib, pkg) {
   # if custom ab option is available, load it
   if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {
-    packageStartupMessage("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'...", appendLF = FALSE)
-    x <- readRDS_AMR(getOption("AMR_custom_ab"))
-    tryCatch(
-      {
-        suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
-        packageStartupMessage("OK.")
-      },
-      error = function(e) packageStartupMessage("Failed: ", e$message)
-    )
+    if (getOption("AMR_custom_ab") %unlike% "[.]rds$") {
+      packageStartupMessage("The file with custom antimicrobials must be an RDS file. Set the option `AMR_custom_ab` to another path.")
+    } else {
+      packageStartupMessage("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'...", appendLF = FALSE)
+      x <- readRDS_AMR(getOption("AMR_custom_ab"))
+      tryCatch(
+        {
+          suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
+          packageStartupMessage("OK.")
+        },
+        error = function(e) packageStartupMessage("Failed: ", e$message)
+      )
+    }
   }
   # if custom mo option is available, load it
   if (!is.null(getOption("AMR_custom_mo")) && file.exists(getOption("AMR_custom_mo", default = ""))) {
-    packageStartupMessage("Adding custom microorganisms from '", getOption("AMR_custom_mo"), "'...", appendLF = FALSE)
-    x <- readRDS_AMR(getOption("AMR_custom_mo"))
-    tryCatch(
-      {
-        suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
-        packageStartupMessage("OK.")
-      },
-      error = function(e) packageStartupMessage("Failed: ", e$message)
-    )
+    if (getOption("AMR_custom_mo") %unlike% "[.]rds$") {
+      packageStartupMessage("The file with custom microorganisms must be an RDS file. Set the option `AMR_custom_mo` to another path.")
+    } else {
+      packageStartupMessage("Adding custom microorganisms from '", getOption("AMR_custom_mo"), "'...", appendLF = FALSE)
+      x <- readRDS_AMR(getOption("AMR_custom_mo"))
+      tryCatch(
+        {
+          suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
+          packageStartupMessage("OK.")
+        },
+        error = function(e) packageStartupMessage("Failed: ", e$message)
+      )
+    }
   }
 }

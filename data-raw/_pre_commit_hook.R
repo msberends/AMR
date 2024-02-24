@@ -157,20 +157,21 @@ MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms$genus == "Stre
 MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
 MO_PREVALENT_GENERA <- c(
   "Absidia", "Acanthamoeba", "Acremonium", "Aedes", "Alternaria", "Amoeba", "Ancylostoma", "Angiostrongylus",
-  "Anisakis", "Anopheles", "Apophysomyces", "Aspergillus", "Aureobasidium", "Basidiobolus", "Beauveria",
-  "Blastocystis", "Blastomyces", "Candida", "Capillaria", "Chaetomium", "Chrysonilia", "Cladophialophora",
+  "Anisakis", "Anopheles", "Apophysomyces", "Arthroderma", "Aspergillus", "Aureobasidium", "Basidiobolus", "Beauveria",
+  "Blastocystis", "Blastomyces", "Candida", "Capillaria", "Chaetomium", "Chrysonilia", "Chrysosporium", "Cladophialophora",
   "Cladosporium", "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Demodex",
   "Dermatobia", "Dientamoeba", "Diphyllobothrium", "Dirofilaria", "Echinostoma", "Entamoeba", "Enterobius",
-  "Exophiala", "Exserohilum", "Fasciola", "Fonsecaea", "Fusarium", "Giardia", "Haloarcula", "Halobacterium",
+  "Exophiala", "Exserohilum", "Fasciola", "Fonsecaea", "Fusarium", "Geotrichum", "Giardia", "Haloarcula", "Halobacterium",
   "Halococcus", "Hendersonula", "Heterophyes", "Histomonas", "Histoplasma", "Hymenolepis", "Hypomyces",
-  "Hysterothylacium", "Leishmania", "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma", "Microsporidium",
-  "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Necator", "Nectria", "Ochroconis", "Oesophagostomum",
-  "Oidiodendron", "Opisthorchis", "Pediculus", "Penicillium", "Phlebotomus", "Phoma", "Pichia", "Piedraia", "Pithomyces",
+  "Hysterothylacium", "Kloeckera", "Kodamaea", "Leishmania", "Lichtheimia", "Lodderomyces",
+  "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma", "Microsporidium",
+  "Microsporum", "Millerozyma", "Mortierella", "Mucor", "Mycocentrospora", "Necator", "Nectria", "Ochroconis", "Oesophagostomum",
+  "Oidiodendron", "Opisthorchis", "Paecilomyces", "Pediculus", "Penicillium", "Phlebotomus", "Phoma", "Pichia", "Piedraia", "Pithomyces",
   "Pityrosporum", "Pneumocystis", "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus",
-  "Rhodotorula", "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra",
-  "Sporobolomyces", "Stachybotrys", "Strongyloides", "Syngamus", "Taenia", "Talaromyces", "Toxocara", "Trichinella",
+  "Rhodotorula", "Saccharomyces", "Saprochaete", "Sarcoptes", "Scedosporium", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra",
+  "Sporobolomyces", "Sporotrichum", "Stachybotrys", "Strongyloides", "Syngamus", "Taenia", "Talaromyces", "Toxocara", "Trichinella",
   "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris",
-  "Tritirachium", "Trombicula", "Trypanosoma", "Tunga", "Wuchereria"
+  "Tritirachium", "Trombicula", "Trypanosoma", "Tunga", "Verticillium", "Wuchereria"
 )
 
 # antibiotic groups

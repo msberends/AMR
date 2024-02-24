@@ -245,7 +245,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   # unknown species etc.
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
-  shortnames[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  shortnames[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")], language = NULL, keep_synonyms = keep_synonyms)
 
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_uncertainties(metadata)

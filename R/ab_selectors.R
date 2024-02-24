@@ -541,10 +541,10 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
     ),
     error = function(e) stop_("in not_intrinsic_resistant(): ", e$message, call = FALSE)
   )
-
+  
   agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]
   if (length(agents) > 0 &&
-    message_not_thrown_before("not_intrinsic_resistant", sort(agents))) {
+      message_not_thrown_before("not_intrinsic_resistant", sort(agents))) {
     agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
     agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
     need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
@@ -555,7 +555,7 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
       vector_and(agents_formatted, quotes = FALSE, sort = FALSE)
     )
   }
-
+  
   vars_df_R <- names(vars_df_R)[which(!vars_df_R)]
   # find columns that are abx, but also intrinsic R
   out <- unname(intersect(ab_in_data, vars_df_R))

@@ -35,33 +35,33 @@
 # see https://github.com/tidyverse/dplyr/issues/5955 why this is required
 
 # S3: ab_selector
-vec_ptype2.character.ab_selector <- function(x, y, ...) {
+vec_ptype2.ab_selector.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.ab_selector.character <- function(x, y, ...) {
-  y
+vec_ptype2.ab_selector.ab_selector <- function(x, y, ...) {
+  x
 }
 vec_cast.character.ab_selector <- function(x, to, ...) {
   unclass(x)
 }
 
 # S3: ab_selector_any_all
-vec_ptype2.logical.ab_selector_any_all <- function(x, y, ...) {
+vec_ptype2.ab_selector_any_all.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.ab_selector_any_all.logical <- function(x, y, ...) {
-  y
+vec_ptype2.ab_selector_any_all.ab_selector_any_all <- function(x, y, ...) {
+  x
 }
 vec_cast.logical.ab_selector_any_all <- function(x, to, ...) {
   unclass(x)
 }
 
 # S3: ab
-vec_ptype2.character.ab <- function(x, y, ...) {
+vec_ptype2.ab.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.ab.character <- function(x, y, ...) {
-  y
+vec_ptype2.ab.ab <- function(x, y, ...) {
+  x
 }
 vec_cast.character.ab <- function(x, to, ...) {
   as.character(x)
@@ -71,11 +71,11 @@ vec_cast.ab.character <- function(x, to, ...) {
 }
 
 # S3: av
-vec_ptype2.character.av <- function(x, y, ...) {
+vec_ptype2.av.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.av.character <- function(x, y, ...) {
-  y
+vec_ptype2.av.av <- function(x, y, ...) {
+  x
 }
 vec_cast.character.av <- function(x, to, ...) {
   as.character(x)
@@ -85,11 +85,11 @@ vec_cast.av.character <- function(x, to, ...) {
 }
 
 # S3: mo
-vec_ptype2.character.mo <- function(x, y, ...) {
+vec_ptype2.mo.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.mo.character <- function(x, y, ...) {
-  y
+vec_ptype2.mo.mo <- function(x, y, ...) {
+  x
 }
 vec_cast.character.mo <- function(x, to, ...) {
   as.character(x)
@@ -100,11 +100,11 @@ vec_cast.mo.character <- function(x, to, ...) {
 }
 
 # S3: disk
-vec_ptype2.integer.disk <- function(x, y, ...) {
+vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.disk.integer <- function(x, y, ...) {
-  y
+vec_ptype2.disk.disk <- function(x, y, ...) {
+  x
 }
 vec_cast.integer.disk <- function(x, to, ...) {
   unclass(x)
@@ -126,11 +126,20 @@ vec_cast.disk.character <- function(x, to, ...) {
 }
 
 # S3: mic
+vec_ptype2.mic.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+  x
+}
+vec_ptype2.mic.mic <- function(x, y, ...) {
+  x
+}
 vec_cast.character.mic <- function(x, to, ...) {
   as.character(x)
 }
 vec_cast.double.mic <- function(x, to, ...) {
   as.double(x)
+}
+vec_cast.integer.mic <- function(x, to, ...) {
+  as.integer(x)
 }
 vec_cast.mic.double <- function(x, to, ...) {
   as.mic(x)
@@ -138,16 +147,22 @@ vec_cast.mic.double <- function(x, to, ...) {
 vec_cast.mic.character <- function(x, to, ...) {
   as.mic(x)
 }
+vec_cast.mic.integer <- function(x, to, ...) {
+  as.mic(x)
+}
 vec_math.mic <- function(.fn, x, ...) {
   .fn(as.double(x), ...)
 }
+vec_arith.mic <- function(op, x, y, ...) {
+  vctrs::vec_arith(op, as.double(x), as.double(y))
+}
 
 # S3: sir
-vec_ptype2.character.sir <- function(x, y, ...) {
+vec_ptype2.sir.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
-vec_ptype2.sir.character <- function(x, y, ...) {
-  y
+vec_ptype2.sir.sir <- function(x, y, ...) {
+  x
 }
 vec_cast.character.sir <- function(x, to, ...) {
   as.character(x)

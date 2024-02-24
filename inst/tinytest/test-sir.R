@@ -27,6 +27,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+
+# Existing SIR ------------------------------------------------------------
+
 # we must only have EUCAST and CLSI, because otherwise the rules in as.sir() will fail
 expect_identical(
   unique(gsub("[^A-Z]", "", AMR::clinical_breakpoints$guideline)),
@@ -108,16 +111,19 @@ if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
 
 expect_equal(as.sir(c("", "-", NA, "NULL")), c(NA_sir_, NA_sir_, NA_sir_, NA_sir_))
 
-mics <- as.mic(2 ^ c(-2:5)) # 0.25 to 32 in factors of 2
+
+# Human -------------------------------------------------------------------
+
+mics <- as.mic(2 ^ c(-4:6)) # 0.0625 to 64 in factors of 2
 expect_identical(as.character(as.sir(mics, mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
                                      uti = FALSE, include_PKPD = FALSE)),
-                 c("S", "S", "S", "S", "S", "S", "R", "R"))
+                 c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R"))
 expect_identical(as.character(as.sir(mics, mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
                                      uti = TRUE, include_PKPD = FALSE)),
-                 c("S", "S", "S", "S", "S", "S", "S", "S"))
+                 c("S", "S", "S", "S", "S", "S", "S", "S", "S", "S", "R"))
 expect_identical(as.character(as.sir(mics, mo = "Escherichia coli", ab = "AMC", guideline = "EUCAST 2022",
                                      uti = FALSE, include_PKPD = FALSE)),
-                 c("S", "S", "S", "S", "S", "S", "R", "R"))
+                 c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R"))
 
 
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
@@ -152,10 +158,6 @@ expect_true(is.null(sir_interpretation_history()))
 # cutoffs at MIC = 8
 expect_equal(
   suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
-  as.sir("S")
-)
-expect_equal(
-  suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE)),
   as.sir("S")
 )
 expect_equal(
@@ -263,3 +265,47 @@ expect_message(as.sir(data.frame(
   NIT = c("<= 2", 32),
   specimen = c("urine", "blood")
 )))
+
+
+
+# Veterinary --------------------------------------------------------------
+
+sir_history <- sir_interpretation_history(clean = TRUE)
+
+vet <- data.frame(animal = c(rep("cat", 3), rep("dogs", 3), "canine", "equine", "horse", "cattle", "bird"),
+                  PRA = mics,
+                  FLR = mics,
+                  mo = mo_name(rep(c("B_ESCHR_COLI", "B_PSTRL_MLTC", "B_MNNHM_HMLY"), 4)[-1]))
+
+out_vet <- as.sir(vet, host = vet$animal, guideline = "CLSI")
+# host column name instead of values
+expect_identical(out_vet,
+                 as.sir(vet, host = "animal", guideline = "CLSI 2023"))
+
+# check outcomes
+expect_identical(out_vet$PRA, as.sir(c("S", NA, "S", "R", NA, "R", "R", NA, "R", "R", NA)))
+expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA, "R", "R")))
+
+out_vet <- as.sir(vet, host = "animal", guideline = "EUCAST 2023")
+expect_identical(out_vet$PRA, rep(NA_sir_, 11))
+expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA, "R", "R")))
+
+sir_history <- sir_interpretation_history()
+expect_identical(sir_history$host,
+                 c("cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
+                   "cattle", "cattle", "cattle", "cattle", "cattle", "cats"  , "cats"  , "cats"  , "cattle", "cattle", "cattle",
+                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
+                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
+                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
+                   "cats"  , "cats"  , "cats"  , "dogs"  , "dogs"  , "dogs"  , "cattle", "cattle", "cattle", "cattle", "cats",
+                   "cats"  , "cats"  , "cats"  , "cats"  , "cats"  , "cats"))
+
+# ECOFF -------------------------------------------------------------------
+
+expect_equal(
+  suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", breakpoint_type = "ECOFF")),
+  as.sir("S")
+)
+# old method
+expect_warning(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE))
+

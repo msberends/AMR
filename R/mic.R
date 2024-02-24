@@ -27,48 +27,22 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# these are allowed MIC values and will become [factor] levels
-operators <- c("<", "<=", "", ">=", ">")
+# these are allowed MIC values and will become factor levels
 VALID_MIC_LEVELS <- c(
-  c(t(vapply(
-    FUN.VALUE = character(6), operators,
-    function(x) paste0(x, "0.000", c(1:4, 6, 8))
-  ))),
-  c(t(vapply(
-    FUN.VALUE = character(90), operators,
-    function(x) paste0(x, "0.00", c(1:9, 11:19, 21:29, 31:39, 41:49, 51:59, 61:69, 71:79, 81:89, 91:99))
-  ))),
-  unique(c(t(vapply(
-    FUN.VALUE = character(106), operators,
-    function(x) {
-      paste0(x, sort(as.double(paste0(
-        "0.0",
-        sort(c(1:99, 125, 128, 156, 165, 256, 512, 625))
-      ))))
-    }
-  )))),
-  unique(c(t(vapply(
-    FUN.VALUE = character(103), operators,
-    function(x) {
-      paste0(x, sort(as.double(paste0(
-        "0.",
-        c(1:99, 125, 128, 256, 512)
-      ))))
-    }
-  )))),
-  c(t(vapply(
-    FUN.VALUE = character(10), operators,
-    function(x) paste0(x, sort(c(1:9, 1.5)))
-  ))),
-  c(t(vapply(
-    FUN.VALUE = character(45), operators,
-    function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])
-  ))),
-  unique(c(t(vapply(
-    FUN.VALUE = character(22), operators,
-    function(x) paste0(x, sort(c(2^c(7:12), 192 * c(1:5), 80 * c(2:12))))
-  ))))
+  as.double(paste0("0.000", c(1:9))),
+  as.double(paste0("0.00", c(1:99, 1953125, 390625, 78125))),
+  as.double(paste0("0.0", c(1:99, 125, 128, 156, 165, 256, 512, 625, 3125, 15625))),
+  as.double(paste0("0.", c(1:99, 125, 128, 256, 512))),
+  1:9, 1.5,
+  c(10:98)[9:98 %% 2 == TRUE],
+  2^c(7:12), 192 * c(1:5), 80 * c(2:12)
 )
+VALID_MIC_LEVELS <- trimws(gsub("[.]?0+$", "", format(unique(sort(VALID_MIC_LEVELS)), scientific = FALSE), perl = TRUE))
+operators <- c("<", "<=", "", ">=", ">")
+VALID_MIC_LEVELS <- c(t(vapply(FUN.VALUE = character(length(VALID_MIC_LEVELS)),
+                               c("<", "<=", "", ">=", ">"),
+                               paste0,
+                               VALID_MIC_LEVELS)))
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -116,16 +90,16 @@ VALID_MIC_LEVELS <- c(
 #' #> 10    16        A
 #' ```
 #'
-#' The following [generic functions][groupGeneric()] are implemented for the MIC class: `!`, `!=`, `%%`, `%/%`, `&`, `*`, `+`, `-`, `/`, `<`, `<=`, `==`, `>`, `>=`, `^`, `|`, [abs()], [acos()], [acosh()], [all()], [any()], [asin()], [asinh()], [atan()], [atanh()], [ceiling()], [cos()], [cosh()], [cospi()], [cummax()], [cummin()], [cumprod()], [cumsum()], [digamma()], [exp()], [expm1()], [floor()], [gamma()], [lgamma()], [log()], [log1p()], [log2()], [log10()], [max()], [mean()], [min()], [prod()], [range()], [round()], [sign()], [signif()], [sin()], [sinh()], [sinpi()], [sqrt()], [sum()], [tan()], [tanh()], [tanpi()], [trigamma()] and [trunc()]. Some functions of the `stats` package are also implemented: [median()], [quantile()], [mad()], [IQR()], [fivenum()]. Also, [boxplot.stats()] is supported. Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
+#' All so-called [group generic functions][groupGeneric()] are implemented for the MIC class (such as `!`, `!=`, `<`, `>=`, [exp()], [log2()]). Some functions of the `stats` package are also implemented (such as [quantile()], [median()], [fivenum()]). Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
 #'
 #' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
 #'
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 #' 
-#' With [rescale_mic()], existing MIC ranges can be rescaled to a defined range of MIC values. This can be useful to better compare MIC distributions.
+#' With [limit_mic_range()], existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
 #'
 #' For `ggplot2`, use one of the [`scale_*_mic()`][scale_x_mic()] functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
-#' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
+#' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as a [numeric] vector. Bear in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
 #' @export
 #' @seealso [as.sir()]
@@ -142,8 +116,8 @@ VALID_MIC_LEVELS <- c(
 #' quantile(mic_data)
 #' all(mic_data < 512)
 #' 
-#' # rescale MICs using rescale_mic()
-#' rescale_mic(mic_data, mic_range = c(4, 16))
+#' # limit MICs using limit_mic_range()
+#' limit_mic_range(mic_data, mic_range = c(4, 16))
 #'
 #' # interpret MIC values
 #' as.sir(
@@ -185,15 +159,16 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
     x.bak <- NULL
     if (is.numeric(x)) {
       x.bak <- format(x, scientific = FALSE)
-      # MICs never need more than 4 decimals, so:
-      x <- format(round(x, 4), scientific = FALSE)
+      # MICs never have more than 9 decimals, so:
+      x <- format(round(x, 9), scientific = FALSE)
     } else {
       x <- as.character(unlist(x))
     }
     if (isTRUE(na.rm)) {
       x <- x[!is.na(x)]
     }
-    x[trimws2(x) == ""] <- NA
+    x <- trimws2(x)
+    x[x == ""] <- NA
     if (is.null(x.bak)) {
       x.bak <- x
     }
@@ -289,12 +264,12 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 )
 
 #' @rdname as.mic
-#' @param mic_range a manual range to plot the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
+#' @param mic_range a manual range to limit the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
-rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
+limit_mic_range <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   stop_ifnot(all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
-             "Values in `mic_range` must be valid MIC values. Unvalid: ", vector_and(mic_range[mic_range %in% c(levels(as.mic(1)), NA)]))
+             "Values in `mic_range` must be valid MIC values. Unvalid: ", vector_and(mic_range[mic_range %in% c(VALID_MIC_LEVELS, NA)]))
   x <- as.mic(x)
   if (is.null(mic_range)) {
     mic_range <- c(NA, NA)

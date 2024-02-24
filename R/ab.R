@@ -117,8 +117,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
-  x <- gsub("(specimen|specimen date|specimen_date|spec_date|gender|^dates?$)", "", x, ignore.case = TRUE, perl = TRUE)
-  # penicillin is a special case: we call it so, but then mean benzylpenicillin
+  x <- gsub("(specimen|specimen date|specimen_date|spec_date|gender|^dates?$|animal|host($|[a-z]))", "", x, ignore.case = TRUE, perl = TRUE)
+  # penicillin is a special case: we call it so, but then most often mean benzylpenicillin
   x[x %like_case% "^PENICILLIN" & x %unlike_case% "[ /+-]"] <- "benzylpenicillin"
   x_bak_clean <- x
   if (already_regex == FALSE) {

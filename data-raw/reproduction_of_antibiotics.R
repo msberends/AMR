@@ -754,12 +754,20 @@ antibiotics <- antibiotics %>%
 
 # update ATC codes from WHOCC website -------------------------------------
 
-# last time checked: 2022-10-29
+# last time checked: 2024-02-22
 
 library(rvest)
 updated_atc <- as.list(antibiotics$atc)
 
-get_atcs <- function(ab_name, url = "https://www.whocc.no/atc_ddd_index/") {
+get_atcs <- function(ab_name, type = "human") {
+  if (type == "human") {
+    url <- "https://www.whocc.no/atc_ddd_index/"
+  } else if (type == "veterinary") {
+    url <- "https://www.whocc.no/atcvet/atcvet_index/"  
+  } else {
+    stop("invalid type")
+  }
+  
   ab_name <- gsub("/", " and ", tolower(ab_name), fixed = TRUE)
 
   # we will do a search on their website, which means:
@@ -780,6 +788,7 @@ get_atcs <- function(ab_name, url = "https://www.whocc.no/atc_ddd_index/") {
     html_node("table") %>%
     # transform it to an R data set
     html_table(header = FALSE)
+  
   # and get the ATCs (first column) of only exact hits
   unique(as.character(atc_tbl[which(tolower(atc_tbl[, 2, drop = TRUE]) == ab_name), 1, drop = TRUE]))
 }
@@ -790,7 +799,10 @@ for (i in seq_len(nrow(antibiotics))) {
     " - Downloading ", antibiotics$name[i],
     appendLF = FALSE
   )
-  atcs <- get_atcs(antibiotics$name[i])
+  atcs <- get_atcs(antibiotics$name[i], type = "human")
+  if (all(is.na(atcs))) {
+    atcs <- get_atcs(antibiotics$name[i], type = "veterinary")
+  }
   if (length(atcs) > 0) {
     updated_atc[[i]] <- atcs
     message(" (", length(atcs), " results)")
@@ -805,7 +817,7 @@ antibiotics$atc <- updated_atc
 
 # update DDDs from WHOCC website ------------------------------------------
 
-# last time checked: 2022-10-29
+# last time checked: 2024-02-22
 ddd_oral <- rep(NA_real_, nrow(antibiotics))
 ddd_oral_units <- rep(NA_character_, nrow(antibiotics))
 ddd_iv <- rep(NA_real_, nrow(antibiotics))

@@ -117,7 +117,7 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 \arguments{
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to plot the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
 \item{drop}{a \link{logical} to remove intermediate MIC values, defaults to \code{FALSE}}
 
@@ -143,7 +143,7 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
+\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.

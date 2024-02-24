@@ -12,15 +12,13 @@
 \alias{as.sir.data.frame}
 \alias{sir_interpretation_history}
 \title{Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data}
-\format{
-An object of class \code{sir} (inherits from \code{ordered}, \code{factor}) of length 1.
-}
 \source{
 For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 \itemize{
-\item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-\item \strong{M100 Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
-\item \strong{Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2023, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
+\item \strong{CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
+\item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2023, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01//}.
+\item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2023, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
 }
 }
 \usage{
@@ -44,6 +42,7 @@ is_sir_eligible(x, threshold = 0.05)
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
   ...
 )
 
@@ -58,6 +57,7 @@ is_sir_eligible(x, threshold = 0.05)
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
   ...
 )
 
@@ -72,7 +72,8 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human")
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -102,7 +103,9 @@ sir_interpretation_history(clean = FALSE)
 
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}.}
+\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
+
+\item{host}{a vector (or column name) with \link{character}s to indicate the host. Only useful for veterinary breakpoints, as it requires \code{breakpoint_type = "animal"}. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with \code{\link[=set_AMR_locale]{set_AMR_locale()}} (though it will be automatically guessed based on the system language).}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -112,17 +115,22 @@ sir_interpretation_history(clean = FALSE)
 Ordered \link{factor} with new class \code{sir}
 }
 \description{
-Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
+Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
 
-Currently available \strong{breakpoint guidelines} are EUCAST 2011-2023 and CLSI 2011-2023, and available \strong{breakpoint types} are "ECOFF", "animal", and "human".
+Currently breakpoints are available:
+\itemize{
+\item For \strong{clinical microbiology} from EUCAST 2011-2023 and CLSI 2011-2023;
+\item For \strong{veterinary microbiology} from EUCAST 2021-2023 and CLSI 2019-2023;
+\item ECOFFs (Epidemiological cut-off values) from EUCAST 2020-2023 and CLSI 2022-2023.
+}
 
 All breakpoints used for interpretation are publicly available in the \link{clinical_breakpoints} data set.
 }
 \details{
-\emph{Note: The clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET} and the public use of this \code{AMR} package has been endorsed by CLSI and EUCAST, please see \link{clinical_breakpoints} for more information.}
+\emph{Note: The clinical breakpoints in this package were validated through, and imported from, \href{https://whonet.org}{WHONET}. The public use of this \code{AMR} package has been endorsed by both CLSI and EUCAST. See \link{clinical_breakpoints} for more information.}
 \subsection{How it Works}{
 
-The \code{\link[=as.sir]{as.sir()}} function works in four ways:
+The \code{\link[=as.sir]{as.sir()}} function can work in four ways:
 \enumerate{
 \item For \strong{cleaning raw / untransformed data}. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with SIR interpretations and MIC values such as \code{"<0.25; S"} will be coerced to \code{"S"}. Combined interpretations for multiple test methods (as seen in laboratory records) such as \code{"S; S"} will be coerced to \code{"S"}, but a value like \code{"S; I"} will return \code{NA} with a warning that the input is unclear.
 \item For \strong{interpreting minimum inhibitory concentration (MIC) values} according to EUCAST or CLSI. You must clean your MIC values first using \code{\link[=as.mic]{as.mic()}}, that also gives your columns the new data class \code{\link{mic}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
@@ -131,6 +139,9 @@ The \code{\link[=as.sir]{as.sir()}} function works in four ways:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.mic, as.sir)
 your_data \%>\% mutate(across(where(is.mic), as.sir))
+
+# for veterinary breakpoints, also set `host`:
+your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
 }\if{html}{\out{</div>}}
 \item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
@@ -140,6 +151,9 @@ your_data \%>\% mutate(across(where(is.mic), as.sir))
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.disk, as.sir)
 your_data \%>\% mutate(across(where(is.disk), as.sir))
+
+# for veterinary breakpoints, also set `host`:
+your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
 }\if{html}{\out{</div>}}
 }
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.sir(your_data)}.
@@ -150,7 +164,7 @@ your_data \%>\% mutate(across(where(is.disk), as.sir))
 
 \subsection{Supported Guidelines}{
 
-For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2023) and CLSI (2011-2023).
+For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are for \strong{clinical microbiology}: EUCAST 2011-2023 and CLSI 2011-2023, and for \strong{veterinary microbiology}: EUCAST 2021-2023 and CLSI 2019-2023.
 
 Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2023"} or \code{"CLSI 2023"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 
@@ -162,6 +176,12 @@ You can set the default guideline with the \link[=AMR-options]{package option} \
   # or to reset:
   options(AMR_guideline = NULL)
 }\if{html}{\out{</div>}}
+
+For veterinary guidelines, these might be the best options:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
+  options(AMR_breakpoint_type = "animal")
+}\if{html}{\out{</div>}}
 }
 
 \subsection{After Interpretation}{
@@ -171,7 +191,7 @@ After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast
 
 \subsection{Machine-Readable Clinical Breakpoints}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 29 747 rows and 12 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 29 883 rows and 13 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{

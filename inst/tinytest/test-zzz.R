@@ -98,7 +98,8 @@ call_functions <- c(
   "theme_minimal" = "ggplot2",
   "unit" = "ggplot2",
   "xlab" = "ggplot2",
-  "ylab" = "ggplot2"
+  "ylab" = "ggplot2",
+  "vec_arith" = "vctrs"
 )
 if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
   call_functions <- c(call_functions,

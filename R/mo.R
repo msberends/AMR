@@ -250,7 +250,7 @@ as.mo <- function(x,
     x_unique <- unique(x[is.na(out) & !is.na(x)])
     
     # set up progress bar
-    progress <- progress_ticker(n = length(x_unique), n_min = 10, print = info)
+    progress <- progress_ticker(n = length(x_unique), n_min = 10, print = info, title = "Converting microorganism input")
     on.exit(close(progress))
     
     msg <- character(0)

@@ -29,10 +29,13 @@
 
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
-#' @description Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing SIR values. This transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
+#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
 #' 
-#' Currently available **breakpoint guidelines** are EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, and available **breakpoint types** are `r vector_and(clinical_breakpoints$type)`.
-#'
+#' Currently breakpoints are available:
+#' - For **clinical microbiology** from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
+#' - For **veterinary microbiology** from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`;
+#' - ECOFFs (Epidemiological cut-off values) from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`.
+#' 
 #' All breakpoints used for interpretation are publicly available in the [clinical_breakpoints] data set.
 #' @rdname as.sir
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
@@ -45,16 +48,17 @@
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the [package option][AMR-options] [`AMR_include_PKPD`][AMR-options].
-#' @param breakpoint_type the type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the [package option][AMR-options] [`AMR_breakpoint_type`][AMR-options].
+#' @param breakpoint_type the type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the [package option][AMR-options] [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
+#' @param host a vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details
-#' *Note: The clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org) and the public use of this `AMR` package has been endorsed by CLSI and EUCAST, please see [clinical_breakpoints] for more information.*
+#' *Note: The clinical breakpoints in this package were validated through, and imported from, [WHONET](https://whonet.org). The public use of this `AMR` package has been endorsed by both CLSI and EUCAST. See [clinical_breakpoints] for more information.*
 #' 
 #' ### How it Works
 #'
-#' The [as.sir()] function works in four ways:
+#' The [as.sir()] function can work in four ways:
 #'
 #' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with SIR interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is unclear.
 #'
@@ -63,6 +67,9 @@
 #'      ```
 #'      your_data %>% mutate_if(is.mic, as.sir)
 #'      your_data %>% mutate(across(where(is.mic), as.sir))
+#'      
+#'      # for veterinary breakpoints, also set `host`:
+#'      your_data %>% mutate_if(is.mic, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
@@ -70,6 +77,9 @@
 #'      ```
 #'      your_data %>% mutate_if(is.disk, as.sir)
 #'      your_data %>% mutate(across(where(is.disk), as.sir))
+#'      
+#'      # for veterinary breakpoints, also set `host`:
+#'      your_data %>% mutate_if(is.disk, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
 #'      ```
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.sir(your_data)`.
 #'
@@ -77,7 +87,7 @@
 #'
 #' ### Supported Guidelines
 #'
-#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
+#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are for **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`, and for **veterinary microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`.
 #'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #'
@@ -89,6 +99,13 @@
 #'   options(AMR_guideline = "EUCAST 2020")
 #'   # or to reset:
 #'   options(AMR_guideline = NULL)
+#' ```
+#' 
+#' For veterinary guidelines, these might be the best options:
+#' 
+#' ```
+#'   options(AMR_guideline = "CLSI")
+#'   options(AMR_breakpoint_type = "animal")
 #' ```
 #'
 #' ### After Interpretation
@@ -124,9 +141,10 @@
 #' @source
 #' For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 #'
-#' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
-#' - **M100 Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m100/>.
-#' - **Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
+#' - **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' - **CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type != "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type != "animal")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m100/>.
+#' - **CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/veterinary-medicine/documents/vet01//>.
+#' - **EUCAST Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' example_isolates
@@ -226,6 +244,7 @@ as.sir <- function(x, ...) {
 
 #' @rdname as.sir
 #' @details `NA_sir_` is a missing value of the new `sir` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
+#' @format NULL
 #' @export
 NA_sir_ <- set_clean_class(factor(NA_character_, levels = c("S", "I", "R"), ordered = TRUE),
   new_class = c("sir", "ordered", "factor")
@@ -429,6 +448,7 @@ as.sir.mic <- function(x,
                        include_screening = getOption("AMR_include_screening", FALSE),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+                       host = NULL,
                        ...) {
   as_sir_method(
     method_short = "mic",
@@ -444,6 +464,7 @@ as.sir.mic <- function(x,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
     breakpoint_type = breakpoint_type,
+    host = host,
     ...
   )
 }
@@ -460,6 +481,7 @@ as.sir.disk <- function(x,
                         include_screening = getOption("AMR_include_screening", FALSE),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+                        host = NULL,
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -475,6 +497,7 @@ as.sir.disk <- function(x,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
     breakpoint_type = breakpoint_type,
+    host = NULL,
     ...
   )
 }
@@ -491,7 +514,8 @@ as.sir.data.frame <- function(x,
                               reference_data = AMR::clinical_breakpoints,
                               include_screening = getOption("AMR_include_screening", FALSE),
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
-                              breakpoint_type = getOption("AMR_breakpoint_type", "human")) {
+                              breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+                              host = NULL) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -502,7 +526,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(include_screening, allow_class = "logical", has_length = 1)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
-
+  meet_criteria(host, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
   x.bak <- x
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
@@ -516,11 +540,20 @@ as.sir.data.frame <- function(x,
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
   }
-
+  
+  # -- host
+  if (breakpoint_type == "animal") {
+    if (is.null(host)) {
+      host <- search_type_in_df(x = x, type = "host", add_col_prefix = FALSE)
+    } else if (length(host) == 1 && host %in% colnames(x)) {
+      host <- x[[host]]
+    }
+  }
+  
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
-    col_uti <- search_type_in_df(x = x, type = "uti")
+    col_uti <- search_type_in_df(x = x, type = "uti", add_col_prefix = FALSE)
   }
   if (!is.null(col_uti)) {
     if (is.logical(col_uti)) {
@@ -634,6 +667,7 @@ as.sir.data.frame <- function(x,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
           breakpoint_type = breakpoint_type,
+          host = host,
           is_data.frame = TRUE
         )
     } else if (types[i] == "disk") {
@@ -652,6 +686,7 @@ as.sir.data.frame <- function(x,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
           breakpoint_type = breakpoint_type,
+          host = host,
           is_data.frame = TRUE
         )
     } else if (types[i] == "sir") {
@@ -661,7 +696,7 @@ as.sir.data.frame <- function(x,
       if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "I", "R", NA), na.rm = TRUE)) {
         show_message <- TRUE
         # only print message if values are not already clean
-        message_("=> Cleaning values in column '", font_bold(ab), "' (",
+        message_("Cleaning values in column '", font_bold(ab), "' (",
           ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
           ab_name(ab_coerced, tolower = TRUE), ")... ",
           appendLF = FALSE,
@@ -670,7 +705,7 @@ as.sir.data.frame <- function(x,
       } else if (!is.sir(x.bak[, ab_cols[i], drop = TRUE])) {
         show_message <- TRUE
         # only print message if class not already set
-        message_("=> Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
+        message_("Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
           ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
           ab_name(ab_coerced, tolower = TRUE, language = NULL), ")... ",
           appendLF = FALSE,
@@ -679,7 +714,7 @@ as.sir.data.frame <- function(x,
       }
       x[, ab_cols[i]] <- as.sir.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
       if (show_message == TRUE) {
-        message_(" OK.", add_fn = list(font_green), as_note = FALSE)
+        message(font_green_bg(" OK "))
       }
     }
   }
@@ -709,6 +744,20 @@ get_guideline <- function(guideline, reference_data) {
   guideline_param
 }
 
+convert_host <- function(x, lang = get_AMR_locale()) {
+  x <- trimws2(tolower(x))
+  x_out <- rep(NA_character_, length(x))
+  # this order is based on: clinical_breakpoints |> filter(type == "animal") |> count(host, sort = TRUE)
+  x_out[is.na(x_out) & (x %like% "dog|canine" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
+  x_out[is.na(x_out) & (x %like% "cattle|bovine" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
+  x_out[is.na(x_out) & (x %like% "swine|suida(e)?" | x %like% translate_AMR("swine|swines", lang))] <- "swine"
+  x_out[is.na(x_out) & (x %like% "cat|feline" | x %like% translate_AMR("cat|cats|feline", lang))] <- "cats"
+  x_out[is.na(x_out) & (x %like% "horse|equine" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
+  x_out[is.na(x_out) & (x %like% "aqua|fish" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
+  x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
+  x_out
+}
+
 as_sir_method <- function(method_short,
                           method_long,
                           x,
@@ -722,6 +771,7 @@ as_sir_method <- function(method_short,
                           include_screening,
                           include_PKPD,
                           breakpoint_type,
+                          host,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE, .call_depth = -2)
@@ -735,11 +785,43 @@ as_sir_method <- function(method_short,
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
   check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
-
+  meet_criteria(host, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
+  
+  # backward compatibilty
+  dots <- list(...)
+  dots <- dots[which(!names(dots) %in% c("warn", "mo.bak", "is_data.frame"))]
+  if (length(dots) != 0) {
+    warning_("These arguments in `as.sir()` are no longer used: ", vector_and(names(dots), quotes = "`"), ".", call = FALSE)
+  }
+  
   guideline_coerced <- get_guideline(guideline, reference_data)
   
+  if (breakpoint_type == "animal") {
+    if (is.null(host)) {
+      host <- AMR_env$host_preferred_order[1]
+      if (message_not_thrown_before("as.sir", "host_missing")) {
+        message_("Animal hosts not set in `host`, assuming `host = \"", host, "\"`, since these have the highest breakpoint availability.\n\n")  
+      }
+    }
+  } else {
+    if (!is.null(host) && !all(toupper(host) %in% c("HUMAN", "ECOFF"))) {
+      if (message_not_thrown_before("as.sir", "assumed_breakpoint_animal")) {
+        message_("Assuming `breakpoint_type = \"animal\"`, since `host` is set.", ifelse(guideline_coerced %like% "EUCAST", " Do you also need to set `guideline = \"CLSI\"`?", ""), "\n\n")
+      }
+      breakpoint_type <- "animal"
+    } else {
+      host <- NA_character_
+    }
+  }
+  host <- convert_host(host)
+  host <- tolower(host)
+  host[host == "ecoff"] <- "ECOFF"
+  
   if (message_not_thrown_before("as.sir", "sir_interpretation_history")) {
-    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations. Note that some microorganisms might not have breakpoints for each antimicrobial drug in ", guideline_coerced, ".\n\n")  
+    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations. Note that some ", ifelse(breakpoint_type == "animal", "animal hosts and ", ""), "microorganisms might not have breakpoints for each antimicrobial drug in ", guideline_coerced, ".\n\n")
+  }
+  if (breakpoint_type == "animal" && message_not_thrown_before("as.sir", "host_preferred_order")) {
+    message_("Please note that in the absence of specific veterinary breakpoints for certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse, aquatic, and poultry, in that order, are used as substitutes.\n\n")
   }
   
   # for dplyr's across()
@@ -812,7 +894,9 @@ as_sir_method <- function(method_short,
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
   }
-
+  if (length(host) == 1) {
+    host <- rep(host, length(x))
+  }
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (message_not_thrown_before("as.sir", "intrinsic")) {
       warning_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
@@ -865,6 +949,7 @@ as_sir_method <- function(method_short,
     mo = mo,
     result = NA_sir_,
     uti = uti,
+    host = host,
     stringsAsFactors = FALSE
   )
   if (method == "mic") {
@@ -874,7 +959,7 @@ as_sir_method <- function(method_short,
     # when as.sir.disk is called directly
     df$values <- as.disk(df$values)
   }
-  df_unique <- unique(df[ , c("mo", "uti"), drop = FALSE])
+  df_unique <- unique(df[ , c("mo", "uti", "host"), drop = FALSE])
 
   rise_warning <- FALSE
   rise_note <- FALSE
@@ -913,7 +998,7 @@ as_sir_method <- function(method_short,
     # apparently no breakpoints found
     message(
       paste0(font_rose_bg(" WARNING "), "\n"),
-      font_black(paste0("  ", AMR_env$bullet_icon, " No ", method_coerced, " breakpoints available for ",
+      font_black(paste0("  ", AMR_env$bullet_icon, " No ", guideline_coerced, " ", method_coerced, " breakpoints available for ",
         suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
         " (", ab_coerced, ").")))
     
@@ -930,7 +1015,7 @@ as_sir_method <- function(method_short,
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
   
-  # run the rules
+  # run the rules (df_unique is a row combination per mo/ab/uti/host)
   for (i in seq_len(nrow(df_unique))) {
     p$tick()
     mo_current <- df_unique[i, "mo", drop = TRUE]
@@ -967,9 +1052,9 @@ as_sir_method <- function(method_short,
       suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
       " (", ab_coerced, ")"
     )
-
-    # gather all available breakpoints for current MO and sort on taxonomic rank
-    # (this will prefer species breakpoints over order breakpoints)
+    
+   
+    # gather all available breakpoints for current MO
     breakpoints_current <- breakpoints %pm>%
       subset(mo %in% c(
         mo_current, mo_current_genus, mo_current_family,
@@ -977,23 +1062,45 @@ as_sir_method <- function(method_short,
         mo_current_species_group,
         mo_current_other
       ))
-
+    # set the host index according to most available breakpoints (see R/zzz.R where this is set in the pkg environment)
+    breakpoints_current$host_index <- match(breakpoints_current$host, c("human", "ECOFF", AMR_env$host_preferred_order))
+    
+    # sort on host and taxonomic rank
+    # (this will prefer species breakpoints over order breakpoints)
     if (is.na(unique(uti_current))) {
       breakpoints_current <- breakpoints_current %pm>%
         # this will put UTI = FALSE first, then UTI = TRUE, then UTI = NA
-        pm_arrange(rank_index, uti) # 'uti' is a column in data set 'clinical_breakpoints'  
+        pm_arrange(host_index, rank_index, uti) # 'uti' is a column in data set 'clinical_breakpoints'  
     } else if (unique(uti_current) == TRUE) {
       breakpoints_current <- breakpoints_current %pm>%
         subset(uti == TRUE) %pm>%
         # be as specific as possible (i.e. prefer species over genus):
-        pm_arrange(rank_index)
+        pm_arrange(host_index, rank_index)
     } else if (unique(uti_current) == FALSE) {
       breakpoints_current <- breakpoints_current %pm>%
         subset(uti == FALSE) %pm>%
         # be as specific as possible (i.e. prefer species over genus):
-        pm_arrange(rank_index)
+        pm_arrange(host_index, rank_index)
     }
-
+    
+    if (NROW(breakpoints_current) == 0) {
+      # no note about missing breakpoints - it's already in the header before the interpretation starts
+      next
+    }
+    
+    # veterinary host check
+    host_current <- unique(df_unique[i, "host", drop = TRUE])[1]
+    breakpoints_current$host_match <- breakpoints_current$host == host_current
+    if (breakpoint_type == "animal") {
+      if (any(breakpoints_current$host_match == TRUE, na.rm = TRUE)) {
+        breakpoints_current <- breakpoints_current %pm>%
+          subset(host_match == TRUE)
+      } else {
+        # no breakpoint found for this host, so sort on mostly available guidelines
+        msgs <- c(msgs, paste0("No ", guideline_coerced, " breakpoints for ", font_bold(host_current), " available for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " breakpoints instead."))
+      }
+    }
+ 
     # throw notes for different body sites
     site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
     if (is.na(site)) {
@@ -1007,15 +1114,12 @@ as_sir_method <- function(method_short,
       rise_warning <- TRUE
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_coerced)) {
       # both UTI and Non-UTI breakpoints available
-      msgs <- c(msgs, paste0("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
+      msgs <- c(msgs, paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
       breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_coerced)) {
       # breakpoints for multiple body sites available
       msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
-    } else if (nrow(breakpoints_current) == 0) {
-      # # do not note - it's already in the header before the interpretation starts
-      next
     }
     
     # first check if mo is intrinsic resistant
@@ -1076,6 +1180,7 @@ as_sir_method <- function(method_short,
           method = rep(method_coerced, length(rows)),
           breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
           guideline = rep(guideline_coerced, length(rows)),
+          host = rep(breakpoints_current[, "host", drop = TRUE], length(rows)),
           ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
           uti = rep(breakpoints_current[, "uti", drop = TRUE], length(rows)),
           stringsAsFactors = FALSE

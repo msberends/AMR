@@ -237,7 +237,7 @@ addin_insert_like <- function() {
   }
 }
 
-search_type_in_df <- function(x, type, info = TRUE) {
+search_type_in_df <- function(x, type, info = TRUE, add_col_prefix = TRUE) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(type, allow_class = "character", has_length = 1)
 
@@ -280,7 +280,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
       if (!inherits(pm_pull(x, found), c("Date", "POSIXct"))) {
         stop(
           font_red(paste0(
-            "Found column '", font_bold(found), "' to be used as input for `col_", type,
+            "Found column '", font_bold(found), "' to be used as input for `", ifelse(add_col_prefix, "col_", ""), type,
             "`, but this column contains no valid dates. Transform its values to valid dates first."
           )),
           call. = FALSE
@@ -311,6 +311,14 @@ search_type_in_df <- function(x, type, info = TRUE) {
       found <- sort(colnames(x)[colnames_formatted %like_case% "^(specimen)"])
     }
   }
+  # -- host (animals)
+  if (type == "host") {
+    if (any(colnames_formatted %like_case% "^(host|animal)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "^(host|animal)"])
+    } else if (any(colnames_formatted %like_case% "((^|[^A-Za-z])host($|[^A-Za-z])|animal)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "((^|[^A-Za-z])host($|[^A-Za-z])|animal)"])
+    }
+  }
   # -- UTI (urinary tract infection)
   if (type == "uti") {
     if (any(colnames_formatted == "uti")) {
@@ -321,7 +329,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
     if (!is.null(found)) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
-        message_("Column '", font_bold(found), "' found as input for `col_", type,
+        message_("Column '", font_bold(found), "' found as input for `", ifelse(add_col_prefix, "col_", ""), type,
           "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.",
           add_fn = font_red
         )
@@ -334,9 +342,9 @@ search_type_in_df <- function(x, type, info = TRUE) {
 
   if (!is.null(found) && isTRUE(info)) {
     if (message_not_thrown_before("search_in_type", type)) {
-      msg <- paste0("Using column '", font_bold(found), "' as input for `col_", type, "`.")
+      msg <- paste0("Using column '", font_bold(found), "' as input for `", ifelse(add_col_prefix, "col_", ""), type, "`.")
       if (type %in% c("keyantibiotics", "keyantimicrobials", "specimen")) {
-        msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
+        msg <- paste(msg, "Use", font_bold(paste0(ifelse(add_col_prefix, "col_", ""), type), "= FALSE"), "to prevent this.")
       }
       message_(msg)
     }
@@ -456,7 +464,8 @@ word_wrap <- function(...,
   ops <- "([,./><\\]\\[])"
   msg <- gsub(paste0(ops, " ", ops), "\\1\\2", msg, perl = TRUE)
   # we need to correct for already applied style, that adds text like "\033[31m\"
-  msg_stripped <- font_stripstyle(msg)
+  msg_stripped <- gsub("(.*)?\\033\\]8;;.*\\a(.*?)\\033\\]8;;\\a(.*)", "\\1\\2\\3", msg, perl = TRUE) # for font_url()
+  msg_stripped <- font_stripstyle(msg_stripped)
   # where are the spaces now?
   msg_stripped_wrapped <- paste0(
     strwrap(msg_stripped,

@@ -1,13 +1,12 @@
 Package: AMR
-Version: 2.1.1.9004
-Date: 2023-12-04
+Version: 2.1.1.9006
+Date: 2024-02-24
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
   using evidence-based methods, as described in <doi:10.18637/jss.v104.i03>.
 Authors@R: c(
   person(family = "Berends",     c("Matthijs", "S."), role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7620-1800"), email = "m.s.berends@umcg.nl"),
-  person(family = "Luz",         c("Christian", "F."), role = c("aut", "ctb"), comment = c(ORCID = "0000-0001-5809-5995")),
   person(family = "Souverein",   c("Dennis"), role = c("aut", "ctb"), comment = c(ORCID = "0000-0003-0455-0336")),
   person(family = "Hassing",     c("Erwin", "E.", "A."), role = c("aut", "ctb")),
   person(family = "Albers",      c("Casper", "J."), role = "ths", comment = c(ORCID = "0000-0002-9213-6743")),
@@ -18,14 +17,18 @@ Authors@R: c(
   person(family = "Hazenberg",   c("Eric", "H.", "L.", "C.", "M."), role = "ctb"),
   person(family = "Knight",      c("Gwen"), role = "ctb", comment = c(ORCID = "0000-0002-7263-9896")),
   person(family = "Lenglet",     c("Annick"), role = "ctb", comment = c(ORCID = "0000-0003-2013-8405")),
+  person(family = "Luz",         c("Christian", "F."), role = c("ctb"), comment = c(ORCID = "0000-0001-5809-5995")),
   person(family = "Meijer",      c("Bart", "C."), role = "ctb"),
   person(family = "Mykhailenko", c("Dmytro"), role = "ctb"),
   person(family = "Mymrikov",    c("Anton"), role = "ctb"),
   person(family = "Norgan",      c("Andrew", "P."), role = "ctb", comment = c(ORCID = "0000-0002-2955-2066")),
   person(family = "Ny",          c("Sofia"), role = "ctb", comment = c(ORCID = "0000-0002-2017-1363")),
+  person(family = "Saab",        c("Matthew"), role = "ctb"),
   person(family = "Salm",        c("Jonas"), role = "ctb"),
+  person(family = "Sanchez",     c("Javier"), role = "ctb", comment = c(ORCID = "0000-0003-2605-8094")),
   person(family = "Schade",      c("Rogier", "P."), role = "ctb"),
   person(family = "Sinha",       c("Bhanu", "N.", "M."), role = "ths", comment = c(ORCID = "0000-0003-1634-0010")),
+  person(family = "Stull",       c("Jason"), role = "ctb", comment = c(ORCID = "0000-0002-9028-8153")),
   person(family = "Underwood",   c("Anthony"), role = "ctb", comment = c(ORCID = "0000-0002-8547-4277")),
   person(family = "Williams",    c("Anita"), role = "ctb", comment = c(ORCID = "0000-0002-5295-8451")))
 Depends: R (>= 3.0.0)
@@ -48,6 +51,7 @@ Suggests:
   rmarkdown,
   rvest,
   tinytest,
+  vctrs,
   xml2
 VignetteBuilder: knitr,rmarkdown
 URL: https://msberends.github.io/AMR/, https://github.com/msberends/AMR
@@ -55,5 +59,5 @@ BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)

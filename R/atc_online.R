@@ -83,7 +83,7 @@ atc_online_property <- function(atc_code,
                                 administration = "O",
                                 url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no",
                                 url_vet = "https://www.whocc.no/atcvet/atcvet_index/?code=%s&showdescription=no") {
-  meet_criteria(atc_code, allow_class = "character")
+  meet_criteria(atc_code, allow_class = "character", allow_NA = TRUE)
   meet_criteria(property, allow_class = "character", has_length = 1, is_in = c("ATC", "Name", "DDD", "U", "unit", "Adm.R", "Note", "groups"), ignore.case = TRUE)
   meet_criteria(administration, allow_class = "character", has_length = 1)
   meet_criteria(url, allow_class = "character", has_length = 1, looks_like = "https?://")
@@ -128,6 +128,10 @@ atc_online_property <- function(atc_code,
 
   for (i in seq_len(length(atc_code))) {
     progress$tick()
+    
+    if (is.na(atc_code[i])) {
+      next
+    }
 
     if (atc_code[i] %like% "^Q") {
       # veterinary drugs, ATC_vet codes start with a "Q"
@@ -176,7 +180,7 @@ atc_online_property <- function(atc_code,
       colnames(out) <- gsub("^atc.*", "atc", tolower(colnames(out)))
 
       if (length(out) == 0) {
-        warning_("in `atc_online_property()`: ATC not found: ", atc_code[i], ". Please check ", atc_url, ".")
+        message_("in `atc_online_property()`: no properties found for ATC ", atc_code[i], ". Please check ", font_url(atc_url, "this WHOCC webpage"), ".")
         returnvalue[i] <- NA
         next
       }
@@ -209,20 +213,20 @@ atc_online_property <- function(atc_code,
 #' @rdname atc_online
 #' @export
 atc_online_groups <- function(atc_code, ...) {
-  meet_criteria(atc_code, allow_class = "character")
+  meet_criteria(atc_code, allow_class = "character", allow_NA = TRUE)
   atc_online_property(atc_code = atc_code, property = "groups", ...)
 }
 
 #' @rdname atc_online
 #' @export
 atc_online_ddd <- function(atc_code, ...) {
-  meet_criteria(atc_code, allow_class = "character")
+  meet_criteria(atc_code, allow_class = "character", allow_NA = TRUE)
   atc_online_property(atc_code = atc_code, property = "ddd", ...)
 }
 
 #' @rdname atc_online
 #' @export
 atc_online_ddd_units <- function(atc_code, ...) {
-  meet_criteria(atc_code, allow_class = "character")
+  meet_criteria(atc_code, allow_class = "character", allow_NA = TRUE)
   atc_online_property(atc_code = atc_code, property = "unit", ...)
 }

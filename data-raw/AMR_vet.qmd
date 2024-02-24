@@ -1,0 +1,71 @@
+---
+title: "AMR Goes Vet"
+author: "Jason, Matthew, Javier, Matthijs"
+date: "2024-02-20"
+format: 
+  html: 
+    embed-resources: true
+---
+
+## Import WHONET data set
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+library(readr)
+library(tidyr)
+library(janitor)
+
+# WHONET version of 16th Feb 2024
+whonet_breakpoints <- read_tsv("WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"),
+                               show_col_types = FALSE, guess_max = Inf) %>%
+  filter(GUIDELINES %in% c("CLSI", "EUCAST"))
+
+dim(whonet_breakpoints)
+```
+
+# EDA of Animal Breakpoints
+
+```{r}
+whonet_breakpoints |>
+  filter(BREAKPOINT_TYPE != "Human")
+whonet_breakpoints |>
+  filter(BREAKPOINT_TYPE != "Human") |>
+  count(BREAKPOINT_TYPE)
+whonet_breakpoints |>
+  filter(BREAKPOINT_TYPE == "Animal")
+```
+
+### Count of all animal breakpoints
+
+```{r}
+whonet_breakpoints |>
+  filter(BREAKPOINT_TYPE == "Animal") |>
+  count(YEAR, HOST, REFERENCE_TABLE = gsub("VET[0-9]+ ", "", REFERENCE_TABLE)) |>
+  pivot_wider(names_from = YEAR, values_from = n, values_fill = list(n = 0)) |>
+  arrange(HOST, REFERENCE_TABLE) |> 
+  adorn_totals(name = "TOTAL")
+```
+
+### Cats only
+
+```{r}
+whonet_breakpoints |>
+  filter(HOST == "Cats", YEAR >= 2021) |> 
+  select(GUIDELINES, YEAR, TEST_METHOD, ORGANISM_CODE, R, S) |> 
+  mutate(MO_NAME = AMR::mo_shortname(ORGANISM_CODE), .before = R) |> 
+  as.data.frame()
+```
+
+### Site of infection in cats (2023)
+
+```{r}
+whonet_breakpoints |>
+  filter(HOST == "Cats", YEAR == 2023) |> 
+  mutate(MO = AMR::mo_shortname(ORGANISM_CODE),
+         AB = AMR::ab_name(WHONET_ABX_CODE),
+         SITE_OF_INFECTION = substr(SITE_OF_INFECTION, 1, 25)) |> 
+  arrange(MO, AB) |> 
+  select(MO, AB, SITE_OF_INFECTION) |> 
+  as.data.frame()
+```
+

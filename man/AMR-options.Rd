@@ -9,17 +9,17 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \section{Options}{
 
 \itemize{
-\item \code{AMR_custom_ab} \cr Allows to use custom antimicrobial drugs with this package. This is explained in \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
-\item \code{AMR_custom_mo} \cr Allows to use custom microorganisms with this package. This is explained in \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}}.
-\item \code{AMR_eucastrules} \cr Used for setting the default types of rules for \code{\link[=eucast_rules]{eucast_rules()}} function, must be one or more of: \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}.
-\item \code{AMR_guideline} \cr Used for setting the default guideline for interpreting MIC values and disk diffusion diameters with \code{\link[=as.sir]{as.sir()}}. Can be only the guideline name (e.g., \code{"CLSI"}) or the name with a year (e.g. \code{"CLSI 2019"}). The default to the latest implemented EUCAST guideline, currently \code{"EUCAST 2023"}. Supported guideline are currently EUCAST (2011-2023) and CLSI (2011-2023).
+\item \code{AMR_breakpoint_type} \cr A \link{character} to use in \code{\link[=as.sir]{as.sir()}}, to indicate which breakpoint type to use. This must be either "ECOFF", "animal", or "human".
+\item \code{AMR_cleaning_regex} \cr A \link[base:regex]{regular expression} (case-insensitive) to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to clean the user input. The default is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar".
+\item \code{AMR_custom_ab} \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
+\item \code{AMR_custom_mo} \cr A file location to an RDS file, to use custom microorganisms with this package. This is explained in \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}}.
+\item \code{AMR_eucastrules} \cr A \link{character} to set the default types of rules for \code{\link[=eucast_rules]{eucast_rules()}} function, must be one or more of: \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}.
+\item \code{AMR_guideline} \cr A \link{character} to set the default guideline for interpreting MIC values and disk diffusion diameters with \code{\link[=as.sir]{as.sir()}}. Can be only the guideline name (e.g., \code{"CLSI"}) or the name with a year (e.g. \code{"CLSI 2019"}). The default to the latest implemented EUCAST guideline, currently \code{"EUCAST 2023"}. Supported guideline are currently EUCAST (2011-2023) and CLSI (2011-2023).
 \item \code{AMR_ignore_pattern} \cr A \link[base:regex]{regular expression} to ignore (i.e., make \code{NA}) any match given in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions.
 \item \code{AMR_include_PKPD} \cr A \link{logical} to use in \code{\link[=as.sir]{as.sir()}}, to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}.
-\item \code{AMR_ecoff} \cr A \link{logical} use in \code{\link[=as.sir]{as.sir()}}, to indicate that ECOFF (Epidemiological Cut-Off) values must be used - the default is \code{FALSE}.
 \item \code{AMR_include_screening} \cr A \link{logical} to use in \code{\link[=as.sir]{as.sir()}}, to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}.
 \item \code{AMR_keep_synonyms} \cr A \link{logical} to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}.
-\item \code{AMR_cleaning_regex} \cr A \link[base:regex]{regular expression} (case-insensitive) to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to clean the user input. The default is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar".
-\item \code{AMR_locale} \cr A language to use for the \code{AMR} package, can be one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr), or Ukrainian (uk). The default is the current system language (if supported).
+\item \code{AMR_locale} \cr A \link{character} to set the language for the \code{AMR} package, can be one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr), or Ukrainian (uk). The default is the current system language (if supported, English otherwise).
 \item \code{AMR_mo_source} \cr A file location for a manual code list to be used in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions. This is explained in \code{\link[=set_mo_source]{set_mo_source()}}.
 }
 }
@@ -31,16 +31,16 @@ Settings in \R are not saved globally and are thus lost when \R is exited. You c
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{  utils::file.edit("~/.Rprofile")
 }\if{html}{\out{</div>}}
 
-In this file, you can set options such as:
+In this file, you can set options such as...
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ options(AMR_locale = "pt")
  options(AMR_include_PKPD = TRUE)
 }\if{html}{\out{</div>}}
 
-to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with \code{\link[=as.sir]{as.sir()}}.
+...to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with \code{\link[=as.sir]{as.sir()}}.
 \subsection{Share Options Within Team}{
 
-For a more global approach, e.g. within a data team, save an options file to a remote file location, such as a shared network drive. This would work in this way:
+For a more global approach, e.g. within a (data) team, save an options file to a remote file location, such as a shared network drive, and have each user read in this file automatically at start-up. This would work in this way:
 \enumerate{
 \item Save a plain text file to e.g. "X:/team_folder/R_options.R" and fill it with preferred settings.
 \item For each user, open the \code{.Rprofile} file using \code{utils::file.edit("~/.Rprofile")} and put in there:

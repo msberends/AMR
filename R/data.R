@@ -100,7 +100,7 @@
 #' - `gbif_parent`\cr GBIF identifier of the parent taxon
 #' - `gbif_renamed_to`\cr GBIF identifier of the currently valid taxon
 #' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
-#' - `prevalence`\cr Prevalence of the microorganism according to Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}), see [mo_matching_score()] for the full explanation
+#' - `prevalence`\cr Prevalence of the microorganism based on Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}), see [mo_matching_score()] for the full explanation
 #' - `snomed`\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)` (see *Source*). Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
 #' @details
 #' Please note that entries are only based on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
@@ -262,10 +262,17 @@
 
 #' Data Set with Clinical Breakpoints for SIR Interpretation
 #'
-#' Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. Currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`). Use [as.sir()] to transform MICs or disks measurements to SIR values.
+#' @description Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This dataset contain breakpoints for humans, `r length(unique(clinical_breakpoints$host[!clinical_breakpoints$host %in% clinical_breakpoints$type]))` different animal groups, and ECOFFs.
+#' 
+#' Currently available breakpoint guidelines for **clinical microbiology** are EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`.
+#' 
+#' Currently available breakpoint guidelines for **veterinary microbiology** are EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`.
+#' 
+#' Use [as.sir()] to transform MICs or disks measurements to SIR values.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(clinical_breakpoints), big.mark = " ")` observations and `r ncol(clinical_breakpoints)` variables:
 #' - `guideline`\cr Name of the guideline
 #' - `type`\cr Breakpoint type, either `r vector_or(clinical_breakpoints$type)`
+#' - `host`\cr Host of infectious agent. This is mostly useful for veterinary breakpoints and is either `r vector_or(clinical_breakpoints$host)`
 #' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method)`
 #' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]

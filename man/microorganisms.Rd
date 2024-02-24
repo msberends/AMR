@@ -21,14 +21,14 @@ A \link[tibble:tibble]{tibble} with 52 171 observations and 23 variables:
 \item \code{gbif_parent}\cr GBIF identifier of the parent taxon
 \item \code{gbif_renamed_to}\cr GBIF identifier of the currently valid taxon
 \item \code{source}\cr Either "GBIF", "LPSN", or "manually added" (see \emph{Source})
-\item \code{prevalence}\cr Prevalence of the microorganism according to Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}), see \code{\link[=mo_matching_score]{mo_matching_score()}} for the full explanation
+\item \code{prevalence}\cr Prevalence of the microorganism based on Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}), see \code{\link[=mo_matching_score]{mo_matching_score()}} for the full explanation
 \item \code{snomed}\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of July 1st, 2021 (see \emph{Source}). Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }
 }
 \source{
 \itemize{
 \item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on December 11th, 2022.
-\item GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on December 11th, 2022.
+\item GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on January 8th, 2024.
 \item Reimer, LC \emph{et al.} (2022). \strong{\emph{BacDive} in 2022: the knowledge base for standardized bacterial and archaeal data.} Nucleic Acids Res., 50(D1):D741-D74; \doi{10.1093/nar/gkab961}. Accessed from \url{https://bacdive.dsmz.de} on May 12th, 2023.
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microorganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 \item Grimont \emph{et al.} (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on \emph{Salmonella} (WHOCC-SALM).
@@ -39,7 +39,7 @@ A \link[tibble:tibble]{tibble} with 52 171 observations and 23 variables:
 microorganisms
 }
 \description{
-A data set containing the full microbial taxonomy (\strong{last updated: December 11th, 2022}) of five kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF). This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
+A data set containing the full microbial taxonomy (\strong{last updated: January 8th, 2024}) of five kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF). This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
 Please note that entries are only based on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.

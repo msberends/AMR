@@ -5,10 +5,11 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 29 747 observations and 12 variables:
+A \link[tibble:tibble]{tibble} with 29 883 observations and 13 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either "ECOFF", "animal", or "human"
+\item \code{host}\cr Host of infectious agent. This is mostly useful for veterinary breakpoints and is either "ECOFF", "aquatic", "cats", "cattle", "dogs", "horse", "human", "poultry", or "swine"
 \item \code{method}\cr Testing method, either "DISK" or "MIC"
 \item \code{site}\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
@@ -25,7 +26,13 @@ A \link[tibble:tibble]{tibble} with 29 747 observations and 12 variables:
 clinical_breakpoints
 }
 \description{
-Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2023) and CLSI (2011-2023). Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
+Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This dataset contain breakpoints for humans, 7 different animal groups, and ECOFFs.
+
+Currently available breakpoint guidelines for \strong{clinical microbiology} are EUCAST 2011-2023 and CLSI 2011-2023.
+
+Currently available breakpoint guidelines for \strong{veterinary microbiology} are EUCAST 2021-2023 and CLSI 2019-2023.
+
+Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
 }
 \details{
 \subsection{Different types of breakpoints}{

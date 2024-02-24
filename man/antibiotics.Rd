@@ -17,9 +17,9 @@
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
 \item \code{abbr}\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 174 drugs
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 179 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
-\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 146 drugs
+\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 153 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}
 \item \code{loinc}\cr All codes associated with the name of the antimicrobial drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }

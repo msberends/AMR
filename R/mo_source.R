@@ -125,13 +125,12 @@
 #' If the original file (in the previous case an Excel file) is moved or deleted, the `mo_source.rds` file will be removed upon the next use of [as.mo()] or any [`mo_*`][mo_property()] function.
 #' @export
 set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_source.rds")) {
+  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their file system.")
+
   meet_criteria(path, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(destination, allow_class = "character", has_length = 1)
   stop_ifnot(destination %like% "[.]rds$", "the `destination` must be a file location with file extension .rds.")
-
   mo_source_destination <- path.expand(destination)
-
-  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their file system.")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
     AMR_env$mo_source <- NULL
@@ -246,6 +245,12 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
       set_mo_source("")
     }
     return(NULL)
+  }
+  if (destination %unlike% "[.]rds$") {
+    current_ext <- regexpr("\\.([[:alnum:]]+)$", destination)
+    current_ext <- ifelse(current_ext > -1L, substring(destination, current_ext + 1L), "")
+    vowel <- ifelse(current_ext %like% "^[AEFHILMNORSX]", "n", "")
+    stop_("The AMR mo source must be an RDS file, not a", vowel, " ", toupper(current_ext), " file. If `\"", basename(destination), "\"` was meant as your input file, use `set_mo_source()` on this file. In any case, the option `AMR_mo_source` must be set to another path.")
   }
   if (is.null(AMR_env$mo_source)) {
     AMR_env$mo_source <- readRDS_AMR(path.expand(destination))

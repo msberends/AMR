@@ -310,7 +310,10 @@ ab_url <- function(x, open = FALSE, ...) {
 
   ab <- as.ab(x = x, ...)
   atcs <- ab_atc(ab, only_first = TRUE)
-  u <- paste0("https://www.whocc.no/atc_ddd_index/?code=", atcs, "&showdescription=no")
+  u <- character(length(atcs))
+  # veterinary codes
+  u[atcs %like% "^Q"] <- paste0("https://www.whocc.no/atcvet/atcvet_index/?code=", atcs[atcs %like% "^Q"], "&showdescription=no")
+  u[atcs %unlike% "^Q"] <- paste0("https://www.whocc.no/atc_ddd_index/?code=", atcs[atcs %unlike% "^Q"], "&showdescription=no")
   u[is.na(atcs)] <- NA_character_
   names(u) <- ab_name(ab)
 
