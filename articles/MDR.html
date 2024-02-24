@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -401,19 +401,19 @@ names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co">#&gt; 1          S         I            R          I            S            I</span></span>
-<span><span class="co">#&gt; 2          S         R            I          S            S            R</span></span>
-<span><span class="co">#&gt; 3          S         I            S          R            I            S</span></span>
-<span><span class="co">#&gt; 4          I         S            R          R            S            S</span></span>
-<span><span class="co">#&gt; 5          S         R            R          S            S            I</span></span>
-<span><span class="co">#&gt; 6          R         S            S          I            R            S</span></span>
+<span><span class="co">#&gt; 1          R         I            S          I            I            I</span></span>
+<span><span class="co">#&gt; 2          S         R            S          I            I            I</span></span>
+<span><span class="co">#&gt; 3          R         R            I          R            I            R</span></span>
+<span><span class="co">#&gt; 4          R         S            S          S            R            S</span></span>
+<span><span class="co">#&gt; 5          I         I            R          I            S            I</span></span>
+<span><span class="co">#&gt; 6          R         R            I          I            S            R</span></span>
 <span><span class="co">#&gt;   kanamycin</span></span>
 <span><span class="co">#&gt; 1         S</span></span>
 <span><span class="co">#&gt; 2         S</span></span>
-<span><span class="co">#&gt; 3         S</span></span>
+<span><span class="co">#&gt; 3         R</span></span>
 <span><span class="co">#&gt; 4         R</span></span>
-<span><span class="co">#&gt; 5         R</span></span>
-<span><span class="co">#&gt; 6         R</span></span></code></pre></div>
+<span><span class="co">#&gt; 5         I</span></span>
+<span><span class="co">#&gt; 6         I</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can
 use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -454,40 +454,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3243</td>
-<td align="right">64.86%</td>
-<td align="right">3243</td>
-<td align="right">64.86%</td>
+<td align="right">3193</td>
+<td align="right">63.86%</td>
+<td align="right">3193</td>
+<td align="right">63.86%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">946</td>
-<td align="right">18.92%</td>
-<td align="right">4189</td>
-<td align="right">83.78%</td>
+<td align="right">989</td>
+<td align="right">19.78%</td>
+<td align="right">4182</td>
+<td align="right">83.64%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">439</td>
-<td align="right">8.78%</td>
-<td align="right">4628</td>
-<td align="right">92.56%</td>
+<td align="right">451</td>
+<td align="right">9.02%</td>
+<td align="right">4633</td>
+<td align="right">92.66%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">272</td>
-<td align="right">5.44%</td>
-<td align="right">4900</td>
-<td align="right">98.00%</td>
+<td align="right">270</td>
+<td align="right">5.40%</td>
+<td align="right">4903</td>
+<td align="right">98.06%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">100</td>
-<td align="right">2.00%</td>
+<td align="right">97</td>
+<td align="right">1.94%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
