@@ -133,12 +133,12 @@ if (pkg_is_available("cli")) {
   # Support vctrs package for use in e.g. dplyr verbs
   # NOTE 2024-02-22 this is the right way - it should be 2 S3 classes in the second argument
   # S3: ab_selector
-  s3_register("vctrs::vec_ptype2", "ab_selector.default")
-  s3_register("vctrs::vec_ptype2", "ab_selector.ab_selector")
+  s3_register("vctrs::vec_ptype2", "character.ab_selector")
+  s3_register("vctrs::vec_ptype2", "ab_selector.character")
   s3_register("vctrs::vec_cast", "character.ab_selector")
   # S3: ab_selector_any_all
-  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.default")
-  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.ab_selector_any_all")
+  s3_register("vctrs::vec_ptype2", "logical.ab_selector_any_all")
+  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.logical")
   s3_register("vctrs::vec_cast", "logical.ab_selector_any_all")
   # S3: ab
   s3_register("vctrs::vec_ptype2", "ab.default")

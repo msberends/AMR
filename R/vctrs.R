@@ -34,29 +34,31 @@
 
 # see https://github.com/tidyverse/dplyr/issues/5955 why this is required
 
-# S3: ab_selector
-vec_ptype2.ab_selector.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+# S3: ab_selector ----
+# this does not need a .default method since it's used internally only
+vec_ptype2.character.ab_selector <- function(x, y, ...) {
   x
 }
-vec_ptype2.ab_selector.ab_selector <- function(x, y, ...) {
-  x
+vec_ptype2.ab_selector.character <- function(x, y, ...) {
+  y
 }
 vec_cast.character.ab_selector <- function(x, to, ...) {
   unclass(x)
 }
 
-# S3: ab_selector_any_all
-vec_ptype2.ab_selector_any_all.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+# S3: ab_selector_any_all ----
+# this does not need a .default method since it's used internally only
+vec_ptype2.logical.ab_selector_any_all <- function(x, y, ...) {
   x
 }
-vec_ptype2.ab_selector_any_all.ab_selector_any_all <- function(x, y, ...) {
-  x
+vec_ptype2.ab_selector_any_all.logical <- function(x, y, ...) {
+  y
 }
 vec_cast.logical.ab_selector_any_all <- function(x, to, ...) {
   unclass(x)
 }
 
-# S3: ab
+# S3: ab ----
 vec_ptype2.ab.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
@@ -70,7 +72,7 @@ vec_cast.ab.character <- function(x, to, ...) {
   return_after_integrity_check(x, "antimicrobial drug code", as.character(AMR_env$AB_lookup$ab))
 }
 
-# S3: av
+# S3: av ----
 vec_ptype2.av.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
@@ -84,7 +86,7 @@ vec_cast.av.character <- function(x, to, ...) {
   return_after_integrity_check(x, "antiviral drug code", as.character(AMR_env$AV_lookup$av))
 }
 
-# S3: mo
+# S3: mo ----
 vec_ptype2.mo.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
@@ -99,7 +101,7 @@ vec_cast.mo.character <- function(x, to, ...) {
   return_after_integrity_check(x, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 
-# S3: disk
+# S3: disk ----
 vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
@@ -125,7 +127,7 @@ vec_cast.disk.character <- function(x, to, ...) {
   as.disk(x)
 }
 
-# S3: mic
+# S3: mic ----
 vec_ptype2.mic.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
@@ -157,7 +159,7 @@ vec_arith.mic <- function(op, x, y, ...) {
   vctrs::vec_arith(op, as.double(x), as.double(y))
 }
 
-# S3: sir
+# S3: sir ----
 vec_ptype2.sir.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
