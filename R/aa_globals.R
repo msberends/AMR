@@ -86,8 +86,8 @@ EUCAST_VERSION_EXPERT_RULES <- list(
 
 TAXONOMY_VERSION <- list(
   GBIF = list(
-    accessed_date = as.Date("2022-12-11"),
-    citation = "GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
+    accessed_date = as.Date("2024-01-08"),
+    citation = "GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
     url = "https://www.gbif.org"
   ),
   LPSN = list(
@@ -146,6 +146,8 @@ globalVariables(c(
   "group",
   "guideline",
   "hjust",
+  "host_index",
+  "host_match",
   "input",
   "intrinsic_resistant",
   "isolates",

@@ -526,7 +526,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(include_screening, allow_class = "logical", has_length = 1)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
-  meet_criteria(host, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE)
   x.bak <- x
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
@@ -545,8 +545,8 @@ as.sir.data.frame <- function(x,
   if (breakpoint_type == "animal") {
     if (is.null(host)) {
       host <- search_type_in_df(x = x, type = "host", add_col_prefix = FALSE)
-    } else if (length(host) == 1 && host %in% colnames(x)) {
-      host <- x[[host]]
+    } else if (length(host) == 1 && as.character(host) %in% colnames(x)) {
+      host <- x[[as.character(host)]]
     }
   }
   
@@ -745,7 +745,7 @@ get_guideline <- function(guideline, reference_data) {
 }
 
 convert_host <- function(x, lang = get_AMR_locale()) {
-  x <- trimws2(tolower(x))
+  x <- trimws2(tolower(as.character(x)))
   x_out <- rep(NA_character_, length(x))
   # this order is based on: clinical_breakpoints |> filter(type == "animal") |> count(host, sort = TRUE)
   x_out[is.na(x_out) & (x %like% "dog|canine" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
@@ -785,7 +785,7 @@ as_sir_method <- function(method_short,
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
   check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
-  meet_criteria(host, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
+  meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   
   # backward compatibilty
   dots <- list(...)
@@ -804,7 +804,7 @@ as_sir_method <- function(method_short,
       }
     }
   } else {
-    if (!is.null(host) && !all(toupper(host) %in% c("HUMAN", "ECOFF"))) {
+    if (!is.null(host) && !all(toupper(as.character(host)) %in% c("HUMAN", "ECOFF"))) {
       if (message_not_thrown_before("as.sir", "assumed_breakpoint_animal")) {
         message_("Assuming `breakpoint_type = \"animal\"`, since `host` is set.", ifelse(guideline_coerced %like% "EUCAST", " Do you also need to set `guideline = \"CLSI\"`?", ""), "\n\n")
       }
