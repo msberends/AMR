@@ -12,7 +12,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -282,7 +282,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt>mic_range</dt>
-<dd><p>a manual range to plot the MIC values, e.g., <code>mic_range = c(0.001, 32)</code>. Use <code>NA</code> to set no limit on one side, e.g., <code>mic_range = c(NA, 32)</code>.</p></dd>
+<dd><p>a manual range to limit the MIC values, e.g., <code>mic_range = c(0.001, 32)</code>. Use <code>NA</code> to set no limit on one side, e.g., <code>mic_range = c(NA, 32)</code>.</p></dd>
 
 
 <dt>drop</dt>
@@ -334,7 +334,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt>breakpoint_type</dt>
-<dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>.</p></dd>
+<dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

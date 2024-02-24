@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,21 +159,31 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9004" id="amr-2119004">AMR 2.1.1.9004<a class="anchor" aria-label="anchor" href="#amr-2119004"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9008" id="amr-2119008">AMR 2.1.1.9008<a class="anchor" aria-label="anchor" href="#amr-2119008"></a></h2>
+<p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support!)</em></p>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9004">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9004"></a></h3>
-<ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents a year ago</li>
+<h3 id="a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9008">A New Milestone: One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9008"></a></h3>
+<p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change. * <code><a href="../reference/as.sir.html">as.sir()</a></code> now supports animal breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names. * The <code>clinical_breakpoints</code> data set contains all these breakpoints, and can be downloaded on our <a href="https://msberends.github.io/AMR/articles/datasets.html">download page</a>. * The <code>antibiotics</code> data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well. * <code><a href="../reference/ab_property.html">ab_atc()</a></code> now supports ATC codes of veterinary antibiotics (that all start with “Q”) * <code><a href="../reference/ab_property.html">ab_url()</a></code> now supports retrieving the WHOCC url of their ATCvet pages</p>
+</div>
+<div class="section level3">
+<h3 id="breaking-2-1-1-9008">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9008"></a></h3>
+<ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9004">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9004"></a></h3>
-<ul><li>Function group <code>scale_*_mic()</code>, namely: <code><a href="../reference/plot.html">scale_x_mic()</a></code>, <code><a href="../reference/plot.html">scale_y_mic()</a></code>, <code><a href="../reference/plot.html">scale_colour_mic()</a></code> and <code><a href="../reference/plot.html">scale_fill_mic()</a></code>. They are advanced ggplot2 extensions to allow plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.</li>
-<li>Function <code><a href="../reference/as.mic.html">rescale_mic()</a></code>, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the <code>scale_*_mic()</code> functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.</li>
+<h3 id="new-functions-2-1-1-9008">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-1-1-9008"></a></h3>
+<ul><li>The group <code>scale_*_mic()</code>, namely: <code><a href="../reference/plot.html">scale_x_mic()</a></code>, <code><a href="../reference/plot.html">scale_y_mic()</a></code>, <code><a href="../reference/plot.html">scale_colour_mic()</a></code> and <code><a href="../reference/plot.html">scale_fill_mic()</a></code>. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.</li>
+<li>
+<code><a href="../reference/as.mic.html">limit_mic_range()</a></code>, which allows to limit MIC values to a manually set range. This is the powerhouse behind the <code>scale_*_mic()</code> functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.</li>
 </ul><div class="section level4">
-<h4 id="changed-2-1-1-9004">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9004"></a></h4>
+<h4 id="changed-2-1-1-9008">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9008"></a></h4>
 <ul><li>For MICs:
-<ul><li>Added 4096 and 5 powers of 192 as valid levels (192, 384, 576, 768, 960)</li>
-<li>Added new argument <code>keep_operators</code> to <code><a href="../reference/as.mic.html">as.mic()</a></code>. This can be <code>"all"</code> (default), <code>"none"</code>, or <code>"edges"</code>.</li>
+<ul><li>Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)</li>
+<li>Added new argument <code>keep_operators</code> to <code><a href="../reference/as.mic.html">as.mic()</a></code>. This can be <code>"all"</code> (default), <code>"none"</code>, or <code>"edges"</code>. This argument is also available in the new <code><a href="../reference/as.mic.html">limit_mic_range()</a></code> and <code>scale_*_mic()</code> functions.</li>
 </ul></li>
+<li>Updated <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> to support HTML</li>
+<li>Greatly improved <code>vctrs</code> integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that <code><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">dplyr::rowwise()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/c_across.html" class="external-link">dplyr::c_across()</a></code> are now supported for e.g. columns of class <code>mic</code>. Despite this, this <code>AMR</code> package is still zero-dependent on any other package, including <code>dplyr</code> and <code>vctrs</code>.</li>
+<li>Updated all ATC codes from WHOCC</li>
+<li>Updated all antibiotic DDDs from WHOCC</li>
 </ul></div>
 </div>
 </div>

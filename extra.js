@@ -58,8 +58,8 @@ $(document).ready(function() {
       // contributors
       x = x.replace("Alex", "Prof. Alex");
       x = x.replace("Andrew", "Dr. Andrew");
-      x = x.replace("Anthony", "Dr. Anthony");
       x = x.replace("Annick", "Dr. Annick");
+      x = x.replace("Anthony", "Dr. Anthony");
       x = x.replace("Bart", "Dr. Bart");
       x = x.replace("Bhanu", "Prof. Bhanu");
       x = x.replace("Casper", "Prof. Casper");
@@ -67,6 +67,8 @@ $(document).ready(function() {
       x = x.replace("Corinna", "Dr. Corinna");
       x = x.replace("Dennis", "Dr. Dennis");
       x = x.replace("Gwen", "Dr. Gwen");
+      x = x.replace("Jason", "Dr. Jason");
+      x = x.replace("Javier", "Prof. Javier");
       x = x.replace("Jonas", "Dr. Jonas");
       x = x.replace("Judith", "Dr. Judith");
       x = x.replace("Matthijs", "Dr. Matthijs");
