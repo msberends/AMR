@@ -55,7 +55,6 @@ AMR_env$av_previously_coerced <- data.frame(
   av = character(0),
   stringsAsFactors = FALSE
 )
-AMR_env$host_preferred_order <- names(sort(table(AMR::clinical_breakpoints$host[!AMR::clinical_breakpoints$host %in% AMR::clinical_breakpoints$type]), decreasing = TRUE))
 AMR_env$sir_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
@@ -195,6 +194,8 @@ if (pkg_is_available("cli")) {
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
+  
+  AMR_env$host_preferred_order <- names(sort(table(AMR::clinical_breakpoints$host[!AMR::clinical_breakpoints$host %in% AMR::clinical_breakpoints$type]), decreasing = TRUE))
 }
 
 .onAttach <- function(lib, pkg) {
