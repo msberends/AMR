@@ -36,7 +36,7 @@ template:
   assets: "pkgdown/logos" # use logos in this folder
   bslib:
     base_font: {google: "Lato"}
-    heading_font: {google: " Lato"}
+    heading_font: {google: "Lato"}
     code_font: {google: "Fira Code"}
     navbar-bg: "#a8d5ef"
     nav-link-color: "#212529"
