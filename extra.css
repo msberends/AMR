@@ -29,6 +29,18 @@
 # ==================================================================== #
 */
 
+:root {
+  --bs-primary: #128F76 !important;
+  --bs-primary-color: #128F76 !important;
+  --bs-primary-rgb: 18, 143, 118 !important;
+  
+  --bs-secondary: #a7dbc3 !important;
+  --bs-secondary-color: #a7dbc3 !important;
+  --bs-secondary-rgb: 167, 219, 195 !important;
+  
+  --bs-bg-opacity: 1 !important;
+}
+
 /* fix some footer issues with the logos */
 @media (min-width: 576px) {
   footer .pkgdown-footer-right {
