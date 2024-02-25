@@ -35,7 +35,11 @@ template:
   bootswatch: "flatly"
   assets: "pkgdown/logos" # use logos in this folder
   bslib:
+    base_font: {google: "Lato"}
+    heading_font: {google: " Lato"}
     code_font: {google: "Fira Code"}
+    navbar-bg: "#a8d5ef"
+    nav-link-color: "#212529"
     # body-text-align: "justify"
     line-height-base: 1.75
     # the green "success" colour of this bootstrap theme should be the same as the green in our logo

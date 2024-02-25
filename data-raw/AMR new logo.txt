@@ -1,0 +1,3 @@
+green grass #a7dbc3
+green bacteria #128F76
+blue sky #a8d5ef

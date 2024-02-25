@@ -1,8 +1,9 @@
 # The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
 
+* Provides an **all-in-one solution** for AMR data analysis in a One Health approach
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** and data on **all antimicrobial drugs**
-* Applies all recent **CLSI and EUCAST clinical breakpoints** for MICs and disk zones
+* Applies all recent **CLSI and EUCAST clinical and veterinary breakpoints** for  MICs and disk zones
 * Corrects for duplicate isolates, **calculates and predicts AMR** per antibiotic class
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC** and **SNOMED CT**
 * Works on Windows, macOS and Linux with **all versions of R** since R-3.0 and is completely **dependency-free**, highly suitable for places with **limited resources**
