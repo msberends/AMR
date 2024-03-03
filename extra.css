@@ -34,7 +34,7 @@
   --bs-primary-color: #a7dbc3 !important;
   --bs-primary-rgb: 167, 219, 195 !important;
   --bs-secondary: #ffffff !important;
-  --bs-secondary-color: #ffffff !important;
+  --bs-secondary-color: var(--bs-success) !important;
   --bs-secondary-rgb: 255, 255, 255 !important;
   --bs-navbar-brand-color: var(--bs-body-color) !important;
   --bs-navbar-brand-color-hover: var(--bs-body-color) !important;
