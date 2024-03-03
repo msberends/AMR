@@ -29,18 +29,30 @@
 # ==================================================================== #
 */
 
-:root {
-  --bs-primary: #128F76 !important;
-  --bs-primary-color: #128F76 !important;
-  --bs-primary-rgb: 18, 143, 118 !important;
-  
-  --bs-secondary: #a7dbc3 !important;
-  --bs-secondary-color: #a7dbc3 !important;
-  --bs-secondary-rgb: 167, 219, 195 !important;
-  
+:root, .navbar * {
+  --bs-primary: #a7dbc3 !important;
+  --bs-primary-color: #a7dbc3 !important;
+  --bs-primary-rgb: 167, 219, 195 !important;
+  --bs-secondary: #ffffff !important;
+  --bs-secondary-color: #ffffff !important;
+  --bs-secondary-rgb: 255, 255, 255 !important;
+  --bs-navbar-brand-color: var(--bs-body-color) !important;
+  --bs-navbar-brand-color-hover: var(--bs-body-color) !important;
+  --bs-nav-link-color: var(--bs-body-color) !important;
   --bs-bg-opacity: 1 !important;
 }
+.nav-text.text-muted {
+  color: var(--bs-success) !important;
+}
 
+.template-home img.logo {
+  width: 200px;
+}
+@media (max-width: 575.98px) {
+  .template-home img.logo {
+    width: 140px;
+  }
+}
 /* fix some footer issues with the logos */
 @media (min-width: 576px) {
   footer .pkgdown-footer-right {
