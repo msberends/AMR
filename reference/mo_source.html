@@ -12,7 +12,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -200,53 +200,53 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
 
 <p>Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>         A          <span class="sc">|</span>            B          <span class="sc">|</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span><span class="er">|</span><span class="sc">--------------------</span><span class="er">|</span><span class="sc">-----------------------</span><span class="er">|</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">|</span> Organisation XYZ   <span class="sc">|</span> mo                    <span class="sc">|</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">|</span> lab_mo_ecoli       <span class="sc">|</span> Escherichia coli      <span class="sc">|</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">|</span> lab_mo_kpneumoniae <span class="sc">|</span> Klebsiella pneumoniae <span class="sc">|</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">|</span>                    <span class="er">|</span>                       <span class="er">|</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="sc">|</span>         A          <span class="sc">|</span>            B          <span class="sc">|</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">--</span><span class="er">|</span><span class="sc">--------------------</span><span class="er">|</span><span class="sc">-----------------------</span><span class="er">|</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dv">1</span> <span class="sc">|</span> Organisation XYZ   <span class="sc">|</span> mo                    <span class="sc">|</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dv">2</span> <span class="sc">|</span> lab_mo_ecoli       <span class="sc">|</span> Escherichia coli      <span class="sc">|</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dv">3</span> <span class="sc">|</span> lab_mo_kpneumoniae <span class="sc">|</span> Klebsiella pneumoniae <span class="sc">|</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="dv">4</span> <span class="sc">|</span>                    <span class="er">|</span>                       <span class="er">|</span></span></code></pre><p></p></div>
 <p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_mo_source</span>(<span class="st">"home/me/ourcodes.xlsx"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       "Organisation XYZ" and "mo"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">set_mo_source</span>(<span class="st">"home/me/ourcodes.xlsx"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt;       "Organisation XYZ" and "mo"</span></span></code></pre><p></p></div>
 <p>It has now created a file <code>"~/mo_source.rds"</code> with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.</p>
 <p>And now we can use it in our functions:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.mo</span>(<span class="st">"lab_mo_ecoli"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class 'mo'</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] B_ESCHR_COLI</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mo_genus</span>(<span class="st">"lab_mo_kpneumoniae"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Klebsiella"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># other input values still work too</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">as.mo</span>(<span class="fu">c</span>(<span class="st">"Escherichia coli"</span>, <span class="st">"E. coli"</span>, <span class="st">"lab_mo_ecoli"</span>))</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Translation to one microorganism was guessed with uncertainty.</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Use mo_uncertainties() to review it.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class 'mo'</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">as.mo</span>(<span class="st">"lab_mo_ecoli"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; Class 'mo'</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; [1] B_ESCHR_COLI</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">mo_genus</span>(<span class="st">"lab_mo_kpneumoniae"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; [1] "Klebsiella"</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># other input values still work too</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">as.mo</span>(<span class="fu">c</span>(<span class="st">"Escherichia coli"</span>, <span class="st">"E. coli"</span>, <span class="st">"lab_mo_ecoli"</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Translation to one microorganism was guessed with uncertainty.</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;       Use mo_uncertainties() to review it.</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; Class 'mo'</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span></span></code></pre><p></p></div>
 <p>If we edit the Excel file by, let's say, adding row 4 like this:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>         A          <span class="sc">|</span>            B          <span class="sc">|</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span><span class="er">|</span><span class="sc">--------------------</span><span class="er">|</span><span class="sc">-----------------------</span><span class="er">|</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">|</span> Organisation XYZ   <span class="sc">|</span> mo                    <span class="sc">|</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">|</span> lab_mo_ecoli       <span class="sc">|</span> Escherichia coli      <span class="sc">|</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">|</span> lab_mo_kpneumoniae <span class="sc">|</span> Klebsiella pneumoniae <span class="sc">|</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">|</span> lab_Staph_aureus   <span class="sc">|</span> Staphylococcus aureus <span class="sc">|</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">|</span>                    <span class="er">|</span>                       <span class="er">|</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="sc">|</span>         A          <span class="sc">|</span>            B          <span class="sc">|</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">--</span><span class="er">|</span><span class="sc">--------------------</span><span class="er">|</span><span class="sc">-----------------------</span><span class="er">|</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dv">1</span> <span class="sc">|</span> Organisation XYZ   <span class="sc">|</span> mo                    <span class="sc">|</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dv">2</span> <span class="sc">|</span> lab_mo_ecoli       <span class="sc">|</span> Escherichia coli      <span class="sc">|</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dv">3</span> <span class="sc">|</span> lab_mo_kpneumoniae <span class="sc">|</span> Klebsiella pneumoniae <span class="sc">|</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="dv">4</span> <span class="sc">|</span> lab_Staph_aureus   <span class="sc">|</span> Staphylococcus aureus <span class="sc">|</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="dv">5</span> <span class="sc">|</span>                    <span class="er">|</span>                       <span class="er">|</span></span></code></pre><p></p></div>
 <p>...any new usage of an MO function in this package will update your data file:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.mo</span>(<span class="st">"lab_mo_ecoli"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        "Organisation XYZ" and "mo"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class 'mo'</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] B_ESCHR_COLI</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mo_genus</span>(<span class="st">"lab_Staph_aureus"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Staphylococcus"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">as.mo</span>(<span class="st">"lab_mo_ecoli"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt;        "Organisation XYZ" and "mo"</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; Class 'mo'</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; [1] B_ESCHR_COLI</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">mo_genus</span>(<span class="st">"lab_Staph_aureus"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; [1] "Staphylococcus"</span></span></code></pre><p></p></div>
 <p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_mo_source</span>(<span class="cn">NULL</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Removed mo_source file '/Users/me/mo_source.rds'</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">set_mo_source</span>(<span class="cn">NULL</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; Removed mo_source file '/Users/me/mo_source.rds'</span></span></code></pre><p></p></div>
 <p>If the original file (in the previous case an Excel file) is moved or deleted, the <code>mo_source.rds</code> file will be removed upon the next use of <code><a href="as.mo.html">as.mo()</a></code> or any <code><a href="mo_property.html">mo_*</a></code> function.</p>
     </div>
 

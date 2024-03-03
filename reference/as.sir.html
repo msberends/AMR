@@ -24,7 +24,7 @@ All breakpoints used for interpretation are publicly available in the clinical_b
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -332,19 +332,19 @@ All breakpoints used for interpretation are publicly available in the clinical_b
 
 <p>The <code>as.sir()</code> function can work in four ways:</p><ol><li><p>For <strong>cleaning raw / untransformed data</strong>. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with SIR interpretations and MIC values such as <code>"&lt;0.25; S"</code> will be coerced to <code>"S"</code>. Combined interpretations for multiple test methods (as seen in laboratory records) such as <code>"S; S"</code> will be coerced to <code>"S"</code>, but a value like <code>"S; I"</code> will return <code>NA</code> with a warning that the input is unclear.</p></li>
 <li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href="as.mic.html">as.mic()</a></code>, that also gives your columns the new data class <code><a href="as.mic.html">mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Using <code>dplyr</code>, SIR interpretation can be done very easily with either:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.mic, as.sir)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.mic), as.sir))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.mic, as.sir, <span class="at">host =</span> <span class="st">"column_with_animal_hosts"</span>, <span class="at">guideline =</span> <span class="st">"CLSI"</span>)</span></code></pre><p></p></div></li>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.mic, as.sir)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.mic), as.sir))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.mic, as.sir, <span class="at">host =</span> <span class="st">"column_with_animal_hosts"</span>, <span class="at">guideline =</span> <span class="st">"CLSI"</span>)</span></code></pre><p></p></div></li>
 <li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
 </ul></li>
 <li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href="as.disk.html">as.disk()</a></code>, that also gives your columns the new data class <code><a href="as.disk.html">disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Using <code>dplyr</code>, SIR interpretation can be done very easily with either:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.disk, as.sir)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.disk), as.sir))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.disk, as.sir, <span class="at">host =</span> <span class="st">"column_with_animal_hosts"</span>, <span class="at">guideline =</span> <span class="st">"CLSI"</span>)</span></code></pre><p></p></div></li>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.disk, as.sir)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.disk), as.sir))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate_if</span>(is.disk, as.sir, <span class="at">host =</span> <span class="st">"column_with_animal_hosts"</span>, <span class="at">guideline =</span> <span class="st">"CLSI"</span>)</span></code></pre><p></p></div></li>
 </ul></li>
 <li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.sir(your_data)</code>.</p></li>
 </ol><p><strong>For points 2, 3 and 4: Use <code>sir_interpretation_history()</code></strong> to retrieve a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> (or <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> if the <code>tibble</code> package is installed) with all results of the last <code>as.sir()</code> call.</p>
@@ -357,14 +357,14 @@ All breakpoints used for interpretation are publicly available in the clinical_b
 <p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are for <strong>clinical microbiology</strong>: EUCAST 2011-2023 and CLSI 2011-2023, and for <strong>veterinary microbiology</strong>: EUCAST 2021-2023 and CLSI 2019-2023.</p>
 <p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2023"</code> or <code>"CLSI 2023"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
 <p>You can set the default guideline with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_guideline</a></code> (e.g. in your <code>.Rprofile</code> file), such as:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI 2018"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"EUCAST 2020"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># or to reset:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="cn">NULL</span>)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI 2018"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"EUCAST 2020"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="co"># or to reset:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="cn">NULL</span>)</span></code></pre><p></p></div>
 <p>For veterinary guidelines, these might be the best options:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_breakpoint_type =</span> <span class="st">"animal"</span>)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_breakpoint_type =</span> <span class="st">"animal"</span>)</span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -592,19 +592,19 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_user    mo_user    ab   mo                input</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-02-25 <span style="color: #949494;">16:00:49</span>     1 TOB        Escherich… TOB  B_[ORD]_ENTRBCTR 16    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-02-25 <span style="color: #949494;">16:00:49</span>     1 GEN        Escherich… GEN  B_[ORD]_ENTRBCTR 18    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-02-25 <span style="color: #949494;">16:00:48</span>     1 CIP        Escherich… CIP  B_[ORD]_ENTRBCTR  0.256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-02-25 <span style="color: #949494;">16:00:48</span>     1 AMP        Escherich… AMP  B_[ORD]_ENTRBCTR  8    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     1 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      0.01 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     2 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      2    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     3 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      4    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     4 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      8    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     1 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      2    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     1 TOB        Escherich… TOB  B_[ORD]_ENTRBCTR 16    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     1 GEN        Escherich… GEN  B_[ORD]_ENTRBCTR 18    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2024-02-25 <span style="color: #949494;">16:00:44</span>     1 AMP        Escherich… AMP  B_[ORD]_ENTRBCTR 20    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2024-02-25 <span style="color: #949494;">16:00:43</span>     1 ampicillin Strep pneu AMP  B_STRPT_PNMN     18    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-03-03 <span style="color: #949494;">22:03:54</span>     1 TOB        Escherich… TOB  B_[ORD]_ENTRBCTR 16    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-03-03 <span style="color: #949494;">22:03:54</span>     1 GEN        Escherich… GEN  B_[ORD]_ENTRBCTR 18    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-03-03 <span style="color: #949494;">22:03:54</span>     1 CIP        Escherich… CIP  B_[ORD]_ENTRBCTR  0.256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-03-03 <span style="color: #949494;">22:03:54</span>     1 AMP        Escherich… AMP  B_[ORD]_ENTRBCTR  8    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     1 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      0.01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     2 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     3 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      4    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     4 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      8    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     1 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     1 TOB        Escherich… TOB  B_[ORD]_ENTRBCTR 16    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     1 GEN        Escherich… GEN  B_[ORD]_ENTRBCTR 18    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2024-03-03 <span style="color: #949494;">22:03:49</span>     1 AMP        Escherich… AMP  B_[ORD]_ENTRBCTR 20    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2024-03-03 <span style="color: #949494;">22:03:48</span>     1 ampicillin Strep pneu AMP  B_STRPT_PNMN     18    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: outcome &lt;sir&gt;, method &lt;chr&gt;, breakpoint_S_R &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   guideline &lt;chr&gt;, host &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;</span></span>
 <span class="r-in"><span></span></span>

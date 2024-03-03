@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,18 +159,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9012" id="amr-2119012">AMR 2.1.1.9012<a class="anchor" aria-label="anchor" href="#amr-2119012"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9013" id="amr-2119013">AMR 2.1.1.9013<a class="anchor" aria-label="anchor" href="#amr-2119013"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support!)</em></p>
 <div class="section level5">
-<h5 id="a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9012">A New Milestone: One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9012"></a></h5>
+<h5 id="a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9013">A New Milestone: One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9013"></a></h5>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 </div>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9012">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9012"></a></h3>
+<h3 id="breaking-2-1-1-9013">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9013"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9012">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9012"></a></h3>
+<h3 id="new-2-1-1-9013">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9013"></a></h3>
 <ul><li>The function group <code>scale_*_mic()</code>, namely: <code><a href="../reference/plot.html">scale_x_mic()</a></code>, <code><a href="../reference/plot.html">scale_y_mic()</a></code>, <code><a href="../reference/plot.html">scale_colour_mic()</a></code> and <code><a href="../reference/plot.html">scale_fill_mic()</a></code>. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.</li>
 <li>Function <code><a href="../reference/as.mic.html">limit_mic_range()</a></code>, which allows to limit MIC values to a manually set range. This is the powerhouse behind the <code>scale_*_mic()</code> functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.</li>
 <li>One Health implementation
@@ -184,7 +184,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-1-1-9012">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9012"></a></h3>
+<h3 id="changed-2-1-1-9013">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9013"></a></h3>
 <ul><li>For MICs:
 <ul><li>Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)</li>
 <li>Added new argument <code>keep_operators</code> to <code><a href="../reference/as.mic.html">as.mic()</a></code>. This can be <code>"all"</code> (default), <code>"none"</code>, or <code>"edges"</code>. This argument is also available in the new <code><a href="../reference/as.mic.html">limit_mic_range()</a></code> and <code>scale_*_mic()</code> functions.</li>
@@ -195,7 +195,7 @@
 <li>Updated all antibiotic DDDs from WHOCC</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-2-1-1-9012">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9012"></a></h3>
+<h3 id="other-2-1-1-9013">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9013"></a></h3>
 <ul><li>Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input</li>
 </ul></div>
 </div>
@@ -337,7 +337,7 @@
 <h4 id="antibiotic-agents-and-selectors-2-0-0">Antibiotic agents and selectors<a class="anchor" aria-label="anchor" href="#antibiotic-agents-and-selectors-2-0-0"></a></h4>
 <p>The new function <code><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code> allows users to add custom antimicrobial codes and names to the <code>AMR</code> package.</p>
 <p>The <code>antibiotics</code> data set was greatly updated:</p>
-<ul><li>The following 20 antibiotics have been added (also includes the <a href="https://www.whocc.no/atc_ddd_index/?code=J01RA&amp;showdescription=no" class="external-link">new J01RA ATC group</a>): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)</li>
+<ul><li>The following 20 antibiotics have been added (also includes the <a href="https://atcddd.fhi.no/atc_ddd_index/?code=J01RA&amp;showdescription=no" class="external-link">new J01RA ATC group</a>): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)</li>
 <li>Added some missing ATC codes</li>
 <li>Updated DDDs and PubChem Compound IDs</li>
 <li>Updated some antibiotic name spelling, now used by WHOCC (such as cephalexin -&gt; cefalexin, and phenethicillin -&gt; pheneticillin)</li>
@@ -348,7 +348,7 @@
 <div class="section level4">
 <h4 id="antiviral-agents-2-0-0">Antiviral agents<a class="anchor" aria-label="anchor" href="#antiviral-agents-2-0-0"></a></h4>
 <p>We now added extensive support for antiviral agents! For the first time, the <code>AMR</code> package has extensive support for antiviral drugs and to work with their names, codes and other data in any way.</p>
-<ul><li>The <code>antivirals</code> data set has been extended with 18 new drugs (also from the <a href="https://www.whocc.no/atc_ddd_index/?code=J05AJ&amp;showdescription=no" class="external-link">new J05AJ ATC group</a>) and now also contains antiviral identifiers and LOINC codes</li>
+<ul><li>The <code>antivirals</code> data set has been extended with 18 new drugs (also from the <a href="https://atcddd.fhi.no/atc_ddd_index/?code=J05AJ&amp;showdescription=no" class="external-link">new J05AJ ATC group</a>) and now also contains antiviral identifiers and LOINC codes</li>
 <li>A new data type <code>av</code> (<em>antivirals</em>) has been added, which is functionally similar to <code>ab</code> for antibiotics</li>
 <li>Functions <code><a href="../reference/as.av.html">as.av()</a></code>, <code><a href="../reference/av_property.html">av_name()</a></code>, <code><a href="../reference/av_property.html">av_atc()</a></code>, <code><a href="../reference/av_property.html">av_synonyms()</a></code>, <code><a href="../reference/av_from_text.html">av_from_text()</a></code> have all been added as siblings to their <code>ab_*()</code> equivalents</li>
 </ul></div>
