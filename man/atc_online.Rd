@@ -7,15 +7,15 @@
 \alias{atc_online_ddd_units}
 \title{Get ATC Properties from WHOCC Website}
 \source{
-\url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
+\url{https://atcddd.fhi.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 }
 \usage{
 atc_online_property(
   atc_code,
   property,
   administration = "O",
-  url = "https://www.whocc.no/atc_ddd_index/?code=\%s&showdescription=no",
-  url_vet = "https://www.whocc.no/atcvet/atcvet_index/?code=\%s&showdescription=no"
+  url = "https://atcddd.fhi.no/atc_ddd_index/?code=\%s&showdescription=no",
+  url_vet = "https://atcddd.fhi.no/atcvet/atcvet_index/?code=\%s&showdescription=no"
 )
 
 atc_online_groups(atc_code, ...)

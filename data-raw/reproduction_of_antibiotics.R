@@ -761,9 +761,9 @@ updated_atc <- as.list(antibiotics$atc)
 
 get_atcs <- function(ab_name, type = "human") {
   if (type == "human") {
-    url <- "https://www.whocc.no/atc_ddd_index/"
+    url <- "https://atcddd.fhi.no/atc_ddd_index/"
   } else if (type == "veterinary") {
-    url <- "https://www.whocc.no/atcvet/atcvet_index/"  
+    url <- "https://atcddd.fhi.no/atcvet/atcvet_index/"  
   } else {
     stop("invalid type")
   }

@@ -34,7 +34,7 @@ library(rvest)
 # get all data from the WHOCC website
 get_atc_table <- function(atc_group) {
   # give as input J0XXX, like atc_group = "J05AB"
-  downloaded <- read_html(paste0("https://www.whocc.no/atc_ddd_index/?code=", atc_group, "&showdescription=no"))
+  downloaded <- read_html(paste0("https://atcddd.fhi.no/atc_ddd_index/?code=", atc_group, "&showdescription=no"))
   table_title <- downloaded %>%
     html_nodes(paste0('a[href^="./?code=', atc_group, '&"]')) %>%
     html_text()
@@ -62,7 +62,7 @@ get_atc_table <- function(atc_group) {
   )
 }
 
-# these are the relevant groups for input: https://www.whocc.no/atc_ddd_index/?code=J05A (J05 only contains J05A)
+# these are the relevant groups for input: https://atcddd.fhi.no/atc_ddd_index/?code=J05A (J05 only contains J05A)
 atc_groups <- c("J05AA", "J05AB", "J05AC", "J05AD", "J05AE", "J05AF", "J05AG", "J05AH", "J05AJ", "J05AP", "J05AR", "J05AX")
 
 # get the first

@@ -103,7 +103,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @section Antibiotics:
 #' To define antibiotics column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 #'
-#' The following antibiotics are eligible for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://www.whocc.no/atc/structure_and_principles/))', sorted alphabetically:
+#' The following antibiotics are eligible for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://atcddd.fhi.no/atc/structure_and_principles/))', sorted alphabetically:
 #'
 #' `r create_eucast_ab_documentation()`
 #' @aliases EUCAST

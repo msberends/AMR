@@ -164,7 +164,7 @@ av_ddd <- function(x, administration = "oral", ...) {
     warning_(
       "in `av_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
-      "www.whocc.no/ddd/list_of_ddds_combined_products/"
+      "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
   }
   out
@@ -184,7 +184,7 @@ av_ddd_units <- function(x, administration = "oral", ...) {
     warning_(
       "in `av_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
-      "www.whocc.no/ddd/list_of_ddds_combined_products/"
+      "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
   }
   out
@@ -227,7 +227,7 @@ av_url <- function(x, open = FALSE, ...) {
 
   av <- as.av(x = x, ...)
   atcs <- av_atc(av, only_first = TRUE)
-  u <- paste0("https://www.whocc.no/atc_ddd_index/?code=", atcs, "&showdescription=no")
+  u <- paste0("https://atcddd.fhi.no/atc_ddd_index/?code=", atcs, "&showdescription=no")
   u[is.na(atcs)] <- NA_character_
   names(u) <- av_name(av)
 

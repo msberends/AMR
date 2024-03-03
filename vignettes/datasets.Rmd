@@ -170,7 +170,7 @@ The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stat
 
 This data set contains all EARS-Net and ATC codes gathered from WHO and WHONET, and all compound IDs from PubChem. It also contains all brand names (synonyms) as found on PubChem and Defined Daily Doses (DDDs) for oral and parenteral administration.
 
-* [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://www.whocc.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
+* [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://atcddd.fhi.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
 * [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
 * [WHONET software 2019](https://whonet.org)
 * [LOINC (Logical Observation Identifiers Names and Codes)](https://loinc.org)
@@ -198,7 +198,7 @@ The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stat
 
 This data set contains all ATC codes gathered from WHO and all compound IDs from PubChem. It also contains all brand names (synonyms) as found on PubChem and Defined Daily Doses (DDDs) for oral and parenteral administration.
 
-* [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://www.whocc.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
+* [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://atcddd.fhi.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
 * [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
 * [LOINC (Logical Observation Identifiers Names and Codes)](https://loinc.org)
 

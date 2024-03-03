@@ -49,7 +49,7 @@
 #'
 #' Note: the [as.av()] and [`av_*`][av_property()] functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 #' @section Source:
-#' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
+#' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://atcddd.fhi.no/atc_ddd_index/}
 #'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
 #' @aliases av

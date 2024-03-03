@@ -4,7 +4,7 @@ library(tidyr)
 library(AMR)
 # we need J01, J02 and J04 (J03 does not exist)
 
-url <- "https://www.whocc.no/atc_ddd_index/?code={code}&showdescription=no"
+url <- "https://atcddd.fhi.no/atc_ddd_index/?code={code}&showdescription=no"
 complete_vector <- character(0)
 for (Jxx in c("J01", "J02", "J04")) {
   site <- gsub("{code}", Jxx, url, fixed = TRUE)

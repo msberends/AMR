@@ -96,7 +96,7 @@
 #'
 #'
 #' # Add Co-fluampicil, which is one of the many J01CR50 codes, see
-#' # https://www.whocc.no/ddd/list_of_ddds_combined_products/
+#' # https://atcddd.fhi.no/ddd/list_of_ddds_combined_products/
 #' add_custom_antimicrobials(
 #'   data.frame(
 #'     ab = "COFLU",

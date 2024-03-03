@@ -67,7 +67,7 @@
 #' Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @source
 #'
-#' * World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
+#' * World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://atcddd.fhi.no/atc_ddd_index/>
 #'
 #' * `r TAXONOMY_VERSION$LOINC$citation` Accessed from <`r TAXONOMY_VERSION$LOINC$url`> on `r documentation_date(TAXONOMY_VERSION$LOINC$accessed_date)`.
 #'

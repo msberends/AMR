@@ -245,7 +245,7 @@ ab_ddd <- function(x, administration = "oral", ...) {
     warning_(
       "in `ab_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
-      "www.whocc.no/ddd/list_of_ddds_combined_products/"
+      "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
   }
   out
@@ -265,7 +265,7 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
     warning_(
       "in `ab_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
-      "www.whocc.no/ddd/list_of_ddds_combined_products/"
+      "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
   }
   out
@@ -312,8 +312,8 @@ ab_url <- function(x, open = FALSE, ...) {
   atcs <- ab_atc(ab, only_first = TRUE)
   u <- character(length(atcs))
   # veterinary codes
-  u[atcs %like% "^Q"] <- paste0("https://www.whocc.no/atcvet/atcvet_index/?code=", atcs[atcs %like% "^Q"], "&showdescription=no")
-  u[atcs %unlike% "^Q"] <- paste0("https://www.whocc.no/atc_ddd_index/?code=", atcs[atcs %unlike% "^Q"], "&showdescription=no")
+  u[atcs %like% "^Q"] <- paste0("https://atcddd.fhi.no/atcvet/atcvet_index/?code=", atcs[atcs %like% "^Q"], "&showdescription=no")
+  u[atcs %unlike% "^Q"] <- paste0("https://atcddd.fhi.no/atc_ddd_index//?code=", atcs[atcs %unlike% "^Q"], "&showdescription=no")
   u[is.na(atcs)] <- NA_character_
   names(u) <- ab_name(ab)
 

@@ -64,7 +64,7 @@
 #' **N.B. This function requires an internet connection and only works if the following packages are installed: `curl`, `rvest`, `xml2`.**
 #' @export
 #' @rdname atc_online
-#' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
+#' @source <https://atcddd.fhi.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
 #' \donttest{
 #' if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("xml2")) {
@@ -81,8 +81,8 @@
 atc_online_property <- function(atc_code,
                                 property,
                                 administration = "O",
-                                url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no",
-                                url_vet = "https://www.whocc.no/atcvet/atcvet_index/?code=%s&showdescription=no") {
+                                url = "https://atcddd.fhi.no/atc_ddd_index/?code=%s&showdescription=no",
+                                url_vet = "https://atcddd.fhi.no/atcvet/atcvet_index/?code=%s&showdescription=no") {
   meet_criteria(atc_code, allow_class = "character", allow_NA = TRUE)
   meet_criteria(property, allow_class = "character", has_length = 1, is_in = c("ATC", "Name", "DDD", "U", "unit", "Adm.R", "Note", "groups"), ignore.case = TRUE)
   meet_criteria(administration, allow_class = "character", has_length = 1)
