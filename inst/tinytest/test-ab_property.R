@@ -66,8 +66,7 @@ expect_equal(
   c("101477-8", "101478-6", "18864-9", "18865-6", "20374-5", "21066-6", "23618-2", "27-3", "28-1", "29-9", "30-7", "31-5", "32-3", "33-1", "3355-5", "33562-0", "33919-2", "34-9", "43883-8", "43884-6", "6979-9", "6980-7", "87604-5")
 )
 
-expect_true(ab_url("AMX") %like% "whocc.no")
-# expect_warning(ab_url("ASP"))
+expect_true(ab_url("AMX") %like% "fhi[.]no")
 
 expect_identical(
   colnames(set_ab_names(example_isolates[, 17:22])),

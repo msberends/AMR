@@ -60,5 +60,4 @@ expect_equal(
   c("29113-8", "30273-7", "30287-7", "30303-2", "78772-1", "78773-9", "79134-3", "80118-3")
 )
 
-expect_true(av_url("ACI") %like% "whocc.no")
-# expect_warning(av_url("ASP"))
+expect_true(av_url("ACI") %like% "fhi[.]no")
