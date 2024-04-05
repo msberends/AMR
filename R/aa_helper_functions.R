@@ -875,7 +875,7 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     if ("logical" %in% allow_class) {
       is_in <- is_in[!is_in %in% c("TRUE", "FALSE")]
     }
-    or_values <- vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class)))
+    or_values <- vector_or(is_in, quotes = !isTRUE(any(c("numeric", "integer") %in% allow_class)))
     if ("logical" %in% allow_class) {
       or_values <- paste0(or_values, ", or TRUE or FALSE")
     }

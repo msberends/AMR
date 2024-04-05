@@ -165,11 +165,6 @@ pillar_shaft.disk <- function(x, ...) {
   create_pillar_column(out, align = "right", width = 2)
 }
 
-# will be exported using s3_register() in R/zzz.R
-type_sum.disk <- function(x, ...) {
-  "disk"
-}
-
 #' @method print disk
 #' @export
 #' @noRd

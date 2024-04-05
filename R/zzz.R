@@ -106,7 +106,6 @@ if (pkg_is_available("cli")) {
   s3_register("pillar::type_sum", "mo")
   s3_register("pillar::type_sum", "sir")
   s3_register("pillar::type_sum", "mic")
-  s3_register("pillar::type_sum", "disk")
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "sir")
@@ -156,6 +155,8 @@ if (pkg_is_available("cli")) {
   s3_register("vctrs::vec_cast", "character.mo")
   s3_register("vctrs::vec_cast", "mo.character")
   # S3: disk
+  s3_register("vctrs::vec_ptype_full", "disk") # returns "disk"
+  s3_register("vctrs::vec_ptype_abbr", "disk") # returns "dsk"
   s3_register("vctrs::vec_ptype2", "disk.default")
   s3_register("vctrs::vec_ptype2", "disk.disk")
   s3_register("vctrs::vec_cast", "integer.disk")
@@ -173,6 +174,7 @@ if (pkg_is_available("cli")) {
   s3_register("vctrs::vec_cast", "mic.character")
   s3_register("vctrs::vec_cast", "mic.double")
   s3_register("vctrs::vec_cast", "mic.integer")
+  s3_register("vctrs::vec_cast", "mic.mic")
   s3_register("vctrs::vec_math", "mic")
   s3_register("vctrs::vec_arith", "mic")
   # S3: sir

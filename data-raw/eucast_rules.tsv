@@ -2,7 +2,7 @@
 # For editing this EUCAST reference file, these values can all be used for targeting antibiotics:
 # aminoglycosides, aminopenicillins, antifungals, antimycobacterials, betalactams, carbapenems, cephalosporins, cephalosporins_1st, cephalosporins_2nd, cephalosporins_3rd, cephalosporins_4th, cephalosporins_5th, cephalosporins_except_CAZ, fluoroquinolones, glycopeptides, glycopeptides_except_lipo, lincosamides, lipoglycopeptides, macrolides, oxazolidinones, penicillins, polymyxins, quinolones, streptogramins, tetracyclines, tetracyclines_except_TGC, trimethoprims, ureidopenicillins
 # and all separate EARS-Net letter codes such as AMC. They can be separated by comma: 'AMC, fluoroquinolones'.
-# The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
+# The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or 'genus_species' or 'gramstain'.
 # The like.is.one_of column must be 'like' or 'is' or 'one_of' ('like' will read the 'this_value' column as regular expression)
 # The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group are noted on the 'B.cepacia' sheet of the EUCAST Clinical Breakpoint v.10.0 Excel file of 2020 and later
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 9 LINES SKIPPED <<<<<

@@ -154,99 +154,103 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   }
   
   if (is.mic(x) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
-    x
+    if (!identical(levels(x), VALID_MIC_LEVELS)) {
+      # from an older AMR version - just update MIC factor levels
+      x <- set_clean_class(factor(as.character(x), levels = VALID_MIC_LEVELS, ordered = TRUE),
+                           new_class = c("mic", "ordered", "factor"))
+    }
+    return(x)
+  }
+  
+  x.bak <- NULL
+  if (is.numeric(x)) {
+    x.bak <- format(x, scientific = FALSE)
+    # MICs never have more than 9 decimals, so:
+    x <- format(round(x, 9), scientific = FALSE)
   } else {
-    x.bak <- NULL
-    if (is.numeric(x)) {
-      x.bak <- format(x, scientific = FALSE)
-      # MICs never have more than 9 decimals, so:
-      x <- format(round(x, 9), scientific = FALSE)
-    } else {
-      x <- as.character(unlist(x))
-    }
-    if (isTRUE(na.rm)) {
-      x <- x[!is.na(x)]
-    }
-    x <- trimws2(x)
-    x[x == ""] <- NA
-    if (is.null(x.bak)) {
-      x.bak <- x
-    }
-
-    # comma to period
-    x <- gsub(",", ".", x, fixed = TRUE)
-    # transform scientific notation
-    x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"] <- as.double(x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"])
-    # transform Unicode for >= and <=
-    x <- gsub("\u2264", "<=", x, fixed = TRUE)
-    x <- gsub("\u2265", ">=", x, fixed = TRUE)
-    # remove other invalid characters
-    x <- gsub("[^a-zA-Z0-9.><= ]+", "", x, perl = TRUE)
-    # remove space between operator and number ("<= 0.002" -> "<=0.002")
-    x <- gsub("(<|=|>) +", "\\1", x, perl = TRUE)
-    # transform => to >= and =< to <=
-    x <- gsub("=<", "<=", x, fixed = TRUE)
-    x <- gsub("=>", ">=", x, fixed = TRUE)
-    # dots without a leading zero must start with 0
-    x <- gsub("([^0-9]|^)[.]", "\\10.", x, perl = TRUE)
-    # values like "<=0.2560.512" should be 0.512
-    x <- gsub(".*[.].*[.]", "0.", x, perl = TRUE)
-    # remove ending .0
-    x <- gsub("[.]+0$", "", x, perl = TRUE)
-    # remove all after last digit
-    x <- gsub("[^0-9]+$", "", x, perl = TRUE)
-    # keep only one zero before dot
-    x <- gsub("0+[.]", "0.", x, perl = TRUE)
-    # starting 00 is probably 0.0 if there's no dot yet
-    x[x %unlike% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
-    # remove last zeroes
-    x <- gsub("([.].?)0+$", "\\1", x, perl = TRUE)
-    x <- gsub("(.*[.])0+$", "\\10", x, perl = TRUE)
-    # remove ending .0 again
-    x[x %like% "[.]"] <- gsub("0+$", "", x[x %like% "[.]"])
-    # never end with dot
-    x <- gsub("[.]$", "", x, perl = TRUE)
-    # trim it
-    x <- trimws2(x)
-
-    ## previously unempty values now empty - should return a warning later on
-    x[x.bak != "" & x == ""] <- "invalid"
-
-    na_before <- x[is.na(x) | x == ""] %pm>% length()
-    x[!x %in% VALID_MIC_LEVELS] <- NA
-    na_after <- x[is.na(x) | x == ""] %pm>% length()
-
-    if (na_before != na_after) {
-      list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
-        unique() %pm>%
-        sort() %pm>%
-        vector_and(quotes = TRUE)
-      cur_col <- get_current_column()
-      warning_("in `as.mic()`: ", na_after - na_before, " result",
-        ifelse(na_after - na_before > 1, "s", ""),
-        ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
-        " truncated (",
-        round(((na_after - na_before) / length(x)) * 100),
-        "%) that were invalid MICs: ",
-        list_missing,
-        call = FALSE
-      )
-    }
-    
-    if (keep_operators == "none" && !all(is.na(x))) {
-      x <- gsub("[>=<]", "", x)
-    } else if (keep_operators == "edges" && !all(is.na(x))) {
-      dbls <- as.double(gsub("[>=<]", "", x))
-      x[dbls == min(dbls, na.rm = TRUE)] <- paste0("<=", min(dbls, na.rm = TRUE))
-      x[dbls == max(dbls, na.rm = TRUE)] <- paste0(">=", max(dbls, na.rm = TRUE))
-      keep <- x[dbls == max(dbls, na.rm = TRUE) | dbls == min(dbls, na.rm = TRUE)]
-      x[!x %in% keep] <- gsub("[>=<]", "", x[!x %in% keep])
-    }
-
-    set_clean_class(factor(x, levels = VALID_MIC_LEVELS, ordered = TRUE),
-      new_class = c("mic", "ordered", "factor")
+    x <- as.character(unlist(x))
+  }
+  if (isTRUE(na.rm)) {
+    x <- x[!is.na(x)]
+  }
+  x <- trimws2(x)
+  x[x == ""] <- NA
+  if (is.null(x.bak)) {
+    x.bak <- x
+  }
+  
+  # comma to period
+  x <- gsub(",", ".", x, fixed = TRUE)
+  # transform scientific notation
+  x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"] <- as.double(x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"])
+  # transform Unicode for >= and <=
+  x <- gsub("\u2264", "<=", x, fixed = TRUE)
+  x <- gsub("\u2265", ">=", x, fixed = TRUE)
+  # remove other invalid characters
+  x <- gsub("[^a-zA-Z0-9.><= ]+", "", x, perl = TRUE)
+  # remove space between operator and number ("<= 0.002" -> "<=0.002")
+  x <- gsub("(<|=|>) +", "\\1", x, perl = TRUE)
+  # transform => to >= and =< to <=
+  x <- gsub("=<", "<=", x, fixed = TRUE)
+  x <- gsub("=>", ">=", x, fixed = TRUE)
+  # dots without a leading zero must start with 0
+  x <- gsub("([^0-9]|^)[.]", "\\10.", x, perl = TRUE)
+  # values like "<=0.2560.512" should be 0.512
+  x <- gsub(".*[.].*[.]", "0.", x, perl = TRUE)
+  # remove ending .0
+  x <- gsub("[.]+0$", "", x, perl = TRUE)
+  # remove all after last digit
+  x <- gsub("[^0-9]+$", "", x, perl = TRUE)
+  # keep only one zero before dot
+  x <- gsub("0+[.]", "0.", x, perl = TRUE)
+  # starting 00 is probably 0.0 if there's no dot yet
+  x[x %unlike% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
+  # remove last zeroes
+  x <- gsub("([.].?)0+$", "\\1", x, perl = TRUE)
+  x <- gsub("(.*[.])0+$", "\\10", x, perl = TRUE)
+  # remove ending .0 again
+  x[x %like% "[.]"] <- gsub("0+$", "", x[x %like% "[.]"])
+  # never end with dot
+  x <- gsub("[.]$", "", x, perl = TRUE)
+  # trim it
+  x <- trimws2(x)
+  
+  ## previously unempty values now empty - should return a warning later on
+  x[x.bak != "" & x == ""] <- "invalid"
+  
+  na_before <- x[is.na(x) | x == ""] %pm>% length()
+  x[!x %in% VALID_MIC_LEVELS] <- NA
+  na_after <- x[is.na(x) | x == ""] %pm>% length()
+  
+  if (na_before != na_after) {
+    list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
+      unique() %pm>%
+      sort() %pm>%
+      vector_and(quotes = TRUE)
+    cur_col <- get_current_column()
+    warning_("in `as.mic()`: ", na_after - na_before, " result",
+             ifelse(na_after - na_before > 1, "s", ""),
+             ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+             " truncated (",
+             round(((na_after - na_before) / length(x)) * 100),
+             "%) that were invalid MICs: ",
+             list_missing,
+             call = FALSE
     )
   }
+  
+  if (keep_operators == "none" && !all(is.na(x))) {
+    x <- gsub("[>=<]", "", x)
+  } else if (keep_operators == "edges" && !all(is.na(x))) {
+    dbls <- as.double(gsub("[>=<]", "", x))
+    x[dbls == min(dbls, na.rm = TRUE)] <- paste0("<=", min(dbls, na.rm = TRUE))
+    x[dbls == max(dbls, na.rm = TRUE)] <- paste0(">=", max(dbls, na.rm = TRUE))
+    keep <- x[dbls == max(dbls, na.rm = TRUE) | dbls == min(dbls, na.rm = TRUE)]
+    x[!x %in% keep] <- gsub("[>=<]", "", x[!x %in% keep])
+  }
+  
+  set_clean_class(factor(x, levels = VALID_MIC_LEVELS, ordered = TRUE),
+                  new_class = c("mic", "ordered", "factor"))
 }
 
 #' @rdname as.mic
@@ -375,7 +379,7 @@ type_sum.mic <- function(x, ...) {
 #' @noRd
 print.mic <- function(x, ...) {
   cat("Class 'mic'",
-    ifelse(length(levels(x)) < length(VALID_MIC_LEVELS), font_red(" with dropped levels"), ""),
+    ifelse(!identical(levels(x), VALID_MIC_LEVELS), font_red(" with outdated structure - convert with `as.mic()` to update"), ""),
     "\n",
     sep = ""
   )
@@ -533,12 +537,23 @@ Math.mic <- function(x, ...) {
 
 #' @export
 Ops.mic <- function(e1, e2) {
+  e1_chr <- as.character(e1)
+  e2_chr <- character(0)
   e1 <- as.double(e1)
   if (!missing(e2)) {
     # when e1 is `!`, e2 is missing
+    e2_chr <- as.character(e2)
     e2 <- as.double(e2)
   }
-  # set class to numeric, because otherwise NextMethod will be factor (since mic is a factor)
+  if (as.character(.Generic) %in% c("<", "<=", "==", "!=", ">", ">=")) {
+    # make sure that <0.002 is lower than 0.002
+    # and that >32 is higher than 32, but equal to >=32
+    e1[e1_chr %like% "<" & e1_chr %unlike% "="] <- e1[e1_chr %like% "<" & e1_chr %unlike% "="] - 0.000001
+    e1[e1_chr %like% ">" & e1_chr %unlike% "="] <- e1[e1_chr %like% ">" & e1_chr %unlike% "="] + 0.000001
+    e2[e2_chr %like% "<" & e2_chr %unlike% "="] <- e2[e2_chr %like% "<" & e2_chr %unlike% "="] - 0.000001
+    e2[e2_chr %like% ">" & e2_chr %unlike% "="] <- e2[e2_chr %like% ">" & e2_chr %unlike% "="] + 0.000001
+  }
+  # set .Class to numeric, because otherwise NextMethod will be factor (since mic is a factor)
   .Class <- class(e1)
   NextMethod(.Generic)
 }

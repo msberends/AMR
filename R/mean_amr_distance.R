@@ -175,8 +175,8 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
 #' @param row an index, such as a row number
 #' @export
 amr_distance_from_row <- function(amr_distance, row) {
-  meet_criteria(amr_distance, allow_class = c("double", "numeric"), is_finite = TRUE)
-  meet_criteria(row, allow_class = c("logical", "double", "numeric"))
+  meet_criteria(amr_distance, allow_class = "numeric", is_finite = TRUE)
+  meet_criteria(row, allow_class = c("logical", "numeric", "integer"))
   if (is.logical(row)) {
     row <- which(row)
   }

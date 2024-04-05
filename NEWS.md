@@ -1,4 +1,4 @@
-# AMR 2.1.1.9015
+# AMR 2.1.1.9016
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -10,7 +10,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## New
 * One Health implementation
-  * Function `as.sir()` now supports animal breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
+  * Function `as.sir()` now has extensive support for animal breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
   * The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://msberends.github.io/AMR/articles/datasets.html).
   * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
@@ -22,8 +22,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * For MICs:
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `limit_mic_range()` and `scale_*_mic()` functions.
+  * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
 * Updated `italicise_taxonomy()` to support HTML
-* Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that `dplyr::rowwise()` and `dplyr::c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
+* Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Updated all ATC codes from WHOCC
 * Updated all antibiotic DDDs from WHOCC
 

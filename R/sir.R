@@ -29,7 +29,7 @@
 
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
-#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] with levels `S < I < R`.
+#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor].
 #' 
 #' Currently breakpoints are available:
 #' - For **clinical microbiology** from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
@@ -326,7 +326,7 @@ as.sir.default <- function(x, ...) {
   x.bak <- x
   x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
 
-  if (inherits(x.bak, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
+  if (inherits(x.bak, c("numeric", "integer")) && all(x %in% c(1:3, NA))) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
     lbls <- attributes(x.bak)$labels
     if (!is.null(lbls) && all(c("S", "I", "R") %in% names(lbls)) && all(c(1:3) %in% lbls)) {

@@ -102,6 +102,12 @@ vec_cast.mo.character <- function(x, to, ...) {
 }
 
 # S3: disk ----
+vec_ptype_full.disk <- function(x, ...) {
+  "disk"
+}
+vec_ptype_abbr.disk <- function(x, ...) {
+  "dsk"
+}
 vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
 }
@@ -129,10 +135,16 @@ vec_cast.disk.character <- function(x, to, ...) {
 
 # S3: mic ----
 vec_ptype2.mic.default <- function (x, y, ..., x_arg = "", y_arg = "") {
-  x
+  # this will make sure that currently implemented MIC levels are returned
+  as.mic(x)
 }
 vec_ptype2.mic.mic <- function(x, y, ...) {
-  x
+  # this will make sure that currently implemented MIC levels are returned
+  as.mic(x)
+}
+vec_cast.mic.mic <- function(x, to, ...) {
+  # this will make sure that currently implemented MIC levels are returned
+  as.mic(x)
 }
 vec_cast.character.mic <- function(x, to, ...) {
   as.character(x)

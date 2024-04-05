@@ -294,7 +294,7 @@ sir_confidence_interval <- function(...,
 
   # this applies the Clopper-Pearson method
   out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
-  out <- set_clean_class(out, "double")
+  out <- set_clean_class(out, "numeric")
 
   if (side %in% c("left", "l", "lower", "lowest", "less", "min")) {
     out <- out[1]
