@@ -340,6 +340,7 @@ as.numeric.mic <- function(x, ...) {
 #' @param as.mic a [logical] to indicate whether the `mic` class should be kept - the default is `FALSE`
 #' @export
 droplevels.mic <- function(x, as.mic = FALSE, ...) {
+  x <- as.mic(x) # make sure that currently implemented MIC levels are used
   x <- droplevels.factor(x, ...)
   if (as.mic == TRUE) {
     class(x) <- c("mic", "ordered", "factor")
@@ -378,11 +379,10 @@ type_sum.mic <- function(x, ...) {
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
-  cat("Class 'mic'",
-    ifelse(!identical(levels(x), VALID_MIC_LEVELS), font_red(" with outdated structure - convert with `as.mic()` to update"), ""),
-    "\n",
-    sep = ""
-  )
+  cat("Class 'mic'\n")
+  if(!identical(levels(x), VALID_MIC_LEVELS)) {
+    cat(font_red("This object has an outdated or altered structure - convert with `as.mic()` to update\n"))
+  }
   print(as.character(x), quote = FALSE)
   att <- attributes(x)
   if ("na.action" %in% names(att)) {
@@ -403,22 +403,44 @@ summary.mic <- function(object, ...) {
 as.matrix.mic <- function(x, ...) {
   as.matrix(as.double(x), ...)
 }
+#' @method as.vector mic
+#' @export
+#' @noRd
+as.vector.mic <- function(x, mode = "numneric", ...) {
+  y <- NextMethod()
+  y <- as.mic(y)
+  calls <- unlist(lapply(sys.calls(), as.character))
+  if (any(calls %in% c("rbind", "cbind")) && message_not_thrown_before("as.vector.mic")) {
+    warning_("Functions `rbind()` and `cbind()` cannot preserve the structure of MIC values. Use dplyr's `bind_rows()` or `bind_cols()` instead. To solve, you can also use `your_data %>% mutate_if(is.ordered, as.mic)`.", call = FALSE)
+  }
+  y
+}
+#' @method as.list mic
+#' @export
+#' @noRd
+as.list.mic <- function(x, ...) {
+  lapply(as.list(as.character(x), ...), as.mic)
+}
+#' @method as.data.frame mic
+#' @export
+#' @noRd
+as.data.frame.mic <- function(x, ...) {
+  as.data.frame.vector(as.mic(x), ...)
+}
 
 #' @method [ mic
 #' @export
 #' @noRd
 "[.mic" <- function(x, ...) {
   y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
+  as.mic(y)
 }
 #' @method [[ mic
 #' @export
 #' @noRd
 "[[.mic" <- function(x, ...) {
   y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
+  as.mic(y)
 }
 #' @method [<- mic
 #' @export
@@ -426,8 +448,7 @@ as.matrix.mic <- function(x, ...) {
 "[<-.mic" <- function(i, j, ..., value) {
   value <- as.mic(value)
   y <- NextMethod()
-  attributes(y) <- attributes(i)
-  y
+  as.mic(y)
 }
 #' @method [[<- mic
 #' @export
@@ -435,8 +456,7 @@ as.matrix.mic <- function(x, ...) {
 "[[<-.mic" <- function(i, j, ..., value) {
   value <- as.mic(value)
   y <- NextMethod()
-  attributes(y) <- attributes(i)
-  y
+  as.mic(y)
 }
 #' @method c mic
 #' @export
@@ -450,8 +470,7 @@ c.mic <- function(...) {
 #' @noRd
 unique.mic <- function(x, incomparables = FALSE, ...) {
   y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
+  as.mic(y)
 }
 
 #' @method rep mic
@@ -459,14 +478,14 @@ unique.mic <- function(x, incomparables = FALSE, ...) {
 #' @noRd
 rep.mic <- function(x, ...) {
   y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
+  as.mic(y)
 }
 
 #' @method sort mic
 #' @export
 #' @noRd
 sort.mic <- function(x, decreasing = FALSE, ...) {
+  x <- as.mic(x) # make sure that currently implemented MIC levels are used
   if (decreasing == TRUE) {
     ord <- order(-as.double(x))
   } else {
@@ -486,6 +505,7 @@ hist.mic <- function(x, ...) {
 
 # will be exported using s3_register() in R/zzz.R
 get_skimmers.mic <- function(column) {
+  column <- as.mic(column) # make sure that currently implemented MIC levels are used
   skimr::sfl(
     skim_type = "mic",
     p0 = ~ stats::quantile(., probs = 0, na.rm = TRUE, names = FALSE),

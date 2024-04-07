@@ -155,8 +155,8 @@ if (pkg_is_available("cli")) {
   s3_register("vctrs::vec_cast", "character.mo")
   s3_register("vctrs::vec_cast", "mo.character")
   # S3: disk
-  s3_register("vctrs::vec_ptype_full", "disk") # returns "disk"
-  s3_register("vctrs::vec_ptype_abbr", "disk") # returns "dsk"
+  s3_register("vctrs::vec_ptype_full", "disk")
+  s3_register("vctrs::vec_ptype_abbr", "disk")
   s3_register("vctrs::vec_ptype2", "disk.default")
   s3_register("vctrs::vec_ptype2", "disk.disk")
   s3_register("vctrs::vec_cast", "integer.disk")
@@ -171,9 +171,11 @@ if (pkg_is_available("cli")) {
   s3_register("vctrs::vec_cast", "character.mic")
   s3_register("vctrs::vec_cast", "double.mic")
   s3_register("vctrs::vec_cast", "integer.mic")
+  s3_register("vctrs::vec_cast", "factor.mic")
   s3_register("vctrs::vec_cast", "mic.character")
   s3_register("vctrs::vec_cast", "mic.double")
   s3_register("vctrs::vec_cast", "mic.integer")
+  s3_register("vctrs::vec_cast", "mic.factor")
   s3_register("vctrs::vec_cast", "mic.mic")
   s3_register("vctrs::vec_math", "mic")
   s3_register("vctrs::vec_arith", "mic")

@@ -106,7 +106,7 @@ vec_ptype_full.disk <- function(x, ...) {
   "disk"
 }
 vec_ptype_abbr.disk <- function(x, ...) {
-  "dsk"
+  "disk"
 }
 vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x
@@ -155,6 +155,9 @@ vec_cast.double.mic <- function(x, to, ...) {
 vec_cast.integer.mic <- function(x, to, ...) {
   as.integer(x)
 }
+vec_cast.factor.mic <- function(x, to, ...) {
+  factor(as.character(x))
+}
 vec_cast.mic.double <- function(x, to, ...) {
   as.mic(x)
 }
@@ -162,6 +165,9 @@ vec_cast.mic.character <- function(x, to, ...) {
   as.mic(x)
 }
 vec_cast.mic.integer <- function(x, to, ...) {
+  as.mic(x)
+}
+vec_cast.mic.factor <- function(x, to, ...) {
   as.mic(x)
 }
 vec_math.mic <- function(.fn, x, ...) {

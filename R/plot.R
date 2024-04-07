@@ -178,6 +178,7 @@ plot.mic <- function(x,
                      include_PKPD = getOption("AMR_include_PKPD", TRUE),
                      breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                      ...) {
+  x <- as.mic(x) # make sure that currently implemented MIC levels are used
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -263,6 +264,7 @@ barplot.mic <- function(height,
                         language = get_AMR_locale(),
                         expand = TRUE,
                         ...) {
+  height <- as.mic(height) # make sure that currently implemented MIC levels are used
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
@@ -305,6 +307,7 @@ autoplot.mic <- function(object,
                          breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                          ...) {
   stop_ifnot_installed("ggplot2")
+  object <- as.mic(object) # make sure that currently implemented MIC levels are used
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -384,6 +387,7 @@ autoplot.mic <- function(object,
 #' @rdname plot
 # will be exported using s3_register() in R/zzz.R
 fortify.mic <- function(object, ...) {
+  object <- as.mic(object) # make sure that currently implemented MIC levels are used
   stats::setNames(
     as.data.frame(range_as_table(object, expand = FALSE)),
     c("x", "y")
@@ -772,7 +776,6 @@ range_as_table <- function(x, expand, keep_operators = "all", mic_range = NULL) 
     x <- as.mic(x, keep_operators = keep_operators)
     if (expand == TRUE) {
       # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
-      valid_lvls <- levels(x)
       extra_range <- max(x)
       min_range <- min(x)
       if (!is.null(mic_range)) {
@@ -791,7 +794,7 @@ range_as_table <- function(x, expand, keep_operators = "all", mic_range = NULL) 
       extra_range <- rep(0, length(extra_range))
       names(extra_range) <- nms
       x <- table(droplevels(x, as.mic = FALSE))
-      extra_range <- extra_range[!names(extra_range) %in% names(x) & names(extra_range) %in% valid_lvls]
+      extra_range <- extra_range[!names(extra_range) %in% names(x) & names(extra_range) %in% VALID_MIC_LEVELS]
       x <- as.table(c(x, extra_range))
     } else {
       x <- table(droplevels(x, as.mic = FALSE))

@@ -343,7 +343,7 @@ as.sir.default <- function(x, ...) {
     x[x.bak == "2"] <- "I"
     x[x.bak == "3"] <- "R"
   } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R")) && !all(x %in% c("S", "I", "R", NA))) {
-    if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
+    if (all(x %unlike% "(S|I|R)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
         warning_("in `as.sir()`: the input seems to contain MIC values. You can transform them with `as.mic()` before running `as.sir()` to interpret them.")
