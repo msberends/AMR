@@ -30,19 +30,36 @@
 */
 
 :root, .navbar * {
-  --bs-primary: #a7dbc3 !important;
-  --bs-primary-color: #a7dbc3 !important;
-  --bs-primary-rgb: 167, 219, 195 !important;
+  --amr-green-light: #a7dbc3;
+  --amr-green-light-rgb: 167, 219, 195;
+  --amr-green-dark: #128f76;
+  --amr-green-dark-rgb: 18, 143, 118;
+  --amr-green-middle: #60a799;
+  --amr-green-middle-rgb: 96, 167, 153;
+  --amr-blue-light: #a8d5ef
+  --amr-blue-light-rgb: 168, 213, 239
+
+  --bs-success: --amr-green-dark !important;
+  --bs-link-color: --amr-green-dark !important;
+  --bs-light: --amr-green-light !important;
+  /* --bs-light was this: #128f76a6; that's success with 60% alpha */
+  --bs-info: --amr-green-middle !important;
+  
+  --bs-primary: --amr-green-dark !important;
+  --bs-primary-color: --amr-green-dark !important;
+  --bs-primary-rgb: --amr-green-light-rgb !important;
+  
   --bs-secondary: #ffffff !important;
-  --bs-secondary-color: var(--bs-success) !important;
+  --bs-secondary-color: var(--amr-green-dark) !important;
   --bs-secondary-rgb: 255, 255, 255 !important;
+  
   --bs-navbar-brand-color: var(--bs-body-color) !important;
   --bs-navbar-brand-color-hover: var(--bs-body-color) !important;
   --bs-nav-link-color: var(--bs-body-color) !important;
   --bs-bg-opacity: 1 !important;
 }
 .nav-text.text-muted {
-  color: var(--bs-success) !important;
+  color: var(--amr-green-dark) !important;
 }
 
 .template-home img.logo {
@@ -78,7 +95,7 @@
 
 /* marked words for after using the search box */
 mark, .mark {
-  background: var(--bs-light) !important;
+  background: var(--amr-green-light) !important;
 }
 
 /* smaller tables */
@@ -103,17 +120,17 @@ pre code {
 }
 pre .fu, .fu {
   /* functions */
-  color: var(--bs-primary) !important;
+  color: var(--amr-green-dark) !important;
   font-weight: bold !important;
   letter-spacing: -1px !important;
 }
 pre .st, .st {
   /* strings, regular text */
-  color: var(--bs-info) !important;
+  color: var(--amr-green-middle) !important;
 }
 pre .co, .co {
   /* comments */
-  color: var(--bs-success) !important;
+  color: var(--amr-green-dark) !important;
   font-style: italic !important;
 }
 pre code .r-out,
@@ -128,7 +145,7 @@ pre a[href],
 a code[href],
 a pre[href] {
   /* adjusted colour for all real links; having href attribute */
-  color: var(--bs-success);
+  color: var(--amr-green-dark);
   text-decoration: none;
 }
 a[href] {
