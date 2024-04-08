@@ -37,29 +37,37 @@
   --amr-green-middle: #60a799;
   --amr-green-middle-rgb: 96, 167, 153;
   --amr-blue-light: #a8d5ef
-  --amr-blue-light-rgb: 168, 213, 239
+  --amr-blue-light-rgb: 168, 213, 239;
 
-  --bs-success: --amr-green-dark !important;
-  --bs-link-color: --amr-green-dark !important;
-  --bs-light: --amr-green-light !important;
+  --bs-success: var(--amr-green-dark) !important);
+  --bs-link-color: var(--amr-green-dark) !important;
+  --bs-light: var(--amr-green-light) !important;
   /* --bs-light was this: #128f76a6; that's success with 60% alpha */
-  --bs-info: --amr-green-middle !important;
+  --bs-info: var(--amr-green-middle) !important;
+  --bs-link-color: var(--amr-green-dark) !important;
+  --bs-link-color-rgb: var(--amr-green-dark-rgb) !important;
   
-  --bs-primary: --amr-green-dark !important;
-  --bs-primary-color: --amr-green-dark !important;
-  --bs-primary-rgb: --amr-green-light-rgb !important;
+  --bs-primary: var(--amr-green-dark) !important;
+  --bs-primary-color: var(--amr-green-dark) !important;
+  --bs-primary-rgb: var(--amr-green-dark-rgb) !important;
   
-  --bs-secondary: #ffffff !important;
+  --bs-secondary: white !important;
   --bs-secondary-color: var(--amr-green-dark) !important;
   --bs-secondary-rgb: 255, 255, 255 !important;
   
-  --bs-navbar-brand-color: var(--bs-body-color) !important;
-  --bs-navbar-brand-color-hover: var(--bs-body-color) !important;
-  --bs-nav-link-color: var(--bs-body-color) !important;
+  --bs-navbar-brand-color: white !important;
+  --bs-navbar-brand-color-hover: white !important;
+  --bs-nav-link-color: white !important;
   --bs-bg-opacity: 1 !important;
 }
 .nav-text.text-muted {
   color: var(--amr-green-dark) !important;
+}
+.navbar-dark input[type="search"] {
+  background-color: var(--amr-green-light) !important;
+}
+.form-control:focus {
+  box-shadow: none !important;
 }
 
 .template-home img.logo {
@@ -121,8 +129,11 @@ pre code {
 pre .fu, .fu {
   /* functions */
   color: var(--amr-green-dark) !important;
-  font-weight: bold !important;
-  letter-spacing: -1px !important;
+}
+pre .fu a:hover, .fu a:hover {
+  /* functions */
+  color: var(--amr-green-light) !important;
+  text-decoration: underline;
 }
 pre .st, .st {
   /* strings, regular text */
@@ -159,4 +170,7 @@ a pre[href]:hover, a pre[href]:focus,
 a[href]:hover, a[href]:focus {
   /* adjusted colour for all real links; having href attribute */
   text-decoration: underline;
+}
+strong code {
+  font-weight: normal !important;
 }
