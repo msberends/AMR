@@ -49,7 +49,7 @@ Suggests:
   tibble,
   tidyselect,
   tinytest,
-  tsibble
+  tsibble,
   vctrs,
   xml2
 VignetteBuilder: knitr,rmarkdown
