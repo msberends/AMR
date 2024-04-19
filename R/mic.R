@@ -360,6 +360,10 @@ all_valid_mics <- function(x) {
 
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.mic <- function(x, ...) {
+  if(!identical(levels(x), VALID_MIC_LEVELS) && message_not_thrown_before("pillar_shaft.mic")) {
+    warning_(AMR_env$sup_1_icon, " These columns contain an outdated or altered structure - convert with `as.mic()` to update",
+             call = FALSE)
+  }
   crude_numbers <- as.double(x)
   operators <- gsub("[^<=>]+", "", as.character(x))
   operators[!is.na(operators) & operators != ""] <- font_silver(operators[!is.na(operators) & operators != ""], collapse = NULL)
@@ -372,17 +376,22 @@ pillar_shaft.mic <- function(x, ...) {
 
 # will be exported using s3_register() in R/zzz.R
 type_sum.mic <- function(x, ...) {
-  "mic"
+  if(!identical(levels(x), VALID_MIC_LEVELS)) {
+    paste0("mic", AMR_env$sup_1_icon)
+  } else {
+    "mic"
+  }
 }
 
 #' @method print mic
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
-  cat("Class 'mic'\n")
+  cat("Class 'mic'")
   if(!identical(levels(x), VALID_MIC_LEVELS)) {
-    cat(font_red("This object has an outdated or altered structure - convert with `as.mic()` to update\n"))
+    cat(font_red(" with an outdated or altered structure - convert with `as.mic()` to update"))
   }
+  cat("\n")
   print(as.character(x), quote = FALSE)
   att <- attributes(x)
   if ("na.action" %in% names(att)) {
@@ -411,7 +420,7 @@ as.vector.mic <- function(x, mode = "numneric", ...) {
   y <- as.mic(y)
   calls <- unlist(lapply(sys.calls(), as.character))
   if (any(calls %in% c("rbind", "cbind")) && message_not_thrown_before("as.vector.mic")) {
-    warning_("Functions `rbind()` and `cbind()` cannot preserve the structure of MIC values. Use dplyr's `bind_rows()` or `bind_cols()` instead. To solve, you can also use `your_data %>% mutate_if(is.ordered, as.mic)`.", call = FALSE)
+    warning_("Functions `rbind()` and `cbind()` cannot preserve the structure of MIC values. Use dplyr's `bind_rows()` or `bind_cols()` instead.", call = FALSE)
   }
   y
 }
@@ -561,7 +570,7 @@ Ops.mic <- function(e1, e2) {
   e2_chr <- character(0)
   e1 <- as.double(e1)
   if (!missing(e2)) {
-    # when e1 is `!`, e2 is missing
+    # when .Generic is `!`, e2 is missing
     e2_chr <- as.character(e2)
     e2 <- as.double(e2)
   }

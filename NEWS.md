@@ -1,4 +1,4 @@
-# AMR 2.1.1.9018
+# AMR 2.1.1.9021
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -17,13 +17,15 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 * The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
 * Function `limit_mic_range()`, which allows to limit MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
+* Function `mo_group_members()` to retrieve the member microorganisms. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
 
 ## Changed
 * For MICs:
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `limit_mic_range()` and `scale_*_mic()` functions.
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
-* Updated `italicise_taxonomy()` to support HTML
+* Updated `italicise_taxonomy()` to support HTML output
+* `mo_info()` now contains an extra element `group_members`, with the contents of the new `mo_group_members()` function
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Updated all ATC codes from WHOCC
 * Updated all antibiotic DDDs from WHOCC

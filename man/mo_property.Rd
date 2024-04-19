@@ -34,6 +34,7 @@
 \alias{mo_taxonomy}
 \alias{mo_synonyms}
 \alias{mo_current}
+\alias{mo_group_members}
 \alias{mo_info}
 \alias{mo_url}
 \title{Get Properties of a Microorganism}
@@ -258,6 +259,13 @@ mo_synonyms(
 
 mo_current(x, language = get_AMR_locale(), ...)
 
+mo_group_members(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
+  ...
+)
+
 mo_info(
   x,
   language = get_AMR_locale(),
@@ -395,6 +403,11 @@ mo_type("Klebsiella pneumoniae")
 mo_rank("Klebsiella pneumoniae")
 mo_url("Klebsiella pneumoniae")
 mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
+
+mo_group_members("Streptococcus group A")
+mo_group_members(c("Streptococcus group C",
+                   "Streptococcus group G",
+                   "Streptococcus group L"))
 
 
 # scientific reference -----------------------------------------------------

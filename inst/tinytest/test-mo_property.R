@@ -98,9 +98,11 @@ expect_equal(names(mo_info("Escherichia coli")), c(
   "mo",
   "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
   "status", "synonyms", "gramstain", "oxygen_tolerance",
-  "url", "ref", "snomed", "lpsn", "gbif"
+  "url", "ref", "snomed", "lpsn", "gbif", "group_members"
 ))
 expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
+expect_true(length(mo_group_members("B_HACEK")) > 1)
+expect_inherits(mo_group_members(c("Candida albicans", "Escherichia coli")), "list")
 
 expect_identical(mo_oxygen_tolerance(c("Klebsiella pneumoniae", "Clostridioides difficile")),
                  c("aerobe", "anaerobe"))

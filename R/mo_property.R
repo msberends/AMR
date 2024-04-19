@@ -106,7 +106,12 @@
 #' mo_rank("Klebsiella pneumoniae")
 #' mo_url("Klebsiella pneumoniae")
 #' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
-#'
+#' 
+#' mo_group_members("Streptococcus group A")
+#' mo_group_members(c("Streptococcus group C",
+#'                    "Streptococcus group G",
+#'                    "Streptococcus group L"))
+#' 
 #'
 #' # scientific reference -----------------------------------------------------
 #'
@@ -796,6 +801,37 @@ mo_current <- function(x, language = get_AMR_locale(), ...) {
   mo_name(out, language = language)
 }
 
+
+#' @rdname mo_property
+#' @export
+mo_group_members <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_synonyms")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  add_MO_lookup_to_AMR_env()
+  
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  metadata <- get_mo_uncertainties()
+  
+  members <- lapply(x.mo, function(y) {
+    AMR::microorganisms.groups$mo_name[which(AMR::microorganisms.groups$mo_group == y)]
+  })
+  names(members) <- mo_name(x, keep_synonyms = TRUE, language = language)
+  
+  if (length(members) == 1) {
+    members <- unname(unlist(members))
+  }
+  
+  load_mo_uncertainties(metadata)
+  members
+}
+
+
 #' @rdname mo_property
 #' @export
 mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
@@ -823,7 +859,8 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
         ref = mo_ref(y, keep_synonyms = keep_synonyms),
         snomed = unlist(mo_snomed(y, keep_synonyms = keep_synonyms)),
         lpsn = mo_lpsn(y, language = language, keep_synonyms = keep_synonyms),
-        gbif = mo_gbif(y, language = language, keep_synonyms = keep_synonyms)
+        gbif = mo_gbif(y, language = language, keep_synonyms = keep_synonyms),
+        group_members = mo_group_members(y, language = language, keep_synonyms = keep_synonyms)
       )
     )
   })

@@ -78,17 +78,11 @@ AMR_env$is_dark_theme <- NULL
 AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
 AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
 
-# determine info icon for messages
-if (pkg_is_available("cli")) {
-  # let cli do the determination of supported symbols
-  AMR_env$info_icon <- import_fn("symbol", "cli")$info
-  AMR_env$bullet_icon <- import_fn("symbol", "cli")$bullet
-  AMR_env$dots <- import_fn("symbol", "cli")$ellipsis
-} else {
-  AMR_env$info_icon <- "i"
-  AMR_env$bullet_icon <- "*"
-  AMR_env$dots <- "..."
-}
+# take cli symbols if available
+AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %or% "i"
+AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %or% "*"
+AMR_env$dots <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %or% "..."
+AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %or% "*"
 
 .onLoad <- function(lib, pkg) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)

@@ -835,7 +835,7 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     return(invisible())
   }
 
-  if (!is.null(allow_class)) {
+  if (!is.null(allow_class) && !(suppressWarnings(all(is.na(object))) && allow_NA == TRUE)) {
     stop_ifnot(inherits(object, allow_class), "argument `", obj_name,
       "` must be ", format_class(allow_class, plural = isTRUE(has_length > 1)),
       ", i.e. not be ", format_class(class(object), plural = isTRUE(has_length > 1)),

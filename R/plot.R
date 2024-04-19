@@ -178,7 +178,6 @@ plot.mic <- function(x,
                      include_PKPD = getOption("AMR_include_PKPD", TRUE),
                      breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                      ...) {
-  x <- as.mic(x) # make sure that currently implemented MIC levels are used
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -189,6 +188,8 @@ plot.mic <- function(x,
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
+  x <- as.mic(x) # make sure that currently implemented MIC levels are used
+  
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
@@ -264,7 +265,6 @@ barplot.mic <- function(height,
                         language = get_AMR_locale(),
                         expand = TRUE,
                         ...) {
-  height <- as.mic(height) # make sure that currently implemented MIC levels are used
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
@@ -276,6 +276,8 @@ barplot.mic <- function(height,
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   main <- gsub(" +", " ", paste0(main, collapse = " "))
+  
+  height <- as.mic(height) # make sure that currently implemented MIC levels are used
 
   plot(
     x = height,
