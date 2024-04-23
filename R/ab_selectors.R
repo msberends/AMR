@@ -611,7 +611,7 @@ ab_select_exec <- function(function_name,
     } else if (isTRUE(function_name == "antimycobacterials")) {
       abx <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$group == "Antimycobacterials")]
     } else {
-      # their upper case equivalent are vectors with class 'ab', created in data-raw/_pre_commit_hook.R
+      # their upper case equivalent are vectors with class 'ab', created in data-raw/_pre_commit_checks.R
       # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
       abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
       # manually added codes from add_custom_antimicrobials() must also be supported

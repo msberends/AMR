@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # Run this file to update the package using:
-# source("data-raw/_pre_commit_hook.R")
+# source("data-raw/_pre_commit_checks.R")
 
 library(dplyr, warn.conflicts = FALSE)
 try(detach("package:data.table", unload = TRUE), silent = TRUE) # to prevent like() to precede over AMR::like

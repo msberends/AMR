@@ -460,7 +460,7 @@ as.mo <- function(x,
       }
     }
     
-    # 'MO_CONS' and 'MO_COPS' are 'mo' vectors created in R/_pre_commit_hook.R
+    # 'MO_CONS' and 'MO_COPS' are 'mo' vectors created in R/_pre_commit_checks.R
     out[out %in% MO_CONS] <- "B_STPHY_CONS"
     out[out %in% MO_COPS] <- "B_STPHY_COPS"
     if (Becker == "all") {

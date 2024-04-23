@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and clinical_breakpoints
-# (sourcing "data-raw/_pre_commit_hook.R" will process the TSV file)
+# (sourcing "data-raw/_pre_commit_checks.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list(
   # "13.0" = list(
   #   version_txt = "v13.0",

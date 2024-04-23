@@ -251,7 +251,7 @@ taxonomy_gbif <- taxonomy_gbif.bak %>%
     kingdom %in% c("Archaea", "Bacteria", "Protozoa") |
       # include all of these fungal orders
       order %in% include_fungal_orders |
-      # and all of these important genera (see "data-raw/_pre_commit_hook.R")
+      # and all of these important genera (see "data-raw/_pre_commit_checks.R")
       # (they also contain bacteria and protozoa, but these will get prevalence = 2 later on)
       genus %in% AMR:::MO_PREVALENT_GENERA
   ) %>%
@@ -1671,7 +1671,7 @@ if (!identical(example_isolates$mo, as.mo(example_isolates$mo, language = NULL))
 
 # load new data sets again
 devtools::load_all(".")
-source("data-raw/_pre_commit_hook.R")
+source("data-raw/_pre_commit_checks.R")
 devtools::load_all(".")
 
 if (!identical(intrinsic_resistant$mo, as.mo(intrinsic_resistant$mo, language = NULL))) {

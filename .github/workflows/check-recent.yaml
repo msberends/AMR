@@ -58,9 +58,9 @@ jobs:
           - {os: ubuntu-latest,  r: 'devel', allowfail: false}
 
           # current 'release' version, check all major OSes:
-          - {os: macOS-latest,   r: '4.3', allowfail: false}
-          - {os: windows-latest, r: '4.3', allowfail: false}
-          - {os: ubuntu-latest,  r: '4.3', allowfail: false}
+          - {os: macOS-latest,   r: 'release', allowfail: false}
+          - {os: windows-latest, r: 'release', allowfail: false}
+          - {os: ubuntu-latest,  r: 'release', allowfail: false}
 
           # older versions (see also check-old.yaml for even older versions):
           - {os: ubuntu-latest, r: '4.2', allowfail: false}

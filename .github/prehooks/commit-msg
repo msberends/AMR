@@ -29,22 +29,24 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#!/bin/bash
+########################################
+# This script runs before every commit #
+########################################
 
-echo "Running commit-msg hook..."
-
-# check if the commit message contains '(no-check)' or '(no-verify)'
+# check the commit message
 COMMIT_MSG=$(cat "$1")
-if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-verify\) ]]; then
-  echo "Commit check bypassed by commit message."
+if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-checks\)|\(no-verify\) ]]; then
+  echo "Not running pre-commit checks; commit message contains '(no-check)', '(no-checks)', or '(no-verify)."
   exit 0
 fi
 
 
+echo "Running pre-commit checks..."
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
-    Rscript -e "source('data-raw/_pre_commit_hook.R')"
+    Rscript -e "source('data-raw/_pre_commit_checks.R')"
     currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
     echo "- Adding changed files in ./data-raw and ./man to this commit"
     git add data-raw/*
