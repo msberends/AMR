@@ -29,7 +29,17 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-echo "Running pre-commit hook..."
+#!/bin/bash
+
+echo "Running commit-msg hook..."
+
+# check if the commit message contains '(no-check)' or '(no-verify)'
+COMMIT_MSG=$(cat "$1")
+if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-verify\) ]]; then
+  echo "Commit check bypassed by commit message."
+  exit 0
+fi
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if command -v Rscript > /dev/null; then
