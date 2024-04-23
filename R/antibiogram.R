@@ -294,7 +294,7 @@ antibiogram <- function(x,
   } else if (mo_transform == "name") {
     x$`.mo` <- mo_name(x$`.mo`, language = language)
   } else {
-    x$`.mo` <- mo_property(x$`.mo`, language = language)
+    x$`.mo` <- mo_property(x$`.mo`, property = mo_transform, language = language)
   }
   x$`.mo`[is.na(x$`.mo`)] <- "(??)"
 
