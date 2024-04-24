@@ -33,15 +33,21 @@
 # This script runs before every commit #
 ########################################
 
-# check the commit message
-COMMIT_MSG=$(cat "$1")
+# try to fetch the commit message from the standard location
+COMMIT_MSG_PATH=".git/COMMIT_EDITMSG"
+if [ -f "$COMMIT_MSG_PATH" ]; then
+    COMMIT_MSG=$(cat "$COMMIT_MSG_PATH")
+else
+    echo "Commit message file not found."
+    echo 1
+fi
+# check the commit message, cancel commit if needed
 if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-checks\)|\(no-verify\) ]]; then
   echo "Not running pre-commit checks:"
   echo "Commit message contains '(no-check)', '(no-checks)', or '(no-verify)."
   echo ""
   exit 0
 fi
-
 
 echo "Running pre-commit checks..."
 
