@@ -36,7 +36,9 @@
 # check the commit message
 COMMIT_MSG=$(cat "$1")
 if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-checks\)|\(no-verify\) ]]; then
-  echo "Not running pre-commit checks; commit message contains '(no-check)', '(no-checks)', or '(no-verify)."
+  echo "Not running pre-commit checks:"
+  echo "Commit message contains '(no-check)', '(no-checks)', or '(no-verify)."
+  echo ""
   exit 0
 fi
 

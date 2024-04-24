@@ -29,6 +29,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Updated all ATC codes from WHOCC
 * Updated all antibiotic DDDs from WHOCC
+* Fix for using a manual value for `mo_transform` in `antibiogram()`
+* Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 
 ## Other
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
