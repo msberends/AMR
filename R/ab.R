@@ -645,14 +645,14 @@ generalise_antibiotic_name <- function(x) {
   x <- gsub("_(MIC|RSI|SIR|DIS[CK])$", "", x, perl = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
   x <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x, perl = TRUE)
-  # correct for 'high level' antibiotics
-  x <- gsub("([^A-Z0-9]+)?(HIGH(.?LEVEL)?|H[^A-Z0-9]?L)([^A-Z0-9]+)?", "-HIGH", x, perl = TRUE)
-  # remove part between brackets if that's followed by another string
-  x <- gsub("(.*)+ [(].*[)]", "\\1", x)
   # keep only max 1 space
   x <- trimws2(gsub(" +", " ", x, perl = TRUE))
   # non-character, space or number should be a slash
-  x <- gsub("[^A-Z0-9 -]", "/", x, perl = TRUE)
+  x <- gsub("[^A-Z0-9 -)(]", "/", x, perl = TRUE)
+  # correct for 'high level' antibiotics
+  x <- gsub("([^A-Z0-9/ -]+)?(HIGH(.?LE?VE?L)?|[^A-Z0-9/]H[^A-Z0-9]?L)([^A-Z0-9 -]+)?", "-HIGH", x, perl = TRUE)
+  # remove part between brackets if that's followed by another string
+  x <- gsub("(.*)+ [(].*[)]", "\\1", x)
   # spaces around non-characters must be removed: amox + clav -> amox/clav
   x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
   x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
