@@ -1,4 +1,4 @@
-# AMR 2.1.1.9028
+# AMR 2.1.1.9029
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -31,6 +31,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Updated all antibiotic DDDs from WHOCC
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
+* Improved overall algorithm of `as.ab()` for better performance and accuracy
 
 ## Other
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
