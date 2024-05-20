@@ -24,7 +24,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9031</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9032</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -280,11 +280,11 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <dt>mo</dt>
-<dd><p>any (vector of) text that can be coerced to valid microorganism codes with <code><a href="as.mo.html">as.mo()</a></code>, can be left empty to determine it automatically</p></dd>
+<dd><p>a vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s that can be coerced to valid microorganism codes with <code><a href="as.mo.html">as.mo()</a></code>, can be left empty to determine it automatically</p></dd>
 
 
 <dt>ab</dt>
-<dd><p>any (vector of) text that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
+<dd><p>a vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 
 
 <dt>guideline</dt>
@@ -576,23 +576,21 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'AMP' (ampicillin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'AMP', EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'CIP' (ciprofloxacin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'CIP', EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'GEN' (gentamicin), EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'GEN', EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for gentamicin (GEN) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'TOB' (tobramycin), EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'TOB', EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for tobramycin (TOB) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
@@ -604,22 +602,13 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 14</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_user    mo_user    ab   mo                input</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-05-20 <span style="color: #949494;">17:02:01</span>     1 TOB        Escherich… TOB  B_[ORD]_ENTRBCTR 16    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-05-20 <span style="color: #949494;">17:02:00</span>     1 GEN        Escherich… GEN  B_[ORD]_ENTRBCTR 18    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-05-20 <span style="color: #949494;">17:02:00</span>     1 CIP        Escherich… CIP  B_[ORD]_ENTRBCTR  0.256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-05-20 <span style="color: #949494;">17:02:00</span>     1 AMP        Escherich… AMP  B_[ORD]_ENTRBCTR  8    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-05-20 <span style="color: #949494;">17:01:56</span>     1 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      0.01 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-05-20 <span style="color: #949494;">17:01:56</span>     2 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      2    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-05-20 <span style="color: #949494;">17:01:56</span>     3 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      4    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-05-20 <span style="color: #949494;">17:01:56</span>     4 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      8    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-05-20 <span style="color: #949494;">17:01:55</span>     1 AMX        B_STRPT_P… AMX  B_STRPT_PNMN      2    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-05-20 <span style="color: #949494;">17:01:55</span>     1 TOB        Escherich… TOB  B_[ORD]_ENTRBCTR 16    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2024-05-20 <span style="color: #949494;">17:01:55</span>     1 GEN        Escherich… GEN  B_[ORD]_ENTRBCTR 18    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2024-05-20 <span style="color: #949494;">17:01:55</span>     1 AMP        Escherich… AMP  B_[ORD]_ENTRBCTR 20    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2024-05-20 <span style="color: #949494;">17:01:55</span>     1 ampicillin Strep pneu AMP  B_STRPT_PNMN     18    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index ab_user mo_user        ab   mo                input</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2024-05-20 <span style="color: #949494;">19:33:13</span>     1 TOB     Escherichia c… TOB  B_[ORD]_ENTRBCTR 16    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2024-05-20 <span style="color: #949494;">19:33:13</span>     1 GEN     Escherichia c… GEN  B_[ORD]_ENTRBCTR 18    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2024-05-20 <span style="color: #949494;">19:33:12</span>     1 CIP     Escherichia c… CIP  B_[ORD]_ENTRBCTR  0.256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2024-05-20 <span style="color: #949494;">19:33:12</span>     1 AMP     Escherichia c… AMP  B_[ORD]_ENTRBCTR  8    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: outcome &lt;sir&gt;, method &lt;chr&gt;, breakpoint_S_R &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   guideline &lt;chr&gt;, host &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;</span></span>
 <span class="r-in"><span></span></span>
@@ -634,7 +623,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP', EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ampicillin (AMP) in Streptococcus</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Non-meningitis'.</span>
@@ -651,7 +640,8 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'ampicillin' (AMP), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'ampicillin' (AMP) (AMP, ampicillin),</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
@@ -666,7 +656,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span>, <span class="va">as.sir</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.sir</span>, mo <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">microorganism</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.sir</span>, mo <span class="op">=</span> <span class="st">"microorganism"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># to include information about urinary tract infections (UTI)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
@@ -690,14 +680,14 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
@@ -705,25 +695,25 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' (gentamicin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for gentamicin (GEN) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' (tobramycin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for tobramycin (TOB) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
@@ -732,14 +722,14 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
@@ -747,25 +737,25 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' (gentamicin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for gentamicin (GEN) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' (tobramycin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for tobramycin (TOB) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
@@ -774,25 +764,25 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' (gentamicin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for gentamicin (GEN) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' (tobramycin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for tobramycin (TOB) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
@@ -801,21 +791,25 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for ampicillin (AMP) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming body site 'Intravenous'. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' based on column 'microorganism', EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' (gentamicin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for gentamicin (GEN) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      set which isolates are from urine. See ?as.sir.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' (tobramycin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' based on column 'microorganism',</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2023...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for UTI and non-UTI available for tobramycin (TOB) in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      Escherichia coli - assuming an unspecified body site. Use argument uti to</span>
@@ -824,31 +818,8 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'NIT' (nitrofurantoin), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming value "urine" in column 'specimen' reflects a urinary tract</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   infection.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Use as.sir(uti = FALSE) to prevent this.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'NIT' (nitrofurantoin), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'CIP' (ciprofloxacin), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'GEN' (gentamicin), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'TOB' (tobramycin), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP  CIP GEN TOB ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S &lt;NA&gt;   S   S   R</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'NIT', EUCAST 2023...</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.frame(values = x, mo = mo, ab = ab, result = NA_sir_, uti = uti,     host = host, stringsAsFactors = FALSE):</span> arguments imply differing number of rows: 2, 1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For CLEANING existing SIR values ------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
