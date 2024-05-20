@@ -282,6 +282,8 @@ generate_antimcrobials_string <- function(df) {
           as.list(df),
           function(x) {
             x <- toupper(as.character(x))
+            x[x == "SDD"] <- "I"
+            # ignore "N" here, no use for determining first isolates
             x[!x %in% c("S", "I", "R")] <- "."
             paste(x)
           }
@@ -312,7 +314,7 @@ antimicrobials_equal <- function(y,
     val <- strsplit(val, "", fixed = TRUE)[[1L]]
     val.int <- rep(NA_real_, length(val))
     val.int[val == "S"] <- 1
-    val.int[val == "I"] <- 2
+    val.int[val %in% c("I", "SDD")] <- 2
     val.int[val == "R"] <- 3
     val.int
   }

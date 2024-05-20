@@ -48,7 +48,7 @@
 #' @details
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
 #' 
-#' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
+#' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()]. Since AMR v3.0, [proportion_SI()] and [proportion_I()] include dose-dependent susceptibility ('SDD').
 #'
 #' Use [sir_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
 #'
@@ -247,7 +247,7 @@ susceptibility <- function(...,
                            only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "I"),
+      ab_result = c("S", "SDD", "I"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
@@ -267,7 +267,7 @@ sir_confidence_interval <- function(...,
                                     confidence_level = 0.95,
                                     side = "both",
                                     collapse = FALSE) {
-  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1, 2, 3), is_in = c("S", "I", "R"))
+  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1:5), is_in = c("S", "SDD", "I", "R", "N"))
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
@@ -285,7 +285,7 @@ sir_confidence_interval <- function(...,
   )
   n <- tryCatch(
     sir_calc(...,
-      ab_result = c("S", "I", "R"),
+      ab_result = c("S", "SDD", "I", "R", "N"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -351,9 +351,12 @@ proportion_IR <- function(...,
                           minimum = 30,
                           as_percent = FALSE,
                           only_all_tested = FALSE) {
+  if (message_not_thrown_before("proportion_IR", entire_session = TRUE)) {
+    message_("Note that `proportion_IR()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = c("I", "R"),
+      ab_result = c("I", "SDD", "R"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
@@ -369,9 +372,12 @@ proportion_I <- function(...,
                          minimum = 30,
                          as_percent = FALSE,
                          only_all_tested = FALSE) {
+  if (message_not_thrown_before("proportion_I", entire_session = TRUE)) {
+    message_("Note that `proportion_I()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = "I",
+      ab_result = c("I", "SDD"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
@@ -387,9 +393,12 @@ proportion_SI <- function(...,
                           minimum = 30,
                           as_percent = FALSE,
                           only_all_tested = FALSE) {
+  if (message_not_thrown_before("proportion_SI", entire_session = TRUE)) {
+    message_("Note that `proportion_SI()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "I"),
+      ab_result = c("S", "I", "SDD"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,

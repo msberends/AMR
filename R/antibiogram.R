@@ -348,11 +348,11 @@ antibiogram <- function(x,
       } else {
         # determine whether this new column should contain S, I, R, or NA
         if (isTRUE(combine_SI)) {
-          S_values <- c("S", "I")
+          S_values <- c("S", "SDD", "I")
         } else {
           S_values <- "S"
         }
-        other_values <- setdiff(c("S", "I", "R"), S_values)
+        other_values <- setdiff(c("S", "SDD", "I", "R", "N"), S_values)
         x_transposed <- as.list(as.data.frame(t(x[, abx, drop = FALSE]), stringsAsFactors = FALSE))
         if (isTRUE(only_all_tested)) {
           x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(anyNA(x), NA_character_, ifelse(any(x %in% S_values), "S", "R")), USE.NAMES = FALSE))

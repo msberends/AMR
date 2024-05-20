@@ -31,12 +31,12 @@
 #'
 #' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor].
 #' 
-#' Currently breakpoints are available:
+#' These breakpoints are currently available:
 #' - For **clinical microbiology** from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
 #' - For **veterinary microbiology** from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`;
 #' - ECOFFs (Epidemiological cut-off values) from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`.
 #' 
-#' All breakpoints used for interpretation are publicly available in the [clinical_breakpoints] data set.
+#' All breakpoints used for interpretation are available in our [clinical_breakpoints] data set.
 #' @rdname as.sir
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
 #' @param mo any (vector of) text that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
@@ -60,7 +60,7 @@
 #'
 #' The [as.sir()] function can work in four ways:
 #'
-#' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with SIR interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is unclear.
+#' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain valid values, namely: **S** for susceptible, **I** for intermediate or 'susceptible, increased exposure', **R** for resistant, **N** for non-interpretable, and **SDD** for susceptible dose-dependent. Each of these can be set using a [regular expression][base::regex]. Furthermore, [as.sir()] will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is invalid.
 #'
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, SIR interpretation can be done very easily with either:
@@ -120,7 +120,7 @@
 #'
 #' The function [is.sir()] detects if the input contains class `sir`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #'
-#' The function [is_sir_eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
+#' The function [is_sir_eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr>):
 #'
@@ -214,7 +214,7 @@
 #'
 #' # For CLEANING existing SIR values ------------------------------------
 #'
-#' as.sir(c("S", "I", "R", "A", "B", "C"))
+#' as.sir(c("S", "SDD", "I", "R", "N", "A", "B", "C"))
 #' as.sir("<= 0.002; S") # will return "S"
 #' sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' is.sir(sir_data)
@@ -242,13 +242,18 @@ as.sir <- function(x, ...) {
   UseMethod("as.sir")
 }
 
+as_sir_structure <- function(x) {
+  structure(factor(as.character(unlist(unname(x))),
+                   levels = c("S", "SDD", "I", "R", "N"),
+                   ordered = TRUE),
+            class = c("sir", "ordered", "factor"))
+}
+
 #' @rdname as.sir
 #' @details `NA_sir_` is a missing value of the new `sir` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @format NULL
 #' @export
-NA_sir_ <- set_clean_class(factor(NA_character_, levels = c("S", "I", "R"), ordered = TRUE),
-  new_class = c("sir", "ordered", "factor")
-)
+NA_sir_ <- as_sir_structure(NA_character_)
 
 #' @rdname as.sir
 #' @export
@@ -286,9 +291,9 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (all(x %in% c("S", "I", "R", NA)) & !all(is.na(x))) {
+  } else if (all(x %in% c("S", "SDD", "I", "R", "N", NA)) & !all(is.na(x))) {
     return(TRUE)
-  } else if (!any(c("S", "I", "R") %in% x, na.rm = TRUE) & !all(is.na(x))) {
+  } else if (!any(c("S", "SDD", "I", "R", "N") %in% x, na.rm = TRUE) & !all(is.na(x))) {
     return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !x %in% c("", "-", "NULL")]
@@ -316,9 +321,11 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   }
 }
 
+#' @rdname as.sir
 #' @export
+#' @param S,I,R,N,SDD a case-indepdendent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters are removed from the input.
 # extra param: warn (logical, to never throw a warning)
-as.sir.default <- function(x, ...) {
+as.sir.default <- function(x, S = "^(S|U)+$", I = "^(I|H)+$", R = "^(R)+$", N = "^(N|V)+$", SDD = "^(SDD|D)+$", ...) {
   if (inherits(x, "sir")) {
     return(x)
   }
@@ -338,11 +345,11 @@ as.sir.default <- function(x, ...) {
       x[x.bak == 2] <- "I"
       x[x.bak == 3] <- "R"
     }
-  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "S", "I", "R", NA_character_))) {
+  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", c("S", "SDD", "I", "R", "N"), NA_character_))) {
     x[x.bak == "1"] <- "S"
     x[x.bak == "2"] <- "I"
     x[x.bak == "3"] <- "R"
-  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R")) && !all(x %in% c("S", "I", "R", NA))) {
+  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "SDD", "I", "R", "N")) && !all(x %in% c("S", "SDD", "I", "R", "N", NA))) {
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
@@ -379,23 +386,14 @@ as.sir.default <- function(x, ...) {
     x[x %like% "([^a-z]|^)res(is(tant)?)?"] <- "R"
     x[x %like% "([^a-z]|^)sus(cep(tible)?)?"] <- "S"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
-    # remove other invalid characters
-    # set to capitals
-    x <- toupper(x)
     x <- gsub("[^A-Z]+", "", x, perl = TRUE)
-    # CLSI uses SDD for "susceptible dose-dependent"
-    x <- gsub("SDD", "I", x, fixed = TRUE)
-    # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
-    x <- gsub("H", "I", x, fixed = TRUE)
-    # MIPS uses D for Dose-dependent (which is I, but it will throw a note)
-    x <- gsub("D", "I", x, fixed = TRUE)
-    # MIPS uses U for "susceptible urine"
-    x <- gsub("U", "S", x, fixed = TRUE)
-    # in cases of "S;S" keep S, but in case of "S;I" make it NA
-    x <- gsub("^S+$", "S", x)
-    x <- gsub("^I+$", "I", x)
-    x <- gsub("^R+$", "R", x)
-    x[!x %in% c("S", "I", "R")] <- NA_character_
+    # apply regexes set by user
+    x[x %like% S] <- "S"
+    x[x %like% I] <- "I"
+    x[x %like% R] <- "R"
+    x[x %like% N] <- "N"
+    x[x %like% SDD] <- "SDD"
+    x[!x %in% c("S", "SDD", "I", "R", "N")] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
 
     if (!isFALSE(list(...)$warn)) { # so as.sir(..., warn = FALSE) will never throw a warning
@@ -415,24 +413,10 @@ as.sir.default <- function(x, ...) {
           call = FALSE
         )
       }
-      if (any(toupper(x.bak[!is.na(x.bak)]) == "U") && message_not_thrown_before("as.sir", "U")) {
-        warning_("in `as.sir()`: 'U' was interpreted as 'S', following some laboratory systems")
-      }
-      if (any(toupper(x.bak[!is.na(x.bak)]) == "D") && message_not_thrown_before("as.sir", "D")) {
-        warning_("in `as.sir()`: 'D' (dose-dependent) was interpreted as 'I', following some laboratory systems")
-      }
-      if (any(toupper(x.bak[!is.na(x.bak)]) == "SDD") && message_not_thrown_before("as.sir", "SDD")) {
-        warning_("in `as.sir()`: 'SDD' (susceptible dose-dependent, coined by CLSI) was interpreted as 'I' to comply with EUCAST's 'I'")
-      }
-      if (any(toupper(x.bak[!is.na(x.bak)]) == "H") && message_not_thrown_before("as.sir", "H")) {
-        warning_("in `as.sir()`: 'H' was interpreted as 'I', following some laboratory systems")
-      }
     }
   }
 
-  set_clean_class(factor(x, levels = c("S", "I", "R"), ordered = TRUE),
-    new_class = c("sir", "ordered", "factor")
-  )
+  as_sir_structure(x)
 }
 
 #' @rdname as.sir
@@ -693,7 +677,7 @@ as.sir.data.frame <- function(x,
       show_message <- FALSE
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
-      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "I", "R", NA), na.rm = TRUE)) {
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "SDD", "I", "R", "N", NA), na.rm = TRUE)) {
         show_message <- TRUE
         # only print message if values are not already clean
         message_("Cleaning values in column '", font_bold(ab), "' (",
@@ -1245,8 +1229,10 @@ pillar_shaft.sir <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey("  NA")
+    out[x == "N"] <- font_grey_bg("  N  ")
     out[x == "S"] <- font_green_bg("  S  ")
     out[x == "I"] <- font_orange_bg("  I  ")
+    out[x == "SDD"] <- font_orange_bg(" SDD ")
     if (is_dark()) {
       out[x == "R"] <- font_red_bg("  R  ")
     } else {

@@ -4,11 +4,11 @@
 \alias{count}
 \alias{count_resistant}
 \alias{count_susceptible}
-\alias{count_R}
-\alias{count_IR}
-\alias{count_I}
-\alias{count_SI}
 \alias{count_S}
+\alias{count_SI}
+\alias{count_I}
+\alias{count_IR}
+\alias{count_R}
 \alias{count_all}
 \alias{n_sir}
 \alias{count_df}
@@ -18,15 +18,15 @@ count_resistant(..., only_all_tested = FALSE)
 
 count_susceptible(..., only_all_tested = FALSE)
 
-count_R(..., only_all_tested = FALSE)
-
-count_IR(..., only_all_tested = FALSE)
-
-count_I(..., only_all_tested = FALSE)
+count_S(..., only_all_tested = FALSE)
 
 count_SI(..., only_all_tested = FALSE)
 
-count_S(..., only_all_tested = FALSE)
+count_I(..., only_all_tested = FALSE)
+
+count_IR(..., only_all_tested = FALSE)
+
+count_R(..., only_all_tested = FALSE)
 
 count_all(..., only_all_tested = FALSE)
 

@@ -45,14 +45,14 @@ expect_inherits(x[[1]], "sir")
 expect_inherits(c(x[1], x[9]), "sir")
 expect_inherits(unique(x[1], x[9]), "sir")
 pdf(NULL) # prevent Rplots.pdf being created
-expect_silent(barplot(as.sir(c("S", "I", "R"))))
-expect_silent(plot(as.sir(c("S", "I", "R"))))
+expect_silent(barplot(as.sir(c("S", "SDD", "I", "R", "N"))))
+expect_silent(plot(as.sir(c("S", "SDD", "I", "R", "N"))))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(ggplot2::autoplot(as.sir(c("S", "I", "R"))), "gg")
+  expect_inherits(ggplot2::autoplot(as.sir(c("S", "SDD", "I", "R", "N"))), "gg")
 }
-expect_stdout(print(as.sir(c("S", "I", "R"))))
-expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
-expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
+expect_stdout(print(as.sir(c("S", "SDD", "I", "R", "N"))))
+expect_equal(as.character(as.sir(c(1:3))), c("S", "SDD", "I", "R", "N"))
+expect_equal(as.character(as.sir(c(1:3))), c("S", "SDD", "I", "R", "N"))
 expect_equal(suppressWarnings(as.logical(as.sir("INVALID VALUE"))), NA)
 expect_equal(
   summary(as.sir(c("S", "R"))),
@@ -148,7 +148,7 @@ expect_equal(suppressMessages(
       guideline = "CLSI 2019"
     )
   )),
-  c("S", "S", "I", "R", "R")
+  c("S", c("S", "SDD", "I", "R", "N"), "R")
 )
 
 expect_true(is.data.frame(sir_interpretation_history(clean = FALSE)))
@@ -250,7 +250,7 @@ expect_inherits(
 expect_inherits(
   suppressWarnings(as.sir(data.frame(
     mo = "Escherichia coli",
-    amoxi = c("S", "I", "R", "invalid")
+    amoxi = c("S", "SDD", "I", "R", "N", "invalid")
   ))$amoxi),
   "sir"
 )

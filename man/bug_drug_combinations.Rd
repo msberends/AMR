@@ -49,7 +49,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
     decimal point.}
 }
 \value{
-The function \code{\link[=bug_drug_combinations]{bug_drug_combinations()}} returns a \link{data.frame} with columns "mo", "ab", "S", "I", "R" and "total".
+The function \code{\link[=bug_drug_combinations]{bug_drug_combinations()}} returns a \link{data.frame} with columns "mo", "ab", "S", "SDD", "I", "R", and "total".
 }
 \description{
 Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{\link[=format]{format()}} on the result to prettify it to a publishable/printable format, see \emph{Examples}.

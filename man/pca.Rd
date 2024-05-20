@@ -39,7 +39,7 @@ pca(
     standard deviations are less than or equal to \code{tol} times the
     standard deviation of the first component.)  With the default null
     setting, no components are omitted (unless \code{rank.} is specified
-    less than \code{min(dim(x))}.).  Other settings for tol could be
+    less than \code{min(dim(x))}.).  Other settings for \code{tol} could be
     \code{tol = 0} or \code{tol = sqrt(.Machine$double.eps)}, which
     would omit essentially constant components.}
 

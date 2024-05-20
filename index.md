@@ -5,7 +5,7 @@
 * Provides the **full microbiological taxonomy** and data on **all antimicrobial drugs**
 * Applies all recent **CLSI and EUCAST clinical and veterinary breakpoints** for  MICs and disk zones
 * Corrects for duplicate isolates, **calculates and predicts AMR** per antibiotic class
-* Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC** and **SNOMED CT**
+* Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, and **SNOMED CT**
 * Works on Windows, macOS and Linux with **all versions of R** since R-3.0 and is completely **dependency-free**, highly suitable for places with **limited resources**
 
 <div style="display: flex; font-size: 0.8em;">

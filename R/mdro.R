@@ -732,7 +732,7 @@ mdro <- function(x = NULL,
           sum(vapply(
             FUN.VALUE = logical(1),
             group_tbl,
-            function(group) any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% c("S", "I", "R"))
+            function(group) any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% c("S", "SDD", "I", "R"))
           ))
         }
       )

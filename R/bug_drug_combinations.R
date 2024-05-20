@@ -42,7 +42,7 @@
 #' @details The function [format()] calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S. This table can also directly be used in R Markdown / Quarto without the need for e.g. [knitr::kable()].
 #' @export
 #' @rdname bug_drug_combinations
-#' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
+#' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "SDD", "I", "R", and "total".
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
@@ -105,6 +105,7 @@ bug_drug_combinations <- function(x,
       mo = character(0),
       ab = character(0),
       S = integer(0),
+      SDD = integer(0),
       I = integer(0),
       R = integer(0),
       total = integer(0),
@@ -122,13 +123,14 @@ bug_drug_combinations <- function(x,
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
         m <- as.matrix(table(x))
-        data.frame(S = m["S", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
+        data.frame(S = m["S", ], SDD = m["SDD", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
       })
       merged <- do.call(rbind_AMR, pivot)
       out_group <- data.frame(
         mo = rep(unique_mo[i], NROW(merged)),
         ab = rownames(merged),
         S = merged$S,
+        SDD = merged$SSD,
         I = merged$I,
         R = merged$R,
         total = merged$S + merged$I + merged$R,
@@ -203,10 +205,12 @@ format.bug_drug_combinations <- function(x,
       mo = gsub("(.*)%%(.*)", "\\1", names(idx)),
       ab = gsub("(.*)%%(.*)", "\\2", names(idx)),
       S = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$S[i], na.rm = TRUE)),
+      SDD = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$SDD[i], na.rm = TRUE)),
       I = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$I[i], na.rm = TRUE)),
       R = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
       total = vapply(FUN.VALUE = double(1), idx, function(i) {
         sum(x$S[i], na.rm = TRUE) +
+          sum(x$SDD[i], na.rm = TRUE) +
           sum(x$I[i], na.rm = TRUE) +
           sum(x$R[i], na.rm = TRUE)
       }),
@@ -223,7 +227,7 @@ format.bug_drug_combinations <- function(x,
   if (combine_SI == TRUE) {
     x$isolates <- x$R
   } else {
-    x$isolates <- x$R + x$I
+    x$isolates <- x$R + x$I + x$SDD
   }
 
   give_ab_name <- function(ab, format, language) {

@@ -743,6 +743,10 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     # class 'sir' should be sorted like this
     v <- c("S", "I", "R")
   }
+  if (identical(v, c("I", "N", "R", "S", "SDD"))) {
+    # class 'sir' should be sorted like this
+    v <- c("S", "SDD", "I", "R", "N")
+  }
   # oxford comma
   if (last_sep %in% c(" or ", " and ") && length(v) > 2) {
     last_sep <- paste0(",", last_sep)

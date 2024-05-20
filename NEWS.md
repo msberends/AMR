@@ -1,4 +1,4 @@
-# AMR 2.1.1.9029
+# AMR 2.1.1.9030
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -15,6 +15,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
+* `as.sir()` now returns additional factor levels "N" for non-interpretable and "SDD" for susceptible dose-dependent. Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and N.
 * The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
 * Function `limit_mic_range()`, which allows to limit MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
 * Function `mo_group_members()` to retrieve the member microorganisms. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.

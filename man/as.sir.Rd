@@ -7,6 +7,7 @@
 \alias{NA_sir_}
 \alias{is.sir}
 \alias{is_sir_eligible}
+\alias{as.sir.default}
 \alias{as.sir.mic}
 \alias{as.sir.disk}
 \alias{as.sir.data.frame}
@@ -29,6 +30,16 @@ NA_sir_
 is.sir(x)
 
 is_sir_eligible(x, threshold = 0.05)
+
+\method{as.sir}{default}(
+  x,
+  S = "^(S|U)+$",
+  I = "^(I|H)+$",
+  R = "^(R)+$",
+  N = "^(N|V)+$",
+  SDD = "^(SDD|D)+$",
+  ...
+)
 
 \method{as.sir}{mic}(
   x,
@@ -85,6 +96,8 @@ sir_interpretation_history(clean = FALSE)
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
 
+\item{S, I, R, N, SDD}{a case-indepdendent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters are removed from the input.}
+
 \item{mo}{any (vector of) text that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
@@ -117,14 +130,14 @@ Ordered \link{factor} with new class \code{sir}
 \description{
 Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor}.
 
-Currently breakpoints are available:
+These breakpoints are currently available:
 \itemize{
 \item For \strong{clinical microbiology} from EUCAST 2011-2023 and CLSI 2011-2023;
 \item For \strong{veterinary microbiology} from EUCAST 2021-2023 and CLSI 2019-2023;
 \item ECOFFs (Epidemiological cut-off values) from EUCAST 2020-2023 and CLSI 2022-2023.
 }
 
-All breakpoints used for interpretation are publicly available in the \link{clinical_breakpoints} data set.
+All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
 }
 \details{
 \emph{Note: The clinical breakpoints in this package were validated through, and imported from, \href{https://whonet.org}{WHONET}. The public use of this \code{AMR} package has been endorsed by both CLSI and EUCAST. See \link{clinical_breakpoints} for more information.}
@@ -132,7 +145,7 @@ All breakpoints used for interpretation are publicly available in the \link{clin
 
 The \code{\link[=as.sir]{as.sir()}} function can work in four ways:
 \enumerate{
-\item For \strong{cleaning raw / untransformed data}. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with SIR interpretations and MIC values such as \code{"<0.25; S"} will be coerced to \code{"S"}. Combined interpretations for multiple test methods (as seen in laboratory records) such as \code{"S; S"} will be coerced to \code{"S"}, but a value like \code{"S; I"} will return \code{NA} with a warning that the input is unclear.
+\item For \strong{cleaning raw / untransformed data}. The data will be cleaned to only contain valid values, namely: \strong{S} for susceptible, \strong{I} for intermediate or 'susceptible, increased exposure', \strong{R} for resistant, \strong{N} for non-interpretable, and \strong{SDD} for susceptible dose-dependent. Each of these can be set using a \link[base:regex]{regular expression}. Furthermore, \code{\link[=as.sir]{as.sir()}} will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as \code{"<0.25; S"} will be coerced to \code{"S"}. Combined interpretations for multiple test methods (as seen in laboratory records) such as \code{"S; S"} will be coerced to \code{"S"}, but a value like \code{"S; I"} will return \code{NA} with a warning that the input is invalid.
 \item For \strong{interpreting minimum inhibitory concentration (MIC) values} according to EUCAST or CLSI. You must clean your MIC values first using \code{\link[=as.mic]{as.mic()}}, that also gives your columns the new data class \code{\link{mic}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{
 \item Using \code{dplyr}, SIR interpretation can be done very easily with either:
@@ -198,7 +211,7 @@ The repository of this package \href{https://github.com/msberends/AMR/blob/main/
 
 The function \code{\link[=is.sir]{is.sir()}} detects if the input contains class \code{sir}. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 
-The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
+The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 }
 
 \code{NA_sir_} is a missing value of the new \code{sir} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
@@ -294,7 +307,7 @@ if (require("dplyr")) {
 
 # For CLEANING existing SIR values ------------------------------------
 
-as.sir(c("S", "I", "R", "A", "B", "C"))
+as.sir(c("S", "SDD", "I", "R", "N", "A", "B", "C"))
 as.sir("<= 0.002; S") # will return "S"
 sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.sir(sir_data)

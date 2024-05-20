@@ -99,7 +99,7 @@ These functions can be used to calculate the (co-)resistance or susceptibility o
 \details{
 \strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set with one of the four available algorithms.
 
-The function \code{\link[=resistance]{resistance()}} is equal to the function \code{\link[=proportion_R]{proportion_R()}}. The function \code{\link[=susceptibility]{susceptibility()}} is equal to the function \code{\link[=proportion_SI]{proportion_SI()}}.
+The function \code{\link[=resistance]{resistance()}} is equal to the function \code{\link[=proportion_R]{proportion_R()}}. The function \code{\link[=susceptibility]{susceptibility()}} is equal to the function \code{\link[=proportion_SI]{proportion_SI()}}. Since AMR v3.0, \code{\link[=proportion_SI]{proportion_SI()}} and \code{\link[=proportion_I]{proportion_I()}} include dose-dependent susceptibility ('SDD').
 
 Use \code{\link[=sir_confidence_interval]{sir_confidence_interval()}} to calculate the confidence interval, which relies on \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial \emph{resistance}. Change the \code{side} argument to "left"/"min" or "right"/"max" to return a single value, and change the \code{ab_result} argument to e.g. \code{c("S", "I")} to test for antimicrobial \emph{susceptibility}, see Examples.
 

@@ -363,6 +363,7 @@ autoplot.mic <- function(object,
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
+      "(SDD) Susceptible dose-dependent" = colours_SIR[2],
       "(I) Susceptible, incr. exp." = colours_SIR[2],
       "(I) Intermediate" = colours_SIR[2],
       "(R) Resistant" = colours_SIR[3]
@@ -595,6 +596,7 @@ autoplot.disk <- function(object,
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
+      "(SDD) Susceptible dose-dependent" = colours_SIR[2],
       "(I) Susceptible, incr. exp." = colours_SIR[2],
       "(I) Intermediate" = colours_SIR[2],
       "(R) Resistant" = colours_SIR[3]
@@ -648,14 +650,21 @@ plot.sir <- function(x,
   if (!"S" %in% data$x) {
     data <- rbind_AMR(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE))
   }
+  if (!"SDD" %in% data$x) {
+    data <- rbind_AMR(data, data.frame(x = "SDD", n = 0, s = 0, stringsAsFactors = FALSE))
+  }
   if (!"I" %in% data$x) {
     data <- rbind_AMR(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE))
   }
   if (!"R" %in% data$x) {
     data <- rbind_AMR(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE))
   }
-
-  data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
+  if (!"N" %in% data$x) {
+    data <- rbind_AMR(data, data.frame(x = "N", n = 0, s = 0, stringsAsFactors = FALSE))
+  }
+  
+  data <- data[!(data$n == 0 & data$x %in% c("SDD", "I", "N")), , drop = FALSE]
+  data$x <- factor(data$x, levels = intersect(unique(data$x), c("S", "SDD", "I", "R", "N")), ordered = TRUE)
 
   ymax <- pm_if_else(max(data$s) > 95, 105, 100)
 
@@ -704,10 +713,15 @@ barplot.sir <- function(height,
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
+  # add SSD and N to colours
+  colours_SIR <- c(colours_SIR[1:2], colours_SIR[2], colours_SIR[3], "#888888")
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
   x <- table(height)
-  x <- x[c(1, 2, 3)]
+  # remove missing I, SSD, and N
+  colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "N") & x == 0)]
+  x <- x[!(names(x) %in% c("SDD", "I", "N") & x == 0)]
+  # plot it
   barplot(x,
     col = colours_SIR,
     xlab = xlab,
@@ -753,8 +767,10 @@ autoplot.sir <- function(object,
     ggplot2::scale_fill_manual(
       values = c(
         "S" = colours_SIR[1],
+        "SDD" = colours_SIR[2],
         "I" = colours_SIR[2],
-        "R" = colours_SIR[3]
+        "R" = colours_SIR[3],
+        "N" = "#888888"
       ),
       limits = force
     ) +
@@ -882,8 +898,10 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     cols <- character(length = length(sir))
     cols[is.na(sir)] <- "#BEBEBE"
     cols[sir == "S"] <- colours_SIR[1]
+    cols[sir == "SDD"] <- colours_SIR[2]
     cols[sir == "I"] <- colours_SIR[2]
     cols[sir == "R"] <- colours_SIR[3]
+    cols[sir == "N"] <- "#888888"
     sub <- bquote(.(abname) ~ "-" ~ italic(.(moname)) ~ .(guideline_txt))
   } else {
     cols <- "#BEBEBE"
