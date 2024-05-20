@@ -135,7 +135,7 @@ count_resistant <- function(..., only_all_tested = FALSE) {
 count_susceptible <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "I"),
+      ab_result = c("S", "SDD", "I"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),

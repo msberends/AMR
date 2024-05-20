@@ -69,7 +69,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE) +
       example_isolates %>% count_resistant(AMC, GEN, only_all_tested = TRUE)
   )
-
+  
   # count of cases
   expect_equal(
     example_isolates %>%
@@ -95,8 +95,10 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     example_isolates %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(value),
     c(
       suppressWarnings(example_isolates$AMX %>% count_S()),
+      0,
       example_isolates$AMX %>% count_I(),
-      example_isolates$AMX %>% count_R()
+      example_isolates$AMX %>% count_R(),
+      0
     )
   )
 

@@ -129,6 +129,10 @@ ab_from_text <- function(text,
       text_split_all <- text_split_all[nchar(text_split_all) >= 4 & grepl("[a-z]+", text_split_all)]
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
+        text_split <- text_split[text_split %like% "[A-Z]" & text_split %unlike% "[0-9]"]
+        if (length(text_split) == 0) {
+          return(as.ab(NA_character_))
+        }
         suppressWarnings(
           as.ab(text_split, ...)
         )

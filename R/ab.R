@@ -322,13 +322,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
 
     # INITIAL SEARCH - More uncertain results ----
-
     if (loop_time <= 2 && fast_mode == FALSE) {
       # only run on first and second try
 
       # try by removing all spaces
       if (x[i] %like% " ") {
-        found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), loop_time = loop_time + 1))
+        found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -337,7 +336,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # try by removing all spaces and numbers
       if (x[i] %like% " " || x[i] %like% "[0-9]") {
-        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), loop_time = loop_time + 1))
+        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -363,7 +362,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         )[[1]],
         collapse = "/"
       )
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 1))
+      x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 2))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
         next
@@ -375,7 +374,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
           strsplit(x_translated, "[^A-Z0-9 ]"),
           function(y) {
             for (i in seq_len(length(y))) {
-              y_name <- suppressWarnings(ab_name(y[i], language = NULL, loop_time = loop_time + 1))
+              y_name <- suppressWarnings(ab_name(y[i], language = NULL, loop_time = loop_time + 2))
               y[i] <- ifelse(!is.na(y_name),
                 y_name,
                 y[i]
@@ -386,7 +385,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         )[[1]],
         collapse = "/"
       )
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 1))
+      x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 2))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
         next
@@ -394,7 +393,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # try by removing all trailing capitals
       if (x[i] %like_case% "[a-z]+[A-Z]+$") {
-        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i], perl = TRUE), loop_time = loop_time + 1))
+        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (!is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -402,7 +401,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
 
       # keep only letters
-      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i], perl = TRUE), loop_time = loop_time + 1))
+      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
@@ -413,7 +412,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       if (flag_multiple_results == TRUE) {
         found <- from_text[1L]
       } else {
-        found <- tryCatch(suppressWarnings(ab_from_text(x[i], loop_time = loop_time + 1, translate_ab = FALSE)[[1]][1L]),
+        found <- tryCatch(suppressWarnings(ab_from_text(x[i], loop_time = loop_time + 2, translate_ab = FALSE)[[1]][1L]),
           error = function(e) NA_character_
         )
       }
@@ -423,12 +422,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
 
       # first 5 except for cephalosporins, then first 7 (those cephalosporins all start quite the same!)
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 5), loop_time = loop_time + 1))
+      found <- suppressWarnings(as.ab(substr(x[i], 1, 5), loop_time = loop_time + 2))
       if (!is.na(found) && ab_group(found, loop_time = loop_time + 1) %unlike% "cephalosporins") {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 7), loop_time = loop_time + 1))
+      found <- suppressWarnings(as.ab(substr(x[i], 1, 7), loop_time = loop_time + 2))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
@@ -436,7 +435,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # make all consonants facultative
       search_str <- gsub("([BCDFGHJKLMNPQRSTVWXZ])", "\\1*", x[i], perl = TRUE)
-      found <- suppressWarnings(as.ab(search_str, loop_time = loop_time + 1, already_regex = TRUE))
+      found <- suppressWarnings(as.ab(search_str, loop_time = loop_time + 2, already_regex = TRUE))
       # keep at least 4 normal characters
       if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 4) {
         found <- NA
@@ -448,7 +447,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # make all vowels facultative
       search_str <- gsub("([AEIOUY])", "\\1*", x[i], perl = TRUE)
-      found <- suppressWarnings(as.ab(search_str, loop_time = loop_time + 1, already_regex = TRUE))
+      found <- suppressWarnings(as.ab(search_str, loop_time = loop_time + 2, already_regex = TRUE))
       # keep at least 5 normal characters
       if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 5) {
         found <- NA
@@ -464,7 +463,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_spelling <- gsub("I+", "[AEIOU]+", x_spelling, fixed = TRUE)
       x_spelling <- gsub("O+", "[AEIOU]+", x_spelling, fixed = TRUE)
       x_spelling <- gsub("U+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      found <- suppressWarnings(as.ab(x_spelling, loop_time = loop_time + 1, already_regex = TRUE))
+      found <- suppressWarnings(as.ab(x_spelling, loop_time = loop_time + 2, already_regex = TRUE))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next

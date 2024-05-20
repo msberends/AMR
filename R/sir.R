@@ -39,8 +39,8 @@
 #' All breakpoints used for interpretation are available in our [clinical_breakpoints] data set.
 #' @rdname as.sir
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
-#' @param mo any (vector of) text that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
-#' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
+#' @param mo a vector (or column name) with [character]s that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
+#' @param ab a vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the [package option][AMR-options] [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
@@ -191,7 +191,7 @@
 #'   df %>% mutate(across(AMP:TOB, as.sir))
 #'
 #'   df %>%
-#'     mutate_at(vars(AMP:TOB), as.sir, mo = .$microorganism)
+#'     mutate_at(vars(AMP:TOB), as.sir, mo = "microorganism")
 #'
 #'   # to include information about urinary tract infections (UTI)
 #'   data.frame(
@@ -759,7 +759,7 @@ as_sir_method <- function(method_short,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE, .call_depth = -2)
-  meet_criteria(ab, allow_class = c("ab", "character"), has_length = 1, .call_depth = -2)
+  meet_criteria(ab, allow_class = c("ab", "character"), .call_depth = -2)
   meet_criteria(guideline, allow_class = "character", has_length = 1, .call_depth = -2)
   meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1, .call_depth = -2)
@@ -808,37 +808,49 @@ as_sir_method <- function(method_short,
     message_("Please note that in the absence of specific veterinary breakpoints for certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse, aquatic, and poultry, in that order, are used as substitutes.\n\n")
   }
   
-  # for dplyr's across()
-  cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0)), error = function(e) FALSE)) {
-    # try to get current column, which will only be available when in across()
-    ab <- tryCatch(cur_column_dplyr(),
-      error = function(e) ab
-    )
-  }
+  current_df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
 
-  # for auto-determining mo
-  mo_var_found <- ""
-  if (is.null(mo)) {
-    tryCatch(
-      {
-        df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
-        mo <- NULL
-        try(
-          {
-            mo <- suppressMessages(search_type_in_df(df, "mo"))
-          },
-          silent = TRUE
-        )
-        if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-          mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
-          mo <- df[, mo, drop = TRUE]
+  # get ab
+  if (!is.null(current_df) && length(ab) == 1 && ab %in% colnames(current_df) && any(current_df[[ab]] %like% "[A-Z]", na.rm = TRUE)) {
+    ab <- current_df[[ab]]
+  } else {
+    # for dplyr's across()
+    cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
+    if (!is.null(cur_column_dplyr) && is.data.frame(current_df)) {
+      # try to get current column, which will only be available when in across()
+      ab <- tryCatch(cur_column_dplyr(),
+                     error = function(e) ab
+      )
+    }
+  }
+  
+  # get mo
+  if (!is.null(current_df) && length(mo) == 1 && mo %in% colnames(current_df)) {
+    mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
+    mo <- current_df[[mo]]
+  } else {
+    mo_var_found <- ""
+    if (is.null(mo)) {
+      tryCatch(
+        {
+          df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
+          mo <- NULL
+          try(
+            {
+              mo <- suppressMessages(search_type_in_df(df, "mo"))
+            },
+            silent = TRUE
+          )
+          if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
+            mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
+            mo <- df[, mo, drop = TRUE]
+          }
+        },
+        error = function(e) {
+          mo <- NULL
         }
-      },
-      error = function(e) {
-        mo <- NULL
-      }
-    )
+      )
+    }
   }
   if (is.null(mo)) {
     stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class 'mo' found). See ?as.sir.\n\n",
@@ -861,9 +873,9 @@ as_sir_method <- function(method_short,
   }
   # be sure to take current taxonomy, as the 'clinical_breakpoints' data set only contains current taxonomy
   mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, info = FALSE)))
-  if (is.na(ab)) {
-    message_("Returning NAs for unknown antibiotic: '", font_bold(ab.bak),
-      "'. Rename this column to a valid name or code, and check the output with `as.ab()`.",
+  if (all(is.na(ab))) {
+    message_("Returning NAs for unknown antibiotic: ", vector_and(ab.bak, sort = FALSE, quotes = TRUE),
+      ". Rename this column to a valid name or code, and check the output with `as.ab()`.",
       add_fn = font_red,
       as_note = FALSE
     )
@@ -887,25 +899,20 @@ as_sir_method <- function(method_short,
     }
   }
 
-  agent_formatted <- paste0("'", font_bold(ab.bak), "'")
+  agent_formatted <- paste0("'", font_bold(ab.bak, collapse = NULL), "'")
   agent_name <- ab_name(ab, tolower = TRUE, language = NULL)
-  if (generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)) {
-    agent_formatted <- paste0(
-      agent_formatted,
-      " (", ab, ")"
-    )
-  } else if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
-    agent_formatted <- paste0(
-      agent_formatted,
-      " (", ifelse(ab.bak == ab, "",
-        paste0(ab, ", ")
-      ), agent_name, ")"
-    )
-  }
-  
+  same_ab <- generalise_antibiotic_name(ab) == generalise_antibiotic_name(agent_name)
+  same_ab.bak <- generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)
+  agent_formatted[same_ab.bak] <- paste0(agent_formatted[same_ab.bak], " (", ab, ")")
+  agent_formatted[same_ab.bak & !same_ab] <- paste0(agent_formatted[same_ab.bak & !same_ab], 
+                                                    " (", ifelse(ab.bak[same_ab.bak & !same_ab] == ab[same_ab.bak & !same_ab],
+                                                                 "",
+                                                                 paste0(ab[same_ab.bak & !same_ab], ", ")),
+                                                    agent_name[same_ab.bak & !same_ab],
+                                                    ")")
   # this intro text will also be printed in the progress bar in the `progress` package is installed
   intro_txt <- paste0("Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-                      agent_formatted,
+                      ifelse(length(agent_formatted) == 1, agent_formatted, ""),
                       mo_var_found,
                       ifelse(identical(reference_data, AMR::clinical_breakpoints),
                              paste0(", ", font_bold(guideline_coerced)),
@@ -928,23 +935,6 @@ as_sir_method <- function(method_short,
 
   metadata_mo <- get_mo_uncertainties()
 
-  df <- data.frame(
-    values = x,
-    mo = mo,
-    result = NA_sir_,
-    uti = uti,
-    host = host,
-    stringsAsFactors = FALSE
-  )
-  if (method == "mic") {
-    # when as.sir.mic is called directly
-    df$values <- as.mic(df$values)
-  } else if (method == "disk") {
-    # when as.sir.disk is called directly
-    df$values <- as.disk(df$values)
-  }
-  df_unique <- unique(df[ , c("mo", "uti", "host"), drop = FALSE])
-
   rise_warning <- FALSE
   rise_note <- FALSE
   method_coerced <- toupper(method)
@@ -952,20 +942,41 @@ as_sir_method <- function(method_short,
   
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
-      subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
-    if (ab_coerced == "AMX" && nrow(breakpoints) == 0) {
-      ab_coerced <- "AMP"
+      subset(guideline == guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+    if (any(ab_coerced == "AMX") && nrow(breakpoints[breakpoints$ab == "AMX", , drop = FALSE]) == 0) {
+      ab_coerced[ab_coerced == "AMX"] <- "AMP"
       breakpoints <- reference_data %pm>%
-        subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
+        subset(guideline == guideline_coerced & method == method_coerced & ab %in% ab_coerced)
     }
   } else {
     breakpoints <- reference_data %pm>%
-      subset(method == method_coerced & ab == ab_coerced)
+      subset(method == method_coerced & ab %in% ab_coerced)
   }
-
+  
+  # create the unique data frame to be filled to save time
+  df <- data.frame(
+    values = x,
+    mo = mo,
+    ab = ab,
+    result = NA_sir_,
+    uti = uti,
+    host = host,
+    stringsAsFactors = FALSE
+  )
+  
+  if (method == "mic") {
+    # when as.sir.mic is called directly
+    df$values <- as.mic(df$values)
+  } else if (method == "disk") {
+    # when as.sir.disk is called directly
+    df$values <- as.disk(df$values)
+  }
+  df_unique <- unique(df[ , c("mo", "ab", "uti", "host"), drop = FALSE])
+  
+  # get all breakpoints
   breakpoints <- breakpoints %pm>%
     subset(type == breakpoint_type)
-
+  
   if (isFALSE(include_screening)) {
     # remove screening rules from the breakpoints table
     breakpoints <- breakpoints %pm>%
@@ -1003,6 +1014,7 @@ as_sir_method <- function(method_short,
   for (i in seq_len(nrow(df_unique))) {
     p$tick()
     mo_current <- df_unique[i, "mo", drop = TRUE]
+    ab_current <- df_unique[i, "ab", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
     if (is.na(uti_current)) {
       # no preference, so no filter on UTIs
@@ -1030,16 +1042,17 @@ as_sir_method <- function(method_short,
     # formatted for notes
     mo_formatted <- mo_current_name
     if (!mo_current_rank %in% c("kingdom", "phylum", "class", "order")) {
-      mo_formatted <- font_italic(mo_formatted)
+      mo_formatted <- font_italic(mo_formatted, collapse = NULL)
     }
     ab_formatted <- paste0(
-      suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
-      " (", ab_coerced, ")"
+      suppressMessages(suppressWarnings(ab_name(ab_current, language = NULL, tolower = TRUE))),
+      " (", ab_current, ")"
     )
     
    
     # gather all available breakpoints for current MO
     breakpoints_current <- breakpoints %pm>%
+      subset(ab == ab_current) %pm>%
       subset(mo %in% c(
         mo_current, mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
@@ -1155,9 +1168,9 @@ as_sir_method <- function(method_short,
         data.frame(
           datetime = rep(Sys.time(), length(rows)),
           index = rows,
-          ab_user = rep(ab.bak, length(rows)),
+          ab_user = rep(ab.bak[match(ab_current, df$ab)][1], length(rows)),
           mo_user = rep(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          ab = rep(ab_coerced, length(rows)),
+          ab = rep(ab_current, length(rows)),
           mo = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
           input = as.double(values),
           outcome = as.sir(new_sir),

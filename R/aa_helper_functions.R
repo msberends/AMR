@@ -1049,10 +1049,15 @@ get_current_column <- function() {
     if (tryCatch(!is.null(env$i), error = function(e) FALSE)) {
       if (!is.null(env$tibble_vars)) {
         # for mutate_if()
+        # TODO remove later, was part of older dplyr versions (at least not in dplyr 1.1.4)
         env$tibble_vars[env$i]
       } else {
         # for mutate(across())
-        df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
+        if (!is.null(env$data) && is.data.frame(env$data)) {
+          df <- env$data
+        } else {
+          df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
+        }
         if (is.data.frame(df)) {
           colnames(df)[env$i]
         } else {

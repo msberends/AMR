@@ -98,9 +98,9 @@ sir_interpretation_history(clean = FALSE)
 
 \item{S, I, R, N, SDD}{a case-indepdendent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters are removed from the input.}
 
-\item{mo}{any (vector of) text that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
+\item{mo}{a vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 
-\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{a vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{defaults to EUCAST 2023 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2023) and CLSI (2011-2023), see \emph{Details}.}
 
@@ -284,7 +284,7 @@ if (require("dplyr")) {
   df \%>\% mutate(across(AMP:TOB, as.sir))
 
   df \%>\%
-    mutate_at(vars(AMP:TOB), as.sir, mo = .$microorganism)
+    mutate_at(vars(AMP:TOB), as.sir, mo = "microorganism")
 
   # to include information about urinary tract infections (UTI)
   data.frame(
