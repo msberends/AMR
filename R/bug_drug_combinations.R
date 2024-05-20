@@ -108,6 +108,7 @@ bug_drug_combinations <- function(x,
       SDD = integer(0),
       I = integer(0),
       R = integer(0),
+      N = integer(0),
       total = integer(0),
       stringsAsFactors = FALSE
     )
@@ -122,18 +123,19 @@ bug_drug_combinations <- function(x,
       x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.sir))), drop = FALSE]
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
-        m <- as.matrix(table(x))
-        data.frame(S = m["S", ], SDD = m["SDD", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
+        m <- as.matrix(table(as.sir(x)))
+        data.frame(S = m["S", ], SDD = m["SDD", ], I = m["I", ], R = m["R", ], N = m["N", ], stringsAsFactors = FALSE)
       })
       merged <- do.call(rbind_AMR, pivot)
       out_group <- data.frame(
         mo = rep(unique_mo[i], NROW(merged)),
         ab = rownames(merged),
         S = merged$S,
-        SDD = merged$SSD,
+        SDD = merged$SDD,
         I = merged$I,
         R = merged$R,
-        total = merged$S + merged$I + merged$R,
+        N = merged$N,
+        total = merged$S + merged$SDD + merged$I + merged$R + merged$N,
         stringsAsFactors = FALSE
       )
       if (data_has_groups) {
@@ -208,11 +210,13 @@ format.bug_drug_combinations <- function(x,
       SDD = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$SDD[i], na.rm = TRUE)),
       I = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$I[i], na.rm = TRUE)),
       R = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
+      N = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
       total = vapply(FUN.VALUE = double(1), idx, function(i) {
         sum(x$S[i], na.rm = TRUE) +
           sum(x$SDD[i], na.rm = TRUE) +
           sum(x$I[i], na.rm = TRUE) +
-          sum(x$R[i], na.rm = TRUE)
+          sum(x$R[i], na.rm = TRUE) +
+          sum(x$N[i], na.rm = TRUE)
       }),
       stringsAsFactors = FALSE
     )

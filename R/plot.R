@@ -713,12 +713,12 @@ barplot.sir <- function(height,
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
-  # add SSD and N to colours
+  # add SDD and N to colours
   colours_SIR <- c(colours_SIR[1:2], colours_SIR[2], colours_SIR[3], "#888888")
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
   x <- table(height)
-  # remove missing I, SSD, and N
+  # remove missing I, SDD, and N
   colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "N") & x == 0)]
   x <- x[!(names(x) %in% c("SDD", "I", "N") & x == 0)]
   # plot it

@@ -49,6 +49,7 @@ jobs:
           # Test all old versions of R >= 3.0, we support them all!
           # For these old versions, dependencies and vignettes will not be checked.
           # For recent R versions, see check-recent.yaml (r-lib and tidyverse support the latest 5 major R releases).
+          - {os: ubuntu-latest, r: '3.6', allowfail: false}
           # - {os: windows-latest, r: '3.5', allowfail: true} # always fails, horrible with UTF-8
           - {os: ubuntu-latest, r: '3.4', allowfail: false}
           - {os: ubuntu-latest, r: '3.3', allowfail: false}

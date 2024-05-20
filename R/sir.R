@@ -327,7 +327,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x, S = "^(S|U)+$", I = "^(I|H)+$", R = "^(R)+$", N = "^(N|V)+$", SDD = "^(SDD|D)+$", ...) {
   if (inherits(x, "sir")) {
-    return(x)
+    return(as_sir_structure(x))
   }
 
   x.bak <- x
