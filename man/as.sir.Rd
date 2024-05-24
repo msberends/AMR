@@ -96,7 +96,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
 
-\item{S, I, R, N, SDD}{a case-indepdendent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters are removed from the input.}
+\item{S, I, R, N, SDD}{a case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters are removed from the input.}
 
 \item{mo}{a vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 

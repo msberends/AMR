@@ -1,4 +1,4 @@
-# AMR 2.1.1.9032
+# AMR 2.1.1.9033
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -17,14 +17,14 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 * `as.sir()` now returns additional factor levels "N" for non-interpretable and "SDD" for susceptible dose-dependent. Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and N.
 * The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
-* Function `limit_mic_range()`, which allows to limit MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
-* Function `mo_group_members()` to retrieve the member microorganisms. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
+* Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
+* Function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
 
 ## Changed
 * For SIR interpretation, it is now possible to use column names for argument `ab` and `mo`: `as.sir(..., ab = "column1", mo = "column2")`. This greatly improves the flexibility for users.
 * For MICs:
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
-  * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `limit_mic_range()` and `scale_*_mic()` functions.
+  * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
 * Updated `italicise_taxonomy()` to support HTML output
 * `mo_info()` now contains an extra element `group_members`, with the contents of the new `mo_group_members()` function

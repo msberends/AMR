@@ -6,7 +6,7 @@
 \alias{mic}
 \alias{is.mic}
 \alias{NA_mic_}
-\alias{limit_mic_range}
+\alias{rescale_mic}
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
@@ -16,7 +16,7 @@ is.mic(x)
 
 NA_mic_
 
-limit_mic_range(x, mic_range, keep_operators = "edges", as.mic = TRUE)
+rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
 
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
@@ -82,7 +82,7 @@ Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numer
 
 Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \code{mic} class.
 
-With \code{\link[=limit_mic_range]{limit_mic_range()}}, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
+With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
 
 For \code{ggplot2}, use one of the \code{\link[=scale_x_mic]{scale_*_mic()}} functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 
@@ -101,8 +101,8 @@ fivenum(mic_data)
 quantile(mic_data)
 all(mic_data < 512)
 
-# limit MICs using limit_mic_range()
-limit_mic_range(mic_data, mic_range = c(4, 16))
+# limit MICs using rescale_mic()
+rescale_mic(mic_data, mic_range = c(4, 16))
 
 # interpret MIC values
 as.sir(

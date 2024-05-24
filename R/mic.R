@@ -96,7 +96,7 @@ VALID_MIC_LEVELS <- c(t(vapply(FUN.VALUE = character(length(VALID_MIC_LEVELS)),
 #'
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 #' 
-#' With [limit_mic_range()], existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
+#' With [rescale_mic()], existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
 #'
 #' For `ggplot2`, use one of the [`scale_*_mic()`][scale_x_mic()] functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as a [numeric] vector. Bear in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
@@ -116,8 +116,8 @@ VALID_MIC_LEVELS <- c(t(vapply(FUN.VALUE = character(length(VALID_MIC_LEVELS)),
 #' quantile(mic_data)
 #' all(mic_data < 512)
 #' 
-#' # limit MICs using limit_mic_range()
-#' limit_mic_range(mic_data, mic_range = c(4, 16))
+#' # limit MICs using rescale_mic()
+#' rescale_mic(mic_data, mic_range = c(4, 16))
 #'
 #' # interpret MIC values
 #' as.sir(
@@ -270,7 +270,7 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 #' @rdname as.mic
 #' @param mic_range a manual range to limit the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
-limit_mic_range <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
+rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   stop_ifnot(all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
              "Values in `mic_range` must be valid MIC values. Unvalid: ", vector_and(mic_range[mic_range %in% c(VALID_MIC_LEVELS, NA)]))

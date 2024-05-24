@@ -323,7 +323,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 
 #' @rdname as.sir
 #' @export
-#' @param S,I,R,N,SDD a case-indepdendent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters are removed from the input.
+#' @param S,I,R,N,SDD a case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters are removed from the input.
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x, S = "^(S|U)+$", I = "^(I|H)+$", R = "^(R)+$", N = "^(N|V)+$", SDD = "^(SDD|D)+$", ...) {
   if (inherits(x, "sir")) {
