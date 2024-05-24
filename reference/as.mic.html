@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9033</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,7 +171,7 @@
 <span></span>
 <span><span class="va">NA_mic_</span></span>
 <span></span>
-<span><span class="fu">limit_mic_range</span><span class="op">(</span><span class="va">x</span>, <span class="va">mic_range</span>, keep_operators <span class="op">=</span> <span class="st">"edges"</span>, as.mic <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">rescale_mic</span><span class="op">(</span><span class="va">x</span>, <span class="va">mic_range</span>, keep_operators <span class="op">=</span> <span class="st">"edges"</span>, as.mic <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for mic</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="va">x</span>, as.mic <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -243,7 +243,7 @@
 <p>All so-called <a href="https://rdrr.io/r/base/groupGeneric.html" class="external-link">group generic functions</a> are implemented for the MIC class (such as <code>!</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;=</code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2()</a></code>). Some functions of the <code>stats</code> package are also implemented (such as <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code>, <code><a href="https://rdrr.io/r/stats/fivenum.html" class="external-link">fivenum()</a></code>). Since <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var()</a></code> are non-generic functions, these could not be extended. Use <code><a href="https://rdrr.io/r/stats/mad.html" class="external-link">mad()</a></code> as an alternative, or use e.g. <code>sd(as.numeric(x))</code> where <code>x</code> is your vector of MIC values.</p>
 <p>Using <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> or <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> on MIC values will remove the operators and return a numeric vector. Do <strong>not</strong> use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on MIC values as by the <span style="R">R</span> convention on <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>s, it will return the index of the factor levels (which is often useless for regular users).</p>
 <p>Use <code><a href="https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html" class="external-link">droplevels()</a></code> to drop unused levels. At default, it will return a plain factor. Use <code>droplevels(..., as.mic = TRUE)</code> to maintain the <code>mic</code> class.</p>
-<p>With <code>limit_mic_range()</code>, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.</p>
+<p>With <code>rescale_mic()</code>, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.</p>
 <p>For <code>ggplot2</code>, use one of the <code><a href="plot.html">scale_*_mic()</a></code> functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.</p>
 <p><code>NA_mic_</code> is a missing value of the new <code>mic</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
     </div>
@@ -275,8 +275,8 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">mic_data</span> <span class="op">&lt;</span> <span class="fl">512</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># limit MICs using limit_mic_range()</span></span></span>
-<span class="r-in"><span><span class="fu">limit_mic_range</span><span class="op">(</span><span class="va">mic_data</span>, mic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">16</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># limit MICs using rescale_mic()</span></span></span>
+<span class="r-in"><span><span class="fu">rescale_mic</span><span class="op">(</span><span class="va">mic_data</span>, mic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">16</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] &gt;=16 &lt;=4  &lt;=4  &lt;=4  8    &lt;=4  8    &gt;=16 &gt;=16</span>
 <span class="r-in"><span></span></span>
