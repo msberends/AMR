@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9034</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -307,23 +307,27 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMX', EUCAST 2023...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.frame(values = x, mo = mo, ab = ab, result = NA_sir_, uti = uti,     host = host, stringsAsFactors = FALSE):</span> arguments imply differing number of rows: 4, 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: , EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for amoxicillin (AMX) in Streptococcus</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Meningitis'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] S R R R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot MIC values, see ?plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">mic_data</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="as.mic-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">mic_data</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.frame(values = x, mo = mo, ab = ab, result = NA_sir_, uti = uti,     host = host, stringsAsFactors = FALSE):</span> arguments imply differing number of rows: 9, 1</span>
+<span class="r-plt img"><img src="as.mic-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_data</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.frame(values = x, mo = mo, ab = ab, result = NA_sir_, uti = uti,     host = host, stringsAsFactors = FALSE):</span> arguments imply differing number of rows: 9, 1</span>
+<span class="r-plt img"><img src="as.mic-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_data</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span> <span class="co"># Dutch</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.frame(values = x, mo = mo, ab = ab, result = NA_sir_, uti = uti,     host = host, stringsAsFactors = FALSE):</span> arguments imply differing number of rows: 9, 1</span>
+<span class="r-plt img"><img src="as.mic-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
