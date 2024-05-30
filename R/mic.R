@@ -495,12 +495,17 @@ rep.mic <- function(x, ...) {
 #' @noRd
 sort.mic <- function(x, decreasing = FALSE, ...) {
   x <- as.mic(x) # make sure that currently implemented MIC levels are used
+  dbl <- as.double(x)
+  # make sure that e.g. '<0.001' comes before '0.001', and '>0.001' comes after
+  dbl[as.character(x) %like% "<[0-9]"] <- dbl[as.character(x) %like% "<[0-9]"] - 0.000002
+  dbl[as.character(x) %like% "<="] <- dbl[as.character(x) %like% "<="] - 0.000001
+  dbl[as.character(x) %like% ">="] <- dbl[as.character(x) %like% ">="] + 0.000001
+  dbl[as.character(x) %like% ">[0-9]"] <- dbl[as.character(x) %like% ">[0-9]"] + 0.000002
   if (decreasing == TRUE) {
-    ord <- order(-as.double(x))
+    x[order(-dbl)]
   } else {
-    ord <- order(as.double(x))
+    x[order(dbl)]
   }
-  x[ord]
 }
 
 #' @method hist mic

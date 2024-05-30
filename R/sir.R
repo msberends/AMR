@@ -884,6 +884,9 @@ as_sir_method <- function(method_short,
   if (length(mo) == 1) {
     mo <- rep(mo, length(x))
   }
+  if (length(ab) == 1) {
+    ab <- rep(ab, length(x))
+  }
   if (is.null(uti)) {
     uti <- NA
   }

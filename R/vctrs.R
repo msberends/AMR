@@ -106,7 +106,7 @@ vec_ptype_full.disk <- function(x, ...) {
   "disk"
 }
 vec_ptype_abbr.disk <- function(x, ...) {
-  "disk"
+  "dsk"
 }
 vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   x

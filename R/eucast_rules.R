@@ -889,6 +889,7 @@ eucast_rules <- function(x,
           ),
           type = "ansi"
         ))
+        cat("\n")
         warned <- FALSE
       }
       run_changes <- edit_sir(

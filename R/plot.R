@@ -309,7 +309,6 @@ autoplot.mic <- function(object,
                          breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                          ...) {
   stop_ifnot_installed("ggplot2")
-  object <- as.mic(object) # make sure that currently implemented MIC levels are used
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -327,6 +326,7 @@ autoplot.mic <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
+  object <- as.mic(object) # make sure that currently implemented MIC levels are used
   x <- range_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
