@@ -907,15 +907,15 @@ as_sir_method <- function(method_short,
   same_ab <- generalise_antibiotic_name(ab) == generalise_antibiotic_name(agent_name)
   same_ab.bak <- generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)
   agent_formatted[same_ab.bak] <- paste0(agent_formatted[same_ab.bak], " (", ab, ")")
-  agent_formatted[same_ab.bak & !same_ab] <- paste0(agent_formatted[same_ab.bak & !same_ab], 
-                                                    " (", ifelse(ab.bak[same_ab.bak & !same_ab] == ab[same_ab.bak & !same_ab],
+  agent_formatted[!same_ab.bak & !same_ab] <- paste0(agent_formatted[!same_ab.bak & !same_ab],
+                                                    " (", ifelse(ab.bak[!same_ab.bak & !same_ab] == ab[!same_ab.bak & !same_ab],
                                                                  "",
-                                                                 paste0(ab[same_ab.bak & !same_ab], ", ")),
-                                                    agent_name[same_ab.bak & !same_ab],
+                                                                 paste0(ab[!same_ab.bak & !same_ab], ", ")),
+                                                    agent_name[!same_ab.bak & !same_ab],
                                                     ")")
-  # this intro text will also be printed in the progress bar in the `progress` package is installed
+  # this intro text will also be printed in the progress bar if the `progress` package is installed
   intro_txt <- paste0("Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-                      ifelse(length(agent_formatted) == 1, agent_formatted, ""),
+                      ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), vector_and(ab, quotes = FALSE)),
                       mo_var_found,
                       ifelse(identical(reference_data, AMR::clinical_breakpoints),
                              paste0(", ", font_bold(guideline_coerced)),

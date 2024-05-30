@@ -760,9 +760,10 @@ autoplot.sir <- function(object,
   }
 
   df <- as.data.frame(table(object), stringsAsFactors = TRUE)
-  colnames(df) <- c("sir", "count")
+  colnames(df) <- c("x", "n")
+  df <- df[!(df$n == 0 & df$x %in% c("SDD", "I", "N")), , drop = FALSE]
   ggplot2::ggplot(df) +
-    ggplot2::geom_col(ggplot2::aes(x = sir, y = count, fill = sir)) +
+    ggplot2::geom_col(ggplot2::aes(x = x, y = n, fill = x)) +
     # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
     ggplot2::scale_fill_manual(
       values = c(
