@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9035</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9036</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,18 +159,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9035" id="amr-2119035">AMR 2.1.1.9035<a class="anchor" aria-label="anchor" href="#amr-2119035"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9036" id="amr-2119036">AMR 2.1.1.9036<a class="anchor" aria-label="anchor" href="#amr-2119036"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support!)</em></p>
 <div class="section level5">
-<h5 id="a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9035">A New Milestone: One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9035"></a></h5>
+<h5 id="a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9036">A New Milestone: One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-one-health-support--human--veterinary--environmental-2-1-1-9036"></a></h5>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 </div>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9035">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9035"></a></h3>
+<h3 id="breaking-2-1-1-9036">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9036"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9035">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9035"></a></h3>
+<h3 id="new-2-1-1-9036">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9036"></a></h3>
 <ul><li>One Health implementation
 <ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for animal breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
 <li>The <code>clinical_breakpoints</code> data set contains all these breakpoints, and can be downloaded on our <a href="https://msberends.github.io/AMR/articles/datasets.html">download page</a>.</li>
@@ -187,7 +187,7 @@
 <li>Function <code><a href="../reference/mo_property.html">mo_group_members()</a></code> to retrieve the member microorganisms of a microorganism group. For example, <code>mo_group_members("Strep group C")</code> returns a vector of all microorganisms that are in that group.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-1-1-9035">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9035"></a></h3>
+<h3 id="changed-2-1-1-9036">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9036"></a></h3>
 <ul><li>For SIR interpretation, it is now possible to use column names for argument <code>ab</code> and <code>mo</code>: <code>as.sir(..., ab = "column1", mo = "column2")</code>. This greatly improves the flexibility for users.</li>
 <li>For MICs:
 <ul><li>Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)</li>
@@ -196,6 +196,8 @@
 <li>Sorting of MIC values (using <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>) was fixed in the same manner; <code>&lt;0.001</code> now gets sorted before <code>0.001</code>, and <code>&gt;0.001</code> gets sorted after <code>0.001</code>.</li>
 </ul></li>
 <li>Updated <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> to support HTML output</li>
+<li>
+<code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> now supports multiple antibiotics and antibiotic groups to be affected by a single rule</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_info()</a></code> now contains an extra element <code>group_members</code>, with the contents of the new <code><a href="../reference/mo_property.html">mo_group_members()</a></code> function</li>
 <li>Greatly improved <code>vctrs</code> integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as <code>dplyr</code>’s <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">rowwise()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/c_across.html" class="external-link">c_across()</a></code> are now supported for e.g. columns of class <code>mic</code>. Despite this, this <code>AMR</code> package is still zero-dependent on any other package, including <code>dplyr</code> and <code>vctrs</code>.</li>
@@ -207,7 +209,7 @@
 <li>Improved overall algorithm of <code><a href="../reference/as.ab.html">as.ab()</a></code> for better performance and accuracy</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-2-1-1-9035">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9035"></a></h3>
+<h3 id="other-2-1-1-9036">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9036"></a></h3>
 <ul><li>Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input</li>
 </ul></div>
 </div>
