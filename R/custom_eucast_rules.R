@@ -30,7 +30,7 @@
 #' Define Custom EUCAST Rules
 #'
 #' Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in [eucast_rules()].
-#' @param ... rules in [formula][base::tilde] notation, see *Examples*
+#' @param ... rules in [formula][base::tilde] notation, see below for instructions, and in *Examples*
 #' @details
 #' Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the [eucast_rules()] function.
 #' @section How it works:
@@ -89,11 +89,24 @@
 #' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
-#' ### Usage of antibiotic group names
+#' ### Usage of multiple antibiotics and antibiotic group names
+#' 
+#' You can define antibiotic groups instead of single antibiotics for the rule consequence, which is the part *after* the tilde (~). In the examples above, the antibiotic group `aminopenicillins` includes both ampicillin and amoxicillin.
+#' 
+#' Rules can also be applied to multiple antibiotics and antibiotic groups simultaneously. Use the `c()` function to combine multiple antibiotics. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
+#' 
+#' ```r
+#' x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
+#' x
+#' #> A set of custom EUCAST rules:
+#' #> 
+#' #>   1. If TZP is "R" then set to "R":
+#' #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
+#' ```
 #'
-#' It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part *after* the tilde. In above examples, the antibiotic group `aminopenicillins` is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the drugs that will be matched when running the rule.
+#' These `r length(DEFINED_AB_GROUPS)` antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
 #'
-#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("\"", tolower(gsub("^AB_", "", x)), "\"\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
+#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0(tolower(gsub("^AB_", "", x)), "\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
 #' @returns A [list] containing the custom rules
 #' @export
 #' @examples
@@ -156,24 +169,34 @@ custom_eucast_rules <- function(...) {
       "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see `?custom_eucast_rules`"
     )
     result_group <- as.character(result)[[2]]
-    if (paste0("AB_", toupper(result_group), "S") %in% DEFINED_AB_GROUPS) {
-      # support for e.g. 'aminopenicillin' if user meant 'aminopenicillins'
-      result_group <- paste0(result_group, "s")
+    result_group<- as.character(str2lang(result_group))
+    result_group <- result_group[result_group != "c"]
+    result_group_agents <- character(0)
+    for (j in seq_len(length(result_group))) {
+      if (paste0("AB_", toupper(result_group[j]), "S") %in% DEFINED_AB_GROUPS) {
+        # support for e.g. 'aminopenicillin' if user meant 'aminopenicillins'
+        result_group[j] <- paste0(result_group[j], "s")
+      }
+      if (paste0("AB_", toupper(result_group[j])) %in% DEFINED_AB_GROUPS) {
+        result_group_agents <- c(result_group_agents,
+                                 eval(parse(text = paste0("AB_", toupper(result_group[j]))), envir = asNamespace("AMR")))
+      } else {
+        out_group <- tryCatch(
+          suppressWarnings(as.ab(result_group[j],
+                                 fast_mode = TRUE,
+                                 flag_multiple_results = FALSE
+          )),
+          error = function(e) NA_character_
+        )
+        if (!all(is.na(out_group))) {
+          result_group_agents <- c(result_group_agents, out_group)
+        }
+      }
     }
-    if (paste0("AB_", toupper(result_group)) %in% DEFINED_AB_GROUPS) {
-      result_group <- eval(parse(text = paste0("AB_", toupper(result_group))), envir = asNamespace("AMR"))
-    } else {
-      result_group <- tryCatch(
-        suppressWarnings(as.ab(result_group,
-          fast_mode = TRUE,
-          flag_multiple_results = FALSE
-        )),
-        error = function(e) NA_character_
-      )
-    }
-
+    result_group_agents <- result_group_agents[!is.na(result_group_agents)]
+    
     stop_if(
-      any(is.na(result_group)),
+      length(result_group_agents) == 0,
       "this result of rule ", i, " could not be translated to a single antimicrobial drug/group: \"",
       as.character(result)[[2]], "\".\n\nThe input can be a name or code of an antimicrobial drug, or be one of: ",
       vector_or(tolower(gsub("AB_", "", DEFINED_AB_GROUPS)), quotes = FALSE), "."
@@ -186,7 +209,7 @@ custom_eucast_rules <- function(...) {
     )
     result_value <- as.sir(result_value)
 
-    out[[i]]$result_group <- result_group
+    out[[i]]$result_group <- result_group_agents
     out[[i]]$result_value <- result_value
   }
 

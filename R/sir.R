@@ -532,6 +532,8 @@ as.sir.data.frame <- function(x,
     } else if (length(host) == 1 && as.character(host) %in% colnames(x)) {
       host <- x[[as.character(host)]]
     }
+  } else {
+    host <- breakpoint_type
   }
   
   # -- UTIs
@@ -731,6 +733,8 @@ get_guideline <- function(guideline, reference_data) {
 convert_host <- function(x, lang = get_AMR_locale()) {
   x <- trimws2(tolower(as.character(x)))
   x_out <- rep(NA_character_, length(x))
+  x_out[trimws2(tolower(x)) == "human"] <- "human"
+  x_out[trimws2(tolower(x)) == "ecoff"] <- "ecoff"
   # this order is based on: clinical_breakpoints |> filter(type == "animal") |> count(host, sort = TRUE)
   x_out[is.na(x_out) & (x %like% "dog|canine" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
   x_out[is.na(x_out) & (x %like% "cattle|bovine" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
@@ -739,6 +743,7 @@ convert_host <- function(x, lang = get_AMR_locale()) {
   x_out[is.na(x_out) & (x %like% "horse|equine" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
   x_out[is.na(x_out) & (x %like% "aqua|fish" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
   x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
+  x_out[x_out == "ecoff"] <- "ECOFF"
   x_out
 }
 
@@ -794,12 +799,10 @@ as_sir_method <- function(method_short,
       }
       breakpoint_type <- "animal"
     } else {
-      host <- NA_character_
+      host <- breakpoint_type
     }
   }
   host <- convert_host(host)
-  host <- tolower(host)
-  host[host == "ecoff"] <- "ECOFF"
   
   if (message_not_thrown_before("as.sir", "sir_interpretation_history")) {
     message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations. Note that some ", ifelse(breakpoint_type == "animal", "animal hosts and ", ""), "microorganisms might not have breakpoints for each antimicrobial drug in ", guideline_coerced, ".\n\n")
@@ -887,14 +890,14 @@ as_sir_method <- function(method_short,
   if (length(ab) == 1) {
     ab <- rep(ab, length(x))
   }
+  if (length(host) == 1) {
+    host <- rep(host, length(x))
+  }
   if (is.null(uti)) {
     uti <- NA
   }
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
-  }
-  if (length(host) == 1) {
-    host <- rep(host, length(x))
   }
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (message_not_thrown_before("as.sir", "intrinsic")) {
@@ -906,7 +909,7 @@ as_sir_method <- function(method_short,
   agent_name <- ab_name(ab, tolower = TRUE, language = NULL)
   same_ab <- generalise_antibiotic_name(ab) == generalise_antibiotic_name(agent_name)
   same_ab.bak <- generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)
-  agent_formatted[same_ab.bak] <- paste0(agent_formatted[same_ab.bak], " (", ab, ")")
+  agent_formatted[same_ab.bak] <- paste0(agent_formatted[same_ab.bak], " (", ab[same_ab.bak], ")")
   agent_formatted[!same_ab.bak & !same_ab] <- paste0(agent_formatted[!same_ab.bak & !same_ab],
                                                     " (", ifelse(ab.bak[!same_ab.bak & !same_ab] == ab[!same_ab.bak & !same_ab],
                                                                  "",
@@ -915,13 +918,12 @@ as_sir_method <- function(method_short,
                                                     ")")
   # this intro text will also be printed in the progress bar if the `progress` package is installed
   intro_txt <- paste0("Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-                      ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), vector_and(ab, quotes = FALSE)),
+                      ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0("for ", vector_and(ab, quotes = FALSE))),
                       mo_var_found,
                       ifelse(identical(reference_data, AMR::clinical_breakpoints),
                              paste0(", ", font_bold(guideline_coerced)),
                              ""),
                       "... ")
-  message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   
   msg_note <- function(messages) {
     messages <- unique(messages)
@@ -1009,6 +1011,10 @@ as_sir_method <- function(method_short,
     add_intrinsic_resistance_to_AMR_env()
   }
   
+  if (nrow(df_unique) < 10) {
+    # only print intro under 10 items, otherwise progressbar will print this and then it will be printed double
+    message_(intro_txt, appendLF = FALSE, as_note = FALSE)
+  }
   p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
@@ -1018,12 +1024,13 @@ as_sir_method <- function(method_short,
     p$tick()
     mo_current <- df_unique[i, "mo", drop = TRUE]
     ab_current <- df_unique[i, "ab", drop = TRUE]
+    host_current <- df_unique[i, "host", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
     if (is.na(uti_current)) {
       # no preference, so no filter on UTIs
-      rows <- which(df$mo == mo_current)
+      rows <- which(df$mo == mo_current & df$ab == ab_current & df$host == host_current)
     } else {
-      rows <- which(df$mo == mo_current & df$uti == uti_current)
+      rows <- which(df$mo == mo_current & df$ab == ab_current & df$host == host_current & df$uti == uti_current)
     }
     values <- df[rows, "values", drop = TRUE]
     new_sir <- rep(NA_sir_, length(rows))

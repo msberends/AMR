@@ -1,4 +1,4 @@
-# AMR 2.1.1.9035
+# AMR 2.1.1.9036
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -28,6 +28,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
   * Sorting of MIC values (using `sort()`) was fixed in the same manner; `<0.001` now gets sorted before `0.001`, and `>0.001` gets sorted after `0.001`.
 * Updated `italicise_taxonomy()` to support HTML output
+* `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule
 * `mo_info()` now contains an extra element `group_members`, with the contents of the new `mo_group_members()` function
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Updated all ATC codes from WHOCC

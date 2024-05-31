@@ -71,6 +71,7 @@ expect_identical(
 expect_error(as.sir.mic(as.mic(16)))
 expect_error(as.sir.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
+
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   # 40 sir columns
   expect_equal(
@@ -125,6 +126,24 @@ expect_identical(as.character(as.sir(mics, mo = "Escherichia coli", ab = "AMC", 
                                      uti = FALSE, include_PKPD = FALSE)),
                  c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R"))
 
+# test SIR using dplyr's mutate_if(...) and mutate(across(...))
+out1 <- as.sir(as.mic(c(0.256, 0.5, 1, 2)), mo = "Escherichia coli", ab = "ertapenem", guideline = "EUCAST 2023")
+expect_identical(out1, as.sir(c("S", "S", "R", "R")))
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+  out2 <- data.frame(mo = "Escherichia coli",
+                     ab = "ertapenem",
+                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) |> 
+    mutate(across(where(is.mic), function(x) as.sir(x, mo = "mo", ab = "ab", guideline = "EUCAST 2023"))) |> 
+    pull(some_mics)
+  out3 <- data.frame(mo = "Escherichia coli",
+                     ab = "ertapenem",
+                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) |> 
+    mutate_if(is.mic, as.sir, mo = "mo", ab = "ab", guideline = "EUCAST 2023") |> 
+    pull(some_mics)
+  
+  expect_identical(out1, out2)
+  expect_identical(out1, out3)
+}
 
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
 expect_equal(suppressMessages(
