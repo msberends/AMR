@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9037</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -244,10 +244,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'ampicillin' (AMP), EUCAST 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in as_sir_method(method_short = "disk", method_long = "disk diffusion zones",     x = x, mo = mo, ab = ab, guideline = guideline, uti = uti,     conserve_capped_values = FALSE, add_intrinsic_resistance = add_intrinsic_resistance,     reference_data = reference_data, include_screening = include_screening,     include_PKPD = include_PKPD, breakpoint_type = breakpoint_type,     host = NULL, ...):</span> object 'mo_var_found' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># interpret whole data set, pretend to be all from urinary tract infections:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">df</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -255,20 +252,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'AMP' (ampicillin), EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'CIP' (ciprofloxacin), EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'GEN' (gentamicin), EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: column 'TOB' (tobramycin), EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP  CIP GEN TOB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S &lt;NA&gt;   S   S</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in as_sir_method(method_short = "disk", method_long = "disk diffusion zones",     x = x, mo = mo, ab = ab, guideline = guideline, uti = uti,     conserve_capped_values = FALSE, add_intrinsic_resistance = add_intrinsic_resistance,     reference_data = reference_data, include_screening = include_screening,     include_PKPD = include_PKPD, breakpoint_type = breakpoint_type,     host = NULL, ...):</span> object 'mo_var_found' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
