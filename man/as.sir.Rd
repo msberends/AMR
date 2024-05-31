@@ -104,7 +104,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{guideline}{defaults to EUCAST 2023 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2023) and CLSI (2011-2023), see \emph{Details}.}
 
-\item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
+\item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
 \item{conserve_capped_values}{a \link{logical} to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
 
@@ -130,11 +130,11 @@ Ordered \link{factor} with new class \code{sir}
 \description{
 Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor}.
 
-These breakpoints are currently available:
+These breakpoints are currently implemented:
 \itemize{
-\item For \strong{clinical microbiology} from EUCAST 2011-2023 and CLSI 2011-2023;
-\item For \strong{veterinary microbiology} from EUCAST 2021-2023 and CLSI 2019-2023;
-\item ECOFFs (Epidemiological cut-off values) from EUCAST 2020-2023 and CLSI 2022-2023.
+\item For \strong{clinical microbiology}: EUCAST 2011-2023 and CLSI 2011-2023;
+\item For \strong{veterinary microbiology}: EUCAST 2021-2023 and CLSI 2019-2023;
+\item ECOFFs (Epidemiological cut-off values): EUCAST 2020-2023 and CLSI 2022-2023.
 }
 
 All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
@@ -150,8 +150,10 @@ The \code{\link[=as.sir]{as.sir()}} function can work in four ways:
 \itemize{
 \item Using \code{dplyr}, SIR interpretation can be done very easily with either:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.mic, as.sir)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{your_data \%>\% mutate_if(is.mic, as.sir)
 your_data \%>\% mutate(across(where(is.mic), as.sir))
+your_data \%>\% mutate_if(is.mic, as.sir, ab = "column_with_antibiotics", mo = "column_with_microorganisms")
+your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo = c("E. coli", "K. pneumoniae", ...))
 
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
@@ -162,8 +164,10 @@ your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_hosts", gui
 \itemize{
 \item Using \code{dplyr}, SIR interpretation can be done very easily with either:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.disk, as.sir)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{your_data \%>\% mutate_if(is.disk, as.sir)
 your_data \%>\% mutate(across(where(is.disk), as.sir))
+your_data \%>\% mutate_if(is.disk, as.sir, ab = "column_with_antibiotics", mo = "column_with_microorganisms")
+your_data \%>\% mutate_if(is.disk, as.sir, ab = c("cipro", "ampicillin", ...), mo = c("E. coli", "K. pneumoniae", ...))
 
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
