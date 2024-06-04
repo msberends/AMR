@@ -121,9 +121,11 @@ fi
 
 # Prepend the version number to the commit message
 if [ -f "$COMMIT_MSG_PATH" ]; then
-  # Prepend the version number
-  echo "(v${currentversion}) ${COMMIT_MSG}" > "$COMMIT_MSG_PATH"
-  echo "- prepended version number to commit message"
+    COMMIT_MSG=$(cat "$COMMIT_MSG_PATH")
+    echo "Current commit message: $COMMIT_MSG"  # Debug line
+    echo "(v${currentversion}) ${COMMIT_MSG}" > "$COMMIT_MSG_PATH"
+    echo "- prepended version number to commit message"
+    echo "Updated commit message: $(cat "$COMMIT_MSG_PATH")"  # Debug line
 else
   echo ""
   echo "Commit message file not found. Unable to prepend version number."
