@@ -1,16 +1,18 @@
 # The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
 
+<img src="./endorsement_clsi_eucast.jpg" align="right" height="120" />
+
 * Provides an **all-in-one solution** for AMR data analysis in a One Health approach
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
-* Provides the **full microbiological taxonomy** and data on **all antimicrobial drugs**
-* Applies all recent **CLSI and EUCAST clinical and veterinary breakpoints** for  MICs and disk zones
+* Provides the **full microbiological taxonomy** and extensive info on **all antimicrobial drugs**
+* Applies all recent **CLSI and EUCAST clinical and veterinary breakpoints** for MICs and disk zones
 * Corrects for duplicate isolates, **calculates and predicts AMR** per antibiotic class
-* Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, and **SNOMED CT**
+* Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * Works on Windows, macOS and Linux with **all versions of R** since R-3.0 and is completely **dependency-free**, highly suitable for places with **limited resources**
 
 <div style="display: flex; font-size: 0.8em;">
 <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
-<p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03">https://doi.org/10.18637/jss.v104.i03</a></small></p>
+<p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small></p>
 </div>
 
 ----
@@ -25,7 +27,7 @@ After installing this package, R knows [**~52,000 distinct microbial species**](
 
 ##### Used in over 175 countries, translated into 20 languages
 
-<a href="./countries_large.png"><img src="./countries.png" target="_blank" align="right" style="max-width: 300px;" /></a>
+<a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;" /></a>
 
 Since its first public release in early 2018, this R package has been used in almost all countries in the world. Click the map to enlarge and to see the country names.
 

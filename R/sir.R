@@ -858,6 +858,8 @@ as_sir_method <- function(method_short,
         }
       )
     }
+  } else {
+    mo_var_found <- ""
   }
   if (is.null(mo)) {
     stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class 'mo' found). See ?as.sir.\n\n",
