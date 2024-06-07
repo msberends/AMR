@@ -39,7 +39,7 @@ if [ -f "$COMMIT_MSG_PATH" ]; then
   COMMIT_MSG=$(cat "$COMMIT_MSG_PATH")
 else
   echo "Commit message file not found."
-  COMMIT_MSG=""
+  exit 1
 fi
 # check the commit message, cancel commit if needed
 if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-checks\)|\(no-verify\) ]]; then
@@ -119,16 +119,8 @@ else
   echo "- no NEWS.md found!"
 fi
 
-# Prepend the version number to the commit message
-if [ -f "$COMMIT_MSG_PATH" ]; then
-    COMMIT_MSG=$(cat "$COMMIT_MSG_PATH")
-    echo "Current commit message: $COMMIT_MSG"  # Debug line
-    echo "(v${currentversion}) ${COMMIT_MSG}" > "$COMMIT_MSG_PATH"
-    echo "- prepended version number to commit message"
-    echo "Updated commit message: $(cat "$COMMIT_MSG_PATH")"  # Debug line
-else
-  echo ""
-  echo "Commit message file not found. Unable to prepend version number."
-fi
+# set the version number as an environment variable for the commit-msg hook
+export COMMIT_VERSION=$currentversion
+echo "- exported COMMIT_VERSION=${currentversion} for the commit-msg hook"
 
 echo ""
