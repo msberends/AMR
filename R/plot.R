@@ -195,7 +195,7 @@ plot.mic <- function(x,
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
-  x <- range_as_table(x, expand = expand)
+  x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -327,7 +327,7 @@ autoplot.mic <- function(object,
   }
 
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
-  x <- range_as_table(object, expand = expand)
+  x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -392,7 +392,7 @@ autoplot.mic <- function(object,
 fortify.mic <- function(object, ...) {
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
   stats::setNames(
-    as.data.frame(range_as_table(object, expand = FALSE)),
+    as.data.frame(plotrange_as_table(object, expand = FALSE)),
     c("x", "y")
   )
 }
@@ -430,7 +430,7 @@ plot.disk <- function(x,
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
-  x <- range_as_table(x, expand = expand)
+  x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -559,7 +559,7 @@ autoplot.disk <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
-  x <- range_as_table(object, expand = expand)
+  x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
     mo = mo,
@@ -624,7 +624,7 @@ autoplot.disk <- function(object,
 # will be exported using s3_register() in R/zzz.R
 fortify.disk <- function(object, ...) {
   stats::setNames(
-    as.data.frame(range_as_table(object, expand = FALSE)),
+    as.data.frame(plotrange_as_table(object, expand = FALSE)),
     c("x", "y")
   )
 }
@@ -789,26 +789,15 @@ fortify.sir <- function(object, ...) {
   )
 }
 
-range_as_table <- function(x, expand, keep_operators = "all", mic_range = NULL) {
+plotrange_as_table <- function(x, expand, keep_operators = "all", mic_range = NULL) {
   x <- x[!is.na(x)]
   if (is.mic(x)) {
     x <- as.mic(x, keep_operators = keep_operators)
     if (expand == TRUE) {
-      # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
-      extra_range <- max(x)
-      min_range <- min(x)
-      if (!is.null(mic_range)) {
-        if (!is.na(mic_range[2])) {
-          extra_range <- as.mic(mic_range[2]) * 2
-        }
-        if (!is.na(mic_range[1])) {
-          min_range <- as.mic(mic_range[1])
-        }
-      }
-      extra_range <- extra_range / 2
-      while (min(extra_range) / 2 > min_range) {
-        extra_range <- c(min(extra_range) / 2, extra_range)
-      }
+      # expand range for MIC by adding common intermediate factors levels
+      extra_range <- COMMON_MIC_VALUES[COMMON_MIC_VALUES > min(x, na.rm = TRUE) & COMMON_MIC_VALUES < max(x, na.rm = TRUE)]
+      # remove the ones that are in 25% range of user values
+      extra_range <- extra_range[!vapply(FUN.VALUE = logical(1), extra_range, function(r) any(abs(r - x) / x < 0.25, na.rm = TRUE))]
       nms <- extra_range
       extra_range <- rep(0, length(extra_range))
       names(extra_range) <- nms

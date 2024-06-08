@@ -181,10 +181,10 @@ AB_AMINOGLYCOSIDES <- antibiotics %>%
   filter(group %like% "aminoglycoside") %>%
   pull(ab)
 AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
-AB_ANTIFUNGALS <- AMR_env$AB_lookup %>%
+AB_ANTIFUNGALS <- antibiotics %>%
   filter(group %like% "antifungal") %>%
   pull(ab)
-AB_ANTIMYCOBACTERIALS <- AMR_env$AB_lookup %>%
+AB_ANTIMYCOBACTERIALS <- antibiotics %>%
   filter(group %like% "antimycobacterial") %>%
   pull(ab)
 AB_CARBAPENEMS <- antibiotics %>%
@@ -221,7 +221,10 @@ AB_LINCOSAMIDES <- antibiotics %>%
   filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2))) %>%
   pull(ab)
 AB_MACROLIDES <- antibiotics %>%
-  filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2))) %>%
+  filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2) & name %unlike% "screening|inducible")) %>%
+  pull(ab)
+AB_NITROFURANS <- antibiotics %>%
+  filter(name %like% "^furaz|nitrofura" | atc_group2 %like% "nitrofuran") %>%
   pull(ab)
 AB_OXAZOLIDINONES <- antibiotics %>%
   filter(group %like% "oxazolidinone") %>%
@@ -234,6 +237,9 @@ AB_POLYMYXINS <- antibiotics %>%
   pull(ab)
 AB_QUINOLONES <- antibiotics %>%
   filter(group %like% "quinolone") %>%
+  pull(ab)
+AB_RIFAMYCINS <- antibiotics %>%
+  filter(name %like% "Rifampi|Rifabutin|Rifapentine|rifamy") %>%
   pull(ab)
 AB_STREPTOGRAMINS <- antibiotics %>%
   filter(atc_group2 %like% "streptogramin") %>%
@@ -310,10 +316,12 @@ suppressMessages(usethis::use_data(EUCAST_RULES_DF,
   AB_GLYCOPEPTIDES_EXCEPT_LIPO,
   AB_LINCOSAMIDES,
   AB_MACROLIDES,
+  AB_NITROFURANS,
   AB_OXAZOLIDINONES,
   AB_PENICILLINS,
   AB_POLYMYXINS,
   AB_QUINOLONES,
+  AB_RIFAMYCINS,
   AB_STREPTOGRAMINS,
   AB_TETRACYCLINES,
   AB_TETRACYCLINES_EXCEPT_TGC,

@@ -43,6 +43,9 @@ VALID_MIC_LEVELS <- c(t(vapply(FUN.VALUE = character(length(VALID_MIC_LEVELS)),
                                c("<", "<=", "", ">=", ">"),
                                paste0,
                                VALID_MIC_LEVELS)))
+COMMON_MIC_VALUES <- c(0.001, 0.002, 0.004, 0.008, 0.016, 0.032, 0.064,
+                       0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32,
+                       64, 128, 256, 512, 1024)
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -300,10 +303,10 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   }
   
   # create a manual factor with levels only within desired range
-  expanded <- range_as_table(x,
-                                 expand = TRUE,
-                                 keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
-                                 mic_range = mic_range)
+  expanded <- plotrange_as_table(x,
+                             expand = TRUE,
+                             keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
+                             mic_range = mic_range)
   if (keep_operators == "edges") {
     names(expanded)[1] <- paste0("<=", names(expanded)[1])
     names(expanded)[length(expanded)] <- paste0(">=", names(expanded)[length(expanded)])

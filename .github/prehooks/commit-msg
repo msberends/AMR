@@ -28,7 +28,6 @@
 # Visit our website for the full manual and a complete tutorial about  #
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
-#!/bin/bash
 
 #######################################
 # This script runs on commit-msg hook #
@@ -56,6 +55,3 @@ fi
 
 # Prepend the version number to the commit message
 echo "(v${currentversion}) ${COMMIT_MSG}" > "$COMMIT_MSG_FILE"
-
-# Print the updated commit message for verification
-echo "Updated commit message: $(cat "$COMMIT_MSG_FILE")"

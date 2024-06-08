@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==================================================================== #
 # TITLE:                                                               #
@@ -118,9 +118,4 @@ if [ -e "NEWS.md" ]; then
 else
   echo "- no NEWS.md found!"
 fi
-
-# set the version number as an environment variable for the commit-msg hook
-export COMMIT_VERSION=$currentversion
-echo "- exported COMMIT_VERSION=${currentversion} for the commit-msg hook"
-
 echo ""

@@ -367,9 +367,10 @@ glycopeptides <- function(only_sir_columns = FALSE, ...) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-lincosamides <- function(only_sir_columns = FALSE, ...) {
+lincosamides <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-  ab_select_exec("lincosamides", only_sir_columns = only_sir_columns)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  ab_select_exec("lincosamides", only_sir_columns = only_sir_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -384,6 +385,13 @@ lipoglycopeptides <- function(only_sir_columns = FALSE, ...) {
 macrolides <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("macrolides", only_sir_columns = only_sir_columns)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+nitrofurans <- function(only_sir_columns = FALSE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("nitrofurans", only_sir_columns = only_sir_columns)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -410,16 +418,23 @@ polymyxins <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-streptogramins <- function(only_sir_columns = FALSE, ...) {
+quinolones <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-  ab_select_exec("streptogramins", only_sir_columns = only_sir_columns)
+  ab_select_exec("quinolones", only_sir_columns = only_sir_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-quinolones <- function(only_sir_columns = FALSE, ...) {
+rifamycins <- function(only_sir_columns = FALSE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-  ab_select_exec("quinolones", only_sir_columns = only_sir_columns)
+  ab_select_exec("rifamycins", only_sir_columns = only_sir_columns)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+streptogramins <- function(only_sir_columns = FALSE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("streptogramins", only_sir_columns = only_sir_columns)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -579,9 +594,9 @@ ab_select_exec <- function(function_name,
 
   # untreatable drugs
   if (only_treatable == TRUE) {
-    untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
+    untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "-high|EDTA|polysorbate|macromethod|screening|nacubactam"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
-      if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
+      if (message_not_thrown_before(function_name, "ab_class", "untreatable")) {
         warning_(
           "in `", function_name, "()`: some drugs were ignored since they cannot be used for treating patients: ",
           vector_and(
@@ -591,8 +606,7 @@ ab_select_exec <- function(function_name,
             ),
             quotes = FALSE,
             sort = TRUE
-          ), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
-          "This warning will be shown once per session."
+          ), ". They can be included using `", function_name, "(only_treatable = FALSE)`."
         )
       }
       ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]

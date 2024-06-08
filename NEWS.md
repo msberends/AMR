@@ -1,4 +1,4 @@
-# AMR 2.1.1.9040
+# AMR 2.1.1.9041
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support!)*
 
@@ -22,6 +22,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## Changed
 * For SIR interpretation, it is now possible to use column names for argument `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
+* Extended the antibiotic selectors with `nitrofurans()` and `rifamycins()`
+* Added "clindamycin inducible screening" as `CLI1` to the `antibiotics` data set. Since clindamycin is a lincosamide, the antibiotic selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
 * For MICs:
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.
@@ -36,6 +38,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy
+* When using antibiotic selectors such as `aminoglycosides()` that exclude non-treatable drugs like gentamicin-high, the function now always returns a warning that these can be included using `only_treatable = FALSE`
 
 ## Other
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input

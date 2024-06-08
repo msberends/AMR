@@ -735,6 +735,18 @@ antibiotics <- antibiotics %>%
   ))
 antibiotics[which(antibiotics$ab %in% c("CYC", "LNZ", "THA", "TZD")), "group"] <- "Oxazolidinones"
 
+# add clindamycin inducible screening
+clin <- antibiotics |>
+  filter(ab == "FOX1") |>
+  mutate(ab = as.character("CLI1"),
+         name = "Clindamycin inducible screening",
+         group = "Macrolides/lincosamides")
+antibiotics <- antibiotics |>
+  mutate(ab = as.character(ab)) |>
+  bind_rows(clin)
+class(antibiotics$ab) <- c("ab", "character")
+antibiotics[which(antibiotics$ab == "CLI1"), "abbreviations"][[1]] <- list(c("clindamycin inducible", "clinda inducible", "clin inducible"))
+
 # add pretomanid
 antibiotics <- antibiotics %>%
   mutate(ab = as.character(ab)) %>%
