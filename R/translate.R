@@ -244,7 +244,6 @@ translate_into_language <- function(from,
     # starting with longest pattern, since more general translations are shorter, such as 'Group'
     order(nchar(df_trans$pattern), decreasing = TRUE),
     function(i) {
-      if (df_trans$pattern[i] %like% "[/]") return(df_trans$pattern[i])
       from_unique_translated <<- gsub(
         pattern = df_trans$pattern[i],
         replacement = df_trans[i, lang, drop = TRUE],

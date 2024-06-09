@@ -327,9 +327,15 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 
 #' @rdname as.sir
 #' @export
-#' @param S,I,R,N,SDD a case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters are removed from the input.
+#' @param S,I,R,N,SDD a case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
 # extra param: warn (logical, to never throw a warning)
-as.sir.default <- function(x, S = "^(S|U)+$", I = "^(I|H)+$", R = "^(R)+$", N = "^(N|V)+$", SDD = "^(SDD|D)+$", ...) {
+as.sir.default <- function(x,
+                           S = "^(S|U)+$",
+                           I = "^(I)+$",
+                           R = "^(R)+$",
+                           N = "^(N|V)+$",
+                           SDD = "^(SDD|D|H)+$",
+                           ...) {
   if (inherits(x, "sir")) {
     return(as_sir_structure(x))
   }
@@ -349,7 +355,7 @@ as.sir.default <- function(x, S = "^(S|U)+$", I = "^(I|H)+$", R = "^(R)+$", N = 
       x[x.bak == 2] <- "I"
       x[x.bak == 3] <- "R"
     }
-  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", c("S", "SDD", "I", "R", "N"), NA_character_))) {
+  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "S", "SDD", "I", "R", "N", NA_character_))) {
     x[x.bak == "1"] <- "S"
     x[x.bak == "2"] <- "I"
     x[x.bak == "3"] <- "R"
@@ -389,7 +395,9 @@ as.sir.default <- function(x, S = "^(S|U)+$", I = "^(I|H)+$", R = "^(R)+$", N = 
     # replace all English textual input
     x[x %like% "([^a-z]|^)res(is(tant)?)?"] <- "R"
     x[x %like% "([^a-z]|^)sus(cep(tible)?)?"] <- "S"
+    x[x %like% "not|non"] <- "N"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
+    x[x %like% "dose"] <- "SDD"
     x <- gsub("[^A-Z]+", "", x, perl = TRUE)
     # apply regexes set by user
     x[x %like% S] <- "S"
