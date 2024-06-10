@@ -1,6 +1,6 @@
 # The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
 
-<img src="./endorsement_clsi_eucast.jpg" align="right" height="120" />
+<img src="./endorsement_clsi_eucast.jpg" class="endorse_img" align="right" height="120" />
 
 * Provides an **all-in-one solution** for AMR data analysis in a One Health approach
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA

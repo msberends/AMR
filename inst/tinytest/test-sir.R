@@ -168,7 +168,7 @@ expect_equal(suppressMessages(
       guideline = "CLSI 2019"
     )
   )),
-  c("S", c("S", "SDD", "I", "R", "N"), "R")
+  c("S", "S", "I", "R", "R")
 )
 
 expect_true(is.data.frame(sir_interpretation_history(clean = FALSE)))
