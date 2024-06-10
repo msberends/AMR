@@ -33,12 +33,12 @@
 #' @param x a data set 
 #' @param filename a character string specifying the file name
 #' @param type a character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see <https://www.ncbi.nlm.nih.gov/biosample/docs/>
-#' @param save_as_xlsx
-export_biosample <- function(x,
-                             filename = paste0("biosample_", format(Sys.time(), "%Y-%m-%d-%H%M%S"), ".xlsx"),
-                             type = "pathogen MIC",
-                             columns = where(is.mic),
-                             save_as_xlsx = TRUE) {
+#' @keywords internal
+export_ncbi_biosample <- function(x,
+                                  filename = paste0("biosample_", format(Sys.time(), "%Y-%m-%d-%H%M%S"), ".xlsx"),
+                                  type = "pathogen MIC",
+                                  columns = where(is.mic),
+                                  save_as_xlsx = TRUE) {
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(filename, allow_class = "character", has_length = 1)
   meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("pathogen MIC", "beta-lactamase MIC"))

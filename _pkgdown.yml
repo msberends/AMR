@@ -170,7 +170,7 @@ reference:
     - "`atc_online_property`"
     - "`add_custom_antimicrobials`"
 
-  - title: "Preparing data"
+  - title: "Preparing data: antimicrobial results"
     desc: >
       With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
       Use `as.sir()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines.
@@ -217,7 +217,7 @@ reference:
     - "`ggplot_sir`"
     - "`ggplot_pca`"
     
-  - title: "Other: AMR-specific options"
+  - title: "AMR-specific options"
     desc: >
       The AMR package is customisable, by providing settings that can be set per user or per team. For
       example, the default interpretation guideline can be changed from EUCAST to CLSI, or a supported
@@ -262,6 +262,7 @@ reference:
     contents:
     - "`age_groups`"
     - "`age`"
+    - "`export_ncbi_biosample`"
     - "`availability`"
     - "`get_AMR_locale`"
     - "`italicise_taxonomy`"

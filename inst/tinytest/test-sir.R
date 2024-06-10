@@ -51,17 +51,18 @@ if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(as.sir(c("S", "SDD", "I", "R", "N"))), "gg")
 }
 expect_stdout(print(as.sir(c("S", "SDD", "I", "R", "N"))))
-expect_equal(as.character(as.sir(c(1:3))), c("S", "SDD", "I", "R", "N"))
-expect_equal(as.character(as.sir(c(1:3))), c("S", "SDD", "I", "R", "N"))
+expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
+expect_equal(as.character(as.sir(c(1:3))), c("S", "I", "R"))
 expect_equal(suppressWarnings(as.logical(as.sir("INVALID VALUE"))), NA)
 expect_equal(
   summary(as.sir(c("S", "R"))),
   structure(c(
     "Class" = "sir",
+    "%S" = "50.0% (n=1)",
+    "%SDD" = " 0.0% (n=0)",
+    "%I" = " 0.0% (n=0)",
     "%R" = "50.0% (n=1)",
-    "%SI" = "50.0% (n=1)",
-    "- %S" = "50.0% (n=1)",
-    "- %I" = " 0.0% (n=0)"
+    "%N" = " 0.0% (n=0)"
   ), class = c("summaryDefault", "table"))
 )
 expect_identical(

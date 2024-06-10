@@ -29,7 +29,7 @@
 
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
-#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor].
+#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] containing the levels `S`, `SDD`, `I`, `R`, `N`.
 #' 
 #' These breakpoints are currently implemented:
 #' - For **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
@@ -123,8 +123,10 @@
 #' ### Other
 #'
 #' The function [is.sir()] detects if the input contains class `sir`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
+#' 
+#' The base R function [as.double()] can be used to retrieve quantitative values from a `sir` object: `"S"` = 1, `"I"`/`"SDD"` = 2, `"R"` = 3. All other values are rendered `NA` . **Note:** Do not use `as.integer()`, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
 #'
-#' The function [is_sir_eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
+#' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr>):
 #'
@@ -224,7 +226,12 @@
 #' is.sir(sir_data)
 #' plot(sir_data) # for percentages
 #' barplot(sir_data) # for frequencies
-#'
+#' 
+#' # as common in R, you can use as.integer() to return factor indices:
+#' as.integer(as.sir(c("S", "SDD", "I", "R", "N", NA)))
+#' # but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:
+#' as.double(as.sir(c("S", "SDD", "I", "R", "N", NA)))
+#' 
 #' # the dplyr way
 #' if (require("dplyr")) {
 #'   example_isolates %>%
@@ -1394,6 +1401,17 @@ print.sir <- function(x, ...) {
   print(as.character(x), quote = FALSE)
 }
 
+
+#' @method as.double sir
+#' @export
+as.double.sir <- function(x, ...) {
+  dbls <- rep(NA_real_, length(x))
+  dbls[x == "S"] <- 1
+  dbls[x %in% c("SDD", "I")] <- 2
+  dbls[x == "R"] <- 3
+  dbls
+}
+
 #' @method droplevels sir
 #' @export
 #' @noRd
@@ -1410,8 +1428,10 @@ summary.sir <- function(object, ...) {
   x <- object
   n <- sum(!is.na(x))
   S <- sum(x == "S", na.rm = TRUE)
+  SDD <- sum(x == "SDD", na.rm = TRUE)
   I <- sum(x == "I", na.rm = TRUE)
   R <- sum(x == "R", na.rm = TRUE)
+  N <- sum(x == "N", na.rm = TRUE)
   pad <- function(x) {
     if (is.na(x)) {
       return("??")
@@ -1426,10 +1446,11 @@ summary.sir <- function(object, ...) {
   }
   value <- c(
     "Class" = "sir",
+    "%S" = paste0(pad(percentage(S / n, digits = 1)), " (n=", S, ")"),
+    "%SDD" = paste0(pad(percentage(SDD / n, digits = 1)), " (n=", SDD, ")"),
+    "%I" = paste0(pad(percentage(I / n, digits = 1)), " (n=", I, ")"),
     "%R" = paste0(pad(percentage(R / n, digits = 1)), " (n=", R, ")"),
-    "%SI" = paste0(pad(percentage((S + I) / n, digits = 1)), " (n=", S + I, ")"),
-    "- %S" = paste0(pad(percentage(S / n, digits = 1)), " (n=", S, ")"),
-    "- %I" = paste0(pad(percentage(I / n, digits = 1)), " (n=", I, ")")
+    "%N" = paste0(pad(percentage(N / n, digits = 1)), " (n=", N, ")")
   )
   class(value) <- c("summaryDefault", "table")
   value

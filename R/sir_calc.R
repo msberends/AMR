@@ -135,20 +135,13 @@ sir_calc <- function(...,
 
     x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
     if (isTRUE(only_all_tested)) {
-      get_integers <- function(x) {
-        ints <- rep(NA_integer_, length(x))
-        ints[x == "S"] <- 1L
-        ints[x %in% c("SDD", "I")] <- 2L
-        ints[x == "R"] <- 3L
-        ints
-      }
       # no NAs in any column
       y <- apply(
-        X = as.data.frame(lapply(x, get_integers), stringsAsFactors = FALSE),
+        X = as.data.frame(lapply(x, as.double), stringsAsFactors = FALSE),
         MARGIN = 1,
         FUN = min
       )
-      numerator <- sum(!is.na(y) & y %in% get_integers(ab_result), na.rm = TRUE)
+      numerator <- sum(!is.na(y) & y %in% as.double(ab_result), na.rm = TRUE)
       denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(anyNA(y))))
     } else {
       # may contain NAs in any column
@@ -364,7 +357,11 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   } else {
     # don't use as.sir() here, as it would add the class 'sir' and we would like
     # the same data structure as output, regardless of input
-    out$interpretation <- factor(out$interpretation, levels = c("S", "SDD", "I", "R", "N"), ordered = TRUE)
+    if (out$value[out$interpretation == "SDD"] > 0) {
+      out$interpretation <- factor(out$interpretation, levels = c("S", "SDD", "I", "R"), ordered = TRUE)  
+    } else {
+      out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)
+    }
   }
   
   out <- out[!is.na(out$interpretation), , drop = FALSE]

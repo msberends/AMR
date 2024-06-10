@@ -128,7 +128,7 @@ sir_interpretation_history(clean = FALSE)
 Ordered \link{factor} with new class \code{sir}
 }
 \description{
-Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor}.
+Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} containing the levels \code{S}, \code{SDD}, \code{I}, \code{R}, \code{N}.
 
 These breakpoints are currently implemented:
 \itemize{
@@ -215,7 +215,9 @@ The repository of this package \href{https://github.com/msberends/AMR/blob/main/
 
 The function \code{\link[=is.sir]{is.sir()}} detects if the input contains class \code{sir}. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 
-The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
+The base R function \code{\link[=as.double]{as.double()}} can be used to retrieve quantitative values from a \code{sir} object: \code{"S"} = 1, \code{"I"}/\code{"SDD"} = 2, \code{"R"} = 3. All other values are rendered \code{NA} . \strong{Note:} Do not use \code{as.integer()}, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
+
+The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRUE} when a column contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 }
 
 \code{NA_sir_} is a missing value of the new \code{sir} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
@@ -317,6 +319,11 @@ sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.sir(sir_data)
 plot(sir_data) # for percentages
 barplot(sir_data) # for frequencies
+
+# as common in R, you can use as.integer() to return factor indices:
+as.integer(as.sir(c("S", "SDD", "I", "R", "N", NA)))
+# but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:
+as.double(as.sir(c("S", "SDD", "I", "R", "N", NA)))
 
 # the dplyr way
 if (require("dplyr")) {
