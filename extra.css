@@ -89,6 +89,10 @@
   box-shadow: none !important;
 }
 
+.endorse_img {
+  width: 0% !important;
+}
+
 .template-home img.logo {
   width: 200px;
 }
