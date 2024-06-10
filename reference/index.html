@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9037</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9043</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -241,7 +241,7 @@
         </dt>
         <dd>Add Custom Antimicrobials</dd>
       </dl></div><div class="section level2">
-      <h2 id="preparing-data">Preparing data<a class="anchor" aria-label="anchor" href="#preparing-data"></a></h2>
+      <h2 id="preparing-data-antimicrobial-results">Preparing data: antimicrobial results<a class="anchor" aria-label="anchor" href="#preparing-data-antimicrobial-results"></a></h2>
       
       <div class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST rules</a> with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</p></div>
 
@@ -329,7 +329,7 @@
         <dd>Determine Bug-Drug Combinations</dd>
       </dl><dl><dt>
           
-          <code><a href="antibiotic_class_selectors.html">ab_class()</a></code> <code><a href="antibiotic_class_selectors.html">ab_selector()</a></code> <code><a href="antibiotic_class_selectors.html">aminoglycosides()</a></code> <code><a href="antibiotic_class_selectors.html">aminopenicillins()</a></code> <code><a href="antibiotic_class_selectors.html">antifungals()</a></code> <code><a href="antibiotic_class_selectors.html">antimycobacterials()</a></code> <code><a href="antibiotic_class_selectors.html">betalactams()</a></code> <code><a href="antibiotic_class_selectors.html">carbapenems()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_1st()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_2nd()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_3rd()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_4th()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_5th()</a></code> <code><a href="antibiotic_class_selectors.html">fluoroquinolones()</a></code> <code><a href="antibiotic_class_selectors.html">glycopeptides()</a></code> <code><a href="antibiotic_class_selectors.html">lincosamides()</a></code> <code><a href="antibiotic_class_selectors.html">lipoglycopeptides()</a></code> <code><a href="antibiotic_class_selectors.html">macrolides()</a></code> <code><a href="antibiotic_class_selectors.html">oxazolidinones()</a></code> <code><a href="antibiotic_class_selectors.html">penicillins()</a></code> <code><a href="antibiotic_class_selectors.html">polymyxins()</a></code> <code><a href="antibiotic_class_selectors.html">streptogramins()</a></code> <code><a href="antibiotic_class_selectors.html">quinolones()</a></code> <code><a href="antibiotic_class_selectors.html">tetracyclines()</a></code> <code><a href="antibiotic_class_selectors.html">trimethoprims()</a></code> <code><a href="antibiotic_class_selectors.html">ureidopenicillins()</a></code> <code><a href="antibiotic_class_selectors.html">administrable_per_os()</a></code> <code><a href="antibiotic_class_selectors.html">administrable_iv()</a></code> <code><a href="antibiotic_class_selectors.html">not_intrinsic_resistant()</a></code> 
+          <code><a href="antibiotic_class_selectors.html">ab_class()</a></code> <code><a href="antibiotic_class_selectors.html">ab_selector()</a></code> <code><a href="antibiotic_class_selectors.html">aminoglycosides()</a></code> <code><a href="antibiotic_class_selectors.html">aminopenicillins()</a></code> <code><a href="antibiotic_class_selectors.html">antifungals()</a></code> <code><a href="antibiotic_class_selectors.html">antimycobacterials()</a></code> <code><a href="antibiotic_class_selectors.html">betalactams()</a></code> <code><a href="antibiotic_class_selectors.html">carbapenems()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_1st()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_2nd()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_3rd()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_4th()</a></code> <code><a href="antibiotic_class_selectors.html">cephalosporins_5th()</a></code> <code><a href="antibiotic_class_selectors.html">fluoroquinolones()</a></code> <code><a href="antibiotic_class_selectors.html">glycopeptides()</a></code> <code><a href="antibiotic_class_selectors.html">lincosamides()</a></code> <code><a href="antibiotic_class_selectors.html">lipoglycopeptides()</a></code> <code><a href="antibiotic_class_selectors.html">macrolides()</a></code> <code><a href="antibiotic_class_selectors.html">nitrofurans()</a></code> <code><a href="antibiotic_class_selectors.html">oxazolidinones()</a></code> <code><a href="antibiotic_class_selectors.html">penicillins()</a></code> <code><a href="antibiotic_class_selectors.html">polymyxins()</a></code> <code><a href="antibiotic_class_selectors.html">quinolones()</a></code> <code><a href="antibiotic_class_selectors.html">rifamycins()</a></code> <code><a href="antibiotic_class_selectors.html">streptogramins()</a></code> <code><a href="antibiotic_class_selectors.html">tetracyclines()</a></code> <code><a href="antibiotic_class_selectors.html">trimethoprims()</a></code> <code><a href="antibiotic_class_selectors.html">ureidopenicillins()</a></code> <code><a href="antibiotic_class_selectors.html">administrable_per_os()</a></code> <code><a href="antibiotic_class_selectors.html">administrable_iv()</a></code> <code><a href="antibiotic_class_selectors.html">not_intrinsic_resistant()</a></code> 
         </dt>
         <dd>Antibiotic Selectors</dd>
       </dl><dl><dt>
@@ -374,7 +374,7 @@
         </dt>
         <dd>PCA Biplot with <code>ggplot2</code></dd>
       </dl></div><div class="section level2">
-      <h2 id="other-amr-specific-options">Other: AMR-specific options<a class="anchor" aria-label="anchor" href="#other-amr-specific-options"></a></h2>
+      <h2 id="amr-specific-options">AMR-specific options<a class="anchor" aria-label="anchor" href="#amr-specific-options"></a></h2>
       
       <div class="section-desc"><p>The AMR package is customisable, by providing settings that can be set per user or per team. For example, the default interpretation guideline can be changed from EUCAST to CLSI, or a supported language can be set for the whole team (system-language independent) for antibiotic names in a foreign language.</p></div>
 
@@ -450,7 +450,7 @@
           
           <code><a href="antibiotics.html">antibiotics</a></code> <code><a href="antibiotics.html">antivirals</a></code> 
         </dt>
-        <dd>Data Sets with 603 Antimicrobial Drugs</dd>
+        <dd>Data Sets with 604 Antimicrobial Drugs</dd>
       </dl><dl><dt>
           
           <code><a href="intrinsic_resistant.html">intrinsic_resistant</a></code> 
@@ -502,6 +502,11 @@
           <code><a href="age.html">age()</a></code> 
         </dt>
         <dd>Age in Years of Individuals</dd>
+      </dl><dl><dt>
+          
+          <code><a href="export_ncbi_biosample.html">export_ncbi_biosample()</a></code> 
+        </dt>
+        <dd>Export Data Set as NCBI BioSample Antibiogram</dd>
       </dl><dl><dt>
           
           <code><a href="availability.html">availability()</a></code> 
