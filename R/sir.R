@@ -545,6 +545,13 @@ as.sir.data.frame <- function(x,
   }
   
   # -- host
+  if (missing(breakpoint_type) && any(host %in% AMR_env$host_preferred_order, na.rm = TRUE)) {
+    message_("Assuming `breakpoint_type = \"animal\"` since `host` contains animal species.")
+    breakpoint_type <- "animal"
+  } else if (any(!convert_host(host) %in% c("human", "ECOFF"), na.rm = TRUE)) {
+    message_("Assuming `breakpoint_type = \"animal\"`.")
+    breakpoint_type <- "animal"
+  }
   if (breakpoint_type == "animal") {
     if (is.null(host)) {
       host <- search_type_in_df(x = x, type = "host", add_col_prefix = FALSE)
@@ -936,6 +943,7 @@ as_sir_method <- function(method_short,
   }
   if (length(ab) == 1) {
     ab <- rep(ab, length(x))
+    ab.bak <- rep(ab.bak, length(ab))
   }
   if (length(host) == 1) {
     host <- rep(host, length(x))
@@ -952,7 +960,7 @@ as_sir_method <- function(method_short,
       warning_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
     }
   }
-
+  
   agent_formatted <- paste0("'", font_bold(ab.bak, collapse = NULL), "'")
   agent_name <- ab_name(ab, tolower = TRUE, language = NULL)
   same_ab <- generalise_antibiotic_name(ab) == generalise_antibiotic_name(agent_name)
@@ -966,7 +974,7 @@ as_sir_method <- function(method_short,
                                                     ")")
   # this intro text will also be printed in the progress bar if the `progress` package is installed
   intro_txt <- paste0("Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-                      ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0("for ", vector_and(ab, quotes = FALSE, sort = FALSE))),
+                      ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0(vector_and(agent_formatted, quotes = FALSE, sort = FALSE))),
                       mo_var_found,
                       ifelse(identical(reference_data, AMR::clinical_breakpoints),
                              paste0(", ", font_bold(guideline_coerced)),
@@ -1042,17 +1050,6 @@ as_sir_method <- function(method_short,
   }
 
   msgs <- character(0)
-  if (nrow(breakpoints) == 0) {
-    # apparently no breakpoints found
-    message(
-      paste0(font_rose_bg(" WARNING "), "\n"),
-      font_black(paste0("  ", AMR_env$bullet_icon, " No ", guideline_coerced, " ", method_coerced, " breakpoints available for ",
-        suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
-        " (", ab_coerced, ").")))
-    
-    load_mo_uncertainties(metadata_mo)
-    return(rep(NA_sir_, nrow(df)))
-  }
 
   if (guideline_coerced %like% "EUCAST") {
     any_is_intrinsic_resistant <- FALSE
@@ -1066,6 +1063,18 @@ as_sir_method <- function(method_short,
   p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
+  
+  if (nrow(breakpoints) == 0) {
+    # apparently no breakpoints found
+    message(
+      paste0(font_rose_bg(" WARNING "), "\n"),
+      font_black(paste0("  ", AMR_env$bullet_icon, " No ", guideline_coerced, " ", method_coerced, " breakpoints available for ",
+                        suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE))),
+                        " (", unique(ab_coerced), ")."), collapse = "\n"))
+    
+    load_mo_uncertainties(metadata_mo)
+    return(rep(NA_sir_, nrow(df)))
+  }
   
   # run the rules (df_unique is a row combination per mo/ab/uti/host)
   for (i in seq_len(nrow(df_unique))) {
@@ -1106,7 +1115,6 @@ as_sir_method <- function(method_short,
       suppressMessages(suppressWarnings(ab_name(ab_current, language = NULL, tolower = TRUE))),
       " (", ab_current, ")"
     )
-    
    
     # gather all available breakpoints for current MO
     breakpoints_current <- breakpoints %pm>%
@@ -1151,7 +1159,7 @@ as_sir_method <- function(method_short,
           subset(host_match == TRUE)
       } else {
         # no breakpoint found for this host, so sort on mostly available guidelines
-        msgs <- c(msgs, paste0("No ", guideline_coerced, " breakpoints for ", font_bold(host_current), " available for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " breakpoints instead."))
+        msgs <- c(msgs, paste0("No breakpoints available for ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " instead."))
       }
     }
  

@@ -89,13 +89,19 @@
   box-shadow: none !important;
 }
 
-.endorse_img {
-  width: 0% !important;
-}
-
 .template-home img.logo {
   width: 200px;
 }
+.template-home .endorse_img {
+  width: 150px;
+}
+
+.template-reference-index .section-desc {
+  font-style: italic;
+  text-align: justify;
+  font-size: 16px;
+}
+
 @media (max-width: 575.98px) {
   .template-home img.logo {
     width: 140px;

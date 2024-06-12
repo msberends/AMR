@@ -292,6 +292,7 @@ expect_message(as.sir(data.frame(
 
 sir_history <- sir_interpretation_history(clean = TRUE)
 
+mics <- as.mic(2 ^ c(-4:6)) # 0.0625 to 64 in factors of 2
 vet <- data.frame(animal = c(rep("cat", 3), rep("dogs", 3), "canine", "equine", "horse", "cattle", "bird"),
                   PRA = mics,
                   FLR = mics,
@@ -313,12 +314,9 @@ expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA,
 sir_history <- sir_interpretation_history()
 expect_identical(sir_history$host,
                  c("cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
-                   "cattle", "cattle", "cattle", "cattle", "cattle", "cats"  , "cats"  , "cats"  , "cattle", "cattle", "cattle",
-                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
-                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
-                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
-                   "cats"  , "cats"  , "cats"  , "dogs"  , "dogs"  , "dogs"  , "cattle", "cattle", "cattle", "cattle", "cats",
-                   "cats"  , "cats"  , "cats"  , "cats"  , "cats"  , "cats"))
+                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs", "dogs", "cattle", "cattle", "cats",
+                   "cats", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",
+                   "dogs", "cattle", "cattle", "cats", "cats"))
 
 # ECOFF -------------------------------------------------------------------
 
