@@ -5,10 +5,9 @@
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** and extensive info on **all antimicrobial drugs**
 * Applies all recent **CLSI** and **EUCAST** clinical and veterinary breakpoints for MICs and disk zones
-* Corrects for duplicate isolates using 4 methods, **calculates** and **predicts** AMR per antibiotic class
+* Corrects for duplicate isolates, **calculates** and **predicts** AMR per antibiotic class
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * 100% free of costs and dependencies, highly suitable for places with **limited resources**
-* **Easy to use** and **easy to learn**, with a **community** of contributors from around the globe
 
 <div style="display: flex; font-size: 0.8em;">
 <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
@@ -245,8 +244,8 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-[![check-recent](https://github.com/msberends/AMR/workflows/check-old/badge.svg?branch=main)](https://codecov.io/gh/msberends/AMR?branch=main)
-[![check-recent](https://github.com/msberends/AMR/workflows/check-recent/badge.svg?branch=main)](https://codecov.io/gh/msberends/AMR?branch=main)
+[![check-old](https://github.com/msberends/AMR/actions/workflows/check-old.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old.yaml?query=branch%3Amain)
+[![check-recent](https://github.com/msberends/AMR/actions/workflows/check-recent.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-recent.yaml?query=branch%3Amain)
 [![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
 [![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=main)
 

@@ -133,13 +133,13 @@ expect_identical(out1, as.sir(c("S", "S", "R", "R")))
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   out2 <- data.frame(mo = "Escherichia coli",
                      ab = "ertapenem",
-                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) |> 
-    mutate(across(where(is.mic), function(x) as.sir(x, mo = "mo", ab = "ab", guideline = "EUCAST 2023"))) |> 
+                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) %>% 
+    mutate(across(where(is.mic), function(x) as.sir(x, mo = "mo", ab = "ab", guideline = "EUCAST 2023"))) %>% 
     pull(some_mics)
   out3 <- data.frame(mo = "Escherichia coli",
                      ab = "ertapenem",
-                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) |> 
-    mutate_if(is.mic, as.sir, mo = "mo", ab = "ab", guideline = "EUCAST 2023") |> 
+                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) %>% 
+    mutate_if(is.mic, as.sir, mo = "mo", ab = "ab", guideline = "EUCAST 2023") %>% 
     pull(some_mics)
   
   expect_identical(out1, out2)
