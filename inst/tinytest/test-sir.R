@@ -92,6 +92,12 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
                 mutate(MEM = as.sir(ifelse(AMC == "S", "S", MEM))) %>% 
                 pull(MEM) %>% 
                 is.sir())
+  
+  expect_true(example_isolates %>% 
+                select(AMC, MEM) %>% 
+                mutate(MEM = if_else(AMC == "S", "S", MEM)) %>% 
+                pull(MEM) %>% 
+                is.sir())
 }
 if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
   expect_inherits(

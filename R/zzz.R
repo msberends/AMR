@@ -176,6 +176,7 @@ AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %o
   # S3: sir
   s3_register("vctrs::vec_ptype2", "sir.default")
   s3_register("vctrs::vec_ptype2", "sir.sir")
+  s3_register("vctrs::vec_ptype2", "character.sir")
   s3_register("vctrs::vec_cast", "character.sir")
   s3_register("vctrs::vec_cast", "sir.character")
 

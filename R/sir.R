@@ -362,10 +362,16 @@ as.sir.default <- function(x,
       x[x.bak == 2] <- "I"
       x[x.bak == 3] <- "R"
     }
-  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "S", "SDD", "I", "R", "N", NA_character_))) {
+  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "S", "I", "R", NA_character_))) {
     x[x.bak == "1"] <- "S"
     x[x.bak == "2"] <- "I"
     x[x.bak == "3"] <- "R"
+  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "4", "5", "S", "SDD", "I", "R", "N", NA_character_))) {
+    x[x.bak == "1"] <- "S"
+    x[x.bak == "2"] <- "SDD"
+    x[x.bak == "3"] <- "I"
+    x[x.bak == "4"] <- "R"
+    x[x.bak == "5"] <- "N"
   } else if (!all(is.na(x)) && !identical(levels(x), c("S", "SDD", "I", "R", "N")) && !all(x %in% c("S", "SDD", "I", "R", "N", NA))) {
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
@@ -1133,7 +1139,7 @@ as_sir_method <- function(method_short,
     if (all(uti_current == FALSE, na.rm = TRUE)) {
       breakpoints_current <- breakpoints_current %pm>%
         # this will put UTI = FALSE first, then UTI = NA, then UTI = TRUE
-        pm_mutate(uti_index = ifelse(uti == FALSE, 1, 
+        pm_mutate(uti_index = ifelse(is.na(uti) & uti == FALSE, 1, 
                                      ifelse(is.na(uti), 2,
                                             3))) %pm>%
         # be as specific as possible (i.e. prefer species over genus):
@@ -1170,22 +1176,22 @@ as_sir_method <- function(method_short,
     } else {
       site <- paste0("body site '", site, "'")
     }
-    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti_current %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_coerced)) {
+    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti_current %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_current)) {
       # only UTI breakpoints available
       warning_("in `as.sir()`: interpretation of ", font_bold(ab_formatted), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See `?as.sir`.")
       rise_warning <- TRUE
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_coerced)) {
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
       # both UTI and Non-UTI breakpoints available
       msgs <- c(msgs, paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
       breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_coerced)) {
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
       msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
     }
     
     # first check if mo is intrinsic resistant
-    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_current, ab_coerced) %in% AMR_env$intrinsic_resistant) {
+    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_current, ab_current) %in% AMR_env$intrinsic_resistant) {
       msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
       new_sir <- rep(as.sir("R"), length(rows))
     } else if (nrow(breakpoints_current) == 0) {

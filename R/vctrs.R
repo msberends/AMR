@@ -179,10 +179,13 @@ vec_arith.mic <- function(op, x, y, ...) {
 
 # S3: sir ----
 vec_ptype2.sir.default <- function (x, y, ..., x_arg = "", y_arg = "") {
-  x
+  NA_sir_[0]
 }
 vec_ptype2.sir.sir <- function(x, y, ...) {
-  x
+  NA_sir_[0]
+}
+vec_ptype2.character.sir <- function(x, y, ...) {
+  NA_sir_[0]
 }
 vec_cast.character.sir <- function(x, to, ...) {
   as.character(x)
