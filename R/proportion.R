@@ -267,7 +267,7 @@ sir_confidence_interval <- function(...,
                                     confidence_level = 0.95,
                                     side = "both",
                                     collapse = FALSE) {
-  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1:5), is_in = c("S", "SDD", "I", "R", "N"))
+  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1:5), is_in = c("S", "SDD", "I", "R", "NI"))
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
@@ -285,7 +285,7 @@ sir_confidence_interval <- function(...,
   )
   n <- tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I", "R", "N"),
+      ab_result = c("S", "SDD", "I", "R", "NI"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),

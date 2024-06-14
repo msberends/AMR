@@ -29,7 +29,7 @@
 
 #' Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data
 #'
-#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] containing the levels `S`, `SDD`, `I`, `R`, `N`.
+#' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] containing the levels `S`, `SDD`, `I`, `R`, `NI`.
 #' 
 #' These breakpoints are currently implemented:
 #' - For **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
@@ -60,7 +60,7 @@
 #'
 #' The [as.sir()] function can work in four ways:
 #'
-#' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain valid values, namely: **S** for susceptible, **I** for intermediate or 'susceptible, increased exposure', **R** for resistant, **N** for non-interpretable, and **SDD** for susceptible dose-dependent. Each of these can be set using a [regular expression][base::regex]. Furthermore, [as.sir()] will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is invalid.
+#' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain valid values, namely: **S** for susceptible, **I** for intermediate or 'susceptible, increased exposure', **R** for resistant, **NI** for non-interpretable, and **SDD** for susceptible dose-dependent. Each of these can be set using a [regular expression][base::regex]. Furthermore, [as.sir()] will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is invalid.
 #'
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, SIR interpretation can be done very easily with either:
@@ -126,7 +126,7 @@
 #' 
 #' The base R function [as.double()] can be used to retrieve quantitative values from a `sir` object: `"S"` = 1, `"I"`/`"SDD"` = 2, `"R"` = 3. All other values are rendered `NA` . **Note:** Do not use `as.integer()`, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
 #'
-#' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or N and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
+#' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or NI and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr>):
 #'
@@ -220,7 +220,7 @@
 #'
 #' # For CLEANING existing SIR values ------------------------------------
 #'
-#' as.sir(c("S", "SDD", "I", "R", "N", "A", "B", "C"))
+#' as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 #' as.sir("<= 0.002; S") # will return "S"
 #' sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' is.sir(sir_data)
@@ -228,9 +228,9 @@
 #' barplot(sir_data) # for frequencies
 #' 
 #' # as common in R, you can use as.integer() to return factor indices:
-#' as.integer(as.sir(c("S", "SDD", "I", "R", "N", NA)))
+#' as.integer(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
 #' # but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:
-#' as.double(as.sir(c("S", "SDD", "I", "R", "N", NA)))
+#' as.double(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
 #' 
 #' # the dplyr way
 #' if (require("dplyr")) {
@@ -255,7 +255,7 @@ as.sir <- function(x, ...) {
 
 as_sir_structure <- function(x) {
   structure(factor(as.character(unlist(unname(x))),
-                   levels = c("S", "SDD", "I", "R", "N"),
+                   levels = c("S", "SDD", "I", "R", "NI"),
                    ordered = TRUE),
             class = c("sir", "ordered", "factor"))
 }
@@ -302,9 +302,9 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (all(x %in% c("S", "SDD", "I", "R", "N", NA)) & !all(is.na(x))) {
+  } else if (all(x %in% c("S", "SDD", "I", "R", "NI", NA)) & !all(is.na(x))) {
     return(TRUE)
-  } else if (!any(c("S", "SDD", "I", "R", "N") %in% x, na.rm = TRUE) & !all(is.na(x))) {
+  } else if (!any(c("S", "SDD", "I", "R", "NI") %in% x, na.rm = TRUE) & !all(is.na(x))) {
     return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !x %in% c("", "-", "NULL")]
@@ -334,13 +334,13 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 
 #' @rdname as.sir
 #' @export
-#' @param S,I,R,N,SDD a case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
+#' @param S,I,R,NI,SDD a case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x,
                            S = "^(S|U)+$",
                            I = "^(I)+$",
                            R = "^(R)+$",
-                           N = "^(N|V)+$",
+                           NI = "^(N|NI|V)+$",
                            SDD = "^(SDD|D|H)+$",
                            ...) {
   if (inherits(x, "sir")) {
@@ -366,13 +366,13 @@ as.sir.default <- function(x,
     x[x.bak == "1"] <- "S"
     x[x.bak == "2"] <- "I"
     x[x.bak == "3"] <- "R"
-  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "4", "5", "S", "SDD", "I", "R", "N", NA_character_))) {
+  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "4", "5", "S", "SDD", "I", "R", "NI", NA_character_))) {
     x[x.bak == "1"] <- "S"
     x[x.bak == "2"] <- "SDD"
     x[x.bak == "3"] <- "I"
     x[x.bak == "4"] <- "R"
-    x[x.bak == "5"] <- "N"
-  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "SDD", "I", "R", "N")) && !all(x %in% c("S", "SDD", "I", "R", "N", NA))) {
+    x[x.bak == "5"] <- "NI"
+  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "SDD", "I", "R", "NI")) && !all(x %in% c("S", "SDD", "I", "R", "NI", NA))) {
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
@@ -408,7 +408,7 @@ as.sir.default <- function(x,
     # replace all English textual input
     x[x %like% "([^a-z]|^)res(is(tant)?)?"] <- "R"
     x[x %like% "([^a-z]|^)sus(cep(tible)?)?"] <- "S"
-    x[x %like% "not|non"] <- "N"
+    x[x %like% "not|non"] <- "NI"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
     x[x %like% "dose"] <- "SDD"
     x <- gsub("[^A-Z]+", "", x, perl = TRUE)
@@ -416,9 +416,9 @@ as.sir.default <- function(x,
     x[x %like% S] <- "S"
     x[x %like% I] <- "I"
     x[x %like% R] <- "R"
-    x[x %like% N] <- "N"
+    x[x %like% NI] <- "NI"
     x[x %like% SDD] <- "SDD"
-    x[!x %in% c("S", "SDD", "I", "R", "N")] <- NA_character_
+    x[!x %in% c("S", "SDD", "I", "R", "NI")] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
 
     if (!isFALSE(list(...)$warn)) { # so as.sir(..., warn = FALSE) will never throw a warning
@@ -711,7 +711,7 @@ as.sir.data.frame <- function(x,
       show_message <- FALSE
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
-      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "SDD", "I", "R", "N", NA), na.rm = TRUE)) {
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
         # only print message if values are not already clean
         message_("Cleaning values in column '", font_bold(ab), "' (",
@@ -1313,7 +1313,7 @@ pillar_shaft.sir <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey("  NA")
-    out[x == "N"] <- font_grey_bg("  N  ")
+    out[x == "NI"] <- font_grey_bg("  NI ")
     out[x == "S"] <- font_green_bg("  S  ")
     out[x == "I"] <- font_orange_bg("  I  ")
     out[x == "SDD"] <- font_orange_bg(" SDD ")
@@ -1445,7 +1445,7 @@ summary.sir <- function(object, ...) {
   SDD <- sum(x == "SDD", na.rm = TRUE)
   I <- sum(x == "I", na.rm = TRUE)
   R <- sum(x == "R", na.rm = TRUE)
-  N <- sum(x == "N", na.rm = TRUE)
+  NI <- sum(x == "NI", na.rm = TRUE)
   pad <- function(x) {
     if (is.na(x)) {
       return("??")
@@ -1464,7 +1464,7 @@ summary.sir <- function(object, ...) {
     "%SDD" = paste0(pad(percentage(SDD / n, digits = 1)), " (n=", SDD, ")"),
     "%I" = paste0(pad(percentage(I / n, digits = 1)), " (n=", I, ")"),
     "%R" = paste0(pad(percentage(R / n, digits = 1)), " (n=", R, ")"),
-    "%N" = paste0(pad(percentage(N / n, digits = 1)), " (n=", N, ")")
+    "%NI" = paste0(pad(percentage(NI / n, digits = 1)), " (n=", NI, ")")
   )
   class(value) <- c("summaryDefault", "table")
   value

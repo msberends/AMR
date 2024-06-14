@@ -283,7 +283,7 @@ generate_antimcrobials_string <- function(df) {
           function(x) {
             x <- toupper(as.character(x))
             x[x == "SDD"] <- "I"
-            # ignore "N" here, no use for determining first isolates
+            # ignore "NI" here, no use for determining first isolates
             x[!x %in% c("S", "I", "R")] <- "."
             paste(x)
           }

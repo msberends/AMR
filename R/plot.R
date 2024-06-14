@@ -659,12 +659,12 @@ plot.sir <- function(x,
   if (!"R" %in% data$x) {
     data <- rbind_AMR(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE))
   }
-  if (!"N" %in% data$x) {
-    data <- rbind_AMR(data, data.frame(x = "N", n = 0, s = 0, stringsAsFactors = FALSE))
+  if (!"NI" %in% data$x) {
+    data <- rbind_AMR(data, data.frame(x = "NI", n = 0, s = 0, stringsAsFactors = FALSE))
   }
   
-  data <- data[!(data$n == 0 & data$x %in% c("SDD", "I", "N")), , drop = FALSE]
-  data$x <- factor(data$x, levels = intersect(unique(data$x), c("S", "SDD", "I", "R", "N")), ordered = TRUE)
+  data <- data[!(data$n == 0 & data$x %in% c("SDD", "I", "NI")), , drop = FALSE]
+  data$x <- factor(data$x, levels = intersect(unique(data$x), c("S", "SDD", "I", "R", "NI")), ordered = TRUE)
 
   ymax <- pm_if_else(max(data$s) > 95, 105, 100)
 
@@ -719,8 +719,8 @@ barplot.sir <- function(height,
 
   x <- table(height)
   # remove missing I, SDD, and N
-  colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "N") & x == 0)]
-  x <- x[!(names(x) %in% c("SDD", "I", "N") & x == 0)]
+  colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
+  x <- x[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
   # plot it
   barplot(x,
     col = colours_SIR,
@@ -761,7 +761,7 @@ autoplot.sir <- function(object,
 
   df <- as.data.frame(table(object), stringsAsFactors = TRUE)
   colnames(df) <- c("x", "n")
-  df <- df[!(df$n == 0 & df$x %in% c("SDD", "I", "N")), , drop = FALSE]
+  df <- df[!(df$n == 0 & df$x %in% c("SDD", "I", "NI")), , drop = FALSE]
   ggplot2::ggplot(df) +
     ggplot2::geom_col(ggplot2::aes(x = x, y = n, fill = x)) +
     # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
@@ -771,7 +771,7 @@ autoplot.sir <- function(object,
         "SDD" = colours_SIR[2],
         "I" = colours_SIR[2],
         "R" = colours_SIR[3],
-        "N" = "#888888"
+        "NI" = "#888888"
       ),
       limits = force
     ) +
@@ -891,7 +891,7 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     cols[sir == "SDD"] <- colours_SIR[2]
     cols[sir == "I"] <- colours_SIR[2]
     cols[sir == "R"] <- colours_SIR[3]
-    cols[sir == "N"] <- "#888888"
+    cols[sir == "NI"] <- "#888888"
     sub <- bquote(.(abname) ~ "-" ~ italic(.(moname)) ~ .(guideline_txt))
   } else {
     cols <- "#BEBEBE"

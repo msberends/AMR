@@ -236,7 +236,7 @@ first_isolate <- function(x = NULL,
     FUN.VALUE = logical(1),
     X = x,
     # check only first 10,000 rows
-    FUN = function(x) any(as.character(x[1:10000]) %in% c("S", "SDD", "I", "R", "N"), na.rm = TRUE),
+    FUN = function(x) any(as.character(x[1:10000]) %in% c("S", "SDD", "I", "R", "NI"), na.rm = TRUE),
     USE.NAMES = FALSE
   ))
   if (method == "phenotype-based" && !any_col_contains_sir) {

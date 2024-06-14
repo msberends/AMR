@@ -225,7 +225,7 @@ count_R <- function(..., only_all_tested = FALSE) {
 count_all <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I", "R", "N"),
+      ab_result = c("S", "SDD", "I", "R", "NI"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),

@@ -743,9 +743,9 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     # class 'sir' should be sorted like this
     v <- c("S", "I", "R")
   }
-  if (identical(v, c("I", "N", "R", "S", "SDD"))) {
+  if (identical(v, c("I", "NI", "R", "S", "SDD"))) {
     # class 'sir' should be sorted like this
-    v <- c("S", "SDD", "I", "R", "N")
+    v <- c("S", "SDD", "I", "R", "NI")
   }
   # oxford comma
   if (last_sep %in% c(" or ", " and ") && length(v) > 2) {
@@ -1342,6 +1342,10 @@ progress_ticker <- function(n = 1, n_min = 0, print = TRUE, clear = TRUE, title 
     if (!is.null(progress_bar)) {
       # so we use progress::progress_bar
       # a close()-method was also added, see below for that
+      title <- trimws2(title)
+      if (title != "") {
+        title <- paste0(title, " ")
+      }
       pb <- progress_bar$new(
         format = paste0(title,
                         ifelse(only_bar_percent == TRUE, "[:bar] :percent", "[:bar] :percent (:current/:total,:eta)")),
@@ -1538,14 +1542,14 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 3
 
     # the fullname lowercase, important for the internal algorithms in as.mo()
-    MO_lookup$fullname_lower <- tolower(trimws(paste(
+    MO_lookup$fullname_lower <- tolower(trimws2(paste(
       MO_lookup$genus,
       MO_lookup$species,
       MO_lookup$subspecies
     )))
     ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
     MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
-    MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+    MO_lookup$fullname_lower <- trimws2(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
     # special for Salmonella - they have cities as subspecies but not the species (enterica) in the fullname:
     MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
 

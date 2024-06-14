@@ -352,7 +352,7 @@ antibiogram <- function(x,
         } else {
           S_values <- "S"
         }
-        other_values <- setdiff(c("S", "SDD", "I", "R", "N"), S_values)
+        other_values <- setdiff(c("S", "SDD", "I", "R", "NI"), S_values)
         x_transposed <- as.list(as.data.frame(t(x[, abx, drop = FALSE]), stringsAsFactors = FALSE))
         if (isTRUE(only_all_tested)) {
           x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(anyNA(x), NA_character_, ifelse(any(x %in% S_values), "S", "R")), USE.NAMES = FALSE))

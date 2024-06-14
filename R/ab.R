@@ -525,6 +525,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     x_unknown,
     AMR_env$ab_previously_coerced$x_bak[which(AMR_env$ab_previously_coerced$x %in% x & is.na(AMR_env$ab_previously_coerced$ab))]
   )
+  x_unknown <- x_unknown[!x_unknown %in% c("", NA)]
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
       "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",

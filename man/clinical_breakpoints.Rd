@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 29 883 observations and 13 variables:
+A \link[tibble:tibble]{tibble} with 34 085 observations and 13 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either "ECOFF", "animal", or "human"
@@ -28,9 +28,9 @@ clinical_breakpoints
 \description{
 Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This dataset contain breakpoints for humans, 7 different animal groups, and ECOFFs.
 
-Currently available breakpoint guidelines for \strong{clinical microbiology} are EUCAST 2011-2023 and CLSI 2011-2023.
+Currently available breakpoint guidelines for \strong{clinical microbiology} are EUCAST 2011-2024 and CLSI 2011-2024.
 
-Currently available breakpoint guidelines for \strong{veterinary microbiology} are EUCAST 2021-2023 and CLSI 2019-2023.
+Currently available breakpoint guidelines for \strong{veterinary microbiology} are EUCAST 2021-2024 and CLSI 2019-2024.
 
 Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
 }

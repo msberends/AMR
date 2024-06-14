@@ -124,7 +124,7 @@ bug_drug_combinations <- function(x,
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
         m <- as.matrix(table(as.sir(x)))
-        data.frame(S = m["S", ], SDD = m["SDD", ], I = m["I", ], R = m["R", ], N = m["N", ], stringsAsFactors = FALSE)
+        data.frame(S = m["S", ], SDD = m["SDD", ], I = m["I", ], R = m["R", ], NI = m["NI", ], stringsAsFactors = FALSE)
       })
       merged <- do.call(rbind_AMR, pivot)
       out_group <- data.frame(
@@ -134,8 +134,8 @@ bug_drug_combinations <- function(x,
         SDD = merged$SDD,
         I = merged$I,
         R = merged$R,
-        N = merged$N,
-        total = merged$S + merged$SDD + merged$I + merged$R + merged$N,
+        NI = merged$NI,
+        total = merged$S + merged$SDD + merged$I + merged$R + merged$NI,
         stringsAsFactors = FALSE
       )
       if (data_has_groups) {
@@ -210,13 +210,13 @@ format.bug_drug_combinations <- function(x,
       SDD = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$SDD[i], na.rm = TRUE)),
       I = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$I[i], na.rm = TRUE)),
       R = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
-      N = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
+      NI = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$NI[i], na.rm = TRUE)),
       total = vapply(FUN.VALUE = double(1), idx, function(i) {
         sum(x$S[i], na.rm = TRUE) +
           sum(x$SDD[i], na.rm = TRUE) +
           sum(x$I[i], na.rm = TRUE) +
           sum(x$R[i], na.rm = TRUE) +
-          sum(x$N[i], na.rm = TRUE)
+          sum(x$NI[i], na.rm = TRUE)
       }),
       stringsAsFactors = FALSE
     )

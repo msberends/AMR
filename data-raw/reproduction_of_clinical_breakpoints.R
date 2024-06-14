@@ -134,6 +134,7 @@ organisms <- organisms %>%
   distinct()
 
 # 2023-07-08 SGM is also Strep gamma in WHONET, must only be Slowly-growing Mycobacterium
+# 2024-06-14 still the case
 organisms <- organisms %>% 
   filter(!(code == "SGM" & name %like% "Streptococcus"))
 # this must be empty:
@@ -159,6 +160,7 @@ mo_name(microorganisms.codes2$mo[which(!microorganisms.codes2$code %in% microorg
 microorganisms.codes <- microorganisms.codes2
 
 # Run this part to update ASIARS-Net:
+# 2024-06-14: file not available anymore
 # # start
 # asiarsnet <- read_tsv("data-raw/WHONET/Codes/ASIARS_Net_Organisms_ForwardLookup.txt")
 # asiarsnet <- asiarsnet %>%
@@ -198,6 +200,13 @@ whonet_breakpoints %>%
   count(GUIDELINES, BREAKPOINT_TYPE) %>% 
   pivot_wider(names_from = BREAKPOINT_TYPE, values_from = n) %>% 
   janitor::adorn_totals(where = c("row", "col"))
+# compared to current
+AMR::clinical_breakpoints |>
+  count(GUIDELINES = gsub("[^a-zA-Z]", "", guideline), type) |>
+  arrange(tolower(type)) |>
+  pivot_wider(names_from = type, values_from = n) %>% 
+  as.data.frame() |>
+  janitor::adorn_totals(where = c("row", "col"))
 
 breakpoints <- whonet_breakpoints %>%
   mutate(code = toupper(ORGANISM_CODE)) %>%
@@ -213,10 +222,7 @@ unknown <- breakpoints %>%
 breakpoints %>% 
   filter(code %in% unknown) %>% 
   count(GUIDELINES, YEAR, ORGANISM_CODE, BREAKPOINT_TYPE, sort = TRUE)
-# 2024-02-22: clu and kma are know (see below), fix the PBI one
-breakpoints$mo[breakpoints$ORGANISM_CODE == "PBI"] <- as.mo("Parabacteroides")
-breakpoints$ORGANISM_CODE[breakpoints$ORGANISM_CODE == "PBI"] <- "Parabacteroides"
-# 2023-07-08: these codes are currently: clu, kma. No clue (are not in MO list of WHONET), so remove them:
+# 2024-06-14: these codes are currently: clu, kma, fso, tyi. No clue (are not in MO list of WHONET), and they are only ECOFFs, so remove them:
 breakpoints <- breakpoints %>% 
   filter(!is.na(mo))
 
@@ -272,7 +278,8 @@ breakpoints_new <- breakpoints %>%
 # check the strange duplicates
 breakpoints_new %>% 
   mutate(id = paste(guideline, type, host, ab, mo, method, site)) %>% 
-  filter(id %in% .$id[which(duplicated(id))])
+  filter(id %in% .$id[which(duplicated(id))]) |> 
+  arrange(desc(guideline))
 # remove duplicates
 breakpoints_new <- breakpoints_new %>% 
   distinct(guideline, type, host, ab, mo, method, site, .keep_all = TRUE)
@@ -289,6 +296,9 @@ breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.d
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R", drop = TRUE]))
 
 # regarding animal breakpoints, CLSI has adults and foals for horses, but only for amikacin - remove them
+breakpoints_new |> 
+  filter(host %like% "foal") |>
+  View()
 breakpoints_new <- breakpoints_new |> 
   filter(host %unlike% "foal") |> 
   mutate(host = ifelse(host %like% "horse", "horse", host))
@@ -328,7 +338,6 @@ breakpoints_new <- breakpoints_new %>% filter(!(mo == as.mo("Streptococcus virid
 breakpoints_new$mo[breakpoints_new$mo == "B_STPHY" & breakpoints_new$ab == "NIT" & breakpoints_new$guideline %like% "EUCAST"] <- as.mo("B_STPHY_SPRP")
 # WHONET sets the 2023 breakpoints for SAM to MIC of 16/32 for Enterobacterales, should be MIC 8/32 like AMC (see issue #123 on github.com/msberends/AMR)
 # UPDATE 2024-02-22: fixed now
-# breakpoints_new$breakpoint_S[breakpoints_new$mo == "B_[ORD]_ENTRBCTR" & breakpoints_new$ab == "SAM" & breakpoints_new$guideline %like% "CLSI 2023" & breakpoints_new$method == "MIC"] <- 8
 
 # determine rank again now that some changes were made on taxonomic level (genus -> species)
 breakpoints_new <- breakpoints_new %>% 
@@ -344,10 +353,10 @@ breakpoints_new <- breakpoints_new %>%
   ))
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
-# EUCAST 2022 guideline: S <= 8 and R > 8
+# EUCAST 2023 guideline: S <= 8 and R > 8
 #           WHONET file: S <= 8 and R >= 16
 breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
-# this will make an MIC of 12 I, which should be R according to EUCAST, so:
+# but this will make an MIC of 12 I, which should be R according to EUCAST, so:
 breakpoints_new <- breakpoints_new %>%
   mutate(breakpoint_R = ifelse(guideline %like% "EUCAST" & method == "MIC" & log2(breakpoint_R) - log2(breakpoint_S) != 0,
     pmax(breakpoint_S, breakpoint_R / 2),
@@ -363,13 +372,16 @@ breakpoints_new <- breakpoints_new %>%
 # fill missing R breakpoint where there is an S breakpoint
 breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
 
+# keep distinct rows
+breakpoints_new <- breakpoints_new |>
+  distinct()
 
 # CHECKS AND SAVE TO PACKAGE ----
 
 # check again
-breakpoints_new %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+breakpoints_new %>% filter(guideline == "EUCAST 2024", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
-clinical_breakpoints %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+clinical_breakpoints %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 
 # must have "human" and "ECOFF"
 breakpoints_new %>% filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCAST 2020", method == "MIC")

@@ -33,7 +33,7 @@ These functions can be used for generating random MIC values and disk diffusion 
 \details{
 The base \R function \code{\link[=sample]{sample()}} is used for generating values.
 
-Generated values are based on the EUCAST 2023 guideline as implemented in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
+Generated values are based on the EUCAST 2024 guideline as implemented in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
 }
 \examples{
 random_mic(25)

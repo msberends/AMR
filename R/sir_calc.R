@@ -278,9 +278,9 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
     for (i in seq_len(ncol(.data))) {
       values <- .data[, i, drop = TRUE]
       if (isTRUE(combine_SI)) {
-        values <- factor(values, levels = c("SI", "R", "N"), ordered = TRUE)
+        values <- factor(values, levels = c("SI", "R", "NI"), ordered = TRUE)
       } else {
-        values <- factor(values, levels = c("S", "SDD", "I", "R", "N"), ordered = TRUE)
+        values <- factor(values, levels = c("S", "SDD", "I", "R", "NI"), ordered = TRUE)
       }
       col_results <- as.data.frame(as.matrix(table(values)), stringsAsFactors = FALSE)
       col_results$interpretation <- rownames(col_results)
