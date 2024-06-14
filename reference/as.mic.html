@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9048</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -211,7 +211,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>To interpret MIC values as SIR values, use <code><a href="as.sir.html">as.sir()</a></code> on MIC values. It supports guidelines from EUCAST (2011-2023) and CLSI (2011-2023).</p>
+    <p>To interpret MIC values as SIR values, use <code><a href="as.sir.html">as.sir()</a></code> on MIC values. It supports guidelines from EUCAST (2011-2024) and CLSI (2011-2024).</p>
 <p>This class for MIC values is a quite a special data type: formally it is an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with valid MIC values as <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">random_mic</span>(<span class="dv">10</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>x</span>
@@ -290,8 +290,8 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMX' (amoxicillin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2024.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMX' (amoxicillin), EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for amoxicillin (AMX) in Streptococcus</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Meningitis'.</span>
@@ -306,8 +306,8 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations. Note that some</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   microorganisms might not have breakpoints for each antimicrobial drug in</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2023.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMX' (amoxicillin), EUCAST 2023...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   EUCAST 2024.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMX' (amoxicillin), EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for amoxicillin (AMX) in Streptococcus</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      pneumoniae - assuming body site 'Meningitis'.</span>

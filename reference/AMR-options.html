@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9048</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,7 +173,7 @@
 <li><p><code>AMR_custom_ab</code> <br> A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code>.</p></li>
 <li><p><code>AMR_custom_mo</code> <br> A file location to an RDS file, to use custom microorganisms with this package. This is explained in <code><a href="add_custom_microorganisms.html">add_custom_microorganisms()</a></code>.</p></li>
 <li><p><code>AMR_eucastrules</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to set the default types of rules for <code><a href="eucast_rules.html">eucast_rules()</a></code> function, must be one or more of: <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expert")</code>.</p></li>
-<li><p><code>AMR_guideline</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to set the default guideline for interpreting MIC values and disk diffusion diameters with <code><a href="as.sir.html">as.sir()</a></code>. Can be only the guideline name (e.g., <code>"CLSI"</code>) or the name with a year (e.g. <code>"CLSI 2019"</code>). The default to the latest implemented EUCAST guideline, currently <code>"EUCAST 2023"</code>. Supported guideline are currently EUCAST (2011-2023) and CLSI (2011-2023).</p></li>
+<li><p><code>AMR_guideline</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to set the default guideline for interpreting MIC values and disk diffusion diameters with <code><a href="as.sir.html">as.sir()</a></code>. Can be only the guideline name (e.g., <code>"CLSI"</code>) or the name with a year (e.g. <code>"CLSI 2019"</code>). The default to the latest implemented EUCAST guideline, currently <code>"EUCAST 2024"</code>. Supported guideline are currently EUCAST (2011-2024) and CLSI (2011-2024).</p></li>
 <li><p><code>AMR_ignore_pattern</code> <br> A <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> to ignore (i.e., make <code>NA</code>) any match given in <code><a href="as.mo.html">as.mo()</a></code> and all <code><a href="mo_property.html">mo_*</a></code> functions.</p></li>
 <li><p><code>AMR_include_PKPD</code> <br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>.</p></li>
 <li><p><code>AMR_include_screening</code> <br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate that clinical breakpoints for screening are allowed - the default is <code>FALSE</code>.</p></li>
