@@ -188,7 +188,7 @@ key_antimicrobials <- function(x = NULL,
           "No columns available ",
           paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")
         ),
-        "as key antimicrobials for ", name, "s. See ?key_antimicrobials."
+        "as key antimicrobials for ", name, "s. See `?key_antimicrobials`."
       )
     }
 

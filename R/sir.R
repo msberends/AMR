@@ -158,6 +158,51 @@
 #'
 #' # For INTERPRETING disk diffusion and MIC values -----------------------
 #'
+#' \donttest{
+#' ## Using dplyr -------------------------------------------------
+#' if (require("dplyr")) {
+#'   # approaches that all work without additional arguments:
+#'   df %>% mutate_if(is.mic, as.sir)
+#'   df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
+#'   df %>% mutate(across(where(is.mic), as.sir))
+#'   df %>% mutate_at(vars(AMP:TOB), as.sir)
+#'   df %>% mutate(across(AMP:TOB, as.sir))
+#'   
+#'   # approaches that all work with additional arguments:
+#'   df %>% mutate_if(is.mic, as.sir, mo = "column1", guideline = "CLSI")
+#'   df %>% mutate(across(where(is.mic),
+#'                        function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+#'   df %>% mutate_at(vars(AMP:TOB), as.sir, mo = "column1", guideline = "CLSI")
+#'   df %>% mutate(across(AMP:TOB,
+#'                        function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+#'                        
+#'   # for veterinary breakpoints, add 'host':
+#'   df %>% mutate_if(is.mic, as.sir, guideline = "CLSI", host = "species_column")
+#'   df %>% mutate_if(is.mic, as.sir, guideline = "CLSI", host = "horse")
+#'   df %>% mutate(across(where(is.mic),
+#'                        function(x) as.sir(x, guideline = "CLSI", host = "species_column")))
+#'   df %>% mutate_at(vars(AMP:TOB), as.sir, guideline = "CLSI", host = "species_column")
+#'   df %>% mutate(across(AMP:TOB,
+#'                        function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+#'   
+#'   # to include information about urinary tract infections (UTI)
+#'   data.frame(mo = "E. coli",
+#'              nitrofuratoin = c("<= 2", 32),
+#'              from_the_bladder = c(TRUE, FALSE)) %>%
+#'     as.sir(uti = "from_the_bladder")
+#'
+#'   data.frame(mo = "E. coli",
+#'              nitrofuratoin = c("<= 2", 32),
+#'              specimen = c("urine", "blood")) %>%
+#'     as.sir() # automatically determines urine isolates
+#'
+#'   df %>%
+#'     mutate_at(vars(AMP:TOB), as.sir, mo = "E. coli", uti = TRUE)
+#' }
+#'
+#'
+#' ## Using base R ------------------------------------------------
+#'
 #' # a whole data set, even with combined MIC values and disk zones
 #' df <- data.frame(
 #'   microorganism = "Escherichia coli",
@@ -187,36 +232,6 @@
 #'   guideline = "EUCAST"
 #' )
 #'
-#' \donttest{
-#' # the dplyr way
-#' if (require("dplyr")) {
-#'   df %>% mutate_if(is.mic, as.sir)
-#'   df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
-#'   df %>% mutate(across(where(is.mic), as.sir))
-#'   df %>% mutate_at(vars(AMP:TOB), as.sir)
-#'   df %>% mutate(across(AMP:TOB, as.sir))
-#'
-#'   df %>%
-#'     mutate_at(vars(AMP:TOB), as.sir, mo = "microorganism")
-#'
-#'   # to include information about urinary tract infections (UTI)
-#'   data.frame(
-#'     mo = "E. coli",
-#'     NIT = c("<= 2", 32),
-#'     from_the_bladder = c(TRUE, FALSE)
-#'   ) %>%
-#'     as.sir(uti = "from_the_bladder")
-#'
-#'   data.frame(
-#'     mo = "E. coli",
-#'     NIT = c("<= 2", 32),
-#'     specimen = c("urine", "blood")
-#'   ) %>%
-#'     as.sir() # automatically determines urine isolates
-#'
-#'   df %>%
-#'     mutate_at(vars(AMP:TOB), as.sir, mo = "E. coli", uti = TRUE)
-#' }
 #'
 #' # For CLEANING existing SIR values ------------------------------------
 #'
@@ -1121,6 +1136,7 @@ as_sir_method <- function(method_short,
       suppressMessages(suppressWarnings(ab_name(ab_current, language = NULL, tolower = TRUE))),
       " (", ab_current, ")"
     )
+    notes <- character(0)
    
     # gather all available breakpoints for current MO
     breakpoints_current <- breakpoints %pm>%
@@ -1165,7 +1181,8 @@ as_sir_method <- function(method_short,
           subset(host_match == TRUE)
       } else {
         # no breakpoint found for this host, so sort on mostly available guidelines
-        msgs <- c(msgs, paste0("No breakpoints available for ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " instead."))
+        notes <- c(notes, paste0("No breakpoints available for ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " instead."))
+        # msgs <- c(msgs, paste0("No breakpoints available for ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " instead."))
       }
     }
  
@@ -1243,14 +1260,15 @@ as_sir_method <- function(method_short,
           mo_user = rep(mo.bak[match(mo_current, df$mo)][1], length(rows)),
           ab = rep(ab_current, length(rows)),
           mo = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
+          method = rep(method_coerced, length(rows)),
           input = as.double(values),
           outcome = as.sir(new_sir),
-          method = rep(method_coerced, length(rows)),
-          breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
-          guideline = rep(guideline_coerced, length(rows)),
           host = rep(breakpoints_current[, "host", drop = TRUE], length(rows)),
+          notes = rep(paste0(notes, collapse = " "), length(rows)),
+          guideline = rep(guideline_coerced, length(rows)),
           ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
           uti = rep(breakpoints_current[, "uti", drop = TRUE], length(rows)),
+          breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
           stringsAsFactors = FALSE
         )
       )
@@ -1268,6 +1286,8 @@ as_sir_method <- function(method_short,
   }
   if (isTRUE(rise_warning)) {
     message(font_rose_bg(" WARNING "))
+  } else if (length(notes) > 0) {
+    message(font_yellow_bg(" NOTES "))
   } else if (length(msgs) == 0) {
     message(font_green_bg(" OK "))
   } else {

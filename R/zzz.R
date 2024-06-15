@@ -62,13 +62,15 @@ AMR_env$sir_interpretation_history <- data.frame(
   mo_user = character(0),
   ab = set_clean_class(character(0), c("ab", "character")),
   mo = set_clean_class(character(0), c("mo", "character")),
+  method = character(0),
   input = double(0),
   outcome = NA_sir_[0],
-  method = character(0),
-  breakpoint_S_R = character(0),
-  guideline = character(0),
   host = character(0),
+  notes = character(0),
+  guideline = character(0),
   ref_table = character(0),
+  uti = logical(0),
+  breakpoint_S_R = character(0),
   stringsAsFactors = FALSE
 )
 
@@ -95,6 +97,7 @@ AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %o
   s3_register("pillar::pillar_shaft", "sir")
   s3_register("pillar::pillar_shaft", "mic")
   s3_register("pillar::pillar_shaft", "disk")
+  # no type_sum of disk, that's now in vctrs::vec_ptype_full
   s3_register("pillar::type_sum", "ab")
   s3_register("pillar::type_sum", "av")
   s3_register("pillar::type_sum", "mo")
@@ -153,6 +156,7 @@ AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %o
   s3_register("vctrs::vec_ptype_abbr", "disk")
   s3_register("vctrs::vec_ptype2", "disk.default")
   s3_register("vctrs::vec_ptype2", "disk.disk")
+  s3_register("vctrs::vec_cast", "disk.disk")
   s3_register("vctrs::vec_cast", "integer.disk")
   s3_register("vctrs::vec_cast", "disk.integer")
   s3_register("vctrs::vec_cast", "double.disk")
@@ -179,6 +183,7 @@ AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %o
   s3_register("vctrs::vec_ptype2", "character.sir")
   s3_register("vctrs::vec_cast", "character.sir")
   s3_register("vctrs::vec_cast", "sir.character")
+  s3_register("vctrs::vec_cast", "sir.sir")
 
   # if mo source exists, fire it up (see mo_source())
   if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {

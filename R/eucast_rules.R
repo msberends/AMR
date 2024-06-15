@@ -462,7 +462,7 @@ eucast_rules <- function(x,
           font_red(paste0(
             "v", utils::packageDescription("AMR")$Version, ", ",
             format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y")
-          )), "), see ?eucast_rules\n"
+          )), "), see `?eucast_rules`\n"
         ))
       ))
     }

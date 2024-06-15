@@ -524,6 +524,9 @@ word_wrap <- function(...,
     # otherwise, give a 'click to run' popup
     parts[cmds & parts %unlike% "[.]"] <- font_url(url = paste0("ide:run:AMR::", parts[cmds & parts %unlike% "[.]"]),
                                                    txt = parts[cmds & parts %unlike% "[.]"])
+    # text starting with `?` must also lead to the help page
+    parts[parts %like% "^[?]"] <- font_url(url = paste0("ide:help:AMR::", gsub("()", "", gsub("^[?]", "", parts[parts %like% "^[?]"]), fixed = TRUE)),
+                                           txt = parts[parts %like% "^[?]"])
     msg <- paste0(parts, collapse = "`")
   }
   msg <- gsub("`(.+?)`", font_grey_bg("\\1"), msg)

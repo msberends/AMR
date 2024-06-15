@@ -109,10 +109,13 @@ vec_ptype_abbr.disk <- function(x, ...) {
   "dsk"
 }
 vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
-  x
+  NA_disk_[0]
 }
 vec_ptype2.disk.disk <- function(x, y, ...) {
-  x
+  NA_disk_[0]
+}
+vec_cast.disk.disk <- function(x, to, ...) {
+  as.disk(x)
 }
 vec_cast.integer.disk <- function(x, to, ...) {
   unclass(x)
@@ -136,11 +139,11 @@ vec_cast.disk.character <- function(x, to, ...) {
 # S3: mic ----
 vec_ptype2.mic.default <- function (x, y, ..., x_arg = "", y_arg = "") {
   # this will make sure that currently implemented MIC levels are returned
-  as.mic(x)
+  NA_mic_[0]
 }
 vec_ptype2.mic.mic <- function(x, y, ...) {
   # this will make sure that currently implemented MIC levels are returned
-  as.mic(x)
+  NA_mic_[0]
 }
 vec_cast.mic.mic <- function(x, to, ...) {
   # this will make sure that currently implemented MIC levels are returned
@@ -186,6 +189,10 @@ vec_ptype2.sir.sir <- function(x, y, ...) {
 }
 vec_ptype2.character.sir <- function(x, y, ...) {
   NA_sir_[0]
+}
+vec_cast.sir.sir <- function(x, to, ...) {
+  # this makes sure that old SIR objects (with S/I/R) are converted to the current structure (S/SDD/I/R/NI)
+  as.sir(x)
 }
 vec_cast.character.sir <- function(x, to, ...) {
   as.character(x)

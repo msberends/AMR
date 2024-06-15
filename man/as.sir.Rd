@@ -251,6 +251,51 @@ summary(example_isolates) # see all SIR results at a glance
 
 # For INTERPRETING disk diffusion and MIC values -----------------------
 
+\donttest{
+## Using dplyr -------------------------------------------------
+if (require("dplyr")) {
+  # approaches that all work without additional arguments:
+  df \%>\% mutate_if(is.mic, as.sir)
+  df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
+  df \%>\% mutate(across(where(is.mic), as.sir))
+  df \%>\% mutate_at(vars(AMP:TOB), as.sir)
+  df \%>\% mutate(across(AMP:TOB, as.sir))
+  
+  # approaches that all work with additional arguments:
+  df \%>\% mutate_if(is.mic, as.sir, mo = "column1", guideline = "CLSI")
+  df \%>\% mutate(across(where(is.mic),
+                       function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+  df \%>\% mutate_at(vars(AMP:TOB), as.sir, mo = "column1", guideline = "CLSI")
+  df \%>\% mutate(across(AMP:TOB,
+                       function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+                       
+  # for veterinary breakpoints, add 'host':
+  df \%>\% mutate_if(is.mic, as.sir, guideline = "CLSI", host = "species_column")
+  df \%>\% mutate_if(is.mic, as.sir, guideline = "CLSI", host = "horse")
+  df \%>\% mutate(across(where(is.mic),
+                       function(x) as.sir(x, guideline = "CLSI", host = "species_column")))
+  df \%>\% mutate_at(vars(AMP:TOB), as.sir, guideline = "CLSI", host = "species_column")
+  df \%>\% mutate(across(AMP:TOB,
+                       function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+  
+  # to include information about urinary tract infections (UTI)
+  data.frame(mo = "E. coli",
+             nitrofuratoin = c("<= 2", 32),
+             from_the_bladder = c(TRUE, FALSE)) \%>\%
+    as.sir(uti = "from_the_bladder")
+
+  data.frame(mo = "E. coli",
+             nitrofuratoin = c("<= 2", 32),
+             specimen = c("urine", "blood")) \%>\%
+    as.sir() # automatically determines urine isolates
+
+  df \%>\%
+    mutate_at(vars(AMP:TOB), as.sir, mo = "E. coli", uti = TRUE)
+}
+
+
+## Using base R ------------------------------------------------
+
 # a whole data set, even with combined MIC values and disk zones
 df <- data.frame(
   microorganism = "Escherichia coli",
@@ -280,36 +325,6 @@ as.sir(
   guideline = "EUCAST"
 )
 
-\donttest{
-# the dplyr way
-if (require("dplyr")) {
-  df \%>\% mutate_if(is.mic, as.sir)
-  df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
-  df \%>\% mutate(across(where(is.mic), as.sir))
-  df \%>\% mutate_at(vars(AMP:TOB), as.sir)
-  df \%>\% mutate(across(AMP:TOB, as.sir))
-
-  df \%>\%
-    mutate_at(vars(AMP:TOB), as.sir, mo = "microorganism")
-
-  # to include information about urinary tract infections (UTI)
-  data.frame(
-    mo = "E. coli",
-    NIT = c("<= 2", 32),
-    from_the_bladder = c(TRUE, FALSE)
-  ) \%>\%
-    as.sir(uti = "from_the_bladder")
-
-  data.frame(
-    mo = "E. coli",
-    NIT = c("<= 2", 32),
-    specimen = c("urine", "blood")
-  ) \%>\%
-    as.sir() # automatically determines urine isolates
-
-  df \%>\%
-    mutate_at(vars(AMP:TOB), as.sir, mo = "E. coli", uti = TRUE)
-}
 
 # For CLEANING existing SIR values ------------------------------------
 
