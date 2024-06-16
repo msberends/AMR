@@ -1,7 +1,7 @@
 # The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
 
-* Provides an **all-in-one solution** for AMR data analysis in a One Health approach
-* Used in over 175 countries, translated into 20 languages
+* Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
+* Used in over 175 countries, available in 20 languages
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** and extensive info on **all antimicrobial drugs**
 * Applies all recent **CLSI** and **EUCAST** clinical and veterinary breakpoints for MICs and disk zones
@@ -26,7 +26,7 @@ This work was published in the Journal of Statistical Software (Volume 104(3); [
 
 After installing this package, R knows [**~52,000 distinct microbial species**](./reference/microorganisms.html) (updated December 2022) and all [**~600 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl).
 
-##### Used in over 175 countries, translated into 20 languages
+##### Used in over 175 countries, available in 20 languages
 
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;" /></a>
 
