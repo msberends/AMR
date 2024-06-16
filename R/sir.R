@@ -1002,14 +1002,13 @@ as_sir_method <- function(method_short,
                              ""),
                       "... ")
   
-  msg_note <- function(messages) {
+  msg_note <- function(messages, font_fn = font_black) {
     messages <- unique(messages)
     for (i in seq_len(length(messages))) {
       messages[i] <- word_wrap(extra_indent = 5, messages[i])
     }
     message(
-      font_yellow_bg(paste0(" NOTE", ifelse(length(messages) > 1, "S", ""), " \n")),
-      paste0("  ", font_black(AMR_env$bullet_icon), " ", font_black(messages, collapse = NULL), collapse = "\n")
+      paste0("  ", font_fn(AMR_env$bullet_icon), " ", font_fn(messages, collapse = NULL), collapse = "\n")
     )
   }
 
@@ -1018,7 +1017,7 @@ as_sir_method <- function(method_short,
   metadata_mo <- get_mo_uncertainties()
 
   rise_warning <- FALSE
-  rise_note <- FALSE
+  rise_notes <- FALSE
   method_coerced <- toupper(method)
   ab_coerced <- as.ab(ab)
   
@@ -1070,7 +1069,7 @@ as_sir_method <- function(method_short,
       subset(mo != "UNKNOWN" & ref_tbl %unlike% "PK.*PD")
   }
 
-  msgs <- character(0)
+  notes <- character(0)
 
   if (guideline_coerced %like% "EUCAST") {
     any_is_intrinsic_resistant <- FALSE
@@ -1095,6 +1094,14 @@ as_sir_method <- function(method_short,
     
     load_mo_uncertainties(metadata_mo)
     return(rep(NA_sir_, nrow(df)))
+  }
+  
+  vectorise_log_entry <- function(x, len) {
+    if (length(x) == 1 && len > 1) {
+      rep(x, len)
+    } else {
+      x
+    }
   }
   
   # run the rules (df_unique is a row combination per mo/ab/uti/host)
@@ -1136,7 +1143,6 @@ as_sir_method <- function(method_short,
       suppressMessages(suppressWarnings(ab_name(ab_current, language = NULL, tolower = TRUE))),
       " (", ab_current, ")"
     )
-    notes <- character(0)
    
     # gather all available breakpoints for current MO
     breakpoints_current <- breakpoints %pm>%
@@ -1147,6 +1153,34 @@ as_sir_method <- function(method_short,
         mo_current_species_group,
         mo_current_other
       ))
+    
+    if (NROW(breakpoints_current) == 0) {
+      # no note about missing breakpoints - it's already in the header before the interpretation starts
+      AMR_env$sir_interpretation_history <- rbind_AMR(
+        AMR_env$sir_interpretation_history,
+        # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added
+        data.frame(
+          datetime = vectorise_log_entry(Sys.time(), length(rows)),
+          index = rows,
+          ab_user = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
+          mo_user = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
+          ab = vectorise_log_entry(ab_current, length(rows)),
+          mo = vectorise_log_entry(mo_current, length(rows)),
+          method = vectorise_log_entry(method_coerced, length(rows)),
+          input = vectorise_log_entry(as.double(values), length(rows)),
+          outcome = vectorise_log_entry(NA_sir_, length(rows)),
+          host = vectorise_log_entry(host_current, length(rows)),
+          notes = vectorise_log_entry("NO BREAKPOINT AVAILABLE", length(rows)),
+          guideline = vectorise_log_entry(guideline_coerced, length(rows)),
+          ref_table = vectorise_log_entry(NA_character_, length(rows)),
+          uti = vectorise_log_entry(uti_current, length(rows)),
+          breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
+          stringsAsFactors = FALSE
+        )
+      )
+      next
+    }
+    
     # set the host index according to most available breakpoints (see R/zzz.R where this is set in the pkg environment)
     breakpoints_current$host_index <- match(breakpoints_current$host, c("human", "ECOFF", AMR_env$host_preferred_order))
     
@@ -1154,6 +1188,7 @@ as_sir_method <- function(method_short,
     # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
     if (all(uti_current == FALSE, na.rm = TRUE)) {
       breakpoints_current <- breakpoints_current %pm>%
+        #  `uti` is a column in the data set
         # this will put UTI = FALSE first, then UTI = NA, then UTI = TRUE
         pm_mutate(uti_index = ifelse(is.na(uti) & uti == FALSE, 1, 
                                      ifelse(is.na(uti), 2,
@@ -1167,11 +1202,6 @@ as_sir_method <- function(method_short,
         pm_arrange(host_index, rank_index)
     }
     
-    if (NROW(breakpoints_current) == 0) {
-      # no note about missing breakpoints - it's already in the header before the interpretation starts
-      next
-    }
-    
     # veterinary host check
     host_current <- unique(df_unique[i, "host", drop = TRUE])[1]
     breakpoints_current$host_match <- breakpoints_current$host == host_current
@@ -1181,12 +1211,12 @@ as_sir_method <- function(method_short,
           subset(host_match == TRUE)
       } else {
         # no breakpoint found for this host, so sort on mostly available guidelines
-        notes <- c(notes, paste0("No breakpoints available for ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " instead."))
-        # msgs <- c(msgs, paste0("No breakpoints available for ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " - using ", font_bold(breakpoints_current$host[1]), " instead."))
+        notes <- c(notes, paste0("Using ", font_bold(breakpoints_current$host[1]), " breakpoints since ", font_bold(host_current), " for ", ab_formatted, " in ", mo_formatted, " are not available."))
+        rise_notes <- TRUE
       }
     }
  
-    # throw notes for different body sites
+    # throw messages for different body sites
     site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
     if (is.na(site)) {
       site <- paste0("an unspecified body site")
@@ -1195,21 +1225,20 @@ as_sir_method <- function(method_short,
     }
     if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti_current %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_current)) {
       # only UTI breakpoints available
-      warning_("in `as.sir()`: interpretation of ", font_bold(ab_formatted), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See `?as.sir`.")
-      rise_warning <- TRUE
+      notes <- c(notes, paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI); assuming `uti = TRUE`."))
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
       # both UTI and Non-UTI breakpoints available
-      msgs <- c(msgs, paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
+      notes <- c(notes, paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
       breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
-      msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
+      notes <- c(notes, paste0("Multiple breakpoints available for ", font_bold(ab_formatted), " in ", mo_formatted, " - assuming ", site, "."))
     }
     
     # first check if mo is intrinsic resistant
     if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_current, ab_current) %in% AMR_env$intrinsic_resistant) {
-      msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
+      notes <- c(notes, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
       new_sir <- rep(as.sir("R"), length(rows))
     } else if (nrow(breakpoints_current) == 0) {
       # no rules available
@@ -1219,10 +1248,10 @@ as_sir_method <- function(method_short,
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
 
       if (any(breakpoints_current$mo == "UNKNOWN", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "PK.*PD", na.rm = TRUE)) {
-        msgs <- c(msgs, "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
+        notes <- c(notes, "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
       }
       if (any(breakpoints_current$site %like% "screen", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "screen", na.rm = TRUE)) {
-        msgs <- c(msgs, "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
+        notes <- c(notes, "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
       }
 
       if (method == "mic") {
@@ -1252,23 +1281,23 @@ as_sir_method <- function(method_short,
       # write to verbose output
       AMR_env$sir_interpretation_history <- rbind_AMR(
         AMR_env$sir_interpretation_history,
-        # recycling 1 to 2 rows does not seem to work, which is why rep() was added
+        # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added
         data.frame(
-          datetime = rep(Sys.time(), length(rows)),
+          datetime = vectorise_log_entry(Sys.time(), length(rows)),
           index = rows,
-          ab_user = rep(ab.bak[match(ab_current, df$ab)][1], length(rows)),
-          mo_user = rep(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          ab = rep(ab_current, length(rows)),
-          mo = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
-          method = rep(method_coerced, length(rows)),
-          input = as.double(values),
-          outcome = as.sir(new_sir),
-          host = rep(breakpoints_current[, "host", drop = TRUE], length(rows)),
-          notes = rep(paste0(notes, collapse = " "), length(rows)),
-          guideline = rep(guideline_coerced, length(rows)),
-          ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
-          uti = rep(breakpoints_current[, "uti", drop = TRUE], length(rows)),
-          breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
+          ab_user = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
+          mo_user = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
+          ab = vectorise_log_entry(breakpoints_current[, "ab", drop = TRUE], length(rows)),
+          mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
+          method = vectorise_log_entry(method_coerced, length(rows)),
+          input = vectorise_log_entry(as.double(values), length(rows)),
+          outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
+          host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
+          notes = vectorise_log_entry(paste0(font_stripstyle(notes), collapse = "\n"), length(rows)),
+          guideline = vectorise_log_entry(guideline_coerced, length(rows)),
+          ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
+          uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
+          breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
           stringsAsFactors = FALSE
         )
       )
@@ -1278,7 +1307,7 @@ as_sir_method <- function(method_short,
   }
   
   close(p)
-
+  
   # printing messages
   if (has_progress_bar == TRUE) {
     # the progress bar has overwritten the intro text, so:
@@ -1286,16 +1315,20 @@ as_sir_method <- function(method_short,
   }
   if (isTRUE(rise_warning)) {
     message(font_rose_bg(" WARNING "))
-  } else if (length(notes) > 0) {
-    message(font_yellow_bg(" NOTES "))
-  } else if (length(msgs) == 0) {
-    message(font_green_bg(" OK "))
+  } else if (isTRUE(rise_notes)) {
+    message(font_yellow_bg(paste0(" NOTE", ifelse(length(notes) > 1, "S ", " "))))
+    if (length(notes) > 1) {
+      plural <- c("were", "s", "them")
+    } else {
+      plural <- c("was", "", "it")
+    }
+    message(word_wrap("  ", AMR_env$bullet_icon, " There ", plural[1], " ", length(notes), " note", plural[2], ". Print or View `sir_interpretation_history()` to examine ", plural[3], ".", add_fn = font_black))
   } else {
-    msg_note(sort(msgs))
+    message(font_green_bg(" OK "))
   }
-
+  
   load_mo_uncertainties(metadata_mo)
-
+  
   df$result
 }
 
@@ -1306,24 +1339,33 @@ sir_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)
 
   out <- AMR_env$sir_interpretation_history
-  if (NROW(out) == 0) {
-    message_("No results to return. Run `as.sir()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
-    return(invisible(NULL))
-  }
   out$outcome <- as.sir(out$outcome)
+  if (NROW(out) > 0) {
+    # sort descending on time
+    out <- out[order(out$datetime, out$index, decreasing = TRUE), , drop = FALSE]
+  }
+  
   # keep stored for next use
   if (isTRUE(clean)) {
     AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
   }
   
-  # sort descending on time
-  out <- out[order(out$datetime, decreasing = TRUE), , drop = FALSE]
-
   if (pkg_is_available("tibble")) {
-    import_fn("as_tibble", "tibble")(out)
-  } else {
-    out
+    out <- import_fn("as_tibble", "tibble")(out)
   }
+  structure(out, class = c("sir_log", class(out)))
+}
+
+#' @method print sir_log
+#' @export
+#' @noRd
+print.sir_log <- function(x, ...) {
+  if (NROW(x) == 0) {
+    message_("No results to print. Run `as.sir()` on MIC values or disk diffusion zones first to print a 'logbook' data set here.")
+    return(invisible(NULL))
+  }
+  class(x) <- class(x)[class(x) != "sir_log"]
+  print(x, ...)
 }
 
 # will be exported using s3_register() in R/zzz.R

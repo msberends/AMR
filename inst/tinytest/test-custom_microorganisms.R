@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 expect_identical(as.mo("Enterobacter asburiae/cloacae"),
-                 as.mo("Enterobacter cloacae cloacae"))
+                 as.mo("Enterobacter asburiae"))
 
 suppressMessages(
   add_custom_microorganisms(
@@ -44,3 +44,5 @@ expect_identical(mo_gramstain("ENT_ASB_CLO", language = NULL), "Gram-negative")
 
 expect_identical(paste("B", AMR:::abbreviate_mo("Klebsiella"), AMR:::abbreviate_mo("pneumoniae", 4), sep = "_"),
                  as.character(as.mo("Klebsiella pneumoniae")))
+expect_identical(paste("B", AMR:::abbreviate_mo("Aerococcus"), AMR:::abbreviate_mo("urinae", 4), sep = "_"),
+                 as.character(as.mo("Aerococcus urinae")))

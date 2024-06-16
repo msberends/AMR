@@ -63,7 +63,7 @@
 #' # dplyr -------------------------------------------------------------------
 #' 
 #' if (require("dplyr")) {
-#'.  example_isolates %>% select(carbapenems())
+#'   example_isolates %>% select(carbapenems())
 #' }
 #'
 #' if (require("dplyr")) {
@@ -73,7 +73,7 @@
 #'
 #' if (require("dplyr")) {
 #'   # select only antibiotic columns with DDDs for oral treatment
-#'.  example_isolates %>% select(administrable_per_os())
+#'   example_isolates %>% select(administrable_per_os())
 #' }
 #'
 #' if (require("dplyr")) {
