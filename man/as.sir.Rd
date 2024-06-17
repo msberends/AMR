@@ -266,7 +266,7 @@ df_wide <- data.frame(
   ERY = "R"
 )
 df_long <- data.frame(
-  bacteria = rep("Escherichia coli", 3),
+  bacteria = rep("Escherichia coli", 4),
   antibiotic = c("amoxicillin", "cipro", "tobra", "genta"),
   mics = as.mic(c(0.01, 1, 4, 8)),
   disks = as.disk(c(6, 10, 14, 18))
