@@ -44,12 +44,12 @@ The default is \code{"human"}, which can also be set with the \link[=AMR-options
 
 \subsection{Imported from WHONET}{
 
-Clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}. The developers of WHONET and this \code{AMR} package have been in contact about sharing their work. We highly appreciate their development on the WHONET software.
+Clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}. The developers of WHONET and this \code{AMR} package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
 }
 
 \subsection{Response from CLSI and EUCAST}{
 
-The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this \code{AMR} package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, the WHO, and developers of WHONET and the \code{AMR} package.
+The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this \code{AMR} package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this \code{AMR} package.
 }
 
 \subsection{Download}{

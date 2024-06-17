@@ -242,16 +242,16 @@ reference:
       Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
       for more information about how to work with functions in this package.
     contents:
-    - "`example_isolates`"
     - "`microorganisms`"
+    - "`antibiotics`"
+    - "`clinical_breakpoints`"
+    - "`example_isolates`"
     - "`microorganisms.codes`"
     - "`microorganisms.groups`"
-    - "`antibiotics`"
     - "`intrinsic_resistant`"
     - "`dosage`"
     - "`WHOCC`"
     - "`example_isolates_unclean`"
-    - "`clinical_breakpoints`"
     - "`WHONET`"
 
   - title: "Other: miscellaneous functions"

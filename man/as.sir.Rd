@@ -20,6 +20,7 @@ For interpretations of minimum inhibitory concentration (MIC) values and disk di
 \item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
 \item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01//}.
 \item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2024, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
+\item \strong{WHONET} as a source for machine-reading clinical breakpoints ((read more here)\link{https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet}), 1989-2024, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
 }
 }
 \usage{
@@ -259,10 +260,10 @@ summary(example_isolates) # see all SIR results at a glance
 # example data sets, with combined MIC values and disk zones
 df_wide <- data.frame(
   microorganism = "Escherichia coli",
-  AMP = as.mic(8),
-  CIP = as.mic(0.256),
-  GEN = as.disk(18),
-  TOB = as.disk(16),
+  amoxicillin = as.mic(8),
+  cipro = as.mic(0.256),
+  tobra = as.disk(16),
+  genta = as.disk(18),
   ERY = "R"
 )
 df_long <- data.frame(
@@ -279,8 +280,8 @@ if (require("dplyr")) {
   df_wide \%>\% mutate_if(is.mic, as.sir)
   df_wide \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
   df_wide \%>\% mutate(across(where(is.mic), as.sir))
-  df_wide \%>\% mutate_at(vars(AMP:TOB), as.sir)
-  df_wide \%>\% mutate(across(AMP:TOB, as.sir))
+  df_wide \%>\% mutate_at(vars(amoxicillin:tobra), as.sir)
+  df_wide \%>\% mutate(across(amoxicillin:tobra, as.sir))
   
   # approaches that all work with additional arguments:
   df_long \%>\%
@@ -295,17 +296,15 @@ if (require("dplyr")) {
                                      mo = "bacteria",
                                      ab = "antibiotic",
                                      guideline = "CLSI")))
-  df_long \%>\%
+  df_wide \%>\%
     # given certain columns, e.g. from 'cipro' to 'genta'
     mutate_at(vars(cipro:genta), as.sir,
               mo = "bacteria",
-              ab = "antibiotic",
               guideline = "CLSI")
-  df_long \%>\%
+  df_wide \%>\%
     mutate(across(cipro:genta,
                        function(x) as.sir(x,
                                           mo = "bacteria",
-                                          ab = "antibiotic",
                                           guideline = "CLSI")))
                        
   # for veterinary breakpoints, add 'host':
@@ -324,18 +323,16 @@ if (require("dplyr")) {
                                      ab = "antibiotic",
                                      host = "animal_species",
                                      guideline = "CLSI")))
-  df_long \%>\%
-    # given certain columns, e.g. from AMP to TOB
+  df_wide \%>\%
     mutate_at(vars(cipro:genta), as.sir,
               mo = "bacteria",
               ab = "antibiotic",
               host = "animal_species",
               guideline = "CLSI")
-  df_long \%>\%
+  df_wide \%>\%
     mutate(across(cipro:genta,
                        function(x) as.sir(x,
                                           mo = "bacteria",
-                                          ab = "antibiotic",
                                           host = "animal_species",
                                           guideline = "CLSI")))
   
