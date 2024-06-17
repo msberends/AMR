@@ -1,8 +1,8 @@
-# AMR 2.1.1.9058
+# AMR 2.1.1.9059
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
-#### A New Milestone: One Health Support (= Human + Veterinary + Environmental)
+#### A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
 ## Breaking
@@ -15,8 +15,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
-* EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 (v14.0) is now the new default guideline for all MIC and disks diffusion interpretations.
-* `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI. Also, to get quantitative values, `as.double()` or a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
+* EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 (v14.0) is now the new default guideline for all MIC and disks diffusion interpretations.
+* `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI. Also, to get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
 * The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
 * Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
 * Function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
