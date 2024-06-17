@@ -296,13 +296,13 @@ if (require("dplyr")) {
                                      ab = "antibiotic",
                                      guideline = "CLSI")))
   df_long \%>\%
-    # given certain columns, e.g. from AMP to TOB
-    mutate_at(vars(AMP:TOB), as.sir,
+    # given certain columns, e.g. from 'cipro' to 'genta'
+    mutate_at(vars(cipro:genta), as.sir,
               mo = "bacteria",
               ab = "antibiotic",
               guideline = "CLSI")
   df_long \%>\%
-    mutate(across(AMP:TOB,
+    mutate(across(cipro:genta,
                        function(x) as.sir(x,
                                           mo = "bacteria",
                                           ab = "antibiotic",
@@ -326,13 +326,13 @@ if (require("dplyr")) {
                                      guideline = "CLSI")))
   df_long \%>\%
     # given certain columns, e.g. from AMP to TOB
-    mutate_at(vars(AMP:TOB), as.sir,
+    mutate_at(vars(cipro:genta), as.sir,
               mo = "bacteria",
               ab = "antibiotic",
               host = "animal_species",
               guideline = "CLSI")
   df_long \%>\%
-    mutate(across(AMP:TOB,
+    mutate(across(cipro:genta,
                        function(x) as.sir(x,
                                           mo = "bacteria",
                                           ab = "antibiotic",
@@ -351,7 +351,7 @@ if (require("dplyr")) {
     as.sir() # automatically determines urine isolates
 
   df_wide \%>\%
-    mutate_at(vars(AMP:TOB), as.sir, mo = "E. coli", uti = TRUE)
+    mutate_at(vars(cipro:genta), as.sir, mo = "E. coli", uti = TRUE)
 }
 
 

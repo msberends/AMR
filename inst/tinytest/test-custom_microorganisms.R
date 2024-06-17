@@ -42,7 +42,10 @@ expect_identical(as.character(as.mo("ENT_ASB_CLO")), "ENT_ASB_CLO")
 expect_identical(mo_name("ENT_ASB_CLO"), "Enterobacter asburiae/cloacae")
 expect_identical(mo_gramstain("ENT_ASB_CLO", language = NULL), "Gram-negative")
 
-expect_identical(paste("B", AMR:::abbreviate_mo("Klebsiella"), AMR:::abbreviate_mo("pneumoniae", 4), sep = "_"),
-                 as.character(as.mo("Klebsiella pneumoniae")))
-expect_identical(paste("B", AMR:::abbreviate_mo("Aerococcus"), AMR:::abbreviate_mo("urinae", 4), sep = "_"),
-                 as.character(as.mo("Aerococcus urinae")))
+if (getRversion() >= "3.3.0") {
+  # until R 3.2, abbreviate() used a completely different algorithm, making these tests unreproducible
+  expect_identical(paste("B", AMR:::abbreviate_mo("Klebsiella"), AMR:::abbreviate_mo("pneumoniae", 4), sep = "_"),
+                   as.character(as.mo("Klebsiella pneumoniae")))
+  expect_identical(paste("B", AMR:::abbreviate_mo("Aerococcus"), AMR:::abbreviate_mo("urinae", 4), sep = "_"),
+                   as.character(as.mo("Aerococcus urinae")))
+}
