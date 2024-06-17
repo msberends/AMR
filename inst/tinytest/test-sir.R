@@ -179,7 +179,7 @@ expect_equal(suppressMessages(
 
 expect_true(is.data.frame(sir_interpretation_history(clean = FALSE)))
 expect_true(is.data.frame(sir_interpretation_history(clean = TRUE)))
-expect_true(is.null(sir_interpretation_history()))
+expect_true(NROW(sir_interpretation_history()) == 0)
 
 # cutoffs at MIC = 8
 expect_equal(
@@ -319,10 +319,9 @@ expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA,
 
 sir_history <- sir_interpretation_history()
 expect_identical(sir_history$host,
-                 c("cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
-                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs", "dogs", "cattle", "cattle", "cats",
-                   "cats", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",
-                   "dogs", "cattle", "cattle", "cats", "cats"))
+                 c("poultry", "cattle", "poultry", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs", "horse", "dogs", "horse", "horse", "horse", "cattle", "horse", "cattle", "cattle", "cattle", 
+                   "cattle", "cattle", "cattle", "cattle", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "cattle", "dogs", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cats", "cats", 
+                   "cats", "cats", "cats", "cats", "cattle", "cats", "cattle", "cattle", "cats", "cattle", "cats", "cattle", "cattle"))
 
 # ECOFF -------------------------------------------------------------------
 

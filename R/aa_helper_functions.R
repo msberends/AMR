@@ -1340,23 +1340,24 @@ progress_ticker <- function(n = 1, n_min = 0, print = TRUE, clear = TRUE, title 
     }
     set_clean_class(pb, new_class = "txtProgressBar")
   } else if (n >= n_min) {
-    # use `progress`, which also has a timer
+    title <- trimws2(title)
+    if (title != "") {
+      title <- paste0(title, " ")
+    }
     progress_bar <- import_fn("progress_bar", "progress", error_on_fail = FALSE)
     if (!is.null(progress_bar)) {
       # so we use progress::progress_bar
       # a close()-method was also added, see below for that
-      title <- trimws2(title)
-      if (title != "") {
-        title <- paste0(title, " ")
-      }
       pb <- progress_bar$new(
+        show_after = 0,
         format = paste0(title,
                         ifelse(only_bar_percent == TRUE, "[:bar] :percent", "[:bar] :percent (:current/:total,:eta)")),
         clear = clear,
         total = n
       )
     } else {
-      # use base R
+      # use base R's txtProgressBar
+      cat(title, "\n", sep = "")
       pb <- utils::txtProgressBar(max = n, style = 3)
       pb$tick <- function() {
         pb$up(pb$getVal() + 1)

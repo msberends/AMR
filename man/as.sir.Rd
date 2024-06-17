@@ -54,6 +54,7 @@ is_sir_eligible(x, threshold = 0.05)
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   host = NULL,
+  verbose = FALSE,
   ...
 )
 
@@ -69,6 +70,7 @@ is_sir_eligible(x, threshold = 0.05)
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   host = NULL,
+  verbose = FALSE,
   ...
 )
 
@@ -84,7 +86,8 @@ is_sir_eligible(x, threshold = 0.05)
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
-  host = NULL
+  host = NULL,
+  verbose = FALSE
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -119,6 +122,8 @@ sir_interpretation_history(clean = FALSE)
 \item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
 \item{host}{a vector (or column name) with \link{character}s to indicate the host. Only useful for veterinary breakpoints, as it requires \code{breakpoint_type = "animal"}. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with \code{\link[=set_AMR_locale]{set_AMR_locale()}} (though it will be automatically guessed based on the system language).}
+
+\item{verbose}{a \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
