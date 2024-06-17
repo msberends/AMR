@@ -158,33 +158,89 @@
 #' summary(example_isolates) # see all SIR results at a glance
 #'
 #' # For INTERPRETING disk diffusion and MIC values -----------------------
+#' 
+#' # example data sets, with combined MIC values and disk zones
+#' df_wide <- data.frame(
+#'   microorganism = "Escherichia coli",
+#'   AMP = as.mic(8),
+#'   CIP = as.mic(0.256),
+#'   GEN = as.disk(18),
+#'   TOB = as.disk(16),
+#'   ERY = "R"
+#' )
+#' df_long <- data.frame(
+#'   bacteria = rep("Escherichia coli", 3),
+#'   antibiotic = c("amoxicillin", "cipro", "tobra", "genta"),
+#'   mics = as.mic(c(0.01, 1, 4, 8)),
+#'   disks = as.disk(c(6, 10, 14, 18))
+#' )
 #'
 #' \donttest{
 #' ## Using dplyr -------------------------------------------------
 #' if (require("dplyr")) {
 #'   # approaches that all work without additional arguments:
-#'   df %>% mutate_if(is.mic, as.sir)
-#'   df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
-#'   df %>% mutate(across(where(is.mic), as.sir))
-#'   df %>% mutate_at(vars(AMP:TOB), as.sir)
-#'   df %>% mutate(across(AMP:TOB, as.sir))
+#'   df_wide %>% mutate_if(is.mic, as.sir)
+#'   df_wide %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
+#'   df_wide %>% mutate(across(where(is.mic), as.sir))
+#'   df_wide %>% mutate_at(vars(AMP:TOB), as.sir)
+#'   df_wide %>% mutate(across(AMP:TOB, as.sir))
 #'   
 #'   # approaches that all work with additional arguments:
-#'   df %>% mutate_if(is.mic, as.sir, mo = "column1", guideline = "CLSI")
-#'   df %>% mutate(across(where(is.mic),
-#'                        function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
-#'   df %>% mutate_at(vars(AMP:TOB), as.sir, mo = "column1", guideline = "CLSI")
-#'   df %>% mutate(across(AMP:TOB,
-#'                        function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+#'   df_long %>%
+#'     # given a certain data type, e.g. MIC values
+#'     mutate_if(is.mic, as.sir,
+#'               mo = "bacteria",
+#'               ab = "antibiotic",
+#'               guideline = "CLSI")
+#'   df_long %>%
+#'     mutate(across(where(is.mic),
+#'                   function(x) as.sir(x,
+#'                                      mo = "bacteria",
+#'                                      ab = "antibiotic",
+#'                                      guideline = "CLSI")))
+#'   df_long %>%
+#'     # given certain columns, e.g. from AMP to TOB
+#'     mutate_at(vars(AMP:TOB), as.sir,
+#'               mo = "bacteria",
+#'               ab = "antibiotic",
+#'               guideline = "CLSI")
+#'   df_long %>%
+#'     mutate(across(AMP:TOB,
+#'                        function(x) as.sir(x,
+#'                                           mo = "bacteria",
+#'                                           ab = "antibiotic",
+#'                                           guideline = "CLSI")))
 #'                        
 #'   # for veterinary breakpoints, add 'host':
-#'   df %>% mutate_if(is.mic, as.sir, guideline = "CLSI", host = "species_column")
-#'   df %>% mutate_if(is.mic, as.sir, guideline = "CLSI", host = "horse")
-#'   df %>% mutate(across(where(is.mic),
-#'                        function(x) as.sir(x, guideline = "CLSI", host = "species_column")))
-#'   df %>% mutate_at(vars(AMP:TOB), as.sir, guideline = "CLSI", host = "species_column")
-#'   df %>% mutate(across(AMP:TOB,
-#'                        function(x) as.sir(x, mo = "column1", guideline = "CLSI")))
+#'   df_long$animal_species <- c("cats", "dogs", "horses", "cattle")
+#'   df_long %>%
+#'     # given a certain data type, e.g. MIC values
+#'     mutate_if(is.mic, as.sir,
+#'               mo = "bacteria",
+#'               ab = "antibiotic",
+#'               host = "animal_species",
+#'               guideline = "CLSI")
+#'   df_long %>%
+#'     mutate(across(where(is.mic),
+#'                   function(x) as.sir(x,
+#'                                      mo = "bacteria",
+#'                                      ab = "antibiotic",
+#'                                      host = "animal_species",
+#'                                      guideline = "CLSI")))
+#'   df_long %>%
+#'     # given certain columns, e.g. from AMP to TOB
+#'     mutate_at(vars(AMP:TOB), as.sir,
+#'               mo = "bacteria",
+#'               ab = "antibiotic",
+#'               host = "animal_species",
+#'               guideline = "CLSI")
+#'   df_long %>%
+#'     mutate(across(AMP:TOB,
+#'                        function(x) as.sir(x,
+#'                                           mo = "bacteria",
+#'                                           ab = "antibiotic",
+#'                                           host = "animal_species",
+#'                                           guideline = "CLSI")))
 #'   
 #'   # to include information about urinary tract infections (UTI)
 #'   data.frame(mo = "E. coli",
@@ -197,23 +253,14 @@
 #'              specimen = c("urine", "blood")) %>%
 #'     as.sir() # automatically determines urine isolates
 #'
-#'   df %>%
+#'   df_wide %>%
 #'     mutate_at(vars(AMP:TOB), as.sir, mo = "E. coli", uti = TRUE)
 #' }
 #'
 #'
 #' ## Using base R ------------------------------------------------
 #'
-#' # a whole data set, even with combined MIC values and disk zones
-#' df <- data.frame(
-#'   microorganism = "Escherichia coli",
-#'   AMP = as.mic(8),
-#'   CIP = as.mic(0.256),
-#'   GEN = as.disk(18),
-#'   TOB = as.disk(16),
-#'   ERY = "R"
-#' )
-#' as.sir(df)
+#' as.sir(df_wide)
 #'
 #' # return a 'logbook' about the results:
 #' sir_interpretation_history()
