@@ -844,6 +844,25 @@ convert_host <- function(x, lang = get_AMR_locale()) {
   x_out[is.na(x_out) & (x %like% "horse|equine" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
   x_out[is.na(x_out) & (x %like% "aqua|fish" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
   x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
+  # additional animals, not necessarily currently in breakpoint guidelines:
+  x_out[is.na(x_out) & (x %like% "camel|camelid" | x %like% translate_AMR("camel|camels|camelid", lang))] <- "camels"
+  x_out[is.na(x_out) & (x %like% "deer|cervine" | x %like% translate_AMR("deer|deers|cervine", lang))] <- "deer"
+  x_out[is.na(x_out) & (x %like% "donkey|asinine" | x %like% translate_AMR("donkey|donkeys|asinine", lang))] <- "donkeys"
+  x_out[is.na(x_out) & (x %like% "ferret|musteline" | x %like% translate_AMR("ferret|ferrets|musteline", lang))] <- "ferrets"
+  x_out[is.na(x_out) & (x %like% "goat|caprine" | x %like% translate_AMR("goat|goats|caprine", lang))] <- "goats"
+  x_out[is.na(x_out) & (x %like% "guinea pig|caviine" | x %like% translate_AMR("guinea pig|guinea pigs|caviine", lang))] <- "guinea pigs"
+  x_out[is.na(x_out) & (x %like% "hamster|cricetine" | x %like% translate_AMR("hamster|hamsters|cricetine", lang))] <- "hamsters"
+  x_out[is.na(x_out) & (x %like% "monkey|simian" | x %like% translate_AMR("monkey|monkeys|simian", lang))] <- "monkeys"
+  x_out[is.na(x_out) & (x %like% "mouse|murine" | x %like% translate_AMR("mouse|mice|murine", lang))] <- "mice"
+  x_out[is.na(x_out) & (x %like% "pig|porcine" | x %like% translate_AMR("pig|pigs|porcine", lang))] <- "pigs"
+  x_out[is.na(x_out) & (x %like% "rabbit|leporine" | x %like% translate_AMR("rabbit|rabbits|leporine", lang))] <- "rabbits"
+  x_out[is.na(x_out) & (x %like% "rat|ratine" | x %like% translate_AMR("rat|rats|ratine", lang))] <- "rats"
+  x_out[is.na(x_out) & (x %like% "sheep|ovine" | x %like% translate_AMR("sheep|sheeps|ovine", lang))] <- "sheep"
+  x_out[is.na(x_out) & (x %like% "snake|serpentine" | x %like% translate_AMR("snake|snakes|serpentine", lang))] <- "snakes"
+  x_out[is.na(x_out) & (x %like% "turkey|meleagrine" | x %like% translate_AMR("turkey|turkeys|meleagrine", lang))] <- "turkey"
+  if (message_not_thrown_before("convert_host", x) && any(is.na(x_out) & !is.na(x))) {
+    warning_("The following host(s) are invalid: ", vector_and(x[is.na(x_out) & !is.na(x)]), call = FALSE, immediate = TRUE)
+  }
   x_out[x_out == "ecoff"] <- "ECOFF"
   x_out
 }
@@ -912,18 +931,21 @@ as_sir_method <- function(method_short,
       host <- breakpoint_type
     }
   }
-  if (!is.null(current_df) && length(host) == 1 && host %in% colnames(current_df) && any(current_df[[host]] %like% "[A-Z]", na.rm = TRUE)) {
-    host <- current_df[[host]]
-  } else if (length(host) != length(x)) {
-    # for dplyr's across()
-    cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-    if (!is.null(cur_column_dplyr) && is.data.frame(current_df)) {
-      # try to get current column, which will only be available when in across()
-      host <- tryCatch(cur_column_dplyr(),
-                     error = function(e) host
-      )
+  if (!is.null(host) && !all(toupper(as.character(host)) %in% c("HUMAN", "ECOFF"))) {
+    if (!is.null(current_df) && length(host) == 1 && host %in% colnames(current_df) && any(current_df[[host]] %like% "[A-Z]", na.rm = TRUE)) {
+      host <- current_df[[host]]
+    } else if (length(host) != length(x)) {
+      # for dplyr's across()
+      cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
+      if (!is.null(cur_column_dplyr) && is.data.frame(current_df)) {
+        # try to get current column, which will only be available when in across()
+        host <- tryCatch(cur_column_dplyr(),
+                         error = function(e) host
+        )
+      }
     }
   }
+  host.bak <- host
   host <- convert_host(host)
   if (breakpoint_type == "animal" && message_not_thrown_before("as.sir", "host_preferred_order")) {
     message_("Please note that in the absence of specific veterinary breakpoints for certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse, aquatic, and poultry, in that order, are used as substitutes.\n\n")
@@ -1169,6 +1191,10 @@ as_sir_method <- function(method_short,
     mo_current <- df_unique[i, "mo", drop = TRUE]
     ab_current <- df_unique[i, "ab", drop = TRUE]
     host_current <- df_unique[i, "host", drop = TRUE]
+    if (is.na(host_current)) {
+      # fall back to human
+      host_current <- "human"
+    }
     uti_current <- df_unique[i, "uti", drop = TRUE]
     notes_current <- character(0)
     if (isFALSE(uti_current)) {
@@ -1229,7 +1255,7 @@ as_sir_method <- function(method_short,
           index = rows,
           ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
           mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          host_given = vectorise_log_entry(host_current, length(rows)),
+          host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
           ab = vectorise_log_entry(ab_current, length(rows)),
           mo = vectorise_log_entry(mo_current, length(rows)),
           host = vectorise_log_entry(host_current, length(rows)),
@@ -1353,7 +1379,7 @@ as_sir_method <- function(method_short,
           index = rows,
           ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
           mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          host_given = vectorise_log_entry(host_current, length(rows)),
+          host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
           ab = vectorise_log_entry(breakpoints_current[, "ab", drop = TRUE], length(rows)),
           mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
           host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
