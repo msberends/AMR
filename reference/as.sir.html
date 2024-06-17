@@ -24,7 +24,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9055</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9056</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -614,13 +614,13 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>                                     ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
 <span class="r-in"><span>                                     guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="co"># given certain columns, e.g. from AMP to TOB</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.sir</span>,</span></span>
+<span class="r-in"><span>    <span class="co"># given certain columns, e.g. from 'cipro' to 'genta'</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>,</span></span>
 <span class="r-in"><span>              mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
 <span class="r-in"><span>              ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
 <span class="r-in"><span>              guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span>,</span></span>
 <span class="r-in"><span>                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>                                          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
 <span class="r-in"><span>                                          ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
@@ -644,13 +644,13 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>                                     guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="co"># given certain columns, e.g. from AMP to TOB</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.sir</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>,</span></span>
 <span class="r-in"><span>              mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
 <span class="r-in"><span>              ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
 <span class="r-in"><span>              host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
 <span class="r-in"><span>              guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span>,</span></span>
 <span class="r-in"><span>                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>                                          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
 <span class="r-in"><span>                                          ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
@@ -669,7 +669,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>    <span class="fu">as.sir</span><span class="op">(</span><span class="op">)</span> <span class="co"># automatically determines urine isolates</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.sir</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
@@ -747,7 +747,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'bacteria', CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tbl_at_vars(tbl, vars, .include_group_vars = .include_group_vars,     error_call = error_call):</span> Can't select columns that don't exist.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `AMP` doesn't exist.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `cipro` doesn't exist.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Using base R ------------------------------------------------</span></span></span>
@@ -776,16 +776,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 37 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given mo_given host_given ab   mo              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-06-17 <span style="color: #949494;">12:42:44</span>     4 AMX      B_STRPT… human      AMX  B_STRPT_PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-06-17 <span style="color: #949494;">12:42:50</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-06-17 <span style="color: #949494;">12:42:51</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-06-17 <span style="color: #949494;">12:42:44</span>     3 AMX      B_STRPT… human      AMX  B_STRPT_PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-06-17 <span style="color: #949494;">12:42:50</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-06-17 <span style="color: #949494;">12:42:51</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-06-17 <span style="color: #949494;">12:42:44</span>     2 AMX      B_STRPT… human      AMX  B_STRPT_PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-06-17 <span style="color: #949494;">12:42:50</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-06-17 <span style="color: #949494;">12:42:51</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-06-17 <span style="color: #949494;">12:42:43</span>     1 ampicil… Strep p… human      AMP  B_STRPT_PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-06-17 <span style="color: #949494;">12:56:05</span>     4 AMX      B_STRPT… human      AMX  B_STRPT_PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-06-17 <span style="color: #949494;">12:56:11</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-06-17 <span style="color: #949494;">12:56:11</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-06-17 <span style="color: #949494;">12:56:05</span>     3 AMX      B_STRPT… human      AMX  B_STRPT_PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-06-17 <span style="color: #949494;">12:56:11</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-06-17 <span style="color: #949494;">12:56:11</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-06-17 <span style="color: #949494;">12:56:05</span>     2 AMX      B_STRPT… human      AMX  B_STRPT_PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-06-17 <span style="color: #949494;">12:56:11</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-06-17 <span style="color: #949494;">12:56:11</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-06-17 <span style="color: #949494;">12:56:04</span>     1 ampicil… Strep p… human      AMP  B_STRPT_PNMN    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 27 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;dbl&gt;, outcome &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
