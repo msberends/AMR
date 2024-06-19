@@ -36,7 +36,7 @@ expect_identical(
   c("EUCAST", "CLSI")
 )
 # no missing SDDs
-expect_identical(sum(is.na(AMR::clinical_breakpoints$is_SDD)), 0)
+expect_identical(sum(is.na(AMR::clinical_breakpoints$is_SDD)), 0L)
 
 expect_true(as.sir("S") < as.sir("I"))
 expect_true(as.sir("I") < as.sir("R"))

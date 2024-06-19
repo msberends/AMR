@@ -832,7 +832,7 @@ get_guideline <- function(guideline, reference_data) {
 }
 
 convert_host <- function(x, lang = get_AMR_locale()) {
-  x <- trimws2(tolower(as.character(x)))
+  x <- gsub("[^a-zA-Z ]", "", trimws2(tolower(as.character(x))), perl = TRUE)
   x_out <- rep(NA_character_, length(x))
   x_out[trimws2(tolower(x)) == "human"] <- "human"
   x_out[trimws2(tolower(x)) == "ecoff"] <- "ecoff"
@@ -860,8 +860,15 @@ convert_host <- function(x, lang = get_AMR_locale()) {
   x_out[is.na(x_out) & (x %like% "sheep|ovine" | x %like% translate_AMR("sheep|sheeps|ovine", lang))] <- "sheep"
   x_out[is.na(x_out) & (x %like% "snake|serpentine" | x %like% translate_AMR("snake|snakes|serpentine", lang))] <- "snakes"
   x_out[is.na(x_out) & (x %like% "turkey|meleagrine" | x %like% translate_AMR("turkey|turkeys|meleagrine", lang))] <- "turkey"
-  if (message_not_thrown_before("convert_host", x) && any(is.na(x_out) & !is.na(x))) {
-    warning_("The following host(s) are invalid: ", vector_and(x[is.na(x_out) & !is.na(x)]), call = FALSE, immediate = TRUE)
+  if (any(x_out %in% c(NA_character_, "animal"))) {
+    x_out[is.na(x_out) & x == "animal"] <- AMR_env$host_preferred_order[1]
+    if (message_not_thrown_before("as.sir", "convert_host_missing")) {
+      message_(ifelse(any(is.na(x_out) & !is.na(x), na.rm = TRUE),
+                      paste0("The following host(s) are invalid: ", vector_and(x[is.na(x_out) & !is.na(x)]), ". "),
+                      ""),
+               "For missing animal hosts, assuming \"", AMR_env$host_preferred_order[1], "\", since these have the highest breakpoint availability.")
+    x_out[is.na(x_out)] <- AMR_env$host_preferred_order[1]
+    }
   }
   x_out[x_out == "ecoff"] <- "ECOFF"
   x_out
