@@ -201,11 +201,11 @@ whonet_breakpoints %>%
   pivot_wider(names_from = BREAKPOINT_TYPE, values_from = n) %>% 
   janitor::adorn_totals(where = c("row", "col"))
 # compared to current
-AMR::clinical_breakpoints |>
-  count(GUIDELINES = gsub("[^a-zA-Z]", "", guideline), type) |>
-  arrange(tolower(type)) |>
+AMR::clinical_breakpoints %>%
+  count(GUIDELINES = gsub("[^a-zA-Z]", "", guideline), type) %>%
+  arrange(tolower(type)) %>%
   pivot_wider(names_from = type, values_from = n) %>% 
-  as.data.frame() |>
+  as.data.frame() %>%
   janitor::adorn_totals(where = c("row", "col"))
 
 breakpoints <- whonet_breakpoints %>%
@@ -264,7 +264,8 @@ breakpoints_new <- breakpoints %>%
     disk_dose = POTENCY,
     breakpoint_S = ifelse(type == "ECOFF" & is.na(S) & !is.na(ECV_ECOFF), ECV_ECOFF, S),
     breakpoint_R = ifelse(type == "ECOFF" & is.na(R) & !is.na(ECV_ECOFF), ECV_ECOFF, R),
-    uti = ifelse(is.na(site), FALSE, gsub(".*(UTI|urinary|urine).*", "UTI", site) == "UTI")
+    uti = ifelse(is.na(site), FALSE, gsub(".*(UTI|urinary|urine).*", "UTI", site) == "UTI"),
+    is_SDD = !is.na(SDD)
   ) %>%
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
@@ -274,15 +275,6 @@ breakpoints_new <- breakpoints %>%
   arrange(desc(guideline), mo, ab, type, method) %>%
   filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>%
   distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
-
-# check the strange duplicates
-breakpoints_new %>% 
-  mutate(id = paste(guideline, type, host, ab, mo, method, site)) %>% 
-  filter(id %in% .$id[which(duplicated(id))]) |> 
-  arrange(desc(guideline))
-# remove duplicates
-breakpoints_new <- breakpoints_new %>% 
-  distinct(guideline, type, host, ab, mo, method, site, .keep_all = TRUE)
 
 # fix reference table names
 breakpoints_new %>% filter(guideline %like% "EUCAST", is.na(ref_tbl)) %>% View()
@@ -295,12 +287,12 @@ breakpoints_new <- breakpoints_new %>%
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S", drop = TRUE]))
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R", drop = TRUE]))
 
-# regarding animal breakpoints, CLSI has adults and foals for horses, but only for amikacin - remove them
-breakpoints_new |> 
-  filter(host %like% "foal") |>
+# regarding animal breakpoints, CLSI has adults and foals for horses, but only for amikacin - only keep adult horses
+breakpoints_new %>% 
+  filter(host %like% "foal") %>%
   View()
-breakpoints_new <- breakpoints_new |> 
-  filter(host %unlike% "foal") |> 
+breakpoints_new <- breakpoints_new %>% 
+  filter(host %unlike% "foal") %>% 
   mutate(host = ifelse(host %like% "horse", "horse", host))
 
 # FIXES FOR WHONET ERRORS ----
@@ -372,9 +364,17 @@ breakpoints_new <- breakpoints_new %>%
 # fill missing R breakpoint where there is an S breakpoint
 breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
 
-# keep distinct rows
-breakpoints_new <- breakpoints_new |>
-  distinct()
+
+# check the strange duplicates
+breakpoints_new %>% 
+  mutate(id = paste(guideline, type, host, method, site, mo, ab, uti)) %>% 
+  filter(id %in% .$id[which(duplicated(id))]) %>% 
+  arrange(desc(guideline))
+# 2024-06-19 mostly ECOFFs, but there's no explanation in the whonet_breakpoints file, we have to remove duplicates
+# remove duplicates
+breakpoints_new <- breakpoints_new %>% 
+  distinct(guideline, type, host, method, site, mo, ab, uti, .keep_all = TRUE)
+
 
 # CHECKS AND SAVE TO PACKAGE ----
 

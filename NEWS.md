@@ -1,4 +1,4 @@
-# AMR 2.1.1.9059
+# AMR 2.1.1.9060
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -15,19 +15,27 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
-* EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 (v14.0) is now the new default guideline for all MIC and disks diffusion interpretations.
-* `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI. Also, to get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
-* The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
-* Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
-* Function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
+* Clinical breakpoints
+  * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disks diffusion interpretations.
+  * `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Currently, the `clinical_breakpoints` data set contains 24 breakpoints that can return the value "SDD" instead of "I".
+* MIC plotting and transforming
+  * The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
+  * Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
+* Other
+  * Function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
 
 ## Changed
-* For SIR interpretation, it is now possible to use column names for argument `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
-* Extended the antibiotic selectors with `nitrofurans()` and `rifamycins()`
-* `antibiotics` data set:
+* SIR interpretation
+  * It is now possible to use column names for argument `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
+  * Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.
+  * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
+* `antibiotics` data set
   * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antibiotic selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
-* For MICs:
+* Antibiotic selectors
+  * Added selectors `nitrofurans()` and `rifamycins()`
+  * When using antibiotic selectors such as `aminoglycosides()` that exclude non-treatable drugs like gentamicin-high, the function now always returns a warning that these can be included using `only_treatable = FALSE`
+* MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
@@ -42,7 +50,6 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy
 * Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically, more weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species.
-* When using antibiotic selectors such as `aminoglycosides()` that exclude non-treatable drugs like gentamicin-high, the function now always returns a warning that these can be included using `only_treatable = FALSE`
 * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
 
 ## Other

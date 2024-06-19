@@ -283,6 +283,7 @@
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
+#' - `is_SDD`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to `r sum(clinical_breakpoints$is_SDD)` breakpoints.
 #' @details
 #' ### Different types of breakpoints
 #' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quote = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.

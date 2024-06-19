@@ -35,6 +35,8 @@ expect_identical(
   unique(gsub("[^A-Z]", "", AMR::clinical_breakpoints$guideline)),
   c("EUCAST", "CLSI")
 )
+# no missing SDDs
+expect_identical(sum(is.na(AMR::clinical_breakpoints$is_SDD)), 0)
 
 expect_true(as.sir("S") < as.sir("I"))
 expect_true(as.sir("I") < as.sir("R"))
@@ -292,6 +294,12 @@ expect_message(as.sir(data.frame(
   specimen = c("urine", "blood")
 )))
 
+# SDD vs I in CLSI 2024
+expect_identical(as.sir(as.mic(2 ^ c(-2:4)), mo = "Enterococcus faecium", ab = "Dapto", guideline = "CLSI 2024"),
+                 as.sir(c("SDD", "SDD", "SDD", "SDD", "SDD", "R", "R")))
+expect_identical(as.sir(as.mic(2 ^ c(-2:2)), mo = "Enterococcus faecium", ab = "Cipro
+                        ", guideline = "CLSI 2024"),
+                 as.sir(c("S", "S", "S", "I", "R")))
 
 
 # Veterinary --------------------------------------------------------------

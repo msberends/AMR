@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 34 085 observations and 13 variables:
+A \link[tibble:tibble]{tibble} with 34 063 observations and 14 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either "ECOFF", "animal", or "human"
@@ -20,6 +20,7 @@ A \link[tibble:tibble]{tibble} with 34 085 observations and 13 variables:
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R"
 \item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
+\item \code{is_SDD}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 24 breakpoints.
 }
 }
 \usage{

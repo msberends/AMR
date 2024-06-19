@@ -1033,13 +1033,14 @@ as_sir_method <- function(method_short,
     stop_("No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.sir.", call = FALSE)
   }
 
-  ab.bak <- ab
+  ab.bak <- trimws2(ab)
   ab <- suppressWarnings(as.ab(ab))
   if (!is.null(list(...)$mo.bak)) {
     mo.bak <- list(...)$mo.bak
   } else {
     mo.bak <- mo
   }
+  mo.bak <- trimws2(mo.bak)
   # be sure to take current taxonomy, as the 'clinical_breakpoints' data set only contains current taxonomy
   mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, info = FALSE)))
   if (all(is.na(ab))) {
@@ -1352,8 +1353,9 @@ as_sir_method <- function(method_short,
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
           guideline_coerced %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),
-          # return "I" when breakpoints are in the middle
-          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) ~ as.sir("I"),
+          # return "I" or "SDD" when breakpoints are in the middle
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           # and NA otherwise
           TRUE ~ NA_sir_
         )
@@ -1363,8 +1365,9 @@ as_sir_method <- function(method_short,
           as.double(values) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           guideline_coerced %like% "CLSI" & as.double(values) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
-          # return "I" when breakpoints are in the middle
-          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) ~ as.sir("I"),
+          # return "I" or "SDD" when breakpoints are in the middle
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           # and NA otherwise
           TRUE ~ NA_sir_
         )
