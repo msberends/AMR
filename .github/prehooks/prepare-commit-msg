@@ -33,23 +33,25 @@
 # This script runs before every commit #
 ########################################
 
-# try to fetch the commit message from the standard location
-COMMIT_MSG_PATH=".git/COMMIT_EDITMSG"
-if [ -f "$COMMIT_MSG_PATH" ]; then
-  COMMIT_MSG=$(cat "$COMMIT_MSG_PATH")
+COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
+
+# Read the commit message
+if [ -f "$COMMIT_MSG_FILE" ]; then
+  COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 else
   echo "Commit message file not found."
   exit 1
 fi
-# check the commit message, cancel commit if needed
-if [[ "$COMMIT_MSG" =~ \(no-check\)|\(no-checks\)|\(no-verify\) ]]; then
-  echo "Not running pre-commit checks:"
-  echo "Commit message contains '(no-check)', '(no-checks)', or '(no-verify)."
+
+# Check the commit message and skip checks if needed
+if [[ "$COMMIT_MSG" =~ no-?checks?|no-?verify ]]; then
+  echo "Not running prehook:"
+  echo "Commit message contains 'no-check' or 'no-verify'."
   echo ""
   exit 0
 fi
 
-echo "Running pre-commit checks..."
+echo "Running prehook..."
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if command -v Rscript > /dev/null; then
@@ -119,3 +121,6 @@ else
   echo "- no NEWS.md found!"
 fi
 echo ""
+
+# Prepend the version number to the commit message
+echo "(v${currentversion}) ${COMMIT_MSG}" > "$COMMIT_MSG_FILE"

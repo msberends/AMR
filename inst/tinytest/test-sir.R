@@ -326,6 +326,7 @@ expect_identical(out_vet$PRA, rep(NA_sir_, 11))
 expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA, "R", "R")))
 
 sir_history <- sir_interpretation_history()
+print(sir_history$host)
 expect_identical(sir_history$host,
                  c("poultry", "cattle", "poultry", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs", "horse", "dogs", "horse", "horse", "horse", "cattle", "horse", "cattle", "cattle", "cattle", 
                    "cattle", "cattle", "cattle", "cattle", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "cattle", "dogs", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cats", "cats", 
