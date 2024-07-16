@@ -265,7 +265,7 @@ expect_equal(
       "Raoultella (here some text) terrigena"
     )
   ))),
-  c("B_MCRBC_PRXY", "B_STRPT_SUIS", "B_RLTLL_TRRG")
+  c("B_MCRBC_PRXY", "B_STRPT_SUIS", "B_KLBSL_TRRG")
 )
 expect_stdout(print(mo_uncertainties()))
 x <- as.mo("Sta. aur")

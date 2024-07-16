@@ -122,7 +122,8 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
         "vitulinus", "vitulus", "warneri", "xylosus",
         "caledonicus", "canis",
         "durrellii", "lloydii",
-        "ratti", "taiwanensis", "veratri", "urealyticus"
+        "ratti", "taiwanensis", "veratri", "urealyticus",
+        "americanisciuri", "marylandisciuri", "shinii", "brunensis"
       ) |
         # old, now renamed to S. schleiferi (but still as synonym in our data of course):
         (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),

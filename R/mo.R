@@ -420,17 +420,21 @@ as.mo <- function(x,
   # Keep or replace synonyms ----
   lpsn_matches <- AMR_env$MO_lookup$lpsn_renamed_to[match(out, AMR_env$MO_lookup$mo)]
   lpsn_matches[!lpsn_matches %in% AMR_env$MO_lookup$lpsn] <- NA
-  # GBIF only for non-bacteria, since we use LPSN as primary source for bacteria
+  mycobank_matches <- AMR_env$MO_lookup$mycobank_renamed_to[match(out, AMR_env$MO_lookup$mo)]
+  mycobank_matches[!mycobank_matches %in% AMR_env$MO_lookup$mycobank] <- NA
+  # GBIF only for non-bacteria and non-fungi, since we use LPSN as primary source for bacteria and MycoBank for fungi
   # (an example is Strep anginosus, renamed according to GBIF, not according to LPSN)
-  gbif_matches <- AMR_env$MO_lookup$gbif_renamed_to[AMR_env$MO_lookup$kingdom != "Bacteria"][match(out, AMR_env$MO_lookup$mo[AMR_env$MO_lookup$kingdom != "Bacteria"])]
+  gbif_matches <- AMR_env$MO_lookup$gbif_renamed_to[!AMR_env$MO_lookup$kingdom %in% c("Bacteria", "Fungi")][match(out, AMR_env$MO_lookup$mo[!AMR_env$MO_lookup$kingdom %in% c("Bacteria", "Fungi")])]
   gbif_matches[!gbif_matches %in% AMR_env$MO_lookup$gbif] <- NA
   AMR_env$mo_renamed <- list(
-    old = out[!is.na(gbif_matches) | !is.na(lpsn_matches)],
-    gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)],
-    lpsn_matches = lpsn_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)]
+    old = out[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)],
+    gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)],
+    mycobank_matches = mycobank_matches[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)],
+    lpsn_matches = lpsn_matches[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)]
   )
   if (isFALSE(keep_synonyms)) {
     out[which(!is.na(gbif_matches))] <- AMR_env$MO_lookup$mo[match(gbif_matches[which(!is.na(gbif_matches))], AMR_env$MO_lookup$gbif)]
+    out[which(!is.na(mycobank_matches))] <- AMR_env$MO_lookup$mo[match(mycobank_matches[which(!is.na(mycobank_matches))], AMR_env$MO_lookup$mycobank)]
     out[which(!is.na(lpsn_matches))] <- AMR_env$MO_lookup$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR_env$MO_lookup$lpsn)]
     if (isTRUE(info) && length(AMR_env$mo_renamed$old) > 0) {
       print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
@@ -1040,13 +1044,14 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "anaerob[a-z]+ .*gram[ -]?neg.*"] <- "B_ANAER-NEG"
   out[x %like_case% "anaerob[a-z]+ .*gram[ -]?pos.*"] <- "B_ANAER-POS"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
+  out[is.na(out) & x %like_case% "anaerob[a-z]+ bacter"] <- "B_ANAER"
   
   # coryneform bacteria
   out[x %like_case% "^coryneform"] <- "B_CORYNF"
   
   # yeasts and fungi
-  out[x %like_case% "^yeast?"] <- "F_YEAST"
-  out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
+  out[x %like_case% "(^| )yeast?"] <- "F_YEAST"
+  out[x %like_case% "(^| )fung(us|i)"] <- "F_FUNGUS"
   
   # trivial names known to the field
   out[x %like_case% "meningo[ck]o[ck]"] <- "B_NESSR_MNNG"

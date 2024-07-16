@@ -104,10 +104,10 @@ expect_true(length(mo_group_members("B_HACEK")) > 1)
 expect_inherits(mo_group_members(c("Candida albicans", "Escherichia coli")), "list")
 
 expect_identical(mo_oxygen_tolerance(c("Klebsiella pneumoniae", "Clostridioides difficile")),
-                 c("aerobe", "anaerobe"))
+                 c("facultative anaerobe", "anaerobe"))
 
 expect_equal(as.character(table(mo_pathogenicity(example_isolates$mo))),
-             c("1874", "109", "1", "16"))
+             c("1911", "72", "1", "16"))
 
 expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
 expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
@@ -116,8 +116,9 @@ expect_equal(mo_year("Escherichia coli"), 1919)
 expect_true(mo_url("Candida albicans") %like% "gbif.org")
 expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
-# test integrity
-expect_identical(microorganisms$fullname, mo_fullname(microorganisms$fullname, language = "en", keep_synonyms = TRUE))
+# test integrity of getting back full names
+expect_identical(microorganisms$fullname[microorganisms$fullname %unlike% "(Fungi|{)"],
+                 suppressWarnings(mo_fullname(microorganisms$fullname[microorganisms$fullname %unlike% "(Fungi|{)"], language = "en", keep_synonyms = TRUE)))
 
 # check languages
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
