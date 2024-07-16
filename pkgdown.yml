@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   AMR: AMR.html
@@ -11,8 +11,7 @@ articles:
   resistance_predict: resistance_predict.html
   welcome_to_AMR: welcome_to_AMR.html
   WHONET: WHONET.html
-last_built: 2024-06-23T14:21Z
+last_built: 2024-07-16T12:57Z
 urls:
   reference: https://msberends.github.io/AMR/reference
   article: https://msberends.github.io/AMR/articles
-
