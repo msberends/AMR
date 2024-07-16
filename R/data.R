@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -32,9 +32,9 @@
 #' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
 #' @format
 #' ### For the [antibiotics] data set: a [tibble][tibble::tibble] with `r nrow(antibiotics)` observations and `r ncol(antibiotics)` variables:
-#' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. *This is a unique identifier.*
-#' - `cid`\cr Compound ID as found in PubChem. *This is a unique identifier.*
-#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. *This is a unique identifier.*
+#' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.***
+#' - `cid`\cr Compound ID as found in PubChem. ***This is a unique identifier.***
+#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. ***This is a unique identifier.***
 #' - `group`\cr A short and concise group name, based on WHONET and WHOCC definitions
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02`
 #' - `atc_group1`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like `"Macrolides, lincosamides and streptogramins"`
@@ -48,10 +48,10 @@
 #' - `loinc`\cr All codes associated with the name of the antimicrobial drug from `r TAXONOMY_VERSION$LOINC$citation` Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
 #' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
-#' - `av`\cr Antiviral ID as used in this package (such as `ACI`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. *This is a unique identifier.* Combinations are codes that contain a `+` to indicate this, such as `ATA+COBI` for atazanavir/cobicistat.
-#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. *This is a unique identifier.*
+#' - `av`\cr Antiviral ID as used in this package (such as `ACI`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.*** Combinations are codes that contain a `+` to indicate this, such as `ATA+COBI` for atazanavir/cobicistat.
+#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. ***This is a unique identifier.***
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
-#' - `cid`\cr Compound ID as found in PubChem. *This is a unique identifier.*
+#' - `cid`\cr Compound ID as found in PubChem. ***This is a unique identifier.***
 #' - `atc_group`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
 #' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
 #' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment
@@ -82,35 +82,41 @@
 #' @rdname antibiotics
 "antivirals"
 
-#' Data Set with `r format(nrow(microorganisms), big.mark = " ")` Microorganisms
+#' Data Set with `r format(nrow(microorganisms), big.mark = " ")` Taxonomic Records of Microorganisms
 #'
-#' A data set containing the full microbial taxonomy (**last updated: `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF). This data set is the backbone of this `AMR` package. MO codes can be looked up using [as.mo()].
+#' @description
+#' A data set containing the full microbial taxonomy (**last updated: `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date, TAXONOMY_VERSION$MycoBank$accessed_date))`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms. This data set is the backbone of this `AMR` package. MO codes can be looked up using [as.mo()] and microorganism properties can be looked up using any of the [`mo_*`][mo_property()] functions.
+#' 
+#' This data set is carefully crafted, yet made 100% reproducible from public and authoritative taxonomic sources (using [this script](https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R)), namely: *`r TAXONOMY_VERSION$LPSN$name`* for bacteria, *`r TAXONOMY_VERSION$MycoBank$name`* for fungi, and *`r TAXONOMY_VERSION$GBIF$name`* for all others taxons.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms), big.mark = " ")` observations and `r ncol(microorganisms)` variables:
-#' - `mo`\cr ID of microorganism as used by this package. *This is a unique identifier.*
-#' - `fullname`\cr Full name, like `"Escherichia coli"`. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. *This is a unique identifier.*
+#' - `mo`\cr ID of microorganism as used by this package. ***This is a unique identifier.***
+#' - `fullname`\cr Full name, like `"Escherichia coli"`. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. ***This is a unique identifier.***
 #' - `status` \cr Status of the taxon, either `r vector_or(microorganisms$status)`
-#' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism
+#' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism. Note that for fungi, *phylum* is equal to their taxonomic *division*. Also, for fungi, *subkingdom* and *subdivision* were left out since they do not occur in the bacterial taxonomy.
 #' - `rank`\cr Text of the taxonomic rank of the microorganism, such as `"species"` or `"genus"`
 #' - `ref`\cr Author(s) and year of related scientific publication. This contains only the *first surname* and year of the *latest* authors, e.g. "Wallis *et al.* 2006 *emend.* Smith and Jones 2018" becomes "Smith *et al.*, 2018". This field is directly retrieved from the source specified in the column `source`. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.
-#' - `lpsn`\cr Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, *Acetobacter ascendens* has LPSN Record number 7864 and 11011. Only the first is available in the `microorganisms` data set.
 #' - `oxygen_tolerance` \cr Oxygen tolerance, either `r vector_or(microorganisms$oxygen_tolerance)`. These data were retrieved from BacDive (see *Source*). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently `r round(length(microorganisms$oxygen_tolerance[which(!is.na(microorganisms$oxygen_tolerance))]) / nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]) * 100, 1)`% of all `r format_included_data_number(nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]))` bacteria in the data set contain an oxygen tolerance.
+#' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
+#' - `lpsn`\cr Identifier ('Record number') of `r TAXONOMY_VERSION$LPSN$name`. This will be the first/highest LPSN identifier to keep one identifier per row. For example, *Acetobacter ascendens* has LPSN Record number 7864 and 11011. Only the first is available in the `microorganisms` data set. ***This is a unique identifier***, though available for only `r format_included_data_number(sum(!is.na(microorganisms$lpsn)))` records.
 #' - `lpsn_parent`\cr LPSN identifier of the parent taxon
 #' - `lpsn_renamed_to`\cr LPSN identifier of the currently valid taxon
-#' - `gbif`\cr Identifier ('taxonID') of the Global Biodiversity Information Facility (GBIF)
+#' - `mycobank`\cr Identifier ('MycoBank #') of `r TAXONOMY_VERSION$MycoBank$name`. ***This is a unique identifier***, though available for only `r format_included_data_number(sum(!is.na(microorganisms$mycobank)))` records.
+#' - `mycobank_parent`\cr MycoBank identifier of the parent taxon
+#' - `mycobank_renamed_to`\cr MycoBank identifier of the currently valid taxon
+#' - `gbif`\cr Identifier ('taxonID') of `r TAXONOMY_VERSION$GBIF$name`. ***This is a unique identifier***, though available for only `r format_included_data_number(sum(!is.na(microorganisms$gbif)))` records.
 #' - `gbif_parent`\cr GBIF identifier of the parent taxon
 #' - `gbif_renamed_to`\cr GBIF identifier of the currently valid taxon
-#' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
 #' - `prevalence`\cr Prevalence of the microorganism based on Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}), see [mo_matching_score()] for the full explanation
 #' - `snomed`\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)` (see *Source*). Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
 #' @details
-#' Please note that entries are only based on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
+#' Please note that entries are only based on LPSN, MycoBank, and GBIF (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
 #'
-#' For example, *Staphylococcus pettenkoferi* was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the `AMR` package returns 2007 for `mo_year("S. pettenkoferi")`.
+#' For example, *Staphylococcus pettenkoferi* was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not until 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the `AMR` package returns 2007 for `mo_year("S. pettenkoferi")`.
 #'
 #' @section Included Taxa:
-#' Included taxonomic data are:
+#' Included taxonomic data from [LPSN](`r TAXONOMY_VERSION$LPSN$url`), [MycoBank](`r TAXONOMY_VERSION$MycoBank$url`), and [GBIF](`r TAXONOMY_VERSION$GBIF$url`) are:
 #' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria")), , drop = FALSE])` (sub)species from the kingdoms of Archaea and Bacteria
-#' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi"), , drop = FALSE])` (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histoplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+#' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi"), , drop = FALSE])` species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histoplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
 #' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Protozoa"), , drop = FALSE])` (sub)species from the kingdom of Protozoa
 #' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus", drop = TRUE])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
 #' - All `r format_included_data_number(microorganisms[which(microorganisms$status != "accepted"), , drop = FALSE])` previously accepted names of all included (sub)species (these were taxonomically renamed)
@@ -127,22 +133,28 @@
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 #' - 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 #'
-#' The syntax used to transform the original data to a cleansed \R format, can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R>.
+#' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R).
 #'
 #' ### Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
-#' @section About the Records from LPSN (see *Source*):
-#' LPSN is the main source for bacteriological taxonomy of this `AMR` package.
-#'
-#' The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
 #' @source
-#' * `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
-#'
-#' * `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
-#'
-#' * `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
+#' Taxonomic entries were imported in this order of importance:
+#' 1. `r TAXONOMY_VERSION$LPSN$name`:\cr\cr
+#'    `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
 #' 
-#' * `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
+#' 2. `r TAXONOMY_VERSION$MycoBank$name`:\cr\cr
+#'    `r TAXONOMY_VERSION$MycoBank$citation` Accessed from <`r TAXONOMY_VERSION$MycoBank$url`> on `r documentation_date(TAXONOMY_VERSION$MycoBank$accessed_date)`.
+#'
+#' 3. `r TAXONOMY_VERSION$GBIF$name`:\cr\cr
+#'    `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
+#'
+#' Furthermore, these sources were used for additional details:
+#' 
+#' * `r TAXONOMY_VERSION$BacDive$name`:\cr\cr
+#'   `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
+#' 
+#' * `r TAXONOMY_VERSION$SNOMED$name`:\cr\cr
+#'   `r TAXONOMY_VERSION$SNOMED$citation` Accessed from <`r TAXONOMY_VERSION$SNOMED$url`> on `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`.
 #'
 #' * Grimont *et al.* (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on *Salmonella* (WHOCC-SALM).
 #'
@@ -156,7 +168,7 @@
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and [WHONET](https://whonet.org). Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = " ")` observations and `r ncol(microorganisms.codes)` variables:
-#' - `code`\cr Commonly used code of a microorganism. *This is a unique identifier.*
+#' - `code`\cr Commonly used code of a microorganism. ***This is a unique identifier.***
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).

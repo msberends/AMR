@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -36,12 +36,14 @@ devtools::load_all(quiet = TRUE)
 
 suppressMessages(set_AMR_locale("English"))
 
-old_globalenv <- ls(envir = globalenv())
+pre_commit_lst <- list()
 
 # Save internal data to R/sysdata.rda -------------------------------------
 
+usethis::ui_info(paste0("Updating internal package data"))
+
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
-EUCAST_RULES_DF <- utils::read.delim(
+pre_commit_lst$EUCAST_RULES_DF <- utils::read.delim(
   file = "data-raw/eucast_rules.tsv",
   skip = 9,
   sep = "\t",
@@ -67,7 +69,7 @@ EUCAST_RULES_DF <- utils::read.delim(
   mutate(reference.rule_group = as.character(reference.rule_group)) %>%
   select(-sorting_rule)
 
-TRANSLATIONS <- utils::read.delim(
+pre_commit_lst$TRANSLATIONS <- utils::read.delim(
   file = "data-raw/translations.tsv",
   sep = "\t",
   stringsAsFactors = FALSE,
@@ -82,15 +84,15 @@ TRANSLATIONS <- utils::read.delim(
   quote = ""
 )
 
-LANGUAGES_SUPPORTED_NAMES <- c(
+pre_commit_lst$LANGUAGES_SUPPORTED_NAMES <- c(
   list(en = list(exonym = "English", endonym = "English")),
   lapply(
-    TRANSLATIONS[, which(nchar(colnames(TRANSLATIONS)) == 2), drop = FALSE],
+    TRANSLATIONS[, which(nchar(colnames(pre_commit_lst$TRANSLATIONS)) == 2), drop = FALSE],
     function(x) list(exonym = x[1], endonym = x[2])
   )
 )
 
-LANGUAGES_SUPPORTED <- names(LANGUAGES_SUPPORTED_NAMES)
+pre_commit_lst$LANGUAGES_SUPPORTED <- names(pre_commit_lst$LANGUAGES_SUPPORTED_NAMES)
 
 # vectors of CoNS and CoPS, improves speed in as.mo()
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
@@ -147,115 +149,223 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
     ]
   }
 }
-MO_CONS <- create_species_cons_cops("CoNS")
-MO_COPS <- create_species_cons_cops("CoPS")
-MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms$genus == "Streptococcus" &
+pre_commit_lst$MO_CONS <- create_species_cons_cops("CoNS")
+pre_commit_lst$MO_COPS <- create_species_cons_cops("CoPS")
+pre_commit_lst$MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms$genus == "Streptococcus" &
   tolower(AMR::microorganisms$species) %in% c(
     "pyogenes", "agalactiae", "dysgalactiae", "equi", "canis",
     "group a", "group b", "group c", "group g"
   ))]
-MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
-MO_PREVALENT_GENERA <- c(
-  "Absidia", "Acanthamoeba", "Acremonium", "Aedes", "Alternaria", "Amoeba", "Ancylostoma", "Angiostrongylus",
-  "Anisakis", "Anopheles", "Apophysomyces", "Arthroderma", "Aspergillus", "Aureobasidium", "Basidiobolus", "Beauveria",
-  "Blastocystis", "Blastomyces", "Candida", "Capillaria", "Chaetomium", "Chrysonilia", "Chrysosporium", "Cladophialophora",
-  "Cladosporium", "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Demodex",
-  "Dermatobia", "Dientamoeba", "Diphyllobothrium", "Dirofilaria", "Echinostoma", "Entamoeba", "Enterobius",
-  "Exophiala", "Exserohilum", "Fasciola", "Fonsecaea", "Fusarium", "Geotrichum", "Giardia", "Haloarcula", "Halobacterium",
-  "Halococcus", "Hendersonula", "Heterophyes", "Histomonas", "Histoplasma", "Hymenolepis", "Hypomyces",
-  "Hysterothylacium", "Kloeckera", "Kodamaea", "Leishmania", "Lichtheimia", "Lodderomyces",
-  "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma", "Microsporidium",
-  "Microsporum", "Millerozyma", "Mortierella", "Mucor", "Mycocentrospora", "Necator", "Nectria", "Ochroconis", "Oesophagostomum",
-  "Oidiodendron", "Opisthorchis", "Paecilomyces", "Pediculus", "Penicillium", "Phlebotomus", "Phoma", "Pichia", "Piedraia", "Pithomyces",
-  "Pityrosporum", "Pneumocystis", "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus",
-  "Rhodotorula", "Saccharomyces", "Saprochaete", "Sarcoptes", "Scedosporium", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra",
-  "Sporobolomyces", "Sporotrichum", "Stachybotrys", "Strongyloides", "Syngamus", "Taenia", "Talaromyces", "Toxocara", "Trichinella",
-  "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris",
-  "Tritirachium", "Trombicula", "Trypanosoma", "Tunga", "Verticillium", "Wuchereria"
+pre_commit_lst$MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
+pre_commit_lst$MO_PREVALENT_GENERA <- c(
+  "Absidia",
+  "Acanthamoeba",
+  "Acremonium",
+  "Aedes",
+  "Alternaria",
+  "Amoeba",
+  "Ancylostoma",
+  "Angiostrongylus",
+  "Anisakis",
+  "Anopheles",
+  "Apophysomyces",
+  "Arthroderma",
+  "Aspergillus",
+  "Aureobasidium",
+  "Basidiobolus",
+  "Beauveria",
+  "Blastocystis",
+  "Blastomyces",
+  "Candida",
+  "Capillaria",
+  "Chaetomium",
+  "Chrysonilia",
+  "Chrysosporium",
+  "Cladophialophora",
+  "Cladosporium",
+  "Conidiobolus",
+  "Contracaecum",
+  "Cordylobia",
+  "Cryptococcus",
+  "Curvularia",
+  "Demodex",
+  "Dermatobia",
+  "Dientamoeba",
+  "Diphyllobothrium",
+  "Dirofilaria",
+  "Echinostoma",
+  "Entamoeba",
+  "Enterobius",
+  "Exophiala",
+  "Exserohilum",
+  "Fasciola",
+  "Fonsecaea",
+  "Fusarium",
+  "Geotrichum",
+  "Giardia",
+  "Haloarcula",
+  "Halobacterium",
+  "Halococcus",
+  "Hansenula",
+  "Hendersonula",
+  "Heterophyes",
+  "Histomonas",
+  "Histoplasma",
+  "Hymenolepis",
+  "Hypomyces",
+  "Hysterothylacium",
+  "Kloeckera",
+  "Kluyveromyces",
+  "Kodamaea",
+  "Leishmania",
+  "Lichtheimia",
+  "Lodderomyces",
+  "Lomentospora",
+  "Malassezia",
+  "Malbranchea",
+  "Metagonimus",
+  "Meyerozyma",
+  "Microsporidium",
+  "Microsporum",
+  "Millerozyma",
+  "Mortierella",
+  "Mucor",
+  "Mycocentrospora",
+  "Necator",
+  "Nectria",
+  "Ochroconis",
+  "Oesophagostomum",
+  "Oidiodendron",
+  "Opisthorchis",
+  "Paecilomyces",
+  "Pediculus",
+  "Penicillium",
+  "Phlebotomus",
+  "Phoma",
+  "Pichia",
+  "Piedraia",
+  "Pithomyces",
+  "Pityrosporum",
+  "Pneumocystis",
+  "Pseudallescheria",
+  "Pseudoscopulariopsis",
+  "Pseudoterranova",
+  "Pulex",
+  "Rhizomucor",
+  "Rhizopus",
+  "Rhodotorula",
+  "Saccharomyces",
+  "Saprochaete",
+  "Sarcoptes",
+  "Scedosporium",
+  "Scolecobasidium",
+  "Scopulariopsis",
+  "Scytalidium",
+  "Spirometra",
+  "Sporobolomyces",
+  "Sporotrichum",
+  "Stachybotrys",
+  "Strongyloides",
+  "Syngamus",
+  "Taenia",
+  "Talaromyces",
+  "Toxocara",
+  "Trichinella",
+  "Trichobilharzia",
+  "Trichoderma",
+  "Trichomonas",
+  "Trichophyton",
+  "Trichosporon",
+  "Trichostrongylus",
+  "Trichuris",
+  "Tritirachium",
+  "Trombicula",
+  "Trypanosoma",
+  "Tunga",
+  "Verticillium",
+  "Wuchereria"
 )
 
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
-globalenv_before_ab <- c(ls(envir = globalenv()), "globalenv_before_ab")
-AB_AMINOGLYCOSIDES <- antibiotics %>%
+pre_commit_lst$AB_AMINOGLYCOSIDES <- antibiotics %>%
   filter(group %like% "aminoglycoside") %>%
   pull(ab)
-AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
-AB_ANTIFUNGALS <- antibiotics %>%
+pre_commit_lst$AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
+pre_commit_lst$AB_ANTIFUNGALS <- antibiotics %>%
   filter(group %like% "antifungal") %>%
   pull(ab)
-AB_ANTIMYCOBACTERIALS <- antibiotics %>%
+pre_commit_lst$AB_ANTIMYCOBACTERIALS <- antibiotics %>%
   filter(group %like% "antimycobacterial") %>%
   pull(ab)
-AB_CARBAPENEMS <- antibiotics %>%
+pre_commit_lst$AB_CARBAPENEMS <- antibiotics %>%
   filter(group %like% "carbapenem") %>%
   pull(ab)
-AB_CEPHALOSPORINS <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS <- antibiotics %>%
   filter(group %like% "cephalosporin") %>%
   pull(ab)
-AB_CEPHALOSPORINS_1ST <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_1ST <- antibiotics %>%
   filter(group %like% "cephalosporin.*1") %>%
   pull(ab)
-AB_CEPHALOSPORINS_2ND <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_2ND <- antibiotics %>%
   filter(group %like% "cephalosporin.*2") %>%
   pull(ab)
-AB_CEPHALOSPORINS_3RD <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_3RD <- antibiotics %>%
   filter(group %like% "cephalosporin.*3") %>%
   pull(ab)
-AB_CEPHALOSPORINS_4TH <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_4TH <- antibiotics %>%
   filter(group %like% "cephalosporin.*4") %>%
   pull(ab)
-AB_CEPHALOSPORINS_5TH <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_5TH <- antibiotics %>%
   filter(group %like% "cephalosporin.*5") %>%
   pull(ab)
-AB_CEPHALOSPORINS_EXCEPT_CAZ <- AB_CEPHALOSPORINS[AB_CEPHALOSPORINS != "CAZ"]
-AB_FLUOROQUINOLONES <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_EXCEPT_CAZ <- pre_commit_lst$AB_CEPHALOSPORINS[pre_commit_lst$AB_CEPHALOSPORINS != "CAZ"]
+pre_commit_lst$AB_FLUOROQUINOLONES <- antibiotics %>%
   filter(atc_group2 %like% "fluoroquinolone" | (group %like% "quinolone" & is.na(atc_group2))) %>%
   pull(ab)
-AB_GLYCOPEPTIDES <- antibiotics %>%
+pre_commit_lst$AB_GLYCOPEPTIDES <- antibiotics %>%
   filter(group %like% "glycopeptide") %>%
   pull(ab)
-AB_LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
-AB_GLYCOPEPTIDES_EXCEPT_LIPO <- AB_GLYCOPEPTIDES[!AB_GLYCOPEPTIDES %in% AB_LIPOGLYCOPEPTIDES]
-AB_LINCOSAMIDES <- antibiotics %>%
+pre_commit_lst$AB_LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
+pre_commit_lst$AB_GLYCOPEPTIDES_EXCEPT_LIPO <- pre_commit_lst$AB_GLYCOPEPTIDES[!pre_commit_lst$AB_GLYCOPEPTIDES %in% pre_commit_lst$AB_LIPOGLYCOPEPTIDES]
+pre_commit_lst$AB_LINCOSAMIDES <- antibiotics %>%
   filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2))) %>%
   pull(ab)
-AB_MACROLIDES <- antibiotics %>%
+pre_commit_lst$AB_MACROLIDES <- antibiotics %>%
   filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2) & name %unlike% "screening|inducible")) %>%
   pull(ab)
-AB_NITROFURANS <- antibiotics %>%
+pre_commit_lst$AB_NITROFURANS <- antibiotics %>%
   filter(name %like% "^furaz|nitrofura" | atc_group2 %like% "nitrofuran") %>%
   pull(ab)
-AB_OXAZOLIDINONES <- antibiotics %>%
+pre_commit_lst$AB_OXAZOLIDINONES <- antibiotics %>%
   filter(group %like% "oxazolidinone") %>%
   pull(ab)
-AB_PENICILLINS <- antibiotics %>%
+pre_commit_lst$AB_PENICILLINS <- antibiotics %>%
   filter(group %like% "penicillin") %>%
   pull(ab)
-AB_POLYMYXINS <- antibiotics %>%
+pre_commit_lst$AB_POLYMYXINS <- antibiotics %>%
   filter(group %like% "polymyxin") %>%
   pull(ab)
-AB_QUINOLONES <- antibiotics %>%
+pre_commit_lst$AB_QUINOLONES <- antibiotics %>%
   filter(group %like% "quinolone") %>%
   pull(ab)
-AB_RIFAMYCINS <- antibiotics %>%
+pre_commit_lst$AB_RIFAMYCINS <- antibiotics %>%
   filter(name %like% "Rifampi|Rifabutin|Rifapentine|rifamy") %>%
   pull(ab)
-AB_STREPTOGRAMINS <- antibiotics %>%
+pre_commit_lst$AB_STREPTOGRAMINS <- antibiotics %>%
   filter(atc_group2 %like% "streptogramin") %>%
   pull(ab)
-AB_TETRACYCLINES <- antibiotics %>%
+pre_commit_lst$AB_TETRACYCLINES <- antibiotics %>%
   filter(group %like% "tetracycline") %>%
   pull(ab)
-AB_TETRACYCLINES_EXCEPT_TGC <- AB_TETRACYCLINES[AB_TETRACYCLINES != "TGC"]
-AB_TRIMETHOPRIMS <- antibiotics %>%
+pre_commit_lst$AB_TETRACYCLINES_EXCEPT_TGC <- pre_commit_lst$AB_TETRACYCLINES[pre_commit_lst$AB_TETRACYCLINES != "TGC"]
+pre_commit_lst$AB_TRIMETHOPRIMS <- antibiotics %>%
   filter(group %like% "trimethoprim") %>%
   pull(ab)
-AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
-AB_BETALACTAMS <- c(AB_PENICILLINS, AB_CEPHALOSPORINS, AB_CARBAPENEMS)
+pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
+pre_commit_lst$AB_BETALACTAMS <- c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS)
 # this will be used for documentation:
-DEFINED_AB_GROUPS <- ls(envir = globalenv())
-DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
+pre_commit_lst$DEFINED_AB_GROUPS <- sort(names(pre_commit_lst)[names(pre_commit_lst) %like% "^AB_" & names(pre_commit_lst) != "AB_LOOKUP"])
 create_AB_AV_lookup <- function(df) {
   new_df <- df
   new_df$generalised_name <- generalise_antibiotic_name(new_df$name)
@@ -282,62 +392,26 @@ create_AB_AV_lookup <- function(df) {
   ))
   new_df[, colnames(new_df)[colnames(new_df) %like% "^generalised"]]
 }
-AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
-AV_LOOKUP <- create_AB_AV_lookup(AMR::antivirals)
+pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
+pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(AMR::antivirals)
 
 # Export to package as internal data ----
-usethis::ui_info(paste0("Updating internal package data"))
-suppressMessages(usethis::use_data(EUCAST_RULES_DF,
-  TRANSLATIONS,
-  LANGUAGES_SUPPORTED_NAMES,
-  LANGUAGES_SUPPORTED,
-  MO_CONS,
-  MO_COPS,
-  MO_STREP_ABCG,
-  MO_LANCEFIELD,
-  MO_PREVALENT_GENERA,
-  AB_LOOKUP,
-  AV_LOOKUP,
-  AB_AMINOGLYCOSIDES,
-  AB_AMINOPENICILLINS,
-  AB_ANTIFUNGALS,
-  AB_ANTIMYCOBACTERIALS,
-  AB_CARBAPENEMS,
-  AB_CEPHALOSPORINS,
-  AB_CEPHALOSPORINS_1ST,
-  AB_CEPHALOSPORINS_2ND,
-  AB_CEPHALOSPORINS_3RD,
-  AB_CEPHALOSPORINS_4TH,
-  AB_CEPHALOSPORINS_5TH,
-  AB_CEPHALOSPORINS_EXCEPT_CAZ,
-  AB_FLUOROQUINOLONES,
-  AB_LIPOGLYCOPEPTIDES,
-  AB_GLYCOPEPTIDES,
-  AB_GLYCOPEPTIDES_EXCEPT_LIPO,
-  AB_LINCOSAMIDES,
-  AB_MACROLIDES,
-  AB_NITROFURANS,
-  AB_OXAZOLIDINONES,
-  AB_PENICILLINS,
-  AB_POLYMYXINS,
-  AB_QUINOLONES,
-  AB_RIFAMYCINS,
-  AB_STREPTOGRAMINS,
-  AB_TETRACYCLINES,
-  AB_TETRACYCLINES_EXCEPT_TGC,
-  AB_TRIMETHOPRIMS,
-  AB_UREIDOPENICILLINS,
-  AB_BETALACTAMS,
-  DEFINED_AB_GROUPS,
-  internal = TRUE,
-  overwrite = TRUE,
-  version = 2,
-  compress = "xz"
-))
+# usethis::use_data() must receive unquoted object names, which is not flexible at all.
+# we'll use good old base::save() instead
+save(list = names(pre_commit_lst),
+     file = "R/sysdata.rda",
+     envir = as.environment(pre_commit_lst),
+     compress = "xz",
+     version = 2,
+     ascii = FALSE)
+usethis::ui_done("Saved to {usethis::ui_value('R/sysdata.rda')}")
+
+
+
 
 # Export data sets to the repository in different formats -----------------
 
-for (pkg in c("haven", "openxlsx", "arrow")) {
+for (pkg in c("haven", "openxlsx2", "arrow")) {
   if (!pkg %in% rownames(utils::installed.packages())) {
     message("NOTE: package '", pkg, "' not installed! Ignoring export where this package is required.")
   }
@@ -378,7 +452,7 @@ if (changed_md5(clin_break)) {
   try(haven::write_xpt(clin_break, "data-raw/clinical_breakpoints.xpt"), silent = TRUE)
   try(haven::write_sav(clin_break, "data-raw/clinical_breakpoints.sav"), silent = TRUE)
   try(haven::write_dta(clin_break, "data-raw/clinical_breakpoints.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(clin_break, "data-raw/clinical_breakpoints.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(clin_break, "data-raw/clinical_breakpoints.xlsx"), silent = TRUE)
   try(arrow::write_feather(clin_break, "data-raw/clinical_breakpoints.feather"), silent = TRUE)
   try(arrow::write_parquet(clin_break, "data-raw/clinical_breakpoints.parquet"), silent = TRUE)
 }
@@ -396,7 +470,7 @@ if (changed_md5(microorganisms)) {
   try(haven::write_dta(mo, "data-raw/microorganisms.dta"), silent = TRUE)
   mo_all_snomed <- microorganisms %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
   try(write.table(mo_all_snomed, "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(openxlsx::write.xlsx(mo_all_snomed, "data-raw/microorganisms.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(mo_all_snomed, "data-raw/microorganisms.xlsx"), silent = TRUE)
   try(arrow::write_feather(microorganisms, "data-raw/microorganisms.feather"), silent = TRUE)
   try(arrow::write_parquet(microorganisms, "data-raw/microorganisms.parquet"), silent = TRUE)
 }
@@ -409,7 +483,7 @@ if (changed_md5(microorganisms.codes)) {
   try(haven::write_xpt(microorganisms.codes, "data-raw/microorganisms.codes.xpt"), silent = TRUE)
   try(haven::write_sav(microorganisms.codes, "data-raw/microorganisms.codes.sav"), silent = TRUE)
   try(haven::write_dta(microorganisms.codes, "data-raw/microorganisms.codes.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(microorganisms.codes, "data-raw/microorganisms.codes.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(microorganisms.codes, "data-raw/microorganisms.codes.xlsx"), silent = TRUE)
   try(arrow::write_feather(microorganisms.codes, "data-raw/microorganisms.codes.feather"), silent = TRUE)
   try(arrow::write_parquet(microorganisms.codes, "data-raw/microorganisms.codes.parquet"), silent = TRUE)
 }
@@ -422,7 +496,7 @@ if (changed_md5(microorganisms.groups)) {
   try(haven::write_xpt(microorganisms.groups, "data-raw/microorganisms.groups.xpt"), silent = TRUE)
   try(haven::write_sav(microorganisms.groups, "data-raw/microorganisms.groups.sav"), silent = TRUE)
   try(haven::write_dta(microorganisms.groups, "data-raw/microorganisms.groups.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(microorganisms.groups, "data-raw/microorganisms.groups.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(microorganisms.groups, "data-raw/microorganisms.groups.xlsx"), silent = TRUE)
   try(arrow::write_feather(microorganisms.groups, "data-raw/microorganisms.groups.feather"), silent = TRUE)
   try(arrow::write_parquet(microorganisms.groups, "data-raw/microorganisms.groups.parquet"), silent = TRUE)
 }
@@ -437,7 +511,7 @@ if (changed_md5(ab)) {
   try(haven::write_dta(ab, "data-raw/antibiotics.dta"), silent = TRUE)
   ab_lists <- antibiotics %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
   try(write.table(ab_lists, "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(openxlsx::write.xlsx(ab_lists, "data-raw/antibiotics.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(ab_lists, "data-raw/antibiotics.xlsx"), silent = TRUE)
   try(arrow::write_feather(antibiotics, "data-raw/antibiotics.feather"), silent = TRUE)
   try(arrow::write_parquet(antibiotics, "data-raw/antibiotics.parquet"), silent = TRUE)
 }
@@ -452,7 +526,7 @@ if (changed_md5(av)) {
   try(haven::write_dta(av, "data-raw/antivirals.dta"), silent = TRUE)
   av_lists <- antivirals %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
   try(write.table(av_lists, "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(openxlsx::write.xlsx(av_lists, "data-raw/antivirals.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(av_lists, "data-raw/antivirals.xlsx"), silent = TRUE)
   try(arrow::write_feather(antivirals, "data-raw/antivirals.feather"), silent = TRUE)
   try(arrow::write_parquet(antivirals, "data-raw/antivirals.parquet"), silent = TRUE)
 }
@@ -471,7 +545,7 @@ if (changed_md5(intrinsicR)) {
   try(haven::write_xpt(intrinsicR, "data-raw/intrinsic_resistant.xpt"), silent = TRUE)
   try(haven::write_sav(intrinsicR, "data-raw/intrinsic_resistant.sav"), silent = TRUE)
   try(haven::write_dta(intrinsicR, "data-raw/intrinsic_resistant.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(intrinsicR, "data-raw/intrinsic_resistant.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(intrinsicR, "data-raw/intrinsic_resistant.xlsx"), silent = TRUE)
   try(arrow::write_feather(intrinsicR, "data-raw/intrinsic_resistant.feather"), silent = TRUE)
   try(arrow::write_parquet(intrinsicR, "data-raw/intrinsic_resistant.parquet"), silent = TRUE)
 }
@@ -484,17 +558,12 @@ if (changed_md5(dosage)) {
   try(haven::write_xpt(dosage, "data-raw/dosage.xpt"), silent = TRUE)
   try(haven::write_sav(dosage, "data-raw/dosage.sav"), silent = TRUE)
   try(haven::write_dta(dosage, "data-raw/dosage.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(dosage, "data-raw/dosage.xlsx"), silent = TRUE)
+  try(openxlsx2::write_xlsx(dosage, "data-raw/dosage.xlsx"), silent = TRUE)
   try(arrow::write_feather(dosage, "data-raw/dosage.feather"), silent = TRUE)
   try(arrow::write_parquet(dosage, "data-raw/dosage.parquet"), silent = TRUE)
 }
 
 suppressMessages(reset_AMR_locale())
-
-# remove leftovers from global env
-current_globalenv <- ls(envir = globalenv())
-rm(list = current_globalenv[!current_globalenv %in% old_globalenv])
-rm(current_globalenv)
 
 devtools::load_all(quiet = TRUE)
 suppressMessages(set_AMR_locale("English"))
@@ -507,19 +576,6 @@ invisible(capture.output(urlchecker::url_update()))
 # Document pkg ------------------------------------------------------------
 usethis::ui_info("Documenting package")
 suppressMessages(devtools::document(quiet = TRUE))
-
-
-# Style pkg ---------------------------------------------------------------
-if (!"styler" %in% rownames(utils::installed.packages())) {
-  message("Package 'styler' not installed!")
-} else if (interactive()) {
-  # only when sourcing this file ourselves
-  # usethis::ui_info("Styling package")
-  # styler::style_pkg(
-  #   style = styler::tidyverse_style,
-  #   filetype = c("R", "Rmd")
-  # )
-}
 
 
 # Finished ----------------------------------------------------------------

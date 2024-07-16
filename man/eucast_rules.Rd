@@ -74,7 +74,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 \strong{Note:} This function does not translate MIC values to SIR values. Use \code{\link[=as.sir]{as.sir()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 
-The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until January 8th, 2024, see \link{microorganisms}.
+The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until June 24th, 2024, see \link{microorganisms}.
 \subsection{Custom Rules}{
 
 Custom rules can be created using \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}, e.g.:

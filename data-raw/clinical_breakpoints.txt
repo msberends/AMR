@@ -192,23 +192,23 @@
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"SXT"	"Brucella melitensis"		0.125	0.125	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"TCY"	"Brucella melitensis"	"30ug"	42	42	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"TCY"	"Brucella melitensis"		0.5	0.5	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"CIP"	"Brucella melitensis"	"5ug"	50	27	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"CIP"	"Brucella melitensis"		1e-04	1	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"	"Meningitis"	"B_BRCLL_OVIS"	2	"CRO"	"Brucella melitensis"	"30ug"	30	30	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"	"Meningitis"	"B_BRCLL_OVIS"	2	"CRO"	"Brucella melitensis"		2	2	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"DOX"	"Brucella melitensis"		0.25	0.25	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"GEN"	"Brucella melitensis"	"10ug"	23	23	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"GEN"	"Brucella melitensis"		0.5	0.5	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"LVX"	"Brucella melitensis"	"5ug"	50	28	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"LVX"	"Brucella melitensis"		1e-04	1	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"RIF"	"Brucella melitensis"	"5ug"	20	20	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"RIF"	"Brucella melitensis"		2	2	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"STR"	"Brucella melitensis"	"10ug"	15	15	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"STR"	"Brucella melitensis"		1	1	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"SXT"	"Brucella melitensis"	"1.25ug/23.75ug"	29	29	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"SXT"	"Brucella melitensis"		0.125	0.125	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_OVIS"	2	"TCY"	"Brucella melitensis"	"30ug"	42	42	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_OVIS"	2	"TCY"	"Brucella melitensis"		0.5	0.5	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"CIP"	"Brucella melitensis"	"5ug"	50	27	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"CIP"	"Brucella melitensis"		1e-04	1	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"	"Meningitis"	"B_BRCLL_MLTN"	2	"CRO"	"Brucella melitensis"	"30ug"	30	30	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"	"Meningitis"	"B_BRCLL_MLTN"	2	"CRO"	"Brucella melitensis"		2	2	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"DOX"	"Brucella melitensis"		0.25	0.25	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"GEN"	"Brucella melitensis"	"10ug"	23	23	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"GEN"	"Brucella melitensis"		0.5	0.5	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"LVX"	"Brucella melitensis"	"5ug"	50	28	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"LVX"	"Brucella melitensis"		1e-04	1	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"RIF"	"Brucella melitensis"	"5ug"	20	20	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"RIF"	"Brucella melitensis"		2	2	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"STR"	"Brucella melitensis"	"10ug"	15	15	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"STR"	"Brucella melitensis"		1	1	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"SXT"	"Brucella melitensis"	"1.25ug/23.75ug"	29	29	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"SXT"	"Brucella melitensis"		0.125	0.125	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"		"B_BRCLL_MLTN"	2	"TCY"	"Brucella melitensis"	"30ug"	42	42	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"		"B_BRCLL_MLTN"	2	"TCY"	"Brucella melitensis"		0.5	0.5	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_BRKHL_PSDM"	2	"AMC"	"ECOFF"	"20/10ug"	22	22	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_BRKHL_PSDM"	2	"AMC"	"B. pseudomallei"	"20ug/10ug"	50	22	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_BRKHL_PSDM"	2	"AMC"	"B. pseudomallei"		1e-04	8	FALSE	FALSE
@@ -1155,8 +1155,8 @@
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_PSTRL_MLTC"	2	"PEN"	"ECOFF"	"1 unit"	15	15	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_PSTRL_MLTC"	2	"SXT"	"ECOFF"	"1.25/23.75ug"	18	18	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_PSTRL_MLTC"	2	"TCY"	"ECOFF"	"30ug"	21	21	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
-"EUCAST 2024"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
+"EUCAST 2024"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SERRT_MRCS"	2	"AMP"	"ECOFF"	"10ug"	14	14	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SERRT_MRCS"	2	"CAZ"	"ECOFF"	"10ug"	20	20	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SERRT_MRCS"	2	"CIP"	"ECOFF"	"5ug"	22	22	FALSE	FALSE
@@ -1185,7 +1185,7 @@
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"SXT"	"ECOFF"	"1.25/23.75ug"	21	21	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TCY"	"ECOFF"	"30ug"	17	17	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"ECOFF"	"5ug"	23	23	FALSE	FALSE
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"ECOFF"	"1.25/23.75ug"	16	16	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"Stenotrophomonas maltophilia"	"1.25ug/23.75ug"	50	16	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"SXT"	"Stenotrophomonas maltophilia"		1e-04	4	FALSE	FALSE
@@ -1379,7 +1379,7 @@
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_STPHY_LGDN"	2	"TOB"	"ECOFF"	"10ug"	22	22	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_PSDN"	2	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL"	2	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
-"EUCAST 2024"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL_CGLN"	1	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
+"EUCAST 2024"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_CGLN"	1	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_STPHY_SPRP"	2	"AMP"	"ECOFF"	"2ug"	17	17	FALSE	FALSE
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_STPHY_SPRP"	2	"AMP"	"Staphs"	"2ug"	18	18	FALSE	FALSE
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_STPHY_SPRP"	2	"CFR"	"ECOFF"	"30ug"	19	19	FALSE	FALSE
@@ -2866,15 +2866,15 @@
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_PSTRL"	3	"SXT"	"Pasteurella spp."		0.25	0.25	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"	"Screen"	"B_PSTRL"	3	"TCY"	"Pasteurella spp."	"30ug"	24	24	FALSE	FALSE
 "EUCAST 2023"	"animal"	"cattle"	"MIC"	"Respiratory"	"B_PSTRL_MLTC"	2	"FLR"	"Pasteurella multocida"		2	4	FALSE	FALSE
-"EUCAST 2023"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
-"EUCAST 2023"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
+"EUCAST 2023"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
+"EUCAST 2023"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
 "EUCAST 2023"	"ECOFF"	"ECOFF"	"DISK"		"B_SHGLL_FLXN"	2	"PEF"	"ECOFF"	"5ug"	24	24	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_SLMNL"	3	"CIP"	"Enterobacteriaceae"		0.064	0.064	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"	"Screen"	"B_SLMNL"	3	"PEF"	"Enterobacteriaceae"	"5ug"	24	24	FALSE	FALSE
 "EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE
 "EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
-"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
+"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"Stenotrophomonas maltophilia"	"1.25ug/23.75ug"	50	16	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"SXT"	"Stenotrophomonas maltophilia"		1e-04	4	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_STPHY"	3	"AZM"	"Staphs"		2	2	FALSE	FALSE
@@ -3012,7 +3012,7 @@
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_STPHY_LGDN"	2	"PEN"	"Staphs"		0.125	0.125	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_PSDN"	2	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL"	2	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
-"EUCAST 2023"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL_CGLN"	1	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
+"EUCAST 2023"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_CGLN"	1	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"		"B_STPHY_SPRP"	2	"AMP"	"Staphs"	"2ug"	18	18	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"MIC"	"Screen"	"B_STPHY_SPRP"	2	"FOX"	"Staphs"		8	8	FALSE	FALSE
 "EUCAST 2023"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_STPHY_SPRP"	2	"NIT"	"Staphs"	"100ug"	13	13	TRUE	FALSE
@@ -4298,15 +4298,15 @@
 "EUCAST 2022"	"human"	"human"	"DISK"		"B_PSTRL_MLTC"	2	"SXT"	"Pasteurella multocida"	"1.25ug/23.75ug"	23	23	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_PSTRL_MLTC"	2	"SXT"	"Pasteurella multocida"		0.25	0.25	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_PSTRL_MLTC"	2	"TCY"	"Pasteurella multocida"	"30ug"	24	24	FALSE	FALSE
-"EUCAST 2022"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
-"EUCAST 2022"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
+"EUCAST 2022"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
+"EUCAST 2022"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
 "EUCAST 2022"	"ECOFF"	"ECOFF"	"DISK"		"B_SHGLL_FLXN"	2	"PEF"	"ECOFF"	"5ug"	24	24	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_SLMNL"	3	"CIP"	"Enterobacteriaceae"		0.064	0.064	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_SLMNL"	3	"PEF"	"Enterobacteriaceae"	"5ug"	24	24	FALSE	FALSE
 "EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE
 "EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
-"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
+"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"Stenotrophomonas maltophilia"	"1.25ug/23.75ug"	50	16	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"SXT"	"Stenotrophomonas maltophilia"		1e-04	4	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_STPHY"	3	"AZM"	"Staphs"		2	2	FALSE	FALSE
@@ -4446,7 +4446,7 @@
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_STPHY_LGDN"	2	"PEN"	"Staphs"		0.125	0.125	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_PSDN"	2	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL"	2	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
-"EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL_CGLN"	1	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
+"EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_CGLN"	1	"OXA"	"Staphs"	"1 unit"	20	20	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"		"B_STPHY_SPRP"	2	"AMP"	"Staphs"	"2ug"	18	18	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"MIC"	"Screen"	"B_STPHY_SPRP"	2	"FOX"	"Staphs"		8	8	FALSE	FALSE
 "EUCAST 2022"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_STPHY_SPRP"	2	"NIT"	"Staphs"	"100ug"	13	13	TRUE	FALSE
@@ -6152,8 +6152,8 @@
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_PSTRL_MLTC"	2	"SXT"	"Pasteurella multocida"		0.25	0.25	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_PSTRL_MLTC"	2	"TCY"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2021"	"human"	"human"	"DISK"	"Screen"	"B_PSTRL_MLTC"	2	"TCY"	"Pasteurella multocida"	"30ug"	24	24	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
-"EUCAST 2021"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_RLTLL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
+"EUCAST 2021"	"human"	"human"	"DISK"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"	"10ug"	15	15	TRUE	FALSE
+"EUCAST 2021"	"human"	"human"	"MIC"	"Uncomplicated urinary tract infection"	"B_KLBSL"	3	"MEC"	"Enterobacteriaceae"		8	8	TRUE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SERRT"	3	"CAZ"	"ECOFF"		0.5	0.5	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SERRT"	3	"CTX"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SERRT"	3	"DOR"	"ECOFF"		0.5	0.5	FALSE	FALSE
@@ -6225,11 +6225,11 @@
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"AMP"	"ECOFF"		8	8	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"CXM"	"ECOFF"		16	16	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"FOX"	"ECOFF"		8	8	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"TZP"	"ECOFF"		8	8	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"AMP"	"ECOFF"		8	8	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"CXM"	"ECOFF"		16	16	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"FOX"	"ECOFF"		8	8	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"TZP"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"DOX"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"MNO"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"SXT"	"ECOFF"		2	2	FALSE	FALSE
@@ -6486,7 +6486,7 @@
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STPHY_LGDN"	2	"VAN"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2021"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_PSDN"	2	"OXA"	"Staphs"	"1ug"	20	20	FALSE	FALSE
 "EUCAST 2021"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL"	2	"OXA"	"Staphs"	"1ug"	20	20	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_SCHL_CGLN"	1	"OXA"	"Staphs"	"1ug"	20	20	FALSE	FALSE
+"EUCAST 2021"	"human"	"human"	"DISK"	"Screen"	"B_STPHY_CGLN"	1	"OXA"	"Staphs"	"1ug"	20	20	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STPHY_SCIR"	2	"CIP"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STPHY_SMLN"	2	"CIP"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STPHY_SMLN"	2	"VAN"	"ECOFF"		4	4	FALSE	FALSE
@@ -6593,11 +6593,11 @@
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_STRPT_ANGN"	2	"TZD"	"Viridans strept"		0.5	0.5	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_ANGN"	2	"TZP"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_ANGN"	2	"VAN"	"ECOFF"		1	1	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"LNZ"	"ECOFF"		2	2	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"LVX"	"ECOFF"		2	2	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"MFX"	"ECOFF"		0.5	0.5	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"PEN"	"ECOFF"		0.25	0.25	FALSE	FALSE
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"VAN"	"ECOFF"		1	1	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"LNZ"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"LVX"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"MFX"	"ECOFF"		0.5	0.5	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"PEN"	"ECOFF"		0.25	0.25	FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"VAN"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_STRPT_CNST"	2	"DFX"	"Viridans strept"		0.032	0.032	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_CNST"	2	"MFX"	"ECOFF"		0.5	0.5	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_CNST"	2	"PEN"	"ECOFF"		0.25	0.25	FALSE	FALSE
@@ -8354,11 +8354,11 @@
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"AMP"	"ECOFF"		8	8	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"CXM"	"ECOFF"		16	16	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"FOX"	"ECOFF"		8	8	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"TZP"	"ECOFF"		8	8	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"AMP"	"ECOFF"		8	8	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"CXM"	"ECOFF"		16	16	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"FOX"	"ECOFF"		8	8	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"TZP"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"DOX"	"ECOFF"		8	8	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"MNO"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"SXT"	"ECOFF"		2	2	FALSE	FALSE
@@ -8729,11 +8729,11 @@
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_STRPT_ANGN"	2	"TZD"	"Viridans strept"		0.25	0.25	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_ANGN"	2	"TZP"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_ANGN"	2	"VAN"	"ECOFF"		1	1	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"LNZ"	"ECOFF"		2	2	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"LVX"	"ECOFF"		2	2	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"MFX"	"ECOFF"		0.5	0.5	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"PEN"	"ECOFF"		0.25	0.25	FALSE	FALSE
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_BOVS"	2	"VAN"	"ECOFF"		1	1	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"LNZ"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"LVX"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"MFX"	"ECOFF"		0.5	0.5	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"PEN"	"ECOFF"		0.25	0.25	FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_EQNS"	2	"VAN"	"ECOFF"		1	1	FALSE	FALSE
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_STRPT_CNST"	2	"DFX"	"Viridans strept"		0.032	0.032	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_CNST"	2	"MFX"	"ECOFF"		0.5	0.5	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STRPT_CNST"	2	"PEN"	"ECOFF"		0.25	0.25	FALSE	FALSE
@@ -17058,15 +17058,15 @@
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SLMNL"	3	"SXT"	"Table 2A-2"		2	4	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"DISK"		"B_SLMNL"	3	"TCY"	"Table 2A-2"	"30ug"	15	11	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SLMNL"	3	"TCY"	"Table 2A-2"		4	16	FALSE	FALSE
-"CLSI 2024"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
-"CLSI 2024"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
-"CLSI 2024"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
+"CLSI 2024"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
+"CLSI 2024"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
+"CLSI 2024"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"	"15ug"	13	12	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SMYCS"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE
@@ -19258,16 +19258,16 @@
 "CLSI 2023"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"LVX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5ug"	24	23	FALSE	FALSE
-"CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
-"CLSI 2023"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
-"CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
+"CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
+"CLSI 2023"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
+"CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15ug"	13	12	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE
 "CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SMYCS"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE
@@ -21286,16 +21286,16 @@
 "CLSI 2022"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"LVX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5ug"	24	23	FALSE	FALSE
-"CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
-"CLSI 2022"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
-"CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
+"CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
+"CLSI 2022"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
+"CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15ug"	13	12	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE
 "CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_RTDS"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"MIC"	"Parenteral"	"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE
 "CLSI 2022"	"human"	"human"	"DISK"	"Parenteral"	"B_STNTR_MLTP"	2	"FDC"	"Table 2B-4"	"30ug"	15	15	FALSE	FALSE
@@ -22941,9 +22941,9 @@
 "CLSI 2021"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"LVX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2021"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2021"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5ug"	24	23	FALSE	FALSE
-"CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
-"CLSI 2021"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
-"CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
+"CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
+"CLSI 2021"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30ug"	21	17	FALSE	FALSE
+"CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE
 "CLSI 2021"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15ug"	13	12	FALSE	FALSE
 "CLSI 2021"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE
 "CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE
@@ -24478,9 +24478,9 @@
 "CLSI 2020"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"LVX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2020"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2020"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5ug"	24	23	FALSE	FALSE
-"CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE
-"CLSI 2020"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET08 Table 2A"	"30ug"	21	17	FALSE	FALSE
-"CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET08 Table 2A"		2	8	FALSE	FALSE
+"CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE
+"CLSI 2020"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"	"30ug"	21	17	FALSE	FALSE
+"CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"		2	8	FALSE	FALSE
 "CLSI 2020"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15ug"	13	12	FALSE	FALSE
 "CLSI 2020"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE
 "CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE
@@ -25988,9 +25988,9 @@
 "CLSI 2019"	"human"	"human"	"MIC"		"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2019"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE
 "CLSI 2019"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5ug"	24	23	FALSE	FALSE
-"CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE
-"CLSI 2019"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET08 Table 2A"	"30ug"	21	17	FALSE	FALSE
-"CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_CHLR"	2	"TIO"	"VET08 Table 2A"		2	8	FALSE	FALSE
+"CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE
+"CLSI 2019"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"	"30ug"	21	17	FALSE	FALSE
+"CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"		2	8	FALSE	FALSE
 "CLSI 2019"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15ug"	13	12	FALSE	FALSE
 "CLSI 2019"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE
 "CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE

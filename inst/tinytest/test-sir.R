@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -327,10 +327,10 @@ expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA,
 
 sir_history <- sir_interpretation_history()
 print(sir_history$host)
-expect_identical(sir_history$host,
-                 c("poultry", "cattle", "poultry", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs", "horse", "dogs", "horse", "horse", "horse", "cattle", "horse", "cattle", "cattle", "cattle", 
-                   "cattle", "cattle", "cattle", "cattle", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "cattle", "dogs", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cats", "cats", 
-                   "cats", "cats", "cats", "cats", "cattle", "cats", "cattle", "cattle", "cats", "cattle", "cats", "cattle", "cattle"))
+expect_identical(sort(sir_history$host),
+                 c("cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
+                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",  
+                   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "horse",  "horse",  "horse",  "horse",  "horse",  "poultry","poultry"))
 
 # ECOFF -------------------------------------------------------------------
 

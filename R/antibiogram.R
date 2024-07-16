@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -392,14 +392,17 @@ antibiogram <- function(x,
   } else {
     out$numerator <- out$S
   }
-  if (any(out$total < minimum, na.rm = TRUE)) {
+  if (all(out$total < minimum, na.rm = TRUE)) {
+    warning_("All combinations had less than `minimum = ", minimum, "` results, returning an empty antibiogram")
+    return(as_original_data_class(data.frame(), class(out), extra_class = "antibiogram"))
+  } else if (any(out$total < minimum, na.rm = TRUE)) {
     if (isTRUE(info)) {
       message_("NOTE: ", sum(out$total < minimum, na.rm = TRUE), " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
     }
     out <- out %pm>%
       subset(total >= minimum)
   }
-
+  
   # regroup for summarising
   if (isTRUE(has_syndromic_group)) {
     colnames(out)[1] <- "syndromic_group"
@@ -409,9 +412,10 @@ antibiogram <- function(x,
     out <- out %pm>%
       pm_group_by(mo, ab)
   }
+  
   out <- out %pm>%
     pm_summarise(SI = numerator / total)
-
+  
   # transform names of antibiotics
   ab_naming_function <- function(x, t, l, s) {
     x <- strsplit(x, s, fixed = TRUE)
@@ -513,6 +517,29 @@ antibiogram <- function(x,
     long = long,
     combine_SI = combine_SI
   )
+}
+
+# will be exported in R/zzz.R
+tbl_sum.antibiogram <- function(x, ...) {
+  if (isTRUE(base::l10n_info()$`UTF-8`)) {
+    cross <- "\u00d7"
+  } else {
+    cross <- "x"
+  }
+  dims <- paste(format(NROW(x), big.mark = ","), cross, format(NCOL(x), big.mark = ","))
+  names(dims) <- "An Antibiogram"
+  dims
+}
+
+# will be exported in R/zzz.R
+tbl_format_footer.antibiogram <- function(x, ...) {
+  footer <- NextMethod()
+  if (NROW(x) == 0) {
+    return(footer)
+  }
+  c(footer, font_subtle(paste0("# Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,\n",
+                               "# or use it directly in R Markdown or ",
+                               font_url("https://quarto.org", "Quarto"), ", see ", word_wrap("?antibiogram"))))
 }
 
 #' @export

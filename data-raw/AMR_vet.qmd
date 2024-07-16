@@ -13,7 +13,6 @@ format:
 library(dplyr)
 library(readr)
 library(tidyr)
-library(janitor)
 
 # WHONET version of 16th Feb 2024
 whonet_breakpoints <- read_tsv("WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"),
@@ -42,8 +41,7 @@ whonet_breakpoints |>
   filter(BREAKPOINT_TYPE == "Animal") |>
   count(YEAR, HOST, REFERENCE_TABLE = gsub("VET[0-9]+ ", "", REFERENCE_TABLE)) |>
   pivot_wider(names_from = YEAR, values_from = n, values_fill = list(n = 0)) |>
-  arrange(HOST, REFERENCE_TABLE) |> 
-  adorn_totals(name = "TOTAL")
+  arrange(HOST, REFERENCE_TABLE)
 ```
 
 ### Cats only

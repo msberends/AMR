@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -1251,19 +1251,32 @@ load_mo_uncertainties <- function(metadata) {
   AMR_env$mo_uncertainties <- metadata$uncertainties
 }
 
-synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE) {
-  x_gbif <- AMR_env$MO_lookup$gbif_renamed_to[match(x, AMR_env$MO_lookup$mo)]
-  x_lpsn <- AMR_env$MO_lookup$lpsn_renamed_to[match(x, AMR_env$MO_lookup$mo)]
-  x_gbif[!x_gbif %in% AMR_env$MO_lookup$gbif] <- NA
-  x_lpsn[!x_lpsn %in% AMR_env$MO_lookup$lpsn] <- NA
+synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR_env$MO_lookup) {
+  if (identical(dataset, AMR_env$MO_lookup)) {
+    add_MO_lookup_to_AMR_env()
+    dataset <- AMR_env$MO_lookup
+  }
+  x_lpsn <- dataset$lpsn_renamed_to[match(x, dataset$mo)] %or% NA_character_
+  x_mycobank <- dataset$mycobank_renamed_to[match(x, dataset$mo)] %or% NA_character_
+  x_gbif <- dataset$gbif_renamed_to[match(x, dataset$mo)] %or% NA_character_
   
-  out <- ifelse(is.na(x_lpsn),
-                AMR_env$MO_lookup$mo[match(x_gbif, AMR_env$MO_lookup$gbif)],
-                AMR_env$MO_lookup$mo[match(x_lpsn, AMR_env$MO_lookup$lpsn)]
-  )
+  # Replace invalid values with NA
+  x_lpsn[!x_lpsn %in% dataset$lpsn] <- NA_character_
+  x_mycobank[!x_mycobank %in% dataset$mycobank] <- NA_character_
+  x_gbif[!x_gbif %in% dataset$gbif] <- NA_character_
+  
+  # Create output vector using vectorized operations
+  out <- rep(NA_character_, length(x))
+  out[is.na(out) & !is.na(x_lpsn)] <- dataset$mo[match(x_lpsn[is.na(out) & !is.na(x_lpsn)], dataset$lpsn)]
+  out[is.na(out) & !is.na(x_mycobank)] <- dataset$mo[match(x_mycobank[is.na(out) & !is.na(x_mycobank)], dataset$mycobank)]
+  out[is.na(out) & !is.na(x_gbif)] <- dataset$mo[match(x_gbif[is.na(out) & !is.na(x_gbif)], dataset$gbif)]
+  
+  out[dataset$status[match(x, dataset$mo)] == "accepted"] <- NA_character_
   if (isTRUE(fill_in_accepted)) {
-    x_accepted <- which(AMR_env$MO_lookup$status[match(x, AMR_env$MO_lookup$mo)] == "accepted")
+    x_accepted <- which(dataset$status[match(x, dataset$mo)] == "accepted")
     out[x_accepted] <- x[x_accepted]
   }
+  
+  out[is.na(match(x, dataset$mo))] <- NA_character_
   out
 }

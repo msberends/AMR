@@ -1,4 +1,4 @@
-# AMR 2.1.1.9061
+# AMR 2.1.1.9063
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -19,10 +19,15 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disks diffusion interpretations.
   * `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Currently, the `clinical_breakpoints` data set contains 24 breakpoints that can return the value "SDD" instead of "I".
 * MIC plotting and transforming
-  * The function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
-  * Function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
+  * New function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
+  * New function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
+* Microbiological taxonomy (`microorganisms` data set) updated to June 2024, with some exciting new features:
+  * Added MycoBank as the primary taxonomic source for fungi
+    * The `microorganisms` data set now contains additional columns `mycobank`, `mycobank_parent`, and `mycobank_renamed_to`
+    * New function `mo_mycobank()` to get the MycoBank record number, analogous to existing functions `mo_lpsn()` and `mo_gbif()`
+  * We've welcomed over 2,000 records from 2023, over 900 from 2024, and many thousands of new fungi
 * Other
-  * Function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
+  * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
 
 ## Changed
 * SIR interpretation
@@ -51,6 +56,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Improved overall algorithm of `as.ab()` for better performance and accuracy
 * Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically, more weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species.
 * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
+* Fixed a bug for when `antibiogram()` returns an empty data set
 
 ## Other
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input

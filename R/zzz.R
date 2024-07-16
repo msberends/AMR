@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -81,11 +81,12 @@ AMR_env$is_dark_theme <- NULL
 AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
 AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
 
-# take cli symbols if available
+# take cli symbols and error function if available
 AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %or% "i"
 AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %or% "*"
 AMR_env$dots <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %or% "..."
 AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %or% "*"
+AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
 
 .onLoad <- function(lib, pkg) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
@@ -104,6 +105,8 @@ AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %o
   s3_register("pillar::type_sum", "mo")
   s3_register("pillar::type_sum", "sir")
   s3_register("pillar::type_sum", "mic")
+  s3_register("pillar::tbl_sum", "antibiogram")
+  s3_register("pillar::tbl_format_footer", "antibiogram")
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "sir")

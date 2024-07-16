@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -86,26 +86,37 @@ EUCAST_VERSION_EXPERT_RULES <- list(
 
 TAXONOMY_VERSION <- list(
   GBIF = list(
-    accessed_date = as.Date("2024-01-08"),
+    name = "Global Biodiversity Information Facility (GBIF)",
+    accessed_date = as.Date("2024-06-24"),
     citation = "GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
     url = "https://www.gbif.org"
   ),
   LPSN = list(
-    accessed_date = as.Date("2022-12-11"),
+    name = "List of Prokaryotic names with Standing in Nomenclature (LPSN)",
+    accessed_date = as.Date("2024-06-24"),
     citation = "Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
     url = "https://lpsn.dsmz.de"
   ),
+  MycoBank = list(
+    name = "MycoBank",
+    accessed_date = as.Date("2024-06-24"),
+    citation = "Vincent, R *et al* (2013). **MycoBank gearing up for new horizons.** IMA Fungus, 4(2), 371-9; \\doi{10.5598/imafungus.2013.04.02.16}.",
+    url = "https://www.mycobank.org"
+  ),
   BacDive = list(
-    accessed_date = as.Date("2023-05-12"),
+    name = "BacDive",
+    accessed_date = as.Date("2024-07-16"),
     citation = "Reimer, LC *et al.* (2022). ***BacDive* in 2022: the knowledge base for standardized bacterial and archaeal data.** Nucleic Acids Res., 50(D1):D741-D74; \\doi{10.1093/nar/gkab961}.",
     url = "https://bacdive.dsmz.de"
   ),
   SNOMED = list(
-    accessed_date = as.Date("2021-07-01"),
+    name = "Systematized Nomenclature of Medicine - Clinical Terms (SNOMED-CT)",
+    accessed_date = as.Date("2024-07-16"),
     citation = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microorganism', OID 2.16.840.1.114222.4.11.1009 (v12).",
     url = "https://phinvads.cdc.gov"
   ),
   LOINC = list(
+    name = "Logical Observation Identifiers Names and Codes (LOINC)",
     accessed_date = as.Date("2023-10-19"),
     citation = "Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023).",
     url = "https://loinc.org"

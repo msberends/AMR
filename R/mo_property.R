@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -120,6 +120,7 @@
 #' mo_year("Klebsiella aerogenes")
 #' mo_lpsn("Klebsiella aerogenes")
 #' mo_gbif("Klebsiella aerogenes")
+#' mo_mycobank("Candida albicans")
 #' mo_synonyms("Klebsiella aerogenes")
 #'
 #'
@@ -214,7 +215,13 @@ mo_name <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_fullname <- mo_name
+mo_fullname <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_fullname")
+  }
+  mo_name(x = x, language = language, keep_synonyms = keep_synonyms, ...)
+}
 
 #' @rdname mo_property
 #' @export
@@ -696,6 +703,21 @@ mo_lpsn <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
   mo_validate(x = x, property = "lpsn", language = language, keep_synonyms = keep_synonyms, ...)
 }
+
+#' @rdname mo_property
+#' @export
+mo_mycobank <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_mycobank")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  mo_validate(x = x, property = "mycobank", language = language, keep_synonyms = keep_synonyms, ...)
+}
+
 
 #' @rdname mo_property
 #' @export

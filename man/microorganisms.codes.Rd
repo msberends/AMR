@@ -7,7 +7,7 @@
 \format{
 A \link[tibble:tibble]{tibble} with 4 971 observations and 2 variables:
 \itemize{
-\item \code{code}\cr Commonly used code of a microorganism. \emph{This is a unique identifier.}
+\item \code{code}\cr Commonly used code of a microorganism. \emph{\strong{This is a unique identifier.}}
 \item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set
 }
 }

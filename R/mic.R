@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -119,7 +119,7 @@ COMMON_MIC_VALUES <- c(0.001, 0.002, 0.004, 0.008, 0.016, 0.032, 0.064,
 #' quantile(mic_data)
 #' all(mic_data < 512)
 #' 
-#' # limit MICs using rescale_mic()
+#' # rescale MICs using rescale_mic()
 #' rescale_mic(mic_data, mic_range = c(4, 16))
 #'
 #' # interpret MIC values

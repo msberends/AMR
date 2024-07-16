@@ -101,7 +101,7 @@ fivenum(mic_data)
 quantile(mic_data)
 all(mic_data < 512)
 
-# limit MICs using rescale_mic()
+# rescale MICs using rescale_mic()
 rescale_mic(mic_data, mic_range = c(4, 16))
 
 # interpret MIC values

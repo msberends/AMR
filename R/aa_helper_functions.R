@@ -6,9 +6,9 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # PLEASE CITE THIS SOFTWARE AS:                                        #
-# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
-# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
-# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
 # https://doi.org/10.18637/jss.v104.i03                                #
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
@@ -573,6 +573,7 @@ warning_ <- function(...,
 # - wraps text to never break lines within words
 stop_ <- function(..., call = TRUE) {
   msg <- paste0(c(...), collapse = "")
+  msg_call <- ""
   if (!isFALSE(call)) {
     if (isTRUE(call)) {
       call <- as.character(sys.call(-1)[1])
@@ -580,10 +581,19 @@ stop_ <- function(..., call = TRUE) {
       # so you can go back more than 1 call, as used in sir_calc(), that now throws a reference to e.g. n_sir()
       call <- as.character(sys.call(call)[1])
     }
-    msg <- paste0("in ", call, "(): ", msg)
+    msg_call <- paste0("in ", call, "():")
   }
   msg <- trimws2(word_wrap(msg, add_fn = list(), as_note = FALSE))
-  stop(msg, call. = FALSE)
+  if (!is.null(AMR_env$cli_abort) && length(unlist(strsplit(msg, "\n", fixed = TRUE))) <= 1) {
+    if (is.character(call)) {
+      call <- as.call(str2lang(paste0(call, "()")))
+    } else {
+      call <- NULL
+    }
+    AMR_env$cli_abort(msg, call = call)
+  } else {
+    stop(paste(msg_call, msg), call. = FALSE)
+  }
 }
 
 stop_if <- function(expr, ..., call = TRUE) {
@@ -1021,10 +1031,10 @@ get_current_data <- function(arg_name, call) {
       fn <- as.character(sys.call(call + 1)[1])
       examples <- paste0(
         ", e.g.:\n",
-        "  your_data %>% select(", fn, "())\n",
-        "  your_data %>% select(column_a, column_b, ", fn, "())\n",
-        "  your_data[, ", fn, "()]\n",
-        '  your_data[, c("column_a", "column_b", ', fn, "())]"
+        " ", AMR_env$bullet_icon, " your_data %>% select(", fn, "())\n",
+        " ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", fn, "())\n",
+        " ", AMR_env$bullet_icon, " your_data[, ", fn, "()]\n",
+        " ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", fn, "())]"
       )
     } else {
       examples <- ""
@@ -1412,12 +1422,8 @@ as_original_data_class <- function(df, old_class = NULL, extra_class = NULL) {
   if ("tbl_df" %in% old_class && pkg_is_available("tibble")) {
     # this will then also remove groups
     fn <- import_fn("as_tibble", "tibble")
-  } else if ("tbl_ts" %in% old_class && pkg_is_available("tsibble")) {
-    fn <- import_fn("as_tsibble", "tsibble")
   } else if ("data.table" %in% old_class && pkg_is_available("data.table")) {
     fn <- import_fn("as.data.table", "data.table")
-  } else if ("tabyl" %in% old_class && pkg_is_available("janitor")) {
-    fn <- import_fn("as_tabyl", "janitor")
   } else {
     fn <- function(x) base::as.data.frame(df, stringsAsFactors = FALSE)
   }
