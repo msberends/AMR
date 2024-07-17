@@ -99,10 +99,11 @@
 #' 5. Lancefield RC (1933). **A serological differentiation of human and other groups of hemolytic streptococci.** *J Exp Med.* 57(4): 571-95; \doi{10.1084/jem.57.4.571}
 #' 6. Berends MS *et al.* (2022). **Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/** *Micro.rganisms* 10(9), 1801; \doi{10.3390/microorganisms10091801}
 #' 7. `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
-#' 8. `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
-#' 9. `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
-#' 10. `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
-#' 11. Bartlett A *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
+#' 8. `r TAXONOMY_VERSION$MycoBank$citation` Accessed from <`r TAXONOMY_VERSION$MycoBank$url`> on `r documentation_date(TAXONOMY_VERSION$MycoBank$accessed_date)`.
+#' 9. `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
+#' 10. `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
+#' 11. `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
+#' 12. Bartlett A *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
 #' @export
 #' @return A [character] [vector] with additional class [`mo`]
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
@@ -418,24 +419,10 @@ as.mo <- function(x,
   } # end of loop over all yet unknowns
   
   # Keep or replace synonyms ----
-  lpsn_matches <- AMR_env$MO_lookup$lpsn_renamed_to[match(out, AMR_env$MO_lookup$mo)]
-  lpsn_matches[!lpsn_matches %in% AMR_env$MO_lookup$lpsn] <- NA
-  mycobank_matches <- AMR_env$MO_lookup$mycobank_renamed_to[match(out, AMR_env$MO_lookup$mo)]
-  mycobank_matches[!mycobank_matches %in% AMR_env$MO_lookup$mycobank] <- NA
-  # GBIF only for non-bacteria and non-fungi, since we use LPSN as primary source for bacteria and MycoBank for fungi
-  # (an example is Strep anginosus, renamed according to GBIF, not according to LPSN)
-  gbif_matches <- AMR_env$MO_lookup$gbif_renamed_to[!AMR_env$MO_lookup$kingdom %in% c("Bacteria", "Fungi")][match(out, AMR_env$MO_lookup$mo[!AMR_env$MO_lookup$kingdom %in% c("Bacteria", "Fungi")])]
-  gbif_matches[!gbif_matches %in% AMR_env$MO_lookup$gbif] <- NA
-  AMR_env$mo_renamed <- list(
-    old = out[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)],
-    gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)],
-    mycobank_matches = mycobank_matches[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)],
-    lpsn_matches = lpsn_matches[!is.na(gbif_matches) | !is.na(lpsn_matches) | !is.na(mycobank_matches)]
-  )
+  out_current <- synonym_mo_to_accepted_mo(out, fill_in_accepted = FALSE)
+  AMR_env$mo_renamed <- list(old = out[!is.na(out_current)])
   if (isFALSE(keep_synonyms)) {
-    out[which(!is.na(gbif_matches))] <- AMR_env$MO_lookup$mo[match(gbif_matches[which(!is.na(gbif_matches))], AMR_env$MO_lookup$gbif)]
-    out[which(!is.na(mycobank_matches))] <- AMR_env$MO_lookup$mo[match(mycobank_matches[which(!is.na(mycobank_matches))], AMR_env$MO_lookup$mycobank)]
-    out[which(!is.na(lpsn_matches))] <- AMR_env$MO_lookup$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR_env$MO_lookup$lpsn)]
+    out[!is.na(out_current)] <- out_current[!is.na(out_current)]
     if (isTRUE(info) && length(AMR_env$mo_renamed$old) > 0) {
       print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
     }
@@ -1257,29 +1244,36 @@ load_mo_uncertainties <- function(metadata) {
 }
 
 synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR_env$MO_lookup) {
+  # `dataset` is an argument so that it can be used in the regeneration of the microorganisms data set
   if (identical(dataset, AMR_env$MO_lookup)) {
     add_MO_lookup_to_AMR_env()
     dataset <- AMR_env$MO_lookup
   }
-  x_lpsn <- dataset$lpsn_renamed_to[match(x, dataset$mo)] %or% NA_character_
-  x_mycobank <- dataset$mycobank_renamed_to[match(x, dataset$mo)] %or% NA_character_
-  x_gbif <- dataset$gbif_renamed_to[match(x, dataset$mo)] %or% NA_character_
+
+  out <- x
+  is_still_synonym <- dataset$status[match(out, dataset$mo)] == "synonym"
+  limit <- 0
+  while(any(is_still_synonym, na.rm = TRUE) && limit < 5) {
+    limit <- limit + 1
+    
+    # make sure to get the latest name, e.g. Fusarium pulicaris robiniae was first renamed to Fusarium roseum, then to Fusarium sambucinum
+    # we need the MO of Fusarium pulicaris robiniae to return the MO of Fusarium sambucinum
+    idx <- !is.na(is_still_synonym) & is_still_synonym
+    x_gbif <- dataset$gbif_renamed_to[match(out[idx], dataset$mo)]
+    x_mycobank <- dataset$mycobank_renamed_to[match(out[idx], dataset$mo)]
+    x_lpsn <- dataset$lpsn_renamed_to[match(out[idx], dataset$mo)]
+
+    out[idx][!is.na(x_gbif)] <- dataset$mo[match(x_gbif[idx][!is.na(x_gbif)], dataset$gbif)]
+    out[idx][!is.na(x_mycobank)] <- dataset$mo[match(x_mycobank[idx][!is.na(x_mycobank)], dataset$mycobank)]
+    out[idx][!is.na(x_lpsn)] <- dataset$mo[match(x_lpsn[idx][!is.na(x_lpsn)], dataset$lpsn)]
+
+    is_still_synonym <- dataset$status[match(out, dataset$mo)] == "synonym"
+  }
   
-  # Replace invalid values with NA
-  x_lpsn[!x_lpsn %in% dataset$lpsn] <- NA_character_
-  x_mycobank[!x_mycobank %in% dataset$mycobank] <- NA_character_
-  x_gbif[!x_gbif %in% dataset$gbif] <- NA_character_
-  
-  # Create output vector using vectorized operations
-  out <- rep(NA_character_, length(x))
-  out[is.na(out) & !is.na(x_lpsn)] <- dataset$mo[match(x_lpsn[is.na(out) & !is.na(x_lpsn)], dataset$lpsn)]
-  out[is.na(out) & !is.na(x_mycobank)] <- dataset$mo[match(x_mycobank[is.na(out) & !is.na(x_mycobank)], dataset$mycobank)]
-  out[is.na(out) & !is.na(x_gbif)] <- dataset$mo[match(x_gbif[is.na(out) & !is.na(x_gbif)], dataset$gbif)]
-  
-  out[dataset$status[match(x, dataset$mo)] == "accepted"] <- NA_character_
+  x_no_synonym <- dataset$status[match(x, dataset$mo)] != "synonym"
+  out[x_no_synonym] <- NA_character_
   if (isTRUE(fill_in_accepted)) {
-    x_accepted <- which(dataset$status[match(x, dataset$mo)] == "accepted")
-    out[x_accepted] <- x[x_accepted]
+    out[!is.na(x_no_synonym) & x_no_synonym] <- x[!is.na(x_no_synonym) & x_no_synonym]
   }
   
   out[is.na(match(x, dataset$mo))] <- NA_character_

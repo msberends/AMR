@@ -194,6 +194,10 @@ expect_equal(
   mo_is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
   c(FALSE, TRUE, FALSE)
 )
+expect_equal(
+  mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella")),
+  c(TRUE, FALSE, FALSE)
+)
 # is intrinsic resistant
 expect_equal(
   mo_is_intrinsic_resistant(

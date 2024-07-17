@@ -559,6 +559,9 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
                              TRUE ~ "")
   )
 
+# FOR 2025: use this to get all the genera with updated names from MO_PREVALENT_GENERA:
+# AMR::microorganisms %>% filter(genus %in% MO_PREVALENT_GENERA) %>% pull(fullname) %>% mo_current() %>% mo_genus() %>% unique() %>% sort()
+
 # keep only the relevant ones
 taxonomy_mycobank <- taxonomy_mycobank %>% 
   filter(order %in% include_fungal_orders |
@@ -1078,6 +1081,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ lpsn[match(kingdom, fullname)],
       # species, always has a genus
       rank == "species" ~ lpsn[match(genus, fullname)],
+      # subspecies, always has a genus + species
+      rank == "subspecies" ~ lpsn[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_),
     mycobank_parent = case_when(
       rank == "phylum" ~ mycobank[match(kingdom, fullname)],
@@ -1101,6 +1106,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ mycobank[match(kingdom, fullname)],
       # species
       rank == "species" ~ mycobank[match(genus, fullname)],
+      # subspecies
+      rank == "subspecies" ~ mycobank[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_),
     gbif_parent = case_when(
       rank == "phylum" ~ gbif[match(kingdom, fullname)],
@@ -1124,6 +1131,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ gbif[match(kingdom, fullname)],
       # species
       rank == "species" ~ gbif[match(genus, fullname)],
+      # subspecies
+      rank == "subspecies" ~ gbif[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_))
 
 # these still have no record in our data set:
@@ -1699,6 +1708,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ lpsn[match(kingdom, fullname)],
       # species, always has a genus
       rank == "species" ~ lpsn[match(genus, fullname)],
+      # subspecies, always has a genus + species
+      rank == "subspecies" ~ lpsn[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_),
     mycobank_parent = case_when(
       rank == "phylum" ~ mycobank[match(kingdom, fullname)],
@@ -1722,6 +1733,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ mycobank[match(kingdom, fullname)],
       # species
       rank == "species" ~ mycobank[match(genus, fullname)],
+      # subspecies
+      rank == "subspecies" ~ mycobank[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_),
     gbif_parent = case_when(
       rank == "phylum" ~ gbif[match(kingdom, fullname)],
@@ -1745,6 +1758,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ gbif[match(kingdom, fullname)],
       # species
       rank == "species" ~ gbif[match(genus, fullname)],
+      # subspecies
+      rank == "subspecies" ~ gbif[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_))
 
 # check again
@@ -1810,6 +1825,8 @@ taxonomy <- taxonomy %>%
       rank == "genus" ~ lpsn[match(kingdom, fullname)],
       # species, always has a genus
       rank == "species" ~ lpsn[match(genus, fullname)],
+      # subspecies, always has a genus + species
+      rank == "subspecies" ~ lpsn[match(paste(genus, species), fullname)],
       TRUE ~ NA_character_))
 
 

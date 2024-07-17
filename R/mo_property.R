@@ -39,8 +39,8 @@
 #' @details All functions will, at default, **not** keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example *Enterobacter aerogenes*, which was initially named in 1960 but renamed to *Klebsiella aerogenes* in 2017:
 #' - `mo_genus("Enterobacter aerogenes")` will return `"Klebsiella"` (with a note about the renaming)
 #' - `mo_genus("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Enterobacter"` (with a once-per-session warning that the name is outdated)
-#' - `mo_ref("Enterobacter aerogenes")` will return `"Tindall et al., 2017"` (with a note)
-#' - `mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Hormaeche et al., 1960"` (with a warning)
+#' - `mo_ref("Enterobacter aerogenes")` will return `"Tindall et al., 2017"` (with a note about the renaming)
+#' - `mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Hormaeche et al., 1960"` (with a once-per-session warning that the name is outdated)
 #'
 #' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
@@ -50,15 +50,15 @@
 #'
 #' Determination of the Gram stain ([mo_gramstain()]) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
-#' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
+#' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are yeasts that reproduce asexually through a process called budding, where a new cell develops from a small protrusion on the parent cell. Taxonomically, these are members of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes) or Pichiomycetes. *True yeasts* quite specifically refers to yeasts in the underlying order Saccharomycetales (such as *Saccharomyces cerevisiae*). Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes or Pichiomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
 #'
 #' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
 #' 
 #' Determination of bacterial oxygen tolerance ([mo_oxygen_tolerance()]) will be based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicting an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
-#' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
+#' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. [This MycoBank URL](`r TAXONOMY_VERSION$MycoBank$url`) will be used for fungi wherever available , [this LPSN URL](`r TAXONOMY_VERSION$MycoBank$url`) for bacteria wherever available, and [this GBIF link](`r TAXONOMY_VERSION$GBIF$url`) otherwise.
 #'
-#' SNOMED codes ([mo_snomed()]) are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
+#' SNOMED codes ([mo_snomed()]) was last updated on `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #'
 #' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()] (which will have the scientific reference as [name][base::names()]), the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
 #'
@@ -71,8 +71,9 @@
 #' @return
 #' - An [integer] in case of [mo_year()]
 #' - An [ordered factor][factor] in case of [mo_pathogenicity()]
-#' - A [list] in case of [mo_taxonomy()], [mo_synonyms()], [mo_snomed()] and [mo_info()]
-#' - A named [character] in case of [mo_url()]
+#' - A [list] in case of [mo_taxonomy()], [mo_synonyms()], [mo_snomed()], and [mo_info()]
+#' - A [logical] in case of [mo_is_anaerobic()], [mo_is_gram_negative()], [mo_is_gram_positive()], [mo_is_intrinsic_resistant()], and [mo_is_yeast()]
+#' - A named [character] in case of [mo_synonyms()] and [mo_url()]
 #' - A [character] in all other cases
 #' @export
 #' @seealso Data set [microorganisms]
@@ -107,8 +108,8 @@
 #' mo_url("Klebsiella pneumoniae")
 #' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 #' 
-#' mo_group_members("Streptococcus group A")
-#' mo_group_members(c("Streptococcus group C",
+#' mo_group_members(c("Streptococcus group A",
+#'                    "Streptococcus group C",
 #'                    "Streptococcus group G",
 #'                    "Streptococcus group L"))
 #' 
@@ -118,11 +119,13 @@
 #' mo_ref("Klebsiella aerogenes")
 #' mo_authors("Klebsiella aerogenes")
 #' mo_year("Klebsiella aerogenes")
+#' mo_synonyms("Klebsiella aerogenes")
 #' mo_lpsn("Klebsiella aerogenes")
 #' mo_gbif("Klebsiella aerogenes")
 #' mo_mycobank("Candida albicans")
-#' mo_synonyms("Klebsiella aerogenes")
-#'
+#' mo_mycobank("Candida krusei")
+#' mo_mycobank("Candida krusei", keep_synonyms = TRUE)
+#' 
 #'
 #' # abbreviations known in the field -----------------------------------------
 #'
@@ -550,8 +553,7 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
 
   load_mo_uncertainties(metadata)
 
-  out <- rep(FALSE, length(x))
-  out[x.kingdom == "Fungi" & x.class == "Saccharomycetes"] <- TRUE
+  out <- x.mo == "F_YEAST" | (x.kingdom == "Fungi" & x.class %in% c("Saccharomycetes", "Pichiomycetes"))
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
 }
@@ -818,7 +820,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
 mo_current <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
-  x.mo <- suppressWarnings(as.mo(x, keep_synonyms = TRUE, ...))
+  x.mo <- suppressWarnings(as.mo(x, keep_synonyms = TRUE, info = FALSE, ...))
   out <- synonym_mo_to_accepted_mo(x.mo, fill_in_accepted = TRUE)
   mo_name(out, language = language)
 }
@@ -916,19 +918,23 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
 
   x.rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
   x.name <- AMR_env$MO_lookup$fullname[match(x.mo, AMR_env$MO_lookup$mo)]
+  
   x.lpsn <- AMR_env$MO_lookup$lpsn[match(x.mo, AMR_env$MO_lookup$mo)]
+  x.mycobank <- AMR_env$MO_lookup$mycobank[match(x.mo, AMR_env$MO_lookup$mo)]
   x.gbif <- AMR_env$MO_lookup$gbif[match(x.mo, AMR_env$MO_lookup$mo)]
 
   u <- character(length(x))
   u[!is.na(x.gbif)] <- paste0(TAXONOMY_VERSION$GBIF$url, "/species/", x.gbif[!is.na(x.gbif)])
   # overwrite with LPSN:
   u[!is.na(x.lpsn)] <- paste0(TAXONOMY_VERSION$LPSN$url, "/", x.rank[!is.na(x.lpsn)], "/", gsub(" ", "-", tolower(x.name[!is.na(x.lpsn)]), fixed = TRUE))
+  # overwrite with MycoBank (bacteria from LPSN will not be overwritten since MycoBank has no bacteria)
+  u[!is.na(x.mycobank)] <- paste0(TAXONOMY_VERSION$MycoBank$url, "/name/", gsub(" ", "%20", tolower(x.name[!is.na(x.mycobank)]), fixed = TRUE))
 
   names(u) <- x.name
 
   if (isTRUE(open)) {
     if (length(u) > 1) {
-      warning_("in `mo_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in `mo_url()`: only the first URL will be opened, as R's built-in function `browseURL()` only suports one string.")
     }
     utils::browseURL(u[1L])
   }

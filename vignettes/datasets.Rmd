@@ -129,10 +129,12 @@ The tab-separated text file and Microsoft Excel workbook both contain all SNOMED
 
 ### Source
 
-This data set contains the full microbial taxonomy of `r AMR:::nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF):
+This data set contains the full microbial taxonomy of `r AMR:::nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the `r AMR:::TAXONOMY_VERSION$LPSN$name`, `r AMR:::TAXONOMY_VERSION$MycoBank$name`, and the `r AMR:::TAXONOMY_VERSION$GBIF$name`:
 
-* `r AMR:::TAXONOMY_VERSION$LPSN$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$LPSN$url`> on `r AMR:::documentation_date(AMR:::TAXONOMY_VERSION$LPSN$accessed_date)`.
-* `r AMR:::TAXONOMY_VERSION$GBIF$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$GBIF$url`> on `r AMR:::documentation_date(AMR:::TAXONOMY_VERSION$GBIF$accessed_date)`.
+* `r AMR:::TAXONOMY_VERSION$LPSN$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$LPSN$accessed_date)`.
+* `r AMR:::TAXONOMY_VERSION$MycoBank$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$MycoBank$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$MycoBank$accessed_date)`.
+* `r AMR:::TAXONOMY_VERSION$GBIF$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$GBIF$accessed_date)`.
+* `r AMR:::TAXONOMY_VERSION$BacDive$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$BacDive$accessed_date)`.
 * `r AMR:::TAXONOMY_VERSION$SNOMED$citation` URL: <`r AMR:::TAXONOMY_VERSION$SNOMED$url`>
 
 ### Example content
