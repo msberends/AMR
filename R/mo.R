@@ -1258,14 +1258,14 @@ synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR
     
     # make sure to get the latest name, e.g. Fusarium pulicaris robiniae was first renamed to Fusarium roseum, then to Fusarium sambucinum
     # we need the MO of Fusarium pulicaris robiniae to return the MO of Fusarium sambucinum
-    idx <- !is.na(is_still_synonym) & is_still_synonym
-    x_gbif <- dataset$gbif_renamed_to[match(out[idx], dataset$mo)]
-    x_mycobank <- dataset$mycobank_renamed_to[match(out[idx], dataset$mo)]
-    x_lpsn <- dataset$lpsn_renamed_to[match(out[idx], dataset$mo)]
+    must_be_corrected <- !is.na(is_still_synonym) & is_still_synonym
+    x_gbif <- dataset$gbif_renamed_to[match(out, dataset$mo)]
+    x_mycobank <- dataset$mycobank_renamed_to[match(out, dataset$mo)]
+    x_lpsn <- dataset$lpsn_renamed_to[match(out, dataset$mo)]
 
-    out[idx][!is.na(x_gbif)] <- dataset$mo[match(x_gbif[idx][!is.na(x_gbif)], dataset$gbif)]
-    out[idx][!is.na(x_mycobank)] <- dataset$mo[match(x_mycobank[idx][!is.na(x_mycobank)], dataset$mycobank)]
-    out[idx][!is.na(x_lpsn)] <- dataset$mo[match(x_lpsn[idx][!is.na(x_lpsn)], dataset$lpsn)]
+    out[must_be_corrected & !is.na(x_gbif)] <- dataset$mo[match(x_gbif[must_be_corrected & !is.na(x_gbif)], dataset$gbif)]
+    out[must_be_corrected & !is.na(x_mycobank)] <- dataset$mo[match(x_mycobank[must_be_corrected & !is.na(x_mycobank)], dataset$mycobank)]
+    out[must_be_corrected & !is.na(x_lpsn)] <- dataset$mo[match(x_lpsn[must_be_corrected & !is.na(x_lpsn)], dataset$lpsn)]
 
     is_still_synonym <- dataset$status[match(out, dataset$mo)] == "synonym"
   }

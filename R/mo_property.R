@@ -928,7 +928,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
   # overwrite with LPSN:
   u[!is.na(x.lpsn)] <- paste0(TAXONOMY_VERSION$LPSN$url, "/", x.rank[!is.na(x.lpsn)], "/", gsub(" ", "-", tolower(x.name[!is.na(x.lpsn)]), fixed = TRUE))
   # overwrite with MycoBank (bacteria from LPSN will not be overwritten since MycoBank has no bacteria)
-  u[!is.na(x.mycobank)] <- paste0(TAXONOMY_VERSION$MycoBank$url, "/name/", gsub(" ", "%20", tolower(x.name[!is.na(x.mycobank)]), fixed = TRUE))
+  u[!is.na(x.mycobank)] <- paste0(TAXONOMY_VERSION$MycoBank$url, "/mb/", gsub(" ", "%20", tolower(x.mycobank[!is.na(x.mycobank)]), fixed = TRUE))
 
   names(u) <- x.name
 

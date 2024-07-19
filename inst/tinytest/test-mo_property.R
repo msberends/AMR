@@ -113,7 +113,8 @@ expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
 expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
 expect_equal(mo_year("Escherichia coli"), 1919)
 
-expect_true(mo_url("Candida albicans") %like% "gbif.org")
+expect_true(mo_url("Amoeba dysenteriae") %like% "gbif.org")
+expect_true(mo_url("Candida albicans") %like% "mycobank.org")
 expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
 # test integrity of getting back full names
