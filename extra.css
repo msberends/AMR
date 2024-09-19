@@ -145,9 +145,11 @@ mark, .mark {
 pre {
   font-size: 0.8em !important;
 }
-pre code {
-  /* never wrap code on smaller screens */
+code, .code {
+  font-feature-settings: "ss02", "ss06";
+  /* don't wrap syntax on small devices: */
   word-wrap: normal !important;
+  word-break: keep-all !important;
   white-space: pre !important;
 }
 .ot, .dv, .fl, .cn, .at,
