@@ -20,6 +20,7 @@ as.mo(
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
   cleaning_regex = getOption("AMR_cleaning_regex", mo_cleaning_regex()),
+  only_fungi = getOption("AMR_only_fungi", FALSE),
   language = get_AMR_locale(),
   info = interactive(),
   ...
@@ -58,9 +59,11 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{cleaning_regex}{a Perl-compatible \link[base:regex]{regular expression} (case-insensitive) to clean the input of \code{x}. Every matched part in \code{x} will be removed. At default, this is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_cleaning_regex}}.}
 
+\item{only_fungi}{a \link{logical} to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for \link[=mo_property]{all microorganism functions} with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_only_fungi}}, i.e. \code{options(AMR_only_fungi = TRUE)}.}
+
 \item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
-\item{info}{a \link{logical} to indicate if a progress bar should be printed if more than 25 items are to be coerced - the default is \code{TRUE} only in interactive mode}
+\item{info}{a \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is \code{TRUE} only in interactive mode.}
 
 \item{...}{other arguments passed on to functions}
 }
@@ -87,15 +90,11 @@ A microorganism (MO) code from this package (class: \code{\link{mo}}) is human r
                             F (Fungi), PL (Plantae), P (Protozoa)
 }\if{html}{\out{</div>}}
 
-Values that cannot be coerced will be considered 'unknown' and will be returned as the MO code \code{UNKNOWN} with a warning.
+Values that cannot be coerced will be considered 'unknown' and will return the MO code \code{UNKNOWN} with a warning.
 
 Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see \emph{Examples}.
 
-The \code{\link[=as.mo]{as.mo()}} function uses a novel \link[=mo_matching_score]{matching score algorithm} (see \emph{Matching Score for Microorganisms} below) to match input against the \link[=microorganisms]{available microbial taxonomy} in this package. This will lead to the effect that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first.
-
-With \code{Becker = TRUE}, the following 89 staphylococci will be converted to the \strong{coagulase-negative group}: \emph{S. americanisciuri}, \emph{S. argensis}, \emph{S. arlettae}, \emph{S. auricularis}, \emph{S. borealis}, \emph{S. brunensis}, \emph{S. caeli}, \emph{S. caledonicus}, \emph{S. canis}, \emph{S. capitis}, \emph{S. capitis capitis}, \emph{S. capitis urealyticus}, \emph{S. capitis ureolyticus}, \emph{S. caprae}, \emph{S. carnosus}, \emph{S. carnosus carnosus}, \emph{S. carnosus utilis}, \emph{S. casei}, \emph{S. caseolyticus}, \emph{S. chromogenes}, \emph{S. cohnii}, \emph{S. cohnii cohnii}, \emph{S. cohnii urealyticum}, \emph{S. cohnii urealyticus}, \emph{S. condimenti}, \emph{S. croceilyticus}, \emph{S. debuckii}, \emph{S. devriesei}, \emph{S. durrellii}, \emph{S. edaphicus}, \emph{S. epidermidis}, \emph{S. equorum}, \emph{S. equorum equorum}, \emph{S. equorum linens}, \emph{S. felis}, \emph{S. fleurettii}, \emph{S. gallinarum}, \emph{S. haemolyticus}, \emph{S. hominis}, \emph{S. hominis hominis}, \emph{S. hominis novobiosepticus}, \emph{S. jettensis}, \emph{S. kloosii}, \emph{S. lentus}, \emph{S. lloydii}, \emph{S. lugdunensis}, \emph{S. marylandisciuri}, \emph{S. massiliensis}, \emph{S. microti}, \emph{S. muscae}, \emph{S. nepalensis}, \emph{S. pasteuri}, \emph{S. petrasii}, \emph{S. petrasii croceilyticus}, \emph{S. petrasii jettensis}, \emph{S. petrasii petrasii}, \emph{S. petrasii pragensis}, \emph{S. pettenkoferi}, \emph{S. piscifermentans}, \emph{S. pragensis}, \emph{S. pseudoxylosus}, \emph{S. pulvereri}, \emph{S. ratti}, \emph{S. rostri}, \emph{S. saccharolyticus}, \emph{S. saprophyticus}, \emph{S. saprophyticus bovis}, \emph{S. saprophyticus saprophyticus}, \emph{S. schleiferi}, \emph{S. schleiferi schleiferi}, \emph{S. sciuri}, \emph{S. sciuri carnaticus}, \emph{S. sciuri lentus}, \emph{S. sciuri rodentium}, \emph{S. sciuri sciuri}, \emph{S. shinii}, \emph{S. simulans}, \emph{S. stepanovicii}, \emph{S. succinus}, \emph{S. succinus casei}, \emph{S. succinus succinus}, \emph{S. taiwanensis}, \emph{S. urealyticus}, \emph{S. ureilyticus}, \emph{S. veratri}, \emph{S. vitulinus}, \emph{S. vitulus}, \emph{S. warneri}, and \emph{S. xylosus}.\cr The following 16 staphylococci will be converted to the \strong{coagulase-positive group}: \emph{S. agnetis}, \emph{S. argenteus}, \emph{S. coagulans}, \emph{S. cornubiensis}, \emph{S. delphini}, \emph{S. hyicus}, \emph{S. hyicus chromogenes}, \emph{S. hyicus hyicus}, \emph{S. intermedius}, \emph{S. lutrae}, \emph{S. pseudintermedius}, \emph{S. roterodami}, \emph{S. schleiferi coagulans}, \emph{S. schweitzeri}, \emph{S. simiae}, and \emph{S. singaporensis}.
-
-With \code{Lancefield = TRUE}, the following streptococci will be converted to their corresponding Lancefield group: \emph{S. agalactiae} (Group B), \emph{S. anginosus anginosus} (Group F), \emph{S. anginosus whileyi} (Group F), \emph{S. anginosus} (Group F), \emph{S. canis} (Group G), \emph{S. dysgalactiae dysgalactiae} (Group C), \emph{S. dysgalactiae equisimilis} (Group C), \emph{S. dysgalactiae} (Group C), \emph{S. equi equi} (Group C), \emph{S. equi ruminatorum} (Group C), \emph{S. equi zooepidemicus} (Group C), \emph{S. equi} (Group C), \emph{S. pyogenes} (Group A), \emph{S. salivarius salivarius} (Group K), \emph{S. salivarius thermophilus} (Group K), \emph{S. salivarius} (Group K), and \emph{S. sanguinis} (Group H).
+The \code{\link[=as.mo]{as.mo()}} function uses a novel and scientifically validated (\doi{10.18637/jss.v104.i03}) matching score algorithm (see \emph{Matching Score for Microorganisms} below) to match input against the \link[=microorganisms]{available microbial taxonomy} in this package. This implicates that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 \subsection{Coping with Uncertain Results}{
 
 Results of non-exact taxonomic input are based on their \link[=mo_matching_score]{matching score}. The lowest allowed score can be set with the \code{minimum_matching_score} argument. At default this will be determined based on the character length of the input, and the \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity} of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to evaluate the results with \code{\link[=mo_uncertainties]{mo_uncertainties()}}, which returns a \link{data.frame} with all specifications.
@@ -110,9 +109,40 @@ There are three helper functions that can be run after using the \code{\link[=as
 }
 }
 
-\subsection{Microbial Prevalence of Pathogens in Humans}{
+\subsection{For Mycologists}{
 
-The coercion rules consider the prevalence of microorganisms in humans, which is available as the \code{prevalence} column in the \link{microorganisms} data set. The grouping into human pathogenic prevalence is explained in the section \emph{Matching Score for Microorganisms} below.
+The \link[=mo_matching_score]{matching score algorithm} gives precedence to bacteria over fungi. If you are only analysing fungi, be sure to use \code{only_fungi = TRUE}, or better yet, add this to your code and run it once every session:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(AMR_only_fungi = TRUE)
+}\if{html}{\out{</div>}}
+
+This will make sure that no bacteria or other 'non-fungi' will be returned by \code{\link[=as.mo]{as.mo()}}, or any of the \code{\link[=mo_property]{mo_*}} functions.
+}
+
+\subsection{Coagulase-negative and Coagulase-positive Staphylococci}{
+
+With \code{Becker = TRUE}, the following staphylococci will be converted to their corresponding coagulase group:
+\itemize{
+\item Coagulase-negative: \emph{S. americanisciuri}, \emph{S. argensis}, \emph{S. arlettae}, \emph{S. auricularis}, \emph{S. borealis}, \emph{S. brunensis}, \emph{S. caeli}, \emph{S. caledonicus}, \emph{S. canis}, \emph{S. capitis}, \emph{S. capitis capitis}, \emph{S. capitis urealyticus}, \emph{S. capitis ureolyticus}, \emph{S. caprae}, \emph{S. carnosus}, \emph{S. carnosus carnosus}, \emph{S. carnosus utilis}, \emph{S. casei}, \emph{S. caseolyticus}, \emph{S. chromogenes}, \emph{S. cohnii}, \emph{S. cohnii cohnii}, \emph{S. cohnii urealyticum}, \emph{S. cohnii urealyticus}, \emph{S. condimenti}, \emph{S. croceilyticus}, \emph{S. debuckii}, \emph{S. devriesei}, \emph{S. durrellii}, \emph{S. edaphicus}, \emph{S. epidermidis}, \emph{S. equorum}, \emph{S. equorum equorum}, \emph{S. equorum linens}, \emph{S. felis}, \emph{S. fleurettii}, \emph{S. gallinarum}, \emph{S. haemolyticus}, \emph{S. hominis}, \emph{S. hominis hominis}, \emph{S. hominis novobiosepticus}, \emph{S. jettensis}, \emph{S. kloosii}, \emph{S. lentus}, \emph{S. lloydii}, \emph{S. lugdunensis}, \emph{S. marylandisciuri}, \emph{S. massiliensis}, \emph{S. microti}, \emph{S. muscae}, \emph{S. nepalensis}, \emph{S. pasteuri}, \emph{S. petrasii}, \emph{S. petrasii croceilyticus}, \emph{S. petrasii jettensis}, \emph{S. petrasii petrasii}, \emph{S. petrasii pragensis}, \emph{S. pettenkoferi}, \emph{S. piscifermentans}, \emph{S. pragensis}, \emph{S. pseudoxylosus}, \emph{S. pulvereri}, \emph{S. ratti}, \emph{S. rostri}, \emph{S. saccharolyticus}, \emph{S. saprophyticus}, \emph{S. saprophyticus bovis}, \emph{S. saprophyticus saprophyticus}, \emph{S. schleiferi}, \emph{S. schleiferi schleiferi}, \emph{S. sciuri}, \emph{S. sciuri carnaticus}, \emph{S. sciuri lentus}, \emph{S. sciuri rodentium}, \emph{S. sciuri sciuri}, \emph{S. shinii}, \emph{S. simulans}, \emph{S. stepanovicii}, \emph{S. succinus}, \emph{S. succinus casei}, \emph{S. succinus succinus}, \emph{S. taiwanensis}, \emph{S. urealyticus}, \emph{S. ureilyticus}, \emph{S. veratri}, \emph{S. vitulinus}, \emph{S. vitulus}, \emph{S. warneri}, and \emph{S. xylosus}
+\item Coagulase-positive: \emph{S. agnetis}, \emph{S. argenteus}, \emph{S. coagulans}, \emph{S. cornubiensis}, \emph{S. delphini}, \emph{S. hyicus}, \emph{S. hyicus chromogenes}, \emph{S. hyicus hyicus}, \emph{S. intermedius}, \emph{S. lutrae}, \emph{S. pseudintermedius}, \emph{S. roterodami}, \emph{S. schleiferi coagulans}, \emph{S. schweitzeri}, \emph{S. simiae}, and \emph{S. singaporensis}
+}
+
+For newly named staphylococcal species, such as \emph{S. brunensis} (2024) and \emph{S. shinii} (2023), we look up the scientific reference to make sure the species are considered for the correct coagulase group.
+}
+
+\subsection{Lancefield Groups in Streptococci}{
+
+With \code{Lancefield = TRUE}, the following streptococci will be converted to their corresponding Lancefield group:
+\itemize{
+\item Streptococcus Group A: \emph{S. pyogenes}
+\item Streptococcus Group B: \emph{S. agalactiae}
+\item Streptococcus Group C: \emph{S. dysgalactiae}, \emph{S. dysgalactiae dysgalactiae}, \emph{S. dysgalactiae equisimilis}, \emph{S. equi}, \emph{S. equi equi}, \emph{S. equi ruminatorum}, and \emph{S. equi zooepidemicus}
+\item Streptococcus Group F: \emph{S. anginosus}, \emph{S. anginosus anginosus}, \emph{S. anginosus whileyi}, \emph{S. constellatus}, \emph{S. constellatus constellatus}, \emph{S. constellatus pharyngis}, \emph{S. constellatus viborgensis}, and \emph{S. intermedius}
+\item Streptococcus Group G: \emph{S. canis}, \emph{S. dysgalactiae}, \emph{S. dysgalactiae dysgalactiae}, and \emph{S. dysgalactiae equisimilis}
+\item Streptococcus Group H: \emph{S. sanguinis}
+\item Streptococcus Group K: \emph{S. salivarius}, \emph{S. salivarius salivarius}, and \emph{S. salivarius thermophilus}
+\item Streptococcus Group L: \emph{S. dysgalactiae}, \emph{S. dysgalactiae dysgalactiae}, and \emph{S. dysgalactiae equisimilis}
+}
 }
 }
 \section{Source}{

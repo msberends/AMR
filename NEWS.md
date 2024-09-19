@@ -3,7 +3,7 @@
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
 #### A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)
-This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
+This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
 ## Breaking
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over a year ago
@@ -26,6 +26,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
     * The `microorganisms` data set now contains additional columns `mycobank`, `mycobank_parent`, and `mycobank_renamed_to`
     * New function `mo_mycobank()` to get the MycoBank record number, analogous to existing functions `mo_lpsn()` and `mo_gbif()`
   * We've welcomed over 2,000 records from 2023, over 900 from 2024, and many thousands of new fungi
+* Improved support for mycologists:
+  * The `as.mo()` function now includes a new argument, `only_fungi` (TRUE/FALSE), which limits the results to fungi only. Normally, bacteria are often prioritised by the algorithm, but setting `only_fungi = TRUE` ensures only fungi are returned. 
+  * You can also set this globally using the new R option `AMR_only_fungi`, e.g., `options(AMR_only_fungi = TRUE)`.
 * Other
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
 
@@ -59,6 +62,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Fixed a bug for when `antibiogram()` returns an empty data set
 
 ## Other
+* Greatly updated and expanded documentation
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
 
 

@@ -736,6 +736,8 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
 
 # Combine the datasets ----------------------------------------------------
 
+# TODO !! check why e.g. Clavispora lusitaniae is gotten from GBIF, not MycoBank !!
+
 taxonomy <- taxonomy_lpsn %>%
   # add fungi
   bind_rows(taxonomy_mycobank) %>% 
@@ -1237,9 +1239,9 @@ saveRDS(taxonomy, "data-raw/taxonomy2.rds")
 # taxonomy <- readRDS("data-raw/taxonomy2.rds")
 
 
-# Remove unwanted taxonomic entries from Protoza/Fungi --------------------
+# Remove unwanted taxonomic entries ---------------------------------------
 
-taxonomy <- taxonomy %>%
+part1 <- taxonomy %>%
   filter(
     # keep all we added ourselves:
     source == "manually added" |
@@ -1259,10 +1261,7 @@ taxonomy <- taxonomy %>%
       # kingdom of Protozoa:
       (phylum %in% c("Choanozoa", "Mycetozoa") & prevalence < 2) |
       # Fungi:
-      (kingdom == "Fungi" & (!rank %in% c("genus", "species", "subspecies") | prevalence < 2)) |
-      # !(phylum %in% c("Ascomycota", "Zygomycota", "Basidiomycota") & prevalence == 2 & rank %in% c("genus", "species", "subspecies")),
-      # !(genus %in% c("Leptosphaeria", "Physarum") & rank %in% c("species", "subspecies")), # keep only genus of this rare fungus, with resp. 850 and 500 species
-      # # (leave Alternaria in there, part of human mycobiome and opportunistic pathogen)
+      (kingdom == "Fungi" & (!rank %in% c("genus", "species", "subspecies") | prevalence < 2 | class == "Pichiomycetes")) |
       # Animalia:
       genus %in% c("Lucilia", "Lumbricus") |
       (class == "Insecta" & !rank %in% c("species", "subspecies")) | # keep only genus of insects, not all of their (sub)species
@@ -1271,6 +1270,29 @@ taxonomy <- taxonomy %>%
   # this kingdom only contained Curvularia and Hymenolepis, which have coincidental twin names with Fungi
   filter(kingdom != "Plantae",
          !(genus %in% c("Aedes", "Anopheles") & rank %in% c("species", "subspecies")))
+
+# now get the parents and old names
+part2 <- taxonomy %>% 
+  filter(gbif %in% c(part1$gbif_parent[!is.na(part1$gbif_parent)], part1$gbif_renamed_to[!is.na(part1$gbif_renamed_to)]) |
+           mycobank %in% c(part1$mycobank_parent[!is.na(part1$mycobank_parent)], part1$mycobank_renamed_to[!is.na(part1$mycobank_renamed_to)]) |
+           lpsn %in% c(part1$lpsn_parent[!is.na(part1$lpsn_parent)], part1$lpsn_renamed_to[!is.na(part1$lpsn_renamed_to)]))
+parts <- bind_rows(part1, part2)
+
+part3 <- taxonomy %>% 
+  filter(gbif %in% c(parts$gbif_parent[!is.na(parts$gbif_parent)], parts$gbif_renamed_to[!is.na(parts$gbif_renamed_to)]) |
+           mycobank %in% c(parts$mycobank_parent[!is.na(parts$mycobank_parent)], parts$mycobank_renamed_to[!is.na(parts$mycobank_renamed_to)]) |
+           lpsn %in% c(parts$lpsn_parent[!is.na(parts$lpsn_parent)], parts$lpsn_renamed_to[!is.na(parts$lpsn_renamed_to)]))
+parts <- bind_rows(part1, part2, part3)
+
+part4 <- taxonomy %>% 
+  filter(gbif %in% c(parts$gbif_parent[!is.na(parts$gbif_parent)], parts$gbif_renamed_to[!is.na(parts$gbif_renamed_to)]) |
+           mycobank %in% c(parts$mycobank_parent[!is.na(parts$mycobank_parent)], parts$mycobank_renamed_to[!is.na(parts$mycobank_renamed_to)]) |
+           lpsn %in% c(parts$lpsn_parent[!is.na(parts$lpsn_parent)], parts$lpsn_renamed_to[!is.na(parts$lpsn_renamed_to)]))
+parts <- bind_rows(part1, part2, part3, part4)
+
+taxonomy <- bind_rows(part1, part2, part3, part4) %>% 
+  arrange(fullname) %>% 
+  distinct(fullname, .keep_all = TRUE)
 
 # no ghost families, orders classes, phyla
 taxonomy <- taxonomy %>%
@@ -2005,7 +2027,7 @@ taxonomy <- taxonomy %>%
   filter(!mo %in% groups$mo) %>% 
   bind_rows(groups)
 
-# we added MO code, so make sure everything is still unique
+# we added an MO code, so make sure everything is still unique
 any(duplicated(taxonomy$mo))
 any(duplicated(taxonomy$fullname))
 
@@ -2018,13 +2040,17 @@ AMR::clinical_breakpoints %>% filter(!mo %in% taxonomy$mo)
 AMR::example_isolates %>% filter(!mo %in% taxonomy$mo)
 AMR::intrinsic_resistant %>% filter(!mo %in% taxonomy$mo)
 
+# all our previously manually added names should be in it
+all(microorganisms$fullname[microorganisms$source == "manually added"] %in% taxonomy$fullname)
+microorganisms$fullname[!microorganisms$fullname[microorganisms$source == "manually added"] %in% taxonomy$fullname]
+
 # put this one back
 taxonomy <- taxonomy %>% 
   bind_rows(microorganisms %>%
               filter(fullname == "Blastocystis hominis") %>% 
               mutate(mo = as.character(mo)))
 
-# we added MO code, so make sure everything is still unique
+# we added an MO code, so make sure everything is still unique
 any(duplicated(taxonomy$mo))
 any(duplicated(taxonomy$fullname))
 

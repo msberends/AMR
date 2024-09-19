@@ -274,16 +274,18 @@ get_column_abx <- function(x,
       }
       if (names(out[i]) %in% names(duplicates)) {
         already_set_as <- out[unname(out) == unname(out[i])][1L]
-        warning_(
-          paste0(
-            "Column '", font_bold(out[i]), "' will not be used for ",
-            names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
-            ", as it is already set for ",
-            names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
-          ),
-          add_fn = font_red,
-          immediate = verbose
-        )
+        if (names(out)[i] != names(already_set_as)) {
+          warning_(
+            paste0(
+              "Column '", font_bold(out[i]), "' will not be used for ",
+              names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
+              ", as it is already set for ",
+              names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
+            ),
+            add_fn = font_red,
+            immediate = verbose
+          )
+        }
       }
     }
   }

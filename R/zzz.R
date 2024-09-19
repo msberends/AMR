@@ -84,6 +84,9 @@ AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
 # take cli symbols and error function if available
 AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %or% "i"
 AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %or% "*"
+
+AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
+
 AMR_env$dots <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %or% "..."
 AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %or% "*"
 AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)

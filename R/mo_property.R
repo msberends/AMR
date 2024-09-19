@@ -883,6 +883,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
         ref = mo_ref(y, keep_synonyms = keep_synonyms),
         snomed = unlist(mo_snomed(y, keep_synonyms = keep_synonyms)),
         lpsn = mo_lpsn(y, language = language, keep_synonyms = keep_synonyms),
+        mycobank = mo_mycobank(y, language = language, keep_synonyms = keep_synonyms),
         gbif = mo_gbif(y, language = language, keep_synonyms = keep_synonyms),
         group_members = mo_group_members(y, language = language, keep_synonyms = keep_synonyms)
       )
