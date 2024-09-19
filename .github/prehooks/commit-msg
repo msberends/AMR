@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# ==================================================================== #
+# TITLE:                                                               #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
+#                                                                      #
+# SOURCE CODE:                                                         #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
+# https://doi.org/10.18637/jss.v104.i03                                #
+#                                                                      #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# ==================================================================== #
+
+# Path to the commit message file
+COMMIT_MSG_FILE="$1"
+
+# Read the original commit message
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Check if commit should skip checks
+if [[ "$COMMIT_MSG" =~ no-?checks?|no-?verify ]]; then
+  echo "Not modifying commit message:"
+  echo "Commit message contains 'no-check' or 'no-verify'."
+  echo ""
+  exit 0
+fi
+
+# Read the version number from the temporary file
+if [ -f ".git/commit_version.tmp" ]; then
+  currentversion=$(cat .git/commit_version.tmp)
+  rm -f .git/commit_version.tmp
+else
+  echo "Version number file not found."
+  currentversion=""
+fi
+
+# Prepend the version number to the commit message if available
+if [ -n "$currentversion" ]; then
+  echo "(v${currentversion}) ${COMMIT_MSG}" > "$COMMIT_MSG_FILE"
+else
+  echo "No version number to prepend to commit message."
+fi
+
+exit 0

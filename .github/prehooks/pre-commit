@@ -29,10 +29,86 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# always add these:
-git add data-raw/*
-git add man/*
-git add R/sysdata.rda
-git add NAMESPACE
+# Check if commit should skip checks
+COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
+if [ -f "$COMMIT_MSG_FILE" ]; then
+  COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+  if [[ "$COMMIT_MSG" =~ no-?checks?|no-?verify ]]; then
+    echo "Not running prehook:"
+    echo "Commit message contains 'no-check' or 'no-verify'."
+    echo ""
+    exit 0
+  fi
+fi
+
+echo "Running prehook..."
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Run the R script and stage the modified files
+if command -v Rscript > /dev/null; then
+  if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
+    Rscript -e "source('data-raw/_pre_commit_checks.R')"
+    currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
+    echo "- Adding changed files in ./data-raw and ./man to this commit"
+    git add data-raw/*
+    git add man/*
+    git add R/sysdata.rda
+    git add NAMESPACE
+  else
+    echo "- R package 'pkgload', 'devtools', or 'dplyr' not installed!"
+    currentpkg="your"
+  fi
+else
+  echo "- R is not available on your system!"
+  currentpkg="your"
+fi
+echo ""
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo "Updating semantic versioning and date..."
+
+# Get tags from remote and remove tags not on remote
+git fetch origin --prune --prune-tags --quiet
+currenttagfull=$(git describe --tags --abbrev=0)
+currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
+
+# Assume main branch to be 'main' or 'master'
+defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
+if [ "$currenttag" = "" ]; then
+  currenttag="0.0.1"
+  currentcommit=$(git rev-list --count ${defaultbranch})
+  echo "- No git tags found, creating one in format 'v(x).(y).(z)' - currently ${currentcommit} previous commits in '${defaultbranch}'"
+else
+  currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
+  echo "- Latest tag is '${currenttagfull}', with ${currentcommit} previous commits in '${defaultbranch}'"
+fi
+
+# Combine tag and commit number
+currentversion="$currenttag.$((currentcommit + 9001))"
+echo "- ${currentpkg} pkg version set to ${currentversion}"
+
+# Update version number and date in DESCRIPTION
+sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
+sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
+echo "- Updated version number and date in ./DESCRIPTION"
+rm -f DESCRIPTION--
 git add DESCRIPTION
-git add NEWS.md
+
+# Update version number in NEWS.md
+if [ -e "NEWS.md" ]; then
+  if [ "$currentpkg" = "your" ]; then
+    currentpkg=""
+  fi
+  sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
+  echo "- Updated version number in ./NEWS.md"
+  rm -f NEWS.md--
+  git add NEWS.md
+else
+  echo "- No NEWS.md found!"
+fi
+echo ""
+
+# Save the version number for use in the commit-msg hook
+echo "${currentversion}" > .git/commit_version.tmp
+
+exit 0
