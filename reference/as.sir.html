@@ -3,14 +3,14 @@
 These breakpoints are currently implemented:
 For clinical microbiology: EUCAST 2011-2024 and CLSI 2011-2024;
 For veterinary microbiology: EUCAST 2021-2024 and CLSI 2019-2024;
-ECOFFs (Epidemiological cut-off values): EUCAST 2020-2024 and CLSI 2022-2024.
+For ECOFFs (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.
 
 
 All breakpoints used for interpretation are available in our clinical_breakpoints data set."><meta property="og:description" content="Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. as.sir() transforms the input to a new class sir, which is an ordered factor containing the levels S, SDD, I, R, NI.
 These breakpoints are currently implemented:
 For clinical microbiology: EUCAST 2011-2024 and CLSI 2011-2024;
 For veterinary microbiology: EUCAST 2021-2024 and CLSI 2019-2024;
-ECOFFs (Epidemiological cut-off values): EUCAST 2020-2024 and CLSI 2022-2024.
+For ECOFFs (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.
 
 
 All breakpoints used for interpretation are available in our clinical_breakpoints data set."><meta property="og:image" content="https://msberends.github.io/AMR/logo.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@msberends"><meta name="twitter:site" content="@msberends"></head><body>
@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9066</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9073</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     <p>Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. <code>as.sir()</code> transforms the input to a new class <code>sir</code>, which is an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> containing the levels <code>S</code>, <code>SDD</code>, <code>I</code>, <code>R</code>, <code>NI</code>.</p>
 <p>These breakpoints are currently implemented:</p><ul><li><p>For <strong>clinical microbiology</strong>: EUCAST 2011-2024 and CLSI 2011-2024;</p></li>
 <li><p>For <strong>veterinary microbiology</strong>: EUCAST 2021-2024 and CLSI 2019-2024;</p></li>
-<li><p>ECOFFs (Epidemiological cut-off values): EUCAST 2020-2024 and CLSI 2022-2024.</p></li>
+<li><p>For <strong>ECOFFs</strong> (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.</p></li>
 </ul><p>All breakpoints used for interpretation are available in our <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set.</p>
     </div>
 
@@ -155,7 +155,8 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
     <p>For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:</p><ul><li><p><strong>CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data</strong>, 2011-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p></li>
 <li><p><strong>CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing</strong>, 2011-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m100/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m100/</a>.</p></li>
-<li><p><strong>CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals</strong>, 2019-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet01//" class="external-link">https://clsi.org/standards/products/veterinary-medicine/documents/vet01//</a>.</p></li>
+<li><p><strong>CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals</strong>, 2019-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet01/" class="external-link">https://clsi.org/standards/products/veterinary-medicine/documents/vet01/</a>.</p></li>
+<li><p><strong>CLSI VET09: Understanding Susceptibility Test Data as a Component of Antimicrobial Stewardship in Veterinary Settings</strong>, 2019-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet09/" class="external-link">https://clsi.org/standards/products/veterinary-medicine/documents/vet09/</a>.</p></li>
 <li><p><strong>EUCAST Breakpoint tables for interpretation of MICs and zone diameters</strong>, 2011-2024, <em>European Committee on Antimicrobial Susceptibility Testing</em> (EUCAST). <a href="https://www.eucast.org/clinical_breakpoints" class="external-link">https://www.eucast.org/clinical_breakpoints</a>.</p></li>
 <li><p><strong>WHONET</strong> as a source for machine-reading the clinical breakpoints (<a href="https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet">read more here</a>), 1989-2024, <em>WHO Collaborating Centre for Surveillance of Antimicrobial Resistance</em>. <a href="https://whonet.org/" class="external-link">https://whonet.org/</a>.</p></li>
 </ul></div>
@@ -253,7 +254,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"ampicillin"</span>, <span class="va">...</span><span class="op">)</span>, mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="st">"K. pneumoniae"</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
-<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_hosts"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
+<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
 <li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
 </ul></li>
 <li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href="as.disk.html">as.disk()</a></code>, that also gives your columns the new data class <code><a href="as.disk.html">disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Using <code>dplyr</code>, SIR interpretation can be done very easily with either:</p>
@@ -263,7 +264,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"ampicillin"</span>, <span class="va">...</span><span class="op">)</span>, mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="st">"K. pneumoniae"</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
-<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_hosts"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
+<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
 </ul></li>
 <li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.sir(your_data)</code>.</p></li>
 </ol><p><strong>For points 2, 3 and 4: Use <code>sir_interpretation_history()</code></strong> to retrieve a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> (or <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> if the <code>tibble</code> package is installed) with all results of the last <code>as.sir()</code> call.</p>
@@ -284,6 +285,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <p>For veterinary guidelines, these might be the best options:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_breakpoint_type =</span> <span class="st">"animal"</span>)</span></code></pre><p></p></div>
+<p>When applying veterinary breakpoints (by setting <code>host</code> or by setting <code>breakpoint_type = "animal"</code>), the <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet09/" class="external-link">CLSI VET09 guideline</a> will be applied to cope with missing animal species-specific breakpoints.</p>
 </div>
 
 <div class="section">
@@ -291,6 +293,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <p>After using <code>as.sir()</code>, you can use the <code><a href="eucast_rules.html">eucast_rules()</a></code> defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>To determine which isolates are multi-drug resistant, be sure to run <code><a href="mdro.html">mdro()</a></code> (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about <a href="mdro.html">interpreting multidrug-resistant organisms here</a>.</p>
 </div>
 
 <div class="section">
@@ -560,6 +563,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX) based on column</span>
@@ -569,6 +573,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli - assuming body site 'Non-meningitis'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX) based on column</span>
@@ -584,6 +589,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'genta' (GEN, gentamicin) based on</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> column 'microorganism', EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX) based on column</span>
@@ -593,18 +599,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2024...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'cipro' (CIP, ciprofloxacin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2024...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli - assuming body site 'Non-meningitis'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'tobra' (TOB, tobramycin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> column 'microorganism', EUCAST 2024...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX) based on column</span>
@@ -617,18 +612,34 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'tobra' (TOB, tobramycin) based on</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> column 'microorganism', EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2024...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'cipro' (CIP, ciprofloxacin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 'microorganism', EUCAST 2024...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • Multiple breakpoints available for ciprofloxacin (CIP) in Escherichia coli - assuming body site 'Non-meningitis'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'tobra' (TOB, tobramycin) based on</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> column 'microorganism', EUCAST 2024...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX), 'cipro' (CIP, ciprofloxacin),</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'tobra' (TOB, tobramycin), and 'genta' (GEN, gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'bacteria', CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX), 'cipro' (CIP, ciprofloxacin),</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'tobra' (TOB, tobramycin), and 'genta' (GEN, gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'bacteria', CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'cipro' (CIP, ciprofloxacin), CLSI 2024...</span>
@@ -637,6 +648,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'genta' (GEN, gentamicin), CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'cipro' (CIP, ciprofloxacin), CLSI 2024...</span>
@@ -645,37 +657,36 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'genta' (GEN, gentamicin), CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming breakpoint_type = "animal", since host is set.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Please note that in the absence of specific veterinary breakpoints for</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   aquatic, and poultry, in that order, are used as substitutes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, the CLSI guideline VET09 will be applied where</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   possible.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX), 'cipro' (CIP, ciprofloxacin),</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'tobra' (TOB, tobramycin), and 'genta' (GEN, gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'bacteria', CLSI 2024...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   • Using dogs breakpoints since cattle for gentamicin (GEN) in Escherichia coli are not available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming breakpoint_type = "animal", since host is set.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Please note that in the absence of specific veterinary breakpoints for</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   aquatic, and poultry, in that order, are used as substitutes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, the CLSI guideline VET09 will be applied where</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   possible.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'amoxicillin' (AMX), 'cipro' (CIP, ciprofloxacin),</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'tobra' (TOB, tobramycin), and 'genta' (GEN, gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'bacteria', CLSI 2024...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   • Using dogs breakpoints since cattle for gentamicin (GEN) in Escherichia coli are not available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming breakpoint_type = "animal", since host is set.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ The following host(s) are invalid: "animalspecies". For missing animal</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   hosts, assuming "dogs", since these have the highest breakpoint</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   availability.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Please note that in the absence of specific veterinary breakpoints for</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   aquatic, and poultry, in that order, are used as substitutes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, the CLSI guideline VET09 will be applied where</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   possible.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'antibiotic' (TESTAB, test Antibiotic), CLSI</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  WARNING </span>
@@ -688,22 +699,29 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  WARNING </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • No CLSI 2024 DISK breakpoints available for test Antibiotic (TESTAB).</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `cipro = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming breakpoint_type = "animal", since host is set.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ The following host(s) are invalid: "animalspecies". For missing animal</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   hosts, assuming "dogs", since these have the highest breakpoint</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   availability.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Please note that in the absence of specific veterinary breakpoints for</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, breakpoints for dogs, cattle, swine, cats, horse,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   aquatic, and poultry, in that order, are used as substitutes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   certain animal hosts, the CLSI guideline VET09 will be applied where</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   possible.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'cipro' (CIP, ciprofloxacin), CLSI 2024...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  WARNING </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   • No CLSI 2024 MIC breakpoints available for ciprofloxacin (CIP).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'tobra' (TOB, tobramycin), CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'genta' (GEN, gentamicin), CLSI 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'nitrofuratoin' (NIT, nitrofurantoin),</span>
@@ -713,12 +731,14 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming value "urine" in column 'specimen' reflects a urinary tract</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   infection.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Use as.sir(uti = FALSE) to prevent this.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'nitrofuratoin' (NIT, nitrofurantoin),</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> EUCAST 2024...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  NOTE </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • Breakpoints for nitrofurantoin (NIT) in Escherichia coli are only available for (uncomplicated) urinary tract infections (UTI); assuming uti = TRUE.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'cipro' (CIP, ciprofloxacin), EUCAST 2024...</span>
@@ -736,6 +756,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span><span class="co">## Using base R ------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: column 'amoxicillin' (AMX), EUCAST 2024...</span>
@@ -760,16 +781,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 59 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given mo_given host_given ab   mo              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-07-16 <span style="color: #949494;">14:14:03</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-07-16 <span style="color: #949494;">14:14:04</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-07-16 <span style="color: #949494;">14:14:04</span>     4 genta    Escheri… cattle     GEN  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-07-16 <span style="color: #949494;">14:14:05</span>     4 genta    Escheri… cattle     GEN  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-07-16 <span style="color: #949494;">14:14:03</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-07-16 <span style="color: #949494;">14:14:04</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-07-16 <span style="color: #949494;">14:14:04</span>     3 tobra    Escheri… horses     TOB  B_ESCHR_COLI    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-07-16 <span style="color: #949494;">14:14:05</span>     3 tobra    Escheri… horses     TOB  B_ESCHR_COLI    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-07-16 <span style="color: #949494;">14:14:03</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-07-16 <span style="color: #949494;">14:14:04</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-09-19 <span style="color: #949494;">12:03:00</span>     4 genta    Escheri… human      GEN  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-09-19 <span style="color: #949494;">12:03:00</span>     4 genta    Escheri… cattle     GEN  B_ESCHR_COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-09-19 <span style="color: #949494;">12:03:01</span>     4 genta    Escheri… cattle     GEN  B_ESCHR_COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-09-19 <span style="color: #949494;">12:03:00</span>     3 tobra    Escheri… human      TOB  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-09-19 <span style="color: #949494;">12:03:00</span>     3 tobra    Escheri… horses     TOB  B_ESCHR_COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-09-19 <span style="color: #949494;">12:03:01</span>     3 tobra    Escheri… horses     TOB  B_ESCHR_COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-09-19 <span style="color: #949494;">12:03:00</span>     2 cipro    Escheri… human      CIP  B_[ORD]_ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-09-19 <span style="color: #949494;">12:03:00</span>     2 cipro    Escheri… dogs       CIP  B_ESCHR_COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-09-19 <span style="color: #949494;">12:03:01</span>     2 cipro    Escheri… dogs       CIP  B_ESCHR_COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-09-19 <span style="color: #949494;">12:03:02</span>     2 nitrofu… E. coli  human      NIT  B_ESCHR_COLI    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 49 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;dbl&gt;, outcome &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
@@ -782,6 +803,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"AMP"</span>,</span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting MIC values: 'AMP' (ampicillin), EUCAST 2024...</span>
@@ -796,6 +818,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Run sir_interpretation_history() afterwards to retrieve a logbook with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   all the details of the breakpoint interpretations.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Interpreting disk diffusion zones: 'ampicillin' (AMP), EUCAST 2024...</span>
@@ -807,7 +830,7 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span><span class="co"># For CLEANING existing SIR values ------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"SDD"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"NI"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in as.sir(): 3 results in column '30' truncated (38%) that were invalid</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in as.sir(): 3 results in column '19' truncated (38%) that were invalid</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B", and "C"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    SDD  I    R    NI   &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</span>
