@@ -74,7 +74,7 @@ A \link{character} \link{vector} with additional class \code{\link{mo}}
 Use this function to get a valid microorganism code (\code{\link{mo}}) based on arbitrary user input. Determination is done using intelligent rules and the complete taxonomic tree of the kingdoms Animalia, Archaea, Bacteria, Chromista, and Protozoa, and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
 }
 \details{
-A microorganism (MO) code from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:
+A microorganism (MO) code from this package (class: \code{\link{mo}}) is human-readable and typically looks like these examples:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  Code               Full name
   ---------------    --------------------------------------
@@ -86,8 +86,9 @@ A microorganism (MO) code from this package (class: \code{\link{mo}}) is human r
   |   |    |    \\---> subspecies, a 3-5 letter acronym
   |   |    \\----> species, a 3-6 letter acronym
   |   \\----> genus, a 4-8 letter acronym
-  \\----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-                            F (Fungi), PL (Plantae), P (Protozoa)
+  \\----> kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+                  C (Chromista), F (Fungi), PL (Plantae),
+                  P (Protozoa)
 }\if{html}{\out{</div>}}
 
 Values that cannot be coerced will be considered 'unknown' and will return the MO code \code{UNKNOWN} with a warning.
@@ -97,9 +98,9 @@ Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on th
 The \code{\link[=as.mo]{as.mo()}} function uses a novel and scientifically validated (\doi{10.18637/jss.v104.i03}) matching score algorithm (see \emph{Matching Score for Microorganisms} below) to match input against the \link[=microorganisms]{available microbial taxonomy} in this package. This implicates that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 \subsection{Coping with Uncertain Results}{
 
-Results of non-exact taxonomic input are based on their \link[=mo_matching_score]{matching score}. The lowest allowed score can be set with the \code{minimum_matching_score} argument. At default this will be determined based on the character length of the input, and the \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity} of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to evaluate the results with \code{\link[=mo_uncertainties]{mo_uncertainties()}}, which returns a \link{data.frame} with all specifications.
+Results of non-exact taxonomic input are based on their \link[=mo_matching_score]{matching score}. The lowest allowed score can be set with the \code{minimum_matching_score} argument. At default this will be determined based on the character length of the input, the \link[=microorganisms]{taxonomic kingdom}, and the \link[=mo_matching_score]{human pathogenicity} of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to inspect the results with \code{\link[=mo_uncertainties]{mo_uncertainties()}}, which returns a \link{data.frame} with all specifications.
 
-To increase the quality of matching, the \code{cleaning_regex} argument can be used to clean the input (i.e., \code{x}). This must be a \link[base:regex]{regular expression} that matches parts of the input that should be removed before the input is matched against the \link[=microorganisms]{available microbial taxonomy}. It will be matched Perl-compatible and case-insensitive. The default value of \code{cleaning_regex} is the outcome of the helper function \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}.
+To increase the quality of matching, the \code{cleaning_regex} argument is used to clean the input. This must be a \link[base:regex]{regular expression} that matches parts of the input that should be removed before the input is matched against the \link[=microorganisms]{available microbial taxonomy}. It will be matched Perl-compatible and case-insensitive. The default value of \code{cleaning_regex} is the outcome of the helper function \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}.
 
 There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
@@ -127,7 +128,14 @@ With \code{Becker = TRUE}, the following staphylococci will be converted to thei
 \item Coagulase-positive: \emph{S. agnetis}, \emph{S. argenteus}, \emph{S. coagulans}, \emph{S. cornubiensis}, \emph{S. delphini}, \emph{S. hyicus}, \emph{S. hyicus chromogenes}, \emph{S. hyicus hyicus}, \emph{S. intermedius}, \emph{S. lutrae}, \emph{S. pseudintermedius}, \emph{S. roterodami}, \emph{S. schleiferi coagulans}, \emph{S. schweitzeri}, \emph{S. simiae}, and \emph{S. singaporensis}
 }
 
-For newly named staphylococcal species, such as \emph{S. brunensis} (2024) and \emph{S. shinii} (2023), we look up the scientific reference to make sure the species are considered for the correct coagulase group.
+This is based on:
+\itemize{
+\item Becker K \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
+\item Becker K \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
+\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci.} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
+}
+
+For newly named staphylococcal species, such as \emph{S. brunensis} (2024) and \emph{S. shinii} (2023), we looked up the scientific reference to make sure the species are considered for the correct coagulase group.
 }
 
 \subsection{Lancefield Groups in Streptococci}{
@@ -143,17 +151,17 @@ With \code{Lancefield = TRUE}, the following streptococci will be converted to t
 \item Streptococcus Group K: \emph{S. salivarius}, \emph{S. salivarius salivarius}, and \emph{S. salivarius thermophilus}
 \item Streptococcus Group L: \emph{S. dysgalactiae}, \emph{S. dysgalactiae dysgalactiae}, and \emph{S. dysgalactiae equisimilis}
 }
+
+This is based on:
+\itemize{
+\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci.} \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
+}
 }
 }
 \section{Source}{
 
-\enumerate{
+\itemize{
 \item Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
-\item Becker K \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
-\item Becker K \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
-\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci.} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci.} \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-\item Berends MS \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/} \emph{Micro.rganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
 \item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on June 24th, 2024.
 \item Vincent, R \emph{et al} (2013). \strong{MycoBank gearing up for new horizons.} IMA Fungus, 4(2), 371-9; \doi{10.5598/imafungus.2013.04.02.16}. Accessed from \url{https://www.mycobank.org} on June 24th, 2024.
 \item GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on June 24th, 2024.

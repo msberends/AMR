@@ -363,13 +363,8 @@ This function uses \code{\link[=as.mo]{as.mo()}} internally, which uses an advan
 
 \section{Source}{
 
-\enumerate{
+\itemize{
 \item Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
-\item Becker K \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
-\item Becker K \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
-\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci.} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci.} \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-\item Berends MS \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019/} \emph{Micro.rganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
 \item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on June 24th, 2024.
 \item Vincent, R \emph{et al} (2013). \strong{MycoBank gearing up for new horizons.} IMA Fungus, 4(2), 371-9; \doi{10.5598/imafungus.2013.04.02.16}. Accessed from \url{https://www.mycobank.org} on June 24th, 2024.
 \item GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on June 24th, 2024.

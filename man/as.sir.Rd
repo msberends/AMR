@@ -18,7 +18,8 @@ For interpretations of minimum inhibitory concentration (MIC) values and disk di
 \itemize{
 \item \strong{CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 \item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
-\item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01//}.
+\item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01/}.
+\item \strong{CLSI VET09: Understanding Susceptibility Test Data as a Component of Antimicrobial Stewardship in Veterinary Settings}, 2019-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet09/}.
 \item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2024, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
 \item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2024, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
 }
@@ -140,7 +141,7 @@ These breakpoints are currently implemented:
 \itemize{
 \item For \strong{clinical microbiology}: EUCAST 2011-2024 and CLSI 2011-2024;
 \item For \strong{veterinary microbiology}: EUCAST 2021-2024 and CLSI 2019-2024;
-\item ECOFFs (Epidemiological cut-off values): EUCAST 2020-2024 and CLSI 2022-2024.
+\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.
 }
 
 All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
@@ -162,7 +163,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = "column_with_antibiotics", mo = "
 your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo = c("E. coli", "K. pneumoniae", ...))
 
 # for veterinary breakpoints, also set `host`:
-your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
+your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 }\if{html}{\out{</div>}}
 \item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
@@ -176,7 +177,7 @@ your_data \%>\% mutate_if(is.disk, as.sir, ab = "column_with_antibiotics", mo = 
 your_data \%>\% mutate_if(is.disk, as.sir, ab = c("cipro", "ampicillin", ...), mo = c("E. coli", "K. pneumoniae", ...))
 
 # for veterinary breakpoints, also set `host`:
-your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_hosts", guideline = "CLSI")
+your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 }\if{html}{\out{</div>}}
 }
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.sir(your_data)}.
@@ -205,11 +206,15 @@ For veterinary guidelines, these might be the best options:
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
   options(AMR_breakpoint_type = "animal")
 }\if{html}{\out{</div>}}
+
+When applying veterinary breakpoints (by setting \code{host} or by setting \code{breakpoint_type = "animal"}), the \href{https://clsi.org/standards/products/veterinary-medicine/documents/vet09/}{CLSI VET09 guideline} will be applied to cope with missing animal species-specific breakpoints.
 }
 
 \subsection{After Interpretation}{
 
 After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast_rules]{eucast_rules()}} defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+
+To determine which isolates are multi-drug resistant, be sure to run \code{\link[=mdro]{mdro()}} (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about \link[=mdro]{interpreting multidrug-resistant organisms here}.
 }
 
 \subsection{Machine-Readable Clinical Breakpoints}{
