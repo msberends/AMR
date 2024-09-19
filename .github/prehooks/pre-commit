@@ -34,7 +34,7 @@ COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
 if [ -f "$COMMIT_MSG_FILE" ]; then
   COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
   if [[ "$COMMIT_MSG" =~ no-?checks?|no-?verify ]]; then
-    echo "Not running prehook:"
+    echo "Not running prehook 'pre-commit':"
     echo "Commit message contains 'no-check' or 'no-verify'."
     echo ""
     exit 0

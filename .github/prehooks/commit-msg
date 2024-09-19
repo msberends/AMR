@@ -37,7 +37,7 @@ COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 
 # Check if commit should skip checks
 if [[ "$COMMIT_MSG" =~ no-?checks?|no-?verify ]]; then
-  echo "Not modifying commit message:"
+  echo "Not modifying commit message with 'pre-commit':"
   echo "Commit message contains 'no-check' or 'no-verify'."
   echo ""
   exit 0
