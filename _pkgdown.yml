@@ -42,10 +42,6 @@ template:
     line-height-base: 1.75
     # make top bar a bit wider
     navbar-padding-y: "0.5rem"
-  opengraph:
-    twitter:
-      creator: "@msberends"
-      card: summary_large_image
 
 news:
   one_page: true
@@ -57,7 +53,7 @@ footer:
     right: [logo]
   components:
     devtext: '<code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE">GNU General Public License version 2.0 (GPL-2)</a>.<br>Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a> in The Netherlands.'
-    logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_rug.svg" style="max-width: 150px;"></a><a target="_blank" href="https://www.umcg.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_umcg.svg" style="max-width: 150px;"></a>'
+    logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/logo_rug.svg" style="max-width: 150px;"></a><a target="_blank" href="https://www.umcg.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/logo_umcg.svg" style="max-width: 150px;"></a>'
 
 home:
   sidebar:
