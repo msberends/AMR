@@ -97,7 +97,7 @@ expect_equal(names(mo_info("Escherichia coli")), c(
   "mo",
   "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
   "status", "synonyms", "gramstain", "oxygen_tolerance",
-  "url", "ref", "snomed", "lpsn", "gbif", "group_members"
+  "url", "ref", "snomed", "lpsn", "mycobank", "gbif", "group_members"
 ))
 expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
 expect_true(length(mo_group_members("B_HACEK")) > 1)

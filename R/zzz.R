@@ -205,8 +205,6 @@ AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
-  
-  AMR_env$host_preferred_order <- names(sort(table(AMR::clinical_breakpoints$host[!AMR::clinical_breakpoints$host %in% AMR::clinical_breakpoints$type]), decreasing = TRUE))
 }
 
 .onAttach <- function(lib, pkg) {

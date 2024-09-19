@@ -312,14 +312,14 @@ vet <- data.frame(animal = c(rep("cat", 3), rep("dogs", 3), "canine", "equine", 
                   FLR = mics,
                   mo = mo_name(rep(c("B_ESCHR_COLI", "B_PSTRL_MLTC", "B_MNNHM_HMLY"), 4)[-1]))
 
-out_vet <- as.sir(vet, host = vet$animal, guideline = "CLSI")
+out_vet <- as.sir(vet, host = vet$animal, guideline = "CLSI 2023")
 # host column name instead of values
 expect_identical(out_vet,
                  as.sir(vet, host = "animal", guideline = "CLSI 2023"))
 
 # check outcomes
-expect_identical(out_vet$PRA, as.sir(c("S", NA, "S", "R", NA, "R", "R", NA, "R", "R", NA)))
-expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA, "R", "R")))
+expect_identical(out_vet$PRA, as.sir(c("S", NA, "S", NA, NA, "R", NA, NA, NA, "I", NA)))
+expect_identical(out_vet$FLR, as.sir(c(NA, NA, NA, NA, NA, NA, NA, NA, NA, "R", NA)))
 
 out_vet <- as.sir(vet, host = "animal", guideline = "EUCAST 2023")
 expect_identical(out_vet$PRA, rep(NA_sir_, 11))
@@ -327,9 +327,10 @@ expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA,
 
 sir_history <- sir_interpretation_history()
 expect_identical(sort(sir_history$host),
-                 c("cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle",
-                   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",  
-                   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "horse",  "horse",  "horse",  "horse",  "horse",  "poultry","poultry"))
+                 c("cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",
+                   "cats",   "cats",   "cats",   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",
+                   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",
+                   "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "poultry","poultry","poultry","poultry"))
 
 # ECOFF -------------------------------------------------------------------
 
