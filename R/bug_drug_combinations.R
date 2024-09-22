@@ -108,7 +108,6 @@ bug_drug_combinations <- function(x,
       SDD = integer(0),
       I = integer(0),
       R = integer(0),
-      N = integer(0),
       total = integer(0),
       stringsAsFactors = FALSE
     )

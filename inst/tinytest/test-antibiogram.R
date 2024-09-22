@@ -36,20 +36,22 @@ ab1 <- antibiogram(example_isolates,
 ab2 <- antibiogram(example_isolates,
                    antibiotics = aminoglycosides(),
                    ab_transform = "atc",
-                   mo_transform = "gramstain")
+                   mo_transform = "gramstain",
+                   add_total_n = TRUE)
 
 ab3 <- antibiogram(example_isolates,
                    antibiotics = carbapenems(),
-                   ab_transform = "name",
-                   mo_transform = "name")
+                   ab_transform = "ab",
+                   mo_transform = "name",
+                   formatting_type = 1)
 
 expect_inherits(ab1, "antibiogram")
 expect_inherits(ab2, "antibiogram")
 expect_inherits(ab3, "antibiogram")
-expect_equal(colnames(ab1), c("Pathogen (N min-max)", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
+expect_equal(colnames(ab1), c("Pathogen", "Amikacin", "Gentamicin", "Imipenem", "Kanamycin", "Meropenem", "Tobramycin"))
 expect_equal(colnames(ab2), c("Pathogen (N min-max)", "J01GB01", "J01GB03", "J01GB04", "J01GB06"))
-expect_equal(colnames(ab3), c("Pathogen (N min-max)", "Imipenem", "Meropenem"))
-expect_equal(ab3$Meropenem, c(52, NA, 100, 100, NA))
+expect_equal(colnames(ab3), c("Pathogen", "IPM", "MEM"))
+expect_equal(ab3$MEM, c(52, NA, 100, 100, NA))
 
 # Combined antibiogram -------------------------------------------------
 
@@ -67,7 +69,7 @@ ab5 <- antibiogram(example_isolates,
 
 expect_inherits(ab4, "antibiogram")
 expect_inherits(ab5, "antibiogram")
-expect_equal(colnames(ab4), c("Pathogen (N min-max)", "TZP", "TZP + GEN", "TZP + TOB"))
+expect_equal(colnames(ab4), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
 expect_equal(colnames(ab5), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam & Tobramycin"))
 
 # Syndromic antibiogram ------------------------------------------------
@@ -75,7 +77,8 @@ expect_equal(colnames(ab5), c("Pathogen", "Piperacillin/tazobactam", "Piperacill
 # the data set could contain a filter for e.g. respiratory specimens
 ab6 <- antibiogram(example_isolates,
                    antibiotics = c(aminoglycosides(), carbapenems()),
-                   syndromic_group = "ward")
+                   syndromic_group = "ward",
+                   ab_transform = NULL)
 
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Dutch on Dutch systems)
@@ -85,11 +88,12 @@ ab7 <- antibiogram(ex1,
                    ab_transform = "name",
                    syndromic_group = ifelse(ex1$ward == "ICU",
                                             "IC", "Geen IC"),
-                   language = "nl")
+                   language = "nl",
+                   add_total_n = TRUE)
 
 expect_inherits(ab6, "antibiogram")
 expect_inherits(ab7, "antibiogram")
-expect_equal(colnames(ab6), c("Syndromic Group", "Pathogen (N min-max)", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
+expect_equal(colnames(ab6), c("Syndromic Group", "Pathogen", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
 expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikacine", "Gentamicine", "Tobramycine"))
 
 # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
@@ -101,10 +105,11 @@ ab8 <- antibiogram(example_isolates,
                    minimum = 10, # this should be >= 30, but now just as example
                    syndromic_group = ifelse(example_isolates$age >= 65 &
                                               example_isolates$gender == "M",
-                                            "WISCA Group 1", "WISCA Group 2"))
+                                            "WISCA Group 1", "WISCA Group 2"),
+                   ab_transform = NULL)
 
 expect_inherits(ab8, "antibiogram")
-expect_equal(colnames(ab8), c("Syndromic Group", "Pathogen (N min-max)", "AMC", "AMC + CIP", "TZP", "TZP + TOB"))
+expect_equal(colnames(ab8), c("Syndromic Group", "Pathogen", "AMC", "AMC + CIP", "TZP", "TZP + TOB"))
 
 # Generate plots with ggplot2 or base R --------------------------------
 

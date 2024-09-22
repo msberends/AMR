@@ -1,4 +1,4 @@
-# AMR 2.1.1.9077
+# AMR 2.1.1.9078
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -37,6 +37,10 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * It is now possible to use column names for argument `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
   * Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
+* `antibiogram()` function
+  * New argument `formatting_type` to set any of the 12 options for the formatting of all 'cells'. This defaults to `10`, changing the output of antibiograms to cells with `5% (15/300)` instead of the previous standard of just `5`.
+  * For this reason, `add_total_n` is now `FALSE` at default since the denominators are added to the cells
+  * The `ab_transform` argument now defaults to `"name"`, displaying antibiotic column names instead of codes
 * `antibiotics` data set
   * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antibiotic selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
