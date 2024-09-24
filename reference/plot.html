@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9078</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Plotting for Classes <code>sir</code>, <code>mic</code> and <code>disk</code></h1>
-      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/R/plotting.R" class="external-link"><code>R/plotting.R</code></a></small>
       <div class="d-none name"><code>plot.Rd</code></div>
     </div>
 
@@ -218,7 +218,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_locale</a></code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the package option <code><a href="AMR-options.html">AMR_locale</a></code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 
 
 <dt id="arg-expand">expand<a class="anchor" aria-label="anchor" href="#arg-expand"></a></dt>
@@ -226,11 +226,11 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt id="arg-include-pkpd">include_PKPD<a class="anchor" aria-label="anchor" href="#arg-include-pkpd"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
 
 
 <dt id="arg-breakpoint-type">breakpoint_type<a class="anchor" aria-label="anchor" href="#arg-breakpoint-type"></a></dt>
-<dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
+<dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -270,7 +270,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span class="r-in"><span><span class="co"># Plotting using scale_x_mic()</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">mic_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mics <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.125</span>, <span class="st">"&lt;=4"</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">32</span>, <span class="st">"&gt;=32"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">mic_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mics <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"&lt;=4"</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">32</span>, <span class="st">"&gt;=32"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">mics</span>, <span class="va">counts</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span></span></span>
@@ -292,23 +292,29 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span class="r-plt img"><img src="plot-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">mic_plot</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu">scale_x_mic</span><span class="op">(</span>mic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">128</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"with scale_x_mic() using a manual range"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu">scale_x_mic</span><span class="op">(</span>mic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">16</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"with scale_x_mic() using a manual 'within' range"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="plot-10.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">mic_plot</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">scale_x_mic</span><span class="op">(</span>mic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.032</span>, <span class="fl">256</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"with scale_x_mic() using a manual 'outside' range"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="plot-11.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">some_mic_values</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="plot-11.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot-12.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">some_disk_values</span>, mo <span class="op">=</span> <span class="st">"Escherichia coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="plot-12.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot-13.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">some_sir_values</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="plot-13.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot-14.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

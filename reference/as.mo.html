@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9078</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,7 @@
 
 
 <dt id="arg-keep-synonyms">keep_synonyms<a class="anchor" aria-label="anchor" href="#arg-keep-synonyms"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
 
 
 <dt id="arg-reference-df">reference_df<a class="anchor" aria-label="anchor" href="#arg-reference-df"></a></dt>
@@ -118,15 +118,15 @@
 
 
 <dt id="arg-ignore-pattern">ignore_pattern<a class="anchor" aria-label="anchor" href="#arg-ignore-pattern"></a></dt>
-<dd><p>a Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) of which all matches in <code>x</code> must return <code>NA</code>. This can be convenient to exclude known non-relevant input and can also be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_ignore_pattern</a></code>, e.g. <code>options(AMR_ignore_pattern = "(not reported|contaminated flora)")</code>.</p></dd>
+<dd><p>a Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) of which all matches in <code>x</code> must return <code>NA</code>. This can be convenient to exclude known non-relevant input and can also be set with the package option <code><a href="AMR-options.html">AMR_ignore_pattern</a></code>, e.g. <code>options(AMR_ignore_pattern = "(not reported|contaminated flora)")</code>.</p></dd>
 
 
 <dt id="arg-cleaning-regex">cleaning_regex<a class="anchor" aria-label="anchor" href="#arg-cleaning-regex"></a></dt>
-<dd><p>a Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) to clean the input of <code>x</code>. Every matched part in <code>x</code> will be removed. At default, this is the outcome of <code>mo_cleaning_regex()</code>, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_cleaning_regex</a></code>.</p></dd>
+<dd><p>a Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) to clean the input of <code>x</code>. Every matched part in <code>x</code> will be removed. At default, this is the outcome of <code>mo_cleaning_regex()</code>, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option <code><a href="AMR-options.html">AMR_cleaning_regex</a></code>.</p></dd>
 
 
 <dt id="arg-only-fungi">only_fungi<a class="anchor" aria-label="anchor" href="#arg-only-fungi"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for <a href="mo_property.html">all microorganism functions</a> with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_only_fungi</a></code>, i.e. <code>options(AMR_only_fungi = TRUE)</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for <a href="mo_property.html">all microorganism functions</a> with the package option <code><a href="AMR-options.html">AMR_only_fungi</a></code>, i.e. <code>options(AMR_only_fungi = TRUE)</code>.</p></dd>
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>

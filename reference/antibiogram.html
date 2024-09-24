@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9078</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@
 
 
 <dt id="arg-ab-transform">ab_transform<a class="anchor" aria-label="anchor" href="#arg-ab-transform"></a></dt>
-<dd><p>a character to transform antibiotic input - must be one of the column names of the <a href="antibiotics.html">antibiotics</a> data set (defaults to "name"): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be <code>NULL</code> to not transform the input.</p></dd>
+<dd><p>a character to transform antibiotic input - must be one of the column names of the <a href="antibiotics.html">antibiotics</a> data set (defaults to <code>"name"</code>): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be <code>NULL</code> to not transform the input.</p></dd>
 
 
 <dt id="arg-syndromic-group">syndromic_group<a class="anchor" aria-label="anchor" href="#arg-syndromic-group"></a></dt>
@@ -199,7 +199,7 @@
 <li><p>5% (15/300)</p></li>
 <li><p>5 (N=15/300)</p></li>
 <li><p>5% (N=15/300)</p></li>
-</ol><p>The default is <code>10</code>, which can be set globally with the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_antibiogram_formatting_type</a></code>, e.g. <code>options(AMR_antibiogram_formatting_type = 5)</code>.</p>
+</ol><p>The default is <code>10</code>, which can be set globally with the package option <code><a href="AMR-options.html">AMR_antibiogram_formatting_type</a></code>, e.g. <code>options(AMR_antibiogram_formatting_type = 5)</code>.</p>
 <p>Set <code>digits</code> (defaults to <code>0</code>) to alter the rounding of the susceptibility percentage.</p>
 </div>
 

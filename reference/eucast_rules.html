@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9078</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-rules">rules<a class="anchor" aria-label="anchor" href="#arg-rules"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expert")</code>. The default value can be set to another value using the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_eucastrules</a></code>: <code>options(AMR_eucastrules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expert")</code>. The default value can be set to another value using the package option <code><a href="AMR-options.html">AMR_eucastrules</a></code>: <code>options(AMR_eucastrules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -173,7 +173,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <p>Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:</p><ol><li><p>A drug <strong>with</strong> enzyme inhibitor will be set to S if the same drug <strong>without</strong> enzyme inhibitor is S</p></li>
 <li><p>A drug <strong>without</strong> enzyme inhibitor will be set to R if the same drug <strong>with</strong> enzyme inhibitor is R</p></li>
 </ol><p>Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.</p>
-<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the <a href="AMR-options.html">package option</a> <code><a href="AMR-options.html">AMR_eucastrules</a></code>, i.e. run <code>options(AMR_eucastrules = "all")</code>.</p>
+<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the package option <code><a href="AMR-options.html">AMR_eucastrules</a></code>, i.e. run <code>options(AMR_eucastrules = "all")</code>.</p>
 </div>
 
     </div>

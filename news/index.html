@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9078</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,18 +53,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9078" id="amr-2119078">AMR 2.1.1.9078<a class="anchor" aria-label="anchor" href="#amr-2119078"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9080" id="amr-2119080">AMR 2.1.1.9080<a class="anchor" aria-label="anchor" href="#amr-2119080"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using <a href="https://msberends.github.io/AMR/#latest-development-version">the instructions here</a>.)</em></p>
 <div class="section level5">
-<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9078">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9078"></a></h5>
+<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9080">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9080"></a></h5>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 </div>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9078">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9078"></a></h3>
+<h3 id="breaking-2-1-1-9080">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9080"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9078">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9078"></a></h3>
+<h3 id="new-2-1-1-9080">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9080"></a></h3>
 <ul><li>One Health implementation
 <ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for animal breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
 <li>The <code>clinical_breakpoints</code> data set contains all these breakpoints, and can be downloaded on our <a href="https://msberends.github.io/AMR/articles/datasets.html">download page</a>.</li>
@@ -101,7 +101,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-1-1-9078">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9078"></a></h3>
+<h3 id="changed-2-1-1-9080">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9080"></a></h3>
 <ul><li>SIR interpretation
 <ul><li>It is now possible to use column names for argument <code>ab</code>, <code>mo</code>, and <code>uti</code>: <code>as.sir(..., ab = "column1", mo = "column2", uti = "column3")</code>. This greatly improves the flexibility for users.</li>
 <li>Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.</li>
@@ -147,24 +147,11 @@
 <li>Fixed a bug for when <code><a href="../reference/antibiogram.html">antibiogram()</a></code> returns an empty data set</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-2-1-1-9078">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9078"></a></h3>
+<h3 id="other-2-1-1-9080">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9080"></a></h3>
 <ul><li>Greatly updated and expanded documentation</li>
 <li>Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input</li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1" id="amr-211">AMR 2.1.1<a class="anchor" aria-label="anchor" href="#amr-211"></a></h2><p class="text-muted">CRAN release: 2023-10-21</p>
-<ul><li>Fix for selecting first isolates using the phenotype-based method
-<ul><li>This included too many isolates when patients had altering antibiograms within the same bacterial species</li>
-<li>See for more info <a href="https://github.com/msberends/AMR/issues/122" class="external-link">our issue </a><a href="https://github.com/msberends/AMR/issues/122" class="external-link">#122</a>
-</li>
-</ul></li>
-<li>Added 1,366 LOINC codes to the <code>antibiotics</code> data set and updated to the latest version (LOINC v2.76)</li>
-<li>MICs can now be used in complex number calculations and allow scientific number format as input (e.g., <code>as.mic("1.28e-2")</code>)</li>
-<li>Fix rounding MICs on latest R beta (‘R-devel’)</li>
-<li>Removed unneeded note about the used language when option <code>AMR_locale</code> is set</li>
-<li>Fixed non-ASCII characters in documentation, according to CRAN maintainers</li>
-</ul><hr></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
