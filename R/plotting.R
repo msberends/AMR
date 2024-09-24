@@ -73,7 +73,7 @@
 #' # Plotting using scale_x_mic()
 #' \donttest{
 #' if (require("ggplot2")) {
-#'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.125, "<=4", 4, 8, 32, ">=32")),
+#'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
 #'                                 counts = c(1, 1, 2, 2, 3, 3)),
 #'                      aes(mics, counts)) +
 #'     geom_col()
@@ -92,8 +92,13 @@
 #' }
 #' if (require("ggplot2")) {
 #'   mic_plot +
-#'     scale_x_mic(mic_range = c(1, 128)) +
-#'     labs(title = "with scale_x_mic() using a manual range")
+#'     scale_x_mic(mic_range = c(1, 16)) +
+#'     labs(title = "with scale_x_mic() using a manual 'within' range")
+#' }
+#' if (require("ggplot2")) {
+#'   mic_plot +
+#'     scale_x_mic(mic_range = c(0.032, 256)) +
+#'     labs(title = "with scale_x_mic() using a manual 'outside' range")
 #' }
 #' 
 #' if (require("ggplot2")) {
@@ -795,7 +800,14 @@ plotrange_as_table <- function(x, expand, keep_operators = "all", mic_range = NU
     x <- as.mic(x, keep_operators = keep_operators)
     if (expand == TRUE) {
       # expand range for MIC by adding common intermediate factors levels
-      extra_range <- COMMON_MIC_VALUES[COMMON_MIC_VALUES > min(x, na.rm = TRUE) & COMMON_MIC_VALUES < max(x, na.rm = TRUE)]
+      if (!is.null(mic_range) && !all(is.na(mic_range))) {
+        # base on mic_range
+        `%na_or%` <- function(x, y) if (is.na(x)) y else x
+        extra_range <- COMMON_MIC_VALUES[COMMON_MIC_VALUES >= (mic_range[1] %na_or% min(x, na.rm = TRUE)) & COMMON_MIC_VALUES <= (mic_range[2] %na_or% max(x, na.rm = TRUE))]
+      } else {
+        # base on x
+        extra_range <- COMMON_MIC_VALUES[COMMON_MIC_VALUES > min(x, na.rm = TRUE) & COMMON_MIC_VALUES < max(x, na.rm = TRUE)]
+      }
       # remove the ones that are in 25% range of user values
       extra_range <- extra_range[!vapply(FUN.VALUE = logical(1), extra_range, function(r) any(abs(r - x) / x < 0.25, na.rm = TRUE))]
       nms <- extra_range

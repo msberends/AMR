@@ -304,9 +304,9 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   
   # create a manual factor with levels only within desired range
   expanded <- plotrange_as_table(x,
-                             expand = TRUE,
-                             keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
-                             mic_range = mic_range)
+                                 expand = TRUE,
+                                 keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
+                                 mic_range = mic_range)
   if (keep_operators == "edges") {
     names(expanded)[1] <- paste0("<=", names(expanded)[1])
     names(expanded)[length(expanded)] <- paste0(">=", names(expanded)[length(expanded)])

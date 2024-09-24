@@ -1376,7 +1376,7 @@ as_sir_method <- function(method_short,
     } else {
       site <- paste0("body site '", site, "'")
     }
-    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti_current %in% c(FALSE, NA)) && message_not_thrown_before("as.sir", "uti", ab_current)) {
+    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && is.na(uti_current) && message_not_thrown_before("as.sir", "uti", ab_current)) {
       # only UTI breakpoints available
       notes_current <- c(notes_current, paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI); assuming `uti = TRUE`."))
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
