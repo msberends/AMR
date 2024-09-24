@@ -33,7 +33,7 @@
 #' @param x any (vector of) text that can be coerced to a valid antiviral drug code with [as.av()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character].
 #' @param property one of the column names of one of the [antivirals] data set: `vector_or(colnames(antivirals), sort = FALSE)`.
-#' @param language language of the returned text - the default is system language (see [get_AMR_locale()]) and can also be set with the [package option][AMR-options] [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param language language of the returned text - the default is system language (see [get_AMR_locale()]) and can also be set with the package option [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... other arguments passed on to [as.av()]

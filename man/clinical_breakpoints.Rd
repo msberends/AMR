@@ -29,9 +29,12 @@ clinical_breakpoints
 \description{
 Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This dataset contain breakpoints for humans, 7 different animal groups, and ECOFFs.
 
-Currently available breakpoint guidelines for \strong{clinical microbiology} are EUCAST 2011-2024 and CLSI 2011-2024.
-
-Currently available breakpoint guidelines for \strong{veterinary microbiology} are EUCAST 2021-2024 and CLSI 2019-2024.
+These breakpoints are currently implemented:
+\itemize{
+\item For \strong{clinical microbiology}: EUCAST 2011-2024 and CLSI 2011-2024;
+\item For \strong{veterinary microbiology}: EUCAST 2021-2024 and CLSI 2019-2024;
+\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.
+}
 
 Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
 }
@@ -40,7 +43,7 @@ Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to S
 
 Supported types of breakpoints are ECOFF, animal, and human. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 
-The default is \code{"human"}, which can also be set with the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_breakpoint_type}}. Use \code{\link[=as.sir]{as.sir(..., breakpoint_type = ...)}} to interpret raw data using a specific breakpoint type, e.g. \code{as.sir(..., breakpoint_type = "ECOFF")} to use ECOFFs.
+The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. Use \code{\link[=as.sir]{as.sir(..., breakpoint_type = ...)}} to interpret raw data using a specific breakpoint type, e.g. \code{as.sir(..., breakpoint_type = "ECOFF")} to use ECOFFs.
 }
 
 \subsection{Imported from WHONET}{

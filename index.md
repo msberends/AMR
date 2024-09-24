@@ -4,7 +4,7 @@
 * Used in over 175 countries, available in 20 languages
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** and extensive info on **all antimicrobial drugs**
-* Applies all recent **CLSI** and **EUCAST** clinical and veterinary breakpoints for MICs and disk zones
+* Applies all recent **CLSI** and **EUCAST** clinical and veterinary breakpoints for MICs, disk zones and ECOFFs
 * Corrects for duplicate isolates, **calculates** and **predicts** AMR per antibiotic class
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * 100% free of costs and dependencies, highly suitable for places with **limited resources**
@@ -98,18 +98,18 @@ antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()))
 ```
 
-|Pathogen (N min-max)     | AMK| GEN| IPM| KAN| MEM| TOB|
-|:------------------------|---:|---:|---:|---:|---:|---:|
-|CoNS (43-309)            |   0|  86|  52|   0|  52|  22|
-|*E. coli* (0-462)        | 100|  98| 100|    | 100|  97|
-|*E. faecalis* (0-39)     |   0|   0| 100|   0|    |   0|
-|*K. pneumoniae* (0-58)   |    |  90| 100|    | 100|  90|
-|*P. aeruginosa* (17-30)  |    | 100|    |   0|    | 100|
-|*P. mirabilis* (0-34)    |    |  94|  94|    |    |  94|
-|*S. aureus* (2-233)      |    |  99|    |    |    |  98|
-|*S. epidermidis* (8-163) |   0|  79|    |   0|    |  51|
-|*S. hominis* (3-80)      |    |  92|    |    |    |  85|
-|*S. pneumoniae* (11-117) |   0|   0|    |   0|    |   0|
+| Pathogen                | Amikacin         | Gentamicin      | Imipenem         | Kanamycin        | Meropenem        | Tobramycin       |
+|:------------------------|:----------------:|:---------------:|:----------------:|:----------------:|:----------------:|:----------------:|
+| CoNS                    | 0% (0/43)        | 86% (267/309)   | 52% (25/48)      | 0% (0/43)        | 52% (25/48)      | 22% (12/55)      |
+| *E. coli*               | 100% (171/171)   | 98% (451/460)   | 100% (422/422)   |                  | 100% (418/418)   | 97% (450/462)    |
+| *E. faecalis*           | 0% (0/39)        | 0% (0/39)       | 100% (38/38)     | 0% (0/39)        |                  | 0% (0/39)        |
+| *K. pneumoniae*         |                  | 90% (52/58)     | 100% (51/51)     |                  | 100% (53/53)     | 90% (52/58)      |
+| *P. aeruginosa*         |                  | 100% (30/30)    |                  | 0% (0/30)        |                  | 100% (30/30)     |
+| *P. mirabilis*          |                  | 94% (32/34)     | 94% (30/32)      |                  |                  | 94% (32/34)      |
+| *S. aureus*             |                  | 99% (231/233)   |                  |                  |                  | 98% (84/86)      |
+| *S. epidermidis*        | 0% (0/44)        | 79% (128/163)   |                  | 0% (0/44)        |                  | 51% (45/89)      |
+| *S. hominis*            |                  | 92% (74/80)     |                  |                  |                  | 85% (53/62)      |
+| *S. pneumoniae*         | 0% (0/117)       | 0% (0/117)      |                  | 0% (0/117)       |                  | 0% (0/117)       |
 
 In combination antibiograms, it is clear that combined antibiotics yield higher empiric coverage:
 
@@ -119,10 +119,10 @@ antibiogram(example_isolates,
             mo_transform = "gramstain")
 ```
 
-|Pathogen (N min-max)     | TZP| TZP + GEN| TZP + TOB|
-|:------------------------|---:|---------:|---------:|
-|Gram-negative (641-693)  |  88|        99|        98|
-|Gram-positive (345-1044) |  86|        98|        95|
+| Pathogen      | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:--------------|:-----------------------:|:-------------------------------------:|:------------------------------------:|
+| Gram-negative | 88% (565/641)            | 99% (681/691)                        | 98% (679/693)                       |
+| Gram-positive | 86% (296/345)            | 98% (1018/1044)                      | 95% (524/550)                       |
 
 Like many other functions in this package, `antibiogram()` comes with support for 20 languages that are often detected automatically based on system language:
 
@@ -134,11 +134,10 @@ antibiogram(example_isolates,
             language = "uk") # Ukrainian
 ```
 
-|Збудник (N min-max)      | Гентаміцин| Тобраміцин| Ципрофлоксацин|
-|:------------------------|----------:|----------:|--------------:|
-|Грамнегативні (684-686)  |         96|         96|             91|
-|Грампозитивні (665-1170) |         63|         34|             77|
-
+| Збудник        | Гентаміцин           | Тобраміцин          | Ципрофлоксацин     |
+|:---------------|:--------------------:|:-------------------:|:------------------:|
+| Грамнегативні  | 96% (659/684)        | 96% (658/686)       | 91% (621/684)      |
+| Грампозитивні  | 63% (740/1170)       | 34% (228/665)       | 77% (560/724)      |
 
 #### Calculating resistance per group
 

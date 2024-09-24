@@ -1,4 +1,4 @@
-# AMR 2.1.1.9078
+# AMR 2.1.1.9079
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -70,20 +70,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
 
 
-# AMR 2.1.1
-
-* Fix for selecting first isolates using the phenotype-based method
-  * This included too many isolates when patients had altering antibiograms within the same bacterial species
-  * See for more info [our issue #122](https://github.com/msberends/AMR/issues/122)
-* Added 1,366 LOINC codes to the `antibiotics` data set and updated to the latest version (LOINC v2.76)
-* MICs can now be used in complex number calculations and allow scientific number format as input (e.g., `as.mic("1.28e-2")`)
-* Fix rounding MICs on latest R beta ('R-devel')
-* Removed unneeded note about the used language when option `AMR_locale` is set
-* Fixed non-ASCII characters in documentation, according to CRAN maintainers
-
-----
-
-# Older versions
+# Older Versions
 
 This changelog only contains changes from AMR v3.0 (October 2024) and later.
 

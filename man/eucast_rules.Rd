@@ -42,7 +42,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{info}{a \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions}
 
-\item{rules}{a \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value using the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_eucastrules}}: \code{options(AMR_eucastrules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
+\item{rules}{a \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value using the package option \code{\link[=AMR-options]{AMR_eucastrules}}: \code{options(AMR_eucastrules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
@@ -96,7 +96,7 @@ Before further processing, two non-EUCAST rules about drug combinations can be a
 
 Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 
-Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the \link[=AMR-options]{package option} \code{\link[=AMR-options]{AMR_eucastrules}}, i.e. run \code{options(AMR_eucastrules = "all")}.
+Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the package option \code{\link[=AMR-options]{AMR_eucastrules}}, i.e. run \code{options(AMR_eucastrules = "all")}.
 }
 }
 \section{Antibiotics}{

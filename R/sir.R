@@ -43,12 +43,12 @@
 #' @param ab a vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
-#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the [package option][AMR-options] [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
+#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
-#' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the [package option][AMR-options] [`AMR_include_screening`][AMR-options].
-#' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the [package option][AMR-options] [`AMR_include_PKPD`][AMR-options].
-#' @param breakpoint_type the type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the [package option][AMR-options] [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
+#' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
+#' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the package option [`AMR_include_PKPD`][AMR-options].
+#' @param breakpoint_type the type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
 #' @param host a vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
 #' @param verbose a [logical] to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
@@ -96,7 +96,7 @@
 #'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #'
-#' You can set the default guideline with the [package option][AMR-options] [`AMR_guideline`][AMR-options] (e.g. in your `.Rprofile` file), such as:
+#' You can set the default guideline with the package option [`AMR_guideline`][AMR-options] (e.g. in your `.Rprofile` file), such as:
 #'
 #' ```
 #'   options(AMR_guideline = "CLSI")
@@ -1078,7 +1078,6 @@ as_sir_method <- function(method_short,
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
   }
-  uti[is.na(uti)] <- FALSE
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (message_not_thrown_before("as.sir", "intrinsic")) {
       warning_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
@@ -1211,7 +1210,7 @@ as_sir_method <- function(method_short,
     host_current <- df_unique[i, "host", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
     notes_current <- character(0)
-    if (isFALSE(uti_current)) {
+    if (is.na(uti_current)) {
       # no preference, so no filter on UTIs
       rows <- which(df$mo == mo_current & df$ab == ab_current & df$host == host_current)
     } else {
@@ -1354,16 +1353,16 @@ as_sir_method <- function(method_short,
     
     # sort on host and taxonomic rank
     # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
-    if (all(uti_current == FALSE, na.rm = TRUE)) {
+    if (is.na(uti_current)) {
       breakpoints_current <- breakpoints_current %pm>%
         #  `uti` is a column in the data set
         # this will put UTI = FALSE first, then UTI = NA, then UTI = TRUE
-        pm_mutate(uti_index = ifelse(is.na(uti) & uti == FALSE, 1, 
+        pm_mutate(uti_index = ifelse(!is.na(uti) & uti == FALSE, 1, 
                                      ifelse(is.na(uti), 2,
                                             3))) %pm>%
         # be as specific as possible (i.e. prefer species over genus):
         pm_arrange(rank_index, uti_index)
-    } else if (all(uti_current == TRUE, na.rm = TRUE)) {
+    } else if (uti_current == TRUE) {
       breakpoints_current <- breakpoints_current %pm>%
         subset(uti == TRUE) %pm>%
         # be as specific as possible (i.e. prefer species over genus):
@@ -1415,8 +1414,8 @@ as_sir_method <- function(method_short,
           guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
           guideline_coerced %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
-          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
           # and NA otherwise
           TRUE ~ NA_sir_
         )
@@ -1427,8 +1426,8 @@ as_sir_method <- function(method_short,
           guideline_coerced %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           guideline_coerced %like% "CLSI" & as.double(values) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
-          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
           # and NA otherwise
           TRUE ~ NA_sir_
         )

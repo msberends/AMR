@@ -33,7 +33,7 @@
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antibiotic results (class 'sir', see [as.sir()])
 #' @param antibiotics vector of any antibiotic name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antibiotic selectors][antibiotic_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as "TZP+TOB" or "cipro + genta", given that columns resembling such antibiotics exist in `x`. See *Examples*.
 #' @param mo_transform a character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
-#' @param ab_transform a character to transform antibiotic input - must be one of the column names of the [antibiotics] data set (defaults to "name"): `r vector_or(colnames(antibiotics), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
+#' @param ab_transform a character to transform antibiotic input - must be one of the column names of the [antibiotics] data set (defaults to `"name"`): `r vector_or(colnames(antibiotics), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group a column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
 #' @param add_total_n a [logical] to indicate whether total available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolate per antibiotic (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").
 #' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antibiotics, see *Details*
@@ -68,7 +68,7 @@
 #' 11. 5 (N=15/300)
 #' 12. 5% (N=15/300)
 #' 
-#' The default is `10`, which can be set globally with the [package option][AMR-options] [`AMR_antibiogram_formatting_type`][AMR-options], e.g. `options(AMR_antibiogram_formatting_type = 5)`.
+#' The default is `10`, which can be set globally with the package option [`AMR_antibiogram_formatting_type`][AMR-options], e.g. `options(AMR_antibiogram_formatting_type = 5)`.
 #' 
 #' Set `digits` (defaults to `0`) to alter the rounding of the susceptibility percentage.
 #'
