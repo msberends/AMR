@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9081</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,20 +53,22 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9080" id="amr-2119080">AMR 2.1.1.9080<a class="anchor" aria-label="anchor" href="#amr-2119080"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9081" id="amr-2119081">AMR 2.1.1.9081<a class="anchor" aria-label="anchor" href="#amr-2119081"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using <a href="https://msberends.github.io/AMR/#latest-development-version">the instructions here</a>.)</em></p>
 <div class="section level5">
-<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9080">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9080"></a></h5>
+<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9081">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9081"></a></h5>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 </div>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9080">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9080"></a></h3>
+<h3 id="breaking-2-1-1-9081">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9081"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9080">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9080"></a></h3>
-<ul><li>One Health implementation
-<ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for animal breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
+<h3 id="new-2-1-1-9081">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9081"></a></h3>
+<ul><li>
+<strong>One Health implementation</strong>
+<ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for veterinary breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
+<li>The CLSI VET09 guideline has been implemented to address cases where veterinary breakpoints are missing (only applies when <code>guideline</code> is set to CLSI)</li>
 <li>The <code>clinical_breakpoints</code> data set contains all these breakpoints, and can be downloaded on our <a href="https://msberends.github.io/AMR/articles/datasets.html">download page</a>.</li>
 <li>The <code>antibiotics</code> data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.</li>
 <li>
@@ -74,34 +76,32 @@
 <li>
 <code><a href="../reference/ab_property.html">ab_url()</a></code> now supports retrieving the WHOCC url of their ATCvet pages</li>
 </ul></li>
-<li>Clinical breakpoints
-<ul><li>EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the <code>clinical_breakpoints</code> data set for usage in <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2024 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
+<li>
+<strong>Major update to fungal taxonomy and tools for mycologists</strong>
+<ul><li>MycoBank has now been integrated as the primary taxonomic source for fungi. The <code>microorganisms</code> data set has been enriched with new columns (<code>mycobank</code>, <code>mycobank_parent</code>, and <code>mycobank_renamed_to</code>) that provide detailed information for fungal species.</li>
+<li>A remarkable addition of over 20,000 new fungal records</li>
+<li>New function <code><a href="../reference/mo_property.html">mo_mycobank()</a></code> to retrieve the MycoBank record number, analogous to existing functions such as <code><a href="../reference/mo_property.html">mo_lpsn()</a></code> and <code><a href="../reference/mo_property.html">mo_gbif()</a></code>.</li>
+<li>The <code><a href="../reference/as.mo.html">as.mo()</a></code> function and all <code>mo_*()</code> functions now includes an <code>only_fungi</code> argument, allowing users to restrict results solely to fungal species. This ensures fungi are prioritised over bacteria during microorganism identification. This can also be set globally with the new <code>AMR_only_fungi</code> option.</li>
+<li>Also updated other kingdoms, welcoming a total of 2,149 new records from 2023 and 927 from 2024.</li>
+</ul></li>
+<li>
+<strong>Updated clinical breakpoints</strong>
+<ul><li>EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the <code>clinical_breakpoints</code> data set for usage in <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2024 is now the new default guideline for all MIC and disk diffusion interpretations.</li>
 <li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code> now brings additional factor levels: “NI” for non-interpretable and “SDD” for susceptible dose-dependent. Currently, the <code>clinical_breakpoints</code> data set contains 24 breakpoints that can return the value “SDD” instead of “I”.</li>
 </ul></li>
-<li>MIC plotting and transforming
+<li>
+<strong>New forms for MIC plotting and transforming</strong>
 <ul><li>New function group <code>scale_*_mic()</code>, namely: <code><a href="../reference/plot.html">scale_x_mic()</a></code>, <code><a href="../reference/plot.html">scale_y_mic()</a></code>, <code><a href="../reference/plot.html">scale_colour_mic()</a></code> and <code><a href="../reference/plot.html">scale_fill_mic()</a></code>. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.</li>
-<li>New function <code><a href="../reference/as.mic.html">rescale_mic()</a></code>, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the <code>scale_*_mic()</code> functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.</li>
+<li>New function <code><a href="../reference/as.mic.html">rescale_mic()</a></code>, which allows users to rescale MIC values to a manually set range. This is the powerhouse behind the <code>scale_*_mic()</code> functions, but it can be used independently to, for instance, compare equality in MIC distributions by rescaling them to the same range first.</li>
 </ul></li>
-<li>Microbiological taxonomy (<code>microorganisms</code> data set) updated to June 2024, with some exciting new features:
-<ul><li>Added MycoBank as the primary taxonomic source for fungi
-<ul><li>The <code>microorganisms</code> data set now contains additional columns <code>mycobank</code>, <code>mycobank_parent</code>, and <code>mycobank_renamed_to</code>
-</li>
-<li>New function <code><a href="../reference/mo_property.html">mo_mycobank()</a></code> to get the MycoBank record number, analogous to existing functions <code><a href="../reference/mo_property.html">mo_lpsn()</a></code> and <code><a href="../reference/mo_property.html">mo_gbif()</a></code>
-</li>
-</ul></li>
-<li>We’ve welcomed over 2,000 records from 2023, over 900 from 2024, and many thousands of new fungi</li>
-</ul></li>
-<li>Improved support for mycologists:
-<ul><li>The <code><a href="../reference/as.mo.html">as.mo()</a></code> function now includes a new argument, <code>only_fungi</code> (TRUE/FALSE), which limits the results to fungi only. Normally, bacteria are often prioritised by the algorithm, but setting <code>only_fungi = TRUE</code> ensures only fungi are returned.</li>
-<li>You can also set this globally using the new R option <code>AMR_only_fungi</code>, e.g., <code>options(AMR_only_fungi = TRUE)</code>.</li>
-</ul></li>
-<li>Other
-<ul><li>New function <code><a href="../reference/mo_property.html">mo_group_members()</a></code> to retrieve the member microorganisms of a microorganism group. For example, <code>mo_group_members("Strep group C")</code> returns a vector of all microorganisms that are in that group.</li>
+<li>
+<strong>Other</strong>
+<ul><li>New function <code><a href="../reference/mo_property.html">mo_group_members()</a></code> to retrieve the member microorganisms of a microorganism group. For example, <code>mo_group_members("Strep group C")</code> returns a vector of all microorganisms that belong to that group.</li>
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-1-1-9080">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9080"></a></h3>
+<h3 id="changed-2-1-1-9081">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9081"></a></h3>
 <ul><li>SIR interpretation
 <ul><li>It is now possible to use column names for argument <code>ab</code>, <code>mo</code>, and <code>uti</code>: <code>as.sir(..., ab = "column1", mo = "column2", uti = "column3")</code>. This greatly improves the flexibility for users.</li>
 <li>Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.</li>
@@ -147,9 +147,16 @@
 <li>Fixed a bug for when <code><a href="../reference/antibiogram.html">antibiogram()</a></code> returns an empty data set</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-2-1-1-9080">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9080"></a></h3>
+<h3 id="other-2-1-1-9081">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9081"></a></h3>
 <ul><li>Greatly updated and expanded documentation</li>
 <li>Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input</li>
+<li>Stopped support for SAS (<code>.xpt</code>) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="older-versions-2-1-1-9081">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9081"></a></h3>
+<p>This changelog only contains changes from AMR v3.0 (October 2024) and later.</p>
+<ul><li>For prior v2 versions, please see <a href="https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md" class="external-link">our v2 archive</a>.</li>
+<li>For prior v1 versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our v1 archive</a>.</li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

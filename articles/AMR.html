@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9080</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9081</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 24 September 2024.</p>
+generated on 29 September 2024.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -151,21 +151,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2024-09-24</td>
+<td align="center">2024-09-29</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2024-09-24</td>
+<td align="center">2024-09-29</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2024-09-24</td>
+<td align="center">2024-09-29</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -279,37 +279,35 @@ taxonomic codes. Let’s check this:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; "E. coli" -&gt; Escherichia coli (B_ESCHR_COLI, 0.688)</span></span>
-<span><span class="co">#&gt; Also matched: Escherichia coli coli (0.643), Escherichia coli</span></span>
-<span><span class="co">#&gt;               expressing (0.611), Enterobacter cowanii (0.600), Eubacterium combesii</span></span>
-<span><span class="co">#&gt;               (0.600), Eggerthia catenaformis (0.591), Eubacterium callanderi</span></span>
-<span><span class="co">#&gt;               (0.591), Enterocloster citroniae (0.587), Eubacterium cylindroides</span></span>
-<span><span class="co">#&gt;               (0.583), Enterococcus casseliflavus (0.577), and Enterobacter cloacae</span></span>
-<span><span class="co">#&gt;               cloacae (0.571)</span></span>
+<span><span class="co">#&gt; Also matched: Enterococcus crotali (0.650), Escherichia coli coli</span></span>
+<span><span class="co">#&gt;               (0.643), Escherichia coli expressing (0.611), Erwinia coffeiphila</span></span>
+<span><span class="co">#&gt;               (0.605), Eubacterium coprostanoligenes (0.603), Enterobacter cowanii</span></span>
+<span><span class="co">#&gt;               (0.600), Eubacterium combesii (0.600), Enterococcus columbae (0.595),</span></span>
+<span><span class="co">#&gt;               Eggerthia catenaformis (0.591), and Enterococcus camelliae (0.591)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; "K. pneumoniae" -&gt; Klebsiella pneumoniae (B_KLBSL_PNMN, 0.786)</span></span>
 <span><span class="co">#&gt; Also matched: Klebsiella pneumoniae ozaenae (0.707), Klebsiella</span></span>
 <span><span class="co">#&gt;               pneumoniae pneumoniae (0.688), Klebsiella pneumoniae rhinoscleromatis</span></span>
-<span><span class="co">#&gt;               (0.658), Klebsiella pasteurii (0.500), Klebsiella planticola (0.500),</span></span>
-<span><span class="co">#&gt;               Kingella potus (0.400), Kluyveromyces pseudotropicale (0.386),</span></span>
-<span><span class="co">#&gt;               Kluyveromyces pseudotropicalis (0.363), Kosakonia pseudosacchari</span></span>
-<span><span class="co">#&gt;               (0.361), and Kluyveromyces pseudotropicalis pseudotropicalis (0.361)</span></span>
+<span><span class="co">#&gt;               (0.658), Kosakonia pseudosacchari (0.542), Kaistella palustris (0.500),</span></span>
+<span><span class="co">#&gt;               Kaistella polysaccharea (0.500), Kingella potus (0.500), Kingella</span></span>
+<span><span class="co">#&gt;               pumchi (0.500), Klebsiella pasteurii (0.500), and Klebsiella planticola</span></span>
+<span><span class="co">#&gt;               (0.500)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; "S. aureus" -&gt; Staphylococcus aureus (B_STPHY_AURS, 0.690)</span></span>
-<span><span class="co">#&gt; Also matched: Staphylococcus aureus aureus (0.643), Staphylococcus</span></span>
-<span><span class="co">#&gt;               argenteus (0.625), Staphylococcus aureus anaerobius (0.625), Salmonella</span></span>
-<span><span class="co">#&gt;               Aurelianis (0.595), Salmonella Aarhus (0.588), Salmonella Amounderness</span></span>
-<span><span class="co">#&gt;               (0.587), Selenomonas artemidis (0.571), Salmonella choleraesuis</span></span>
-<span><span class="co">#&gt;               arizonae (0.562), Streptococcus anginosus anginosus (0.561), and</span></span>
-<span><span class="co">#&gt;               Salmonella Abaetetuba (0.548)</span></span>
+<span><span class="co">#&gt; "S. aureus" -&gt; Streptomyces aureus (B_SMYCS_AURS, 0.711)</span></span>
+<span><span class="co">#&gt; Also matched: Streptomyces azureus (0.700), Staphylococcus aureus</span></span>
+<span><span class="co">#&gt;               (0.690), Streptomyces aureorectus (0.667), Streptomyces albipurpureus</span></span>
+<span><span class="co">#&gt;               (0.654), Streptomyces auratus (0.650), Staphylococcus aureus aureus</span></span>
+<span><span class="co">#&gt;               (0.643), Streptomyces aurantiogriseus (0.643), Streptomyces</span></span>
+<span><span class="co">#&gt;               aureocirculatus (0.643), Streptomyces aureoverticillatus (0.629), and</span></span>
+<span><span class="co">#&gt;               Staphylococcus argenteus (0.625)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; "S. pneumoniae" -&gt; Streptococcus pneumoniae (B_STRPT_PNMN, 0.750)</span></span>
-<span><span class="co">#&gt; Also matched: Streptococcus pseudopneumoniae (0.700), Serratia</span></span>
-<span><span class="co">#&gt;               proteamaculans quinovora (0.545), Streptococcus pseudoporcinus (0.536),</span></span>
-<span><span class="co">#&gt;               Staphylococcus pseudintermedius (0.532), Serratia proteamaculans</span></span>
-<span><span class="co">#&gt;               proteamaculans (0.526), Salmonella Portanigra (0.524), Sphingomonas</span></span>
-<span><span class="co">#&gt;               paucimobilis (0.520), Streptococcus pluranimalium (0.519),</span></span>
-<span><span class="co">#&gt;               Streptococcus constellatus pharyngis (0.514), and Salmonella Pakistan</span></span>
-<span><span class="co">#&gt;               (0.500)</span></span>
+<span><span class="co">#&gt; Also matched: Streptococcus pseudopneumoniae (0.700), Sphingomonas</span></span>
+<span><span class="co">#&gt;               piscinae (0.619), Sphingomonas paeninsulae (0.604), Streptomyces</span></span>
+<span><span class="co">#&gt;               pseudovenezuelae (0.603), Sphingomonas panaciterrae (0.600),</span></span>
+<span><span class="co">#&gt;               Sphingobacterium pakistanense (0.586), Shewanella pneumatophori</span></span>
+<span><span class="co">#&gt;               (0.583), Sphingobacterium pakistanensis (0.583), Sphingomonas palmae</span></span>
+<span><span class="co">#&gt;               (0.579), and Sphingomonas pseudosanguinis (0.571)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Only the first 10 other matches of each record are shown. Run</span></span>
 <span><span class="co">#&gt; print(mo_uncertainties(), n = ...) to view more entries, or save</span></span>
@@ -348,11 +346,11 @@ dplyr:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> P3         A        2014-09-19 B_ESCHR_COLI R     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> P10        A        2015-12-10 B_ESCHR_COLI S     I     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B7         A        2015-03-02 B_ESCHR_COLI S     S     S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> W3         A        2018-03-31 B_STPHY_AURS R     S     R     S    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> W3         A        2018-03-31 B_SMYCS_AURS R     S     R     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> J8         A        2016-06-14 B_ESCHR_COLI R     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> M3         A        2015-10-25 B_ESCHR_COLI R     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> J3         A        2019-06-19 B_ESCHR_COLI S     S     S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> G6         A        2015-04-27 B_STPHY_AURS S     S     S     S    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> G6         A        2015-04-27 B_SMYCS_AURS S     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,990 more rows</span></span></span></code></pre></div>
 <p>This is basically it for the cleaning, time to start the data
 inclusion.</p>
@@ -406,9 +404,9 @@ the methods on the <code><a href="../reference/first_isolate.html">first_isolate
 <span><span class="co">#&gt; ℹ Using column 'patient_id' as input for col_patient_id.</span></span>
 <span><span class="co">#&gt; ℹ Basing inclusion on all antimicrobial results, using a points threshold</span></span>
 <span><span class="co">#&gt;   of 2</span></span>
-<span><span class="co">#&gt; =&gt; Found 2,712 'phenotype-based' first isolates (90.4% of total where a</span></span>
+<span><span class="co">#&gt; =&gt; Found 2,724 'phenotype-based' first isolates (90.8% of total where a</span></span>
 <span><span class="co">#&gt;    microbial ID was available)</span></span></code></pre></div>
-<p>So only 90% is suitable for resistance analysis! We can now filter on
+<p>So only 91% is suitable for resistance analysis! We can now filter on
 it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function, also from the
 <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -418,24 +416,24 @@ it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" cl
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op">&lt;-</span> <span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/first_isolate.html">filter_first_isolate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>So we end up with 2 712 isolates for analysis. Now our data looks
+<p>So we end up with 2 724 isolates for analysis. Now our data looks
 like:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,712 × 9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,724 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> J3         A        2012-11-21 B_ESCHR_COLI R     I     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> R7         A        2018-04-03 B_KLBSL_PNMN R     I     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> P10        A        2015-12-10 B_ESCHR_COLI S     I     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> B7         A        2015-03-02 B_ESCHR_COLI S     S     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> W3         A        2018-03-31 B_STPHY_AURS R     S     R     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> W3         A        2018-03-31 B_SMYCS_AURS R     S     R     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> M3         A        2015-10-25 B_ESCHR_COLI R     S     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> J3         A        2019-06-19 B_ESCHR_COLI S     S     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> G6         A        2015-04-27 B_STPHY_AURS S     S     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> G6         A        2015-04-27 B_SMYCS_AURS S     S     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> P4         A        2011-06-21 B_ESCHR_COLI S     S     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Z1         A        2014-09-05 B_ESCHR_COLI S     S     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,702 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,714 more rows</span></span></span></code></pre></div>
 <p>Time for the analysis.</p>
 </div>
 </div>
@@ -448,29 +446,29 @@ impression, as it comes with support for the new <code>mo</code> and
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">our_data_1st</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   patient_id          hospital              date           </span></span>
-<span><span class="co">#&gt;  Length:2712        Length:2712        Min.   :2011-01-01  </span></span>
-<span><span class="co">#&gt;  Class :character   Class :character   1st Qu.:2013-05-03  </span></span>
-<span><span class="co">#&gt;  Mode  :character   Mode  :character   Median :2015-06-16  </span></span>
-<span><span class="co">#&gt;                                        Mean   :2015-06-21  </span></span>
-<span><span class="co">#&gt;                                        3rd Qu.:2017-08-24  </span></span>
+<span><span class="co">#&gt;  Length:2724        Length:2724        Min.   :2011-01-01  </span></span>
+<span><span class="co">#&gt;  Class :character   Class :character   1st Qu.:2013-04-26  </span></span>
+<span><span class="co">#&gt;  Mode  :character   Mode  :character   Median :2015-06-14  </span></span>
+<span><span class="co">#&gt;                                        Mean   :2015-06-18  </span></span>
+<span><span class="co">#&gt;                                        3rd Qu.:2017-08-21  </span></span>
 <span><span class="co">#&gt;                                        Max.   :2019-12-27  </span></span>
 <span><span class="co">#&gt;    bacteria               AMX                    AMC                </span></span>
 <span><span class="co">#&gt;  Class :mo             Class:sir              Class:sir             </span></span>
-<span><span class="co">#&gt;  &lt;NA&gt;  :0              %S   :41.0% (n=1112)   %S   :52.0% (n=1409)  </span></span>
-<span><span class="co">#&gt;  Unique:4              %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     </span></span>
-<span><span class="co">#&gt;  #1    :B_ESCHR_COLI   %I   :16.1% (n=437)    %I   :12.0% (n=325)   </span></span>
-<span><span class="co">#&gt;  #2    :B_STPHY_AURS   %R   :42.9% (n=1163)   %R   :36.1% (n=978)   </span></span>
+<span><span class="co">#&gt;  &lt;NA&gt;  :0              %S   :41.4% (n=1127)   %S   :52.2% (n=1421)  </span></span>
+<span><span class="co">#&gt;  Unique:5              %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     </span></span>
+<span><span class="co">#&gt;  #1    :B_ESCHR_COLI   %I   :16.1% (n=438)    %I   :12.1% (n=329)   </span></span>
+<span><span class="co">#&gt;  #2    :B_STPHY_AURS   %R   :42.5% (n=1159)   %R   :35.8% (n=974)   </span></span>
 <span><span class="co">#&gt;  #3    :B_STRPT_PNMN   %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     </span></span>
 <span><span class="co">#&gt;     CIP                    GEN                  first        </span></span>
 <span><span class="co">#&gt;  Class:sir              Class:sir              Mode:logical  </span></span>
-<span><span class="co">#&gt;  %S   :51.5% (n=1396)   %S   :59.6% (n=1616)   TRUE:2712     </span></span>
+<span><span class="co">#&gt;  %S   :51.7% (n=1407)   %S   :59.9% (n=1632)   TRUE:2724     </span></span>
 <span><span class="co">#&gt;  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)                    </span></span>
-<span><span class="co">#&gt;  %I   : 6.6% (n=178)    %I   : 3.1% (n=85)                   </span></span>
-<span><span class="co">#&gt;  %R   :42.0% (n=1138)   %R   :37.3% (n=1011)                 </span></span>
+<span><span class="co">#&gt;  %I   : 6.5% (n=178)    %I   : 3.1% (n=85)                   </span></span>
+<span><span class="co">#&gt;  %R   :41.8% (n=1139)   %R   :37.0% (n=1007)                 </span></span>
 <span><span class="co">#&gt;  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">our_data_1st</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 2,712</span></span>
+<span><span class="co">#&gt; Rows: 2,724</span></span>
 <span><span class="co">#&gt; Columns: 9</span></span>
 <span><span class="co">#&gt; $ patient_id <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "J3", "R7", "P10", "B7", "W3", "M3", "J3", "G6", "P4", "Z1"…</span></span>
 <span><span class="co">#&gt; $ hospital   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A",…</span></span>
@@ -485,7 +483,7 @@ impression, as it comes with support for the new <code>mo</code> and
 <span><span class="co"># number of unique values per column:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">our_data_1st</span>, <span class="va">n_distinct</span><span class="op">)</span></span>
 <span><span class="co">#&gt; patient_id   hospital       date   bacteria        AMX        AMC        CIP </span></span>
-<span><span class="co">#&gt;        260          3       1852          4          3          3          3 </span></span>
+<span><span class="co">#&gt;        260          3       1853          5          3          3          3 </span></span>
 <span><span class="co">#&gt;        GEN      first </span></span>
 <span><span class="co">#&gt;          3          1</span></span></code></pre></div>
 <div class="section level3">
@@ -497,23 +495,25 @@ microorganisms:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/count.html">count</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
 <span><span class="co">#&gt;   `mo_name(bacteria)`          n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Escherichia coli          <span style="text-decoration: underline;">1</span>518</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Staphylococcus aureus      730</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Staphylococcus aureus      483</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Streptococcus pneumoniae   426</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae      326</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Streptomyces aureus        247</span></span>
 <span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/count.html">count</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
 <span><span class="co">#&gt;   `mo_name(bacteria)`          n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Escherichia coli          <span style="text-decoration: underline;">1</span>319</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Staphylococcus aureus      676</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Staphylococcus aureus      456</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Streptococcus pneumoniae   400</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae      317</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae      317</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Streptomyces aureus        232</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="select-and-filter-with-antibiotic-selectors">Select and filter with antibiotic selectors<a class="anchor" aria-label="anchor" href="#select-and-filter-with-antibiotic-selectors"></a>
@@ -525,7 +525,7 @@ in:</p>
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ For aminoglycosides() using column 'GEN' (gentamicin)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,712 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,724 × 2</span></span></span>
 <span><span class="co">#&gt;    date       GEN  </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2012-11-21 S    </span></span>
@@ -538,100 +538,100 @@ in:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2015-04-27 S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2011-06-21 S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2014-09-05 S    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,702 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,714 more rows</span></span></span>
 <span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ For betalactams() using columns 'AMX' (amoxicillin) and 'AMC'</span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,712 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,724 × 3</span></span></span>
 <span><span class="co">#&gt;    bacteria     AMX   AMC  </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> B_ESCHR_COLI R     I    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> B_KLBSL_PNMN R     I    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> B_ESCHR_COLI S     I    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> B_ESCHR_COLI S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B_STPHY_AURS R     S    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B_SMYCS_AURS R     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> B_ESCHR_COLI R     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> B_ESCHR_COLI S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> B_STPHY_AURS S     S    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> B_SMYCS_AURS S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> B_ESCHR_COLI S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> B_ESCHR_COLI S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,702 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,714 more rows</span></span></span>
 <span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,712 × 5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,724 × 5</span></span></span>
 <span><span class="co">#&gt;    bacteria     AMX   AMC   CIP   GEN  </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> B_ESCHR_COLI R     I     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> B_KLBSL_PNMN R     I     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> B_ESCHR_COLI S     I     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> B_ESCHR_COLI S     S     S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B_STPHY_AURS R     S     R     S    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B_SMYCS_AURS R     S     R     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> B_ESCHR_COLI R     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> B_ESCHR_COLI S     S     S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> B_STPHY_AURS S     S     S     S    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> B_SMYCS_AURS S     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> B_ESCHR_COLI S     S     S     S    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> B_ESCHR_COLI S     S     S     S    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,702 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,714 more rows</span></span></span>
 <span></span>
 <span><span class="co"># filtering using AB selectors is also possible:</span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ For aminoglycosides() using column 'GEN' (gentamicin)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,011 × 9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,007 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> J5         A        2017-12-25 B_STRPT_PNMN R     S     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> X1         A        2017-07-04 B_STPHY_AURS R     S     S     R     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> X1         A        2017-07-04 B_SMYCS_AURS R     S     S     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> B3         A        2016-07-24 B_ESCHR_COLI S     S     S     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> V7         A        2012-04-03 B_ESCHR_COLI S     S     S     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> C9         A        2017-03-23 B_ESCHR_COLI S     S     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> R1         A        2018-06-10 B_STPHY_AURS S     S     S     R     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> R1         A        2018-06-10 B_SMYCS_AURS S     S     S     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> S2         A        2013-07-19 B_STRPT_PNMN S     S     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> P5         A        2019-03-09 B_STPHY_AURS S     S     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q8         A        2019-08-10 B_STPHY_AURS S     S     S     R     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> P5         A        2019-03-09 B_SMYCS_AURS S     S     S     R     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q8         A        2019-08-10 B_SMYCS_AURS S     S     S     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> K5         A        2013-03-15 B_STRPT_PNMN S     S     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,001 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 997 more rows</span></span></span>
 <span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ For betalactams() using columns 'AMX' (amoxicillin) and 'AMC'</span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 483 × 9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 479 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> M7         A        2013-07-22 B_STRPT_PNMN R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> R10        A        2013-12-20 B_STPHY_AURS R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> R7         A        2015-10-25 B_STPHY_AURS R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> R8         A        2019-10-25 B_STPHY_AURS R     R     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> R10        A        2013-12-20 B_SMYCS_AURS R     R     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> R7         A        2015-10-25 B_SMYCS_AURS R     R     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> R8         A        2019-10-25 B_SMYCS_AURS R     R     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B6         A        2016-11-20 B_ESCHR_COLI R     R     R     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> I7         A        2015-08-19 B_ESCHR_COLI R     R     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> N3         A        2014-12-29 B_STRPT_PNMN R     R     R     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Q2         A        2019-09-22 B_ESCHR_COLI R     R     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> X7         A        2011-03-20 B_ESCHR_COLI R     R     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> V1         A        2018-08-07 B_STPHY_AURS R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 473 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> C5         A        2015-08-30 B_KLBSL_PNMN R     R     S     R     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 469 more rows</span></span></span>
 <span></span>
 <span><span class="co"># even works in base R (since R 3.0):</span></span>
 <span><span class="va">our_data_1st</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt; ℹ For betalactams() using columns 'AMX' (amoxicillin) and 'AMC'</span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 483 × 9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 479 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> M7         A        2013-07-22 B_STRPT_PNMN R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> R10        A        2013-12-20 B_STPHY_AURS R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> R7         A        2015-10-25 B_STPHY_AURS R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> R8         A        2019-10-25 B_STPHY_AURS R     R     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> R10        A        2013-12-20 B_SMYCS_AURS R     R     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> R7         A        2015-10-25 B_SMYCS_AURS R     R     S     S     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> R8         A        2019-10-25 B_SMYCS_AURS R     R     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B6         A        2016-11-20 B_ESCHR_COLI R     R     R     R     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> I7         A        2015-08-19 B_ESCHR_COLI R     R     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> N3         A        2014-12-29 B_STRPT_PNMN R     R     R     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Q2         A        2019-09-22 B_ESCHR_COLI R     R     S     S     TRUE </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> X7         A        2011-03-20 B_ESCHR_COLI R     R     S     R     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> V1         A        2018-08-07 B_STPHY_AURS R     R     S     S     TRUE </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 473 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> C5         A        2015-08-30 B_KLBSL_PNMN R     R     S     R     TRUE </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 469 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="generate-antibiograms">Generate antibiograms<a class="anchor" aria-label="anchor" href="#generate-antibiograms"></a>
@@ -1230,7 +1230,7 @@ I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equa
 own:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.4288348</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.4254772</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -1240,9 +1240,9 @@ own:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   hospital amoxicillin</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A              0.342</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A              0.336</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B              0.564</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C              0.372</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C              0.370</span></span></code></pre></div>
 <hr>
 <p><em>Author: Dr. Matthijs Berends, 26th Feb 2023</em></p>
 </div>
