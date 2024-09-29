@@ -18,7 +18,7 @@ microorganisms.codes
 A data set containing commonly used codes for microorganisms, from laboratory systems and \href{https://whonet.org}{WHONET}. Define your own with \code{\link[=set_mo_source]{set_mo_source()}}. They will all be searched when using \code{\link[=as.mo]{as.mo()}} and consequently all the \code{\link[=mo_property]{mo_*}} functions.
 }
 \details{
-Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 \examples{
 microorganisms.codes

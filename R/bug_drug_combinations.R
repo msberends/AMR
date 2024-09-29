@@ -31,7 +31,7 @@
 #'
 #' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publishable/printable format, see *Examples*.
 #' @inheritParams eucast_rules
-#' @param combine_SI a [logical] to indicate whether values S and I should be summed, so resistance will be based on only R - the default is `TRUE`
+#' @param combine_SI a [logical] to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is `TRUE`
 #' @param add_ab_group a [logical] to indicate where the group of the antimicrobials must be included as a first column
 #' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
 #' @param FUN the function to call on the `mo` column to transform the microorganism codes - the default is [mo_shortname()]

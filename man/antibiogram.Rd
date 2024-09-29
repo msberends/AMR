@@ -69,7 +69,7 @@ antibiogram(
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{a \link{logical} to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (default is \code{TRUE})}
+\item{combine_SI}{a \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE})}
 
 \item{sep}{a separating character for antibiotic columns in combination antibiograms}
 

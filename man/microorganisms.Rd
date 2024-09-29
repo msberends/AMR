@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 70 547 Taxonomic Records of Microorganisms}
+\title{Data Set with 78 678 Taxonomic Records of Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 70 547 observations and 26 variables:
+A \link[tibble:tibble]{tibble} with 78 678 observations and 26 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{\strong{This is a unique identifier.}}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{\strong{This is a unique identifier.}}
@@ -15,13 +15,13 @@ A \link[tibble:tibble]{tibble} with 70 547 observations and 26 variables:
 \item \code{ref}\cr Author(s) and year of related scientific publication. This contains only the \emph{first surname} and year of the \emph{latest} authors, e.g. "Wallis \emph{et al.} 2006 \emph{emend.} Smith and Jones 2018" becomes "Smith \emph{et al.}, 2018". This field is directly retrieved from the source specified in the column \code{source}. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.
 \item \code{oxygen_tolerance} \cr Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 68.3\% of all ~39 000 bacteria in the data set contain an oxygen tolerance.
 \item \code{source}\cr Either "GBIF", "LPSN", "MycoBank", or "manually added" (see \emph{Source})
-\item \code{lpsn}\cr Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set. \emph{\strong{This is a unique identifier}}, though available for only ~32 000 records.
+\item \code{lpsn}\cr Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set. \emph{\strong{This is a unique identifier}}, though available for only ~33 000 records.
 \item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
 \item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
-\item \code{mycobank}\cr Identifier ('MycoBank #') of MycoBank. \emph{\strong{This is a unique identifier}}, though available for only ~15 000 records.
+\item \code{mycobank}\cr Identifier ('MycoBank #') of MycoBank. \emph{\strong{This is a unique identifier}}, though available for only ~18 000 records.
 \item \code{mycobank_parent}\cr MycoBank identifier of the parent taxon
 \item \code{mycobank_renamed_to}\cr MycoBank identifier of the currently valid taxon
-\item \code{gbif}\cr Identifier ('taxonID') of Global Biodiversity Information Facility (GBIF). \emph{\strong{This is a unique identifier}}, though available for only ~46 000 records.
+\item \code{gbif}\cr Identifier ('taxonID') of Global Biodiversity Information Facility (GBIF). \emph{\strong{This is a unique identifier}}, though available for only ~49 000 records.
 \item \code{gbif_parent}\cr GBIF identifier of the parent taxon
 \item \code{gbif_renamed_to}\cr GBIF identifier of the currently valid taxon
 \item \code{prevalence}\cr Prevalence of the microorganism based on Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}), see \code{\link[=mo_matching_score]{mo_matching_score()}} for the full explanation
@@ -67,10 +67,10 @@ For example, \emph{Staphylococcus pettenkoferi} was described for the first time
 Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://www.mycobank.org}{MycoBank}, and \href{https://www.gbif.org}{GBIF} are:
 \itemize{
 \item All ~39 000 (sub)species from the kingdoms of Archaea and Bacteria
-\item ~20 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
+\item ~28 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
 \item ~8 100 (sub)species from the kingdom of Protozoa
-\item ~1 700 (sub)species from 45 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
-\item All ~17 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
+\item ~1 600 (sub)species from 39 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
+\item All ~22 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 \item The identifier of the parent taxons
 \item The year and first author of the related scientific publication
@@ -91,7 +91,7 @@ The syntax used to transform the original data to a cleansed \R format, can be \
 
 \subsection{Direct download}{
 
-Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 }
 

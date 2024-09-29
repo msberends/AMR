@@ -35,7 +35,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{a \link{logical} to indicate whether values S and I should be summed, so resistance will be based on only R - the default is \code{TRUE}}
+\item{combine_SI}{a \link{logical} to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is \code{TRUE}}
 
 \item{add_ab_group}{a \link{logical} to indicate where the group of the antimicrobials must be included as a first column}
 

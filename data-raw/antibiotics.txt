@@ -76,7 +76,7 @@
 "CPI"	5486182	"Cefetamet pivoxil"	"Cephalosporins (3rd gen.)"	"NA"			""	"cefetamet pivoxyl,globocef"					""
 "CCL"	71719688	"Cefetecol"	"Cephalosporins (4th gen.)"	"NA"			"cefcatacol"	"cefetecol,cefetecol anhydrous"					""
 "CZL"	193956	"Cefetrizole"	"Cephalosporins (unclassified gen.)"	"NA"			""	"cefetrizole,cefetrizolum"					""
-"FDC"	77843966	"Cefiderocol"	"Other antibacterials"	"J01DI04"			""	"cefiderocol"			6	"g"	"95767-0,99280-0,99503-5"
+"FDC"	77843966	"Cefiderocol"	"Cephalosporins (unclassified gen.)"	"J01DI04"			""	"cefiderocol"			6	"g"	"95767-0,99280-0,99503-5"
 "CFM"	5362065	"Cefixime"	"Cephalosporins (3rd gen.)"	"J01DD08"	"Other beta-lactam antibacterials"	"Third-generation cephalosporins"	"cfe,cfix,cfxm,dcfm,fix,ix"	"anhydrous cefixime,cefixim,cefixima,cefixime,cefixime anhydrous,cefixime hydrate,cefiximum,cefixoral,cefspan,cephoral,citropen,denvar,necopen,oroken,suprax,tricef,unixime"	0.4	"g"			"16567-0,18880-5,25236-1,35766-5,79-4,80-2,81-0,82-8"
 "CEO"		"Cefixime/ornidazole"	"Other antibacterials"	"J01RA15"	"Combinations of antibacterials"	"Combinations of antibacterials"	""	""					""
 "CMX"	9570757	"Cefmenoxime"	"Cephalosporins (3rd gen.)"	"J01DD05,S01AA31,S02AA18"	"Other beta-lactam antibacterials"	"Third-generation cephalosporins"	""	"bestron,cefmax,cefmenoxima,cefmenoxime,cefmenoximum"			2	"g"	"32375-8,54174-8,54203-5,55641-5"

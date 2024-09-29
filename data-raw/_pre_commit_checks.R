@@ -158,10 +158,11 @@ pre_commit_lst$MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms
     "group a", "group b", "group c", "group g"
   ))]
 pre_commit_lst$MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
-pre_commit_lst$MO_PREVALENT_GENERA <- c(
+pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Absidia",
   "Acanthamoeba",
   "Acremonium",
+  "Actinomucor",
   "Aedes",
   "Alternaria",
   "Amoeba",
@@ -175,20 +176,31 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Aureobasidium",
   "Basidiobolus",
   "Beauveria",
+  "Bipolaris",
+  "Blastobotrys",
   "Blastocystis",
   "Blastomyces",
   "Candida",
   "Capillaria",
   "Chaetomium",
+  "Chilomastix",
   "Chrysonilia",
   "Chrysosporium",
   "Cladophialophora",
   "Cladosporium",
+  "Clavispora",
+  "Coccidioides",
+  "Cokeromyces",
   "Conidiobolus",
+  "Coniochaeta",
   "Contracaecum",
   "Cordylobia",
   "Cryptococcus",
+  "Cryptosporidium",
+  "Cunninghamella",
   "Curvularia",
+  "Cyberlindnera",
+  "Debaryozyma",
   "Demodex",
   "Dermatobia",
   "Dientamoeba",
@@ -197,6 +209,8 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Echinostoma",
   "Entamoeba",
   "Enterobius",
+  "Epidermophyton",
+  "Exidia",
   "Exophiala",
   "Exserohilum",
   "Fasciola",
@@ -204,6 +218,7 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Fusarium",
   "Geotrichum",
   "Giardia",
+  "Graphium",
   "Haloarcula",
   "Halobacterium",
   "Halococcus",
@@ -212,16 +227,19 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Heterophyes",
   "Histomonas",
   "Histoplasma",
+  "Hortaea",
   "Hymenolepis",
   "Hypomyces",
   "Hysterothylacium",
   "Kloeckera",
   "Kluyveromyces",
   "Kodamaea",
+  "Lacazia",
   "Leishmania",
   "Lichtheimia",
   "Lodderomyces",
   "Lomentospora",
+  "Madurella",
   "Malassezia",
   "Malbranchea",
   "Metagonimus",
@@ -232,6 +250,7 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Mortierella",
   "Mucor",
   "Mycocentrospora",
+  "Nannizzia",
   "Necator",
   "Nectria",
   "Ochroconis",
@@ -239,8 +258,12 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Oidiodendron",
   "Opisthorchis",
   "Paecilomyces",
+  "Paracoccidioides",
   "Pediculus",
   "Penicillium",
+  "Phaeoacremonium",
+  "Phaeomoniella",
+  "Phialophora",
   "Phlebotomus",
   "Phoma",
   "Pichia",
@@ -252,24 +275,34 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Pseudoscopulariopsis",
   "Pseudoterranova",
   "Pulex",
+  "Purpureocillium",
+  "Quambalaria",
+  "Rhinocladiella",
   "Rhizomucor",
   "Rhizopus",
   "Rhodotorula",
   "Saccharomyces",
+  "Saksenaea",
   "Saprochaete",
   "Sarcoptes",
   "Scedosporium",
+  "Schistosoma",
+  "Schizosaccharomyces",
   "Scolecobasidium",
   "Scopulariopsis",
   "Scytalidium",
   "Spirometra",
   "Sporobolomyces",
+  "Sporopachydermia",
+  "Sporothrix",
   "Sporotrichum",
   "Stachybotrys",
   "Strongyloides",
+  "Syncephalastrum",
   "Syngamus",
   "Taenia",
   "Talaromyces",
+  "Teleomorph",
   "Toxocara",
   "Trichinella",
   "Trichobilharzia",
@@ -283,8 +316,15 @@ pre_commit_lst$MO_PREVALENT_GENERA <- c(
   "Trombicula",
   "Trypanosoma",
   "Tunga",
+  "Ulocladium",
+  "Ustilago",
   "Verticillium",
-  "Wuchereria"
+  "Wallemia",
+  "Wangiella",
+  "Wickerhamomyces",
+  "Wuchereria",
+  "Yarrowia",
+  "Zygosaccharomyces"
 )
 
 # antibiotic groups
@@ -450,7 +490,6 @@ if (changed_md5(clin_break)) {
   write_md5(clin_break)
   try(saveRDS(clin_break, "data-raw/clinical_breakpoints.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(clinical_breakpoints, "data-raw/clinical_breakpoints.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_xpt(clin_break, "data-raw/clinical_breakpoints.xpt"), silent = TRUE)
   try(haven::write_sav(clin_break, "data-raw/clinical_breakpoints.sav"), silent = TRUE)
   try(haven::write_dta(clin_break, "data-raw/clinical_breakpoints.dta"), silent = TRUE)
   try(openxlsx2::write_xlsx(clin_break, "data-raw/clinical_breakpoints.xlsx"), silent = TRUE)
@@ -466,7 +505,6 @@ if (changed_md5(microorganisms)) {
   mo <- microorganisms
   mo$snomed <- max_50_snomed
   mo <- dplyr::mutate_if(mo, ~ !is.numeric(.), as.character)
-  try(haven::write_xpt(mo, "data-raw/microorganisms.xpt"), silent = TRUE)
   try(haven::write_sav(mo, "data-raw/microorganisms.sav"), silent = TRUE)
   try(haven::write_dta(mo, "data-raw/microorganisms.dta"), silent = TRUE)
   mo_all_snomed <- microorganisms %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
@@ -481,7 +519,6 @@ if (changed_md5(microorganisms.codes)) {
   write_md5(microorganisms.codes)
   try(saveRDS(microorganisms.codes, "data-raw/microorganisms.codes.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(microorganisms.codes, "data-raw/microorganisms.codes.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_xpt(microorganisms.codes, "data-raw/microorganisms.codes.xpt"), silent = TRUE)
   try(haven::write_sav(microorganisms.codes, "data-raw/microorganisms.codes.sav"), silent = TRUE)
   try(haven::write_dta(microorganisms.codes, "data-raw/microorganisms.codes.dta"), silent = TRUE)
   try(openxlsx2::write_xlsx(microorganisms.codes, "data-raw/microorganisms.codes.xlsx"), silent = TRUE)
@@ -494,7 +531,6 @@ if (changed_md5(microorganisms.groups)) {
   write_md5(microorganisms.groups)
   try(saveRDS(microorganisms.groups, "data-raw/microorganisms.groups.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(microorganisms.groups, "data-raw/microorganisms.groups.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_xpt(microorganisms.groups, "data-raw/microorganisms.groups.xpt"), silent = TRUE)
   try(haven::write_sav(microorganisms.groups, "data-raw/microorganisms.groups.sav"), silent = TRUE)
   try(haven::write_dta(microorganisms.groups, "data-raw/microorganisms.groups.dta"), silent = TRUE)
   try(openxlsx2::write_xlsx(microorganisms.groups, "data-raw/microorganisms.groups.xlsx"), silent = TRUE)
@@ -507,7 +543,6 @@ if (changed_md5(ab)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('antibiotics')} to {usethis::ui_value('data-raw/')}"))
   write_md5(ab)
   try(saveRDS(antibiotics, "data-raw/antibiotics.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(haven::write_xpt(ab, "data-raw/antibiotics.xpt"), silent = TRUE)
   try(haven::write_sav(ab, "data-raw/antibiotics.sav"), silent = TRUE)
   try(haven::write_dta(ab, "data-raw/antibiotics.dta"), silent = TRUE)
   ab_lists <- antibiotics %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
@@ -522,7 +557,6 @@ if (changed_md5(av)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('antivirals')} to {usethis::ui_value('data-raw/')}"))
   write_md5(av)
   try(saveRDS(antivirals, "data-raw/antivirals.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(haven::write_xpt(av, "data-raw/antivirals.xpt"), silent = TRUE)
   try(haven::write_sav(av, "data-raw/antivirals.sav"), silent = TRUE)
   try(haven::write_dta(av, "data-raw/antivirals.dta"), silent = TRUE)
   av_lists <- antivirals %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
@@ -543,7 +577,6 @@ if (changed_md5(intrinsicR)) {
   write_md5(intrinsicR)
   try(saveRDS(intrinsicR, "data-raw/intrinsic_resistant.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(intrinsicR, "data-raw/intrinsic_resistant.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_xpt(intrinsicR, "data-raw/intrinsic_resistant.xpt"), silent = TRUE)
   try(haven::write_sav(intrinsicR, "data-raw/intrinsic_resistant.sav"), silent = TRUE)
   try(haven::write_dta(intrinsicR, "data-raw/intrinsic_resistant.dta"), silent = TRUE)
   try(openxlsx2::write_xlsx(intrinsicR, "data-raw/intrinsic_resistant.xlsx"), silent = TRUE)
@@ -556,7 +589,6 @@ if (changed_md5(dosage)) {
   write_md5(dosage)
   try(saveRDS(dosage, "data-raw/dosage.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(dosage, "data-raw/dosage.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_xpt(dosage, "data-raw/dosage.xpt"), silent = TRUE)
   try(haven::write_sav(dosage, "data-raw/dosage.sav"), silent = TRUE)
   try(haven::write_dta(dosage, "data-raw/dosage.dta"), silent = TRUE)
   try(openxlsx2::write_xlsx(dosage, "data-raw/dosage.xlsx"), silent = TRUE)

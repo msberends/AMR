@@ -92,7 +92,7 @@ navbar:
       - text: "Work with WHONET Data"
         icon: "fa-globe-americas"
         href: "articles/WHONET.html"
-      # - text: "Import Data From SPSS/SAS/Stata"
+      # - text: "Import Data From SPSS/Stata"
       #   icon: "fa-file-upload"
       #   href: "articles/SPSS.html"
       - text: "Apply Eucast Rules"

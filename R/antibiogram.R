@@ -42,7 +42,7 @@
 #' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param language language to translate text, which defaults to the system language (see [get_AMR_locale()])
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-#' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S or I, instead of only S (default is `TRUE`)
+#' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`)
 #' @param sep a separating character for antibiotic columns in combination antibiograms
 #' @param info 	a [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
 #' @param object an [antibiogram()] object

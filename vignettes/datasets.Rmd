@@ -80,7 +80,7 @@ download_txt <- function(filename) {
       create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
       create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
       create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
-      create_txt(xpt, "xpt", "SAS transport (XPT) file", file.exists(xpt)),
+      # create_txt(xpt, "xpt", "SAS transport (XPT) file", file.exists(xpt)),
       create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
       create_txt(stata, "dta", "Stata DTA file", file.exists(stata))
     )
@@ -111,7 +111,7 @@ print_df <- function(x, rows = 6) {
 }
 ```
 
-All reference data (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
+All reference data (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
 On this page, we explain how to download them and how the structure of the data sets look like. 
 
@@ -123,7 +123,7 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 `r download_txt("microorganisms")`
 
-**NOTE: The exported files for SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Their file structures and compression techniques are very inefficient. Advice? Use R instead. It's free and much better in many ways.
+**NOTE: The exported files for SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Their file structures and compression techniques are very inefficient. Advice? Use R instead. It's free and much better in many ways.
 
 The tab-separated text file and Microsoft Excel workbook both contain all SNOMED codes as comma separated values.
 
@@ -166,7 +166,7 @@ This data set is in R available as `antibiotics`, after you load the `AMR` packa
 
 `r download_txt("antibiotics")`
 
-The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stata files all contain the ATC codes, common abbreviations, trade names and LOINC codes as comma separated values.
+The tab-separated text, Microsoft Excel, SPSS, and Stata files all contain the ATC codes, common abbreviations, trade names and LOINC codes as comma separated values.
 
 ### Source
 
@@ -194,7 +194,7 @@ This data set is in R available as `antivirals`, after you load the `AMR` packag
 
 `r download_txt("antivirals")`
 
-The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stata files all contain the trade names and LOINC codes as comma separated values.
+The tab-separated text, Microsoft Excel, SPSS, and Stata files all contain the trade names and LOINC codes as comma separated values.
 
 ### Source
 

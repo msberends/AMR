@@ -1563,6 +1563,8 @@ add_MO_lookup_to_AMR_env <- function() {
     # special for Salmonella - they have cities as subspecies but not the species (enterica) in the fullname:
     MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
 
+    MO_lookup$genus_lower <- tolower(MO_lookup$genus)
+    
     MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
     MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
     MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars

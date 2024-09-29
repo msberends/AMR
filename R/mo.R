@@ -315,12 +315,15 @@ as.mo <- function(x,
       
       # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
-      
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
       if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
         if (paste(x_parts[1:2], collapse = " ") %in% MO_lookup_current$fullname_lower) {
           filtr <- which(MO_lookup_current$fullname_lower %like% paste(x_parts[1:2], collapse = " "))
+        } else if (x_parts[1] %in% MO_lookup_current$genus_lower && !paste(x_parts[1:2], collapse = " ") %in% MO_lookup_current$fullname_lower) {
+          # for a known genus, but unknown (sub)species
+          filtr <- which(MO_lookup_current$genus_lower == x_parts[1])
+          minimum_matching_score <- 0.05
         } else if (nchar(gsub("[^a-z]", "", x_parts[1], perl = TRUE)) <= 3) {
           filtr <- which(MO_lookup_current$full_first == substr(x_parts[1], 1, 1) &
                            (MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
@@ -953,11 +956,15 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
                    ),
                    collapse = "\n"
                  ),
-                 # Add note if result was coerced to accepted taxonomic name
-                 ifelse(x[i, ]$keep_synonyms == FALSE & x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")],
+                 ifelse(x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")],
                         paste0(
                           strrep(" ", nchar(x[i, ]$original_input) + 6),
-                          font_red(paste0("This outdated taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL)
+                          ifelse(x[i, ]$keep_synonyms == FALSE,
+                                 # Add note if result was coerced to accepted taxonomic name
+                                 font_red(paste0("This outdated taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL),
+                                 # Or add note if result is currently another taxonomic name
+                                 font_red(paste0(font_bold("Note: "), "The current name is ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", AMR_env$MO_lookup$ref[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], ")."), collapse = NULL)
+                          )
                         ),
                         ""
                  ),

@@ -1,4 +1,4 @@
-# AMR 2.1.1.9080
+# AMR 2.1.1.9081
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -9,28 +9,27 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over a year ago
 
 ## New
-* One Health implementation
-  * Function `as.sir()` now has extensive support for animal breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
+* **One Health implementation**
+  * Function `as.sir()` now has extensive support for veterinary breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
+  * The CLSI VET09 guideline has been implemented to address cases where veterinary breakpoints are missing (only applies when `guideline` is set to CLSI)
   * The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://msberends.github.io/AMR/articles/datasets.html).
   * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
-* Clinical breakpoints
-  * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disks diffusion interpretations.
+* **Major update to fungal taxonomy and tools for mycologists**
+  * MycoBank has now been integrated as the primary taxonomic source for fungi. The `microorganisms` data set has been enriched with new columns (`mycobank`, `mycobank_parent`, and `mycobank_renamed_to`) that provide detailed information for fungal species.
+  * A remarkable addition of over 20,000 new fungal records
+  * New function `mo_mycobank()` to retrieve the MycoBank record number, analogous to existing functions such as `mo_lpsn()` and `mo_gbif()`.
+  * The `as.mo()` function and all `mo_*()` functions now includes an `only_fungi` argument, allowing users to restrict results solely to fungal species. This ensures fungi are prioritised over bacteria during microorganism identification. This can also be set globally with the new `AMR_only_fungi` option.
+  * Also updated other kingdoms, welcoming a total of 2,149 new records from 2023 and 927 from 2024.
+* **Updated clinical breakpoints**
+  * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disk diffusion interpretations.
   * `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Currently, the `clinical_breakpoints` data set contains 24 breakpoints that can return the value "SDD" instead of "I".
-* MIC plotting and transforming
+* **New forms for MIC plotting and transforming**
   * New function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
-  * New function `rescale_mic()`, which allows to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used by users directly to e.g. compare equality in MIC distributions by rescaling them to the same range first.
-* Microbiological taxonomy (`microorganisms` data set) updated to June 2024, with some exciting new features:
-  * Added MycoBank as the primary taxonomic source for fungi
-    * The `microorganisms` data set now contains additional columns `mycobank`, `mycobank_parent`, and `mycobank_renamed_to`
-    * New function `mo_mycobank()` to get the MycoBank record number, analogous to existing functions `mo_lpsn()` and `mo_gbif()`
-  * We've welcomed over 2,000 records from 2023, over 900 from 2024, and many thousands of new fungi
-* Improved support for mycologists:
-  * The `as.mo()` function now includes a new argument, `only_fungi` (TRUE/FALSE), which limits the results to fungi only. Normally, bacteria are often prioritised by the algorithm, but setting `only_fungi = TRUE` ensures only fungi are returned. 
-  * You can also set this globally using the new R option `AMR_only_fungi`, e.g., `options(AMR_only_fungi = TRUE)`.
-* Other
-  * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that are in that group.
+  * New function `rescale_mic()`, which allows users to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used independently to, for instance, compare equality in MIC distributions by rescaling them to the same range first.
+* **Other**
+  * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
 
 ## Changed
 * SIR interpretation
@@ -68,9 +67,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
 ## Other
 * Greatly updated and expanded documentation
 * Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
+* Stopped support for SAS (`.xpt`) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.
 
-
-# Older Versions
+## Older Versions
 
 This changelog only contains changes from AMR v3.0 (October 2024) and later.
 
