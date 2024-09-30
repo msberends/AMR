@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9081</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9083</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,13 @@
 <span class="r-in"><span><span class="co"># this will result in "Enterobacter cloacae cloacae",</span></span></span>
 <span class="r-in"><span><span class="co"># since it resembles the input best:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Enterobacter asburiae/cloacae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacter asburiae"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No hits found for "Enterobacter asburiae/cloacae" with</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> minimum_matching_score = NULL (=0.538). Try setting this value lower or</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> even to 0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The following input could not be coerced and was returned as "UNKNOWN":</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Enterobacter asburiae/cloacae".</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> You can retrieve this list with mo_failures().</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(unknown name)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># now add a custom entry - it will be considered by as.mo() and</span></span></span>
 <span class="r-in"><span><span class="co"># all mo_*() functions</span></span></span>
@@ -231,11 +237,26 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Added Citrobacter braakii complex and Citrobacter freundii complex to the</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   internal microorganisms data set.</span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C. freundii complex"</span>, <span class="st">"C. braakii complex"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Citrobacter freundii complex" "Citrobacter braakii complex" </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No hits found for "C. freundii complex" with minimum_matching_score = NULL</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (=0.16). Try setting this value lower or even to 0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The following input could not be coerced and was returned as "UNKNOWN": "C.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> freundii complex".</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> You can retrieve this list with mo_failures().</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(unknown name)"              "Citrobacter braakii complex"</span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_species</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C. freundii complex"</span>, <span class="st">"C. braakii complex"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "freundii complex" "braakii complex" </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No hits found for "C. freundii complex" with minimum_matching_score = NULL</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (=0.16). Try setting this value lower or even to 0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The following input could not be coerced and was returned as "UNKNOWN": "C.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> freundii complex".</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> You can retrieve this list with mo_failures().</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(unknown species)" "braakii complex"  </span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C. freundii complex"</span>, <span class="st">"C. braakii complex"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gram-negative" "Gram-negative"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No hits found for "C. freundii complex" with minimum_matching_score = NULL</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (=0.16). Try setting this value lower or even to 0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The following input could not be coerced and was returned as "UNKNOWN": "C.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> freundii complex".</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> You can retrieve this list with mo_failures().</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA              "Gram-negative"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
