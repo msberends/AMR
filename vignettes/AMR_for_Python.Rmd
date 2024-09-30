@@ -1,0 +1,170 @@
+---
+title: "AMR for Python"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{AMR for Python}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE, results = 'markup'}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 5
+)
+```
+
+# Introduction
+
+The `AMR` package for R is an incredible tool for antimicrobial resistance (AMR) data analysis, providing extensive functionality for working with microbial and antimicrobial properties. But what if you're working in Python and still want to benefit from the robust features of `AMR`?
+
+Luckily, there is no need to port the package to Python! With the help of `rpy2`, a powerful Python package, you can easily access R from Python and call functions from the `AMR` package to process your own data. This post will guide you through setting up `rpy2` and show you how to use R functions from `AMR` in Python to supercharge your antimicrobial resistance analysis.
+
+# What is `rpy2`?
+
+`rpy2` is a Python library that allows Python users to run R code within their Python scripts. Essentially, it acts as a bridge between the two languages, allowing you to tap into the rich ecosystem of R libraries (like `AMR`) while maintaining the flexibility of Python.
+
+## Key Features of `rpy2`:
+- Seamlessly call R functions from Python.
+- Convert R data structures into Python data structures like pandas DataFrames.
+- Leverage the full power of R libraries without leaving your Python environment.
+
+# Setting Up `rpy2`
+
+Before diving into the examples, you’ll need to install both R and `rpy2`. Here's a step-by-step guide on setting things up.
+
+## Step 1: Install R
+
+Ensure that you have R installed on your system. You can download R from [CRAN](https://cran.r-project.org/).
+
+## Step 2: Install the `AMR` package in R
+
+Once you have R installed, open your R console and install the `AMR` package:
+
+```r
+install.packages("AMR")
+```
+
+You can also install the latest development version of the `AMR` package if needed:
+
+```r
+install.packages("AMR", repos = "https://msberends.r-universe.dev")
+```
+
+## Step 3: Install `rpy2` in Python
+
+To install `rpy2`, simply run the following command in your terminal:
+
+```bash
+pip install rpy2
+```
+
+## Step 4: Test `rpy2` Installation
+
+To ensure everything is set up correctly, you can test your installation by running the following Python script:
+
+```python
+import rpy2.robjects as ro
+
+# Test a simple R function from Python
+ro.r('1 + 1')
+```
+
+If this returns `2`, you're good to go!
+
+# Working with AMR in Python using `rpy2`
+
+Now that we have `rpy2` set up, let’s walk through some practical examples of using the `AMR` package within Python.
+
+## Example 1: Loading `AMR` and Example Data
+
+Let’s start by converting taxonomic user input to valid taxonomy using the `AMR` package, from within Python:
+
+```python
+import pandas as pd
+import rpy2.robjects as ro
+from rpy2.robjects.packages import importr
+from rpy2.robjects import pandas2ri
+
+# Enable conversion between pandas and R data frames
+pandas2ri.activate()
+
+# Load the AMR package from R
+amr = importr('AMR')
+
+# Example user dataset in Python
+data = pd.DataFrame({
+    'microorganism': ['E. coli', 'S. aureus', 'P. aeruginosa', 'K. pneumoniae']
+})
+
+# Convert the Python DataFrame to an R DataFrame
+r_data = pandas2ri.py2rpy(data)
+
+# Apply mo_name() from the AMR package to the 'microorganism' column
+ro.globalenv['r_data'] = r_data
+ro.r('r_data$mo_name <- mo_name(r_data$microorganism)')
+
+# Retrieve and print the modified R DataFrame in Python
+result = ro.r('as.data.frame(r_data)')
+result = pandas2ri.rpy2py(result)
+print(result)
+```
+
+In this example, a Python dataset with microorganism names like *E. coli* and *S. aureus* is passed to the R function `mo_name()`. The result is an updated `DataFrame` that includes the standardised microorganism names based on the `mo_name()` function from the `AMR` package.
+
+## Example 2: Generating an Antibiogram
+
+One of the core functions of the `AMR` package is generating an antibiogram, a table that summarises the antimicrobial susceptibility of bacterial isolates. Here’s how you can generate an antibiogram from Python:
+
+```python
+# Run an antibiogram in R from Python
+ro.r('result <- antibiogram(example_isolates, antibiotics = c(aminoglycosides(), carbapenems()))')
+
+# Retrieve the result in Python
+result = ro.r('as.data.frame(result)')
+print(result)
+```
+
+In this example, we generate an antibiogram by selecting aminoglycosides and carbapenems, two classes of antibiotics, and then convert the resulting R data frame into a Python-readable format.
+
+## Example 3: Filtering Data Based on Gram-Negative Bacteria
+
+Let’s say you want to filter the dataset for Gram-negative bacteria and display their resistance to certain antibiotics:
+
+```python
+# Filter for Gram-negative bacteria with intrinsic resistance to cefotaxime
+ro.r('result <- example_isolates[which(mo_is_gram_negative() & mo_is_intrinsic_resistant(ab = "cefotax")), c("bacteria", aminoglycosides(), carbapenems())]')
+
+# Retrieve the filtered result in Python
+result = ro.r('as.data.frame(result)')
+print(result)
+```
+
+This example uses the AMR functions `mo_is_gram_negative()` and `mo_is_intrinsic_resistant()` to filter the dataset and returns a subset of bacteria with resistance data.
+
+## Example 4: Customising the Antibiogram
+
+You can easily customise the antibiogram by passing different antibiotics or microorganism transformations, as shown below:
+
+```python
+# Customise the antibiogram with different settings
+ro.r('result <- antibiogram(example_isolates, antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"), mo_transform = "gramstain")')
+
+# Retrieve and print the result
+result = ro.r('as.data.frame(result)')
+print(result)
+```
+
+Here, we use piperacillin/tazobactam (TZP) in combination with tobramycin (TOB) and gentamicin (GEN) to see how they perform against various Gram-negative bacteria.
+
+# Conclusion
+
+Using `rpy2`, you can easily integrate the power of R's `AMR` package into your Python workflows. Whether you are generating antibiograms, analyzing resistance data, or performing complex filtering, `rpy2` gives you the flexibility to run R code without leaving the Python environment. This makes it a perfect solution for teams working across both R and Python.
