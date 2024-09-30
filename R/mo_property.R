@@ -442,8 +442,8 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
   kngd <- AMR_env$MO_lookup$kingdom[match(x.mo, AMR_env$MO_lookup$mo)]
   rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
 
-  out <- factor(case_when_AMR(prev == 1 & kngd == "Bacteria" & rank != "genus" ~ "Pathogenic",
-                              (prev < 2 & kngd == "Fungi") ~ "Potentially pathogenic",
+  out <- factor(case_when_AMR(prev <= 1.15 & kngd == "Bacteria" & rank != "genus" ~ "Pathogenic",
+                              prev < 2 & kngd == "Fungi" ~ "Potentially pathogenic",
                               prev == 2 & kngd == "Bacteria" ~ "Non-pathogenic",
                               kngd == "Bacteria" ~ "Potentially pathogenic",
                               TRUE ~ "Unknown"),

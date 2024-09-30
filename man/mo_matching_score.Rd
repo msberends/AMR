@@ -15,9 +15,9 @@ mo_matching_score(x, n)
 This algorithm is used by \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions to determine the most probable match of taxonomic records based on user input.
 }
 \note{
-This algorithm was originally described in: Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
+This algorithm was originally developed in 2018 and subsequently described in: Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
 
-Later, the work of Bartlett A \emph{et al.} about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated.
+Later, the work of Bartlett A \emph{et al.} about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated, and optimalisations to the algorithm were made.
 }
 \section{Matching Score for Microorganisms}{
 
@@ -34,18 +34,19 @@ where:
 \item \eqn{l_n} is the length of \eqn{n};
 \item \eqn{lev} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance function} (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};
 \item \eqn{p_n} is the human pathogenic prevalence group of \eqn{n}, as described below;
-\item \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Archaea = 2, others = 3.
+\item \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
 }
 
 The grouping into human pathogenic prevalence \eqn{p} is based on recent work from Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
 \itemize{
-\item \strong{Established}, if a taxonomic species has infected at least three persons in three or more references. These records have \code{prevalence = 1.0} in the \link{microorganisms} data set;
+\item \strong{Established}, if a taxonomic species has infected at least three persons in three or more references. These records have \code{prevalence = 1.15} in the \link{microorganisms} data set;
 \item \strong{Putative}, if a taxonomic species has fewer than three known cases. These records have \code{prevalence = 1.25} in the \link{microorganisms} data set.
 }
 
 Furthermore,
 \itemize{
-\item Any genus present in the \strong{established} list also has \code{prevalence = 1.0} in the \link{microorganisms} data set;
+\item Genera from the World Health Organization's (WHO) Priority Pathogen List have \code{prevalence = 1.0} in the \link{microorganisms} data set;
+\item Any genus present in the \strong{established} list also has \code{prevalence = 1.15} in the \link{microorganisms} data set;
 \item Any other genus present in the \strong{putative} list has \code{prevalence = 1.25} in the \link{microorganisms} data set;
 \item Any other species or subspecies of which the genus is present in the two aforementioned groups, has \code{prevalence = 1.5} in the \link{microorganisms} data set;
 \item Any \emph{non-bacterial} genus, species or subspecies of which the genus is present in the following list, has \code{prevalence = 1.25} in the \link{microorganisms} data set: \emph{Absidia}, \emph{Acanthamoeba}, \emph{Acremonium}, \emph{Actinomucor}, \emph{Aedes}, \emph{Alternaria}, \emph{Amoeba}, \emph{Ancylostoma}, \emph{Angiostrongylus}, \emph{Anisakis}, \emph{Anopheles}, \emph{Apophysomyces}, \emph{Arthroderma}, \emph{Aspergillus}, \emph{Aureobasidium}, \emph{Basidiobolus}, \emph{Beauveria}, \emph{Bipolaris}, \emph{Blastobotrys}, \emph{Blastocystis}, \emph{Blastomyces}, \emph{Candida}, \emph{Capillaria}, \emph{Chaetomium}, \emph{Chilomastix}, \emph{Chrysonilia}, \emph{Chrysosporium}, \emph{Cladophialophora}, \emph{Cladosporium}, \emph{Clavispora}, \emph{Coccidioides}, \emph{Cokeromyces}, \emph{Conidiobolus}, \emph{Coniochaeta}, \emph{Contracaecum}, \emph{Cordylobia}, \emph{Cryptococcus}, \emph{Cryptosporidium}, \emph{Cunninghamella}, \emph{Curvularia}, \emph{Cyberlindnera}, \emph{Debaryozyma}, \emph{Demodex}, \emph{Dermatobia}, \emph{Dientamoeba}, \emph{Diphyllobothrium}, \emph{Dirofilaria}, \emph{Echinostoma}, \emph{Entamoeba}, \emph{Enterobius}, \emph{Epidermophyton}, \emph{Exidia}, \emph{Exophiala}, \emph{Exserohilum}, \emph{Fasciola}, \emph{Fonsecaea}, \emph{Fusarium}, \emph{Geotrichum}, \emph{Giardia}, \emph{Graphium}, \emph{Haloarcula}, \emph{Halobacterium}, \emph{Halococcus}, \emph{Hansenula}, \emph{Hendersonula}, \emph{Heterophyes}, \emph{Histomonas}, \emph{Histoplasma}, \emph{Hortaea}, \emph{Hymenolepis}, \emph{Hypomyces}, \emph{Hysterothylacium}, \emph{Kloeckera}, \emph{Kluyveromyces}, \emph{Kodamaea}, \emph{Lacazia}, \emph{Leishmania}, \emph{Lichtheimia}, \emph{Lodderomyces}, \emph{Lomentospora}, \emph{Madurella}, \emph{Malassezia}, \emph{Malbranchea}, \emph{Metagonimus}, \emph{Meyerozyma}, \emph{Microsporidium}, \emph{Microsporum}, \emph{Millerozyma}, \emph{Mortierella}, \emph{Mucor}, \emph{Mycocentrospora}, \emph{Nannizzia}, \emph{Necator}, \emph{Nectria}, \emph{Ochroconis}, \emph{Oesophagostomum}, \emph{Oidiodendron}, \emph{Opisthorchis}, \emph{Paecilomyces}, \emph{Paracoccidioides}, \emph{Pediculus}, \emph{Penicillium}, \emph{Phaeoacremonium}, \emph{Phaeomoniella}, \emph{Phialophora}, \emph{Phlebotomus}, \emph{Phoma}, \emph{Pichia}, \emph{Piedraia}, \emph{Pithomyces}, \emph{Pityrosporum}, \emph{Pneumocystis}, \emph{Pseudallescheria}, \emph{Pseudoscopulariopsis}, \emph{Pseudoterranova}, \emph{Pulex}, \emph{Purpureocillium}, \emph{Quambalaria}, \emph{Rhinocladiella}, \emph{Rhizomucor}, \emph{Rhizopus}, \emph{Rhodotorula}, \emph{Saccharomyces}, \emph{Saksenaea}, \emph{Saprochaete}, \emph{Sarcoptes}, \emph{Scedosporium}, \emph{Schistosoma}, \emph{Schizosaccharomyces}, \emph{Scolecobasidium}, \emph{Scopulariopsis}, \emph{Scytalidium}, \emph{Spirometra}, \emph{Sporobolomyces}, \emph{Sporopachydermia}, \emph{Sporothrix}, \emph{Sporotrichum}, \emph{Stachybotrys}, \emph{Strongyloides}, \emph{Syncephalastrum}, \emph{Syngamus}, \emph{Taenia}, \emph{Talaromyces}, \emph{Teleomorph}, \emph{Toxocara}, \emph{Trichinella}, \emph{Trichobilharzia}, \emph{Trichoderma}, \emph{Trichomonas}, \emph{Trichophyton}, \emph{Trichosporon}, \emph{Trichostrongylus}, \emph{Trichuris}, \emph{Tritirachium}, \emph{Trombicula}, \emph{Trypanosoma}, \emph{Tunga}, \emph{Ulocladium}, \emph{Ustilago}, \emph{Verticillium}, \emph{Wallemia}, \emph{Wangiella}, \emph{Wickerhamomyces}, \emph{Wuchereria}, \emph{Yarrowia}, or \emph{Zygosaccharomyces};
@@ -54,7 +55,7 @@ Furthermore,
 
 When calculating the matching score, all characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 
-All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.688}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.381}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
+All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.598}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.381}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
 }
 
 \section{Reference Data Publicly Available}{
@@ -72,7 +73,4 @@ mo_matching_score(
   x = "E. coli",
   n = c("Escherichia coli", "Entamoeba coli")
 )
-}
-\author{
-Dr. Matthijs Berends, 2018
 }

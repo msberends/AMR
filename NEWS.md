@@ -1,4 +1,4 @@
-# AMR 2.1.1.9081
+# AMR 2.1.1.9082
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -20,7 +20,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * MycoBank has now been integrated as the primary taxonomic source for fungi. The `microorganisms` data set has been enriched with new columns (`mycobank`, `mycobank_parent`, and `mycobank_renamed_to`) that provide detailed information for fungal species.
   * A remarkable addition of over 20,000 new fungal records
   * New function `mo_mycobank()` to retrieve the MycoBank record number, analogous to existing functions such as `mo_lpsn()` and `mo_gbif()`.
-  * The `as.mo()` function and all `mo_*()` functions now includes an `only_fungi` argument, allowing users to restrict results solely to fungal species. This ensures fungi are prioritised over bacteria during microorganism identification. This can also be set globally with the new `AMR_only_fungi` option.
+  * The `as.mo()` function and all `mo_*()` functions now include an `only_fungi` argument, allowing users to restrict results solely to fungal species. This ensures fungi are prioritised over bacteria during microorganism identification. This can also be set globally with the new `AMR_only_fungi` option.
   * Also updated other kingdoms, welcoming a total of 2,149 new records from 2023 and 927 from 2024.
 * **Updated clinical breakpoints**
   * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disk diffusion interpretations.
@@ -63,10 +63,11 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically, more weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species.
 * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
 * Fixed a bug for when `antibiogram()` returns an empty data set
+* Updated the prevalence calculation to include genera from the World Health Organization's (WHO) Priority Pathogen List
 
 ## Other
 * Greatly updated and expanded documentation
-* Added Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
+* Added Larisse Bolton, Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
 * Stopped support for SAS (`.xpt`) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.
 
 ## Older Versions

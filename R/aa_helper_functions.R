@@ -1547,6 +1547,7 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
     MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 1.25
     MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 1.5
+    MO_lookup[which(MO_lookup$kingdom == "Chromista"), "kingdom_index"] <- 1.75
     MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 2
     # all the rest
     MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 3

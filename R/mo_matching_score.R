@@ -30,12 +30,11 @@
 #' Calculate the Matching Score for Microorganisms
 #'
 #' This algorithm is used by [as.mo()] and all the [`mo_*`][mo_property()] functions to determine the most probable match of taxonomic records based on user input.
-#' @author Dr. Matthijs Berends, 2018
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
-#' @note This algorithm was originally described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
+#' @note This algorithm was originally developed in 2018 and subsequently described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
 #'
-#' Later, the work of Bartlett A *et al.* about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated.
+#' Later, the work of Bartlett A *et al.* about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated, and optimalisations to the algorithm were made.
 #' @section Matching Score for Microorganisms:
 #' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #'
@@ -50,16 +49,17 @@
 #' * \eqn{l_n} is the length of \eqn{n};
 #' * \eqn{lev} is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance) (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};
 #' * \eqn{p_n} is the human pathogenic prevalence group of \eqn{n}, as described below;
-#' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Archaea = 2, others = 3.
+#' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
 #'
 #' The grouping into human pathogenic prevalence \eqn{p} is based on recent work from Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
 #'
-#' - **Established**, if a taxonomic species has infected at least three persons in three or more references. These records have `prevalence = 1.0` in the [microorganisms] data set;
+#' - **Established**, if a taxonomic species has infected at least three persons in three or more references. These records have `prevalence = 1.15` in the [microorganisms] data set;
 #' - **Putative**, if a taxonomic species has fewer than three known cases. These records have `prevalence = 1.25` in the [microorganisms] data set.
 #'
 #' Furthermore,
 #'
-#' - Any genus present in the **established** list also has `prevalence = 1.0` in the [microorganisms] data set;
+#' - Genera from the World Health Organization's (WHO) Priority Pathogen List have `prevalence = 1.0` in the [microorganisms] data set;
+#' - Any genus present in the **established** list also has `prevalence = 1.15` in the [microorganisms] data set;
 #' - Any other genus present in the **putative** list has `prevalence = 1.25` in the [microorganisms] data set;
 #' - Any other species or subspecies of which the genus is present in the two aforementioned groups, has `prevalence = 1.5` in the [microorganisms] data set;
 #' - Any *non-bacterial* genus, species or subspecies of which the genus is present in the following list, has `prevalence = 1.25` in the [microorganisms] data set: `r vector_or(MO_RELEVANT_GENERA, quotes = "*")`;

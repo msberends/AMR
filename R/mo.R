@@ -1081,6 +1081,9 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "(^| )yeast?"] <- "F_YEAST"
   out[x %like_case% "(^| )fung(us|i)"] <- "F_FUNGUS"
   
+  # protozoa
+  out[x %like_case% "protozo"] <- "P_PROTOZOAN" # to hit it with most languages, and "protozo" does not occur in the microorganisms data set for anything else
+  
   # trivial names known to the field
   out[x %like_case% "meningo[ck]o[ck]"] <- "B_NESSR_MNNG"
   out[x %like_case% "gono[ck]o[ck]"] <- "B_NESSR_GNRR"

@@ -158,6 +158,32 @@ pre_commit_lst$MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms
     "group a", "group b", "group c", "group g"
   ))]
 pre_commit_lst$MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
+pre_commit_lst$MO_WHO_PRIORITY_GENERA <- c(
+  # World Health Organization's (WHO) Priority Pathogen List
+  "Acinetobacter",
+  "Aspergillus",
+  "Blastomyces",
+  "Campylobacter",
+  "Candida",
+  "Clostridioides",
+  "Coccidioides",
+  "Cryptococcus",
+  "Enterococcus",
+  "Fusarium",
+  "Haemophilus",
+  "Helicobacter",
+  "Histoplasma",
+  "Klebsiella",
+  "Mycobacterium",
+  "Neisseria",
+  "Paracoccidioides",
+  "Pneumocystis",
+  "Pseudomonas",
+  "Salmonella",
+  "Shigella",
+  "Staphylococcus",
+  "Streptococcus"
+)
 pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Absidia",
   "Acanthamoeba",

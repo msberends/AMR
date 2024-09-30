@@ -670,6 +670,16 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
     # fast return, only 1 isolate
     return(FALSE)
   }
+  stop("Check R/first_isolate.R -> duplicated_antibiogram()")
+  # first sort on data availability - count the dots and order that ascending
+  number_dots <- vapply(FUN.VALUE = integer(1),
+                        antibiogram,
+                        function(x) sum(strsplit(x, "", fixed = TRUE)[[1]] == "."),
+                        USE.NAMES = FALSE)
+  new_order <- order(number_dots, antibiogram)
+  antibiogram.bak <- antibiogram
+  antibiogram <- antibiogram[new_order]
+  
   out <- rep(NA, length(antibiogram))
   out[1] <- FALSE
   out[2] <- antimicrobials_equal(antibiogram[1], antibiogram[2],
@@ -679,11 +689,6 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
     # fast return, no further check required
     return(out)
   }
-  
-  # sort after the second one (since we already determined AB equality of the first two)
-  original_sort <- c(1, 2, rank(antibiogram[3:length(antibiogram)]) + 2)
-  antibiogram.bak <- antibiogram
-  antibiogram <- c(antibiogram[1:2], sort(antibiogram[3:length(antibiogram)]))
   
   # we can skip the duplicates - they are never unique antibiograms of course
   duplicates <- duplicated(antibiogram)
@@ -703,7 +708,7 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
                                               type = type)))
   }
   
-  out <- out[original_sort]
+  out <- out[order(new_order)]
   # rerun duplicated again
   duplicates <- duplicated(antibiogram.bak)
   out[duplicates == TRUE] <- TRUE

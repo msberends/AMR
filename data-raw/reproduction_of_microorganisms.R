@@ -455,7 +455,7 @@ sort(table(taxonomy_lpsn$status))
 
 # Read MycoBank data ------------------------------------------------------------------------------
 
-taxonomy_mycobank <- readxl::read_excel(file_mycobank, guess_max = 1e5)
+taxonomy_mycobank <- read_excel(file_mycobank, guess_max = 1e5)
 taxonomy_mycobank.bak <- taxonomy_mycobank
 
 taxonomy_mycobank <- taxonomy_mycobank %>%
@@ -1224,10 +1224,12 @@ nonbacterial_genera <- nonbacterial_genera[nonbacterial_genera %unlike% "unknown
 # see https://doi.org/10.1099/mic.0.001269
 taxonomy <- taxonomy %>%
   mutate(prevalence = case_when(
+    # genera of the pathogens mentioned in the World Health Organization's (WHO) Priority Pathogen List
+    genus %in% MO_WHO_PRIORITY_GENERA ~ 1.0,
     # 'established' means 'have infected at least three persons in three or more references'
-    paste(genus, species) %in% established & rank %in% c("species", "subspecies") ~ 1.0,
+    paste(genus, species) %in% established & rank %in% c("species", "subspecies") ~ 1.15,
     # other genera in the 'established' group
-    genus %in% established_genera & rank == "genus" ~ 1.0,
+    genus %in% established_genera & rank == "genus" ~ 1.15,
     
     # 'putative' means 'fewer than three known cases'
     paste(genus, species) %in% putative & rank %in% c("species", "subspecies") ~ 1.25,
@@ -2148,7 +2150,7 @@ microorganisms <- taxonomy
 
 # set class <mo>
 class(microorganisms$mo) <- c("mo", "character")
-microorganisms <- microorganisms %>% arrange(fullname)
+microorganisms <- microorganisms %>% arrange(fullname) %>% df_remove_nonASCII()
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
 rm(microorganisms)
 
