@@ -49,6 +49,12 @@ $(document).ready(function() {
     $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R"><span></span>\n<span', 'sourceCode R"><span'));
   }
 
+  // make Python part more fancy - prepare for CSS
+  if (window.location.href.includes('AMR_for_Python')) {
+    $('body').addClass('amr-for-python');
+    $('img[src="logo.svg"]').attr('src', 'logo_python.svg');
+  }
+
   // add doctoral titles to authors
   function doct_tit(x) {
     if (typeof(x) != "undefined") {
@@ -71,6 +77,7 @@ $(document).ready(function() {
       x = x.replace("Javier", "Prof. Javier");
       x = x.replace("Jonas", "Dr. Jonas");
       x = x.replace("Judith", "Dr. Judith");
+      x = x.replace("Larisse", "Dr. Larisse");
       x = x.replace("Matthijs", "Dr. Matthijs");
       x = x.replace("Peter", "Dr. Peter");
       x = x.replace("Rogier", "Dr. Rogier");
