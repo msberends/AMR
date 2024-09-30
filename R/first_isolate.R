@@ -670,8 +670,7 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
     # fast return, only 1 isolate
     return(FALSE)
   }
-  stop("Check R/first_isolate.R -> duplicated_antibiogram()")
-  # first sort on data availability - count the dots and order that ascending
+  # first sort on data availability - count the dots and order that ascending so that highest availability of SIR is on top
   number_dots <- vapply(FUN.VALUE = integer(1),
                         antibiogram,
                         function(x) sum(strsplit(x, "", fixed = TRUE)[[1]] == "."),

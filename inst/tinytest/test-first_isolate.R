@@ -42,7 +42,7 @@ expect_equal(
 )
 expect_equal(
   sum(first_isolate(x = example_isolates, method = "phenotype-based", info = TRUE), na.rm = TRUE),
-  1373
+  1387
 )
 
 # for phenotype determination
@@ -66,7 +66,7 @@ expect_equal(
     type = "keyantimicrobials",
     antifungal = NULL, info = TRUE
   ), na.rm = TRUE),
-  1376
+  1383
 )
 expect_equal(
   sum(first_isolate(
@@ -75,7 +75,7 @@ expect_equal(
     type = "keyantimicrobials",
     antifungal = NULL, info = TRUE, ignore_I = FALSE
   ), na.rm = TRUE),
-  1396
+  1397
 )
 
 

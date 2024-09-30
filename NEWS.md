@@ -1,4 +1,4 @@
-# AMR 2.1.1.9082
+# AMR 2.1.1.9083
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -51,19 +51,22 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
   * Sorting of MIC values (using `sort()`) was fixed in the same manner; `<0.001` now gets sorted before `0.001`, and `>0.001` gets sorted after `0.001`.
+  * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
 * Updated `italicise_taxonomy()` to support HTML output
 * `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule
-* `mo_info()` now contains an extra element `group_members`, with the contents of the new `mo_group_members()` function
+* `mo_info()` now contains an extra element `rank` and `group_members` (with the contents of the new `mo_group_members()` function)
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Updated all ATC codes from WHOCC
 * Updated all antibiotic DDDs from WHOCC
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy
-* Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically, more weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species.
-* Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
+* Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically:
+  * More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species
+  * Genera from the World Health Organization's (WHO) Priority Pathogen List now have the highest prevalence
 * Fixed a bug for when `antibiogram()` returns an empty data set
 * Updated the prevalence calculation to include genera from the World Health Organization's (WHO) Priority Pathogen List
+* Improved algorithm of `first_isolate()` when using the phenotype-based method, to prioritise records with the highest availability of SIR values
 
 ## Other
 * Greatly updated and expanded documentation
