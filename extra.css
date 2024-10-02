@@ -66,8 +66,31 @@
   --bs-dropdown-link-hover-color: var(--amr-green-light) !important;
   --bs-dropdown-link-hover-bg: var(--amr-green-dark) !important;
   --bs-dropdown-link-active-color: white !important;
-  
 }
+
+/* Python page */
+body.amr-for-python * {
+  --amr-green-light: #FFD43B; /* Python yellow */
+  --amr-green-light-rgb: 255, 212, 59;
+  --amr-green-dark: #306998; /* Python blue */
+  --amr-green-dark-rgb: 48, 105, 152;
+  --amr-green-middle: #b1bc5e; /* Adjusted middle yellow */
+  --amr-green-middle-rgb: 177, 188, 94;
+  --bs-success: var(--amr-green-dark) !important;
+  --bs-light: var(--amr-green-light) !important;
+  --bs-info: var(--amr-green-middle) !important;
+  --bs-link-color: var(--amr-green-dark) !important;
+  --bs-link-color-rgb: var(--amr-green-dark-rgb) !important;
+  --bs-primary: var(--amr-green-dark) !important;
+  --bs-primary-color: var(--amr-green-dark) !important;
+  --bs-primary-rgb: var(--amr-green-dark-rgb) !important;
+  --bs-secondary-color: var(--amr-green-dark) !important;
+  --bs-navbar-active-color: var(--amr-green-light) !important;
+  --bs-dropdown-bg: var(--amr-green-dark) !important;
+  --bs-dropdown-link-hover-color: var(--amr-green-light) !important;
+  --bs-dropdown-link-hover-bg: var(--amr-green-dark) !important;
+}
+
 .nav-text.text-muted,
 .bg-primary .navbar-nav .show>.nav-link,
 .bg-primary .navbar-nav .nav-link.active,

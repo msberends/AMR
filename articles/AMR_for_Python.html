@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9084</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9086</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,13 +91,14 @@ antimicrobial resistance (AMR) data analysis, providing extensive
 functionality for working with microbial and antimicrobial properties.
 But what if you’re working in Python and still want to benefit from the
 robust features of <code>AMR</code>?</p>
-<p>Luckily, there is no need to port the package to Python! With the
-help of <code>rpy2</code>, a powerful Python package, you can easily
-access R from Python and call functions from the <code>AMR</code>
-package to process your own data. This post will guide you through
+<p>The best way is to access R directly from Python with the help of
+<code>rpy2</code>, a simple yet powerful Python package. You can easily
+call functions from the <code>AMR</code> package to process your own
+data in your own Python environment. This post will guide you through
 setting up <code>rpy2</code> and show you how to use R functions from
 <code>AMR</code> in Python to supercharge your antimicrobial resistance
 analysis.</p>
+<p><a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant" class="external-link"><img src="../AMRforRGPT.svg" style="min-width: 300px; width: 10%;"></a></p>
 </div>
 <div class="section level2">
 <h2 id="what-is-rpy2">What is <code>rpy2</code>?<a class="anchor" aria-label="anchor" href="#what-is-rpy2"></a>
@@ -127,19 +128,44 @@ environment.</li>
 <div class="section level3">
 <h3 id="step-1-install-r">Step 1: Install R<a class="anchor" aria-label="anchor" href="#step-1-install-r"></a>
 </h3>
-<p>Ensure that you have R installed on your system. You can download R
-from <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
+<p>Ensure that R is installed on your system. R has minimal dependencies
+and is very simple to install:</p>
+<ul>
+<li>
+<strong>Linux</strong>
+<ul>
+<li>Ubuntu / Debian:<br><code>sudo apt install r-base</code>
+</li>
+<li>Fedora:<br><code>sudo dnf install R</code>
+</li>
+<li>CentOS/RHEL:<br><code>sudo yum install R</code>
+</li>
+<li>Arch Linux:<br><code>sudo pacman -S r</code>
+</li>
+</ul>
+</li>
+<li>
+<strong>macOS</strong> (with Homebrew):<br><code>brew install r</code>
+</li>
+<li>
+<strong>Other Systems:</strong><br>
+Visit the <a href="https://cran.r-project.org" class="external-link">CRAN download
+page</a>.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="step-2-install-the-amr-package-in-r">Step 2: Install the <code>AMR</code> package in R<a class="anchor" aria-label="anchor" href="#step-2-install-the-amr-package-in-r"></a>
 </h3>
-<p>Once you have R installed, open your R console and install the
-<code>AMR</code> package:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also install the latest development version of the
-<code>AMR</code> package if needed:</p>
+<p>On Linux and macOS, open Terminal and run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'install.packages("AMR")'</span></span></code></pre></div>
+<p>For other systems, open your R console and install the
+<code>AMR</code> package by running:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></span></code></pre></div>
+<p>On any system, you can also install the latest development version of
+the <code>AMR</code> package by setting <code>repos</code> to our beta
+channel:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span>, repos <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -147,58 +173,53 @@ from <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
 </h3>
 <p>To install <code>rpy2</code>, simply run the following command in
 your terminal:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install rpy2</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">pip</span> install rpy2</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-4-test-rpy2-installation">Step 4: Test <code>rpy2</code> Installation<a class="anchor" aria-label="anchor" href="#step-4-test-rpy2-installation"></a>
 </h3>
 <p>To ensure everything is set up correctly, you can test your
-installation by running the following Python script:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> ro</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># Test a simple R function from Python</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>ro.r(<span class="st">'1 + 1'</span>)</span></code></pre></div>
+installation by running the following Python script, which essentially
+runs R in the background:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> ro</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># Test a simple R function from Python</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>ro.r(<span class="st">'1 + 1'</span>)</span></code></pre></div>
 <p>If this returns <code>2</code>, you’re good to go!</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="working-with-amr-in-python-using-rpy2">Working with AMR in Python using <code>rpy2</code><a class="anchor" aria-label="anchor" href="#working-with-amr-in-python-using-rpy2"></a>
+<h2 id="working-with-amr-in-python">Working with <code>AMR</code> in Python<a class="anchor" aria-label="anchor" href="#working-with-amr-in-python"></a>
 </h2>
 <p>Now that we have <code>rpy2</code> set up, let’s walk through some
 practical examples of using the <code>AMR</code> package within
 Python.</p>
 <div class="section level3">
-<h3 id="example-1-loading-amr-and-example-data">Example 1: Loading <code>AMR</code> and Example Data<a class="anchor" aria-label="anchor" href="#example-1-loading-amr-and-example-data"></a>
+<h3 id="example-1-converting-taxonomic-data">Example 1: Converting Taxonomic Data<a class="anchor" aria-label="anchor" href="#example-1-converting-taxonomic-data"></a>
 </h3>
 <p>Let’s start by converting taxonomic user input to valid taxonomy
 using the <code>AMR</code> package, from within Python:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> ro</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="im">from</span> rpy2.robjects.packages <span class="im">import</span> importr</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="im">from</span> rpy2.robjects <span class="im">import</span> pandas2ri</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># Enable conversion between pandas and R data frames</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>pandas2ri.activate()</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Load the AMR package from R</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>amr <span class="op">=</span> importr(<span class="st">'AMR'</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># Example user dataset in Python</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>    <span class="st">'microorganism'</span>: [<span class="st">'E. coli'</span>, <span class="st">'S. aureus'</span>, <span class="st">'P. aeruginosa'</span>, <span class="st">'K. pneumoniae'</span>]</span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>})</span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># Convert the Python DataFrame to an R DataFrame</span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>r_data <span class="op">=</span> pandas2ri.py2rpy(data)</span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co"># Apply mo_name() from the AMR package to the 'microorganism' column</span></span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>ro.globalenv[<span class="st">'r_data'</span>] <span class="op">=</span> r_data</span>
-<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>ro.r(<span class="st">'r_data$mo_name &lt;- mo_name(r_data$microorganism)'</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># Retrieve and print the modified R DataFrame in Python</span></span>
-<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(r_data)'</span>)</span>
-<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>result <span class="op">=</span> pandas2ri.rpy2py(result)</span>
-<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> ro</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="im">from</span> rpy2.robjects.packages <span class="im">import</span> importr</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="im">from</span> rpy2.robjects <span class="im">import</span> pandas2ri</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># Load the AMR package from R</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>amr <span class="op">=</span> importr(<span class="st">'AMR'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># Example user dataset in Python</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    <span class="st">'microorganism'</span>: [<span class="st">'E. coli'</span>, <span class="st">'S. aureus'</span>, <span class="st">'P. aeruginosa'</span>, <span class="st">'K. pneumoniae'</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>})</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co"># Apply mo_name() from the AMR package to the 'microorganism' column</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>ro.globalenv[<span class="st">'r_data'</span>] <span class="op">=</span> data</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>ro.r(<span class="st">'r_data$mo_name &lt;- mo_name(r_data$microorganism)'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># Retrieve and print the modified R DataFrame in Python</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'r_data'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>result <span class="op">=</span> pandas2ri.rpy2py(result)</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
 <p>In this example, a Python dataset with microorganism names like
 <em>E. coli</em> and <em>S. aureus</em> is passed to the R function
 <code><a href="../reference/mo_property.html">mo_name()</a></code>. The result is an updated <code>DataFrame</code>
@@ -212,12 +233,12 @@ that includes the standardised microorganism names based on the
 generating an antibiogram, a table that summarises the antimicrobial
 susceptibility of bacterial isolates. Here’s how you can generate an
 antibiogram from Python:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Run an antibiogram in R from Python</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>ro.r(<span class="st">'result &lt;- antibiogram(example_isolates, antibiotics = c(aminoglycosides(), carbapenems()))'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># Retrieve the result in Python</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(result)'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Run an antibiogram in R from Python</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>ro.r(<span class="st">'result &lt;- antibiogram(example_isolates, antibiotics = c(aminoglycosides(), carbapenems()))'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># Retrieve the result in Python</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(result)'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
 <p>In this example, we generate an antibiogram by selecting
 aminoglycosides and carbapenems, two classes of antibiotics, and then
 convert the resulting R data frame into a Python-readable format.</p>
@@ -227,12 +248,12 @@ convert the resulting R data frame into a Python-readable format.</p>
 </h3>
 <p>Let’s say you want to filter the dataset for Gram-negative bacteria
 and display their resistance to certain antibiotics:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Filter for Gram-negative bacteria with intrinsic resistance to cefotaxime</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>ro.r(<span class="st">'result &lt;- example_isolates[which(mo_is_gram_negative() &amp; mo_is_intrinsic_resistant(ab = "cefotax")), c("bacteria", aminoglycosides(), carbapenems())]'</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># Retrieve the filtered result in Python</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(result)'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Filter for Gram-negative bacteria with intrinsic resistance to cefotaxime</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>ro.r(<span class="st">'result &lt;- example_isolates[which(mo_is_gram_negative() &amp; mo_is_intrinsic_resistant(ab = "cefotax")), c("bacteria", aminoglycosides(), carbapenems())]'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># Retrieve the filtered result in Python</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(result)'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
 <p>This example uses the AMR functions
 <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and
 <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> to filter the dataset and
@@ -243,12 +264,12 @@ returns a subset of bacteria with resistance data.</p>
 </h3>
 <p>You can easily customise the antibiogram by passing different
 antibiotics or microorganism transformations, as shown below:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Customise the antibiogram with different settings</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>ro.r(<span class="st">'result &lt;- antibiogram(example_isolates, antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"), mo_transform = "gramstain")'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># Retrieve and print the result</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(result)'</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Customise the antibiogram with different settings</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>ro.r(<span class="st">'result &lt;- antibiogram(example_isolates, antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"), mo_transform = "gramstain")'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># Retrieve and print the result</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>result <span class="op">=</span> ro.r(<span class="st">'as.data.frame(result)'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
 <p>Here, we use piperacillin/tazobactam (TZP) in combination with
 tobramycin (TOB) and gentamicin (GEN) to see how they perform against
 various Gram-negative bacteria.</p>
