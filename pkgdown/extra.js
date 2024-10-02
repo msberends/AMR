@@ -52,7 +52,7 @@ $(document).ready(function() {
   // make Python part more fancy - prepare for CSS
   if (window.location.href.includes('AMR_for_Python')) {
     $('body').addClass('amr-for-python');
-    $('img[src="logo.svg"]').attr('src', 'logo_python.svg');
+    $('img[src="../logo.svg"]').attr('src', '../logo_python.svg');
   }
 
   // add doctoral titles to authors

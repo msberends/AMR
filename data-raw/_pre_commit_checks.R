@@ -169,6 +169,7 @@ pre_commit_lst$MO_WHO_PRIORITY_GENERA <- c(
   "Coccidioides",
   "Cryptococcus",
   "Enterococcus",
+  "Escherichia",
   "Fusarium",
   "Haemophilus",
   "Helicobacter",

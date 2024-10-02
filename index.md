@@ -9,6 +9,8 @@
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * 100% free of costs and dependencies, highly suitable for places with **limited resources**
 
+<a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="../AMRforRGPT.svg" style="min-width: 300px; width: 10%;" /></a>
+
 <div style="display: flex; font-size: 0.8em;">
 <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
 <p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small></p>

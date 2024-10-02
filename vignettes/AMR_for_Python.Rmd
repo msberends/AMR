@@ -26,7 +26,9 @@ knitr::opts_chunk$set(
 
 The `AMR` package for R is an incredible tool for antimicrobial resistance (AMR) data analysis, providing extensive functionality for working with microbial and antimicrobial properties. But what if you're working in Python and still want to benefit from the robust features of `AMR`?
 
-Luckily, there is no need to port the package to Python! With the help of `rpy2`, a powerful Python package, you can easily access R from Python and call functions from the `AMR` package to process your own data. This post will guide you through setting up `rpy2` and show you how to use R functions from `AMR` in Python to supercharge your antimicrobial resistance analysis.
+The best way is to access R directly from Python with the help of `rpy2`, a simple yet powerful Python package. You can easily call functions from the `AMR` package to process your own data in your own Python environment. This post will guide you through setting up `rpy2` and show you how to use R functions from `AMR` in Python to supercharge your antimicrobial resistance analysis.
+
+<a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="../AMRforRGPT.svg" style="min-width: 300px; width: 10%;" /></a>
 
 # What is `rpy2`?
 
@@ -43,17 +45,37 @@ Before diving into the examples, you’ll need to install both R and `rpy2`. Her
 
 ## Step 1: Install R
 
-Ensure that you have R installed on your system. You can download R from [CRAN](https://cran.r-project.org/).
+Ensure that R is installed on your system. R has minimal dependencies and is very simple to install:
+
+* **Linux**
+  * Ubuntu / Debian:  
+    `sudo apt install r-base`
+  * Fedora:  
+    `sudo dnf install R`
+  * CentOS/RHEL:  
+    `sudo yum install R`
+  * Arch Linux:  
+    `sudo pacman -S r`
+* **macOS** (with Homebrew):  
+  `brew install r`
+* **Other Systems:**  
+  Visit the [CRAN download page](https://cran.r-project.org).
 
 ## Step 2: Install the `AMR` package in R
 
-Once you have R installed, open your R console and install the `AMR` package:
+On Linux and macOS, open Terminal and run:
+
+```bash
+Rscript -e 'install.packages("AMR")'
+```
+
+For other systems, open your R console and install the `AMR` package by running:
 
 ```r
 install.packages("AMR")
 ```
 
-You can also install the latest development version of the `AMR` package if needed:
+On any system, you can also install the latest development version of the `AMR` package by setting `repos` to our beta channel:
 
 ```r
 install.packages("AMR", repos = "https://msberends.r-universe.dev")
@@ -69,7 +91,7 @@ pip install rpy2
 
 ## Step 4: Test `rpy2` Installation
 
-To ensure everything is set up correctly, you can test your installation by running the following Python script:
+To ensure everything is set up correctly, you can test your installation by running the following Python script, which essentially runs R in the background:
 
 ```python
 import rpy2.robjects as ro
@@ -80,11 +102,11 @@ ro.r('1 + 1')
 
 If this returns `2`, you're good to go!
 
-# Working with AMR in Python using `rpy2`
+# Working with `AMR` in Python
 
 Now that we have `rpy2` set up, let’s walk through some practical examples of using the `AMR` package within Python.
 
-## Example 1: Loading `AMR` and Example Data
+## Example 1: Converting Taxonomic Data
 
 Let’s start by converting taxonomic user input to valid taxonomy using the `AMR` package, from within Python:
 
@@ -94,9 +116,6 @@ import rpy2.robjects as ro
 from rpy2.robjects.packages import importr
 from rpy2.robjects import pandas2ri
 
-# Enable conversion between pandas and R data frames
-pandas2ri.activate()
-
 # Load the AMR package from R
 amr = importr('AMR')
 
@@ -105,15 +124,12 @@ data = pd.DataFrame({
     'microorganism': ['E. coli', 'S. aureus', 'P. aeruginosa', 'K. pneumoniae']
 })
 
-# Convert the Python DataFrame to an R DataFrame
-r_data = pandas2ri.py2rpy(data)
-
 # Apply mo_name() from the AMR package to the 'microorganism' column
-ro.globalenv['r_data'] = r_data
+ro.globalenv['r_data'] = data
 ro.r('r_data$mo_name <- mo_name(r_data$microorganism)')
 
 # Retrieve and print the modified R DataFrame in Python
-result = ro.r('as.data.frame(r_data)')
+result = ro.r('r_data')
 result = pandas2ri.rpy2py(result)
 print(result)
 ```

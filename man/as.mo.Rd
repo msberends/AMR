@@ -207,7 +207,7 @@ Furthermore,
 
 When calculating the matching score, all characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 
-All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.598}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.381}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
+All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.688}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.381}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
 }
 
 \section{Reference Data Publicly Available}{
