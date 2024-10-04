@@ -262,43 +262,66 @@ get_synonyms <- function(CID, clean = TRUE) {
     if (is.na(CID[i])) {
       next
     }
-
-    synonyms_txt <- tryCatch(
+    
+    # we will now get the closest compounds with a 96% threshold
+    similar_cids <- tryCatch(
       data.table::fread(
         paste0(
-          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastidentity/cid/",
+          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastsimilarity_2d/cid/",
           CID[i],
-          "/synonyms/TXT"
+          "/cids/TXT?Threshold=96&MaxRecords=5"
         ),
         sep = "\n",
         showProgress = FALSE
       )[[1]],
       error = function(e) NA_character_
     )
-
-    Sys.sleep(0.1)
-
-    if (clean == TRUE) {
-      # remove text between brackets
-      synonyms_txt <- trimws(gsub(
-        "[(].*[)]", "",
-        gsub(
-          "[[].*[]]", "",
+    all_cids <- unique(c(CID[i], similar_cids))
+    # for each one, we are getting the synonyms
+    current_syns <- character(0)
+    for (j in seq_len(length(all_cids))) {
+      synonyms_txt <- tryCatch(
+        data.table::fread(
+          paste0(
+            "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastidentity/cid/",
+            all_cids[j],
+            "/synonyms/TXT"
+          ),
+          sep = "\n",
+          showProgress = FALSE
+        )[[1]],
+        error = function(e) NA_character_
+      )
+      
+      Sys.sleep(0.05)
+      
+      if (clean == TRUE) {
+        # remove text between brackets
+        synonyms_txt <- trimws(gsub(
+          "[(].*[)]", "",
           gsub(
-            "[(].*[]]", "",
-            gsub("[[].*[)]", "", synonyms_txt)
+            "[[].*[]]", "",
+            gsub(
+              "[(].*[]]", "",
+              gsub("[[].*[)]", "", synonyms_txt)
+            )
           )
-        )
-      ))
-      synonyms_txt <- gsub("Co-", "Co", synonyms_txt, fixed = TRUE)
-      # only length 6 to 20 and no txt with reading marks or numbers and must start with capital letter (= brand)
-      synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(6:20) &
-        !grepl("[-&{},_0-9/:]", synonyms_txt) &
-        grepl("^[A-Z]", synonyms_txt, ignore.case = FALSE)]
-      synonyms_txt <- unlist(strsplit(synonyms_txt, ";", fixed = TRUE))
+        ))
+        synonyms_txt <- gsub("Co-", "Co", synonyms_txt, fixed = TRUE)
+        synonyms_txt <- gsub(" ?(mono)?sodium ?", "", ignore.case = TRUE, synonyms_txt)
+        synonyms_txt <- gsub(" ?injection ?", "", ignore.case = TRUE, synonyms_txt)
+        # only length 6 to 20 and no txt with reading marks or numbers and must start with capital letter (= brand)
+        synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(5:20) &
+                                       !grepl("[-&{},_0-9/:]", synonyms_txt) &
+                                       grepl("^[A-Z]", synonyms_txt, ignore.case = FALSE)]
+        synonyms_txt <- unlist(strsplit(synonyms_txt, ";", fixed = TRUE))
+      }
+      
+      current_syns <- c(current_syns, synonyms_txt)
     }
-    synonyms_txt <- unique(trimws(synonyms_txt[tolower(synonyms_txt) %in% unique(tolower(synonyms_txt))]))
-    synonyms[i] <- list(sort(synonyms_txt))
+    
+    current_syns <- unique(trimws(current_syns[tolower(current_syns) %in% unique(tolower(current_syns))]))
+    synonyms[i] <- list(sort(current_syns))
   }
   names(synonyms) <- CID
   synonyms
@@ -319,7 +342,7 @@ for (i in seq_len(length(synonyms))) {
 
 antibiotics$synonyms <- synonyms
 
-stop("remember to remove co-trimoxazole as synonyms from SXT (Sulfamethoxazole), so it only exists in SXT!")
+stop("remember to remove co-trimoxazole as synonyms from SMX (Sulfamethoxazole), so it only exists in SXT!")
 sulfa <- antibiotics[which(antibiotics$ab == "SMX"), "synonyms", drop = TRUE][[1]]
 cotrim <- antibiotics[which(antibiotics$ab == "SXT"), "synonyms", drop = TRUE][[1]]
 sulfa <- sulfa[!sulfa %in% cotrim]
