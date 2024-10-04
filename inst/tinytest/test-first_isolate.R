@@ -206,7 +206,7 @@ expect_equal(
     ),
     na.rm = TRUE
   ),
-  1376
+  1390
 )
 
 # unknown MOs
@@ -214,23 +214,23 @@ test_unknown <- example_isolates
 test_unknown$mo <- ifelse(test_unknown$mo == "B_ESCHR_COLI", "UNKNOWN", test_unknown$mo)
 expect_equal(
   sum(first_isolate(test_unknown, include_unknown = FALSE)),
-  1106
+  1116
 )
 expect_equal(
   sum(first_isolate(test_unknown, include_unknown = TRUE)),
-  1589
+  1599
 )
 
 test_unknown$mo <- ifelse(test_unknown$mo == "UNKNOWN", NA, test_unknown$mo)
 expect_equal(
   sum(first_isolate(test_unknown)),
-  1106
+  1116
 )
 
 # empty sir results
 expect_equal(
   sum(first_isolate(example_isolates, include_untested_sir = FALSE)),
-  1360
+  1374
 )
 
 # shortcuts
