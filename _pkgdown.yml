@@ -57,7 +57,10 @@ footer:
 
 home:
   sidebar:
-    structure: [toc, links, authors]
+    structure: [gpthelp, toc, links, authors]
+    components:
+      <a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="AMRforRGPT.svg" style="min-width: 300px; width: 10%;" /></a>
+      gpthelp: '<a target="_blank" href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg" style="width: 80%;"></a>'
 
 navbar:
   title: "AMR (for R)"

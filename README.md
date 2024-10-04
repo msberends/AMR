@@ -1,6 +1,6 @@
 # `AMR` (for R)
 
-<a href="https://msberends.github.io/AMR/"><img src="https://msberends.github.io/AMR/AMR_intro.png" align="center"></a>
+<a target="_blank" href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg" style="width: 400px;"></a>
 
 ----
 

@@ -28,8 +28,8 @@ for file in ../vignettes/*.Rmd; do
   echo -e "\n\n" >> "$output_file"
 done
 
-# Process important metadata files (DESCRIPTION, NAMESPACE, README.md)
-for file in ../DESCRIPTION ../NAMESPACE ../README.md; do
+# Process important metadata files (DESCRIPTION, NAMESPACE, index.md)
+for file in ../DESCRIPTION ../NAMESPACE ../index.md; do
   if [[ -f $file ]]; then
     echo "THE NEXT PART CONTAINS CONTENTS FROM FILE $file" >> "$output_file"
     echo -e "\n\n" >> "$output_file"

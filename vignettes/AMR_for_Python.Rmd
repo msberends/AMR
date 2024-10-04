@@ -28,8 +28,6 @@ The `AMR` package for R is an incredible tool for antimicrobial resistance (AMR)
 
 The best way is to access R directly from Python with the help of `rpy2`, a simple yet powerful Python package. You can easily call functions from the `AMR` package to process your own data in your own Python environment. This post will guide you through setting up `rpy2` and show you how to use R functions from `AMR` in Python to supercharge your antimicrobial resistance analysis.
 
-<a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="../AMRforRGPT.svg" style="min-width: 300px; width: 10%;" /></a>
-
 # What is `rpy2`?
 
 `rpy2` is a Python library that allows Python users to run R code within their Python scripts. Essentially, it acts as a bridge between the two languages, allowing you to tap into the rich ecosystem of R libraries (like `AMR`) while maintaining the flexibility of Python.
