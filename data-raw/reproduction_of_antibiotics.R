@@ -276,7 +276,10 @@ get_synonyms <- function(CID, clean = TRUE) {
       )[[1]],
       error = function(e) NA_character_
     )
+    # include the current CID of course
     all_cids <- unique(c(CID[i], similar_cids))
+    # but leave out all CIDs that we have in our antibiotics dataset to prevent duplication
+    all_cids <- all_cids[!all_cids %in% antibiotics$cid[!is.na(antibiotics$cid)]]
     # for each one, we are getting the synonyms
     current_syns <- character(0)
     for (j in seq_len(length(all_cids))) {
@@ -309,7 +312,7 @@ get_synonyms <- function(CID, clean = TRUE) {
         ))
         synonyms_txt <- gsub("Co-", "Co", synonyms_txt, fixed = TRUE)
         synonyms_txt <- gsub(" ?(mono)?sodium ?", "", ignore.case = TRUE, synonyms_txt)
-        synonyms_txt <- gsub(" ?injection ?", "", ignore.case = TRUE, synonyms_txt)
+        synonyms_txt <- gsub(" ?(injection|pediatric) ?", "", ignore.case = TRUE, synonyms_txt)
         # only length 6 to 20 and no txt with reading marks or numbers and must start with capital letter (= brand)
         synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(5:20) &
                                        !grepl("[-&{},_0-9/:]", synonyms_txt) &
@@ -330,14 +333,12 @@ get_synonyms <- function(CID, clean = TRUE) {
 # get brand names from PubChem (3-4 min)
 synonyms <- get_synonyms(CIDs)
 synonyms.bak <- synonyms
+synonyms <- synonyms.bak
 
 # add existing ones (will be cleaned later)
 for (i in seq_len(length(synonyms))) {
-  old <- antibiotics$synonyms[[i]]
-  if (old %like% "^c[()]") {
-    old <- eval(parse(text = old))
-  }
-  synonyms[[i]] <- c(synonyms[[i]], old)
+  old <- unname(unlist(AMR::antibiotics[i, "synonyms", drop = TRUE]))
+  synonyms[[i]] <- c(unname(synonyms[[i]]), old)
 }
 
 antibiotics$synonyms <- synonyms
@@ -345,6 +346,7 @@ antibiotics$synonyms <- synonyms
 stop("remember to remove co-trimoxazole as synonyms from SMX (Sulfamethoxazole), so it only exists in SXT!")
 sulfa <- antibiotics[which(antibiotics$ab == "SMX"), "synonyms", drop = TRUE][[1]]
 cotrim <- antibiotics[which(antibiotics$ab == "SXT"), "synonyms", drop = TRUE][[1]]
+# 2024-10-06 not the case anymore, no overlapping names: sulfa[sulfa %in% cotrim]
 sulfa <- sulfa[!sulfa %in% cotrim]
 antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]][[1]] <- sulfa
 
@@ -904,8 +906,18 @@ antibiotics <- dplyr::arrange(antibiotics, name)
 for (i in 1:nrow(antibiotics)) {
   abb <- as.character(sort(unique(tolower(antibiotics[i, "abbreviations", drop = TRUE][[1]]))))
   abb <- abb[abb != "" & abb %unlike% ":"]
-  syn <- as.character(sort(unique(tolower(antibiotics[i, "synonyms", drop = TRUE][[1]]))))
-  syn <- syn[syn != "" & syn %unlike% ":"]
+  syn <- as.character(sort(unique(tolower(unname(unlist(antibiotics[i, "synonyms", drop = TRUE]))))))
+  pharm_terms <- "(pa?ediatric|injection|oral|inhale|otic|sulfate|sulphate|sodium|base|anhydrous|anhydrate|syrup|natrium|hydrate|x?hcl|gsalt|vet[.]?)"
+  syn <- gsub(paste0(" ", pharm_terms, "$"), "", syn)
+  syn <- gsub(paste0("^", pharm_terms, " "), "", syn)
+  syn <- gsub(" \\b[a-z]{1}\\.?[a-z]{1}\\.?$", "", syn, perl = TRUE)
+  syn <- trimws(syn)
+  syn <- syn[syn != "" & syn %unlike% ":" & !syn %in% tolower(antibiotics$name)]
+  syn <- unique(syn)
+  if (antibiotics$ab[i] == "VAN") {
+    # special case
+    syn <- syn[syn %unlike% "^tei?ch?o"]
+  }
   antibiotics[i, "abbreviations"][[1]] <- ifelse(length(abb) == 0, list(""), list(abb))
   antibiotics[i, "synonyms"][[1]] <- ifelse(length(syn) == 0, list(""), list(syn))
   if ("loinc" %in% colnames(antibiotics)) {

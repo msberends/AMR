@@ -1,4 +1,4 @@
-# AMR 2.1.1.9092
+# AMR 2.1.1.9093
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -55,9 +55,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Updated `italicise_taxonomy()` to support HTML output
 * `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule
 * `mo_info()` now contains an extra element `rank` and `group_members` (with the contents of the new `mo_group_members()` function)
-* Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Updated all ATC codes from WHOCC
 * Updated all antibiotic DDDs from WHOCC
+* Added over 1,500 trade names for antibiotics
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy
@@ -65,10 +65,12 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species
   * Genera from the World Health Organization's (WHO) Priority Pathogen List now have the highest prevalence
 * Fixed a bug for when `antibiogram()` returns an empty data set
+* Fixed a bug for `sir_confidence_interval()` when there are no isolates available
 * Updated the prevalence calculation to include genera from the World Health Organization's (WHO) Priority Pathogen List
 * Improved algorithm of `first_isolate()` when using the phenotype-based method, to prioritise records with the highest availability of SIR values
 
 ## Other
+* Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Greatly updated and expanded documentation
 * Added Larisse Bolton, Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
 * Stopped support for SAS (`.xpt`) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.

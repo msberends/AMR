@@ -46,7 +46,10 @@ $(document).ready(function() {
   }
   
   // rename 'Package index' to 'Manual' (weird design choice to pick 'Package index')
-  
+  if ($(".template-reference-index").length > 0) {
+    $(".template-reference-index .page-header h1").text("Manual");
+    document.title = document.title.replace("Package index", "Manual");
+  }
 
   // remove leading newline in code examples on changelog
   if ($("body .template-news").length > 0) {
