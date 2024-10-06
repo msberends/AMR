@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9087</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9092</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,18 +47,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9087" id="amr-2119087">AMR 2.1.1.9087<a class="anchor" aria-label="anchor" href="#amr-2119087"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9092" id="amr-2119092">AMR 2.1.1.9092<a class="anchor" aria-label="anchor" href="#amr-2119092"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using <a href="https://msberends.github.io/AMR/#latest-development-version">the instructions here</a>.)</em></p>
 <div class="section level5">
-<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9087">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9087"></a></h5>
+<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9092">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9092"></a></h5>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 </div>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9087">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9087"></a></h3>
+<h3 id="breaking-2-1-1-9092">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9092"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over a year ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9087">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9087"></a></h3>
+<h3 id="new-2-1-1-9092">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9092"></a></h3>
 <ul><li>
 <strong>One Health implementation</strong>
 <ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for veterinary breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
@@ -95,7 +95,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-1-1-9087">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9087"></a></h3>
+<h3 id="changed-2-1-1-9092">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9092"></a></h3>
 <ul><li>SIR interpretation
 <ul><li>It is now possible to use column names for argument <code>ab</code>, <code>mo</code>, and <code>uti</code>: <code>as.sir(..., ab = "column1", mo = "column2", uti = "column3")</code>. This greatly improves the flexibility for users.</li>
 <li>Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.</li>
@@ -146,13 +146,13 @@
 <li>Improved algorithm of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> when using the phenotype-based method, to prioritise records with the highest availability of SIR values</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-2-1-1-9087">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9087"></a></h3>
+<h3 id="other-2-1-1-9092">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9092"></a></h3>
 <ul><li>Greatly updated and expanded documentation</li>
 <li>Added Larisse Bolton, Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input</li>
 <li>Stopped support for SAS (<code>.xpt</code>) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="older-versions-2-1-1-9087">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9087"></a></h3>
+<h3 id="older-versions-2-1-1-9092">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9092"></a></h3>
 <p>This changelog only contains changes from AMR v3.0 (October 2024) and later.</p>
 <ul><li>For prior v2 versions, please see <a href="https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md" class="external-link">our v2 archive</a>.</li>
 <li>For prior v1 versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our v1 archive</a>.</li>
