@@ -119,6 +119,10 @@ body.amr-for-python * {
   width: 150px;
 }
 
+.amr-gpt-assistant * {
+  width: 90%;
+}
+
 .template-reference-index .section-desc {
   font-style: italic;
   text-align: justify;

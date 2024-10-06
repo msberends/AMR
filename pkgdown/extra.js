@@ -30,8 +30,10 @@
 */
 
 $(document).ready(function() {
+  // add GPT assistant info
+  $('aside').prepend('<div class="amr-gpt-assistant"><a target="_blank" href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg"></a></div>');
 
-  // Replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
+  // replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");
   $(".citation h2:nth(0)").text("All contributors");
   $(".citation h2:nth(1)").text("How to Cite");
@@ -42,6 +44,9 @@ $(document).ready(function() {
     $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\dontrun{", ""));
     $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# }", ""));
   }
+  
+  // rename 'Package index' to 'Manual' (weird design choice to pick 'Package index')
+  
 
   // remove leading newline in code examples on changelog
   if ($("body .template-news").length > 0) {
