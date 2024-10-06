@@ -119,8 +119,19 @@ body.amr-for-python * {
   width: 150px;
 }
 
+/* 
+this shows on top of every sidebar to the right
+(e.g., on top of Table of Contents)
+*/
+.amr-gpt-assistant {
+  margin-top: 10px;
+  border: 2px dashed var(--amr-green-dark);
+  text-align: center;
+}
 .amr-gpt-assistant * {
   width: 90%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .template-reference-index .section-desc {
