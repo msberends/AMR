@@ -59,8 +59,9 @@ $(document).ready(function() {
 
   // make Python part more fancy - prepare for CSS
   if (window.location.href.includes('AMR_for_Python')) {
-    $('body').addClass('amr-for-python');
-    $('img[src="../logo.svg"]').attr('src', '../logo_python.svg');
+    $('body').addClass('amr-for-python'); /* to set colours in CSS */
+    $('img[src="../logo.svg"]').attr('src', '../logo_python.svg'); /* replace base logo */
+    $('img[src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg"]').attr('src', 'https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT_python.svg'); /* replace GPT logo */
   }
 
   // add doctoral titles to authors
