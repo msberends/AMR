@@ -1,0 +1,201 @@
+#!/bin/bash
+
+# ==================================================================== #
+# TITLE:                                                               #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
+#                                                                      #
+# SOURCE CODE:                                                         #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
+# https://doi.org/10.18637/jss.v104.i03                                #
+#                                                                      #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# ==================================================================== #
+
+# Output Python file
+output_file="python_wrapper/amr_python_wrapper.py"
+
+# Write header to the output Python file, including the convert_to_python function
+cat <<EOL > "$output_file"
+import rpy2.robjects as robjects
+from rpy2.robjects.packages import importr
+from rpy2.robjects.vectors import StrVector, FactorVector, IntVector, FloatVector
+from rpy2.robjects import pandas2ri
+import pandas as pd
+
+# Activate automatic conversion between R data frames and pandas data frames
+pandas2ri.activate()
+
+# Import the AMR R package
+amr_r = importr('AMR')
+
+def convert_to_python(r_output):
+    # Check if it's a StrVector (R character vector)
+    if isinstance(r_output, StrVector):
+        return list(r_output)  # Convert to a Python list of strings
+    
+    # Check if it's a FactorVector (R factor)
+    elif isinstance(r_output, FactorVector):
+        return list(r_output)  # Convert to a list of integers (factor levels)
+    
+    # Check if it's an IntVector or FloatVector (numeric R vectors)
+    elif isinstance(r_output, (IntVector, FloatVector)):
+        return list(r_output)  # Convert to a Python list of integers or floats
+    
+    # Check if it's a pandas-compatible R data frame
+    elif isinstance(r_output, pd.DataFrame):
+        return r_output  # Return as pandas DataFrame (already converted by pandas2ri)
+    
+    # Fallback: return the raw rpy2 object if we don't know how to convert it
+    return r_output
+
+EOL
+
+# Directory where the .Rd files are stored (update path as needed)
+rd_dir="../man"
+
+# Iterate through each .Rd file in the man directory
+for rd_file in "$rd_dir"/*.Rd; do
+    # Extract function names and their arguments from the .Rd files
+    awk '
+    BEGIN {
+        usage_started = 0
+    }
+    
+    # Detect the start of the \usage block
+    /^\\usage\{/ {
+        usage_started = 1
+    }
+
+    # Detect the end of the \usage block
+    usage_started && /^\}/ {
+        usage_started = 0
+    }
+
+    # Process lines within the \usage block that look like function calls
+    usage_started && /^[a-zA-Z_]+/ {
+        func_line = $0
+        func_line_py = $0
+
+        # Extract the function name (up to the first parenthesis)
+        sub(/\(.*/, "", func_line)
+        func_name = func_line
+        func_name_py = func_name
+
+        # Replace dots with underscores in Python function names
+        gsub(/\./, "_", func_name_py)
+
+        # Extract the arguments (inside the parentheses)
+        sub(/^[^(]+\(/, "", $0)
+        sub(/\).*/, "", $0)
+        func_args = $0
+
+        # Count the number of arguments
+        arg_count = split(func_args, arg_array, ",")
+
+        # Handle "..." arguments (convert them to *args in Python)
+        gsub("\\.\\.\\.", "*args", func_args)
+
+        # Remove default values from arguments
+        gsub(/ = [^,]+/, "", func_args)
+
+        # If no arguments, skip the function (dont print it)
+        if (arg_count == 0) {
+            next
+        }
+
+        # If more than 1 argument, replace the 2nd to nth arguments with *args
+        if (arg_count > 1) {
+            first_arg = arg_array[1]
+            func_args = first_arg ", *args"
+        }
+
+        # Skip functions where func_name_py is identical to func_args
+        if (func_name_py == func_args) {
+            next
+        }
+
+        # Skip functions matching the regex pattern ^(x |facet|scale|set|get|NA_)
+        if (func_name_py ~ /^(x |facet|scale|set|get|NA_)/) {
+            next
+        }
+
+        # Write the Python function definition to the output file
+        print "def " func_name_py "(" func_args "):" >> "'"$output_file"'"
+        print "    \"\"\"See our website of the R package for the manual: https://msberends.github.io/AMR/index.html\"\"\"" >> "'"$output_file"'"
+        print "    return convert_to_python(amr_r." func_name_py "(" func_args "))" >> "'"$output_file"'"
+    }
+    ' "$rd_file"
+done
+
+# Output completion message
+echo "Python wrapper functions generated in $output_file."
+
+cp ../README.md python_wrapper/
+echo "README copied"
+
+
+# Path to your DESCRIPTION file
+description_file="../DESCRIPTION"
+
+# Output setup.py file
+output_file="python_wrapper/setup.py"
+
+# Extract the relevant fields from DESCRIPTION
+version=$(grep "^Version:" "$description_file" | awk '{print $2}')
+license=$(grep "^License:" "$description_file" | awk '{print $2}')
+
+# Write the setup.py file
+cat <<EOL > "$output_file"
+from setuptools import setup, find_packages
+
+setup(
+    name='AMR',
+    #version='$version',
+    version='2.1.1.1',
+    packages=find_packages(),
+    install_requires=[
+        'rpy2',
+        'pandas',
+    ],
+    author='Matthijs Berends',
+    author_email='m.s.berends@umcg.nl',
+    description='A Python wrapper for the AMR R package',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/msberends/AMR',
+    project_urls={
+        'Bug Tracker': 'https://github.com/msberends/AMR/issues',
+    },
+    license='GPL 2',
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'Operating System :: OS Independent',
+    ],
+    python_requires='>=3.6',
+)
+EOL
+
+# Output completion message
+echo "setup.py has been generated in $output_file."
+
+cd python_wrapper
+python3 setup.py sdist bdist_wheel
+

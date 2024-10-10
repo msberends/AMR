@@ -907,17 +907,19 @@ for (i in 1:nrow(antibiotics)) {
   abb <- as.character(sort(unique(tolower(antibiotics[i, "abbreviations", drop = TRUE][[1]]))))
   abb <- abb[abb != "" & abb %unlike% ":"]
   syn <- as.character(sort(unique(tolower(unname(unlist(antibiotics[i, "synonyms", drop = TRUE]))))))
-  pharm_terms <- "(pa?ediatric|injection|oral|inhale|otic|sulfate|sulphate|sodium|base|anhydrous|anhydrate|syrup|natrium|hydrate|x?hcl|gsalt|vet[.]?)"
+  syn <- gsub("[^a-z]", "", syn)
+  syn <- gsub(" +", " ", syn)
+  pharm_terms <- "(pa?ediatric|injection|oral|inhale|otic|sulfate|sulphate|sodium|base|anhydrous|anhydrate|stearate|syrup|natrium|hydrate|x?hcl|gsalt|vet[.]?)"
   syn <- gsub(paste0(" ", pharm_terms, "$"), "", syn)
   syn <- gsub(paste0("^", pharm_terms, " "), "", syn)
-  syn <- gsub(" \\b[a-z]{1}\\.?[a-z]{1}\\.?$", "", syn, perl = TRUE)
+  syn <- trimws(syn)
+  syn <- gsub(" [a-z]{1,3}$", "", syn, perl = TRUE)
   syn <- trimws(syn)
   syn <- syn[syn != "" & syn %unlike% ":" & !syn %in% tolower(antibiotics$name)]
   syn <- unique(syn)
-  if (antibiotics$ab[i] == "VAN") {
-    # special case
-    syn <- syn[syn %unlike% "^tei?ch?o"]
-  }
+  # special cases
+  if (antibiotics$ab[i] == "VAN") syn <- syn[syn %unlike% "^tei?ch?o"]
+  if (antibiotics$ab[i] == "CLR") syn <- syn[syn %unlike% "^ery"]
   antibiotics[i, "abbreviations"][[1]] <- ifelse(length(abb) == 0, list(""), list(abb))
   antibiotics[i, "synonyms"][[1]] <- ifelse(length(syn) == 0, list(""), list(syn))
   if ("loinc" %in% colnames(antibiotics)) {
