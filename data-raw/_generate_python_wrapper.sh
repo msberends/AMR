@@ -29,16 +29,71 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# Output Python file
-output_file="python_wrapper/amr_python_wrapper.py"
+# Clean up
+rm -rf python_wrapper/AMR/*
+mkdir python_wrapper/AMR/AMR
 
-# Write header to the output Python file, including the convert_to_python function
-cat <<EOL > "$output_file"
+# Output Python file
+functions_file="python_wrapper/AMR/AMR/functions.py"
+datasets_file="python_wrapper/AMR/AMR/datasets.py"
+init_file="python_wrapper/AMR/AMR/__init__.py"
+
+# Write header to the datasets Python file, including the convert_to_python function
+cat <<EOL > "$datasets_file"
+BLUE = '\033[94m'
+GREEN = '\033[32m'
+RESET = '\033[0m'
+
+print(f"{BLUE}AMR:{RESET} Setting up R environment and AMR datasets...", flush=True)
+
+from rpy2 import robjects
+from rpy2.robjects import pandas2ri
+from rpy2.robjects.packages import importr, isinstalled
+import pandas as pd
+
+# Check if the R package is installed
+if not isinstalled('AMR'):
+    utils = importr('utils')
+    utils.install_packages('AMR')
+
+# Activate the automatic conversion between R and pandas DataFrames
+pandas2ri.activate()
+# example_isolates
+example_isolates = pandas2ri.rpy2py(robjects.r('''
+df <- AMR::example_isolates
+df[] <- lapply(df, function(x) {
+    if (inherits(x, c("Date", "POSIXt", "factor"))) {
+        as.character(x)
+    } else {
+        x
+    }
+})
+df
+'''))
+example_isolates['date'] = pd.to_datetime(example_isolates['date'])
+
+# microorganisms
+microorganisms = pandas2ri.rpy2py(robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]'))
+antibiotics = pandas2ri.rpy2py(robjects.r('AMR::antibiotics[, !sapply(AMR::antibiotics, is.list)]'))
+clinical_breakpoints = pandas2ri.rpy2py(robjects.r('AMR::clinical_breakpoints'))
+
+print(f"{BLUE}AMR:{RESET} {GREEN}Done.{RESET}", flush=True)
+EOL
+
+echo "from .datasets import example_isolates" >> $init_file
+echo "from .datasets import microorganisms" >> $init_file
+echo "from .datasets import antibiotics" >> $init_file
+echo "from .datasets import clinical_breakpoints" >> $init_file
+
+
+# Write header to the functions Python file, including the convert_to_python function
+cat <<EOL > "$functions_file"
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
-from rpy2.robjects.vectors import StrVector, FactorVector, IntVector, FloatVector
+from rpy2.robjects.vectors import StrVector, FactorVector, IntVector, FloatVector, DataFrame
 from rpy2.robjects import pandas2ri
 import pandas as pd
+import numpy as np
 
 # Activate automatic conversion between R data frames and pandas data frames
 pandas2ri.activate()
@@ -62,10 +117,15 @@ def convert_to_python(r_output):
     # Check if it's a pandas-compatible R data frame
     elif isinstance(r_output, pd.DataFrame):
         return r_output  # Return as pandas DataFrame (already converted by pandas2ri)
-    
-    # Fallback: return the raw rpy2 object if we don't know how to convert it
-    return r_output
+    elif isinstance(r_output, DataFrame):
+        return pandas2ri.rpy2py(r_output) # Return as pandas DataFrame
 
+    # Check if the input is a NumPy array and has a string data type
+    if isinstance(r_output, np.ndarray) and np.issubdtype(r_output.dtype, np.str_):
+        return r_output.tolist()  # Convert to a regular Python list
+    
+    # Fall-back
+    return r_output
 EOL
 
 # Directory where the .Rd files are stored (update path as needed)
@@ -110,21 +170,24 @@ for rd_file in "$rd_dir"/*.Rd; do
         # Count the number of arguments
         arg_count = split(func_args, arg_array, ",")
 
-        # Handle "..." arguments (convert them to *args in Python)
-        gsub("\\.\\.\\.", "*args", func_args)
+        # Handle "..." arguments (convert them to *args, **kwargs in Python)
+        gsub("\\.\\.\\.", "*args, **kwargs", func_args)
 
         # Remove default values from arguments
         gsub(/ = [^,]+/, "", func_args)
 
         # If no arguments, skip the function (dont print it)
         if (arg_count == 0) {
-            next
+            func_args = "*args, **kwargs"
         }
 
-        # If more than 1 argument, replace the 2nd to nth arguments with *args
+        # If more than 1 argument, replace the 2nd to nth arguments with *args, **kwargs
         if (arg_count > 1) {
             first_arg = arg_array[1]
-            func_args = first_arg ", *args"
+            func_args = first_arg ", *args, **kwargs"
+        }
+        if (arg_array[1] == "...") {
+            func_args = "*args, **kwargs"
         }
 
         # Skip functions where func_name_py is identical to func_args
@@ -132,23 +195,31 @@ for rd_file in "$rd_dir"/*.Rd; do
             next
         }
 
-        # Skip functions matching the regex pattern ^(x |facet|scale|set|get|NA_)
-        if (func_name_py ~ /^(x |facet|scale|set|get|NA_)/) {
+        # Skip functions matching the regex pattern
+        if (func_name_py ~ /^(x |facet|scale|set|get|NA_|microorganisms|antibiotics|clinical_breakpoints|example_isolates)/) {
             next
         }
 
+        # Replace TRUE/FALSE/NULL
+        gsub("TRUE", "True", func_args)
+        gsub("FALSE", "False", func_args)
+        gsub("NULL", "None", func_args)
+
         # Write the Python function definition to the output file
-        print "def " func_name_py "(" func_args "):" >> "'"$output_file"'"
-        print "    \"\"\"See our website of the R package for the manual: https://msberends.github.io/AMR/index.html\"\"\"" >> "'"$output_file"'"
-        print "    return convert_to_python(amr_r." func_name_py "(" func_args "))" >> "'"$output_file"'"
+        print "def " func_name_py "(" func_args "):" >> "'"$functions_file"'"
+        print "    \"\"\"See our website of the R package for the manual: https://msberends.github.io/AMR/index.html\"\"\"" >> "'"$functions_file"'"
+        print "    return convert_to_python(amr_r." func_name_py "(" func_args "))" >> "'"$functions_file"'"
+        
+        print "from .functions import " func_name_py >> "'"$init_file"'"
     }
     ' "$rd_file"
 done
 
 # Output completion message
-echo "Python wrapper functions generated in $output_file."
+echo "Python wrapper functions generated in $functions_file."
+echo "Python wrapper functions listed in $init_file."
 
-cp ../README.md python_wrapper/
+cp ../vignettes/AMR_for_Python.Rmd python_wrapper/AMR/README.md
 echo "README copied"
 
 
@@ -156,23 +227,22 @@ echo "README copied"
 description_file="../DESCRIPTION"
 
 # Output setup.py file
-output_file="python_wrapper/setup.py"
+functions_file="python_wrapper/AMR/setup.py"
 
 # Extract the relevant fields from DESCRIPTION
 version=$(grep "^Version:" "$description_file" | awk '{print $2}')
-license=$(grep "^License:" "$description_file" | awk '{print $2}')
 
 # Write the setup.py file
-cat <<EOL > "$output_file"
+cat <<EOL > "$functions_file"
 from setuptools import setup, find_packages
 
 setup(
     name='AMR',
-    #version='$version',
-    version='2.1.1.1',
+    version='$version',
     packages=find_packages(),
     install_requires=[
         'rpy2',
+        'numpy',
         'pandas',
     ],
     author='Matthijs Berends',
@@ -194,8 +264,8 @@ setup(
 EOL
 
 # Output completion message
-echo "setup.py has been generated in $output_file."
+echo "setup.py has been generated in $functions_file."
 
-cd python_wrapper
+cd python_wrapper/AMR
 python3 setup.py sdist bdist_wheel
 

@@ -1263,7 +1263,7 @@ as_sir_method <- function(method_short,
     if (breakpoint_type == "animal" && !host_current %in% breakpoints_current$host) {
       if (guideline_coerced %like% "CLSI") {
         # VET09 says that staph/strep/enterococcus BP can be extrapolated to all Gr+ cocci except for intrinsic resistance, so take all Gr+ cocci:
-        all_gram_pos_genera <- c("B_STPHY", "B_STRPT", "B_ENTRC", "B_PPTST", "B_AERCC", "B_MCRCCC", "B_TRPRL")
+        all_gram_pos_genera <- c("B_STPHY", "B_STRPT", "B_PPTST", "B_AERCC", "B_MCRCCC", "B_TRPRL")
         
         # HUMAN SUBSTITUTES
         if (ab_current == "AZM" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats", "horse")) {
@@ -1310,9 +1310,9 @@ as_sir_method <- function(method_short,
           # vancomycin can take human breakpoints in these hosts
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " based on CLSI VET09."))
-          
+
         } else if (host_current %in% c("dogs", "cats") && (mo_current_genus %in% c("B_AMYCS", "B_NOCRD", "B_CMPYL", "B_CRYNB", "B_ENTRC", "B_MYCBC", "B_PSDMN", "B_AERMN") | mo_current_class == "B_[CLS]_BTPRTBCT" | mo_current == "B_LISTR_MNCY")) {
-          # human breakpoints if no canine/feline
+          # dog breakpoints if no canine/feline
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", mo_formatted, " based on CLSI VET09."))
           

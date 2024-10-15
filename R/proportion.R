@@ -292,14 +292,14 @@ sir_confidence_interval <- function(...,
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
   
-  # this applies the Clopper-Pearson method
   if (x == 0) {
-    out <- c(NA_real_, NA_real_)
+    out <- c(0, 0)
   } else {
+    # this applies the Clopper-Pearson method
     out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
   }
   out <- set_clean_class(out, "numeric")
-
+  
   if (side %in% c("left", "l", "lower", "lowest", "less", "min")) {
     out <- out[1]
   } else if (side %in% c("right", "r", "higher", "highest", "greater", "g", "max")) {
@@ -312,7 +312,7 @@ sir_confidence_interval <- function(...,
     if (is.numeric(out)) {
       out <- round(out, digits = 3)
     }
-    out[is.na(out)] <- "??"
+    # out[is.na(out)] <- 0
     out <- paste(out, collapse = ifelse(isTRUE(collapse), "-", collapse))
   }
   

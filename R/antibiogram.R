@@ -313,7 +313,8 @@ antibiogram <- function(x,
                         combine_SI = TRUE,
                         sep = " + ",
                         info = interactive()) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
+  meet_criteria(x, allow_class = "data.frame")
+  x <- ascertain_sir_classes(x, "x")
   meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE)
   meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antibiotics), allow_NULL = TRUE)
   meet_criteria(syndromic_group, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)

@@ -193,7 +193,8 @@ ggplot_sir <- function(data,
                        y.title = "Proportion",
                        ...) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
+  meet_criteria(data, allow_class = "data.frame")
+  data <- ascertain_sir_classes(data, "data")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)

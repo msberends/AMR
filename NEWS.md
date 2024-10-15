@@ -1,4 +1,4 @@
-# AMR 2.1.1.9094
+# AMR 2.1.1.9095
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -28,6 +28,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * **New forms for MIC plotting and transforming**
   * New function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They are advanced ggplot2 extensions to allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
   * New function `rescale_mic()`, which allows users to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used independently to, for instance, compare equality in MIC distributions by rescaling them to the same range first.
+* **Support for Python**
+  * While using R for the heavy lifting, [our 'AMR' Python Package](https://pypi.org/project/AMR/) was developed to run the AMR R package natively in Python. The Python package will always have the same version number as the R package, as it is built automatically with every code change.
 * **Other**
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
 
@@ -52,6 +54,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
   * Sorting of MIC values (using `sort()`) was fixed in the same manner; `<0.001` now gets sorted before `0.001`, and `>0.001` gets sorted after `0.001`.
   * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
+* Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (`as.disk()`) is now between 0 and 50 mm
 * Updated `italicise_taxonomy()` to support HTML output
 * `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule
 * `mo_info()` now contains an extra element `rank` and `group_members` (with the contents of the new `mo_group_members()` function)

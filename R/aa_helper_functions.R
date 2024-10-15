@@ -822,7 +822,6 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
                           is_positive = NULL,
                           is_positive_or_zero = NULL,
                           is_finite = NULL,
-                          contains_column_class = NULL,
                           allow_NULL = FALSE,
                           allow_NA = FALSE,
                           ignore.case = FALSE,
@@ -850,6 +849,11 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
   if (is.null(dim(object)) && length(object) == 1 && suppressWarnings(is.na(object))) { # suppressWarnings for functions
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
+  }
+  
+  if (identical(class(object), "list") && !"list" %in% allow_class) {
+    # coming from Python, possibly - turn lists (not data.frame) to the underlying data type
+    object <- unlist(object)
   }
 
   if (!is.null(allow_class) && !(suppressWarnings(all(is.na(object))) && allow_NA == TRUE)) {
@@ -937,21 +941,6 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
       call = call_depth
     )
   }
-  if (!is.null(contains_column_class)) {
-    stop_ifnot(
-      any(vapply(
-        FUN.VALUE = logical(1),
-        object,
-        function(col, columns_class = contains_column_class) {
-          inherits(col, columns_class)
-        }
-      ), na.rm = TRUE),
-      "the data provided in argument `", obj_name,
-      "` must contain at least one column of class '", contains_column_class[1L], "'. ",
-      "See `?as.", contains_column_class[1L], "`.",
-      call = call_depth
-    )
-  }
   if (!is.null(allow_arguments_from) && !is.null(names(object))) {
     args_given <- names(object)
     if (is.function(allow_arguments_from)) {
@@ -971,6 +960,20 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     )
   }
   return(invisible())
+}
+
+ascertain_sir_classes <- function(x, obj_name) {
+  sirs <- vapply(FUN.VALUE = logical(1), x, is.sir)
+  if (!any(sirs, na.rm = TRUE)) {
+    warning_("the data provided in argument `", obj_name,
+             "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
+             "See `?as.sir`.")
+    sirs_eligible <- is_sir_eligible(x)
+    for (col in colnames(x)[sirs_eligible]) {
+      x[[col]] <- as.sir(x[[col]])
+    }
+  }
+  x
 }
 
 get_current_data <- function(arg_name, call) {

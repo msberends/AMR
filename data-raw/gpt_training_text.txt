@@ -1028,7 +1028,6 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
                           is_positive = NULL,
                           is_positive_or_zero = NULL,
                           is_finite = NULL,
-                          contains_column_class = NULL,
                           allow_NULL = FALSE,
                           allow_NA = FALSE,
                           ignore.case = FALSE,
@@ -1056,6 +1055,11 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
   if (is.null(dim(object)) && length(object) == 1 && suppressWarnings(is.na(object))) { # suppressWarnings for functions
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
+  }
+  
+  if (identical(class(object), "list") && !"list" %in% allow_class) {
+    # coming from Python, possibly - turn lists (not data.frame) to the underlying data type
+    object <- unlist(object)
   }
 
   if (!is.null(allow_class) && !(suppressWarnings(all(is.na(object))) && allow_NA == TRUE)) {
@@ -1143,21 +1147,6 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
       call = call_depth
     )
   }
-  if (!is.null(contains_column_class)) {
-    stop_ifnot(
-      any(vapply(
-        FUN.VALUE = logical(1),
-        object,
-        function(col, columns_class = contains_column_class) {
-          inherits(col, columns_class)
-        }
-      ), na.rm = TRUE),
-      "the data provided in argument `", obj_name,
-      "` must contain at least one column of class '", contains_column_class[1L], "'. ",
-      "See `?as.", contains_column_class[1L], "`.",
-      call = call_depth
-    )
-  }
   if (!is.null(allow_arguments_from) && !is.null(names(object))) {
     args_given <- names(object)
     if (is.function(allow_arguments_from)) {
@@ -1177,6 +1166,20 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     )
   }
   return(invisible())
+}
+
+ascertain_sir_classes <- function(x, obj_name) {
+  sirs <- vapply(FUN.VALUE = logical(1), x, is.sir)
+  if (!any(sirs, na.rm = TRUE)) {
+    warning_("the data provided in argument `", obj_name,
+             "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
+             "See `?as.sir`.")
+    sirs_eligible <- is_sir_eligible(x)
+    for (col in colnames(x)[sirs_eligible]) {
+      x[[col]] <- as.sir(x[[col]])
+    }
+  }
+  x
 }
 
 get_current_data <- function(arg_name, call) {
@@ -5893,7 +5896,8 @@ antibiogram <- function(x,
                         combine_SI = TRUE,
                         sep = " + ",
                         info = interactive()) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
+  meet_criteria(x, allow_class = "data.frame")
+  x <- ascertain_sir_classes(x, "x")
   meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE)
   meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antibiotics), allow_NULL = TRUE)
   meet_criteria(syndromic_group, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
@@ -7659,7 +7663,8 @@ bug_drug_combinations <- function(x,
                                   col_mo = NULL,
                                   FUN = mo_shortname,
                                   ...) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
+  meet_criteria(x, allow_class = "data.frame")
+  x <- ascertain_sir_classes(x, "x")
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), has_length = 1, allow_NULL = TRUE)
   meet_criteria(FUN, allow_class = "function", has_length = 1)
 
@@ -9273,13 +9278,13 @@ THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/disk.R
 
 #' Transform Input to Disk Diffusion Diameters
 #'
-#' This transforms a vector to a new class [`disk`], which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
+#' This transforms a vector to a new class [`disk`], which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 0 and 50.
 #' @rdname as.disk
 #' @param x vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
 #' @details Interpret disk values as SIR values with [as.sir()]. It supports guidelines from EUCAST and CLSI.
 #'
-#' Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return `NA`.
+#' Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 0-50 range will return `NA`.
 #' @return An [integer] with additional class [`disk`]
 #' @aliases disk
 #' @export
@@ -9352,8 +9357,8 @@ as.disk <- function(x, na.rm = FALSE) {
     # round up and make it an integer
     x <- as.integer(ceiling(clean_double2(x)))
 
-    # disks can never be less than 6 mm (size of smallest disk) or more than 50 mm
-    x[x < 6 | x > 99] <- NA_integer_
+    # disks can never be less than 0 mm or more than 50 mm
+    x[x < 0 | x > 99] <- NA_integer_
     x[x > 50] <- 50L
     na_after <- length(x[is.na(x)])
 
@@ -12478,7 +12483,8 @@ ggplot_sir <- function(data,
                        y.title = "Proportion",
                        ...) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
+  meet_criteria(data, allow_class = "data.frame")
+  data <- ascertain_sir_classes(data, "data")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)
@@ -20722,26 +20728,31 @@ sir_confidence_interval <- function(...,
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
-
-  # this applies the Clopper-Pearson method
-  out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
+  
+  if (x == 0) {
+    out <- c(0, 0)
+  } else {
+    # this applies the Clopper-Pearson method
+    out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
+  }
   out <- set_clean_class(out, "numeric")
-
+  
   if (side %in% c("left", "l", "lower", "lowest", "less", "min")) {
     out <- out[1]
   } else if (side %in% c("right", "r", "higher", "highest", "greater", "g", "max")) {
     out <- out[2]
   }
   if (isTRUE(as_percent)) {
-    out <- percentage(out, digits = 1)
+    out <- trimws(percentage(out, digits = 1))
   }
   if (!isFALSE(collapse) && length(out) > 1) {
     if (is.numeric(out)) {
       out <- round(out, digits = 3)
     }
+    # out[is.na(out)] <- 0
     out <- paste(out, collapse = ifelse(isTRUE(collapse), "-", collapse))
   }
-
+  
   if (n < minimum) {
     warning_("Introducing NA: ",
       ifelse(n == 0, "no", paste("only", n)),
@@ -20754,7 +20765,6 @@ sir_confidence_interval <- function(...,
       return(NA_real_)
     }
   }
-
   out
 }
 
@@ -22241,29 +22251,31 @@ convert_host <- function(x, lang = get_AMR_locale()) {
   x_out[trimws2(tolower(x)) == "human"] <- "human"
   x_out[trimws2(tolower(x)) == "ecoff"] <- "ecoff"
   # this order is based on: clinical_breakpoints |> filter(type == "animal") |> count(host, sort = TRUE)
-  x_out[is.na(x_out) & (x %like% "dog|canine" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
-  x_out[is.na(x_out) & (x %like% "cattle|bovine" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
-  x_out[is.na(x_out) & (x %like% "swine|suida(e)?" | x %like% translate_AMR("swine|swines", lang))] <- "swine"
-  x_out[is.na(x_out) & (x %like% "cat|feline" | x %like% translate_AMR("cat|cats|feline", lang))] <- "cats"
-  x_out[is.na(x_out) & (x %like% "horse|equine" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
-  x_out[is.na(x_out) & (x %like% "aqua|fish" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
-  x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
+  x_out[is.na(x_out) & (x %like% "dog|canine|Canis lupus" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
+  x_out[is.na(x_out) & (x %like% "cattle|bovine|Bos taurus" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
+  x_out[is.na(x_out) & (x %like% "swine|suida(e)?|Sus scrofa" | x %like% translate_AMR("swine|swines", lang))] <- "swine"
+  x_out[is.na(x_out) & (x %like% "cat|feline|Felis catus" | x %like% translate_AMR("cat|cats|feline", lang))] <- "cats"
+  x_out[is.na(x_out) & (x %like% "horse|equine|Equus ferus" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
+  x_out[is.na(x_out) & (x %like% "aqua|fish|Pisces" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
+  x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia|Gallus gallus" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
+  
   # additional animals, not necessarily currently in breakpoint guidelines:
-  x_out[is.na(x_out) & (x %like% "camel|camelid" | x %like% translate_AMR("camel|camels|camelid", lang))] <- "camels"
-  x_out[is.na(x_out) & (x %like% "deer|cervine" | x %like% translate_AMR("deer|deers|cervine", lang))] <- "deer"
-  x_out[is.na(x_out) & (x %like% "donkey|asinine" | x %like% translate_AMR("donkey|donkeys|asinine", lang))] <- "donkeys"
-  x_out[is.na(x_out) & (x %like% "ferret|musteline" | x %like% translate_AMR("ferret|ferrets|musteline", lang))] <- "ferrets"
-  x_out[is.na(x_out) & (x %like% "goat|caprine" | x %like% translate_AMR("goat|goats|caprine", lang))] <- "goats"
-  x_out[is.na(x_out) & (x %like% "guinea pig|caviine" | x %like% translate_AMR("guinea pig|guinea pigs|caviine", lang))] <- "guinea pigs"
-  x_out[is.na(x_out) & (x %like% "hamster|cricetine" | x %like% translate_AMR("hamster|hamsters|cricetine", lang))] <- "hamsters"
-  x_out[is.na(x_out) & (x %like% "monkey|simian" | x %like% translate_AMR("monkey|monkeys|simian", lang))] <- "monkeys"
-  x_out[is.na(x_out) & (x %like% "mouse|murine" | x %like% translate_AMR("mouse|mice|murine", lang))] <- "mice"
-  x_out[is.na(x_out) & (x %like% "pig|porcine" | x %like% translate_AMR("pig|pigs|porcine", lang))] <- "pigs"
-  x_out[is.na(x_out) & (x %like% "rabbit|leporine" | x %like% translate_AMR("rabbit|rabbits|leporine", lang))] <- "rabbits"
-  x_out[is.na(x_out) & (x %like% "rat|ratine" | x %like% translate_AMR("rat|rats|ratine", lang))] <- "rats"
-  x_out[is.na(x_out) & (x %like% "sheep|ovine" | x %like% translate_AMR("sheep|sheeps|ovine", lang))] <- "sheep"
-  x_out[is.na(x_out) & (x %like% "snake|serpentine" | x %like% translate_AMR("snake|snakes|serpentine", lang))] <- "snakes"
-  x_out[is.na(x_out) & (x %like% "turkey|meleagrine" | x %like% translate_AMR("turkey|turkeys|meleagrine", lang))] <- "turkey"
+  x_out[is.na(x_out) & (x %like% "camel|camelid|Camelus dromedarius" | x %like% translate_AMR("camel|camels|camelid", lang))] <- "camels"
+  x_out[is.na(x_out) & (x %like% "deer|cervine|Cervidae" | x %like% translate_AMR("deer|deers|cervine", lang))] <- "deer"
+  x_out[is.na(x_out) & (x %like% "donkey|asinine|Equus africanus" | x %like% translate_AMR("donkey|donkeys|asinine", lang))] <- "donkeys"
+  x_out[is.na(x_out) & (x %like% "ferret|musteline|Mustela putorius" | x %like% translate_AMR("ferret|ferrets|musteline", lang))] <- "ferrets"
+  x_out[is.na(x_out) & (x %like% "goat|caprine|Capra aegagrus" | x %like% translate_AMR("goat|goats|caprine", lang))] <- "goats"
+  x_out[is.na(x_out) & (x %like% "guinea pig|caviine|Cavia porcellus" | x %like% translate_AMR("guinea pig|guinea pigs|caviine", lang))] <- "guinea pigs"
+  x_out[is.na(x_out) & (x %like% "hamster|cricetine|Cricetinae" | x %like% translate_AMR("hamster|hamsters|cricetine", lang))] <- "hamsters"
+  x_out[is.na(x_out) & (x %like% "monkey|simian|Simia" | x %like% translate_AMR("monkey|monkeys|simian", lang))] <- "monkeys"
+  x_out[is.na(x_out) & (x %like% "mouse|murine|Mus musculus" | x %like% translate_AMR("mouse|mice|murine", lang))] <- "mice"
+  x_out[is.na(x_out) & (x %like% "pig|porcine|Sus scrofa" | x %like% translate_AMR("pig|pigs|porcine", lang))] <- "pigs"
+  x_out[is.na(x_out) & (x %like% "rabbit|leporine|Oryctolagus cuniculus" | x %like% translate_AMR("rabbit|rabbits|leporine", lang))] <- "rabbits"
+  x_out[is.na(x_out) & (x %like% "rat|ratine|Rattus" | x %like% translate_AMR("rat|rats|ratine", lang))] <- "rats"
+  x_out[is.na(x_out) & (x %like% "sheep|ovine|Ovis aries" | x %like% translate_AMR("sheep|sheeps|ovine", lang))] <- "sheep"
+  x_out[is.na(x_out) & (x %like% "snake|serpentine|Serpentes" | x %like% translate_AMR("snake|snakes|serpentine", lang))] <- "snakes"
+  x_out[is.na(x_out) & (x %like% "turkey|meleagrine|Meleagris gallopavo" | x %like% translate_AMR("turkey|turkeys|meleagrine", lang))] <- "turkey"
+  
   
   x_out[x_out == "ecoff"] <- "ECOFF"
   x_out
@@ -22660,7 +22672,7 @@ as_sir_method <- function(method_short,
     if (breakpoint_type == "animal" && !host_current %in% breakpoints_current$host) {
       if (guideline_coerced %like% "CLSI") {
         # VET09 says that staph/strep/enterococcus BP can be extrapolated to all Gr+ cocci except for intrinsic resistance, so take all Gr+ cocci:
-        all_gram_pos_genera <- c("B_STPHY", "B_STRPT", "B_ENTRC", "B_PPTST", "B_AERCC", "B_MCRCCC", "B_TRPRL")
+        all_gram_pos_genera <- c("B_STPHY", "B_STRPT", "B_PPTST", "B_AERCC", "B_MCRCCC", "B_TRPRL")
         
         # HUMAN SUBSTITUTES
         if (ab_current == "AZM" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats", "horse")) {
@@ -22707,9 +22719,9 @@ as_sir_method <- function(method_short,
           # vancomycin can take human breakpoints in these hosts
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " based on CLSI VET09."))
-          
+
         } else if (host_current %in% c("dogs", "cats") && (mo_current_genus %in% c("B_AMYCS", "B_NOCRD", "B_CMPYL", "B_CRYNB", "B_ENTRC", "B_MYCBC", "B_PSDMN", "B_AERMN") | mo_current_class == "B_[CLS]_BTPRTBCT" | mo_current == "B_LISTR_MNCY")) {
-          # human breakpoints if no canine/feline
+          # dog breakpoints if no canine/feline
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", mo_formatted, " based on CLSI VET09."))
           
@@ -23349,7 +23361,8 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
                         combine_SI = TRUE,
                         confidence_level = 0.95) {
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = "sir")
+  meet_criteria(data, allow_class = "data.frame")
+  data <- ascertain_sir_classes(data, "data")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
@@ -24721,166 +24734,183 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `AMR` package for R is an incredible tool for antimicrobial resistance (AMR) data analysis, providing extensive functionality for working with microbial and antimicrobial properties. But what if you're working in Python and still want to benefit from the robust features of `AMR`?
+The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the `AMR` Python package, which uses `rpy2` internally. This package allows Python users to access all the functions from the R `AMR` package without the need to set up `rpy2` themselves. Since this Python package is not a true 'port' (which would require all R functions to be rewritten into Python), R and the AMR R package are still required to be installed. Yet, Python users can now easily work with AMR data directly through Python code.
 
-The best way is to access R directly from Python with the help of `rpy2`, a simple yet powerful Python package. You can easily call functions from the `AMR` package to process your own data in your own Python environment. This post will guide you through setting up `rpy2` and show you how to use R functions from `AMR` in Python to supercharge your antimicrobial resistance analysis.
+In this document, we explain how this works and provide simple examples of using the `AMR` Python package.
 
-<a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="../AMRforRGPT.svg" style="min-width: 300px; width: 10%;" /></a>
+## How It Works
 
-# What is `rpy2`?
+The `AMR` Python package acts as a wrapper around the functions in the `AMR` R package. The package simplifies the process of calling R functions in Python, eliminating the need to manually manage the `rpy2` setup, which Python uses internally to be able to work with the R package. By just using `import AMR`, Python users can directly use the functions from the `AMR` R package as if they were native Python functions.
 
-`rpy2` is a Python library that allows Python users to run R code within their Python scripts. Essentially, it acts as a bridge between the two languages, allowing you to tap into the rich ecosystem of R libraries (like `AMR`) while maintaining the flexibility of Python.
+Internally, `rpy2` is still being used, but all complexity is hidden from the user. This approach keeps the Python code clean and Pythonic, while still leveraging the full power of the R `AMR` package.
 
-## Key Features of `rpy2`:
-- Seamlessly call R functions from Python.
-- Convert R data structures into Python data structures like pandas DataFrames.
-- Leverage the full power of R libraries without leaving your Python environment.
+## Example of Usage
 
-# Setting Up `rpy2`
-
-Before diving into the examples, you’ll need to install both R and `rpy2`. Here's a step-by-step guide on setting things up.
-
-## Step 1: Install R
-
-Ensure that R is installed on your system. R has minimal dependencies and is very simple to install:
-
-* **Linux**
-  * Ubuntu / Debian:  
-    `sudo apt install r-base`
-  * Fedora:  
-    `sudo dnf install R`
-  * CentOS/RHEL:  
-    `sudo yum install R`
-  * Arch Linux:  
-    `sudo pacman -S r`
-* **macOS** (with Homebrew):  
-  `brew install r`
-* **Other Systems:**  
-  Visit the [CRAN download page](https://cran.r-project.org).
-
-## Step 2: Install the `AMR` package in R
-
-On Linux and macOS, open Terminal and run:
-
-```bash
-Rscript -e 'install.packages("AMR")'
-```
-
-For other systems, open your R console and install the `AMR` package by running:
-
-```r
-install.packages("AMR")
-```
-
-On any system, you can also install the latest development version of the `AMR` package by setting `repos` to our beta channel:
-
-```r
-install.packages("AMR", repos = "https://msberends.r-universe.dev")
-```
-
-## Step 3: Install `rpy2` in Python
-
-To install `rpy2`, simply run the following command in your terminal:
-
-```bash
-pip install rpy2
-```
-
-## Step 4: Test `rpy2` Installation
-
-To ensure everything is set up correctly, you can test your installation by running the following Python script, which essentially runs R in the background:
-
-```python
-import rpy2.robjects as ro
-
-# Test a simple R function from Python
-ro.r('1 + 1')
-```
-
-If this returns `2`, you're good to go!
-
-# Working with `AMR` in Python
-
-Now that we have `rpy2` set up, let’s walk through some practical examples of using the `AMR` package within Python.
-
-## Example 1: Converting Taxonomic Data
-
-Let’s start by converting taxonomic user input to valid taxonomy using the `AMR` package, from within Python:
+Here’s an example that demonstrates how to clean microorganism and drug names using the `AMR` Python package:
 
 ```python
 import pandas as pd
-import rpy2.robjects as ro
-from rpy2.robjects.packages import importr
-from rpy2.robjects import pandas2ri
+import AMR
 
-# Load the AMR package from R
-amr = importr('AMR')
+# Sample data
+data = {
+    "MOs": ['E. coli', 'ESCCOL', 'esco', 'Esche coli'],
+    "Drug": ['Cipro', 'CIP', 'J01MA02', 'Ciproxin']
+}
+df = pd.DataFrame(data)
 
-# Example user dataset in Python
-data = pd.DataFrame({
-    'microorganism': ['E. coli', 'S. aureus', 'P. aeruginosa', 'K. pneumoniae']
-})
+# Use AMR functions to clean microorganism and drug names
+df['MO_clean'] = AMR.mo_name(df['MOs'])
+df['Drug_clean'] = AMR.ab_name(df['Drug'])
 
-# Apply mo_name() from the AMR package to the 'microorganism' column
-ro.globalenv['r_data'] = data
-ro.r('r_data$mo_name <- mo_name(r_data$microorganism)')
+# Display the results
+print(df)
+```
 
-# Retrieve and print the modified R DataFrame in Python
-result = ro.r('r_data')
-result = pandas2ri.rpy2py(result)
+| MOs         | Drug      | MO_clean           | Drug_clean    |
+|-------------|-----------|--------------------|---------------|
+| E. coli     | Cipro     | Escherichia coli   | Ciprofloxacin |
+| ESCCOL      | CIP       | Escherichia coli   | Ciprofloxacin |
+| esco        | J01MA02   | Escherichia coli   | Ciprofloxacin |
+| Esche coli  | Ciproxin  | Escherichia coli   | Ciprofloxacin |
+
+### Explanation
+
+* **mo_name:** This function standardises microorganism names. Here, different variations of *Escherichia coli* (such as "E. coli", "ESCCOL", "esco", and "Esche coli") are all converted into the correct, standardised form, "Escherichia coli".
+
+* **ab_name**: Similarly, this function standardises antimicrobial names. The different representations of ciprofloxacin (e.g., "Cipro", "CIP", "J01MA02", and "Ciproxin") are all converted to the standard name, "Ciprofloxacin".
+
+### Taxonomic Data Sets Now in Python!
+
+As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
+
+```python
+AMR.microorganisms
+```
+
+| mo           | fullname                           | status   | kingdom  | gbif      | gbif_parent | gbif_renamed_to | prevalence |
+|--------------|------------------------------------|----------|----------|-----------|-------------|-----------------|------------|
+| B_GRAMN      | (unknown Gram-negatives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_GRAMP      | (unknown Gram-positives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_ANAER-NEG  | (unknown anaerobic Gram-negatives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_ANAER-POS  | (unknown anaerobic Gram-positives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_ANAER      | (unknown anaerobic bacteria)       | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| ...          | ...                                | ...      | ...      | ...       | ...         | ...             | ...        |
+| B_ZYMMN_POMC | Zymomonas pomaceae                 | accepted | Bacteria | 10744418  | 3221412     | None            | 2.0        |
+| B_ZYMPH      | Zymophilus                         | synonym  | Bacteria | None      | 9475166     | None            | 2.0        |
+| B_ZYMPH_PCVR | Zymophilus paucivorans             | synonym  | Bacteria | None      | None        | None            | 2.0        |
+| B_ZYMPH_RFFN | Zymophilus raffinosivorans         | synonym  | Bacteria | None      | None        | None            | 2.0        |
+| F_ZYZYG      | Zyzygomyces                        | unknown  | Fungi    | None      | 7581        | None            | 2.0        |
+
+```python
+AMR.antibiotics
+```
+
+| ab  | cid         | name                 | group                      | oral_ddd | oral_units | iv_ddd | iv_units |
+|-----|-------------|----------------------|----------------------------|----------|------------|--------|----------|
+| AMA | 4649.0      | 4-aminosalicylic acid| Antimycobacterials         | 12.00    | g          | NaN    | None     |
+| ACM | 6450012.0   | Acetylmidecamycin    | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
+| ASP | 49787020.0  | Acetylspiramycin     | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
+| ALS | 8954.0      | Aldesulfone sodium   | Other antibacterials       | 0.33     | g          | NaN    | None     |
+| AMK | 37768.0     | Amikacin             | Aminoglycosides            | NaN      | None       | 1.0    | g        |
+| ... | ...         | ...                  | ...                        | ...      | ...        | ...    | ...      |
+| VIR | 11979535.0  | Virginiamycine       | Other antibacterials       | NaN      | None       | NaN    | None     |
+| VOR | 71616.0     | Voriconazole         | Antifungals/antimycotics   | 0.40     | g          | 0.4    | g        |
+| XBR | 72144.0     | Xibornol             | Other antibacterials       | NaN      | None       | NaN    | None     |
+| ZID | 77846445.0  | Zidebactam           | Other antibacterials       | NaN      | None       | NaN    | None     |
+| ZFD | NaN         | Zoliflodacin         | None                       | NaN      | None       | NaN    | None     |
+
+
+# Installation
+
+To be able to use the `AMR` Python package, it is required to install both R and the `AMR` R package.
+
+### Preparation: Install R and `AMR` R package
+
+For Linux and macOS, this is just:
+
+```bash
+# Ubuntu / Debian
+sudo apt install r-base && Rscript -e 'install.packages("AMR")'
+# Fedora:
+sudo dnf install R && Rscript -e 'install.packages("AMR")'
+# CentOS/RHEL
+sudo yum install R && Rscript -e 'install.packages("AMR")'
+# Arch Linux
+sudo pacman -S r && Rscript -e 'install.packages("AMR")'
+# macOS
+brew install r && Rscript -e 'install.packages("AMR")'
+```
+
+For Windows, visit the [CRAN download page](https://cran.r-project.org) in install R, then afterwards install the 'AMR' package manually.
+
+### Install `AMR` Python Package
+
+Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
+
+```bash
+pip install AMR
+```
+
+# Working with `AMR` in Python
+
+Now that we have everything set up, let’s walk through some practical examples of using the `AMR` package within Python.
+
+## Example 1: Calculating AMR
+
+```python
+import AMR
+import pandas as pd
+
+df = AMR.example_isolates
+result = AMR.resistance(df["AMX"])
 print(result)
 ```
 
-In this example, a Python dataset with microorganism names like *E. coli* and *S. aureus* is passed to the R function `mo_name()`. The result is an updated `DataFrame` that includes the standardised microorganism names based on the `mo_name()` function from the `AMR` package.
+```
+[0.59555556]
+```
 
-## Example 2: Generating an Antibiogram
+## Example 2: Generating Antibiograms
 
 One of the core functions of the `AMR` package is generating an antibiogram, a table that summarises the antimicrobial susceptibility of bacterial isolates. Here’s how you can generate an antibiogram from Python:
 
 ```python
-# Run an antibiogram in R from Python
-ro.r('result <- antibiogram(example_isolates, antibiotics = c(aminoglycosides(), carbapenems()))')
-
-# Retrieve the result in Python
-result = ro.r('as.data.frame(result)')
-print(result)
+result2a = AMR.antibiogram(df[["mo", "AMX", "CIP", "TZP"]])
+print(result2a)
 ```
 
-In this example, we generate an antibiogram by selecting aminoglycosides and carbapenems, two classes of antibiotics, and then convert the resulting R data frame into a Python-readable format.
+| Pathogen        | Amoxicillin     | Ciprofloxacin   | Piperacillin/tazobactam  |
+|-----------------|-----------------|-----------------|--------------------------|
+| CoNS            | 7% (10/142)     | 73% (183/252)   | 30% (10/33)              |
+| E. coli         | 50% (196/392)   | 88% (399/456)   | 94% (393/416)            |
+| K. pneumoniae   | 0% (0/58)       | 96% (53/55)     | 89% (47/53)              |
+| P. aeruginosa   | 0% (0/30)       | 100% (30/30)    | None                     |
+| P. mirabilis    | None            | 94% (34/36)     | None                     |
+| S. aureus       | 6% (8/131)      | 90% (171/191)   | None                     |
+| S. epidermidis  | 1% (1/91)       | 64% (87/136)    | None                     |
+| S. hominis      | None            | 80% (56/70)     | None                     |
+| S. pneumoniae   | 100% (112/112)  | None            | 100% (112/112)           |
 
-## Example 3: Filtering Data Based on Gram-Negative Bacteria
-
-Let’s say you want to filter the dataset for Gram-negative bacteria and display their resistance to certain antibiotics:
 
 ```python
-# Filter for Gram-negative bacteria with intrinsic resistance to cefotaxime
-ro.r('result <- example_isolates[which(mo_is_gram_negative() & mo_is_intrinsic_resistant(ab = "cefotax")), c("bacteria", aminoglycosides(), carbapenems())]')
-
-# Retrieve the filtered result in Python
-result = ro.r('as.data.frame(result)')
-print(result)
+result2b = AMR.antibiogram(df[["mo", "AMX", "CIP", "TZP"]], mo_transform = "gramstain")
+print(result2b)
 ```
 
-This example uses the AMR functions `mo_is_gram_negative()` and `mo_is_intrinsic_resistant()` to filter the dataset and returns a subset of bacteria with resistance data.
+| Pathogen       | Amoxicillin     | Ciprofloxacin    | Piperacillin/tazobactam  |
+|----------------|-----------------|------------------|--------------------------|
+| Gram-negative  | 36% (226/631)   | 91% (621/684)    | 88% (565/641)            |
+| Gram-positive  | 43% (305/703)   | 77% (560/724)    | 86% (296/345)            |
 
-## Example 4: Customising the Antibiogram
 
-You can easily customise the antibiogram by passing different antibiotics or microorganism transformations, as shown below:
-
-```python
-# Customise the antibiogram with different settings
-ro.r('result <- antibiogram(example_isolates, antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"), mo_transform = "gramstain")')
-
-# Retrieve and print the result
-result = ro.r('as.data.frame(result)')
-print(result)
-```
-
-Here, we use piperacillin/tazobactam (TZP) in combination with tobramycin (TOB) and gentamicin (GEN) to see how they perform against various Gram-negative bacteria.
+In this example, we generate an antibiogram by selecting various antibiotics.
 
 # Conclusion
 
-Using `rpy2`, you can easily integrate the power of R's `AMR` package into your Python workflows. Whether you are generating antibiograms, analyzing resistance data, or performing complex filtering, `rpy2` gives you the flexibility to run R code without leaving the Python environment. This makes it a perfect solution for teams working across both R and Python.
+With the `AMR` Python package, Python users can now effortlessly call R functions from the `AMR` R package. This eliminates the need for complex `rpy2` configurations and provides a clean, easy-to-use interface for antimicrobial resistance analysis. The examples provided above demonstrate how this can be applied to typical workflows, such as standardising microorganism and antimicrobial names or calculating resistance.
+
+By using `import AMR`, you can seamlessly integrate the robust features of the R `AMR` package into your Python workflows. Whether you're cleaning data or analysing resistance patterns, the `AMR` Python package makes it easy to work with AMR data in Python.
 
 
 
@@ -25743,38 +25773,6 @@ microorganisms.codes %>%
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/other_pkg.Rmd
-
-
-
----
-title: "Using AMR with other packages: AMR & dplyr/tidyverse"
-output: 
-  rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 3
-vignette: >
-  %\VignetteIndexEntry{How to conduct AMR data analysis}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include = FALSE, results = 'markup'}
-knitr::opts_chunk$set(
-  warning = FALSE,
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7.5,
-  fig.height = 5
-)
-```
-
-This page will be updated shortly, to give explicit examples of how to work ideally with the `AMR` package, for those who are used to working in `dplyr` or other tidyverse packages.
-
-
-
 THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/resistance_predict.Rmd
 
 
@@ -25991,8 +25989,8 @@ THE NEXT PART CONTAINS CONTENTS FROM FILE ../DESCRIPTION
 
 
 Package: AMR
-Version: 2.1.1.9087
-Date: 2024-10-02
+Version: 2.1.1.9094
+Date: 2024-10-10
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -26430,6 +26428,8 @@ THE NEXT PART CONTAINS CONTENTS FROM FILE ../index.md
 * Corrects for duplicate isolates, **calculates** and **predicts** AMR per antibiotic class
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * 100% free of costs and dependencies, highly suitable for places with **limited resources**
+
+> Now available for Python too! [Click here](./articles/AMR_for_Python.html) to read more.
 
 <div style="display: flex; font-size: 0.8em;">
   <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>

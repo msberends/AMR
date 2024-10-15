@@ -71,7 +71,8 @@ bug_drug_combinations <- function(x,
                                   col_mo = NULL,
                                   FUN = mo_shortname,
                                   ...) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = c("sir", "rsi"))
+  meet_criteria(x, allow_class = "data.frame")
+  x <- ascertain_sir_classes(x, "x")
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), has_length = 1, allow_NULL = TRUE)
   meet_criteria(FUN, allow_class = "function", has_length = 1)
 

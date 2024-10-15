@@ -26,12 +26,12 @@ is.disk(x)
 An \link{integer} with additional class \code{\link{disk}}
 }
 \description{
-This transforms a vector to a new class \code{\link{disk}}, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
+This transforms a vector to a new class \code{\link{disk}}, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 0 and 50.
 }
 \details{
 Interpret disk values as SIR values with \code{\link[=as.sir]{as.sir()}}. It supports guidelines from EUCAST and CLSI.
 
-Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return \code{NA}.
+Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 0-50 range will return \code{NA}.
 
 \code{NA_disk_} is a missing value of the new \code{disk} class.
 }
