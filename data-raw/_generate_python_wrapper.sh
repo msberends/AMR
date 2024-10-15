@@ -31,7 +31,7 @@
 
 # Clean up
 rm -rf python_wrapper/AMR/*
-mkdir python_wrapper/AMR/AMR
+mkdir -p python_wrapper/AMR/AMR
 
 # Output Python file
 functions_file="python_wrapper/AMR/AMR/functions.py"
@@ -245,7 +245,7 @@ setup(
         'numpy',
         'pandas',
     ],
-    author='Matthijs Berends',
+    author='Dr. Matthijs Berends',
     author_email='m.s.berends@umcg.nl',
     description='A Python wrapper for the AMR R package',
     long_description=open('README.md').read(),
