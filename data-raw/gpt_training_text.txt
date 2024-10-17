@@ -4,7 +4,7 @@ This files contains all context you must know about the AMR package for R.
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/aa_amr-package.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/aa_amr-package.R
 
 
 
@@ -40,7 +40,7 @@ THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/aa_amr-package.R
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/aa_globals.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/aa_globals.R
 
 
 
@@ -228,7 +228,7 @@ globalVariables(c(
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/aa_helper_functions.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/aa_helper_functions.R
 
 
 
@@ -1952,7 +1952,7 @@ if (getRversion() < "4.0.0") {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/aa_helper_pm_functions.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/aa_helper_pm_functions.R
 
 
 
@@ -3091,7 +3091,7 @@ pm_row_number <- function(x) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/aa_options.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/aa_options.R
 
 
 
@@ -3151,7 +3151,7 @@ NULL
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/ab.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/ab.R
 
 
 
@@ -3819,7 +3819,7 @@ get_translate_ab <- function(translate_ab) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/ab_from_text.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/ab_from_text.R
 
 
 
@@ -4028,7 +4028,7 @@ ab_from_text <- function(text,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/ab_property.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/ab_property.R
 
 
 
@@ -4478,7 +4478,7 @@ ab_validate <- function(x, property, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/ab_selectors.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/ab_selectors.R
 
 
 
@@ -5394,7 +5394,7 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/age.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/age.R
 
 
 
@@ -5605,7 +5605,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/antibiogram.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/antibiogram.R
 
 
 
@@ -6292,7 +6292,7 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/atc_online.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/atc_online.R
 
 
 
@@ -6503,7 +6503,7 @@ atc_online_ddd_units <- function(atc_code, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/av.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/av.R
 
 
 
@@ -7099,7 +7099,7 @@ get_translate_av <- function(translate_av) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/av_from_text.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/av_from_text.R
 
 
 
@@ -7264,7 +7264,7 @@ av_from_text <- function(text,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/av_property.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/av_property.R
 
 
 
@@ -7533,7 +7533,7 @@ av_validate <- function(x, property, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/availability.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/availability.R
 
 
 
@@ -7614,7 +7614,7 @@ availability <- function(tbl, width = NULL) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/bug_drug_combinations.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/bug_drug_combinations.R
 
 
 
@@ -7956,7 +7956,7 @@ print.bug_drug_combinations <- function(x, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/count.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/count.R
 
 
 
@@ -8192,7 +8192,7 @@ count_df <- function(data,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/custom_antimicrobials.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/custom_antimicrobials.R
 
 
 
@@ -8343,7 +8343,7 @@ clear_custom_antimicrobials <- function() {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/custom_eucast_rules.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/custom_eucast_rules.R
 
 
 
@@ -8631,7 +8631,7 @@ format_custom_query_rule <- function(query, colours = has_colour()) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/custom_microorganisms.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/custom_microorganisms.R
 
 
 
@@ -8937,7 +8937,7 @@ abbreviate_mo <- function(x, minlength = 5, prefix = "", hyphen_as_space = FALSE
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/data.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/data.R
 
 
 
@@ -9271,7 +9271,7 @@ THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/data.R
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/disk.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/disk.R
 
 
 
@@ -9495,7 +9495,7 @@ get_skimmers.disk <- function(column) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/eucast_rules.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/eucast_rules.R
 
 
 
@@ -10703,7 +10703,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 12.0)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/export_biosample.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/export_biosample.R
 
 
 
@@ -10739,7 +10739,7 @@ export_ncbi_biosample <- function(x,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/first_isolate.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/first_isolate.R
 
 
 
@@ -11433,7 +11433,7 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/g.test.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/g.test.R
 
 
 
@@ -11638,7 +11638,7 @@ g.test <- function(x,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/get_episode.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/get_episode.R
 
 
 
@@ -11885,7 +11885,7 @@ exec_episode <- function(x, episode_days, case_free_days, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/ggplot_pca.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/ggplot_pca.R
 
 
 
@@ -12312,7 +12312,7 @@ pca_calculations <- function(pca_model,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/ggplot_sir.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/ggplot_sir.R
 
 
 
@@ -12821,7 +12821,7 @@ labels_sir_count <- function(position = NULL,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/guess_ab_col.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/guess_ab_col.R
 
 
 
@@ -13169,7 +13169,7 @@ generate_warning_abs_missing <- function(missing, any = FALSE) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/italicise_taxonomy.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/italicise_taxonomy.R
 
 
 
@@ -13293,7 +13293,7 @@ italicize_taxonomy <- function(string, type = c("markdown", "ansi", "html")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/join_microorganisms.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/join_microorganisms.R
 
 
 
@@ -13464,7 +13464,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/key_antimicrobials.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/key_antimicrobials.R
 
 
 
@@ -13812,7 +13812,7 @@ antimicrobials_equal <- function(y,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/kurtosis.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/kurtosis.R
 
 
 
@@ -13871,7 +13871,7 @@ kurtosis.data.frame <- function(x, na.rm = FALSE, excess = FALSE) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/like.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/like.R
 
 
 
@@ -13997,7 +13997,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mdro.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mdro.R
 
 
 
@@ -15892,7 +15892,7 @@ eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = FALSE, ..
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mean_amr_distance.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mean_amr_distance.R
 
 
 
@@ -16055,7 +16055,7 @@ amr_distance_from_row <- function(amr_distance, row) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mic.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mic.R
 
 
 
@@ -16650,7 +16650,7 @@ Summary.mic <- function(..., na.rm = FALSE) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mo.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mo.R
 
 
 
@@ -17957,7 +17957,7 @@ synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mo_matching_score.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mo_matching_score.R
 
 
 
@@ -18068,7 +18068,7 @@ mo_matching_score <- function(x, n) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mo_property.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mo_property.R
 
 
 
@@ -19093,7 +19093,7 @@ find_mo_col <- function(fn) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/mo_source.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/mo_source.R
 
 
 
@@ -19402,7 +19402,7 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/pca.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/pca.R
 
 
 
@@ -19563,7 +19563,7 @@ print_pca_group <- function(a) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/plotting.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/plotting.R
 
 
 
@@ -20459,7 +20459,7 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/proportion.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/proportion.R
 
 
 
@@ -20893,7 +20893,7 @@ proportion_df <- function(data,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/random.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/random.R
 
 
 
@@ -21039,7 +21039,7 @@ random_exec <- function(method_type, size, mo = NULL, ab = NULL) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/resistance_predict.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/resistance_predict.R
 
 
 
@@ -21431,7 +21431,7 @@ fortify.resistance_predict <- function(model, data, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/sir.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/sir.R
 
 
 
@@ -23160,7 +23160,7 @@ check_reference_data <- function(reference_data, .call_depth) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/sir_calc.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/sir_calc.R
 
 
 
@@ -23529,7 +23529,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/sir_df.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/sir_df.R
 
 
 
@@ -23560,7 +23560,7 @@ sir_df <- function(data,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/skewness.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/skewness.R
 
 
 
@@ -23613,7 +23613,7 @@ skewness.data.frame <- function(x, na.rm = FALSE) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/translate.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/translate.R
 
 
 
@@ -23865,7 +23865,7 @@ translate_into_language <- function(from,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/vctrs.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/vctrs.R
 
 
 
@@ -24046,7 +24046,7 @@ vec_cast.sir.character <- function(x, to, ...) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/whocc.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/whocc.R
 
 
 
@@ -24074,7 +24074,7 @@ NULL
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/zz_deprecated.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/zz_deprecated.R
 
 
 
@@ -24123,7 +24123,7 @@ deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_fun
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../R/zzz.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE R/zzz.R
 
 
 
@@ -24345,7 +24345,7 @@ AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/AMR.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/AMR.Rmd
 
 
 
@@ -24704,7 +24704,7 @@ our_data_1st %>%
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/AMR_for_Python.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/AMR_for_Python.Rmd
 
 
 
@@ -24734,17 +24734,42 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the `AMR` Python package, which uses `rpy2` internally. This package allows Python users to access all the functions from the R `AMR` package without the need to set up `rpy2` themselves. Since this Python package is not a true 'port' (which would require all R functions to be rewritten into Python), R and the AMR R package are still required to be installed. Yet, Python users can now easily work with AMR data directly through Python code.
+The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the [`AMR` Python Package Index](https://pypi.org/project/AMR/).
 
-In this document, we explain how this works and provide simple examples of using the `AMR` Python package.
+This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
 
-## How It Works
+# Install
 
-The `AMR` Python package acts as a wrapper around the functions in the `AMR` R package. The package simplifies the process of calling R functions in Python, eliminating the need to manually manage the `rpy2` setup, which Python uses internally to be able to work with the R package. By just using `import AMR`, Python users can directly use the functions from the `AMR` R package as if they were native Python functions.
+1. First make sure you have R installed. There is **no need to install the `AMR` R package**, as it will be installed automatically.
 
-Internally, `rpy2` is still being used, but all complexity is hidden from the user. This approach keeps the Python code clean and Pythonic, while still leveraging the full power of the R `AMR` package.
+    For Linux:
 
-## Example of Usage
+    ```bash
+    # Ubuntu / Debian
+    sudo apt install r-base
+    # Fedora:
+    sudo dnf install R
+    # CentOS/RHEL
+    sudo yum install R
+    ```
+    
+    For macOS (using [Homebrew](https://brew.sh)):
+    
+    ```bash
+    brew install r
+    ```
+    
+    For Windows, visit the [CRAN download page](https://cran.r-project.org) to download and install R.
+
+2. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
+
+    ```bash
+    pip install AMR
+    ```
+
+# Examples of Usage
+
+## Cleaning Taxonomy
 
 Here’s an example that demonstrates how to clean microorganism and drug names using the `AMR` Python package:
 
@@ -24780,7 +24805,8 @@ print(df)
 
 * **ab_name**: Similarly, this function standardises antimicrobial names. The different representations of ciprofloxacin (e.g., "Cipro", "CIP", "J01MA02", and "Ciproxin") are all converted to the standard name, "Ciprofloxacin".
 
-### Taxonomic Data Sets Now in Python!
+
+## Taxonomic Data Sets Now in Python!
 
 As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
 
@@ -24821,42 +24847,7 @@ AMR.antibiotics
 | ZFD | NaN         | Zoliflodacin         | None                       | NaN      | None       | NaN    | None     |
 
 
-# Installation
-
-To be able to use the `AMR` Python package, it is required to install both R and the `AMR` R package.
-
-### Preparation: Install R and `AMR` R package
-
-For Linux and macOS, this is just:
-
-```bash
-# Ubuntu / Debian
-sudo apt install r-base && Rscript -e 'install.packages("AMR")'
-# Fedora:
-sudo dnf install R && Rscript -e 'install.packages("AMR")'
-# CentOS/RHEL
-sudo yum install R && Rscript -e 'install.packages("AMR")'
-# Arch Linux
-sudo pacman -S r && Rscript -e 'install.packages("AMR")'
-# macOS
-brew install r && Rscript -e 'install.packages("AMR")'
-```
-
-For Windows, visit the [CRAN download page](https://cran.r-project.org) in install R, then afterwards install the 'AMR' package manually.
-
-### Install `AMR` Python Package
-
-Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
-
-```bash
-pip install AMR
-```
-
-# Working with `AMR` in Python
-
-Now that we have everything set up, let’s walk through some practical examples of using the `AMR` package within Python.
-
-## Example 1: Calculating AMR
+## Calculating AMR
 
 ```python
 import AMR
@@ -24871,7 +24862,7 @@ print(result)
 [0.59555556]
 ```
 
-## Example 2: Generating Antibiograms
+## Generating Antibiograms
 
 One of the core functions of the `AMR` package is generating an antibiogram, a table that summarises the antimicrobial susceptibility of bacterial isolates. Here’s how you can generate an antibiogram from Python:
 
@@ -24910,11 +24901,13 @@ In this example, we generate an antibiogram by selecting various antibiotics.
 
 With the `AMR` Python package, Python users can now effortlessly call R functions from the `AMR` R package. This eliminates the need for complex `rpy2` configurations and provides a clean, easy-to-use interface for antimicrobial resistance analysis. The examples provided above demonstrate how this can be applied to typical workflows, such as standardising microorganism and antimicrobial names or calculating resistance.
 
-By using `import AMR`, you can seamlessly integrate the robust features of the R `AMR` package into your Python workflows. Whether you're cleaning data or analysing resistance patterns, the `AMR` Python package makes it easy to work with AMR data in Python.
+By just running `import AMR`, users can seamlessly integrate the robust features of the R `AMR` package into Python workflows.
+
+Whether you're cleaning data or analysing resistance patterns, the `AMR` Python package makes it easy to work with AMR data in Python.
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/EUCAST.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/EUCAST.Rmd
 
 
 
@@ -25021,7 +25014,7 @@ knitr::kable(eucast_rules(data), align = "lccccccc")
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/MDR.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/MDR.Rmd
 
 
 
@@ -25191,7 +25184,7 @@ freq(my_TB_data$mdr)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/PCA.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/PCA.Rmd
 
 
 
@@ -25291,7 +25284,7 @@ ggplot_pca(pca_result, ellipse = TRUE) +
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/WHONET.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/WHONET.Rmd
 
 
 
@@ -25397,7 +25390,7 @@ tryCatch(
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/datasets.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/datasets.Rmd
 
 
 
@@ -25773,7 +25766,7 @@ microorganisms.codes %>%
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/resistance_predict.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/resistance_predict.Rmd
 
 
 
@@ -25911,7 +25904,7 @@ summary(model)$coefficients
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../vignettes/welcome_to_AMR.Rmd
+THE NEXT PART CONTAINS CONTENTS FROM FILE vignettes/welcome_to_AMR.Rmd
 
 
 
@@ -25984,13 +25977,13 @@ This AMR package for R is free, open-source software and licensed under the [GNU
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../DESCRIPTION
+THE NEXT PART CONTAINS CONTENTS FROM FILE DESCRIPTION
 
 
 
 Package: AMR
-Version: 2.1.1.9094
-Date: 2024-10-10
+Version: 2.1.1.9098
+Date: 2024-10-17
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -26052,7 +26045,7 @@ Roxygen: list(markdown = TRUE)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../NAMESPACE
+THE NEXT PART CONTAINS CONTENTS FROM FILE NAMESPACE
 
 
 
@@ -26414,7 +26407,7 @@ importFrom(stats,var)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../index.md
+THE NEXT PART CONTAINS CONTENTS FROM FILE index.md
 
 
 
@@ -26732,7 +26725,7 @@ This R package is free, open-source software and licensed under the [GNU General
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../tests/tinytest.R
+THE NEXT PART CONTAINS CONTENTS FROM FILE tests/tinytest.R
 
 
 
@@ -26793,7 +26786,7 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/AMR-options.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/AMR-options.Rd
 
 
 
@@ -26858,7 +26851,7 @@ Now the team settings are configured in only one place, and can be maintained th
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/AMR.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/AMR.Rd
 
 
 
@@ -26955,7 +26948,7 @@ Other contributors:
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/WHOCC.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/WHOCC.Rd
 
 
 
@@ -26987,7 +26980,7 @@ ab_tradenames("flucloxacillin")
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/WHONET.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/WHONET.Rd
 
 
 
@@ -27044,7 +27037,7 @@ WHONET
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/ab_from_text.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/ab_from_text.Rd
 
 
 
@@ -27151,7 +27144,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/ab_property.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/ab_property.Rd
 
 
 
@@ -27335,7 +27328,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/add_custom_antimicrobials.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/add_custom_antimicrobials.Rd
 
 
 
@@ -27446,7 +27439,7 @@ x[, betalactams()]
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/add_custom_microorganisms.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/add_custom_microorganisms.Rd
 
 
 
@@ -27566,7 +27559,7 @@ mo_gramstain(c("C. freundii complex", "C. braakii complex"))
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/age.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/age.Rd
 
 
 
@@ -27621,7 +27614,7 @@ To split ages into groups, use the \code{\link[=age_groups]{age_groups()}} funct
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/age_groups.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/age_groups.Rd
 
 
 
@@ -27704,7 +27697,7 @@ To determine ages, based on one or more reference dates, use the \code{\link[=ag
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/antibiogram.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/antibiogram.Rd
 
 
 
@@ -28045,7 +28038,7 @@ plot(ab2)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/antibiotic_class_selectors.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/antibiotic_class_selectors.Rd
 
 
 
@@ -28413,7 +28406,7 @@ if (require("data.table")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/antibiotics.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/antibiotics.Rd
 
 
 
@@ -28508,7 +28501,7 @@ antivirals
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/as.ab.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/as.ab.Rd
 
 
 
@@ -28620,7 +28613,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/as.av.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/as.av.Rd
 
 
 
@@ -28717,7 +28710,7 @@ av_name("acicl")
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/as.disk.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/as.disk.Rd
 
 
 
@@ -28749,12 +28742,12 @@ is.disk(x)
 An \link{integer} with additional class \code{\link{disk}}
 }
 \description{
-This transforms a vector to a new class \code{\link{disk}}, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
+This transforms a vector to a new class \code{\link{disk}}, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 0 and 50.
 }
 \details{
 Interpret disk values as SIR values with \code{\link[=as.sir]{as.sir()}}. It supports guidelines from EUCAST and CLSI.
 
-Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return \code{NA}.
+Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 0-50 range will return \code{NA}.
 
 \code{NA_disk_} is a missing value of the new \code{disk} class.
 }
@@ -28795,7 +28788,7 @@ as.sir(df, uti = TRUE)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/as.mic.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/as.mic.Rd
 
 
 
@@ -28937,7 +28930,7 @@ if (require("ggplot2")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/as.mo.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/as.mo.Rd
 
 
 
@@ -29210,7 +29203,7 @@ The \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_genus]{m
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/as.sir.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/as.sir.Rd
 
 
 
@@ -29635,7 +29628,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/atc_online.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/atc_online.Rd
 
 
 
@@ -29727,7 +29720,7 @@ if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("x
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/av_from_text.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/av_from_text.Rd
 
 
 
@@ -29797,7 +29790,7 @@ av_from_text("28/03/2020 valaciclovir po tid", type = "admin")
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/av_property.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/av_property.Rd
 
 
 
@@ -29921,7 +29914,7 @@ av_name("J05AB01")
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/availability.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/availability.Rd
 
 
 
@@ -29961,7 +29954,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/bug_drug_combinations.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/bug_drug_combinations.Rd
 
 
 
@@ -30052,7 +30045,7 @@ bug_drug_combinations(example_isolates,
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/clinical_breakpoints.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/clinical_breakpoints.Rd
 
 
 
@@ -30131,7 +30124,7 @@ clinical_breakpoints
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/count.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/count.Rd
 
 
 
@@ -30339,7 +30332,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/custom_eucast_rules.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/custom_eucast_rules.Rd
 
 
 
@@ -30492,7 +30485,7 @@ x2
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/dosage.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/dosage.Rd
 
 
 
@@ -30532,7 +30525,7 @@ dosage
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/eucast_rules.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/eucast_rules.Rd
 
 
 
@@ -30695,7 +30688,7 @@ eucast_dosage(c("tobra", "genta", "cipro"), "iv", version_breakpoints = 10)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/example_isolates.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/example_isolates.Rd
 
 
 
@@ -30733,7 +30726,7 @@ example_isolates
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/example_isolates_unclean.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/example_isolates_unclean.Rd
 
 
 
@@ -30769,7 +30762,7 @@ example_isolates_unclean
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/export_ncbi_biosample.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/export_ncbi_biosample.Rd
 
 
 
@@ -30801,7 +30794,7 @@ Export Data Set as NCBI BioSample Antibiogram
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/first_isolate.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/first_isolate.Rd
 
 
 
@@ -31005,7 +30998,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/g.test.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/g.test.Rd
 
 
 
@@ -31153,7 +31146,7 @@ g.test(x)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/get_episode.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/get_episode.Rd
 
 
 
@@ -31353,7 +31346,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/ggplot_pca.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/ggplot_pca.Rd
 
 
 
@@ -31508,7 +31501,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/ggplot_sir.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/ggplot_sir.Rd
 
 
 
@@ -31748,7 +31741,7 @@ if (require("ggplot2") && require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/guess_ab_col.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/guess_ab_col.Rd
 
 
 
@@ -31807,7 +31800,7 @@ guess_ab_col(df, as.ab("augmentin"))
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/intrinsic_resistant.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/intrinsic_resistant.Rd
 
 
 
@@ -31846,7 +31839,7 @@ intrinsic_resistant
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/italicise_taxonomy.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/italicise_taxonomy.Rd
 
 
 
@@ -31885,7 +31878,7 @@ cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/join.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/join.Rd
 
 
 
@@ -31966,7 +31959,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/key_antimicrobials.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/key_antimicrobials.Rd
 
 
 
@@ -32118,7 +32111,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/kurtosis.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/kurtosis.Rd
 
 
 
@@ -32159,7 +32152,7 @@ kurtosis(rnorm(10000), excess = TRUE)
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/like.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/like.Rd
 
 
 
@@ -32244,7 +32237,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/mdro.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/mdro.Rd
 
 
 
@@ -32470,7 +32463,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/mean_amr_distance.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/mean_amr_distance.Rd
 
 
 
@@ -32569,7 +32562,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/microorganisms.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/microorganisms.Rd
 
 
 
@@ -32680,7 +32673,7 @@ microorganisms
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/microorganisms.codes.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/microorganisms.codes.Rd
 
 
 
@@ -32725,7 +32718,7 @@ mo_is_intrinsic_resistant("eco", ab = "vancomycin")
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/microorganisms.groups.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/microorganisms.groups.Rd
 
 
 
@@ -32766,7 +32759,7 @@ microorganisms.groups[microorganisms.groups$mo_group == "B_BCTRD_FRGL-C", ]
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/mo_matching_score.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/mo_matching_score.Rd
 
 
 
@@ -32849,7 +32842,7 @@ mo_matching_score(
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/mo_property.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/mo_property.Rd
 
 
 
@@ -33363,7 +33356,7 @@ Data set \link{microorganisms}
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/mo_source.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/mo_source.Rd
 
 
 
@@ -33479,7 +33472,7 @@ If the original file (in the previous case an Excel file) is moved or deleted, t
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/pca.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/pca.Rd
 
 
 
@@ -33582,7 +33575,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/plot.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/plot.Rd
 
 
 
@@ -33810,7 +33803,7 @@ if (require("ggplot2")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/proportion.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/proportion.Rd
 
 
 
@@ -34108,7 +34101,7 @@ if (require("dplyr")) {
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/random.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/random.Rd
 
 
 
@@ -34168,7 +34161,7 @@ random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/resistance_predict.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/resistance_predict.Rd
 
 
 
@@ -34351,7 +34344,7 @@ Models: \code{\link[=lm]{lm()}} \code{\link[=glm]{glm()}}
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/skewness.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/skewness.Rd
 
 
 
@@ -34391,7 +34384,7 @@ skewness(runif(1000))
 
 
 
-THE NEXT PART CONTAINS CONTENTS FROM FILE ../man/translate.Rd
+THE NEXT PART CONTAINS CONTENTS FROM FILE man/translate.Rd
 
 
 
