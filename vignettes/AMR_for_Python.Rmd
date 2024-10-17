@@ -24,17 +24,42 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the `AMR` Python package, which uses `rpy2` internally. This package allows Python users to access all the functions from the R `AMR` package without the need to set up `rpy2` themselves. Since this Python package is not a true 'port' (which would require all R functions to be rewritten into Python), R and the AMR R package are still required to be installed. Yet, Python users can now easily work with AMR data directly through Python code.
+The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the [`AMR` Python Package Index](https://pypi.org/project/AMR/).
 
-In this document, we explain how this works and provide simple examples of using the `AMR` Python package.
+This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
 
-## How It Works
+# Install
 
-The `AMR` Python package acts as a wrapper around the functions in the `AMR` R package. The package simplifies the process of calling R functions in Python, eliminating the need to manually manage the `rpy2` setup, which Python uses internally to be able to work with the R package. By just using `import AMR`, Python users can directly use the functions from the `AMR` R package as if they were native Python functions.
+1. First make sure you have R installed. There is **no need to install the `AMR` R package**, as it will be installed automatically.
 
-Internally, `rpy2` is still being used, but all complexity is hidden from the user. This approach keeps the Python code clean and Pythonic, while still leveraging the full power of the R `AMR` package.
+    For Linux:
 
-## Example of Usage
+    ```bash
+    # Ubuntu / Debian
+    sudo apt install r-base
+    # Fedora:
+    sudo dnf install R
+    # CentOS/RHEL
+    sudo yum install R
+    ```
+    
+    For macOS (using [Homebrew](https://brew.sh)):
+    
+    ```bash
+    brew install r
+    ```
+    
+    For Windows, visit the [CRAN download page](https://cran.r-project.org) to download and install R.
+
+2. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
+
+    ```bash
+    pip install AMR
+    ```
+
+# Examples of Usage
+
+## Cleaning Taxonomy
 
 Here’s an example that demonstrates how to clean microorganism and drug names using the `AMR` Python package:
 
@@ -70,7 +95,8 @@ print(df)
 
 * **ab_name**: Similarly, this function standardises antimicrobial names. The different representations of ciprofloxacin (e.g., "Cipro", "CIP", "J01MA02", and "Ciproxin") are all converted to the standard name, "Ciprofloxacin".
 
-### Taxonomic Data Sets Now in Python!
+
+## Taxonomic Data Sets Now in Python!
 
 As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
 
@@ -111,42 +137,7 @@ AMR.antibiotics
 | ZFD | NaN         | Zoliflodacin         | None                       | NaN      | None       | NaN    | None     |
 
 
-# Installation
-
-To be able to use the `AMR` Python package, it is required to install both R and the `AMR` R package.
-
-### Preparation: Install R and `AMR` R package
-
-For Linux and macOS, this is just:
-
-```bash
-# Ubuntu / Debian
-sudo apt install r-base && Rscript -e 'install.packages("AMR")'
-# Fedora:
-sudo dnf install R && Rscript -e 'install.packages("AMR")'
-# CentOS/RHEL
-sudo yum install R && Rscript -e 'install.packages("AMR")'
-# Arch Linux
-sudo pacman -S r && Rscript -e 'install.packages("AMR")'
-# macOS
-brew install r && Rscript -e 'install.packages("AMR")'
-```
-
-For Windows, visit the [CRAN download page](https://cran.r-project.org) in install R, then afterwards install the 'AMR' package manually.
-
-### Install `AMR` Python Package
-
-Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
-
-```bash
-pip install AMR
-```
-
-# Working with `AMR` in Python
-
-Now that we have everything set up, let’s walk through some practical examples of using the `AMR` package within Python.
-
-## Example 1: Calculating AMR
+## Calculating AMR
 
 ```python
 import AMR
@@ -161,7 +152,7 @@ print(result)
 [0.59555556]
 ```
 
-## Example 2: Generating Antibiograms
+## Generating Antibiograms
 
 One of the core functions of the `AMR` package is generating an antibiogram, a table that summarises the antimicrobial susceptibility of bacterial isolates. Here’s how you can generate an antibiogram from Python:
 
@@ -200,4 +191,6 @@ In this example, we generate an antibiogram by selecting various antibiotics.
 
 With the `AMR` Python package, Python users can now effortlessly call R functions from the `AMR` R package. This eliminates the need for complex `rpy2` configurations and provides a clean, easy-to-use interface for antimicrobial resistance analysis. The examples provided above demonstrate how this can be applied to typical workflows, such as standardising microorganism and antimicrobial names or calculating resistance.
 
-By using `import AMR`, you can seamlessly integrate the robust features of the R `AMR` package into your Python workflows. Whether you're cleaning data or analysing resistance patterns, the `AMR` Python package makes it easy to work with AMR data in Python.
+By just running `import AMR`, users can seamlessly integrate the robust features of the R `AMR` package into Python workflows.
+
+Whether you're cleaning data or analysing resistance patterns, the `AMR` Python package makes it easy to work with AMR data in Python.

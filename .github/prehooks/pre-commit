@@ -49,6 +49,7 @@ if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_checks.R')"
     currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
+    bash data-raw/AMRforRGPT.sh
     echo "- Adding changed files in ./data-raw and ./man to this commit"
     git add data-raw/*
     git add man/*
