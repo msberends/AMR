@@ -59,9 +59,9 @@ jobs:
           bash _generate_python_wrapper.sh
       
       - name: Publish to PyPI
-        env:
-          # TWINE_USERNAME: "__token__"
-          # TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        # env:
+        #   TWINE_USERNAME: "__token__"
+        #   TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
           cd data-raw/python_wrapper/AMR
           python -m twine upload dist/*
