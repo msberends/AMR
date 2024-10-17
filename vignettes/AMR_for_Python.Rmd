@@ -30,7 +30,13 @@ This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` p
 
 # Install
 
-1. First make sure you have R installed. There is **no need to install the `AMR` R package**, as it will be installed automatically.
+1. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
+
+    ```bash
+    pip install AMR
+    ```
+
+2. Make sure you have R installed. There is **no need to install the `AMR` R package**, as it will be installed automatically.
 
     For Linux:
 
@@ -50,12 +56,6 @@ This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` p
     ```
     
     For Windows, visit the [CRAN download page](https://cran.r-project.org) to download and install R.
-
-2. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
-
-    ```bash
-    pip install AMR
-    ```
 
 # Examples of Usage
 
