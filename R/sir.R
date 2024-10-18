@@ -1739,12 +1739,12 @@ summary.sir <- function(object, ...) {
 c.sir <- function(...) {
   lst <- list(...)
   
-  guideline <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$guideline %||% NA_character_)
-  mo <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$mo %||% NA_character_)
-  ab <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ab %||% NA_character_)
-  method <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$method %||% NA_character_)
-  ref_tbl <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_tbl %||% NA_character_)
-  ref_breakpoints <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_breakpoints %||% NA_character_)
+  guideline <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$guideline %or% NA_character_)
+  mo <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$mo %or% NA_character_)
+  ab <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ab %or% NA_character_)
+  method <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$method %or% NA_character_)
+  ref_tbl <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_tbl %or% NA_character_)
+  ref_breakpoints <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_breakpoints %or% NA_character_)
   
   out <- as.sir(unlist(lapply(list(...), as.character)))
   

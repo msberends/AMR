@@ -49,7 +49,6 @@ if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_checks.R')"
     currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
-    bash data-raw/AMRforRGPT.sh
     echo "- Adding changed files in ./data-raw and ./man to this commit"
     git add data-raw/*
     git add man/*
@@ -111,5 +110,8 @@ echo ""
 
 # Save the version number for use in the commit-msg hook
 echo "${currentversion}" > .git/commit_version.tmp
+
+# Generate GPT knowledge info for our Assistant (https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant)
+bash data-raw/_generate_GPT_knowledge_input.sh "${currentversion}"
 
 exit 0
