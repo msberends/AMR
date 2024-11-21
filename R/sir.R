@@ -970,6 +970,7 @@ as_sir_method <- function(method_short,
     warning_("The following animal host(s) could not be coerced: ", vector_and(host.bak[is.na(host) & !is.na(host.bak)]), immediate = TRUE)
     message() # new line
   }
+  # TODO add a switch to turn this off? In interactive sessions perhaps ask the user. Default should be On.
   if (breakpoint_type == "animal" && message_not_thrown_before("as.sir", "host_missing_breakpoints")) {
     if (guideline_coerced %like% "CLSI") {
       message_("Please note that in the absence of specific veterinary breakpoints for certain animal hosts, the CLSI guideline VET09 will be applied where possible.\n\n")
@@ -1053,6 +1054,8 @@ as_sir_method <- function(method_short,
       )
     }
   }
+  # TODO set uti to specimen column here
+  
 
   if (length(ab) == 1 && ab %like% paste0("as.", method_short)) {
     stop_("No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.sir.", call = FALSE)
@@ -1238,6 +1241,8 @@ as_sir_method <- function(method_short,
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties, as fast as possible
+    # TODO in case of VET09, we need to keep E. coli, also when users have Proteus in their data set
+    # TODO look up which species, at least E. coli - also Staph or Strep?
     mo_current_genus <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$genus[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
     mo_current_family <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$family[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
     mo_current_order <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$order[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
@@ -1262,6 +1267,7 @@ as_sir_method <- function(method_short,
     )
    
     # gather all available breakpoints for current MO
+    # TODO for VET09 do not filter out E. coli and such
     breakpoints_current <- breakpoints %pm>%
       subset(ab == ab_current) %pm>%
       subset(mo %in% c(
@@ -1271,14 +1277,17 @@ as_sir_method <- function(method_short,
         mo_current_other
       ))
     
+    # TODO are operators considered??
+    # This seems to not work well: as.sir(as.mic(c(4, ">4", ">=4", 8, ">8", ">=8")), ab = "AMC", mo = "E. coli", breakpoint_type = "animal", host = "dogs", guideline = "CLSI 2024")
+    
     ## fall-back methods for veterinary guidelines ----
     if (breakpoint_type == "animal" && !host_current %in% breakpoints_current$host) {
       if (guideline_coerced %like% "CLSI") {
         # VET09 says that staph/strep/enterococcus BP can be extrapolated to all Gr+ cocci except for intrinsic resistance, so take all Gr+ cocci:
-        all_gram_pos_genera <- c("B_STPHY", "B_STRPT", "B_PPTST", "B_AERCC", "B_MCRCCC", "B_TRPRL")
+        gram_plus_cocci_vet09 <- microorganisms$mo[microorganisms$genus %in% c("Staphylococcus", "Streptococcus", "Peptostreptococcus", "Aerococcus", "Micrococcus") & microorganisms$rank == "genus"] # TODO should probably include genera that were either of these before
         
         # HUMAN SUBSTITUTES
-        if (ab_current == "AZM" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats", "horse")) {
+        if (ab_current == "AZM" && mo_current_genus %in% gram_plus_cocci_vet09 && host_current %in% c("dogs", "cats", "horse")) {
           # azithro can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in Gram-positive cocci based on CLSI VET09."))
@@ -1290,7 +1299,7 @@ as_sir_method <- function(method_short,
           # cefta can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in Enterobacterales and ", font_italic("P. aeruginosa"), " based on CLSI VET09."))
-        } else if (ab_current == "ERY" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats", "horse")) {
+        } else if (ab_current == "ERY" && mo_current_genus %in% gram_plus_cocci_vet09 && host_current %in% c("dogs", "cats", "horse")) {
           # erythro can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in Gram-positive cocci based on CLSI VET09."))
@@ -1298,7 +1307,7 @@ as_sir_method <- function(method_short,
           # imipenem can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in Enterobacterales and ", font_italic("P. aeruginosa"), " based on CLSI VET09."))
-        } else if (ab_current == "LNZ" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats")) {
+        } else if (ab_current == "LNZ" && mo_current_genus %in% gram_plus_cocci_vet09 && host_current %in% c("dogs", "cats")) {
           # linezolid can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in staphylococci/enterococci based on CLSI VET09."))
@@ -1306,11 +1315,11 @@ as_sir_method <- function(method_short,
           # nitro can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " based on CLSI VET09."))
-        } else if (ab_current == "PEN" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats")) {
+        } else if (ab_current == "PEN" && mo_current_genus %in% gram_plus_cocci_vet09 && host_current %in% c("dogs", "cats")) {
           # penicillin can take human breakpoints for these agents
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in Gram-positive cocci based on CLSI VET09."))
-        } else if (ab_current == "RIF" && mo_current_genus %in% all_gram_pos_genera && host_current %in% c("dogs", "cats")) {
+        } else if (ab_current == "RIF" && mo_current_genus %in% gram_plus_cocci_vet09 && host_current %in% c("dogs", "cats")) {
           # rifampicin can take human breakpoints for staphylococci
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " in staphylococci based on CLSI VET09."))
@@ -1325,7 +1334,8 @@ as_sir_method <- function(method_short,
 
         } else if (host_current %in% c("dogs", "cats") && (mo_current_genus %in% c("B_AMYCS", "B_NOCRD", "B_CMPYL", "B_CRYNB", "B_ENTRC", "B_MYCBC", "B_PSDMN", "B_AERMN") | mo_current_class == "B_[CLS]_BTPRTBCT" | mo_current == "B_LISTR_MNCY")) {
           # dog breakpoints if no canine/feline
-          breakpoints_current <- breakpoints_current %pm>% subset(host == "human")
+          # TODO do we still have dogs breakpoints at this point???
+          breakpoints_current <- breakpoints_current %pm>% subset(host == "human") # WRONG
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", mo_formatted, " based on CLSI VET09."))
           
         } else {

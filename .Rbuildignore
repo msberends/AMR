@@ -35,3 +35,4 @@
 ^vignettes/WHONET\.Rmd$
 ^logo.svg$
 ^CRAN-SUBMISSION$
+^PythonPackage$

@@ -30,13 +30,15 @@
 # ==================================================================== #
 
 # Clean up
-rm -rf python_wrapper/AMR/*
-mkdir -p python_wrapper/AMR/AMR
+rm -rf ../PythonPackage/AMR/*
+mkdir -p ../PythonPackage/AMR/AMR
 
 # Output Python file
-functions_file="python_wrapper/AMR/AMR/functions.py"
-datasets_file="python_wrapper/AMR/AMR/datasets.py"
-init_file="python_wrapper/AMR/AMR/__init__.py"
+setup_file="../PythonPackage/AMR/setup.py"
+functions_file="../PythonPackage/AMR/AMR/functions.py"
+datasets_file="../PythonPackage/AMR/AMR/datasets.py"
+init_file="../PythonPackage/AMR/AMR/__init__.py"
+
 
 # Write header to the datasets Python file, including the convert_to_python function
 cat <<EOL > "$datasets_file"
@@ -46,31 +48,48 @@ RESET = '\033[0m'
 
 print(f"{BLUE}AMR:{RESET} Setting up R environment and AMR datasets...", flush=True)
 
+
+import os
 from rpy2 import robjects
 from rpy2.robjects import pandas2ri
 from rpy2.robjects.packages import importr, isinstalled
 import pandas as pd
-# import importlib.metadata as metadata
+import importlib.metadata as metadata
 
-# Check if AMR package is installed in R
+# Get the path to the virtual environment
+venv_path = os.getenv('VIRTUAL_ENV')  # Path to the active virtual environment
+if not venv_path:
+    raise EnvironmentError("No virtual environment detected. Please activate your Python virtual environment.")
+
+# Define R library path within the venv
+r_lib_path = os.path.join(venv_path, "R_libs")
+# Ensure the R library path exists
+os.makedirs(r_lib_path, exist_ok=True)
+# Set the R library path in .libPaths
+base = importr('base')
+base._libPaths(r_lib_path)
+
+# Check if the AMR package is installed in R
 if not isinstalled('AMR'):
     utils = importr('utils')
-    utils.install_packages('AMR', repos='https://msberends.r-universe.dev')
+    utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
 
 # Python package version of AMR
-python_amr_version = metadata.version('AMR')
+try:
+    python_amr_version = metadata.version('AMR')
+except metadata.PackageNotFoundError:
+    python_amr_version = None
+
 # R package version of AMR
-# r_amr_version = robjects.r('packageVersion("AMR")')[0]
+r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')[0]
 
 # Compare R and Python package versions
-# if r_amr_version != python_amr_version:
-#     print(f"{BLUE}AMR:{RESET} Version mismatch detected. Updating AMR R package version to {python_amr_version}...", flush=True)
-#     try:
-#         # Re-install the specific version of AMR in R
-#         utils = importr('utils')
-#         utils.install_packages('AMR', repos='https://msberends.r-universe.dev')
-#     except Exception as e:
-#         print(f"{BLUE}AMR:{RESET} Could not update: {e}{RESET}", flush=True)
+if python_amr_version and r_amr_version != python_amr_version:
+    try:
+        utils = importr('utils')
+        utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
+    except Exception as e:
+        print(f"{BLUE}AMR:{RESET} Could not update: {e}{RESET}", flush=True)
 
 # Activate the automatic conversion between R and pandas DataFrames
 pandas2ri.activate()
@@ -237,22 +256,20 @@ done
 echo "Python wrapper functions generated in $functions_file."
 echo "Python wrapper functions listed in $init_file."
 
-cp ../vignettes/AMR_for_Python.Rmd python_wrapper/AMR/README.md
-sed -i '1,/^# Introduction$/d' python_wrapper/AMR/README.md
+cp ../vignettes/AMR_for_Python.Rmd ../PythonPackage/AMR/README.md
+sed -i '1,/^# Introduction$/d' ../PythonPackage/AMR/README.md
 echo "README copied"
 
 
 # Path to your DESCRIPTION file
 description_file="../DESCRIPTION"
 
-# Output setup.py file
-functions_file="python_wrapper/AMR/setup.py"
 
 # Extract the relevant fields from DESCRIPTION
 version=$(grep "^Version:" "$description_file" | awk '{print $2}')
 
 # Write the setup.py file
-cat <<EOL > "$functions_file"
+cat <<EOL > "$setup_file"
 from setuptools import setup, find_packages
 
 setup(
@@ -283,8 +300,10 @@ setup(
 EOL
 
 # Output completion message
-echo "setup.py has been generated in $functions_file."
+echo "setup.py has been generated in $setup_file."
 
-cd python_wrapper/AMR
-python3 setup.py sdist bdist_wheel
+cd ../PythonPackage/AMR
+pip3 install build
+python3 -m build
+# python3 setup.py sdist bdist_wheel
 

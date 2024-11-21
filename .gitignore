@@ -26,4 +26,3 @@ data-raw/country_analysis_url_token.R
 data-raw/country_analysis2.R
 data-raw/taxonomy.csv
 data-raw/WHONET/*
-data-raw/python_wrapper/*
