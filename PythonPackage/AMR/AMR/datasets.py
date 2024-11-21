@@ -29,13 +29,13 @@ if not isinstalled('AMR'):
 try:
     python_amr_version = metadata.version('AMR')
 except metadata.PackageNotFoundError:
-    python_amr_version = None
+    python_amr_version = ''
 
 # R package version of AMR
 r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')[0]
 
 # Compare R and Python package versions
-if python_amr_version and r_amr_version != python_amr_version:
+if r_amr_version != python_amr_version:
     try:
         print(f"{BLUE}AMR:{RESET} Updating package version{RESET}", flush=True)
         utils = importr('utils')
