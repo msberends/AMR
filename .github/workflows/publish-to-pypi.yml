@@ -65,5 +65,12 @@ jobs:
         run: |
           cd PythonPackage/AMR
           python -m twine upload dist/*
-        # for test server:
-        # python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+          
+      - name: Publish to PyPI Testserver
+        continue-on-error: true
+        env:
+          TWINE_USERNAME: "__token__"
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TEST_TOKEN }}
+        run: |
+          cd PythonPackage/AMR
+          python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
