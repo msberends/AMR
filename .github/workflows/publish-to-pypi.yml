@@ -63,7 +63,7 @@ jobs:
           TWINE_USERNAME: "__token__"
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          cd data-raw/python_wrapper/AMR
+          cd PythonPackage/AMR
           python -m twine upload dist/*
         # for test server:
         # python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
