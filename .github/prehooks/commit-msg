@@ -59,4 +59,6 @@ else
   echo "No version number to prepend to commit message."
 fi
 
+git add data-raw/*
+
 exit 0

@@ -38,7 +38,7 @@ setup_file="../PythonPackage/AMR/setup.py"
 functions_file="../PythonPackage/AMR/AMR/functions.py"
 datasets_file="../PythonPackage/AMR/AMR/datasets.py"
 init_file="../PythonPackage/AMR/AMR/__init__.py"
-
+description_file="../DESCRIPTION"
 
 # Write header to the datasets Python file, including the convert_to_python function
 cat <<EOL > "$datasets_file"
@@ -257,11 +257,6 @@ echo "Python wrapper functions listed in $init_file."
 cp ../vignettes/AMR_for_Python.Rmd ../PythonPackage/AMR/README.md
 sed -i '1,/^# Introduction$/d' ../PythonPackage/AMR/README.md
 echo "README copied"
-
-
-# Path to your DESCRIPTION file
-description_file="../DESCRIPTION"
-
 
 # Extract the relevant fields from DESCRIPTION
 version=$(grep "^Version:" "$description_file" | awk '{print $2}')
