@@ -60,5 +60,7 @@ else
 fi
 
 git add data-raw/*
+git add PythonPackage/*
+git add -u
 
 exit 0

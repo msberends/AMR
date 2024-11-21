@@ -115,6 +115,9 @@ echo "${currentversion}" > .git/commit_version.tmp
 bash data-raw/_generate_GPT_knowledge_input.sh "${currentversion}"
 cd data-raw
 bash _generate_python_wrapper.sh
+cd ..
+git add data-raw/*
 git add PythonPackage/*
+git add -u
 
 exit 0
