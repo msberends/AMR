@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------------------------------------------------------
 # For editing this EUCAST reference file, these values can all be used for targeting antibiotics:
-# aminoglycosides, aminopenicillins, antifungals, antimycobacterials, betalactams, carbapenems, cephalosporins, cephalosporins_1st, cephalosporins_2nd, cephalosporins_3rd, cephalosporins_4th, cephalosporins_5th, cephalosporins_except_CAZ, fluoroquinolones, glycopeptides, glycopeptides_except_lipo, lincosamides, lipoglycopeptides, macrolides, oxazolidinones, penicillins, polymyxins, quinolones, streptogramins, tetracyclines, tetracyclines_except_TGC, trimethoprims, ureidopenicillins
+# aminoglycosides, aminopenicillins, antifungals, antimycobacterials, betalactams, betalactams_with_inhibitor, carbapenems, cephalosporins, cephalosporins_1st, cephalosporins_2nd, cephalosporins_3rd, cephalosporins_4th, cephalosporins_5th, cephalosporins_except_CAZ, fluoroquinolones, glycopeptides, glycopeptides_except_lipo, lincosamides, lipoglycopeptides, macrolides, oxazolidinones, penicillins, polymyxins, quinolones, streptogramins, tetracyclines, tetracyclines_except_TGC, trimethoprims, ureidopenicillins
 # and all separate EARS-Net letter codes such as AMC. They can be separated by comma: 'AMC, fluoroquinolones'.
 # The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or 'genus_species' or 'gramstain'.
 # The like.is.one_of column must be 'like' or 'is' or 'one_of' ('like' will read the 'this_value' column as regular expression)
@@ -11,7 +11,7 @@ if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	10	
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	10	
 order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints	10	
-genus	is	Staphylococcus	PEN, FOX	S	AMP, AMX, PIP, TIC	S	Staphylococcus	Breakpoints	10	
+genus	is	Staphylococcus	PEN, FOX	S	betalactams_with_inhibitor	S	Staphylococcus	Breakpoints	10	
 genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints	10	
 genus	is	Staphylococcus	FOX	R	betalactams	R	Staphylococcus	Breakpoints	10	
 genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints	10	
@@ -117,7 +117,7 @@ genus_species	is	Burkholderia pseudomallei	TCY	R	DOX	R	Burkholderia pseudomallei
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	11	
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	11	
 order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints	11	
-genus	is	Staphylococcus	PEN, FOX	S	AMP, AMX, PIP, TIC	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	PEN, FOX	S	betalactams_with_inhibitor	S	Staphylococcus	Breakpoints	11	
 genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints	11	
 genus	is	Staphylococcus	FOX	R	betalactams	R	Staphylococcus	Breakpoints	11	
 genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints	11	
@@ -226,7 +226,7 @@ genus	is	Bacillus	NOR	R	fluoroquinolones	R	Bacillus	Breakpoints	11	added in 11
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	12	
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	12	
 order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints	12	
-genus	is	Staphylococcus	PEN, FOX	S	AMP, AMX, PIP, TIC	S	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	PEN, FOX	S	betalactams_with_inhibitor	S	Staphylococcus	Breakpoints	12	
 genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints	12	
 genus	is	Staphylococcus	FOX	R	betalactams	R	Staphylococcus	Breakpoints	12	
 genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints	12	
@@ -500,8 +500,8 @@ genus	is	Salmonella			aminoglycosides	R	Expert Rules on Salmonella	Expert Rules	
 genus	is	Salmonella	PEF	R	CIP	R	Expert Rules on Salmonella	Expert Rules	3.2	
 genus_species	is	Staphylococcus aureus	FOX1	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	is	Staphylococcus aureus	FOX	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.2	
-genus_species	is	Staphylococcus aureus	FOX1	S	betalactams	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
-genus_species	is	Staphylococcus aureus	FOX	S	betalactams	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
+genus_species	is	Staphylococcus aureus	FOX1	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
+genus_species	is	Staphylococcus aureus	FOX	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	one_of	Staphylococcus aureus, Staphylococcus lugdunensis	PEN	R	AMP, AMX, AZL, BAM, CRB, CRN, EPC, HET, MEC, MEZ, MTM, PIP, PME, PVM, SBC, TAL, TEM, TIC	R	Expert Rules on Staphylococcus	Expert Rules	3.2	all penicillins without beta-lactamse inhibitor
 genus	is	Staphylococcus	ERY, CLI	S	macrolides, lincosamides	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX, OFX	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
@@ -620,8 +620,8 @@ genus	is	Salmonella			aminoglycosides	R	Expert Rules on Salmonella	Expert Rules	
 genus	is	Salmonella	PEF	R	CIP	R	Expert Rules on Salmonella	Expert Rules	3.3	
 genus_species	is	Staphylococcus aureus	FOX1	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
 genus_species	is	Staphylococcus aureus	FOX	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
-genus_species	is	Staphylococcus aureus	FOX1	S	betalactams	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
-genus_species	is	Staphylococcus aureus	FOX	S	betalactams	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus_species	is	Staphylococcus aureus	FOX1	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus_species	is	Staphylococcus aureus	FOX	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
 genus_species	one_of	Staphylococcus aureus, Staphylococcus lugdunensis	PEN	R	AMP, AMX, AZL, BAM, CRB, CRN, EPC, HET, MEC, MEZ, MTM, PIP, PME, PVM, SBC, TAL, TEM, TIC	R	Expert Rules on Staphylococcus	Expert Rules	3.3	all penicillins without beta-lactamse inhibitor
 genus	is	Staphylococcus	ERY, CLI	S	macrolides, lincosamides	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
 genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX, OFX	S	Expert Rules on Staphylococcus	Expert Rules	3.3	

@@ -31,6 +31,7 @@ from .functions import aminopenicillins
 from .functions import antifungals
 from .functions import antimycobacterials
 from .functions import betalactams
+from .functions import betalactams_with_inhibitor
 from .functions import carbapenems
 from .functions import cephalosporins
 from .functions import cephalosporins_1st

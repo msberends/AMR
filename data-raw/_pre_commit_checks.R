@@ -440,6 +440,9 @@ pre_commit_lst$AB_TRIMETHOPRIMS <- antibiotics %>%
   pull(ab)
 pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
 pre_commit_lst$AB_BETALACTAMS <- c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS)
+pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antibiotics %>%
+  filter(name %like% "/" & name %unlike% "EDTA" & ab %in% pre_commit_lst$AB_BETALACTAMS) %>%
+  pull(ab)
 # this will be used for documentation:
 pre_commit_lst$DEFINED_AB_GROUPS <- sort(names(pre_commit_lst)[names(pre_commit_lst) %like% "^AB_" & names(pre_commit_lst) != "AB_LOOKUP"])
 create_AB_AV_lookup <- function(df) {
@@ -638,7 +641,7 @@ suppressMessages(set_AMR_locale("English"))
 
 # Update URLs -------------------------------------------------------------
 usethis::ui_info("Checking URLs for redirects")
-invisible(capture.output(urlchecker::url_update()))
+invisible(urlchecker::url_update("."))
 
 
 # Document pkg ------------------------------------------------------------

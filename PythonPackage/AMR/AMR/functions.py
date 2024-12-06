@@ -123,6 +123,9 @@ def antimycobacterials(only_sir_columns = False, *args, **kwargs):
 def betalactams(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.betalactams(only_sir_columns = False, *args, **kwargs))
+def betalactams_with_inhibitor(only_sir_columns = False, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.betalactams_with_inhibitor(only_sir_columns = False, *args, **kwargs))
 def carbapenems(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.carbapenems(only_sir_columns = False, *args, **kwargs))

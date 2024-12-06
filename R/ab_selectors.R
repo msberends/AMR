@@ -62,102 +62,88 @@
 #' \donttest{
 #' # dplyr -------------------------------------------------------------------
 #' 
-#' if (require("dplyr")) {
-#'   example_isolates %>% select(carbapenems())
-#' }
-#'
-#' if (require("dplyr")) {
-#'   # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
-#'   example_isolates %>% select(mo, aminoglycosides())
-#' }
-#'
-#' if (require("dplyr")) {
-#'   # select only antibiotic columns with DDDs for oral treatment
-#'   example_isolates %>% select(administrable_per_os())
-#' }
-#'
-#' if (require("dplyr")) {
-#'   # get AMR for all aminoglycosides e.g., per ward:
-#'   example_isolates %>%
-#'     group_by(ward) %>%
-#'     summarise(across(aminoglycosides(),
-#'                      resistance))
-#' }
-#' if (require("dplyr")) {
-#'   # You can combine selectors with '&' to be more specific:
-#'   example_isolates %>%
-#'     select(penicillins() & administrable_per_os())
-#' }
-#' if (require("dplyr")) {
-#'   # get AMR for only drugs that matter - no intrinsic resistance:
-#'   example_isolates %>%
-#'     filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>%
-#'     group_by(ward) %>%
-#'     summarise_at(not_intrinsic_resistant(),
-#'                  resistance)
-#' }
-#' if (require("dplyr")) {
-#'   # get susceptibility for antibiotics whose name contains "trim":
-#'   example_isolates %>%
-#'     filter(first_isolate()) %>%
-#'     group_by(ward) %>%
-#'     summarise(across(ab_selector(name %like% "trim"), susceptibility))
-#' }
-#' if (require("dplyr")) {
-#'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
-#'   example_isolates %>%
-#'     select(carbapenems())
-#' }
-#' if (require("dplyr")) {
-#'   # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
-#'   example_isolates %>%
-#'     select(mo, aminoglycosides())
-#' }
-#' if (require("dplyr")) {
-#'   # any() and all() work in dplyr's filter() too:
-#'   example_isolates %>%
-#'     filter(
-#'       any(aminoglycosides() == "R"),
-#'       all(cephalosporins_2nd() == "R")
-#'     )
-#' }
-#' if (require("dplyr")) {
-#'   # also works with c():
-#'   example_isolates %>%
-#'     filter(any(c(carbapenems(), aminoglycosides()) == "R"))
-#' }
-#' if (require("dplyr")) {
-#'   # not setting any/all will automatically apply all():
-#'   example_isolates %>%
-#'     filter(aminoglycosides() == "R")
-#' }
-#' if (require("dplyr")) {
-#'   # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
-#'   example_isolates %>%
-#'     select(mo, ab_class("mycobact"))
-#' }
-#' if (require("dplyr")) {
-#'   # get bug/drug combinations for only glycopeptides in Gram-positives:
-#'   example_isolates %>%
-#'     filter(mo_is_gram_positive()) %>%
-#'     select(mo, glycopeptides()) %>%
-#'     bug_drug_combinations() %>%
-#'     format()
-#' }
-#' if (require("dplyr")) {
-#'   data.frame(
-#'     some_column = "some_value",
-#'     J01CA01 = "S"
-#'   ) %>% # ATC code of ampicillin
-#'     select(penicillins()) # only the 'J01CA01' column will be selected
-#' }
-#' if (require("dplyr")) {
-#'   # with recent versions of dplyr, this is all equal:
-#'   x <- example_isolates[carbapenems() == "R", ]
-#'   y <- example_isolates %>% filter(carbapenems() == "R")
-#'   z <- example_isolates %>% filter(if_all(carbapenems(), ~ .x == "R"))
-#'   identical(x, y) && identical(y, z)
-#' }
+#' library(dplyr, warn.conflicts = FALSE)
+#' 
+#' example_isolates %>% select(carbapenems())
+#' 
+#' # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
+#' example_isolates %>% select(mo, aminoglycosides())
+#' 
+#' # you can combine selectors like you are used with tidyverse
+#' # e.g., for betalactams, but not the ones with an enzyme inhibitor:
+#' example_isolates |> select(betalactams(), -betalactams_with_inhibitor())
+#' 
+#' # select only antibiotic columns with DDDs for oral treatment
+#' example_isolates %>% select(administrable_per_os())
+#' 
+#' # get AMR for all aminoglycosides e.g., per ward:
+#' example_isolates %>%
+#'   group_by(ward) %>%
+#'   summarise(across(aminoglycosides(),
+#'                    resistance))
+#' 
+#' # You can combine selectors with '&' to be more specific:
+#' example_isolates %>%
+#'   select(penicillins() & administrable_per_os())
+#' 
+#' # get AMR for only drugs that matter - no intrinsic resistance:
+#' example_isolates %>%
+#'   filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>%
+#'   group_by(ward) %>%
+#'   summarise_at(not_intrinsic_resistant(),
+#'                resistance)
+#' 
+#' # get susceptibility for antibiotics whose name contains "trim":
+#' example_isolates %>%
+#'   filter(first_isolate()) %>%
+#'   group_by(ward) %>%
+#'   summarise(across(ab_selector(name %like% "trim"), susceptibility))
+#' 
+#' # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
+#' example_isolates %>%
+#'   select(carbapenems())
+#' 
+#' # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
+#' example_isolates %>%
+#'   select(mo, aminoglycosides())
+#' 
+#' # any() and all() work in dplyr's filter() too:
+#' example_isolates %>%
+#'   filter(
+#'     any(aminoglycosides() == "R"),
+#'     all(cephalosporins_2nd() == "R")
+#'   )
+#' 
+#' # also works with c():
+#' example_isolates %>%
+#'   filter(any(c(carbapenems(), aminoglycosides()) == "R"))
+#' 
+#' # not setting any/all will automatically apply all():
+#' example_isolates %>%
+#'   filter(aminoglycosides() == "R")
+#' 
+#' # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
+#' example_isolates %>%
+#'   select(mo, ab_class("mycobact"))
+#' 
+#' # get bug/drug combinations for only glycopeptides in Gram-positives:
+#' example_isolates %>%
+#'   filter(mo_is_gram_positive()) %>%
+#'   select(mo, glycopeptides()) %>%
+#'   bug_drug_combinations() %>%
+#'   format()
+#' 
+#' data.frame(
+#'   some_column = "some_value",
+#'   J01CA01 = "S"
+#' ) %>% # ATC code of ampicillin
+#'   select(penicillins()) # only the 'J01CA01' column will be selected
+#' 
+#' # with recent versions of dplyr, this is all equal:
+#' x <- example_isolates[carbapenems() == "R", ]
+#' y <- example_isolates %>% filter(carbapenems() == "R")
+#' z <- example_isolates %>% filter(if_all(carbapenems(), ~ .x == "R"))
+#' identical(x, y) && identical(y, z)
 #'
 #'
 #' # base R ------------------------------------------------------------------
@@ -310,6 +296,13 @@ betalactams <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
   ab_select_exec("betalactams", only_sir_columns = only_sir_columns, only_treatable = only_treatable)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+betalactams_with_inhibitor <- function(only_sir_columns = FALSE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("betalactams_with_inhibitor", only_sir_columns = only_sir_columns)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -595,7 +588,7 @@ ab_select_exec <- function(function_name,
                            only_treatable = FALSE,
                            ab_class_args = NULL) {
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-  # but it only takes a couple of milliseconds
+  # it only takes a couple of milliseconds, so no problem
   vars_df <- get_current_data(arg_name = NA, call = -3)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df,
@@ -605,7 +598,7 @@ ab_select_exec <- function(function_name,
 
   # untreatable drugs
   if (only_treatable == TRUE) {
-    untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "-high|EDTA|polysorbate|macromethod|screening|nacubactam"), "ab", drop = TRUE]
+    untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam)"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable")) {
         warning_(
@@ -644,7 +637,7 @@ ab_select_exec <- function(function_name,
         custom_ab <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% AMR_env$custom_ab_codes), ]
         check_string <- paste0(custom_ab$group, custom_ab$atc_group1, custom_ab$atc_group2)
         if (function_name == "betalactams") {
-          find_group <- "beta-lactams"
+          find_group <- "beta[-]?lactams"
         } else if (function_name %like% "cephalosporins_") {
           find_group <- gsub("_(.*)$", paste0(" (\\1 gen.)"), function_name)
         } else {

@@ -9,6 +9,7 @@
 \alias{antifungals}
 \alias{antimycobacterials}
 \alias{betalactams}
+\alias{betalactams_with_inhibitor}
 \alias{carbapenems}
 \alias{cephalosporins}
 \alias{cephalosporins_1st}
@@ -49,6 +50,8 @@ antifungals(only_sir_columns = FALSE, ...)
 antimycobacterials(only_sir_columns = FALSE, ...)
 
 betalactams(only_sir_columns = FALSE, only_treatable = TRUE, ...)
+
+betalactams_with_inhibitor(only_sir_columns = FALSE, ...)
 
 carbapenems(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
@@ -149,6 +152,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 \item \code{\link[=antifungals]{antifungals()}} can select: \cr amorolfine (AMO), amphotericin B (AMB), amphotericin B-high (AMH), anidulafungin (ANI), butoconazole (BUT), caspofungin (CAS), ciclopirox (CIX), clotrimazole (CTR), econazole (ECO), fluconazole (FLU), flucytosine (FCT), fosfluconazole (FFL), griseofulvin (GRI), hachimycin (HCH), ibrexafungerp (IBX), isavuconazole (ISV), isoconazole (ISO), itraconazole (ITR), ketoconazole (KET), manogepix (MGX), micafungin (MIF), miconazole (MCZ), nystatin (NYS), oteseconazole (OTE), pimaricin (PMR), posaconazole (POS), rezafungin (RZF), ribociclib (RBC), sulconazole (SUC), terbinafine (TRB), terconazole (TRC), and voriconazole (VOR)
 \item \code{\link[=antimycobacterials]{antimycobacterials()}} can select: \cr 4-aminosalicylic acid (AMA), calcium aminosalicylate (CLA), capreomycin (CAP), clofazimine (CLF), delamanid (DLM), enviomycin (ENV), ethambutol (ETH), ethambutol/isoniazid (ETI), ethionamide (ETI1), isoniazid (INH), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), morinamide (MRN), p-aminosalicylic acid (PAS), pretomanid (PMD), protionamide (PTH), pyrazinamide (PZA), rifabutin (RIB), rifampicin (RIF), rifampicin/ethambutol/isoniazid (REI), rifampicin/isoniazid (RFI), rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI), rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), rifapentine (RFP), simvastatin/fenofibrate (SMF), sodium aminosalicylate (SDA), streptomycin/isoniazid (STI), terizidone (TRZ), thioacetazone (TAT), thioacetazone/isoniazid (THI1), tiocarlide (TCR), and viomycin (VIO)
 \item \code{\link[=betalactams]{betalactams()}} can select: \cr amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin (AMP), ampicillin/sulbactam (SAM), apalcillin (APL), aspoxicillin (APX), avibactam (AVB), azidocillin (AZD), azlocillin (AZL), aztreonam (ATM), aztreonam/avibactam (AZA), aztreonam/nacubactam (ANC), bacampicillin (BAM), benzathine benzylpenicillin (BNB), benzathine phenoxymethylpenicillin (BNP), benzylpenicillin (PEN), biapenem (BIA), carbenicillin (CRB), carindacillin (CRN), cefacetrile (CAC), cefaclor (CEC), cefadroxil (CFR), cefalexin (LEX), cefaloridine (RID), cefalotin (CEP), cefamandole (MAN), cefapirin (HAP), cefatrizine (CTZ), cefazedone (CZD), cefazolin (CZO), cefcapene (CCP), cefcapene pivoxil (CCX), cefdinir (CDR), cefditoren (DIT), cefditoren pivoxil (DIX), cefepime (FEP), cefepime/clavulanic acid (CPC), cefepime/nacubactam (FNC), cefepime/tazobactam (FPT), cefetamet (CAT), cefetamet pivoxil (CPI), cefetecol (CCL), cefetrizole (CZL), cefiderocol (FDC), cefixime (CFM), cefmenoxime (CMX), cefmetazole (CMZ), cefodizime (DIZ), cefonicid (CID), cefoperazone (CFP), cefoperazone/sulbactam (CSL), ceforanide (CND), cefoselis (CSE), cefotaxime (CTX), cefotaxime/clavulanic acid (CTC), cefotaxime/sulbactam (CTS), cefotetan (CTT), cefotiam (CTF), cefotiam hexetil (CHE), cefovecin (FOV), cefoxitin (FOX), cefoxitin screening (FOX1), cefozopran (ZOP), cefpimizole (CFZ), cefpiramide (CPM), cefpirome (CPO), cefpodoxime (CPD), cefpodoxime proxetil (CPX), cefpodoxime/clavulanic acid (CDC), cefprozil (CPR), cefquinome (CEQ), cefroxadine (CRD), cefsulodin (CFS), cefsumide (CSU), ceftaroline (CPT), ceftaroline/avibactam (CPA), ceftazidime (CAZ), ceftazidime/avibactam (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftobiprole (BPR), ceftobiprole medocaril (CFM1), ceftolozane/tazobactam (CZT), ceftriaxone (CRO), ceftriaxone/beta-lactamase inhibitor (CEB), cefuroxime (CXM), cefuroxime axetil (CXA), cephradine (CED), ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), doripenem (DOR), epicillin (EPC), ertapenem (ETP), flucloxacillin (FLC), hetacillin (HET), imipenem (IPM), imipenem/EDTA (IPE), imipenem/relebactam (IMR), latamoxef (LTM), lenampicillin (LEN), loracarbef (LOR), mecillinam (MEC), meropenem (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), metampicillin (MTM), meticillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam (MSU), nacubactam (NAC), nafcillin (NAF), oxacillin (OXA), panipenem (PAN), penamecillin (PNM), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), pheneticillin (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine benzylpenicillin (PRB), propicillin (PRP), razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA), sarmoxicillin (SRX), sulbactam (SUL), sulbenicillin (SBC), sultamicillin (SLT6), talampicillin (TAL), tazobactam (TAZ), tebipenem (TBP), temocillin (TEM), ticarcillin (TIC), and ticarcillin/clavulanic acid (TCC)
+\item \code{\link[=betalactams_with_inhibitor]{betalactams_with_inhibitor()}} can select: \cr amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin/sulbactam (SAM), aztreonam/avibactam (AZA), aztreonam/nacubactam (ANC), cefepime/clavulanic acid (CPC), cefepime/nacubactam (FNC), cefepime/tazobactam (FPT), cefoperazone/sulbactam (CSL), cefotaxime/clavulanic acid (CTC), cefotaxime/sulbactam (CTS), cefpodoxime/clavulanic acid (CDC), ceftaroline/avibactam (CPA), ceftazidime/avibactam (CZA), ceftazidime/clavulanic acid (CCV), ceftolozane/tazobactam (CZT), ceftriaxone/beta-lactamase inhibitor (CEB), imipenem/relebactam (IMR), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), mezlocillin/sulbactam (MSU), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), and ticarcillin/clavulanic acid (TCC)
 \item \code{\link[=carbapenems]{carbapenems()}} can select: \cr biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM), imipenem/EDTA (IPE), imipenem/relebactam (IMR), meropenem (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), panipenem (PAN), razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA), and tebipenem (TBP)
 \item \code{\link[=cephalosporins]{cephalosporins()}} can select: \cr cefacetrile (CAC), cefaclor (CEC), cefadroxil (CFR), cefalexin (LEX), cefaloridine (RID), cefalotin (CEP), cefamandole (MAN), cefapirin (HAP), cefatrizine (CTZ), cefazedone (CZD), cefazolin (CZO), cefcapene (CCP), cefcapene pivoxil (CCX), cefdinir (CDR), cefditoren (DIT), cefditoren pivoxil (DIX), cefepime (FEP), cefepime/clavulanic acid (CPC), cefepime/tazobactam (FPT), cefetamet (CAT), cefetamet pivoxil (CPI), cefetecol (CCL), cefetrizole (CZL), cefiderocol (FDC), cefixime (CFM), cefmenoxime (CMX), cefmetazole (CMZ), cefodizime (DIZ), cefonicid (CID), cefoperazone (CFP), cefoperazone/sulbactam (CSL), ceforanide (CND), cefoselis (CSE), cefotaxime (CTX), cefotaxime/clavulanic acid (CTC), cefotaxime/sulbactam (CTS), cefotetan (CTT), cefotiam (CTF), cefotiam hexetil (CHE), cefovecin (FOV), cefoxitin (FOX), cefoxitin screening (FOX1), cefozopran (ZOP), cefpimizole (CFZ), cefpiramide (CPM), cefpirome (CPO), cefpodoxime (CPD), cefpodoxime proxetil (CPX), cefpodoxime/clavulanic acid (CDC), cefprozil (CPR), cefquinome (CEQ), cefroxadine (CRD), cefsulodin (CFS), cefsumide (CSU), ceftaroline (CPT), ceftaroline/avibactam (CPA), ceftazidime (CAZ), ceftazidime/avibactam (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftobiprole (BPR), ceftobiprole medocaril (CFM1), ceftolozane/tazobactam (CZT), ceftriaxone (CRO), ceftriaxone/beta-lactamase inhibitor (CEB), cefuroxime (CXM), cefuroxime axetil (CXA), cephradine (CED), latamoxef (LTM), and loracarbef (LOR)
 \item \code{\link[=cephalosporins_1st]{cephalosporins_1st()}} can select: \cr cefacetrile (CAC), cefadroxil (CFR), cefalexin (LEX), cefaloridine (RID), cefalotin (CEP), cefapirin (HAP), cefatrizine (CTZ), cefazedone (CZD), cefazolin (CZO), cefroxadine (CRD), ceftezole (CTL), and cephradine (CED)
@@ -190,102 +194,88 @@ example_isolates
 \donttest{
 # dplyr -------------------------------------------------------------------
 
-if (require("dplyr")) {
-  example_isolates \%>\% select(carbapenems())
-}
+library(dplyr, warn.conflicts = FALSE)
 
-if (require("dplyr")) {
-  # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
-  example_isolates \%>\% select(mo, aminoglycosides())
-}
+example_isolates \%>\% select(carbapenems())
 
-if (require("dplyr")) {
-  # select only antibiotic columns with DDDs for oral treatment
-  example_isolates \%>\% select(administrable_per_os())
-}
+# select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
+example_isolates \%>\% select(mo, aminoglycosides())
 
-if (require("dplyr")) {
-  # get AMR for all aminoglycosides e.g., per ward:
-  example_isolates \%>\%
-    group_by(ward) \%>\%
-    summarise(across(aminoglycosides(),
-                     resistance))
-}
-if (require("dplyr")) {
-  # You can combine selectors with '&' to be more specific:
-  example_isolates \%>\%
-    select(penicillins() & administrable_per_os())
-}
-if (require("dplyr")) {
-  # get AMR for only drugs that matter - no intrinsic resistance:
-  example_isolates \%>\%
-    filter(mo_genus() \%in\% c("Escherichia", "Klebsiella")) \%>\%
-    group_by(ward) \%>\%
-    summarise_at(not_intrinsic_resistant(),
-                 resistance)
-}
-if (require("dplyr")) {
-  # get susceptibility for antibiotics whose name contains "trim":
-  example_isolates \%>\%
-    filter(first_isolate()) \%>\%
-    group_by(ward) \%>\%
-    summarise(across(ab_selector(name \%like\% "trim"), susceptibility))
-}
-if (require("dplyr")) {
-  # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
-  example_isolates \%>\%
-    select(carbapenems())
-}
-if (require("dplyr")) {
-  # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
-  example_isolates \%>\%
-    select(mo, aminoglycosides())
-}
-if (require("dplyr")) {
-  # any() and all() work in dplyr's filter() too:
-  example_isolates \%>\%
-    filter(
-      any(aminoglycosides() == "R"),
-      all(cephalosporins_2nd() == "R")
-    )
-}
-if (require("dplyr")) {
-  # also works with c():
-  example_isolates \%>\%
-    filter(any(c(carbapenems(), aminoglycosides()) == "R"))
-}
-if (require("dplyr")) {
-  # not setting any/all will automatically apply all():
-  example_isolates \%>\%
-    filter(aminoglycosides() == "R")
-}
-if (require("dplyr")) {
-  # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
-  example_isolates \%>\%
-    select(mo, ab_class("mycobact"))
-}
-if (require("dplyr")) {
-  # get bug/drug combinations for only glycopeptides in Gram-positives:
-  example_isolates \%>\%
-    filter(mo_is_gram_positive()) \%>\%
-    select(mo, glycopeptides()) \%>\%
-    bug_drug_combinations() \%>\%
-    format()
-}
-if (require("dplyr")) {
-  data.frame(
-    some_column = "some_value",
-    J01CA01 = "S"
-  ) \%>\% # ATC code of ampicillin
-    select(penicillins()) # only the 'J01CA01' column will be selected
-}
-if (require("dplyr")) {
-  # with recent versions of dplyr, this is all equal:
-  x <- example_isolates[carbapenems() == "R", ]
-  y <- example_isolates \%>\% filter(carbapenems() == "R")
-  z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
-  identical(x, y) && identical(y, z)
-}
+# you can combine selectors like you are used with tidyverse
+# e.g., for betalactams, but not the ones with an enzyme inhibitor:
+example_isolates |> select(betalactams(), -betalactams_with_inhibitor())
+
+# select only antibiotic columns with DDDs for oral treatment
+example_isolates \%>\% select(administrable_per_os())
+
+# get AMR for all aminoglycosides e.g., per ward:
+example_isolates \%>\%
+  group_by(ward) \%>\%
+  summarise(across(aminoglycosides(),
+                   resistance))
+
+# You can combine selectors with '&' to be more specific:
+example_isolates \%>\%
+  select(penicillins() & administrable_per_os())
+
+# get AMR for only drugs that matter - no intrinsic resistance:
+example_isolates \%>\%
+  filter(mo_genus() \%in\% c("Escherichia", "Klebsiella")) \%>\%
+  group_by(ward) \%>\%
+  summarise_at(not_intrinsic_resistant(),
+               resistance)
+
+# get susceptibility for antibiotics whose name contains "trim":
+example_isolates \%>\%
+  filter(first_isolate()) \%>\%
+  group_by(ward) \%>\%
+  summarise(across(ab_selector(name \%like\% "trim"), susceptibility))
+
+# this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
+example_isolates \%>\%
+  select(carbapenems())
+
+# this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
+example_isolates \%>\%
+  select(mo, aminoglycosides())
+
+# any() and all() work in dplyr's filter() too:
+example_isolates \%>\%
+  filter(
+    any(aminoglycosides() == "R"),
+    all(cephalosporins_2nd() == "R")
+  )
+
+# also works with c():
+example_isolates \%>\%
+  filter(any(c(carbapenems(), aminoglycosides()) == "R"))
+
+# not setting any/all will automatically apply all():
+example_isolates \%>\%
+  filter(aminoglycosides() == "R")
+
+# this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
+example_isolates \%>\%
+  select(mo, ab_class("mycobact"))
+
+# get bug/drug combinations for only glycopeptides in Gram-positives:
+example_isolates \%>\%
+  filter(mo_is_gram_positive()) \%>\%
+  select(mo, glycopeptides()) \%>\%
+  bug_drug_combinations() \%>\%
+  format()
+
+data.frame(
+  some_column = "some_value",
+  J01CA01 = "S"
+) \%>\% # ATC code of ampicillin
+  select(penicillins()) # only the 'J01CA01' column will be selected
+
+# with recent versions of dplyr, this is all equal:
+x <- example_isolates[carbapenems() == "R", ]
+y <- example_isolates \%>\% filter(carbapenems() == "R")
+z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
+identical(x, y) && identical(y, z)
 
 
 # base R ------------------------------------------------------------------
