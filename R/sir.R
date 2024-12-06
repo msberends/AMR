@@ -1658,15 +1658,16 @@ get_skimmers.sir <- function(column) {
 print.sir <- function(x, ...) {
   x_name <- deparse(substitute(x))
   cat("Class 'sir'\n")
-  if (!is.null(attributes(x)$guideline) && !all(is.na(attributes(x)$guideline))) {
-    cat(font_blue(word_wrap("These values were interpreted using ",
-                            font_bold(vector_and(attributes(x)$guideline, quotes = FALSE)),
-                            " based on ",
-                            vector_and(attributes(x)$method, quotes = FALSE),
-                            " values. ",
-                            "Use `sir_interpretation_history(", x_name, ")` to return a full logbook.")))
-    cat("\n")
-  }
+  # TODO for #170
+  # if (!is.null(attributes(x)$guideline) && !all(is.na(attributes(x)$guideline))) {
+  #   cat(font_blue(word_wrap("These values were interpreted using ",
+  #                           font_bold(vector_and(attributes(x)$guideline, quotes = FALSE)),
+  #                           " based on ",
+  #                           vector_and(attributes(x)$method, quotes = FALSE),
+  #                           " values. ",
+  #                           "Use `sir_interpretation_history(", x_name, ")` to return a full logbook.")))
+  #   cat("\n")
+  # }
   print(as.character(x), quote = FALSE)
 }
 
@@ -1749,23 +1750,25 @@ summary.sir <- function(object, ...) {
 c.sir <- function(...) {
   lst <- list(...)
   
-  guideline <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$guideline %or% NA_character_)
-  mo <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$mo %or% NA_character_)
-  ab <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ab %or% NA_character_)
-  method <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$method %or% NA_character_)
-  ref_tbl <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_tbl %or% NA_character_)
-  ref_breakpoints <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_breakpoints %or% NA_character_)
+  # TODO for #170
+  # guideline <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$guideline %or% NA_character_)
+  # mo <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$mo %or% NA_character_)
+  # ab <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ab %or% NA_character_)
+  # method <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$method %or% NA_character_)
+  # ref_tbl <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_tbl %or% NA_character_)
+  # ref_breakpoints <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_breakpoints %or% NA_character_)
   
   out <- as.sir(unlist(lapply(list(...), as.character)))
   
-  if (!all(is.na(guideline))) {
-    attributes(out)$guideline <- guideline
-    attributes(out)$mo <- mo
-    attributes(out)$ab <- ab
-    attributes(out)$method <- method
-    attributes(out)$ref_tbl <- ref_tbl
-    attributes(out)$ref_breakpoints <- ref_breakpoints
-  }
+  # TODO for #170
+  # if (!all(is.na(guideline))) {
+  #   attributes(out)$guideline <- guideline
+  #   attributes(out)$mo <- mo
+  #   attributes(out)$ab <- ab
+  #   attributes(out)$method <- method
+  #   attributes(out)$ref_tbl <- ref_tbl
+  #   attributes(out)$ref_breakpoints <- ref_breakpoints
+  # }
   
   out
 }

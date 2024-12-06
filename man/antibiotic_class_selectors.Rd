@@ -203,7 +203,7 @@ example_isolates \%>\% select(mo, aminoglycosides())
 
 # you can combine selectors like you are used with tidyverse
 # e.g., for betalactams, but not the ones with an enzyme inhibitor:
-example_isolates |> select(betalactams(), -betalactams_with_inhibitor())
+example_isolates \%>\% select(betalactams(), -betalactams_with_inhibitor())
 
 # select only antibiotic columns with DDDs for oral treatment
 example_isolates \%>\% select(administrable_per_os())
