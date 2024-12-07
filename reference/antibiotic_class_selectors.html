@@ -9,7 +9,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9111</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9112</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -285,7 +285,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># you can combine selectors like you are used with tidyverse</span></span></span>
 <span class="r-in"><span><span class="co"># e.g., for betalactams, but not the ones with an enzyme inhibitor:</span></span></span>
-<span class="r-in"><span><span class="va">example_isolates</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">betalactams</span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu">betalactams_with_inhibitor</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">betalactams</span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu">betalactams_with_inhibitor</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For betalactams() using columns 'PEN' (benzylpenicillin), 'OXA'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (oxacillin), 'FLC' (flucloxacillin), 'AMX' (amoxicillin), 'AMC'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), 'TZP'</span>
