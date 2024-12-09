@@ -63,6 +63,41 @@ $(document).ready(function() {
     $('img[src="../logo.svg"]').attr('src', '../logo_python.svg'); /* replace base logo */
     $('img[src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg"]').attr('src', 'https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT_python.svg'); /* replace GPT logo */
   }
+  
+  // add country flags
+   function country_flag(x) {
+    if (typeof(x) != "undefined") {
+      x = x.replace("Alex", '<img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Alex');
+      x = x.replace("Andrew", '<img src="lang_us.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Andrew');
+      x = x.replace("Anita", '<img src="lang_au.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Anita');
+      x = x.replace("Annick", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Annick');
+      x = x.replace("Anthony", '<img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Anthony');
+      x = x.replace("Anton", '<img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Anton');
+      x = x.replace("Bart", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Bart');
+      x = x.replace("Bhanu", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Bhanu');
+      x = x.replace("Casper", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Casper');
+      x = x.replace("Christian", '<img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Christian');
+      x = x.replace("Corinna", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Corinna');
+      x = x.replace("Dennis", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dennis');
+      x = x.replace("Dmytro", '<img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dmytro');
+      x = x.replace("Eric", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Eric');
+      x = x.replace("Erwin", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Erwin');
+      x = x.replace("Gwen", '<img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Gwen');
+      x = x.replace("Jason", '<img src="lang_ca.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Jason');
+      x = x.replace("Javier", '<img src="lang_ca.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Javier');
+      x = x.replace("Jonas", '<img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Jonas');
+      x = x.replace("Judith", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Judith');
+      x = x.replace("Larisse", '<img src="lang_sa.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Larisse');
+      x = x.replace("Matthew", '<img src="lang_ca.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Matthew');
+      x = x.replace("Matthijs", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Matthijs');
+      x = x.replace("Peter", '<img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Peter');
+      x = x.replace("Rogier", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Rogier');
+      x = x.replace("Sofia", '<img src="lang_sv.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Sofia');
+    }
+    return(x);
+  }
+  $(".template-authors").html(country_flag($(".template-authors").html()));
+  $(".template-citation-authors").html(country_flag($(".template-citation-authors").html()));
 
   // add doctoral titles to authors
   function doct_tit(x) {
