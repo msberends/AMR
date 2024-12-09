@@ -65,34 +65,36 @@ $(document).ready(function() {
   }
   
   // add country flags
-   function country_flag(x) {
+  function country_flag(x) {
     if (typeof(x) != "undefined") {
-      x = x.replace("Alex", '<img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Alex');
-      x = x.replace("Andrew", '<img src="lang_us.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Andrew');
-      x = x.replace("Anita", '<img src="lang_au.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Anita');
-      x = x.replace("Annick", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Annick');
-      x = x.replace("Anthony", '<img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Anthony');
-      x = x.replace("Anton", '<img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Anton');
-      x = x.replace("Bart", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Bart');
-      x = x.replace("Bhanu", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Bhanu');
-      x = x.replace("Casper", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Casper');
-      x = x.replace("Christian", '<img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Christian');
-      x = x.replace("Corinna", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Corinna');
-      x = x.replace("Dennis", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dennis');
-      x = x.replace("Dmytro", '<img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dmytro');
-      x = x.replace("Eric", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Eric');
-      x = x.replace("Erwin", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Erwin');
-      x = x.replace("Gwen", '<img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Gwen');
-      x = x.replace("Jason", '<img src="lang_ca.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Jason');
-      x = x.replace("Javier", '<img src="lang_ca.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Javier');
-      x = x.replace("Jonas", '<img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Jonas');
-      x = x.replace("Judith", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Judith');
-      x = x.replace("Larisse", '<img src="lang_sa.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Larisse');
-      x = x.replace("Matthew", '<img src="lang_ca.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Matthew');
-      x = x.replace("Matthijs", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Matthijs');
-      x = x.replace("Peter", '<img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Peter');
-      x = x.replace("Rogier", '<img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Rogier');
-      x = x.replace("Sofia", '<img src="lang_sv.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Sofia');
+      const prefix = '<img src="lang_';
+      const suffix = '.svg" style="height: 13px !important; border: 1px solid #cccccc; aspect-ratio: 1 / 0.6; object-fit: cover; vertical-align: initial !important;"> ';
+      x = x.replace("Alex", prefix + "de" + suffix + "Alex");
+      x = x.replace("Andrew", prefix + "us" + suffix + "Andrew");
+      x = x.replace("Anita", prefix + "au" + suffix + "Anita");
+      x = x.replace("Annick", prefix + "nl" + suffix + "Annick");
+      x = x.replace("Anthony", prefix + "en" + suffix + "Anthony");
+      x = x.replace("Anton", prefix + "uk" + suffix + "Anton");
+      x = x.replace("Bart", prefix + "nl" + suffix + "Bart");
+      x = x.replace("Bhanu", prefix + "nl" + suffix + "Bhanu");
+      x = x.replace("Casper", prefix + "nl" + suffix + "Casper");
+      x = x.replace("Christian", prefix + "de" + suffix + "Christian");
+      x = x.replace("Corinna", prefix + "nl" + suffix + "Corinna");
+      x = x.replace("Dennis", prefix + "nl" + suffix + "Dennis");
+      x = x.replace("Dmytro", prefix + "uk" + suffix + "Dmytro");
+      x = x.replace("Eric", prefix + "nl" + suffix + "Eric");
+      x = x.replace("Erwin", prefix + "nl" + suffix + "Erwin");
+      x = x.replace("Gwen", prefix + "en" + suffix + "Gwen");
+      x = x.replace("Jason", prefix + "ca" + suffix + "Jason");
+      x = x.replace("Javier", prefix + "ca" + suffix + "Javier");
+      x = x.replace("Jonas", prefix + "de" + suffix + "Jonas");
+      x = x.replace("Judith", prefix + "nl" + suffix + "Judith");
+      x = x.replace("Larisse", prefix + "sa" + suffix + "Larisse");
+      x = x.replace("Matthew", prefix + "ca" + suffix + "Matthew");
+      x = x.replace("Matthijs", prefix + "nl" + suffix + "Matthijs");
+      x = x.replace("Peter", prefix + "en" + suffix + "Peter");
+      x = x.replace("Rogier", prefix + "nl" + suffix + "Rogier");
+      x = x.replace("Sofia", prefix + "sv" + suffix + "Sofia");
     }
     return(x);
   }
