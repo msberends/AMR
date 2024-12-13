@@ -112,7 +112,7 @@ jobs:
         run: |
           cd ..
           R CMD build AMR
-          R CMD check --as-cran --no-manual --run-donttest --run-dontrun AMR_*.tar.gz
+          R CMD check --as-cran --no-manual --run-donttest AMR_*.tar.gz
         shell: bash
 
       - name: Show tinytest output
