@@ -9,7 +9,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9112</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9116</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +162,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(internally) a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of column names, with additional class <code>"ab_selector"</code></p>
+    <p>When used inside selecting or filtering, this returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of column names, with additional class <code>"ab_selector"</code>. When used individually, this returns an <a href="as.ab.html">'ab' vector</a> with all possible antimicrobial that the function would be able to select or filter.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -240,154 +240,52 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># you can use the selectors separately to retrieve all possible antimicrobials:</span></span></span>
+<span class="r-in"><span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ The function carbapenems() should be used inside a dplyr verb or</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   data.frame call, e.g.:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • your_data %&gt;% select(carbapenems())</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • your_data %&gt;% select(column_a, column_b, carbapenems())</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • your_data %&gt;% filter(any(carbapenems() == "R"))</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • your_data[, carbapenems()]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • your_data[, c("column_a", "column_b", carbapenems())]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Now returning a vector of all possible antimicrobials that carbapenems()</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> can select.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'ab'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] BIA DOR ETP IMR IPE IPM MEM MEV MNC PAN RIA RIT RZM TBP</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Though they are primarily intended to use for selections and filters.</span></span></span>
 <span class="r-in"><span><span class="co"># Examples sections below are split into 'dplyr', 'base R', and 'data.table':</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># dplyr -------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    IPM   MEM  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu">aminoglycosides</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mo           GEN   TOB   AMK   KAN  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_ESCHR_COLI NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_ESCHR_COLI NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> B_STPHY_AURS NA    S     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> B_STPHY_AURS NA    S     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># you can combine selectors like you are used with tidyverse</span></span></span>
 <span class="r-in"><span><span class="co"># e.g., for betalactams, but not the ones with an enzyme inhibitor:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">betalactams</span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu">betalactams_with_inhibitor</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For betalactams() using columns 'PEN' (benzylpenicillin), 'OXA'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (oxacillin), 'FLC' (flucloxacillin), 'AMX' (amoxicillin), 'AMC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), 'TZP'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (piperacillin/tazobactam), 'CZO' (cefazolin), 'FEP' (cefepime), 'CXM'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (cefuroxime), 'FOX' (cefoxitin), 'CTX' (cefotaxime), 'CAZ' (ceftazidime),</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   'CRO' (ceftriaxone), 'IPM' (imipenem), and 'MEM' (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For betalactams_with_inhibitor() using columns 'AMC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (amoxicillin/clavulanic acid) and 'TZP' (piperacillin/tazobactam)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 14</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    PEN   OXA   FLC   AMX   AMP   CZO   FEP   CXM   FOX   CTX   CAZ   CRO   IPM  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> R     NA    NA    NA    NA    NA    NA    I     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> R     NA    NA    NA    NA    NA    NA    I     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> R     NA    R     NA    NA    NA    NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> R     NA    R     NA    NA    NA    NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> R     NA    R     NA    NA    NA    NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> R     NA    R     NA    NA    NA    NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> R     NA    S     R     R     NA    NA    S     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> R     NA    S     R     R     NA    NA    S     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> R     NA    R     NA    NA    NA    NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> R     NA    S     NA    NA    NA    NA    S     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: MEM &lt;sir&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># select only antibiotic columns with DDDs for oral treatment</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">administrable_per_os</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For administrable_per_os() using columns 'OXA' (oxacillin), 'FLC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (flucloxacillin), 'AMX' (amoxicillin), 'AMC' (amoxicillin/clavulanic acid),</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   'AMP' (ampicillin), 'CXM' (cefuroxime), 'KAN' (kanamycin), 'TMP'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (trimethoprim), 'NIT' (nitrofurantoin), 'FOS' (fosfomycin), 'LNZ'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (linezolid), 'CIP' (ciprofloxacin), 'MFX' (moxifloxacin), 'VAN'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (vancomycin), 'TCY' (tetracycline), 'DOX' (doxycycline), 'ERY'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (erythromycin), 'CLI' (clindamycin), 'AZM' (azithromycin), 'MTR'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (metronidazole), 'CHL' (chloramphenicol), 'COL' (colistin), and 'RIF'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (rifampicin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 23</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    OXA   FLC   AMX   AMC   AMP   CXM   KAN   TMP   NIT   FOS   LNZ   CIP   MFX  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> NA    NA    NA    I     NA    I     NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NA    NA    NA    I     NA    I     NA    R     NA    NA    R     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> NA    R     NA    NA    NA    R     NA    S     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> NA    R     NA    NA    NA    R     NA    S     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> NA    R     NA    NA    NA    R     NA    R     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> NA    R     NA    NA    NA    R     NA    R     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> NA    S     R     S     R     S     NA    R     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> NA    S     R     S     R     S     NA    R     NA    NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> NA    R     NA    NA    NA    R     NA    S     NA    NA    NA    S     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> NA    S     NA    NA    NA    S     NA    S     NA    NA    NA    S     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: VAN &lt;sir&gt;, TCY &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AZM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, RIF &lt;sir&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get AMR for all aminoglycosides e.g., per ward:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">aminoglycosides</span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   <span class="va">resistance</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `summarise()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(aminoglycosides(), resistance)`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 3: `ward = "Outpatient"`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Introducing NA: only 23 results available for KAN in group: ward =</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> "Outpatient" (minimum = 30).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ward         GEN   TOB   AMK   KAN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical   0.229 0.315 0.626     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU        0.290 0.400 0.662     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient 0.2   0.368 0.605    <span style="color: #BB0000;">NA</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># You can combine selectors with '&amp;' to be more specific:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">penicillins</span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu">administrable_per_os</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For penicillins() using columns 'PEN' (benzylpenicillin), 'OXA'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (oxacillin), 'FLC' (flucloxacillin), 'AMX' (amoxicillin), 'AMC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), and 'TZP'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (piperacillin/tazobactam)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For administrable_per_os() using columns 'OXA' (oxacillin), 'FLC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (flucloxacillin), 'AMX' (amoxicillin), 'AMC' (amoxicillin/clavulanic acid),</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   'AMP' (ampicillin), 'CXM' (cefuroxime), 'KAN' (kanamycin), 'TMP'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (trimethoprim), 'NIT' (nitrofurantoin), 'FOS' (fosfomycin), 'LNZ'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (linezolid), 'CIP' (ciprofloxacin), 'MFX' (moxifloxacin), 'VAN'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (vancomycin), 'TCY' (tetracycline), 'DOX' (doxycycline), 'ERY'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (erythromycin), 'CLI' (clindamycin), 'AZM' (azithromycin), 'MTR'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (metronidazole), 'CHL' (chloramphenicol), 'COL' (colistin), and 'RIF'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (rifampicin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    OXA   FLC   AMX   AMC   AMP  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> NA    NA    NA    I     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NA    NA    NA    I     NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> NA    R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> NA    R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> NA    R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> NA    R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> NA    S     R     S     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> NA    S     R     S     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> NA    R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> NA    S     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get AMR for only drugs that matter - no intrinsic resistance:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -395,82 +293,20 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html" class="external-link">summarise_at</a></span><span class="op">(</span><span class="fu">not_intrinsic_resistant</span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>               <span class="va">resistance</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for mo_genus()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For not_intrinsic_resistant() removing columns 'PEN'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (benzylpenicillin), 'LNZ' (linezolid), 'VAN' (vancomycin), 'TEC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (teicoplanin), 'ERY' (erythromycin), 'CLI' (clindamycin), 'AZM'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (azithromycin), and 'RIF' (rifampicin)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 52 warnings in `summarise()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `OXA = (function (..., minimum = 30, as_percent = FALSE,</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   only_all_tested = FALSE) ...`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `ward = "Clinical"`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Introducing NA: no results available for OXA in group: ward = "Clinical"</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (minimum = 30).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 51 remaining warnings.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 33</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ward    OXA   FLC    AMX    AMC    AMP     TZP     CZO     FEP     CXM     FOX</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clin…    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  0.606  0.121  0.606  0.050<span style="text-decoration: underline;">4</span>  0.065<span style="text-decoration: underline;">6</span>  0.015<span style="text-decoration: underline;">9</span>  0.062<span style="text-decoration: underline;">2</span>  0.064<span style="text-decoration: underline;">8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  0.535  0.172  0.535  0.119  <span style="color: #BB0000;">NA</span>       0.072<span style="text-decoration: underline;">2</span>  0.082<span style="text-decoration: underline;">8</span>  0.099<span style="text-decoration: underline;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outp…    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 22 more variables: CTX &lt;dbl&gt;, CAZ &lt;dbl&gt;, CRO &lt;dbl&gt;, GEN &lt;dbl&gt;, TOB &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMK &lt;dbl&gt;, KAN &lt;dbl&gt;, TMP &lt;dbl&gt;, SXT &lt;dbl&gt;, NIT &lt;dbl&gt;, FOS &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CIP &lt;dbl&gt;, MFX &lt;dbl&gt;, TCY &lt;dbl&gt;, TGC &lt;dbl&gt;, DOX &lt;dbl&gt;, IPM &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   MEM &lt;dbl&gt;, MTR &lt;dbl&gt;, CHL &lt;dbl&gt;, COL &lt;dbl&gt;, MUP &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get susceptibility for antibiotics whose name contains "trim":</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="first_isolate.html">first_isolate</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">ab_selector</span><span class="op">(</span><span class="va">name</span> <span class="op"><a href="like.html">%like%</a></span> <span class="st">"trim"</span><span class="op">)</span>, <span class="va">susceptibility</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For ab_selector(name %like% "trim") using columns 'TMP' (trimethoprim)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   and 'SXT' (trimethoprim/sulfamethoxazole)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ward         TMP   SXT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical   0.627 0.806</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU        0.556 0.784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient 0.675 0.825</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    IPM   MEM  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu">aminoglycosides</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mo           GEN   TOB   AMK   KAN  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_ESCHR_COLI NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_ESCHR_COLI NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> B_STPHY_AURS NA    S     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> B_STPHY_AURS NA    S     NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> B_STPHY_EPDR NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># any() and all() work in dplyr's filter() too:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -478,104 +314,18 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu">aminoglycosides</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu">cephalosporins_2nd</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For cephalosporins_2nd() using columns 'CXM' (cefuroxime) and 'FOX'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (cefoxitin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 112 × 46</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 4FC193     69 M      Clinical B_ENTRC_FACM NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-03-16 4FC193     69 M      Clinical B_PSDMN_AERG R     NA    NA    R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-04-08 130252     78 M      ICU      B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-06-23 798871     82 M      Clinical B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-06-23 798871     82 M      Clinical B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-07-21 955940     82 F      Clinical B_PSDMN_AERG R     NA    NA    R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-07-21 955940     82 F      Clinical B_PSDMN_AERG R     NA    NA    R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2003-08-13 F35553     52 M      ICU      B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2003-09-05 F35553     52 M      ICU      B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2004-06-09 529296     69 M      ICU      B_ENTRC_FACM NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 102 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 36 more variables: AMC &lt;sir&gt;, AMP &lt;sir&gt;, TZP &lt;sir&gt;, CZO &lt;sir&gt;, FEP &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;, CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;sir&gt;, AMK &lt;sir&gt;, KAN &lt;sir&gt;, TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># also works with c():</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span>, <span class="fu">aminoglycosides</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 531 × 46</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 4FC193     69 M      Clinical B_ENTRC_FACM NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-03-16 4FC193     69 M      Clinical B_PSDMN_AERG R     NA    NA    R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-03-17 B30560     78 M      Clinical B_STPHY_CONS R     NA    R     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-04-04 E61143     67 M      Clinical B_STRPT_SNGN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-04-08 130252     78 M      ICU      B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-04-14 F30196     73 M      Outpati… B_STRPT_GRPB S     NA    S     S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-05-07 D91570     83 M      Clinical B_STPHY_CONS R     NA    R     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-05-07 D91570     83 M      Clinical B_STPHY_CONS R     NA    R     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-05-14 077552     86 F      Clinical B_STRPT_PNMN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-05-14 077552     86 F      Clinical B_STRPT_PNMN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 521 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 36 more variables: AMC &lt;sir&gt;, AMP &lt;sir&gt;, TZP &lt;sir&gt;, CZO &lt;sir&gt;, FEP &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;, CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;sir&gt;, AMK &lt;sir&gt;, KAN &lt;sir&gt;, TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># not setting any/all will automatically apply all():</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">aminoglycosides</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming a filter on all 4 aminoglycosides. Wrap around all() or</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   any() to prevent this note.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 427 × 46</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 4FC193     69 M      Clinical B_ENTRC_FACM NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-03-17 B30560     78 M      Clinical B_STPHY_CONS R     NA    R     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-04-04 E61143     67 M      Clinical B_STRPT_SNGN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-04-08 130252     78 M      ICU      B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-04-14 F30196     73 M      Outpati… B_STRPT_GRPB S     NA    S     S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-05-07 D91570     83 M      Clinical B_STPHY_CONS R     NA    R     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-05-07 D91570     83 M      Clinical B_STPHY_CONS R     NA    R     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-05-14 077552     86 F      Clinical B_STRPT_PNMN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-05-14 077552     86 F      Clinical B_STRPT_PNMN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-05-16 D25302     65 F      ICU      B_STRPT_ANGN S     NA    NA    S    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 417 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 36 more variables: AMC &lt;sir&gt;, AMP &lt;sir&gt;, TZP &lt;sir&gt;, CZO &lt;sir&gt;, FEP &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;sir&gt;, FOX &lt;sir&gt;, CTX &lt;sir&gt;, CAZ &lt;sir&gt;, CRO &lt;sir&gt;, GEN &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;sir&gt;, AMK &lt;sir&gt;, KAN &lt;sir&gt;, TMP &lt;sir&gt;, SXT &lt;sir&gt;, NIT &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this will select columns 'mo' and all antimycobacterial drugs ('RIF'):</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu">ab_class</span><span class="op">(</span><span class="st">"mycobact"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For ab_class("mycobact") using column 'RIF' (rifampicin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mo           RIF  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> B_ESCHR_COLI R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> B_ESCHR_COLI R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> B_STPHY_EPDR NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> B_STPHY_EPDR NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> B_STPHY_EPDR NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> B_STPHY_EPDR NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> B_STPHY_AURS NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> B_STPHY_AURS NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> B_STPHY_EPDR NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> B_STPHY_EPDR NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get bug/drug combinations for only glycopeptides in Gram-positives:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -583,40 +333,20 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu">glycopeptides</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bug_drug_combinations.html">bug_drug_combinations</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for mo_is_gram_positive()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For glycopeptides() using columns 'VAN' (vancomycin) and 'TEC'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (teicoplanin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group      Drug  CoNS  `E. faecalis` `S. aureus` `S. epidermidis` `S. hominis`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">"</span>Glycopep… Teic… <span style="color: #949494;">""</span>    <span style="color: #949494;">""</span>            <span style="color: #949494;">"</span> 0.0% (0/… <span style="color: #949494;">"</span>64.1% (25/39)<span style="color: #949494;">"</span>  <span style="color: #949494;">"</span> 6.8% (4/5…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">""</span>         Vanc… <span style="color: #949494;">"</span> 0.… <span style="color: #949494;">"</span> 0.0% (0/39… <span style="color: #949494;">"</span> 0.0% (0/… <span style="color: #949494;">"</span> 0.0% (0/171)<span style="color: #949494;">"</span>  <span style="color: #949494;">"</span> 0.0% (0/8…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `S. pneumoniae` &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  some_column <span class="op">=</span> <span class="st">"some_value"</span>,</span></span>
 <span class="r-in"><span>  J01CA01 <span class="op">=</span> <span class="st">"S"</span></span></span>
 <span class="r-in"><span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># ATC code of ampicillin</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">penicillins</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># only the 'J01CA01' column will be selected</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For penicillins() using column 'J01CA01' (ampicillin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   J01CA01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       S</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># with recent versions of dplyr, this is all equal:</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span><span class="op">[</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span>, <span class="op">]</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming a filter on all 2 carbapenems. Wrap around all() or any() to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   prevent this note.</span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming a filter on all 2 carbapenems. Wrap around all() or any() to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   prevent this note.</span>
 <span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">if_all</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># base R ------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># select columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span></span>
