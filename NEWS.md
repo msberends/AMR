@@ -1,4 +1,4 @@
-# AMR 2.1.1.9112
+# AMR 2.1.1.9116
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -47,7 +47,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
 * Antibiotic selectors
   * Added selectors `nitrofurans()` and `rifamycins()`
-  * When using antibiotic selectors such as `aminoglycosides()` that exclude non-treatable drugs like gentamicin-high, the function now always returns a warning that these can be included using `only_treatable = FALSE`
+  * When using antibiotic selectors (such as `aminoglycosides()`) that exclude non-treatable drugs (such as gentamicin-high), the function now always returns a warning that these can be included using `only_treatable = FALSE`
+  * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
 * MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.
@@ -71,6 +72,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Fixed a bug for `sir_confidence_interval()` when there are no isolates available
 * Updated the prevalence calculation to include genera from the World Health Organization's (WHO) Priority Pathogen List
 * Improved algorithm of `first_isolate()` when using the phenotype-based method, to prioritise records with the highest availability of SIR values
+* `scale_y_percent()` can now cope with ranges outside the 0-100% range
 
 ## Other
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.

@@ -48,7 +48,7 @@
 #' `r paste0(" * ", na.omit(sapply(DEFINED_AB_GROUPS, function(ab) ifelse(tolower(gsub("^AB_", "", ab)) %in% ls(envir = asNamespace("AMR")), paste0("[", tolower(gsub("^AB_", "", ab)), "()] can select: \\cr ", vector_and(paste0(ab_name(eval(parse(text = ab), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), " (", eval(parse(text = ab), envir = asNamespace("AMR")), ")"), quotes = FALSE, sort = TRUE)), character(0)), USE.NAMES = FALSE)), "\n", collapse = "")`
 #' @rdname antibiotic_class_selectors
 #' @name antibiotic_class_selectors
-#' @return (internally) a [character] vector of column names, with additional class `"ab_selector"`
+#' @return When used inside selecting or filtering, this returns a [character] vector of column names, with additional class `"ab_selector"`. When used individually, this returns an ['ab' vector][as.ab()] with all possible antimicrobial that the function would be able to select or filter.
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
@@ -57,9 +57,15 @@
 #' example_isolates
 #'
 #'
+#' # you can use the selectors separately to retrieve all possible antimicrobials:
+#' carbapenems()
+#'
+#'
+#' # Though they are primarily intended to use for selections and filters.
 #' # Examples sections below are split into 'dplyr', 'base R', and 'data.table':
 #' 
 #' \donttest{
+#' \dontrun{
 #' # dplyr -------------------------------------------------------------------
 #' 
 #' library(dplyr, warn.conflicts = FALSE)
@@ -145,7 +151,7 @@
 #' z <- example_isolates %>% filter(if_all(carbapenems(), ~ .x == "R"))
 #' identical(x, y) && identical(y, z)
 #'
-#'
+#' }
 #' # base R ------------------------------------------------------------------
 #'
 #' # select columns 'IPM' (imipenem) and 'MEM' (meropenem)
@@ -589,15 +595,16 @@ ab_select_exec <- function(function_name,
                            ab_class_args = NULL) {
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # it only takes a couple of milliseconds, so no problem
-  vars_df <- get_current_data(arg_name = NA, call = -3)
+  vars_df <- tryCatch(get_current_data(arg_name = NA, call = -3), error = function(e) NULL)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df,
-    info = FALSE, only_sir_columns = only_sir_columns,
-    sort = FALSE, fn = function_name
-  )
-
+  if (!is.null(vars_df)) {
+    ab_in_data <- get_column_abx(vars_df,
+                                 info = FALSE, only_sir_columns = only_sir_columns,
+                                 sort = FALSE, fn = function_name)
+  }
+  
   # untreatable drugs
-  if (only_treatable == TRUE) {
+  if (!is.null(vars_df) && only_treatable == TRUE) {
     untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam)"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable")) {
@@ -617,7 +624,7 @@ ab_select_exec <- function(function_name,
     }
   }
 
-  if (length(ab_in_data) == 0) {
+  if (!is.null(vars_df) && length(ab_in_data) == 0) {
     message_("No antimicrobial drugs found in the data.")
     return(NULL)
   }
@@ -665,6 +672,21 @@ ab_select_exec <- function(function_name,
     ab_group <- find_ab_group(ab_class_args)
     function_name <- "ab_class"
     examples <- paste0(" (such as ", find_ab_names(ab_class_args, 2), ")")
+  }
+  
+  if (is.null(vars_df)) {
+    # no data found, no antimicrobials, so no input. Can happen if users run e.g. `aminoglycosides()` as a separate command.
+    examples <- paste0(
+      ", e.g.:\n",
+      "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
+      "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
+      "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
+      "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
+      "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
+    )
+    message_("The function `" , function_name, "()` should be used inside a `dplyr` verb or `data.frame` call",
+             examples, "\n\nNow returning a vector of all possible antimicrobials that `" , function_name, "()` can select.")
+    return(sort(abx))
   }
 
   # get the columns with a group names in the chosen ab class

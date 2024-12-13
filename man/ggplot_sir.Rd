@@ -49,7 +49,10 @@ geom_sir(
 
 facet_sir(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
-scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
+scale_y_percent(
+  breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
+  limits = NULL
+)
 
 scale_sir_colours(..., aesthetics = "fill")
 

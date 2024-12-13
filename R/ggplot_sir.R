@@ -373,17 +373,17 @@ facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 
 #' @rdname ggplot_sir
 #' @export
-scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
+scale_y_percent <- function(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1), limits = NULL) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(breaks, allow_class = c("numeric", "integer"))
+  meet_criteria(breaks, allow_class = c("numeric", "integer", "function"))
   meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)
 
-  if (all(breaks[breaks != 0] > 1)) {
+  if (!is.function(breaks) && all(breaks[breaks != 0] > 1)) {
     breaks <- breaks / 100
   }
   ggplot2::scale_y_continuous(
     breaks = breaks,
-    labels = percentage(breaks),
+    labels = if (is.function(breaks)) function(x) percentage(breaks(x)) else percentage(breaks),
     limits = limits
   )
 }

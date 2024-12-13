@@ -1036,6 +1036,7 @@ get_current_data <- function(arg_name, call) {
         ", e.g.:\n",
         " ", AMR_env$bullet_icon, " your_data %>% select(", fn, "())\n",
         " ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", fn, "())\n",
+        " ", AMR_env$bullet_icon, " your_data %>% filter(any(", fn, "() == \"R\"))\n",
         " ", AMR_env$bullet_icon, " your_data[, ", fn, "()]\n",
         " ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", fn, "())]"
       )

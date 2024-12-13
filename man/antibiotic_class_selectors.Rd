@@ -124,7 +124,7 @@ not_intrinsic_resistant(
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
 }
 \value{
-(internally) a \link{character} vector of column names, with additional class \code{"ab_selector"}
+When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"ab_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobial that the function would be able to select or filter.
 }
 \description{
 These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group (according to the \link{antibiotics} data set), without the need to define the columns or antibiotic abbreviations.
@@ -189,9 +189,15 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR
 example_isolates
 
 
+# you can use the selectors separately to retrieve all possible antimicrobials:
+carbapenems()
+
+
+# Though they are primarily intended to use for selections and filters.
 # Examples sections below are split into 'dplyr', 'base R', and 'data.table':
 
 \donttest{
+\dontrun{
 # dplyr -------------------------------------------------------------------
 
 library(dplyr, warn.conflicts = FALSE)
@@ -277,7 +283,7 @@ y <- example_isolates \%>\% filter(carbapenems() == "R")
 z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
 identical(x, y) && identical(y, z)
 
-
+}
 # base R ------------------------------------------------------------------
 
 # select columns 'IPM' (imipenem) and 'MEM' (meropenem)

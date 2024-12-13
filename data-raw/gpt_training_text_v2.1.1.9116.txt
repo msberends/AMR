@@ -1,5 +1,5 @@
 This files contains all context you must know about the AMR package for R.
-First and foremost, you are trained on version 2.1.1.9112. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9116. Remember this whenever someone asks which AMR package version you’re at.
 --------------------------------
 
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'NAMESPACE':
@@ -811,29 +811,29 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Casper J. Albers (\href{https://orcid.org/0000-0002-9213-6743}{ORCID}) [thesis advisor]
-  \item Larisse Bolton (\href{https://orcid.org/0000-0001-7879-2173}{ORCID}) [contributor]
-  \item Peter Dutey-Magni (\href{https://orcid.org/0000-0002-8942-9836}{ORCID}) [contributor]
-  \item Judith M. Fonville [contributor]
-  \item Alex W. Friedrich (\href{https://orcid.org/0000-0003-4881-038X}{ORCID}) [thesis advisor]
-  \item Corinna Glasner (\href{https://orcid.org/0000-0003-1241-1328}{ORCID}) [thesis advisor]
+  \item Andrew P. Norgan (\href{https://orcid.org/0000-0002-2955-2066}{ORCID}) [contributor]
+  \item Anita Williams (\href{https://orcid.org/0000-0002-5295-8451}{ORCID}) [contributor]
+  \item Annick Lenglet (\href{https://orcid.org/0000-0003-2013-8405}{ORCID}) [contributor]
+  \item Anthony Underwood (\href{https://orcid.org/0000-0002-8547-4277}{ORCID}) [contributor]
+  \item Anton Mymrikov [contributor]
+  \item Bart C. Meijer [contributor]
+  \item Christian F. Luz (\href{https://orcid.org/0000-0001-5809-5995}{ORCID}) [contributor]
+  \item Dmytro Mykhailenko [contributor]
   \item Eric H. L. C. M. Hazenberg [contributor]
   \item Gwen Knight (\href{https://orcid.org/0000-0002-7263-9896}{ORCID}) [contributor]
-  \item Annick Lenglet (\href{https://orcid.org/0000-0003-2013-8405}{ORCID}) [contributor]
-  \item Christian F. Luz (\href{https://orcid.org/0000-0001-5809-5995}{ORCID}) [contributor]
-  \item Bart C. Meijer [contributor]
-  \item Dmytro Mykhailenko [contributor]
-  \item Anton Mymrikov [contributor]
-  \item Andrew P. Norgan (\href{https://orcid.org/0000-0002-2955-2066}{ORCID}) [contributor]
-  \item Sofia Ny (\href{https://orcid.org/0000-0002-2017-1363}{ORCID}) [contributor]
-  \item Matthew Saab [contributor]
-  \item Jonas Salm [contributor]
-  \item Javier Sanchez (\href{https://orcid.org/0000-0003-2605-8094}{ORCID}) [contributor]
-  \item Rogier P. Schade [contributor]
-  \item Bhanu N. M. Sinha (\href{https://orcid.org/0000-0003-1634-0010}{ORCID}) [thesis advisor]
   \item Jason Stull (\href{https://orcid.org/0000-0002-9028-8153}{ORCID}) [contributor]
-  \item Anthony Underwood (\href{https://orcid.org/0000-0002-8547-4277}{ORCID}) [contributor]
-  \item Anita Williams (\href{https://orcid.org/0000-0002-5295-8451}{ORCID}) [contributor]
+  \item Javier Sanchez (\href{https://orcid.org/0000-0003-2605-8094}{ORCID}) [contributor]
+  \item Jonas Salm [contributor]
+  \item Judith M. Fonville [contributor]
+  \item Larisse Bolton (\href{https://orcid.org/0000-0001-7879-2173}{ORCID}) [contributor]
+  \item Matthew Saab [contributor]
+  \item Peter Dutey-Magni (\href{https://orcid.org/0000-0002-8942-9836}{ORCID}) [contributor]
+  \item Rogier P. Schade [contributor]
+  \item Sofia Ny (\href{https://orcid.org/0000-0002-2017-1363}{ORCID}) [contributor]
+  \item Alex W. Friedrich (\href{https://orcid.org/0000-0003-4881-038X}{ORCID}) [thesis advisor]
+  \item Bhanu N. M. Sinha (\href{https://orcid.org/0000-0003-1634-0010}{ORCID}) [thesis advisor]
+  \item Casper J. Albers (\href{https://orcid.org/0000-0002-9213-6743}{ORCID}) [thesis advisor]
+  \item Corinna Glasner (\href{https://orcid.org/0000-0003-1241-1328}{ORCID}) [thesis advisor]
 }
 
 }
@@ -2051,7 +2051,7 @@ not_intrinsic_resistant(
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
 }
 \value{
-(internally) a \link{character} vector of column names, with additional class \code{"ab_selector"}
+When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"ab_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobial that the function would be able to select or filter.
 }
 \description{
 These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group (according to the \link{antibiotics} data set), without the need to define the columns or antibiotic abbreviations.
@@ -2116,9 +2116,15 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR
 example_isolates
 
 
+# you can use the selectors separately to retrieve all possible antimicrobials:
+carbapenems()
+
+
+# Though they are primarily intended to use for selections and filters.
 # Examples sections below are split into 'dplyr', 'base R', and 'data.table':
 
 \donttest{
+\dontrun{
 # dplyr -------------------------------------------------------------------
 
 library(dplyr, warn.conflicts = FALSE)
@@ -2204,7 +2210,7 @@ y <- example_isolates \%>\% filter(carbapenems() == "R")
 z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
 identical(x, y) && identical(y, z)
 
-
+}
 # base R ------------------------------------------------------------------
 
 # select columns 'IPM' (imipenem) and 'MEM' (meropenem)
@@ -5405,7 +5411,10 @@ geom_sir(
 
 facet_sir(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
-scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
+scale_y_percent(
+  breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
+  limits = NULL
+)
 
 scale_sir_colours(..., aesthetics = "fill")
 
