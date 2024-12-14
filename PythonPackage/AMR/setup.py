@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='AMR',
-    version='2.1.1.9117',
+    version='2.1.1.9118',
     packages=find_packages(),
     install_requires=[
         'rpy2',
         'numpy',
         'pandas',
     ],
-    author='Dr. Matthijs Berends',
+    author='Matthijs Berends',
     author_email='m.s.berends@umcg.nl',
     description='A Python wrapper for the AMR R package',
     long_description=open('README.md').read(),

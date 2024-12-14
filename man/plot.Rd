@@ -15,7 +15,12 @@
 \alias{plot.sir}
 \alias{autoplot.sir}
 \alias{fortify.sir}
-\title{Plotting for Classes \code{sir}, \code{mic} and \code{disk}}
+\alias{facet_sir}
+\alias{scale_y_percent}
+\alias{scale_sir_colours}
+\alias{theme_sir}
+\alias{labels_sir_count}
+\title{Plotting Helpers for AMR Data Analysis}
 \usage{
 scale_x_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 
@@ -113,6 +118,32 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...)
 )
 
 \method{fortify}{sir}(object, ...)
+
+facet_sir(facet = c("interpretation", "antibiotic"), nrow = NULL)
+
+scale_y_percent(
+  breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
+  limits = NULL
+)
+
+scale_sir_colours(
+  ...,
+  aesthetics = "fill",
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B")
+)
+
+theme_sir()
+
+labels_sir_count(
+  position = NULL,
+  x = "antibiotic",
+  translate_ab = "name",
+  minimum = 30,
+  language = get_AMR_locale(),
+  combine_SI = TRUE,
+  datalabels.size = 3,
+  datalabels.colour = "grey15"
+)
 }
 \arguments{
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
@@ -161,6 +192,17 @@ The interpretation of "I" will be named "Increased exposure" for all EUCAST guid
 For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2024", "EUCAST 2023", "EUCAST 2022", "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2024", "CLSI 2023", "CLSI 2022", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", and "CLSI 2011".
 
 Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline.
+\subsection{Additional \code{ggplot2} Functions}{
+
+This package contains several functions that extend the \code{ggplot2} package, to help in visualising AMR data results. All these functions are internally used by \code{\link[=ggplot_sir]{ggplot_sir()}} too.
+\itemize{
+\item \code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
+\item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
+\item \code{\link[=scale_sir_colours]{scale_sir_colours()}} sets colours to the bars (green for S, yellow for I, and red for R). Has multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
+\item \code{\link[=theme_sir]{theme_sir()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
+\item \code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and number of isolates, using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
+}
+}
 }
 \examples{
 some_mic_values <- random_mic(size = 100)

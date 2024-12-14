@@ -381,12 +381,6 @@ def ggplot_sir(*args, **kwargs):
 def geom_sir(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.geom_sir(*args, **kwargs))
-def theme_sir(*args, **kwargs):
-    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.theme_sir(*args, **kwargs))
-def labels_sir_count(*args, **kwargs):
-    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.labels_sir_count(*args, **kwargs))
 def guess_ab_col(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.guess_ab_col(*args, **kwargs))
@@ -573,6 +567,12 @@ def mo_property(*args, **kwargs):
 def pca(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.pca(*args, **kwargs))
+def theme_sir(*args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.theme_sir(*args, **kwargs))
+def labels_sir_count(*args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.labels_sir_count(*args, **kwargs))
 def resistance(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.resistance(*args, **kwargs))

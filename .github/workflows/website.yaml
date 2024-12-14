@@ -46,6 +46,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           # this is to keep timestamps, the default fetch-depth: 1 gets the timestamps of the moment of cloning
+          # we need this for the download page on our website - dates must be of the files, not of the latest git push
           fetch-depth: 0
 
       - name: Preserve timestamps
@@ -69,7 +70,6 @@ jobs:
           extra-packages: |
             any::pkgdown
             any::tidymodels
-            any::data.table
 
       # Send updates to repo using GH Actions bot
       - name: Create website in separate branch

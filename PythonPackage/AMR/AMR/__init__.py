@@ -117,8 +117,6 @@ from .functions import is_new_episode
 from .functions import ggplot_pca
 from .functions import ggplot_sir
 from .functions import geom_sir
-from .functions import theme_sir
-from .functions import labels_sir_count
 from .functions import guess_ab_col
 from .functions import italicise_taxonomy
 from .functions import italicize_taxonomy
@@ -181,6 +179,8 @@ from .functions import mo_info
 from .functions import mo_url
 from .functions import mo_property
 from .functions import pca
+from .functions import theme_sir
+from .functions import labels_sir_count
 from .functions import resistance
 from .functions import susceptibility
 from .functions import sir_confidence_interval

@@ -1,9 +1,9 @@
 Metadata-Version: 2.1
 Name: AMR
-Version: 2.1.1.9117
+Version: 2.1.1.9118
 Summary: A Python wrapper for the AMR R package
 Home-page: https://github.com/msberends/AMR
-Author: Dr. Matthijs Berends
+Author: Matthijs Berends
 Author-email: m.s.berends@umcg.nl
 License: GPL 2
 Project-URL: Bug Tracker, https://github.com/msberends/AMR/issues

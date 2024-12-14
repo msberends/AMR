@@ -3,11 +3,6 @@
 \name{ggplot_sir}
 \alias{ggplot_sir}
 \alias{geom_sir}
-\alias{facet_sir}
-\alias{scale_y_percent}
-\alias{scale_sir_colours}
-\alias{theme_sir}
-\alias{labels_sir_count}
 \title{AMR Plots with \code{ggplot2}}
 \usage{
 ggplot_sir(
@@ -45,28 +40,6 @@ geom_sir(
   language = get_AMR_locale(),
   combine_SI = TRUE,
   ...
-)
-
-facet_sir(facet = c("interpretation", "antibiotic"), nrow = NULL)
-
-scale_y_percent(
-  breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
-  limits = NULL
-)
-
-scale_sir_colours(..., aesthetics = "fill")
-
-theme_sir()
-
-labels_sir_count(
-  position = NULL,
-  x = "antibiotic",
-  translate_ab = "name",
-  minimum = 30,
-  language = get_AMR_locale(),
-  combine_SI = TRUE,
-  datalabels.size = 3,
-  datalabels.colour = "grey15"
 )
 }
 \arguments{
@@ -121,22 +94,19 @@ Use these functions to create bar plots for AMR data analysis. All functions rel
 }
 \details{
 At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} argument. See \code{\link[=count_df]{count_df()}}.
-\subsection{The Functions}{
 
 \code{\link[=geom_sir]{geom_sir()}} will take any variable from the data that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) using \code{\link[=sir_df]{sir_df()}} and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 
-\code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
-
-\code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
-
-\code{\link[=scale_sir_colours]{scale_sir_colours()}} sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
-
-\code{\link[=theme_sir]{theme_sir()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
-
-\code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
+Additional functions include:
+\itemize{
+\item \code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
+\item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
+\item \code{\link[=scale_sir_colours]{scale_sir_colours()}} sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
+\item \code{\link[=theme_sir]{theme_sir()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
+\item \code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
+}
 
 \code{\link[=ggplot_sir]{ggplot_sir()}} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\verb{\%>\%}). See \emph{Examples}.
-}
 }
 \examples{
 \donttest{

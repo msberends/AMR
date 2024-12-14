@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Plotting for Classes `sir`, `mic` and `disk`
+#' Plotting Helpers for AMR Data Analysis
 #'
 #' @description
 #' Functions to plot classes `sir`, `mic` and `disk`, with support for base \R and `ggplot2`.
@@ -49,6 +49,16 @@
 #' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::clinical_breakpoints$guideline, quotes = TRUE, reverse = TRUE)`.
 #'
 #' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline.
+#' 
+#' ### Additional `ggplot2` Functions
+#' 
+#' This package contains several functions that extend the `ggplot2` package, to help in visualising AMR data results. All these functions are internally used by [ggplot_sir()] too.
+#' 
+#' * [facet_sir()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
+#' * [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_y_continuous()].
+#' * [scale_sir_colours()] sets colours to the bars (green for S, yellow for I, and red for R). Has multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
+#' * [theme_sir()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
+#' * [labels_sir_count()] print datalabels on the bars with percentage and number of isolates, using [ggplot2::geom_text()].
 #' @name plot
 #' @rdname plot
 #' @return The `autoplot()` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
@@ -914,4 +924,193 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
   AMR_env$sir_interpretation_history <- sir_history
   
   list(cols = cols, count = as.double(x), sub = sub, guideline = guideline)
+}
+
+#' @rdname plot
+#' @export
+facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
+  facet <- facet[1]
+  stop_ifnot_installed("ggplot2")
+  meet_criteria(facet, allow_class = "character", has_length = 1)
+  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
+  
+  # we work with aes_string later on
+  facet_deparse <- deparse(substitute(facet))
+  if (facet_deparse != "facet") {
+    facet <- facet_deparse
+  }
+  if (facet %like% '".*"') {
+    facet <- substr(facet, 2, nchar(facet) - 1)
+  }
+  
+  if (tolower(facet) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
+    facet <- "interpretation"
+  } else if (tolower(facet) %in% tolower(c("ab", "abx", "antibiotics"))) {
+    facet <- "antibiotic"
+  }
+  
+  ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow)
+}
+
+#' @rdname plot
+#' @export
+scale_y_percent <- function(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1), limits = NULL) {
+  stop_ifnot_installed("ggplot2")
+  meet_criteria(breaks, allow_class = c("numeric", "integer", "function"))
+  meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)
+  
+  if (!is.function(breaks) && all(breaks[breaks != 0] > 1)) {
+    breaks <- breaks / 100
+  }
+  ggplot2::scale_y_continuous(
+    breaks = breaks,
+    labels = if (is.function(breaks)) function(x) percentage(breaks(x)) else percentage(breaks),
+    limits = limits
+  )
+}
+
+#' @rdname plot
+#' @export
+scale_sir_colours <- function(...,
+                              aesthetics = "fill",
+                              colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B")) {
+  stop_ifnot_installed("ggplot2")
+  meet_criteria(aesthetics, allow_class = "character", is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  if (length(colours_SIR) == 1) {
+    colours_SIR <- rep(colours_SIR, 3)
+  }
+  # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_sir()
+  if ("colours" %in% names(list(...))) {
+    original_cols <- c(
+      S = colours_SIR[1],
+      SI = colours_SIR[1],
+      I = colours_SIR[2],
+      IR = colours_SIR[3],
+      R = colours_SIR[3]
+    )
+    colours <- replace(original_cols, names(list(...)$colours), list(...)$colours)
+    # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
+    # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
+    return(ggplot2::scale_fill_manual(values = colours, limits = force))
+  }
+  if (identical(unlist(list(...)), FALSE)) {
+    return(invisible())
+  }
+  
+  names_susceptible <- c(
+    "S", "SI", "IS", "S+I", "I+S", "susceptible", "Susceptible",
+    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
+                        "replacement",
+                        drop = TRUE
+    ])
+  )
+  names_incr_exposure <- c(
+    "I", "intermediate", "increased exposure", "incr. exposure",
+    "Increased exposure", "Incr. exposure", "Susceptible, incr. exp.",
+    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Intermediate"),
+                        "replacement",
+                        drop = TRUE
+    ]),
+    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible, incr. exp."),
+                        "replacement",
+                        drop = TRUE
+    ])
+  )
+  names_resistant <- c(
+    "R", "IR", "RI", "R+I", "I+R", "resistant", "Resistant",
+    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Resistant"),
+                        "replacement",
+                        drop = TRUE
+    ])
+  )
+  
+  susceptible <- rep(colours_SIR[1], length(names_susceptible))
+  names(susceptible) <- names_susceptible
+  incr_exposure <- rep(colours_SIR[2], length(names_incr_exposure))
+  names(incr_exposure) <- names_incr_exposure
+  resistant <- rep(colours_SIR[3], length(names_resistant))
+  names(resistant) <- names_resistant
+  
+  original_cols <- c(susceptible, incr_exposure, resistant)
+  dots <- c(...)
+  # replace S, I, R as colours: scale_sir_colours(mydatavalue = "S")
+  dots[dots == "S"] <- colours_SIR[1]
+  dots[dots == "I"] <- colours_SIR[2]
+  dots[dots == "R"] <- colours_SIR[3]
+  cols <- replace(original_cols, names(dots), dots)
+  # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
+  # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
+  ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = cols, limits = force)
+}
+
+#' @rdname plot
+#' @export
+theme_sir <- function() {
+  stop_ifnot_installed("ggplot2")
+  ggplot2::theme_minimal(base_size = 10) +
+    ggplot2::theme(
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_line(colour = "grey75"),
+      # center title and subtitle
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5)
+    )
+}
+
+#' @rdname plot
+#' @export
+labels_sir_count <- function(position = NULL,
+                             x = "antibiotic",
+                             translate_ab = "name",
+                             minimum = 30,
+                             language = get_AMR_locale(),
+                             combine_SI = TRUE,
+                             datalabels.size = 3,
+                             datalabels.colour = "grey15") {
+  stop_ifnot_installed("ggplot2")
+  meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
+  meet_criteria(x, allow_class = "character", has_length = 1)
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
+  language <- validate_language(language)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
+  
+  if (is.null(position)) {
+    position <- "fill"
+  }
+  if (identical(position, "fill")) {
+    position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
+  }
+  x_name <- x
+  ggplot2::geom_text(
+    mapping = ggplot2::aes_string(
+      label = "lbl",
+      x = x,
+      y = "value"
+    ),
+    position = position,
+    inherit.aes = FALSE,
+    size = datalabels.size,
+    colour = datalabels.colour,
+    lineheight = 0.75,
+    data = function(x) {
+      transformed <- sir_df(
+        data = x,
+        translate_ab = translate_ab,
+        combine_SI = combine_SI,
+        minimum = minimum,
+        language = language
+      )
+      transformed$gr <- transformed[, x_name, drop = TRUE]
+      transformed %pm>%
+        pm_group_by(gr) %pm>%
+        pm_mutate(lbl = paste0("n=", isolates)) %pm>%
+        pm_ungroup() %pm>%
+        pm_select(-gr)
+    }
+  )
 }

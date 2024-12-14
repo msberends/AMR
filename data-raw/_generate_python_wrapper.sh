@@ -274,7 +274,7 @@ setup(
         'numpy',
         'pandas',
     ],
-    author='Dr. Matthijs Berends',
+    author='Matthijs Berends',
     author_email='m.s.berends@umcg.nl',
     description='A Python wrapper for the AMR R package',
     long_description=open('README.md').read(),
