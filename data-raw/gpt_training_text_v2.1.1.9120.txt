@@ -1,5 +1,5 @@
 This files contains all context you must know about the AMR package for R.
-First and foremost, you are trained on version 2.1.1.9118. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9120. Remember this whenever someone asks which AMR package version you’re at.
 --------------------------------
 
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'NAMESPACE':
@@ -6140,7 +6140,7 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 }
 }
 \description{
-Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines.
+Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national, or custom guidelines.
 }
 \details{
 These functions are context-aware. This means that the \code{x} argument can be left blank if used inside a \link{data.frame} call, see \emph{Examples}.
@@ -6174,10 +6174,17 @@ The international guideline for multi-drug resistant tuberculosis - World Health
 The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7; \doi{10.1186/s13756-015-0047-6}
 \item \code{guideline = "BRMO"}
 
-The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" (\href{https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh}{link})
+The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" (\href{https://www.sri-richtlijnen.nl/brmo}{link})
+
+Also:
+\itemize{
+\item \code{guideline = "BRMO 2017"}
+
+The former Dutch national guideline - Werkgroep Infectiepreventie (WIP), RIVM, last revision as of 2017: "Bijzonder Resistente Micro-Organismen (BRMO)"
+}
 }
 
-Please suggest your own (country-specific) guidelines by letting us know: \url{https://github.com/msberends/AMR/issues/new}.
+Please suggest to implement guidelines by letting us know: \url{https://github.com/msberends/AMR/issues/new}.
 }
 
 \section{Using Custom Guidelines}{
