@@ -213,6 +213,11 @@ pre .co, .co {
   color: var(--amr-green-dark) !important;
   font-style: italic !important;
 }
+div.sourceCode  pre .co,
+div.sourceCode .co {
+  /* comments in example sections, since functions are already green too */
+  color: var(--bs-gray-600) !important;
+}
 pre code .r-out,
 pre code .r-msg {
   /* output of functions */
