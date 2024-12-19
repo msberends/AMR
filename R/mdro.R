@@ -32,6 +32,12 @@
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national, or custom guidelines.
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank for automatic determination.
 #' @param guideline a specific guideline to follow, see sections *Supported international / national guidelines* and *Using Custom Guidelines* below. When left empty, the publication by Magiorakos *et al.* (see below) will be followed.
+#' @param esbl [logical] values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins)
+#' @param carbapenemase [logical] values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins)
+#' @param mecA [logical] values, or a column name containing logical values, indicating the presence of a *mecA* gene (or production of its proteins)
+#' @param mecC [logical] values, or a column name containing logical values, indicating the presence of a *mecC* gene (or production of its proteins)
+#' @param vanA [logical] values, or a column name containing logical values, indicating the presence of a *vanA* gene (or production of its proteins)
+#' @param vanB [logical] values, or a column name containing logical values, indicating the presence of a *vanB* gene (or production of its proteins)
 #' @param ... in case of [custom_mdro_guideline()]: a set of rules, see section *Using Custom Guidelines* below. Otherwise: column name of an antibiotic, see section *Antibiotics* below.
 #' @param as_factor a [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector
 #' @inheritParams eucast_rules
@@ -177,6 +183,12 @@
 mdro <- function(x = NULL,
                  guideline = "CMI2012",
                  col_mo = NULL,
+                 esbl = NA,
+                 carbapenemase = NA,
+                 mecA = NA,
+                 mecC = NA,
+                 vanA = NA,
+                 vanB = NA,
                  info = interactive(),
                  pct_required_classes = 0.5,
                  combine_SI = TRUE,
@@ -190,9 +202,13 @@ mdro <- function(x = NULL,
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(guideline, allow_class = c("list", "character"), allow_NULL = TRUE)
-  if (!is.list(guideline)) {
-    meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-  }
+  if (!is.list(guideline)) meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(esbl, allow_class = c("logical", "character"), allow_NA = TRUE)
+  meet_criteria(carbapenemase, allow_class = c("logical", "character"), allow_NA = TRUE)
+  meet_criteria(mecA, allow_class = c("logical", "character"), allow_NA = TRUE)
+  meet_criteria(mecC, allow_class = c("logical", "character"), allow_NA = TRUE)
+  meet_criteria(vanA, allow_class = c("logical", "character"), allow_NA = TRUE)
+  meet_criteria(vanB, allow_class = c("logical", "character"), allow_NA = TRUE)
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
@@ -203,7 +219,51 @@ mdro <- function(x = NULL,
   if (!any(is_sir_eligible(x))) {
     stop_("There were no possible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
   }
-
+  
+  # get gene values as TRUE/FALSE
+  if (is.character(esbl)) {
+    meet_criteria(esbl, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+    esbl <- x[[esbl]]
+    meet_criteria(esbl, allow_class = "logical", allow_NA = TRUE)
+  } else if (length(esbl) == 1) {
+    esbl <- rep(esbl, NROW(x))
+  }
+  if (is.character(carbapenemase)) {
+    meet_criteria(carbapenemase, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+    carbapenemase <- x[[carbapenemase]]
+    meet_criteria(carbapenemase, allow_class = "logical", allow_NA = TRUE)
+  } else if (length(carbapenemase) == 1) {
+    carbapenemase <- rep(carbapenemase, NROW(x))
+  }
+  if (is.character(mecA)) {
+    meet_criteria(mecA, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+    mecA <- x[[mecA]]
+    meet_criteria(mecA, allow_class = "logical", allow_NA = TRUE)
+  } else if (length(mecA) == 1) {
+    mecA <- rep(mecA, NROW(x))
+  }
+  if (is.character(mecC)) {
+    meet_criteria(mecC, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+    mecC <- x[[mecC]]
+    meet_criteria(mecC, allow_class = "logical", allow_NA = TRUE)
+  } else if (length(mecC) == 1) {
+    mecC <- rep(mecC, NROW(x))
+  }
+  if (is.character(vanA)) {
+    meet_criteria(vanA, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+    vanA <- x[[vanA]]
+    meet_criteria(vanA, allow_class = "logical", allow_NA = TRUE)
+  } else if (length(vanA) == 1) {
+    vanA <- rep(vanA, NROW(x))
+  }
+  if (is.character(vanB)) {
+    meet_criteria(vanB, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+    vanB <- x[[vanB]]
+    meet_criteria(vanB, allow_class = "logical", allow_NA = TRUE)
+  } else if (length(vanB) == 1) {
+    vanB <- rep(vanB, NROW(x))
+  }
+  
   info.bak <- info
   # don't throw info's more than once per call
   if (isTRUE(info)) {
@@ -476,7 +536,7 @@ mdro <- function(x = NULL,
   if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
     if (isTRUE(info)) {
-      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many EUCAST rules depend on it.")
+      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many MDRO rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
@@ -663,6 +723,17 @@ mdro <- function(x = NULL,
     out[is.na(out)] <- FALSE
     out
   }
+  col_values <- function(df, col, return_if_lacking = "") {
+    if (col %in% colnames(df)) {
+      df[[col]]
+    } else {
+      rep(return_if_lacking, NROW(df))
+    }
+  }
+  NA_as_FALSE <- function(x) {
+    x[is.na(x)] <- FALSE
+    x
+  }
 
   # antibiotic classes
   # nolint start
@@ -677,6 +748,10 @@ mdro <- function(x = NULL,
 
   # helper function for editing the table
   trans_tbl <- function(to, rows, cols, any_all, reason = NULL) {
+    cols.bak <- cols
+    if (identical(cols, "any")) {
+      cols <- unique(cols_ab)
+    }
     cols <- cols[!ab_missing(cols)]
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 && length(cols) > 0) {
@@ -690,7 +765,7 @@ mdro <- function(x = NULL,
       x[rows, "columns_nonsusceptible"] <<- vapply(
         FUN.VALUE = character(1),
         rows,
-        function(row, group_vct = cols) {
+        function(row, group_vct = cols_ab) {
           cols_nonsus <- vapply(
             FUN.VALUE = logical(1),
             x[row, group_vct, drop = FALSE],
@@ -717,7 +792,7 @@ mdro <- function(x = NULL,
       rows_affected <- vapply(
         FUN.VALUE = logical(1),
         x_transposed,
-        function(y) search_function(y %in% search_result, na.rm = TRUE)
+        function(y) search_function(y %in% search_result, na.rm = TRUE) | identical(cols.bak, "any")
       )
       rows_affected <- x[which(rows_affected), "row_number", drop = TRUE]
       rows_to_change <- rows[rows %in% rows_affected]
@@ -1449,62 +1524,83 @@ mdro <- function(x = NULL,
     if (length(ESBLs) > 0) {
       trans_tbl(
         2, # positive, unconfirmed
-        which(x$order == "Enterobacterales" & x[[ESBLs[1]]] == "R" & x[[ESBLs[2]]] == "R"),
-        c(AMX %or% AMP, cephalosporins_3rd),
-        "all",
-        reason = "Enterobacterales: ESBL"
+        rows = which(x$order == "Enterobacterales" & x[[ESBLs[1]]] == "R" & x[[ESBLs[2]]] == "R" & is.na(esbl)),
+        cols = c(AMX %or% AMP, cephalosporins_3rd),
+        any_all = "all",
+        reason = "Enterobacterales: potential ESBL"
       )
     }
     trans_tbl(
       3, # positive
-      which(x$order == "Enterobacterales" & (x$genus %in% c("Proteus", "Providencia") | paste(x$genus, x$species) %in% c("Serratia marcescens", "Morganella morganii"))),
-      carbapenems_without_imipenem,
-      "any",
-      reason = "Enterobacterales: carbapenem or carbapenemase"
+      rows = which(x$order == "Enterobacterales" & esbl == TRUE),
+      cols = "any",
+      any_all = "any",
+      reason = "Enterobacterales: ESBL"
     )
     trans_tbl(
       3,
-      which(x$order == "Enterobacterales" & !(x$genus %in% c("Proteus", "Providencia") | paste(x$genus, x$species) %in% c("Serratia marcescens", "Morganella morganii"))),
-      carbapenems,
-      "any",
-      reason = "Enterobacterales: carbapenem or carbapenemase"
+      rows = which(x$order == "Enterobacterales" & (x$genus %in% c("Proteus", "Providencia") | paste(x$genus, x$species) %in% c("Serratia marcescens", "Morganella morganii"))),
+      cols = carbapenems_without_imipenem,
+      any_all = "any",
+      reason = "Enterobacterales: carbapenem resistance"
     )
     trans_tbl(
       3,
-      which(x[[SXT]] == "R" &
+      rows = which(x$order == "Enterobacterales" & !(x$genus %in% c("Proteus", "Providencia") | paste(x$genus, x$species) %in% c("Serratia marcescens", "Morganella morganii"))),
+      cols = carbapenems,
+      any_all = "any",
+      reason = "Enterobacterales: carbapenem resistance"
+    )
+    trans_tbl(
+      3,
+      rows = which(x$order == "Enterobacterales" & carbapenemase == TRUE),
+      cols = "any",
+      any_all = "any",
+      reason = "Enterobacterales: carbapenemase"
+    )
+    trans_tbl(
+      3,
+      rows = which(x[[SXT]] == "R" &
               (x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
               (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
               (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c("Citrobacter freundii", "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
-      c(SXT, aminoglycosides, fluoroquinolones),
-      "any",
+      cols = c(SXT, aminoglycosides, fluoroquinolones),
+      any_all = "any",
       reason = "Enterobacterales group II: aminoglycoside + fluoroquinolone + cotrimoxazol"
     )
     trans_tbl(
       3,
-      which(x[[SXT]] == "R" &
+      rows = which(x[[SXT]] == "R" &
               x[[GEN]] == "R" &
               (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
               paste(x$genus, x$species) == "Serratia marcescens"),
-      c(SXT, aminoglycosides_serratia_marcescens, fluoroquinolones),
-      "any",
+      cols = c(SXT, aminoglycosides_serratia_marcescens, fluoroquinolones),
+      any_all = "any",
       reason = "Enterobacterales group II: aminoglycoside + fluoroquinolone + cotrimoxazol"
     )
     
     # Acinetobacter baumannii-calcoaceticus complex
     trans_tbl(
       3,
-      which((x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
+      rows = which((x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
               (x[[CIP]] == "R" | x[[LVX]] == "R") &
               x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]),
-      c(aminoglycosides, CIP, LVX),
-      "any",
+      cols = c(aminoglycosides, CIP, LVX),
+      any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: aminoglycoside + ciprofloxacin or levofloxacin"
     )
     trans_tbl(
       2, # unconfirmed
-      which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]),
-      carbapenems,
-      "any",
+      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & is.na(carbapenemase)),
+      cols = carbapenems,
+      any_all = "any",
+      reason = "A. baumannii-calcoaceticus complex: potential carbapenemase"
+    )
+    trans_tbl(
+      3,
+      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & carbapenemase == TRUE),
+      cols = carbapenems,
+      any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: carbapenemase"
     )
     
@@ -1513,59 +1609,65 @@ mdro <- function(x = NULL,
       # take pip/tazo if just pip is not available - many labs only test for pip/tazo because of availability on a Vitek card
       PIP <- TZP
     }
-    if (!ab_missing(MEM) && !ab_missing(IPM) &&
-        !ab_missing(GEN) && !ab_missing(TOB) &&
-        !ab_missing(CIP) &&
-        !ab_missing(CAZ) &&
-        !ab_missing(PIP)) {
-      x$psae <- 0
-      x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"]
-      x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"]
-      x[which(x[, CIP, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, CIP, drop = TRUE] == "R"), "psae"]
-      x[which(x[, CAZ, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, CAZ, drop = TRUE] == "R"), "psae"]
-      x[which(x[, PIP, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, PIP, drop = TRUE] == "R"), "psae"]
-    } else {
-      x$psae <- 0
-    }
+    x$psae <- 0
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, TOB) == "R" | col_values(x, AMK) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, IPM) == "R" | col_values(x, MEM) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, PIP) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CAZ) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CIP) == "R" | col_values(x, NOR) == "R" | col_values(x, LVX) == "R"), 1, 0)
     trans_tbl(
       3,
-      which(x$genus == "Pseudomonas" & x$species == "aeruginosa"),
-      c(CAZ, CIP, GEN, IPM, MEM, TOB, PIP),
-      "all", # this will set all negatives to "guideline criteria not met" instead of "not covered by guideline"
+      rows = which(x$genus == "Pseudomonas" & x$species == "aeruginosa"),
+      cols = c(CAZ, CIP, GEN, IPM, MEM, TOB, PIP),
+      any_all = "all", # this will set all negatives to "guideline criteria not met" instead of "not covered by guideline"
       reason = "P. aeruginosa: at least 3 classes contain R"
     )
     trans_tbl(
       3,
-      which(x$genus == "Pseudomonas" & x$species == "aeruginosa" & x$psae >= 3),
-      c(CAZ, CIP, GEN, IPM, MEM, TOB, PIP),
-      "any", # this is the actual one, changing the ones with x$psae >= 3
+      rows = which(x$genus == "Pseudomonas" & x$species == "aeruginosa" & x$psae >= 3),
+      cols = c(CAZ, CIP, GEN, IPM, MEM, TOB, PIP),
+      any_all = "any", # this is the actual one, changing the ones with x$psae >= 3
       reason = "P. aeruginosa: at least 3 classes contain R"
     )
 
     # Enterococcus faecium
     trans_tbl(
       3,
-      which(x$genus == "Enterococcus" & x$species == "faecium"),
-      c(PEN %or% AMX %or% AMP, VAN),
-      "all",
-      reason = "E. faecium: vancomycin or vanA/vanB gene + penicillin group"
+      rows = which(x$genus == "Enterococcus" & x$species == "faecium"),
+      cols = c(PEN %or% AMX %or% AMP, VAN),
+      any_all = "all",
+      reason = "E. faecium: vancomycin + penicillin group"
+    )
+    trans_tbl(
+      3,
+      rows = which(x$genus == "Enterococcus" & x$species == "faecium" & (vanA == TRUE | vanB == TRUE)),
+      cols = c(PEN, AMX, AMP, VAN),
+      any_all = "any",
+      reason = "E. faecium: vanA/vanB gene + penicillin group"
     )
     
     # Staphylococcus aureus
     trans_tbl(
       2,
-      which(x$genus == "Staphylococcus" & x$species == "aureus"),
-      c(PEN, AMX, AMP, FLC, OXA, FOX, FOX1),
-      "any",
-      reason = "S. aureus: MRSA"
+      rows = which(x$genus == "Staphylococcus" & x$species == "aureus" & (is.na(mecA) | is.na(mecC))),
+      cols = c(AMC, TZP, FLC, OXA, FOX, FOX1),
+      any_all = "any",
+      reason = "S. aureus: potential MRSA"
+    )
+    trans_tbl(
+      3,
+      rows = which(x$genus == "Staphylococcus" & x$species == "aureus" & (mecA == TRUE | mecC == TRUE)),
+      cols = "any",
+      any_all = "any",
+      reason = "S. aureus: mecA/mecC gene"
     )
     
     # Candida auris
     trans_tbl(
       3,
-      which(x$genus == "Candida" & x$species == "auris"),
-      character(0),
-      "any",
+      rows = which(x$genus == "Candida" & x$species == "auris"),
+      cols = "any",
+      any_all = "any",
       reason = "C. auris: regardless of resistance"
     )
   }
@@ -2040,50 +2142,51 @@ brmo <- function(x = NULL, only_sir_columns = FALSE, ...) {
   mdro(x = x, only_sir_columns = only_sir_columns, guideline = "BRMO", ...)
 }
 
+
 #' @rdname mdro
 #' @export
-mrgn <- function(x = NULL, only_sir_columns = FALSE, ...) {
+mrgn <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "MRGN", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "MRGN", ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_tb <- function(x = NULL, only_sir_columns = FALSE, ...) {
+mdr_tb <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "TB", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "TB", ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_cmi2012 <- function(x = NULL, only_sir_columns = FALSE, ...) {
+mdr_cmi2012 <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "CMI2012", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "CMI2012", ...)
 }
 
 #' @rdname mdro
 #' @export
-eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = FALSE, ...) {
+eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "EUCAST", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "EUCAST", ...)
 }

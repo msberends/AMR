@@ -1,6 +1,6 @@
 Package: AMR
-Version: 2.1.1.9120
-Date: 2024-12-15
+Version: 2.1.1.9121
+Date: 2024-12-19
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -47,6 +47,7 @@ Suggests:
   rvest,
   skimr,
   tibble,
+  tidymodels,
   tidyselect,
   tinytest,
   vctrs,

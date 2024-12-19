@@ -25,6 +25,7 @@
 ^tests/testthat/_snaps$
 ^vignettes/AMR\.Rmd$
 ^vignettes/AMR_intro\.png$
+^vignettes/AMR_with_tidymodels\.Rmd$
 ^vignettes/benchmarks\.Rmd$
 ^vignettes/benchmarks\.Rmd\.not$
 ^vignettes/datasets\.Rmd$

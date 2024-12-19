@@ -45,7 +45,7 @@ expect_identical(class(outcome), c("ordered", "factor"))
 # example_isolates should have these finding using Dutch guidelines
 expect_equal(
   as.double(table(outcome)),
-  c(1994, 0, 6)
+  c(1977, 23, 0)
 )
 
 expect_equal(

@@ -441,9 +441,9 @@ def mdr_tb(x = None, *args, **kwargs):
 def mdr_cmi2012(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.mdr_cmi2012(x = None, *args, **kwargs))
-def eucast_exceptional_phenotypes(x = None, *args, **kwargs):
+def eucast_exceptional_phenotypes(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.eucast_exceptional_phenotypes(x = None, *args, **kwargs))
+    return convert_to_python(amr_r.eucast_exceptional_phenotypes(*args, **kwargs))
 def mean_amr_distance(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.mean_amr_distance(x, *args, **kwargs))

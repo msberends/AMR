@@ -988,7 +988,7 @@ get_current_data <- function(arg_name, call) {
   for (env in frms[which(with_mask)]) {
     if (is.function(env$mask$current_rows) && (valid_df(env$data) || valid_df(env$`.data`))) {
       # an element `.data` or `data` (containing all data) and `mask` (containing functions) will be in the environment when using dplyr verbs
-      # we use their mask$current_rows() to get the group rows, since dplyr::cur_data_all() is deprecated and will be removed in the future
+      # we use their mask$current_rows() below to get the group rows, since dplyr::cur_data_all() is deprecated and will be removed in the future
       # e.g. for `example_isolates %>% group_by(ward) %>% mutate(first = first_isolate(.))`
       if (valid_df(env$data)) {
         # support for dplyr 1.1.x
@@ -1008,6 +1008,9 @@ get_current_data <- function(arg_name, call) {
     if (valid_df(env$`.data`)) {
       # an element `.data` will be in the environment when using dplyr::select()
       return(env$`.data`)
+    } else if (valid_df(env$data)) {
+      # an element `data` will be in the environment when using older dplyr versions, or tidymodels
+      return(env$data)
     } else if (valid_df(env$xx)) {
       # an element `xx` will be in the environment for rows + cols in base R, e.g. `example_isolates[c(1:3), carbapenems()]`
       return(env$xx)

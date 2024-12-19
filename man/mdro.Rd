@@ -23,6 +23,12 @@ mdro(
   x = NULL,
   guideline = "CMI2012",
   col_mo = NULL,
+  esbl = NA,
+  carbapenemase = NA,
+  mecA = NA,
+  mecC = NA,
+  vanA = NA,
+  vanB = NA,
   info = interactive(),
   pct_required_classes = 0.5,
   combine_SI = TRUE,
@@ -35,13 +41,18 @@ custom_mdro_guideline(..., as_factor = TRUE)
 
 brmo(x = NULL, only_sir_columns = FALSE, ...)
 
-mrgn(x = NULL, only_sir_columns = FALSE, ...)
+mrgn(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...)
 
-mdr_tb(x = NULL, only_sir_columns = FALSE, ...)
+mdr_tb(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...)
 
-mdr_cmi2012(x = NULL, only_sir_columns = FALSE, ...)
+mdr_cmi2012(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...)
 
-eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE, ...)
+eucast_exceptional_phenotypes(
+  x = NULL,
+  only_sir_columns = FALSE,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}
@@ -49,6 +60,18 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE, ...)
 \item{guideline}{a specific guideline to follow, see sections \emph{Supported international / national guidelines} and \emph{Using Custom Guidelines} below. When left empty, the publication by Magiorakos \emph{et al.} (see below) will be followed.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+
+\item{esbl}{\link{logical} values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins)}
+
+\item{carbapenemase}{\link{logical} values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins)}
+
+\item{mecA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecA} gene (or production of its proteins)}
+
+\item{mecC}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecC} gene (or production of its proteins)}
+
+\item{vanA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanA} gene (or production of its proteins)}
+
+\item{vanB}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanB} gene (or production of its proteins)}
 
 \item{info}{a \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions}
 

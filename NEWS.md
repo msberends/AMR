@@ -1,4 +1,4 @@
-# AMR 2.1.1.9120
+# AMR 2.1.1.9121
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -30,6 +30,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * New function `rescale_mic()`, which allows users to rescale MIC values to a manually set range. This is the powerhouse behind the `scale_*_mic()` functions, but it can be used independently to, for instance, compare equality in MIC distributions by rescaling them to the same range first.
 * **Support for Python**
   * While using R for the heavy lifting, [our 'AMR' Python Package](https://pypi.org/project/AMR/) was developed to run the AMR R package natively in Python. The Python package will always have the same version number as the R package, as it is built automatically with every code change.
+* **Support for `tidymodels`**
+  * All antimicrobial selectors (such as `aminoglycosides()` and `betalactams()`) are now supported in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using AMR function for predictive modelling.
 * **Other**
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
 
@@ -73,7 +75,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Updated the prevalence calculation to include genera from the World Health Organization's (WHO) Priority Pathogen List
 * Improved algorithm of `first_isolate()` when using the phenotype-based method, to prioritise records with the highest availability of SIR values
 * `scale_y_percent()` can now cope with ranges outside the 0-100% range
-* Support for new Dutch national MDRO guideline (SRI-richtlijn BRMO, Nov 2024)
+* MDRO determination (using `mdro()`)
+  * Implemented the new Dutch national MDRO guideline (SRI-richtlijn BRMO, Nov 2024)
+  * Added arguments `esbl`, `carbapenemase`, `mecA`, `mecC`, `vanA`, `vanB` to denote column names or logical values indicating presence of these genes (or production of their proteins)
 
 ## Other
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
