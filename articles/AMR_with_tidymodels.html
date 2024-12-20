@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>`AMR` with `tidymodels` • AMR (for R)</title>
+<title>AMR with tidymodels • AMR (for R)</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -19,7 +19,7 @@
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="`AMR` with `tidymodels`">
+<script src="../extra.js"></script><meta property="og:title" content="AMR with tidymodels">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9121</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9122</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>`AMR` with `tidymodels`</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>AMR with tidymodels</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/AMR_with_tidymodels.Rmd" class="external-link"><code>vignettes/AMR_with_tidymodels.Rmd</code></a></small>
@@ -84,6 +84,11 @@
 
     
     
+<blockquote>
+<p>This page was entirely written by our <a href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant" class="external-link">AMR for R
+Assistant</a>, a ChatGPT manually-trained model able to answer any
+question about the AMR package.</p>
+</blockquote>
 <p>Antimicrobial resistance (AMR) is a global health crisis, and
 understanding resistance patterns is crucial for managing effective
 treatments. The <code>AMR</code> R package provides robust tools for
@@ -94,16 +99,15 @@ framework to predict resistance patterns in the
 <code>example_isolates</code> dataset.</p>
 <p>By leveraging the power of <code>tidymodels</code> and the
 <code>AMR</code> package, we’ll build a reproducible machine learning
-workflow to predict resistance to two important antibiotic classes:
-aminoglycosides and beta-lactams.</p>
-<hr>
+workflow to predict the Gramstain of the microorganism to two important
+antibiotic classes: aminoglycosides and beta-lactams.</p>
 <div class="section level3">
 <h3 id="objective">
 <strong>Objective</strong><a class="anchor" aria-label="anchor" href="#objective"></a>
 </h3>
 <p>Our goal is to build a predictive model using the
-<code>tidymodels</code> framework to determine resistance patterns based
-on microbial data. We will:</p>
+<code>tidymodels</code> framework to determine the Gramstain of the
+microorganism based on microbial data. We will:</p>
 <ol style="list-style-type: decimal">
 <li>Preprocess data using the selector functions
 <code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code>.</li>
@@ -111,7 +115,6 @@ on microbial data. We will:</p>
 <li>Use a structured <code>tidymodels</code> workflow to preprocess,
 train, and evaluate the model.</li>
 </ol>
-<hr>
 </div>
 <div class="section level3">
 <h3 id="data-preparation">
@@ -158,7 +161,7 @@ package.</p>
 <span>          <span class="co"># get Gramstain of microorganisms</span></span>
 <span>          mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># drop NAs - the ones without a Gramstain (fungi, etc.)</span></span>
-<span>  <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span> <span class="co"># %&gt;%</span></span>
+<span>  <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
 <span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
 <span><span class="co">#&gt; ℹ For betalactams() using columns 'PEN' (benzylpenicillin), 'OXA'</span></span>
@@ -166,14 +169,16 @@ package.</p>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), 'TZP'</span></span>
 <span><span class="co">#&gt;   (piperacillin/tazobactam), 'CZO' (cefazolin), 'FEP' (cefepime), 'CXM'</span></span>
 <span><span class="co">#&gt;   (cefuroxime), 'FOX' (cefoxitin), 'CTX' (cefotaxime), 'CAZ' (ceftazidime),</span></span>
-<span><span class="co">#&gt;   'CRO' (ceftriaxone), 'IPM' (imipenem), and 'MEM' (meropenem)</span></span>
-<span>  <span class="co"># Cefepime is not reliable</span></span>
-<span>  <span class="co">#select(-FEP)</span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and
-<code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code> dynamically select columns for antibiotics in
-these classes. - <code>drop_na()</code> ensures the model receives
-complete cases for training.</p>
-<hr>
+<span><span class="co">#&gt;   'CRO' (ceftriaxone), 'IPM' (imipenem), and 'MEM' (meropenem)</span></span></code></pre></div>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code>
+dynamically select columns for antibiotics in these classes.</li>
+<li>
+<code>drop_na()</code> ensures the model receives complete cases for
+training.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="defining-the-workflow">
@@ -184,11 +189,7 @@ three steps: preprocessing, model specification, and fitting.</p>
 <div class="section level4">
 <h4 id="preprocessing-with-a-recipe">1. Preprocessing with a Recipe<a class="anchor" aria-label="anchor" href="#preprocessing-with-a-recipe"></a>
 </h4>
-<p>We create a recipe to preprocess the data for modelling. This
-includes: - Encoding resistance results (<code>S</code>, <code>I</code>,
-<code>R</code>) as binary (resistant or not resistant). - Converting
-microbial organism names (<code>mo</code>) into numerical features using
-one-hot encoding.</p>
+<p>We create a recipe to preprocess the data for modelling.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define the recipe for data preprocessing</span></span>
 <span><span class="va">resistance_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">mo</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -204,11 +205,18 @@ one-hot encoding.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Operations</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Correlation filter on: <span style="color: #0000BB;">c(aminoglycosides(), betalactams())</span></span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>step_mutate()</code> transforms
-resistance results (<code>R</code>) into binary variables (TRUE/FALSE).
-- <code>step_dummy()</code> converts categorical organism
-(<code>mo</code>) names into one-hot encoded numerical features, making
-them compatible with the model.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>recipe(mo ~ ., data = data)</code> will take the
+<code>mo</code> column as outcome and all other columns as
+predictors.</li>
+<li>
+<code>step_corr()</code> removes predictors (i.e., antibiotic
+columns) that have a higher correlation than 90%.</li>
+</ul>
+<p>Notice how the recipe contains just the antibiotic selector functions
+- no need to define the columns specifically.</p>
 </div>
 <div class="section level4">
 <h4 id="specifying-the-model">2. Specifying the Model<a class="anchor" aria-label="anchor" href="#specifying-the-model"></a>
@@ -223,9 +231,15 @@ a binary classification task.</p>
 <span><span class="co">#&gt; Logistic Regression Model Specification (classification)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: glm</span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>logistic_reg()</code> sets up a
-logistic regression model. - <code>set_engine("glm")</code> specifies
-the use of R’s built-in GLM engine.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>logistic_reg()</code> sets up a logistic regression
+model.</li>
+<li>
+<code>set_engine("glm")</code> specifies the use of R’s built-in GLM
+engine.</li>
+</ul>
 </div>
 <div class="section level4">
 <h4 id="building-the-workflow">3. Building the Workflow<a class="anchor" aria-label="anchor" href="#building-the-workflow"></a>
@@ -236,22 +250,7 @@ which organizes the entire modeling process.</p>
 <code class="sourceCode R"><span><span class="co"># Combine the recipe and model into a workflow</span></span>
 <span><span class="va">resistance_workflow</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">add_recipe</span><span class="op">(</span><span class="va">resistance_recipe</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Add the preprocessing recipe</span></span>
-<span>  <span class="fu">add_model</span><span class="op">(</span><span class="va">logistic_model</span><span class="op">)</span> <span class="co"># Add the logistic regression model</span></span>
-<span><span class="va">resistance_workflow</span></span>
-<span><span class="co">#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">Preprocessor:</span> Recipe</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">Model:</span> logistic_reg()</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; 1 Recipe Step</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; • step_corr()</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Model ───────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; Logistic Regression Model Specification (classification)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Computational engine: glm</span></span></code></pre></div>
-<hr>
+<span>  <span class="fu">add_model</span><span class="op">(</span><span class="va">logistic_model</span><span class="op">)</span> <span class="co"># Add the logistic regression model</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -278,38 +277,18 @@ performance.</p>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), 'TZP'</span></span>
 <span><span class="co">#&gt;   (piperacillin/tazobactam), 'CZO' (cefazolin), 'FEP' (cefepime), 'CXM'</span></span>
 <span><span class="co">#&gt;   (cefuroxime), 'FOX' (cefoxitin), 'CTX' (cefotaxime), 'CAZ' (ceftazidime),</span></span>
-<span><span class="co">#&gt;   'CRO' (ceftriaxone), 'IPM' (imipenem), and 'MEM' (meropenem)</span></span>
-<span></span>
-<span><span class="va">fitted_workflow</span></span>
-<span><span class="co">#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">Preprocessor:</span> Recipe</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">Model:</span> logistic_reg()</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; 1 Recipe Step</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; • step_corr()</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Model ───────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt; (Intercept)          GEN          TOB          AMK          KAN          PEN  </span></span>
-<span><span class="co">#&gt;   101.11641     -3.69738      4.55879      1.86703    -23.37497     -0.57182  </span></span>
-<span><span class="co">#&gt;         OXA          FLC          AMC          AMP          TZP          CZO  </span></span>
-<span><span class="co">#&gt;    -4.68575    -11.69742      0.79748     -1.56197      0.87667     -2.28424  </span></span>
-<span><span class="co">#&gt;         FEP          CXM          FOX          CAZ          CRO          IPM  </span></span>
-<span><span class="co">#&gt;    -0.19847      0.02659     10.32455     10.27248      0.97321     -0.93096  </span></span>
-<span><span class="co">#&gt;         MEM  </span></span>
-<span><span class="co">#&gt;    -0.88753  </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Degrees of Freedom: 1573 Total (i.e. Null);  1555 Residual</span></span>
-<span><span class="co">#&gt; Null Deviance:       2071 </span></span>
-<span><span class="co">#&gt; Residual Deviance: 74.91     AIC: 112.9</span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>initial_split()</code> splits
-the data into training and testing sets. - <code>fit()</code> trains the
-workflow on the training set.</p>
+<span><span class="co">#&gt;   'CRO' (ceftriaxone), 'IPM' (imipenem), and 'MEM' (meropenem)</span></span></code></pre></div>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>initial_split()</code> splits the data into training and
+testing sets.</li>
+<li>
+<code>fit()</code> trains the workflow on the training set.</li>
+</ul>
+<p>Notice how in <code>fit()</code>, the antibiotic selector functions
+are internally called again. For training, these functions are called
+since they are stored in the recipe.</p>
 <p>Next, we evaluate the model on the testing data.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make predictions on the testing set</span></span>
@@ -351,17 +330,23 @@ workflow on the training set.</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> accuracy binary         0.995</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> kap      binary         0.989</span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> generates
-predictions on the testing set. - <code>metrics()</code> computes
-evaluation metrics like accuracy and AUC.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> generates predictions on the testing
+set.</li>
+<li>
+<code>metrics()</code> computes evaluation metrics like accuracy and
+kappa.</li>
+</ul>
 <p>It appears we can predict the Gram based on AMR results with a 0.995
-accuracy. The ROC curve looks like:</p>
+accuracy based on AMR results of aminoglycosides and beta-lactam
+antibiotics. The ROC curve looks like this:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predictions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">roc_curve</span><span class="op">(</span><span class="va">mo</span>, <span class="va">`.pred_Gram-negative`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
-<hr>
 </div>
 <div class="section level3">
 <h3 id="conclusion">
@@ -376,7 +361,6 @@ and evaluated its performance.</p>
 <p>This workflow is extensible to other antibiotic classes and
 resistance patterns, empowering users to analyse AMR data systematically
 and reproducibly.</p>
-<hr>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

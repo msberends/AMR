@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9121</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9122</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,7 +167,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span></span>
 <span><span class="fu">scale_y_percent</span><span class="op">(</span></span>
 <span>  breaks <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
-<span>  limits <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">scale_sir_colours</span><span class="op">(</span></span>
@@ -253,6 +253,50 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <dt id="arg-breakpoint-type">breakpoint_type<a class="anchor" aria-label="anchor" href="#arg-breakpoint-type"></a></dt>
 <dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
 
+
+<dt id="arg-facet">facet<a class="anchor" aria-label="anchor" href="#arg-facet"></a></dt>
+<dd><p>variable to split plots by, either <code>"interpretation"</code> (default) or <code>"antibiotic"</code> or a grouping variable</p></dd>
+
+
+<dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>
+<dd><p>(when using <code>facet</code>) number of rows</p></dd>
+
+
+<dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>
+<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of positions</p></dd>
+
+
+<dt id="arg-limits">limits<a class="anchor" aria-label="anchor" href="#arg-limits"></a></dt>
+<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of length two providing limits of the scale, use <code>NA</code> to refer to the existing minimum or maximum</p></dd>
+
+
+<dt id="arg-aesthetics">aesthetics<a class="anchor" aria-label="anchor" href="#arg-aesthetics"></a></dt>
+<dd><p>aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"</p></dd>
+
+
+<dt id="arg-position">position<a class="anchor" aria-label="anchor" href="#arg-position"></a></dt>
+<dd><p>position adjustment of bars, either <code>"fill"</code>, <code>"stack"</code> or <code>"dodge"</code></p></dd>
+
+
+<dt id="arg-translate-ab">translate_ab<a class="anchor" aria-label="anchor" href="#arg-translate-ab"></a></dt>
+<dd><p>a column name of the <a href="antibiotics.html">antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
+
+
+<dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
+<dd><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
+
+
+<dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
+
+
+<dt id="arg-datalabels-size">datalabels.size<a class="anchor" aria-label="anchor" href="#arg-datalabels-size"></a></dt>
+<dd><p>size of the datalabels</p></dd>
+
+
+<dt id="arg-datalabels-colour">datalabels.colour<a class="anchor" aria-label="anchor" href="#arg-datalabels-colour"></a></dt>
+<dd><p>colour of the datalabels</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -298,7 +342,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span class="r-plt img"><img src="plot-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Plotting using scale_x_mic()</span></span></span>
+<span class="r-in"><span><span class="co"># Plotting using scale_x_mic() ---------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">mic_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mics <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"&lt;=4"</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">32</span>, <span class="st">"&gt;=32"</span><span class="op">)</span><span class="op">)</span>,</span></span>
@@ -346,6 +390,28 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">some_sir_values</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="plot-14.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plotting using scale_y_percent() -----------------------------------------</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mics <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"&lt;=4"</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">32</span>, <span class="st">"&gt;=32"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                               counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">mics</span>, <span class="va">counts</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">scale_y_percent</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">theme_sir</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">p</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">scale_y_percent</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">theme_sir</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="plot-15.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot-16.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot-17.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
