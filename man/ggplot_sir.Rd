@@ -86,8 +86,6 @@ geom_sir(
 \item{y.title}{text to show as y axis description}
 
 \item{...}{other arguments passed on to \code{\link[=geom_sir]{geom_sir()}} or, in case of \code{\link[=scale_sir_colours]{scale_sir_colours()}}, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See \emph{Examples}.}
-
-\item{aesthetics}{aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"}
 }
 \description{
 Use these functions to create bar plots for AMR data analysis. All functions rely on \link[ggplot2:ggplot]{ggplot2} functions.

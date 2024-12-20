@@ -40,7 +40,6 @@
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
 #' @param colours a named vactor with colour to be used for filling. The default colours are colour-blind friendly.
-#' @param aesthetics aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
 #' @param datalabels show datalabels using [labels_sir_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels

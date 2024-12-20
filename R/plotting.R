@@ -42,7 +42,10 @@
 #' @param colours_SIR colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.
 #' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see [get_AMR_locale()]) and can be overwritten by setting the package option [`AMR_locale`][AMR-options], e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param expand a [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
+#' @param aesthetics aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
 #' @inheritParams as.sir
+#' @inheritParams ggplot_sir
+#' @inheritParams proportion
 #' @details
 #' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 #'
@@ -80,7 +83,7 @@
 #' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 #' 
 #' 
-#' # Plotting using scale_x_mic()
+#' # Plotting using scale_x_mic() ---------------------------------------------
 #' \donttest{
 #' if (require("ggplot2")) {
 #'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
@@ -119,6 +122,25 @@
 #' }
 #' if (require("ggplot2")) {
 #'   autoplot(some_sir_values)
+#' }
+#' 
+#' # Plotting using scale_y_percent() -----------------------------------------
+#' if (require("ggplot2")) {
+#'   p <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
+#'                                counts = c(1, 1, 2, 2, 3, 3)),
+#'                          aes(mics, counts / sum(counts))) +
+#'     geom_col()
+#'   print(p)
+#'   
+#'   p2 <- p +
+#'     scale_y_percent() +
+#'     theme_sir()
+#'   print(p2)
+#'   
+#'   p +
+#'     scale_y_percent(breaks = seq(from = 0, to = 1, by = 0.1),
+#'                     limits = c(0, 1)) +
+#'     theme_sir()
 #' }
 #' }
 NULL
@@ -954,7 +976,7 @@ facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 
 #' @rdname plot
 #' @export
-scale_y_percent <- function(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1), limits = NULL) {
+scale_y_percent <- function(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1), limits = c(0, NA)) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(breaks, allow_class = c("numeric", "integer", "function"))
   meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)

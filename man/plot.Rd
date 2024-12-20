@@ -123,7 +123,7 @@ facet_sir(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
 scale_y_percent(
   breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
-  limits = NULL
+  limits = c(0, NA)
 )
 
 scale_sir_colours(
@@ -175,6 +175,28 @@ labels_sir_count(
 \item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
 \item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
+
+\item{facet}{variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
+
+\item{nrow}{(when using \code{facet}) number of rows}
+
+\item{breaks}{a \link{numeric} vector of positions}
+
+\item{limits}{a \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
+
+\item{aesthetics}{aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"}
+
+\item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
+
+\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+
+\item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
+
+\item{combine_SI}{a \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+
+\item{datalabels.size}{size of the datalabels}
+
+\item{datalabels.colour}{colour of the datalabels}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
@@ -219,7 +241,7 @@ plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 
 
-# Plotting using scale_x_mic()
+# Plotting using scale_x_mic() ---------------------------------------------
 \donttest{
 if (require("ggplot2")) {
   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
@@ -258,6 +280,25 @@ if (require("ggplot2")) {
 }
 if (require("ggplot2")) {
   autoplot(some_sir_values)
+}
+
+# Plotting using scale_y_percent() -----------------------------------------
+if (require("ggplot2")) {
+  p <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
+                               counts = c(1, 1, 2, 2, 3, 3)),
+                         aes(mics, counts / sum(counts))) +
+    geom_col()
+  print(p)
+  
+  p2 <- p +
+    scale_y_percent() +
+    theme_sir()
+  print(p2)
+  
+  p +
+    scale_y_percent(breaks = seq(from = 0, to = 1, by = 0.1),
+                    limits = c(0, 1)) +
+    theme_sir()
 }
 }
 }
