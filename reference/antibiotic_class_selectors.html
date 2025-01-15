@@ -9,7 +9,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9122</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9123</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,6 +103,8 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <span></span>
 <span><span class="fu">penicillins</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">phenicols</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">polymyxins</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">quinolones</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -163,7 +165,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>When used inside selecting or filtering, this returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of column names, with additional class <code>"ab_selector"</code>. When used individually, this returns an <a href="as.ab.html">'ab' vector</a> with all possible antimicrobial that the function would be able to select or filter.</p>
+    <p>When used inside selecting or filtering, this returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of column names, with additional class <code>"ab_selector"</code>. When used individually, this returns an <a href="as.ab.html">'ab' vector</a> with all possible antimicrobials that the function would be able to select or filter.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -199,6 +201,7 @@ In short, if you have a column name that resembles an antimicrobial drug, it wil
 <li><p><code>nitrofurans()</code> can select: <br> furazidin (FUR), furazolidone (FRZ), nifurtoinol (NFR), nitrofurantoin (NIT), and nitrofurazone (NIZ)</p></li>
 <li><p><code>oxazolidinones()</code> can select: <br> cadazolid (CDZ), cycloserine (CYC), linezolid (LNZ), tedizolid (TZD), and thiacetazone (THA)</p></li>
 <li><p><code>penicillins()</code> can select: <br> amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin (AMP), ampicillin/sulbactam (SAM), apalcillin (APL), aspoxicillin (APX), avibactam (AVB), azidocillin (AZD), azlocillin (AZL), aztreonam (ATM), aztreonam/avibactam (AZA), aztreonam/nacubactam (ANC), bacampicillin (BAM), benzathine benzylpenicillin (BNB), benzathine phenoxymethylpenicillin (BNP), benzylpenicillin (PEN), carbenicillin (CRB), carindacillin (CRN), cefepime/nacubactam (FNC), ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), epicillin (EPC), flucloxacillin (FLC), hetacillin (HET), lenampicillin (LEN), mecillinam (MEC), metampicillin (MTM), meticillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam (MSU), nacubactam (NAC), nafcillin (NAF), oxacillin (OXA), penamecillin (PNM), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), pheneticillin (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine benzylpenicillin (PRB), propicillin (PRP), sarmoxicillin (SRX), sulbactam (SUL), sulbenicillin (SBC), sultamicillin (SLT6), talampicillin (TAL), tazobactam (TAZ), temocillin (TEM), ticarcillin (TIC), and ticarcillin/clavulanic acid (TCC)</p></li>
+<li><p><code>phenicols()</code> can select: <br> chloramphenicol (CHL), florfenicol (FLR), and thiamphenicol (THI)</p></li>
 <li><p><code>polymyxins()</code> can select: <br> colistin (COL), polymyxin B (PLB), and polymyxin B/polysorbate 80 (POP)</p></li>
 <li><p><code>quinolones()</code> can select: <br> besifloxacin (BES), cinoxacin (CIN), ciprofloxacin (CIP), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), flumequine (FLM), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), lascufloxacin (LSC), levofloxacin (LVX), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nalidixic acid (NAL), nemonoxacin (NEM), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), ofloxacin (OFX), orbifloxacin (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF), pipemidic acid (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and trovafloxacin (TVA)</p></li>
 <li><p><code>rifamycins()</code> can select: <br> rifabutin (RIB), rifampicin (RIF), rifampicin/ethambutol/isoniazid (REI), rifampicin/isoniazid (RFI), rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI), rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), and rifapentine (RFP)</p></li>
