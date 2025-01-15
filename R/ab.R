@@ -687,3 +687,30 @@ get_translate_ab <- function(translate_ab) {
     translate_ab
   }
 }
+
+create_AB_AV_lookup <- function(df) {
+  new_df <- df
+  new_df$generalised_name <- generalise_antibiotic_name(new_df$name)
+  new_df$generalised_synonyms <- lapply(new_df$synonyms, generalise_antibiotic_name)
+  if ("abbreviations" %in% colnames(df)) {
+    new_df$generalised_abbreviations <- lapply(new_df$abbreviations, generalise_antibiotic_name)
+  }
+  new_df$generalised_loinc <- lapply(new_df$loinc, generalise_antibiotic_name)
+  new_df$generalised_all <- unname(lapply(
+    as.list(as.data.frame(
+      t(new_df[,
+               c(
+                 colnames(new_df)[colnames(new_df) %in% c("ab", "av", "atc", "cid", "name")],
+                 colnames(new_df)[colnames(new_df) %like% "generalised"]
+               ),
+               drop = FALSE
+      ]),
+      stringsAsFactors = FALSE
+    )),
+    function(x) {
+      x <- generalise_antibiotic_name(unname(unlist(x)))
+      x[x != ""]
+    }
+  ))
+  new_df[, colnames(new_df)[colnames(new_df) %like% "^generalised"]]
+}

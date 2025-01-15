@@ -25,6 +25,7 @@
 \alias{nitrofurans}
 \alias{oxazolidinones}
 \alias{penicillins}
+\alias{phenicols}
 \alias{polymyxins}
 \alias{quinolones}
 \alias{rifamycins}
@@ -83,6 +84,8 @@ oxazolidinones(only_sir_columns = FALSE, ...)
 
 penicillins(only_sir_columns = FALSE, ...)
 
+phenicols(only_sir_columns = FALSE, ...)
+
 polymyxins(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
 quinolones(only_sir_columns = FALSE, ...)
@@ -124,7 +127,7 @@ not_intrinsic_resistant(
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
 }
 \value{
-When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"ab_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobial that the function would be able to select or filter.
+When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"ab_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobials that the function would be able to select or filter.
 }
 \description{
 These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group (according to the \link{antibiotics} data set), without the need to define the columns or antibiotic abbreviations.
@@ -168,6 +171,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 \item \code{\link[=nitrofurans]{nitrofurans()}} can select: \cr furazidin (FUR), furazolidone (FRZ), nifurtoinol (NFR), nitrofurantoin (NIT), and nitrofurazone (NIZ)
 \item \code{\link[=oxazolidinones]{oxazolidinones()}} can select: \cr cadazolid (CDZ), cycloserine (CYC), linezolid (LNZ), tedizolid (TZD), and thiacetazone (THA)
 \item \code{\link[=penicillins]{penicillins()}} can select: \cr amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin (AMP), ampicillin/sulbactam (SAM), apalcillin (APL), aspoxicillin (APX), avibactam (AVB), azidocillin (AZD), azlocillin (AZL), aztreonam (ATM), aztreonam/avibactam (AZA), aztreonam/nacubactam (ANC), bacampicillin (BAM), benzathine benzylpenicillin (BNB), benzathine phenoxymethylpenicillin (BNP), benzylpenicillin (PEN), carbenicillin (CRB), carindacillin (CRN), cefepime/nacubactam (FNC), ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), epicillin (EPC), flucloxacillin (FLC), hetacillin (HET), lenampicillin (LEN), mecillinam (MEC), metampicillin (MTM), meticillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam (MSU), nacubactam (NAC), nafcillin (NAF), oxacillin (OXA), penamecillin (PNM), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), pheneticillin (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine benzylpenicillin (PRB), propicillin (PRP), sarmoxicillin (SRX), sulbactam (SUL), sulbenicillin (SBC), sultamicillin (SLT6), talampicillin (TAL), tazobactam (TAZ), temocillin (TEM), ticarcillin (TIC), and ticarcillin/clavulanic acid (TCC)
+\item \code{\link[=phenicols]{phenicols()}} can select: \cr chloramphenicol (CHL), florfenicol (FLR), and thiamphenicol (THI)
 \item \code{\link[=polymyxins]{polymyxins()}} can select: \cr colistin (COL), polymyxin B (PLB), and polymyxin B/polysorbate 80 (POP)
 \item \code{\link[=quinolones]{quinolones()}} can select: \cr besifloxacin (BES), cinoxacin (CIN), ciprofloxacin (CIP), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), flumequine (FLM), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), lascufloxacin (LSC), levofloxacin (LVX), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nalidixic acid (NAL), nemonoxacin (NEM), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), ofloxacin (OFX), orbifloxacin (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF), pipemidic acid (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and trovafloxacin (TVA)
 \item \code{\link[=rifamycins]{rifamycins()}} can select: \cr rifabutin (RIB), rifampicin (RIF), rifampicin/ethambutol/isoniazid (REI), rifampicin/isoniazid (RFI), rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI), rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), and rifapentine (RFP)

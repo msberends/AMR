@@ -101,7 +101,7 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   # - Becker et al. 2019, PMID 30872103
   # - Becker et al. 2020, PMID 32056452
   # this function returns class <mo>
-  MO_staph <- AMR::microorganisms
+  MO_staph <- microorganisms
   MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
   if (type == "CoNS") {
     MO_staph[
@@ -152,12 +152,12 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
 }
 pre_commit_lst$MO_CONS <- create_species_cons_cops("CoNS")
 pre_commit_lst$MO_COPS <- create_species_cons_cops("CoPS")
-pre_commit_lst$MO_STREP_ABCG <- AMR::microorganisms$mo[which(AMR::microorganisms$genus == "Streptococcus" &
-  tolower(AMR::microorganisms$species) %in% c(
+pre_commit_lst$MO_STREP_ABCG <- microorganisms$mo[which(microorganisms$genus == "Streptococcus" &
+  tolower(microorganisms$species) %in% c(
     "pyogenes", "agalactiae", "dysgalactiae", "equi", "canis",
     "group a", "group b", "group c", "group g"
   ))]
-pre_commit_lst$MO_LANCEFIELD <- AMR::microorganisms$mo[which(AMR::microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
+pre_commit_lst$MO_LANCEFIELD <- microorganisms$mo[which(microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
 pre_commit_lst$MO_WHO_PRIORITY_GENERA <- c(
   # World Health Organization's (WHO) Priority Pathogen List (some are from the group Enterobacteriaceae)
   "Acinetobacter",
@@ -419,6 +419,9 @@ pre_commit_lst$AB_OXAZOLIDINONES <- antibiotics %>%
 pre_commit_lst$AB_PENICILLINS <- antibiotics %>%
   filter(group %like% "penicillin") %>%
   pull(ab)
+pre_commit_lst$AB_PHENICOLS <- antibiotics %>%
+  filter(group %like% "phenicol" | atc_group1 %like% "phenicol" | atc_group2 %like% "phenicol") %>%
+  pull(ab)
 pre_commit_lst$AB_POLYMYXINS <- antibiotics %>%
   filter(group %like% "polymyxin") %>%
   pull(ab)
@@ -445,34 +448,9 @@ pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antibiotics %>%
   pull(ab)
 # this will be used for documentation:
 pre_commit_lst$DEFINED_AB_GROUPS <- sort(names(pre_commit_lst)[names(pre_commit_lst) %like% "^AB_" & names(pre_commit_lst) != "AB_LOOKUP"])
-create_AB_AV_lookup <- function(df) {
-  new_df <- df
-  new_df$generalised_name <- generalise_antibiotic_name(new_df$name)
-  new_df$generalised_synonyms <- lapply(new_df$synonyms, generalise_antibiotic_name)
-  if ("abbreviations" %in% colnames(df)) {
-    new_df$generalised_abbreviations <- lapply(new_df$abbreviations, generalise_antibiotic_name)
-  }
-  new_df$generalised_loinc <- lapply(new_df$loinc, generalise_antibiotic_name)
-  new_df$generalised_all <- unname(lapply(
-    as.list(as.data.frame(
-      t(new_df[,
-        c(
-          colnames(new_df)[colnames(new_df) %in% c("ab", "av", "atc", "cid", "name")],
-          colnames(new_df)[colnames(new_df) %like% "generalised"]
-        ),
-        drop = FALSE
-      ]),
-      stringsAsFactors = FALSE
-    )),
-    function(x) {
-      x <- generalise_antibiotic_name(unname(unlist(x)))
-      x[x != ""]
-    }
-  ))
-  new_df[, colnames(new_df)[colnames(new_df) %like% "^generalised"]]
-}
-pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
-pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(AMR::antivirals)
+
+pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(antibiotics)
+pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(antivirals)
 
 # Export to package as internal data ----
 # usethis::use_data() must receive unquoted object names, which is not flexible at all.
@@ -521,8 +499,8 @@ changed_md5 <- function(object) {
 
 # give official names to ABs and MOs
 clin_break <- clinical_breakpoints %>%
-  mutate(mo_name = mo_name(mo, language = NULL, keep_synonyms = TRUE, info = FALSE), .after = mo) %>%
-  mutate(ab_name = ab_name(ab, language = NULL), .after = ab)
+  mutate(mo_name = microorganisms$fullname[match(mo, microorganisms$mo)], .after = mo) %>%
+  mutate(ab_name = antibiotics$name[match(ab, antibiotics$ab)], .after = ab)
 if (changed_md5(clin_break)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('clinical_breakpoints')} to {usethis::ui_value('data-raw/')}"))
   write_md5(clin_break)

@@ -86,7 +86,7 @@ x
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}
 
-These 31 antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
+These 32 antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
 \itemize{
 \item aminoglycosides\cr(amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, and tobramycin-high)
 \item aminopenicillins\cr(amoxicillin and ampicillin)
@@ -111,6 +111,7 @@ These 31 antibiotic groups are allowed in the rules (case-insensitive) and can b
 \item nitrofurans\cr(furazidin, furazolidone, nifurtoinol, nitrofurantoin, and nitrofurazone)
 \item oxazolidinones\cr(cadazolid, cycloserine, linezolid, tedizolid, and thiacetazone)
 \item penicillins\cr(amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam, ampicillin, ampicillin/sulbactam, apalcillin, aspoxicillin, avibactam, azidocillin, azlocillin, aztreonam, aztreonam/avibactam, aztreonam/nacubactam, bacampicillin, benzathine benzylpenicillin, benzathine phenoxymethylpenicillin, benzylpenicillin, carbenicillin, carindacillin, cefepime/nacubactam, ciclacillin, clometocillin, cloxacillin, dicloxacillin, epicillin, flucloxacillin, hetacillin, lenampicillin, mecillinam, metampicillin, meticillin, mezlocillin, mezlocillin/sulbactam, nacubactam, nafcillin, oxacillin, penamecillin, penicillin/novobiocin, penicillin/sulbactam, pheneticillin, phenoxymethylpenicillin, piperacillin, piperacillin/sulbactam, piperacillin/tazobactam, piridicillin, pivampicillin, pivmecillinam, procaine benzylpenicillin, propicillin, sarmoxicillin, sulbactam, sulbenicillin, sultamicillin, talampicillin, tazobactam, temocillin, ticarcillin, and ticarcillin/clavulanic acid)
+\item phenicols\cr(chloramphenicol, florfenicol, and thiamphenicol)
 \item polymyxins\cr(colistin, polymyxin B, and polymyxin B/polysorbate 80)
 \item quinolones\cr(besifloxacin, cinoxacin, ciprofloxacin, ciprofloxacin/metronidazole, ciprofloxacin/ornidazole, ciprofloxacin/tinidazole, clinafloxacin, danofloxacin, delafloxacin, difloxacin, enoxacin, enrofloxacin, finafloxacin, fleroxacin, flumequine, garenoxacin, gatifloxacin, gemifloxacin, grepafloxacin, lascufloxacin, levofloxacin, levonadifloxacin, lomefloxacin, marbofloxacin, metioxate, miloxacin, moxifloxacin, nadifloxacin, nalidixic acid, nemonoxacin, nifuroquine, nitroxoline, norfloxacin, ofloxacin, orbifloxacin, oxolinic acid, pazufloxacin, pefloxacin, pipemidic acid, piromidic acid, pradofloxacin, premafloxacin, prulifloxacin, rosoxacin, rufloxacin, sarafloxacin, sitafloxacin, sparfloxacin, temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and trovafloxacin)
 \item rifamycins\cr(rifabutin, rifampicin, rifampicin/ethambutol/isoniazid, rifampicin/isoniazid, rifampicin/pyrazinamide/ethambutol/isoniazid, rifampicin/pyrazinamide/isoniazid, rifamycin, and rifapentine)

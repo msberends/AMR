@@ -47,6 +47,7 @@ from .functions import macrolides
 from .functions import nitrofurans
 from .functions import oxazolidinones
 from .functions import penicillins
+from .functions import phenicols
 from .functions import polymyxins
 from .functions import quinolones
 from .functions import rifamycins

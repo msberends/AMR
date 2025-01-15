@@ -200,10 +200,14 @@ AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
   if (pkg_is_available("tibble")) {
     try(loadNamespace("tibble"), silent = TRUE)
   }
-
+  
   # reference data - they have additional data to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
-  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
+  if (NROW(AB_LOOKUP) != NROW(AMR::antibiotics)) {
+    # antibiotics data set was updated - run create_AB_AV_lookup() again
+    AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
+  }
+  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)  
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
 }
 

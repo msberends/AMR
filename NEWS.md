@@ -1,4 +1,4 @@
-# AMR 2.1.1.9122
+# AMR 2.1.1.9123
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -47,8 +47,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * `antibiotics` data set
   * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antibiotic selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
+  * Added Efflux (`EFF`), to allow mapping to AMRFinderPlus
 * Antibiotic selectors
-  * Added selectors `nitrofurans()` and `rifamycins()`
+  * Added selectors `nitrofurans()`, `phenicols()`, and `rifamycins()`
   * When using antibiotic selectors (such as `aminoglycosides()`) that exclude non-treatable drugs (such as gentamicin-high), the function now always returns a warning that these can be included using `only_treatable = FALSE`
   * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
 * MICs

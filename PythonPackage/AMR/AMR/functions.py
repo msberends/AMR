@@ -171,6 +171,9 @@ def oxazolidinones(only_sir_columns = False, *args, **kwargs):
 def penicillins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.penicillins(only_sir_columns = False, *args, **kwargs))
+def phenicols(only_sir_columns = False, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.phenicols(only_sir_columns = False, *args, **kwargs))
 def polymyxins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.polymyxins(only_sir_columns = False, *args, **kwargs))

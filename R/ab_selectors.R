@@ -48,7 +48,7 @@
 #' `r paste0(" * ", na.omit(sapply(DEFINED_AB_GROUPS, function(ab) ifelse(tolower(gsub("^AB_", "", ab)) %in% ls(envir = asNamespace("AMR")), paste0("[", tolower(gsub("^AB_", "", ab)), "()] can select: \\cr ", vector_and(paste0(ab_name(eval(parse(text = ab), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), " (", eval(parse(text = ab), envir = asNamespace("AMR")), ")"), quotes = FALSE, sort = TRUE)), character(0)), USE.NAMES = FALSE)), "\n", collapse = "")`
 #' @rdname antibiotic_class_selectors
 #' @name antibiotic_class_selectors
-#' @return When used inside selecting or filtering, this returns a [character] vector of column names, with additional class `"ab_selector"`. When used individually, this returns an ['ab' vector][as.ab()] with all possible antimicrobial that the function would be able to select or filter.
+#' @return When used inside selecting or filtering, this returns a [character] vector of column names, with additional class `"ab_selector"`. When used individually, this returns an ['ab' vector][as.ab()] with all possible antimicrobials that the function would be able to select or filter.
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
@@ -420,6 +420,13 @@ penicillins <- function(only_sir_columns = FALSE, ...) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
+phenicols <- function(only_sir_columns = FALSE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("phenicols", only_sir_columns = only_sir_columns)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
 polymyxins <- function(only_sir_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
@@ -675,17 +682,16 @@ ab_select_exec <- function(function_name,
   }
   
   if (is.null(vars_df)) {
-    # no data found, no antimicrobials, so no input. Can happen if users run e.g. `aminoglycosides()` as a separate command.
+    # no data found, no antimicrobials, so no input. Happens if users run e.g. `aminoglycosides()` as a separate command.
     examples <- paste0(
-      ", e.g.:\n",
       "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
       "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
       "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
       "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
-      "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
-    )
-    message_("The function `" , function_name, "()` should be used inside a `dplyr` verb or `data.frame` call",
-             examples, "\n\nNow returning a vector of all possible antimicrobials that `" , function_name, "()` can select.")
+      "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]")
+    message_("The function `" , function_name, "()` should be used inside a `dplyr` verb or `data.frame` call, e.g.:\n",
+             examples,
+             "\n\nNow returning a vector of all possible antimicrobials that `" , function_name, "()` can select.")
     return(sort(abx))
   }
 

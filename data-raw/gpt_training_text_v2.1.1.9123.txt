@@ -1,5 +1,5 @@
 This files contains all context you must know about the AMR package for R.
-First and foremost, you are trained on version 2.1.1.9122. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9123. Remember this whenever someone asks which AMR package version you’re at.
 --------------------------------
 
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'NAMESPACE':
@@ -303,6 +303,7 @@ export(not_intrinsic_resistant)
 export(oxazolidinones)
 export(pca)
 export(penicillins)
+export(phenicols)
 export(polymyxins)
 export(proportion_I)
 export(proportion_IR)
@@ -782,7 +783,7 @@ The \code{AMR} package is a \href{https://msberends.github.io/AMR/#copyright}{fr
 
 This work was published in the Journal of Statistical Software (Volume 104(3); \doi{10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\doi{10.33612/diss.177417131} and \doi{10.33612/diss.192486375}).
 
-After installing this package, R knows \href{https://msberends.github.io/AMR/reference/microorganisms.html}{\strong{~79 000 microorganisms}} (updated June 2024) and all \href{https://msberends.github.io/AMR/reference/antibiotics.html}{\strong{~600 antibiotic, antimycotic and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the public \href{https://www.rug.nl}{University of Groningen}, in collaboration with non-profit organisations \href{https://www.certe.nl}{Certe Medical Diagnostics and Advice Foundation} and \href{https://www.umcg.nl}{University Medical Center Groningen}.
+After installing this package, R knows \href{https://msberends.github.io/AMR/reference/microorganisms.html}{\strong{~79 000 microorganisms}} (updated June 2024) and all \href{https://msberends.github.io/AMR/reference/antibiotics.html}{\strong{~610 antibiotic, antimycotic and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the public \href{https://www.rug.nl}{University of Groningen}, in collaboration with non-profit organisations \href{https://www.certe.nl}{Certe Medical Diagnostics and Advice Foundation} and \href{https://www.umcg.nl}{University Medical Center Groningen}.
 
 The \code{AMR} package is available in English, Chinese, Czech, Danish, Dutch, Finnish, French, German, Greek, Italian, Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Turkish, and Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 }
@@ -1952,6 +1953,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antibiotic_class_selectors.R
 \alias{nitrofurans}
 \alias{oxazolidinones}
 \alias{penicillins}
+\alias{phenicols}
 \alias{polymyxins}
 \alias{quinolones}
 \alias{rifamycins}
@@ -2010,6 +2012,8 @@ oxazolidinones(only_sir_columns = FALSE, ...)
 
 penicillins(only_sir_columns = FALSE, ...)
 
+phenicols(only_sir_columns = FALSE, ...)
+
 polymyxins(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
 quinolones(only_sir_columns = FALSE, ...)
@@ -2051,7 +2055,7 @@ not_intrinsic_resistant(
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
 }
 \value{
-When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"ab_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobial that the function would be able to select or filter.
+When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"ab_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobials that the function would be able to select or filter.
 }
 \description{
 These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group (according to the \link{antibiotics} data set), without the need to define the columns or antibiotic abbreviations.
@@ -2095,6 +2099,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 \item \code{\link[=nitrofurans]{nitrofurans()}} can select: \cr furazidin (FUR), furazolidone (FRZ), nifurtoinol (NFR), nitrofurantoin (NIT), and nitrofurazone (NIZ)
 \item \code{\link[=oxazolidinones]{oxazolidinones()}} can select: \cr cadazolid (CDZ), cycloserine (CYC), linezolid (LNZ), tedizolid (TZD), and thiacetazone (THA)
 \item \code{\link[=penicillins]{penicillins()}} can select: \cr amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin (AMP), ampicillin/sulbactam (SAM), apalcillin (APL), aspoxicillin (APX), avibactam (AVB), azidocillin (AZD), azlocillin (AZL), aztreonam (ATM), aztreonam/avibactam (AZA), aztreonam/nacubactam (ANC), bacampicillin (BAM), benzathine benzylpenicillin (BNB), benzathine phenoxymethylpenicillin (BNP), benzylpenicillin (PEN), carbenicillin (CRB), carindacillin (CRN), cefepime/nacubactam (FNC), ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), epicillin (EPC), flucloxacillin (FLC), hetacillin (HET), lenampicillin (LEN), mecillinam (MEC), metampicillin (MTM), meticillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam (MSU), nacubactam (NAC), nafcillin (NAF), oxacillin (OXA), penamecillin (PNM), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), pheneticillin (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine benzylpenicillin (PRB), propicillin (PRP), sarmoxicillin (SRX), sulbactam (SUL), sulbenicillin (SBC), sultamicillin (SLT6), talampicillin (TAL), tazobactam (TAZ), temocillin (TEM), ticarcillin (TIC), and ticarcillin/clavulanic acid (TCC)
+\item \code{\link[=phenicols]{phenicols()}} can select: \cr chloramphenicol (CHL), florfenicol (FLR), and thiamphenicol (THI)
 \item \code{\link[=polymyxins]{polymyxins()}} can select: \cr colistin (COL), polymyxin B (PLB), and polymyxin B/polysorbate 80 (POP)
 \item \code{\link[=quinolones]{quinolones()}} can select: \cr besifloxacin (BES), cinoxacin (CIN), ciprofloxacin (CIP), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), flumequine (FLM), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), lascufloxacin (LSC), levofloxacin (LVX), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nalidixic acid (NAL), nemonoxacin (NEM), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), ofloxacin (OFX), orbifloxacin (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF), pipemidic acid (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and trovafloxacin (TVA)
 \item \code{\link[=rifamycins]{rifamycins()}} can select: \cr rifabutin (RIB), rifampicin (RIF), rifampicin/ethambutol/isoniazid (REI), rifampicin/isoniazid (RFI), rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI), rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), and rifapentine (RFP)
@@ -2294,9 +2299,9 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antibiotics.Rd':
 \name{antibiotics}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data Sets with 605 Antimicrobial Drugs}
+\title{Data Sets with 606 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 485 observations and 14 variables:}{
+\subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 486 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{\strong{This is a unique identifier.}}
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}
@@ -4288,7 +4293,7 @@ x
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}
 
-These 31 antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
+These 32 antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
 \itemize{
 \item aminoglycosides\cr(amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, and tobramycin-high)
 \item aminopenicillins\cr(amoxicillin and ampicillin)
@@ -4313,6 +4318,7 @@ These 31 antibiotic groups are allowed in the rules (case-insensitive) and can b
 \item nitrofurans\cr(furazidin, furazolidone, nifurtoinol, nitrofurantoin, and nitrofurazone)
 \item oxazolidinones\cr(cadazolid, cycloserine, linezolid, tedizolid, and thiacetazone)
 \item penicillins\cr(amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam, ampicillin, ampicillin/sulbactam, apalcillin, aspoxicillin, avibactam, azidocillin, azlocillin, aztreonam, aztreonam/avibactam, aztreonam/nacubactam, bacampicillin, benzathine benzylpenicillin, benzathine phenoxymethylpenicillin, benzylpenicillin, carbenicillin, carindacillin, cefepime/nacubactam, ciclacillin, clometocillin, cloxacillin, dicloxacillin, epicillin, flucloxacillin, hetacillin, lenampicillin, mecillinam, metampicillin, meticillin, mezlocillin, mezlocillin/sulbactam, nacubactam, nafcillin, oxacillin, penamecillin, penicillin/novobiocin, penicillin/sulbactam, pheneticillin, phenoxymethylpenicillin, piperacillin, piperacillin/sulbactam, piperacillin/tazobactam, piridicillin, pivampicillin, pivmecillinam, procaine benzylpenicillin, propicillin, sarmoxicillin, sulbactam, sulbenicillin, sultamicillin, talampicillin, tazobactam, temocillin, ticarcillin, and ticarcillin/clavulanic acid)
+\item phenicols\cr(chloramphenicol, florfenicol, and thiamphenicol)
 \item polymyxins\cr(colistin, polymyxin B, and polymyxin B/polysorbate 80)
 \item quinolones\cr(besifloxacin, cinoxacin, ciprofloxacin, ciprofloxacin/metronidazole, ciprofloxacin/ornidazole, ciprofloxacin/tinidazole, clinafloxacin, danofloxacin, delafloxacin, difloxacin, enoxacin, enrofloxacin, finafloxacin, fleroxacin, flumequine, garenoxacin, gatifloxacin, gemifloxacin, grepafloxacin, lascufloxacin, levofloxacin, levonadifloxacin, lomefloxacin, marbofloxacin, metioxate, miloxacin, moxifloxacin, nadifloxacin, nalidixic acid, nemonoxacin, nifuroquine, nitroxoline, norfloxacin, ofloxacin, orbifloxacin, oxolinic acid, pazufloxacin, pefloxacin, pipemidic acid, piromidic acid, pradofloxacin, premafloxacin, prulifloxacin, rosoxacin, rufloxacin, sarafloxacin, sitafloxacin, sparfloxacin, temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and trovafloxacin)
 \item rifamycins\cr(rifabutin, rifampicin, rifampicin/ethambutol/isoniazid, rifampicin/isoniazid, rifampicin/pyrazinamide/ethambutol/isoniazid, rifampicin/pyrazinamide/isoniazid, rifamycin, and rifapentine)
