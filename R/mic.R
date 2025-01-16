@@ -196,6 +196,8 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   # transform => to >= and =< to <=
   x <- gsub("=<", "<=", x, fixed = TRUE)
   x <- gsub("=>", ">=", x, fixed = TRUE)
+  # Remove leading == and =
+  x <- gsub("^=+", "", x)
   # dots without a leading zero must start with 0
   x <- gsub("([^0-9]|^)[.]", "\\10.", x, perl = TRUE)
   # values like "<=0.2560.512" should be 0.512
