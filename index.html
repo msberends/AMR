@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9123</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9125</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
 <li>Provides the <strong>full microbiological taxonomy</strong> and extensive info on <strong>all antimicrobial drugs</strong>
 </li>
 <li>Applies all recent <strong>CLSI</strong> and <strong>EUCAST</strong> clinical and veterinary breakpoints for MICs, disk zones and ECOFFs</li>
-<li>Corrects for duplicate isolates, <strong>calculates</strong> and <strong>predicts</strong> AMR per antibiotic class</li>
+<li>Corrects for duplicate isolates, <strong>calculates</strong> and <strong>predicts</strong> AMR per antimicrobial class</li>
 <li>Integrates with <strong>WHONET</strong>, ATC, <strong>EARS-Net</strong>, PubChem, <strong>LOINC</strong>, <strong>SNOMED CT</strong>, and <strong>NCBI</strong>
 </li>
 <li>100% free of costs and dependencies, highly suitable for places with <strong>limited resources</strong>
@@ -125,7 +125,7 @@
 <div class="section level4">
 <h4 id="filtering-and-selecting-data">Filtering and selecting data<a class="anchor" aria-label="anchor" href="#filtering-and-selecting-data"></a>
 </h4>
-<p>One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antibiotic columns. This can be done using the so-called <a href="https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html">antibiotic class selectors</a> that work in base R, <code>dplyr</code> and <code>data.table</code>:</p>
+<p>One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called <a href="https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html">antimicrobial class selectors</a>, which work in base R, <code>dplyr</code> and <code>data.table</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
@@ -136,11 +136,11 @@
 <span>  <span class="co"># filtering functions for microorganisms:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="co"># antibiotic selectors:</span></span>
+<span>  <span class="co"># antimicrobial selectors:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,</span>
-<span>         <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>         <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
+<span>         <span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">bacteria</th>
@@ -250,7 +250,7 @@
 <span><span class="va">example_isolates</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span></span>
 <span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>                         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>This base R code will work in any version of R since April 2013 (R-3.0). Moreover, this code works identically with the <code>data.table</code> package, only by starting with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span></code></pre></div>
@@ -262,7 +262,7 @@
 <p>If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="18%">
@@ -489,7 +489,7 @@
 </tr>
 </tbody>
 </table>
-<p>Or use <a href="https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html">antibiotic class selectors</a> to select a series of antibiotic columns:</p>
+<p>Or use <a href="https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html">antimicrobial class selectors</a> to select a series of antibiotic columns:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -498,7 +498,7 @@
 <span>  <span class="co"># group by ward:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># calculate AMR using resistance(), over all aminoglycosides and polymyxins:</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            <span class="va">resistance</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">out</span></span></code></pre></div>
 <table class="table">
@@ -647,7 +647,7 @@
 <li>Calculating (empirical) susceptibility of both mono therapy and combination therapies (<a href="./articles/AMR.html">tutorial</a>)</li>
 <li>Predicting future antimicrobial resistance using regression models (<a href="./articles/resistance_predict.html">tutorial</a>)</li>
 <li>Getting properties for any microorganism (like Gram stain, species, genus or family) (<a href="./reference/mo_property.html">manual</a>)</li>
-<li>Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) (<a href="./reference/ab_property.html">manual</a>)</li>
+<li>Getting properties for any antimicrobial (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) (<a href="./reference/ab_property.html">manual</a>)</li>
 <li>Plotting antimicrobial resistance (<a href="./articles/AMR.html">tutorial</a>)</li>
 <li>Applying EUCAST expert rules (<a href="./reference/eucast_rules.html">manual</a>)</li>
 <li>Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code (<a href="./reference/mo_property.html">manual</a>)</li>
