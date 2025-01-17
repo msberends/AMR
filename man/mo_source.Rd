@@ -47,9 +47,9 @@ Imagine this data on a sheet of an Excel file. The first column contains the org
 4 |                    |                       |
 }\if{html}{\out{</div>}}
 
-We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:
+We save it as \code{"/Users/me/Documents/ourcodes.xlsx"}. Now we have to set it as a source:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{set_mo_source("home/me/ourcodes.xlsx")
+\if{html}{\out{<div class="sourceCode">}}\preformatted{set_mo_source("/Users/me/Documents/ourcodes.xlsx")
 #> NOTE: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
 #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #>       "Organisation XYZ" and "mo"

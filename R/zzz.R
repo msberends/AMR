@@ -135,14 +135,14 @@ AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
   s3_register("knitr::knit_print", "formatted_bug_drug_combinations")
   # Support vctrs package for use in e.g. dplyr verbs
   # NOTE 2024-02-22 this is the right way - it should be 2 S3 classes in the second argument
-  # S3: ab_selector
-  s3_register("vctrs::vec_ptype2", "character.ab_selector")
-  s3_register("vctrs::vec_ptype2", "ab_selector.character")
-  s3_register("vctrs::vec_cast", "character.ab_selector")
-  # S3: ab_selector_any_all
-  s3_register("vctrs::vec_ptype2", "logical.ab_selector_any_all")
-  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.logical")
-  s3_register("vctrs::vec_cast", "logical.ab_selector_any_all")
+  # S3: amr_selector
+  s3_register("vctrs::vec_ptype2", "character.amr_selector")
+  s3_register("vctrs::vec_ptype2", "amr_selector.character")
+  s3_register("vctrs::vec_cast", "character.amr_selector")
+  # S3: amr_selector_any_all
+  s3_register("vctrs::vec_ptype2", "logical.amr_selector_any_all")
+  s3_register("vctrs::vec_ptype2", "amr_selector_any_all.logical")
+  s3_register("vctrs::vec_cast", "logical.amr_selector_any_all")
   # S3: ab
   s3_register("vctrs::vec_ptype2", "ab.default")
   s3_register("vctrs::vec_ptype2", "ab.ab")

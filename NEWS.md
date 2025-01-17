@@ -1,4 +1,4 @@
-# AMR 2.1.1.9123
+# AMR 2.1.1.9125
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -31,7 +31,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * **Support for Python**
   * While using R for the heavy lifting, [our 'AMR' Python Package](https://pypi.org/project/AMR/) was developed to run the AMR R package natively in Python. The Python package will always have the same version number as the R package, as it is built automatically with every code change.
 * **Support for `tidymodels`**
-  * All antimicrobial selectors (such as `aminoglycosides()` and `betalactams()`) are now supported in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using AMR function for predictive modelling.
+  * All antimicrobial selectors (such as `aminoglycosides()` and `betalactams()`) are now supported in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using these AMR functions for predictive modelling.
 * **Other**
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
 
@@ -44,14 +44,16 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * New argument `formatting_type` to set any of the 12 options for the formatting of all 'cells'. This defaults to `10`, changing the output of antibiograms to cells with `5% (15/300)` instead of the previous standard of just `5`.
   * For this reason, `add_total_n` is now `FALSE` at default since the denominators are added to the cells
   * The `ab_transform` argument now defaults to `"name"`, displaying antibiotic column names instead of codes
+* Antimicrobial selectors (previously: *antibiotic selectors*)
+  * 'Antibiotic selectors' are now called 'antimicrobial selectors' since their scope is broader than just antibiotics. All documentation have been updated, and `ab_class()` and `ab_selector()` have been replaced with `amr_class()` and `amr_selector()`. The old functions are now deprecated and will be removed in a future version.
+  * Added selectors `nitrofurans()`, `phenicols()`, and `rifamycins()`
+  * When using antimicrobial selectors (such as `aminoglycosides()`) that exclude non-treatable drugs (such as gentamicin-high), the function now always returns a warning that these can be included using `only_treatable = FALSE`
+  * Added a new argument `return_all` to all selectors, which defaults to `TRUE` to include any match. With `FALSE`, the old behaviour, only the first hit for each unique antimicrobial is returned.
+  * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
 * `antibiotics` data set
-  * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antibiotic selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
+  * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antimicrobial selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
   * Added Efflux (`EFF`), to allow mapping to AMRFinderPlus
-* Antibiotic selectors
-  * Added selectors `nitrofurans()`, `phenicols()`, and `rifamycins()`
-  * When using antibiotic selectors (such as `aminoglycosides()`) that exclude non-treatable drugs (such as gentamicin-high), the function now always returns a warning that these can be included using `only_treatable = FALSE`
-  * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
 * MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.

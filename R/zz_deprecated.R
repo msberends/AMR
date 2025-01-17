@@ -27,14 +27,28 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# #' Deprecated Functions
-# #' 
-# #' These functions are so-called '[Deprecated]'. **They will be removed in a future release.** Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
-# #' @keywords internal
-# #' @name AMR-deprecated
-# #' @rdname AMR-deprecated
-# #' @export
-# NULL
+#' Deprecated Functions
+#'
+#' These functions are so-called '[Deprecated]'. **They will be removed in a future version of this package.** Using these functions will give a warning with the name of the function it has been replaced by (if there is one).
+#' @keywords internal
+#' @name AMR-deprecated
+#' @rdname AMR-deprecated
+NULL
+
+#' @rdname AMR-deprecated
+#' @export
+ab_class <- function(...) {
+  deprecation_warning("ab_class", "amr_class")
+  amr_class(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_selector <- function(...) {
+  deprecation_warning("ab_selector", "amr_selector")
+  amr_selector(...)
+}
+
 
 deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_function = TRUE) {
   if (is.null(old)) {
@@ -53,7 +67,7 @@ deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_fun
       warning_(
         ifelse(is.null(new),
           paste0("The `", old, "` ", type, " is no longer in use"),
-          paste0("The `", old, "` ", type, " has been replaced with `", new, "`")
+          paste0("The `", old, "` ", type, " has been replaced with `", new, "` and will be removed in a future version")
         ),
         ifelse(type == "argument",
           ". While the old argument still works, it will be removed in a future version, so please update your code.",

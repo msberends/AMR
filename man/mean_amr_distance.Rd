@@ -18,7 +18,7 @@ amr_distance_from_row(amr_distance, row)
 \arguments{
 \item{x}{a vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
 
-\item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=ab_selector]{antibiotic selectors}}
+\item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=amr_selector]{antimicrobial selectors}}
 
 \item{combine_SI}{a \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
 

@@ -139,7 +139,7 @@ reference:
       These functions are meant to get taxonomically valid properties of microorganisms from any input, but
       also properties derived from taxonomy, such as the Gram stain (`mo_gramstain()`) , or `mo_is_yeast()`.
       Use `mo_source()` to teach this package how to translate your own codes to valid microorganisms, and
-      use `add_custom_microorganisms() to add your own custom microorganisms to this package.
+      use `add_custom_microorganisms()` to add your own custom microorganisms to this package.
     contents:
     - "`as.mo`"
     - "`mo_property`"
@@ -186,7 +186,7 @@ reference:
     - "`mdro`"
     - "`count`"
     - "`bug_drug_combinations`"
-    - "`antibiotic_class_selectors`"
+    - "`antimicrobial_class_selectors`"
     - "`mean_amr_distance`"
     - "`resistance_predict`"
     - "`guess_ab_col`"

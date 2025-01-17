@@ -89,7 +89,7 @@ add_custom_antimicrobials(
 ab_atc("Co-fluampicil")
 ab_name("J01CR50")
 
-# even antibiotic selectors work
+# even antimicrobial selectors work
 x <- data.frame(
   random_column = "some value",
   coflu = as.sir("S"),

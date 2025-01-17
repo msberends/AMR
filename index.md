@@ -5,7 +5,7 @@
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** and extensive info on **all antimicrobial drugs**
 * Applies all recent **CLSI** and **EUCAST** clinical and veterinary breakpoints for MICs, disk zones and ECOFFs
-* Corrects for duplicate isolates, **calculates** and **predicts** AMR per antibiotic class
+* Corrects for duplicate isolates, **calculates** and **predicts** AMR per antimicrobial class
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * 100% free of costs and dependencies, highly suitable for places with **limited resources**
 
@@ -40,7 +40,7 @@ With the help of contributors from all corners of the world, the `AMR` package i
 
 #### Filtering and selecting data
 
-One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antibiotic columns. This can be done using the so-called [antibiotic class selectors](https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html) that work in base R, `dplyr` and `data.table`:
+One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial class selectors](https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html), which work in base R, `dplyr` and `data.table`:
 
 ```r
 # AMR works great with dplyr, but it's not required or neccesary
@@ -52,7 +52,7 @@ example_isolates %>%
   # filtering functions for microorganisms:
   filter(mo_is_gram_negative(),
          mo_is_intrinsic_resistant(ab = "cefotax")) %>%
-  # antibiotic selectors:
+  # antimicrobial selectors:
   select(bacteria,
          aminoglycosides(),
          carbapenems())
@@ -162,7 +162,7 @@ example_isolates %>%
 |ICU        |   0.290    |0.253-0.330  |   0.400    |0.353-0.449  |
 |Outpatient |   0.200    |0.131-0.285  |   0.368    |0.254-0.493  |
 
-Or use [antibiotic class selectors](https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html) to select a series of antibiotic columns:
+Or use [antimicrobial class selectors](https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html) to select a series of antibiotic columns:
 
 ```r
 library(AMR)
@@ -218,7 +218,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
   * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
-  * Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
+  * Getting properties for any antimicrobial (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
   * Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code ([manual](./reference/mo_property.html))

@@ -97,8 +97,12 @@ x <- data.frame(
 )
 # should have the first hits
 expect_identical(
-  colnames(x[, aminoglycosides()]),
+  colnames(x[, aminoglycosides(return_all = FALSE)]),
   c("gen", "tobra")
+)
+expect_identical(
+  colnames(x[, aminoglycosides()]),
+  c("gen", "genta", "J01GB03", "tobra", "Tobracin")
 )
 
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {

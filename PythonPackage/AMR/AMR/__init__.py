@@ -2,6 +2,8 @@ from .datasets import example_isolates
 from .datasets import microorganisms
 from .datasets import antibiotics
 from .datasets import clinical_breakpoints
+from .functions import ab_class
+from .functions import ab_selector
 from .functions import ab_from_text
 from .functions import ab_name
 from .functions import ab_cid
@@ -24,8 +26,8 @@ from .functions import clear_custom_microorganisms
 from .functions import age
 from .functions import age_groups
 from .functions import antibiogram
-from .functions import ab_class
-from .functions import ab_selector
+from .functions import amr_class
+from .functions import amr_selector
 from .functions import aminoglycosides
 from .functions import aminopenicillins
 from .functions import antifungals

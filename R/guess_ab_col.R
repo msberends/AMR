@@ -105,7 +105,8 @@ get_column_abx <- function(x,
                            only_sir_columns = FALSE,
                            sort = TRUE,
                            reuse_previous_result = TRUE,
-                           fn = NULL) {
+                           fn = NULL,
+                           return_all = FALSE) {
   # check if retrieved before, then get it from package environment
   if (isTRUE(reuse_previous_result) && identical(
     unique_call_id(
@@ -253,47 +254,50 @@ get_column_abx <- function(x,
   if (sort == TRUE) {
     out <- out[order(names(out), out)]
   }
-  # only keep the first hits, no duplicates
-  duplicates <- c(out[duplicated(names(out))], out[duplicated(unname(out))])
-  if (length(duplicates) > 0) {
-    all_okay <- FALSE
-  }
-
-  if (isTRUE(info)) {
-    if (all_okay == TRUE) {
-      message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
-    } else {
-      message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+  
+  if (return_all == FALSE) {
+    # only keep the first hits, no duplicates
+    duplicates <- c(out[duplicated(names(out))], out[duplicated(unname(out))])
+    if (length(duplicates) > 0) {
+      all_okay <- FALSE
     }
-    for (i in seq_len(length(out))) {
-      if (isTRUE(verbose) && !names(out[i]) %in% names(duplicates)) {
-        message_(
-          "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
-          " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
-        )
+    
+    if (isTRUE(info)) {
+      if (all_okay == TRUE) {
+        message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+      } else {
+        message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
       }
-      if (names(out[i]) %in% names(duplicates)) {
-        already_set_as <- out[unname(out) == unname(out[i])][1L]
-        if (names(out)[i] != names(already_set_as)) {
-          warning_(
-            paste0(
-              "Column '", font_bold(out[i]), "' will not be used for ",
-              names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
-              ", as it is already set for ",
-              names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
-            ),
-            add_fn = font_red,
-            immediate = verbose
+      for (i in seq_len(length(out))) {
+        if (isTRUE(verbose) && !names(out[i]) %in% names(duplicates)) {
+          message_(
+            "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
+            " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
           )
+        }
+        if (names(out[i]) %in% names(duplicates)) {
+          already_set_as <- out[unname(out) == unname(out[i])][1L]
+          if (names(out)[i] != names(already_set_as)) {
+            warning_(
+              paste0(
+                "Column '", font_bold(out[i]), "' will not be used for ",
+                names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
+                ", as it is already set for ",
+                names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
+              ),
+              add_fn = font_red,
+              immediate = verbose
+            )
+          }
         }
       }
     }
-  }
-
-  out <- out[!duplicated(names(out))]
-  out <- out[!duplicated(unname(out))]
-  if (sort == TRUE) {
-    out <- out[order(names(out), out)]
+    
+    out <- out[!duplicated(names(out))]
+    out <- out[!duplicated(unname(out))]
+    if (sort == TRUE) {
+      out <- out[order(names(out), out)]
+    }
   }
 
   if (!is.null(hard_dependencies)) {

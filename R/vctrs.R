@@ -34,27 +34,27 @@
 
 # see https://github.com/tidyverse/dplyr/issues/5955 why this is required
 
-# S3: ab_selector ----
+# S3: amr_selector ----
 # this does not need a .default method since it's used internally only
-vec_ptype2.character.ab_selector <- function(x, y, ...) {
+vec_ptype2.character.amr_selector <- function(x, y, ...) {
   x
 }
-vec_ptype2.ab_selector.character <- function(x, y, ...) {
+vec_ptype2.amr_selector.character <- function(x, y, ...) {
   y
 }
-vec_cast.character.ab_selector <- function(x, to, ...) {
+vec_cast.character.amr_selector <- function(x, to, ...) {
   unclass(x)
 }
 
-# S3: ab_selector_any_all ----
+# S3: amr_selector_any_all ----
 # this does not need a .default method since it's used internally only
-vec_ptype2.logical.ab_selector_any_all <- function(x, y, ...) {
+vec_ptype2.logical.amr_selector_any_all <- function(x, y, ...) {
   x
 }
-vec_ptype2.ab_selector_any_all.logical <- function(x, y, ...) {
+vec_ptype2.amr_selector_any_all.logical <- function(x, y, ...) {
   y
 }
-vec_cast.logical.ab_selector_any_all <- function(x, to, ...) {
+vec_cast.logical.amr_selector_any_all <- function(x, to, ...) {
   unclass(x)
 }
 

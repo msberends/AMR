@@ -36,6 +36,12 @@ def convert_to_python(r_output):
     
     # Fall-back
     return r_output
+def ab_class(*args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.ab_class(*args, **kwargs))
+def ab_selector(*args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.ab_selector(*args, **kwargs))
 def ab_from_text(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.ab_from_text(*args, **kwargs))
@@ -102,15 +108,15 @@ def age_groups(x, *args, **kwargs):
 def antibiogram(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.antibiogram(*args, **kwargs))
-def ab_class(ab_class, *args, **kwargs):
+def amr_class(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.ab_class(ab_class, *args, **kwargs))
-def ab_selector(filter, *args, **kwargs):
+    return convert_to_python(amr_r.amr_class(*args, **kwargs))
+def amr_selector(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.ab_selector(filter, *args, **kwargs))
-def aminoglycosides(only_sir_columns = False, *args, **kwargs):
+    return convert_to_python(amr_r.amr_selector(*args, **kwargs))
+def aminoglycosides(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.aminoglycosides(only_sir_columns = False, *args, **kwargs))
+    return convert_to_python(amr_r.aminoglycosides(*args, **kwargs))
 def aminopenicillins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.aminopenicillins(only_sir_columns = False, *args, **kwargs))
@@ -120,15 +126,15 @@ def antifungals(only_sir_columns = False, *args, **kwargs):
 def antimycobacterials(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.antimycobacterials(only_sir_columns = False, *args, **kwargs))
-def betalactams(only_sir_columns = False, *args, **kwargs):
+def betalactams(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.betalactams(only_sir_columns = False, *args, **kwargs))
+    return convert_to_python(amr_r.betalactams(*args, **kwargs))
 def betalactams_with_inhibitor(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.betalactams_with_inhibitor(only_sir_columns = False, *args, **kwargs))
-def carbapenems(only_sir_columns = False, *args, **kwargs):
+def carbapenems(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.carbapenems(only_sir_columns = False, *args, **kwargs))
+    return convert_to_python(amr_r.carbapenems(*args, **kwargs))
 def cephalosporins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.cephalosporins(only_sir_columns = False, *args, **kwargs))
@@ -153,9 +159,9 @@ def fluoroquinolones(only_sir_columns = False, *args, **kwargs):
 def glycopeptides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.glycopeptides(only_sir_columns = False, *args, **kwargs))
-def lincosamides(only_sir_columns = False, *args, **kwargs):
+def lincosamides(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.lincosamides(only_sir_columns = False, *args, **kwargs))
+    return convert_to_python(amr_r.lincosamides(*args, **kwargs))
 def lipoglycopeptides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.lipoglycopeptides(only_sir_columns = False, *args, **kwargs))
@@ -174,9 +180,9 @@ def penicillins(only_sir_columns = False, *args, **kwargs):
 def phenicols(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.phenicols(only_sir_columns = False, *args, **kwargs))
-def polymyxins(only_sir_columns = False, *args, **kwargs):
+def polymyxins(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.polymyxins(only_sir_columns = False, *args, **kwargs))
+    return convert_to_python(amr_r.polymyxins(*args, **kwargs))
 def quinolones(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.quinolones(only_sir_columns = False, *args, **kwargs))

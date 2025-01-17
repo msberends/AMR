@@ -213,7 +213,7 @@ if (require("dplyr")) {
     )
 }
 if (require("dplyr")) {
-  # scoped dplyr verbs with antibiotic selectors
+  # scoped dplyr verbs with antimicrobial selectors
   # (you could also use across() of course)
   example_isolates \%>\%
     group_by(ward) \%>\%
