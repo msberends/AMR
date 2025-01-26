@@ -51,6 +51,8 @@
 #' @param include_untested_sir a [logical] to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_sir = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `sir` and consequently requires transforming columns with antibiotic results using [as.sir()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], otherwise arguments passed on to [key_antimicrobials()] (such as `universal`, `gram_negative`, `gram_positive`)
 #' @details
+#' The methodology implemented in these functions is based on the research overview by Hindler *et al.* (2007, \doi{10.1086/511864}) and the recommendations outlined in the [CLSI Guideline M39](https://clsi.org/standards/products/microbiology/documents/m39).
+
 #' To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 #'
 #' These functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
@@ -61,7 +63,7 @@
 #'
 #' ### Different methods
 #'
-#' According to Hindler *et al.* (2007, \doi{10.1086/511864}), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
+#' According to previously-mentioned sources, there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
 #'
 #' All mentioned methods are covered in the [first_isolate()] function:
 #'
@@ -93,11 +95,11 @@
 #'
 #' ### Patient-based
 #'
-#' To include every genus-species combination per patient once, set the `episode_days` to `Inf`. Although often inappropriate, this method makes sure that no duplicate isolates are selected from the same patient. In a large longitudinal data set, this could mean that isolates are *excluded* that were found years after the initial isolate.
+#' To include every genus-species combination per patient once, set the `episode_days` to `Inf`. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are *excluded* that were found years after the initial isolate.
 #'
 #' ### Episode-based
 #'
-#' To include every genus-species combination per patient episode once, set the `episode_days` to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.
+#' To include every genus-species combination per patient episode once, set the `episode_days` to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.
 #'
 #' This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant *Staphylococcus aureus* (MRSA) isolate cannot be differentiated from a wildtype *Staphylococcus aureus* isolate.
 #'

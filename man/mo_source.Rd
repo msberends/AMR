@@ -6,10 +6,8 @@
 \alias{get_mo_source}
 \title{User-Defined Reference Data Set for Microorganisms}
 \usage{
-set_mo_source(
-  path,
-  destination = getOption("AMR_mo_source", "~/mo_source.rds")
-)
+set_mo_source(path, destination = getOption("AMR_mo_source",
+  "~/mo_source.rds"))
 
 get_mo_source(destination = getOption("AMR_mo_source", "~/mo_source.rds"))
 }

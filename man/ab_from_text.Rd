@@ -4,15 +4,9 @@
 \alias{ab_from_text}
 \title{Retrieve Antimicrobial Drug Names and Doses from Clinical Text}
 \usage{
-ab_from_text(
-  text,
-  type = c("drug", "dose", "administration"),
-  collapse = NULL,
-  translate_ab = FALSE,
-  thorough_search = NULL,
-  info = interactive(),
-  ...
-)
+ab_from_text(text, type = c("drug", "dose", "administration"),
+  collapse = NULL, translate_ab = FALSE, thorough_search = NULL,
+  info = interactive(), ...)
 }
 \arguments{
 \item{text}{text to analyse}

@@ -4,15 +4,8 @@
 \alias{pca}
 \title{Principal Component Analysis (for AMR)}
 \usage{
-pca(
-  x,
-  ...,
-  retx = TRUE,
-  center = TRUE,
-  scale. = TRUE,
-  tol = NULL,
-  rank. = NULL
-)
+pca(x, ..., retx = TRUE, center = TRUE, scale. = TRUE, tol = NULL,
+  rank. = NULL)
 }
 \arguments{
 \item{x}{a \link{data.frame} containing \link{numeric} columns}

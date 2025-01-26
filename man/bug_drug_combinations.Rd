@@ -5,20 +5,14 @@
 \alias{format.bug_drug_combinations}
 \title{Determine Bug-Drug Combinations}
 \usage{
-bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
+bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname,
+  include_n_rows = FALSE, ...)
 
-\method{format}{bug_drug_combinations}(
-  x,
-  translate_ab = "name (ab, atc)",
-  language = get_AMR_locale(),
-  minimum = 30,
-  combine_SI = TRUE,
-  add_ab_group = TRUE,
-  remove_intrinsic_resistant = FALSE,
-  decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark == ",", ".", ","),
-  ...
-)
+\method{format}{bug_drug_combinations}(x, translate_ab = "name (ab, atc)",
+  language = get_AMR_locale(), minimum = 30, combine_SI = TRUE,
+  add_ab_group = TRUE, remove_intrinsic_resistant = FALSE,
+  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark ==
+  ",", ".", ","), ...)
 }
 \arguments{
 \item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}

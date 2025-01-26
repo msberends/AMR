@@ -99,17 +99,22 @@ expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikaci
 # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 
 # the data set could contain a filter for e.g. respiratory specimens
-ab8 <- antibiogram(example_isolates,
-                   antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-                   mo_transform = "gramstain",
-                   minimum = 10, # this should be >= 30, but now just as example
-                   syndromic_group = ifelse(example_isolates$age >= 65 &
-                                              example_isolates$gender == "M",
-                                            "WISCA Group 1", "WISCA Group 2"),
-                   ab_transform = NULL)
+ab8 <- suppressWarnings(antibiogram(example_isolates,
+                                    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+                                    wisca = TRUE))
 
 expect_inherits(ab8, "antibiogram")
-expect_equal(colnames(ab8), c("Syndromic Group", "Pathogen", "AMC", "AMC + CIP", "TZP", "TZP + TOB"))
+expect_equal(colnames(ab8), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
+
+# grouped tibbles
+
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+  ab9 <- example_isolates %>%
+    group_by(ward, gender) %>%
+    wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+  expect_equal(colnames(ab9), c("ward", "gender", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
+}
+
 
 # Generate plots with ggplot2 or base R --------------------------------
 
@@ -123,6 +128,9 @@ expect_silent(plot(ab5))
 expect_silent(plot(ab6))
 expect_silent(plot(ab7))
 expect_silent(plot(ab8))
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+  expect_silent(plot(ab9))
+}
 
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(ab1), "gg")
@@ -133,4 +141,7 @@ if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(ab6), "gg")
   expect_inherits(ggplot2::autoplot(ab7), "gg")
   expect_inherits(ggplot2::autoplot(ab8), "gg")
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    expect_inherits(ggplot2::autoplot(ab9), "gg")
+  }
 }

@@ -33,64 +33,35 @@ is.sir(x)
 
 is_sir_eligible(x, threshold = 0.05)
 
-\method{as.sir}{default}(
-  x,
-  S = "^(S|U)+$",
-  I = "^(I)+$",
-  R = "^(R)+$",
-  NI = "^(N|NI|V)+$",
-  SDD = "^(SDD|D|H)+$",
-  ...
-)
+\method{as.sir}{default}(x, S = "^(S|U)+$", I = "^(I)+$", R = "^(R)+$",
+  NI = "^(N|NI|V)+$", SDD = "^(SDD|D|H)+$", ...)
 
-\method{as.sir}{mic}(
-  x,
-  mo = NULL,
-  ab = deparse(substitute(x)),
-  guideline = getOption("AMR_guideline", "EUCAST"),
-  uti = NULL,
-  conserve_capped_values = FALSE,
+\method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+  conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
+  reference_data = AMR::clinical_breakpoints,
+  include_screening = getOption("AMR_include_screening", FALSE),
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
+  verbose = FALSE, ...)
+
+\method{as.sir}{disk}(x, mo = NULL, ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
-  host = NULL,
-  verbose = FALSE,
-  ...
-)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
+  verbose = FALSE, ...)
 
-\method{as.sir}{disk}(
-  x,
-  mo = NULL,
-  ab = deparse(substitute(x)),
-  guideline = getOption("AMR_guideline", "EUCAST"),
-  uti = NULL,
-  add_intrinsic_resistance = FALSE,
+\method{as.sir}{data.frame}(x, ..., col_mo = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+  conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
-  host = NULL,
-  verbose = FALSE,
-  ...
-)
-
-\method{as.sir}{data.frame}(
-  x,
-  ...,
-  col_mo = NULL,
-  guideline = getOption("AMR_guideline", "EUCAST"),
-  uti = NULL,
-  conserve_capped_values = FALSE,
-  add_intrinsic_resistance = FALSE,
-  reference_data = AMR::clinical_breakpoints,
-  include_screening = getOption("AMR_include_screening", FALSE),
-  include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
-  host = NULL,
-  verbose = FALSE
-)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
+  verbose = FALSE)
 
 sir_interpretation_history(clean = FALSE)
 }

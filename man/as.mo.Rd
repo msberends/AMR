@@ -11,20 +11,14 @@
 \alias{mo_cleaning_regex}
 \title{Transform Arbitrary Input to Valid Microbial Taxonomy}
 \usage{
-as.mo(
-  x,
-  Becker = FALSE,
-  Lancefield = FALSE,
+as.mo(x, Becker = FALSE, Lancefield = FALSE,
   minimum_matching_score = NULL,
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
   cleaning_regex = getOption("AMR_cleaning_regex", mo_cleaning_regex()),
   only_fungi = getOption("AMR_only_fungi", FALSE),
-  language = get_AMR_locale(),
-  info = interactive(),
-  ...
-)
+  language = get_AMR_locale(), info = interactive(), ...)
 
 is.mo(x)
 

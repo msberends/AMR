@@ -8,51 +8,22 @@
 \alias{autoplot.resistance_predict}
 \title{Predict Antimicrobial Resistance}
 \usage{
-resistance_predict(
-  x,
-  col_ab,
-  col_date = NULL,
-  year_min = NULL,
-  year_max = NULL,
-  year_every = 1,
-  minimum = 30,
-  model = NULL,
-  I_as_S = TRUE,
-  preserve_measurements = TRUE,
-  info = interactive(),
-  ...
-)
+resistance_predict(x, col_ab, col_date = NULL, year_min = NULL,
+  year_max = NULL, year_every = 1, minimum = 30, model = NULL,
+  I_as_S = TRUE, preserve_measurements = TRUE, info = interactive(), ...)
 
-sir_predict(
-  x,
-  col_ab,
-  col_date = NULL,
-  year_min = NULL,
-  year_max = NULL,
-  year_every = 1,
-  minimum = 30,
-  model = NULL,
-  I_as_S = TRUE,
-  preserve_measurements = TRUE,
-  info = interactive(),
-  ...
-)
+sir_predict(x, col_ab, col_date = NULL, year_min = NULL, year_max = NULL,
+  year_every = 1, minimum = 30, model = NULL, I_as_S = TRUE,
+  preserve_measurements = TRUE, info = interactive(), ...)
 
-\method{plot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ...)
+\method{plot}{resistance_predict}(x, main = paste("Resistance Prediction of",
+  x_name), ...)
 
-ggplot_sir_predict(
-  x,
-  main = paste("Resistance Prediction of", x_name),
-  ribbon = TRUE,
-  ...
-)
+ggplot_sir_predict(x, main = paste("Resistance Prediction of", x_name),
+  ribbon = TRUE, ...)
 
-\method{autoplot}{resistance_predict}(
-  object,
-  main = paste("Resistance Prediction of", x_name),
-  ribbon = TRUE,
-  ...
-)
+\method{autoplot}{resistance_predict}(object,
+  main = paste("Resistance Prediction of", x_name), ribbon = TRUE, ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}

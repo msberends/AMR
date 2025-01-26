@@ -4,12 +4,8 @@
 \alias{guess_ab_col}
 \title{Guess Antibiotic Column}
 \usage{
-guess_ab_col(
-  x = NULL,
-  search_string = NULL,
-  verbose = FALSE,
-  only_sir_columns = FALSE
-)
+guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE,
+  only_sir_columns = FALSE)
 }
 \arguments{
 \item{x}{a \link{data.frame}}

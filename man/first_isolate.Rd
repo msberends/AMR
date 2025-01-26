@@ -12,38 +12,18 @@ Methodology of this function is strictly based on:
 }
 }
 \usage{
-first_isolate(
-  x = NULL,
-  col_date = NULL,
-  col_patient_id = NULL,
-  col_mo = NULL,
-  col_testcode = NULL,
-  col_specimen = NULL,
-  col_icu = NULL,
-  col_keyantimicrobials = NULL,
-  episode_days = 365,
-  testcodes_exclude = NULL,
-  icu_exclude = FALSE,
-  specimen_group = NULL,
-  type = "points",
-  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
-  ignore_I = TRUE,
-  points_threshold = 2,
-  info = interactive(),
-  include_unknown = FALSE,
-  include_untested_sir = TRUE,
-  ...
-)
+first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
+  col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
+  col_icu = NULL, col_keyantimicrobials = NULL, episode_days = 365,
+  testcodes_exclude = NULL, icu_exclude = FALSE, specimen_group = NULL,
+  type = "points", method = c("phenotype-based", "episode-based",
+  "patient-based", "isolate-based"), ignore_I = TRUE, points_threshold = 2,
+  info = interactive(), include_unknown = FALSE,
+  include_untested_sir = TRUE, ...)
 
-filter_first_isolate(
-  x = NULL,
-  col_date = NULL,
-  col_patient_id = NULL,
-  col_mo = NULL,
-  episode_days = 365,
-  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
-  ...
-)
+filter_first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
+  col_mo = NULL, episode_days = 365, method = c("phenotype-based",
+  "episode-based", "patient-based", "isolate-based"), ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}
@@ -93,6 +73,7 @@ A \link{logical} vector
 Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
+The methodology implemented in these functions is based on the research overview by Hindler \emph{et al.} (2007, \doi{10.1086/511864}) and the recommendations outlined in the \href{https://clsi.org/standards/products/microbiology/documents/m39}{CLSI Guideline M39}.
 To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 
 These functions are context-aware. This means that the \code{x} argument can be left blank if used inside a \link{data.frame} call, see \emph{Examples}.
@@ -102,7 +83,7 @@ The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around t
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
 \subsection{Different methods}{
 
-According to Hindler \emph{et al.} (2007, \doi{10.1086/511864}), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
+According to previously-mentioned sources, there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
 
 All mentioned methods are covered in the \code{\link[=first_isolate]{first_isolate()}} function:\tabular{ll}{
    \strong{Method} \tab \strong{Function to apply} \cr
@@ -135,12 +116,12 @@ This method does not require any selection, as all isolates should be included. 
 
 \subsection{Patient-based}{
 
-To include every genus-species combination per patient once, set the \code{episode_days} to \code{Inf}. Although often inappropriate, this method makes sure that no duplicate isolates are selected from the same patient. In a large longitudinal data set, this could mean that isolates are \emph{excluded} that were found years after the initial isolate.
+To include every genus-species combination per patient once, set the \code{episode_days} to \code{Inf}. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are \emph{excluded} that were found years after the initial isolate.
 }
 
 \subsection{Episode-based}{
 
-To include every genus-species combination per patient episode once, set the \code{episode_days} to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.
+To include every genus-species combination per patient episode once, set the \code{episode_days} to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.
 
 This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant \emph{Staphylococcus aureus} (MRSA) isolate cannot be differentiated from a wildtype \emph{Staphylococcus aureus} isolate.
 }

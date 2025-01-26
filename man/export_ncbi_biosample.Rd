@@ -4,13 +4,9 @@
 \alias{export_ncbi_biosample}
 \title{Export Data Set as NCBI BioSample Antibiogram}
 \usage{
-export_ncbi_biosample(
-  x,
-  filename = paste0("biosample_", format(Sys.time(), "\%Y-\%m-\%d-\%H\%M\%S"), ".xlsx"),
-  type = "pathogen MIC",
-  columns = where(is.mic),
-  save_as_xlsx = TRUE
-)
+export_ncbi_biosample(x, filename = paste0("biosample_", format(Sys.time(),
+  "\%Y-\%m-\%d-\%H\%M\%S"), ".xlsx"), type = "pathogen MIC",
+  columns = where(is.mic), save_as_xlsx = TRUE)
 }
 \arguments{
 \item{x}{a data set}

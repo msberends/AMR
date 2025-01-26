@@ -26,6 +26,7 @@ from .functions import clear_custom_microorganisms
 from .functions import age
 from .functions import age_groups
 from .functions import antibiogram
+from .functions import wisca
 from .functions import amr_class
 from .functions import amr_selector
 from .functions import aminoglycosides
@@ -201,5 +202,6 @@ from .functions import resistance_predict
 from .functions import sir_predict
 from .functions import ggplot_sir_predict
 from .functions import skewness
+from .functions import top_n_microorganisms
 from .functions import reset_AMR_locale
 from .functions import translate_AMR

@@ -38,28 +38,14 @@
 \alias{not_intrinsic_resistant}
 \title{Antimicrobial Selectors}
 \usage{
-amr_class(
-  amr_class,
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+amr_class(amr_class, only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
-amr_selector(
-  filter,
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+amr_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
-aminoglycosides(
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+aminoglycosides(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 aminopenicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -67,21 +53,14 @@ antifungals(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 antimycobacterials(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-betalactams(
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+betalactams(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
-betalactams_with_inhibitor(only_sir_columns = FALSE, return_all = TRUE, ...)
+betalactams_with_inhibitor(only_sir_columns = FALSE, return_all = TRUE,
+  ...)
 
-carbapenems(
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+carbapenems(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 cephalosporins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -99,12 +78,8 @@ fluoroquinolones(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 glycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-lincosamides(
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+lincosamides(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 lipoglycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -118,12 +93,8 @@ penicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 phenicols(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-polymyxins(
-  only_sir_columns = FALSE,
-  only_treatable = TRUE,
-  return_all = TRUE,
-  ...
-)
+polymyxins(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 quinolones(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -141,12 +112,8 @@ administrable_per_os(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 administrable_iv(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-not_intrinsic_resistant(
-  only_sir_columns = FALSE,
-  col_mo = NULL,
-  version_expertrules = 3.3,
-  ...
-)
+not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
+  version_expertrules = 3.3, ...)
 }
 \arguments{
 \item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}

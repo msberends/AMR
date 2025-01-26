@@ -6,31 +6,19 @@
 \alias{antimicrobials_equal}
 \title{(Key) Antimicrobials for First Weighted Isolates}
 \usage{
-key_antimicrobials(
-  x = NULL,
-  col_mo = NULL,
-  universal = c("ampicillin", "amoxicillin/clavulanic acid", "cefuroxime",
-    "piperacillin/tazobactam", "ciprofloxacin", "trimethoprim/sulfamethoxazole"),
-  gram_negative = c("gentamicin", "tobramycin", "colistin", "cefotaxime", "ceftazidime",
-    "meropenem"),
-  gram_positive = c("vancomycin", "teicoplanin", "tetracycline", "erythromycin",
-    "oxacillin", "rifampin"),
-  antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole", "nystatin",
-    "voriconazole"),
-  only_sir_columns = FALSE,
-  ...
-)
+key_antimicrobials(x = NULL, col_mo = NULL, universal = c("ampicillin",
+  "amoxicillin/clavulanic acid", "cefuroxime", "piperacillin/tazobactam",
+  "ciprofloxacin", "trimethoprim/sulfamethoxazole"),
+  gram_negative = c("gentamicin", "tobramycin", "colistin", "cefotaxime",
+  "ceftazidime", "meropenem"), gram_positive = c("vancomycin", "teicoplanin",
+  "tetracycline", "erythromycin", "oxacillin", "rifampin"),
+  antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole",
+  "nystatin", "voriconazole"), only_sir_columns = FALSE, ...)
 
 all_antimicrobials(x = NULL, only_sir_columns = FALSE, ...)
 
-antimicrobials_equal(
-  y,
-  z,
-  type = c("points", "keyantimicrobials"),
-  ignore_I = TRUE,
-  points_threshold = 2,
-  ...
-)
+antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
+  ignore_I = TRUE, points_threshold = 2, ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank to determine automatically}

@@ -70,6 +70,7 @@
 bug_drug_combinations <- function(x,
                                   col_mo = NULL,
                                   FUN = mo_shortname,
+                                  include_n_rows = FALSE,
                                   ...) {
   meet_criteria(x, allow_class = "data.frame")
   x <- ascertain_sir_classes(x, "x")
@@ -110,6 +111,7 @@ bug_drug_combinations <- function(x,
       I = integer(0),
       R = integer(0),
       total = integer(0),
+      total_rows = integer(0),
       stringsAsFactors = FALSE
     )
     if (data_has_groups) {
@@ -123,8 +125,14 @@ bug_drug_combinations <- function(x,
       x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.sir))), drop = FALSE]
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
-        m <- as.matrix(table(as.sir(x)))
-        data.frame(S = m["S", ], SDD = m["SDD", ], I = m["I", ], R = m["R", ], NI = m["NI", ], stringsAsFactors = FALSE)
+        m <- as.matrix(table(as.sir(x), useNA = "always"))
+        data.frame(S = m["S", ],
+                   SDD = m["SDD", ],
+                   I = m["I", ],
+                   R = m["R", ],
+                   NI = m["NI", ],
+                   na = m[which(is.na(rownames(m))), ],
+                   stringsAsFactors = FALSE)
       })
       merged <- do.call(rbind_AMR, pivot)
       out_group <- data.frame(
@@ -136,6 +144,7 @@ bug_drug_combinations <- function(x,
         R = merged$R,
         NI = merged$NI,
         total = merged$S + merged$SDD + merged$I + merged$R + merged$NI,
+        total_rows = merged$S + merged$SDD + merged$I + merged$R + merged$NI + merged$na,
         stringsAsFactors = FALSE
       )
       if (data_has_groups) {
@@ -162,16 +171,21 @@ bug_drug_combinations <- function(x,
     }
     res
   }
-
+  
+  if (include_n_rows == FALSE) {
+    out <- out[, colnames(out)[colnames(out) != "total_rows"], drop = FALSE]
+  }
+  
   if (data_has_groups) {
     out <- apply_group(x, "run_it", groups)
   } else {
     out <- run_it(x)
   }
+  
   out <- out %pm>% pm_arrange(mo, ab)
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
   rownames(out) <- NULL
-  structure(out, class = c("bug_drug_combinations", ifelse(data_has_groups, "grouped", character(0)), class(out)))
+  structure(out, class = c("bug_drug_combinations", if(data_has_groups) "grouped" else NULL, class(out)))
 }
 
 #' @method format bug_drug_combinations

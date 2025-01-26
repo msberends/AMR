@@ -19,19 +19,11 @@ Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility test
 }
 }
 \usage{
-eucast_rules(
-  x,
-  col_mo = NULL,
-  info = interactive(),
+eucast_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
-  verbose = FALSE,
-  version_breakpoints = 12,
-  version_expertrules = 3.3,
-  ampc_cephalosporin_resistance = NA,
-  only_sir_columns = FALSE,
-  custom_rules = NULL,
-  ...
-)
+  verbose = FALSE, version_breakpoints = 12, version_expertrules = 3.3,
+  ampc_cephalosporin_resistance = NA, only_sir_columns = FALSE,
+  custom_rules = NULL, ...)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 }

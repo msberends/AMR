@@ -4,15 +4,9 @@
 \alias{av_from_text}
 \title{Retrieve Antiviral Drug Names and Doses from Clinical Text}
 \usage{
-av_from_text(
-  text,
-  type = c("drug", "dose", "administration"),
-  collapse = NULL,
-  translate_av = FALSE,
-  thorough_search = NULL,
-  info = interactive(),
-  ...
-)
+av_from_text(text, type = c("drug", "dose", "administration"),
+  collapse = NULL, translate_av = FALSE, thorough_search = NULL,
+  info = interactive(), ...)
 }
 \arguments{
 \item{text}{text to analyse}

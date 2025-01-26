@@ -42,9 +42,9 @@ def ab_class(*args, **kwargs):
 def ab_selector(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.ab_selector(*args, **kwargs))
-def ab_from_text(*args, **kwargs):
+def ab_from_text(text, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.ab_from_text(*args, **kwargs))
+    return convert_to_python(amr_r.ab_from_text(text, *args, **kwargs))
 def ab_name(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.ab_name(x, *args, **kwargs))
@@ -105,18 +105,21 @@ def age(x, *args, **kwargs):
 def age_groups(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.age_groups(x, *args, **kwargs))
-def antibiogram(*args, **kwargs):
+def antibiogram(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.antibiogram(*args, **kwargs))
-def amr_class(*args, **kwargs):
+    return convert_to_python(amr_r.antibiogram(x, *args, **kwargs))
+def wisca(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.amr_class(*args, **kwargs))
-def amr_selector(*args, **kwargs):
+    return convert_to_python(amr_r.wisca(x, *args, **kwargs))
+def amr_class(amr_class, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.amr_selector(*args, **kwargs))
-def aminoglycosides(*args, **kwargs):
+    return convert_to_python(amr_r.amr_class(amr_class, *args, **kwargs))
+def amr_selector(filter, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.aminoglycosides(*args, **kwargs))
+    return convert_to_python(amr_r.amr_selector(filter, *args, **kwargs))
+def aminoglycosides(only_sir_columns = False, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.aminoglycosides(only_sir_columns = False, *args, **kwargs))
 def aminopenicillins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.aminopenicillins(only_sir_columns = False, *args, **kwargs))
@@ -126,15 +129,15 @@ def antifungals(only_sir_columns = False, *args, **kwargs):
 def antimycobacterials(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.antimycobacterials(only_sir_columns = False, *args, **kwargs))
-def betalactams(*args, **kwargs):
+def betalactams(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.betalactams(*args, **kwargs))
+    return convert_to_python(amr_r.betalactams(only_sir_columns = False, *args, **kwargs))
 def betalactams_with_inhibitor(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.betalactams_with_inhibitor(only_sir_columns = False, *args, **kwargs))
-def carbapenems(*args, **kwargs):
+def carbapenems(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.carbapenems(*args, **kwargs))
+    return convert_to_python(amr_r.carbapenems(only_sir_columns = False, *args, **kwargs))
 def cephalosporins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.cephalosporins(only_sir_columns = False, *args, **kwargs))
@@ -159,9 +162,9 @@ def fluoroquinolones(only_sir_columns = False, *args, **kwargs):
 def glycopeptides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.glycopeptides(only_sir_columns = False, *args, **kwargs))
-def lincosamides(*args, **kwargs):
+def lincosamides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.lincosamides(*args, **kwargs))
+    return convert_to_python(amr_r.lincosamides(only_sir_columns = False, *args, **kwargs))
 def lipoglycopeptides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.lipoglycopeptides(only_sir_columns = False, *args, **kwargs))
@@ -180,9 +183,9 @@ def penicillins(only_sir_columns = False, *args, **kwargs):
 def phenicols(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.phenicols(only_sir_columns = False, *args, **kwargs))
-def polymyxins(*args, **kwargs):
+def polymyxins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.polymyxins(*args, **kwargs))
+    return convert_to_python(amr_r.polymyxins(only_sir_columns = False, *args, **kwargs))
 def quinolones(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.quinolones(only_sir_columns = False, *args, **kwargs))
@@ -207,9 +210,9 @@ def administrable_per_os(only_sir_columns = False, *args, **kwargs):
 def administrable_iv(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.administrable_iv(only_sir_columns = False, *args, **kwargs))
-def not_intrinsic_resistant(*args, **kwargs):
+def not_intrinsic_resistant(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.not_intrinsic_resistant(*args, **kwargs))
+    return convert_to_python(amr_r.not_intrinsic_resistant(only_sir_columns = False, *args, **kwargs))
 def as_ab(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.as_ab(x, *args, **kwargs))
@@ -237,9 +240,9 @@ def is_mic(x):
 def rescale_mic(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.rescale_mic(x, *args, **kwargs))
-def as_mo(*args, **kwargs):
+def as_mo(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.as_mo(*args, **kwargs))
+    return convert_to_python(amr_r.as_mo(x, *args, **kwargs))
 def is_mo(x):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.is_mo(x))
@@ -270,9 +273,9 @@ def is_sir_eligible(x, *args, **kwargs):
 def sir_interpretation_history(clean):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.sir_interpretation_history(clean))
-def atc_online_property(*args, **kwargs):
+def atc_online_property(atc_code, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.atc_online_property(*args, **kwargs))
+    return convert_to_python(amr_r.atc_online_property(atc_code, *args, **kwargs))
 def atc_online_groups(atc_code, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.atc_online_groups(atc_code, *args, **kwargs))
@@ -282,9 +285,9 @@ def atc_online_ddd(atc_code, *args, **kwargs):
 def atc_online_ddd_units(atc_code, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.atc_online_ddd_units(atc_code, *args, **kwargs))
-def av_from_text(*args, **kwargs):
+def av_from_text(text, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.av_from_text(*args, **kwargs))
+    return convert_to_python(amr_r.av_from_text(text, *args, **kwargs))
 def av_name(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.av_name(x, *args, **kwargs))
@@ -354,45 +357,45 @@ def count_all(*args, **kwargs):
 def n_sir(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.n_sir(*args, **kwargs))
-def count_df(*args, **kwargs):
+def count_df(data, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.count_df(*args, **kwargs))
+    return convert_to_python(amr_r.count_df(data, *args, **kwargs))
 def custom_eucast_rules(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.custom_eucast_rules(*args, **kwargs))
-def eucast_rules(*args, **kwargs):
+def eucast_rules(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.eucast_rules(*args, **kwargs))
+    return convert_to_python(amr_r.eucast_rules(x, *args, **kwargs))
 def eucast_dosage(ab, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.eucast_dosage(ab, *args, **kwargs))
-def export_ncbi_biosample(*args, **kwargs):
+def export_ncbi_biosample(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.export_ncbi_biosample(*args, **kwargs))
-def first_isolate(*args, **kwargs):
+    return convert_to_python(amr_r.export_ncbi_biosample(x, *args, **kwargs))
+def first_isolate(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.first_isolate(*args, **kwargs))
-def filter_first_isolate(*args, **kwargs):
+    return convert_to_python(amr_r.first_isolate(x = None, *args, **kwargs))
+def filter_first_isolate(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.filter_first_isolate(*args, **kwargs))
+    return convert_to_python(amr_r.filter_first_isolate(x = None, *args, **kwargs))
 def g_test(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.g_test(x, *args, **kwargs))
 def is_new_episode(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.is_new_episode(x, *args, **kwargs))
-def ggplot_pca(*args, **kwargs):
+def ggplot_pca(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.ggplot_pca(*args, **kwargs))
-def ggplot_sir(*args, **kwargs):
+    return convert_to_python(amr_r.ggplot_pca(x, *args, **kwargs))
+def ggplot_sir(data, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.ggplot_sir(*args, **kwargs))
-def geom_sir(*args, **kwargs):
+    return convert_to_python(amr_r.ggplot_sir(data, *args, **kwargs))
+def geom_sir(position = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.geom_sir(*args, **kwargs))
-def guess_ab_col(*args, **kwargs):
+    return convert_to_python(amr_r.geom_sir(position = None, *args, **kwargs))
+def guess_ab_col(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.guess_ab_col(*args, **kwargs))
+    return convert_to_python(amr_r.guess_ab_col(x = None, *args, **kwargs))
 def italicise_taxonomy(string, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.italicise_taxonomy(string, *args, **kwargs))
@@ -417,24 +420,24 @@ def semi_join_microorganisms(x, *args, **kwargs):
 def anti_join_microorganisms(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.anti_join_microorganisms(x, *args, **kwargs))
-def key_antimicrobials(*args, **kwargs):
+def key_antimicrobials(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.key_antimicrobials(*args, **kwargs))
+    return convert_to_python(amr_r.key_antimicrobials(x = None, *args, **kwargs))
 def all_antimicrobials(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.all_antimicrobials(x = None, *args, **kwargs))
-def antimicrobials_equal(*args, **kwargs):
+def antimicrobials_equal(y, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.antimicrobials_equal(*args, **kwargs))
+    return convert_to_python(amr_r.antimicrobials_equal(y, *args, **kwargs))
 def kurtosis(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.kurtosis(x, *args, **kwargs))
 def like(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.like(x, *args, **kwargs))
-def mdro(*args, **kwargs):
+def mdro(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mdro(*args, **kwargs))
+    return convert_to_python(amr_r.mdro(x = None, *args, **kwargs))
 def custom_mdro_guideline(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.custom_mdro_guideline(*args, **kwargs))
@@ -450,9 +453,9 @@ def mdr_tb(x = None, *args, **kwargs):
 def mdr_cmi2012(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.mdr_cmi2012(x = None, *args, **kwargs))
-def eucast_exceptional_phenotypes(*args, **kwargs):
+def eucast_exceptional_phenotypes(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.eucast_exceptional_phenotypes(*args, **kwargs))
+    return convert_to_python(amr_r.eucast_exceptional_phenotypes(x = None, *args, **kwargs))
 def mean_amr_distance(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.mean_amr_distance(x, *args, **kwargs))
@@ -462,126 +465,126 @@ def amr_distance_from_row(amr_distance, *args, **kwargs):
 def mo_matching_score(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.mo_matching_score(x, *args, **kwargs))
-def mo_name(*args, **kwargs):
+def mo_name(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_name(*args, **kwargs))
-def mo_fullname(*args, **kwargs):
+    return convert_to_python(amr_r.mo_name(x, *args, **kwargs))
+def mo_fullname(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_fullname(*args, **kwargs))
-def mo_shortname(*args, **kwargs):
+    return convert_to_python(amr_r.mo_fullname(x, *args, **kwargs))
+def mo_shortname(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_shortname(*args, **kwargs))
-def mo_subspecies(*args, **kwargs):
+    return convert_to_python(amr_r.mo_shortname(x, *args, **kwargs))
+def mo_subspecies(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_subspecies(*args, **kwargs))
-def mo_species(*args, **kwargs):
+    return convert_to_python(amr_r.mo_subspecies(x, *args, **kwargs))
+def mo_species(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_species(*args, **kwargs))
-def mo_genus(*args, **kwargs):
+    return convert_to_python(amr_r.mo_species(x, *args, **kwargs))
+def mo_genus(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_genus(*args, **kwargs))
-def mo_family(*args, **kwargs):
+    return convert_to_python(amr_r.mo_genus(x, *args, **kwargs))
+def mo_family(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_family(*args, **kwargs))
-def mo_order(*args, **kwargs):
+    return convert_to_python(amr_r.mo_family(x, *args, **kwargs))
+def mo_order(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_order(*args, **kwargs))
-def mo_class(*args, **kwargs):
+    return convert_to_python(amr_r.mo_order(x, *args, **kwargs))
+def mo_class(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_class(*args, **kwargs))
-def mo_phylum(*args, **kwargs):
+    return convert_to_python(amr_r.mo_class(x, *args, **kwargs))
+def mo_phylum(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_phylum(*args, **kwargs))
-def mo_kingdom(*args, **kwargs):
+    return convert_to_python(amr_r.mo_phylum(x, *args, **kwargs))
+def mo_kingdom(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_kingdom(*args, **kwargs))
-def mo_domain(*args, **kwargs):
+    return convert_to_python(amr_r.mo_kingdom(x, *args, **kwargs))
+def mo_domain(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_domain(*args, **kwargs))
-def mo_type(*args, **kwargs):
+    return convert_to_python(amr_r.mo_domain(x, *args, **kwargs))
+def mo_type(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_type(*args, **kwargs))
-def mo_status(*args, **kwargs):
+    return convert_to_python(amr_r.mo_type(x, *args, **kwargs))
+def mo_status(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_status(*args, **kwargs))
-def mo_pathogenicity(*args, **kwargs):
+    return convert_to_python(amr_r.mo_status(x, *args, **kwargs))
+def mo_pathogenicity(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_pathogenicity(*args, **kwargs))
-def mo_gramstain(*args, **kwargs):
+    return convert_to_python(amr_r.mo_pathogenicity(x, *args, **kwargs))
+def mo_gramstain(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_gramstain(*args, **kwargs))
-def mo_is_gram_negative(*args, **kwargs):
+    return convert_to_python(amr_r.mo_gramstain(x, *args, **kwargs))
+def mo_is_gram_negative(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_is_gram_negative(*args, **kwargs))
-def mo_is_gram_positive(*args, **kwargs):
+    return convert_to_python(amr_r.mo_is_gram_negative(x, *args, **kwargs))
+def mo_is_gram_positive(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_is_gram_positive(*args, **kwargs))
-def mo_is_yeast(*args, **kwargs):
+    return convert_to_python(amr_r.mo_is_gram_positive(x, *args, **kwargs))
+def mo_is_yeast(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_is_yeast(*args, **kwargs))
-def mo_is_intrinsic_resistant(*args, **kwargs):
+    return convert_to_python(amr_r.mo_is_yeast(x, *args, **kwargs))
+def mo_is_intrinsic_resistant(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_is_intrinsic_resistant(*args, **kwargs))
-def mo_oxygen_tolerance(*args, **kwargs):
+    return convert_to_python(amr_r.mo_is_intrinsic_resistant(x, *args, **kwargs))
+def mo_oxygen_tolerance(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_oxygen_tolerance(*args, **kwargs))
-def mo_is_anaerobic(*args, **kwargs):
+    return convert_to_python(amr_r.mo_oxygen_tolerance(x, *args, **kwargs))
+def mo_is_anaerobic(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_is_anaerobic(*args, **kwargs))
-def mo_snomed(*args, **kwargs):
+    return convert_to_python(amr_r.mo_is_anaerobic(x, *args, **kwargs))
+def mo_snomed(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_snomed(*args, **kwargs))
-def mo_ref(*args, **kwargs):
+    return convert_to_python(amr_r.mo_snomed(x, *args, **kwargs))
+def mo_ref(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_ref(*args, **kwargs))
-def mo_authors(*args, **kwargs):
+    return convert_to_python(amr_r.mo_ref(x, *args, **kwargs))
+def mo_authors(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_authors(*args, **kwargs))
-def mo_year(*args, **kwargs):
+    return convert_to_python(amr_r.mo_authors(x, *args, **kwargs))
+def mo_year(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_year(*args, **kwargs))
-def mo_lpsn(*args, **kwargs):
+    return convert_to_python(amr_r.mo_year(x, *args, **kwargs))
+def mo_lpsn(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_lpsn(*args, **kwargs))
-def mo_mycobank(*args, **kwargs):
+    return convert_to_python(amr_r.mo_lpsn(x, *args, **kwargs))
+def mo_mycobank(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_mycobank(*args, **kwargs))
-def mo_gbif(*args, **kwargs):
+    return convert_to_python(amr_r.mo_mycobank(x, *args, **kwargs))
+def mo_gbif(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_gbif(*args, **kwargs))
-def mo_rank(*args, **kwargs):
+    return convert_to_python(amr_r.mo_gbif(x, *args, **kwargs))
+def mo_rank(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_rank(*args, **kwargs))
-def mo_taxonomy(*args, **kwargs):
+    return convert_to_python(amr_r.mo_rank(x, *args, **kwargs))
+def mo_taxonomy(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_taxonomy(*args, **kwargs))
-def mo_synonyms(*args, **kwargs):
+    return convert_to_python(amr_r.mo_taxonomy(x, *args, **kwargs))
+def mo_synonyms(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_synonyms(*args, **kwargs))
+    return convert_to_python(amr_r.mo_synonyms(x, *args, **kwargs))
 def mo_current(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.mo_current(x, *args, **kwargs))
-def mo_group_members(*args, **kwargs):
+def mo_group_members(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_group_members(*args, **kwargs))
-def mo_info(*args, **kwargs):
+    return convert_to_python(amr_r.mo_group_members(x, *args, **kwargs))
+def mo_info(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_info(*args, **kwargs))
-def mo_url(*args, **kwargs):
+    return convert_to_python(amr_r.mo_info(x, *args, **kwargs))
+def mo_url(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_url(*args, **kwargs))
-def mo_property(*args, **kwargs):
+    return convert_to_python(amr_r.mo_url(x, *args, **kwargs))
+def mo_property(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.mo_property(*args, **kwargs))
-def pca(*args, **kwargs):
+    return convert_to_python(amr_r.mo_property(x, *args, **kwargs))
+def pca(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.pca(*args, **kwargs))
+    return convert_to_python(amr_r.pca(x, *args, **kwargs))
 def theme_sir(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.theme_sir(*args, **kwargs))
-def labels_sir_count(*args, **kwargs):
+def labels_sir_count(position = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.labels_sir_count(*args, **kwargs))
+    return convert_to_python(amr_r.labels_sir_count(position = None, *args, **kwargs))
 def resistance(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.resistance(*args, **kwargs))
@@ -606,12 +609,12 @@ def proportion_SI(*args, **kwargs):
 def proportion_S(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.proportion_S(*args, **kwargs))
-def proportion_df(*args, **kwargs):
+def proportion_df(data, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.proportion_df(*args, **kwargs))
-def sir_df(*args, **kwargs):
+    return convert_to_python(amr_r.proportion_df(data, *args, **kwargs))
+def sir_df(data, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.sir_df(*args, **kwargs))
+    return convert_to_python(amr_r.sir_df(data, *args, **kwargs))
 def random_mic(size = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.random_mic(size = None, *args, **kwargs))
@@ -621,18 +624,21 @@ def random_disk(size = None, *args, **kwargs):
 def random_sir(size = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.random_sir(size = None, *args, **kwargs))
-def resistance_predict(*args, **kwargs):
+def resistance_predict(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.resistance_predict(*args, **kwargs))
-def sir_predict(*args, **kwargs):
+    return convert_to_python(amr_r.resistance_predict(x, *args, **kwargs))
+def sir_predict(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.sir_predict(*args, **kwargs))
-def ggplot_sir_predict(*args, **kwargs):
+    return convert_to_python(amr_r.sir_predict(x, *args, **kwargs))
+def ggplot_sir_predict(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.ggplot_sir_predict(*args, **kwargs))
+    return convert_to_python(amr_r.ggplot_sir_predict(x, *args, **kwargs))
 def skewness(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.skewness(x, *args, **kwargs))
+def top_n_microorganisms(x, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.top_n_microorganisms(x, *args, **kwargs))
 def reset_AMR_locale(*args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.reset_AMR_locale(*args, **kwargs))

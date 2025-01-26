@@ -1,4 +1,4 @@
-# AMR 2.1.1.9125
+# AMR 2.1.1.9126
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -6,7 +6,7 @@
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
 ## Breaking
-* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over a year ago
+* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents two years ago
 
 ## New
 * **One Health implementation**
@@ -16,6 +16,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
+* Support for WISCA antibiograms**  
+  * The `antibiogram()` function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in datasets with sparse data. A dedicated `wisca()` function is also available for easy usage.
 * **Major update to fungal taxonomy and tools for mycologists**
   * MycoBank has now been integrated as the primary taxonomic source for fungi. The `microorganisms` data set has been enriched with new columns (`mycobank`, `mycobank_parent`, and `mycobank_renamed_to`) that provide detailed information for fungal species.
   * A remarkable addition of over 20,000 new fungal records
@@ -33,7 +35,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * **Support for `tidymodels`**
   * All antimicrobial selectors (such as `aminoglycosides()` and `betalactams()`) are now supported in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using these AMR functions for predictive modelling.
 * **Other**
+  * New function `top_n_microorganisms()` to filter a data set to the top *n* of any taxonomic property, e.g., filter to the top 3 species, filter to any species in the top 5 genera, or filter to the top 3 species in each of the top 5 genera
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
+  
 
 ## Changed
 * SIR interpretation
@@ -68,12 +72,12 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Updated all antibiotic DDDs from WHOCC
 * Added over 1,500 trade names for antibiotics
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
+* Fixed a bug for when `antibiogram()` returns an empty data set
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy
 * Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically:
   * More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species
   * Genera from the World Health Organization's (WHO) Priority Pathogen List now have the highest prevalence
-* Fixed a bug for when `antibiogram()` returns an empty data set
 * Fixed a bug for `sir_confidence_interval()` when there are no isolates available
 * Updated the prevalence calculation to include genera from the World Health Organization's (WHO) Priority Pathogen List
 * Improved algorithm of `first_isolate()` when using the phenotype-based method, to prioritise records with the highest availability of SIR values
@@ -83,14 +87,15 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added arguments `esbl`, `carbapenemase`, `mecA`, `mecC`, `vanA`, `vanB` to denote column names or logical values indicating presence of these genes (or production of their proteins)
 
 ## Other
+* Added Dr. Larisse Bolton as contributor for her fantastic implementation of WISCA in a mathematically solid way
+* Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Greatly updated and expanded documentation
-* Added Larisse Bolton, Jordan Stull, Matthew Saab, and Javier Sanchez as contributors, to thank them for their valuable input
 * Stopped support for SAS (`.xpt`) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.
 
 ## Older Versions
 
-This changelog only contains changes from AMR v3.0 (October 2024) and later.
+This changelog only contains changes from AMR v3.0 (February 2025) and later.
 
 * For prior v2 versions, please see [our v2 archive](https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md).
 * For prior v1 versions, please see [our v1 archive](https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md).

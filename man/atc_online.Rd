@@ -10,13 +10,9 @@
 \url{https://atcddd.fhi.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 }
 \usage{
-atc_online_property(
-  atc_code,
-  property,
-  administration = "O",
+atc_online_property(atc_code, property, administration = "O",
   url = "https://atcddd.fhi.no/atc_ddd_index/?code=\%s&showdescription=no",
-  url_vet = "https://atcddd.fhi.no/atcvet/atcvet_index/?code=\%s&showdescription=no"
-)
+  url_vet = "https://atcddd.fhi.no/atcvet/atcvet_index/?code=\%s&showdescription=no")
 
 atc_online_groups(atc_code, ...)
 

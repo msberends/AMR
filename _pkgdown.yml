@@ -267,10 +267,10 @@ reference:
     - "`kurtosis`"
     - "`skewness`"
 
-  # - title: "Other: deprecated functions"
-  #   desc: >
-  #     These functions are deprecated, meaning that they will still
-  #     work but show a warning with every use and will be removed
-  #     in a future version.
-  #   contents:
-  #   - "`AMR-deprecated`"
+  - title: "Other: deprecated functions"
+    desc: >
+      These functions are deprecated, meaning that they will still
+      work but show a warning that they will be removed
+      in a future version.
+    contents:
+    - "`AMR-deprecated`"

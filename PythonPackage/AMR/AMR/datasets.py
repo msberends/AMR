@@ -3,6 +3,7 @@ GREEN = '\033[32m'
 RESET = '\033[0m'
 
 import os
+import sys
 from rpy2 import robjects
 from rpy2.robjects import pandas2ri
 from rpy2.robjects.packages import importr, isinstalled
@@ -10,7 +11,7 @@ import pandas as pd
 import importlib.metadata as metadata
 
 # Get the path to the virtual environment
-venv_path = os.getenv('VIRTUAL_ENV')  # Path to the active virtual environment
+venv_path = sys.prefix
 
 # Define R library path within the venv
 r_lib_path = os.path.join(venv_path, "R_libs")
@@ -19,10 +20,12 @@ os.makedirs(r_lib_path, exist_ok=True)
 # Set the R library path in .libPaths
 base = importr('base')
 base._libPaths(r_lib_path)
+r_amr_lib_path = base._libPaths()[0]
 
 # Check if the AMR package is installed in R
-if not isinstalled('AMR'):
+if not isinstalled('AMR', lib_loc = r_amr_lib_path):
     utils = importr('utils')
+    print(f"{BLUE}AMR:{RESET} Installing AMR package to {BLUE}{r_amr_lib_path}/{RESET}...", flush=True)
     utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
 
 # Python package version of AMR
@@ -37,7 +40,7 @@ r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_li
 # Compare R and Python package versions
 if r_amr_version != python_amr_version:
     try:
-        print(f"{BLUE}AMR:{RESET} Updating package version{RESET}", flush=True)
+        print(f"{BLUE}AMR:{RESET} Updating AMR package in {BLUE}{r_amr_lib_path}/{RESET}...", flush=True)
         utils = importr('utils')
         utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
     except Exception as e:

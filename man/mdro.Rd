@@ -19,23 +19,10 @@
 See the supported guidelines above for the \link{list} of publications used for this function.
 }
 \usage{
-mdro(
-  x = NULL,
-  guideline = "CMI2012",
-  col_mo = NULL,
-  esbl = NA,
-  carbapenemase = NA,
-  mecA = NA,
-  mecC = NA,
-  vanA = NA,
-  vanB = NA,
-  info = interactive(),
-  pct_required_classes = 0.5,
-  combine_SI = TRUE,
-  verbose = FALSE,
-  only_sir_columns = FALSE,
-  ...
-)
+mdro(x = NULL, guideline = "CMI2012", col_mo = NULL, esbl = NA,
+  carbapenemase = NA, mecA = NA, mecC = NA, vanA = NA, vanB = NA,
+  info = interactive(), pct_required_classes = 0.5, combine_SI = TRUE,
+  verbose = FALSE, only_sir_columns = FALSE, ...)
 
 custom_mdro_guideline(..., as_factor = TRUE)
 
@@ -47,12 +34,8 @@ mdr_tb(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...)
 
 mdr_cmi2012(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...)
 
-eucast_exceptional_phenotypes(
-  x = NULL,
-  only_sir_columns = FALSE,
-  verbose = FALSE,
-  ...
-)
+eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE,
+  verbose = FALSE, ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}

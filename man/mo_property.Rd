@@ -40,262 +40,115 @@
 \alias{mo_url}
 \title{Get Properties of a Microorganism}
 \usage{
-mo_name(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_name(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_fullname(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_fullname(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_shortname(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_shortname(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_subspecies(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_subspecies(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_species(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_species(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_genus(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_genus(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_family(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_family(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_order(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_order(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_class(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_class(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_phylum(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_phylum(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_kingdom(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_kingdom(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_domain(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_domain(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_type(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_type(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_status(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_status(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_pathogenicity(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_pathogenicity(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_gramstain(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_gramstain(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_is_gram_negative(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_is_gram_negative(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_is_gram_positive(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_is_gram_positive(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_is_yeast(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_is_yeast(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_is_intrinsic_resistant(
-  x,
-  ab,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_is_intrinsic_resistant(x, ab, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_oxygen_tolerance(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_oxygen_tolerance(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_is_anaerobic(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_is_anaerobic(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_snomed(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_snomed(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_ref(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_ref(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_authors(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_authors(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_year(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_year(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_lpsn(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_lpsn(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_mycobank(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_mycobank(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_gbif(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_gbif(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_rank(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_rank(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_taxonomy(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_taxonomy(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_synonyms(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_synonyms(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
 mo_current(x, language = get_AMR_locale(), ...)
 
-mo_group_members(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_group_members(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_info(
-  x,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_info(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_url(
-  x,
-  open = FALSE,
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_url(x, open = FALSE, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
-mo_property(
-  x,
-  property = "fullname",
-  language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
-  ...
-)
+mo_property(x, property = "fullname", language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 }
 \arguments{
 \item{x}{any \link{character} (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
