@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9125</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9133</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 17 January 2025.</p>
+generated on 27 January 2025.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -144,21 +144,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2025-01-17</td>
+<td align="center">2025-01-27</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2025-01-17</td>
+<td align="center">2025-01-27</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2025-01-17</td>
+<td align="center">2025-01-27</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -691,26 +691,9 @@ previously mentioned antibiotic class selectors:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ The function aminoglycosides() should be used inside a dplyr verb or</span></span>
-<span><span class="co">#&gt;   data.frame call, e.g.:</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(aminoglycosides())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(column_a, column_b, aminoglycosides())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% filter(any(aminoglycosides() == "R"))</span></span>
-<span><span class="co">#&gt;   • your_data[, aminoglycosides()]</span></span>
-<span><span class="co">#&gt;   • your_data[, c("column_a", "column_b", aminoglycosides())]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Now returning a vector of all possible antimicrobials that</span></span>
-<span><span class="co">#&gt; aminoglycosides() can select.</span></span>
-<span><span class="co">#&gt; ℹ The function carbapenems() should be used inside a dplyr verb or</span></span>
-<span><span class="co">#&gt;   data.frame call, e.g.:</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(carbapenems())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(column_a, column_b, carbapenems())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% filter(any(carbapenems() == "R"))</span></span>
-<span><span class="co">#&gt;   • your_data[, carbapenems()]</span></span>
-<span><span class="co">#&gt;   • your_data[, c("column_a", "column_b", carbapenems())]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Now returning a vector of all possible antimicrobials that carbapenems()</span></span>
-<span><span class="co">#&gt; can select.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -838,16 +821,8 @@ language to be Spanish using the <code>language</code> argument:</p>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>            language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ The function aminoglycosides() should be used inside a dplyr verb or</span></span>
-<span><span class="co">#&gt;   data.frame call, e.g.:</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(aminoglycosides())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(column_a, column_b, aminoglycosides())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% filter(any(aminoglycosides() == "R"))</span></span>
-<span><span class="co">#&gt;   • your_data[, aminoglycosides()]</span></span>
-<span><span class="co">#&gt;   • your_data[, c("column_a", "column_b", aminoglycosides())]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Now returning a vector of all possible antimicrobials that</span></span>
-<span><span class="co">#&gt; aminoglycosides() can select.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="20%">
@@ -970,26 +945,9 @@ argument must be used. This can be any column in the data, or e.g. an
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            syndromic_group <span class="op">=</span> <span class="st">"ward"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ The function aminoglycosides() should be used inside a dplyr verb or</span></span>
-<span><span class="co">#&gt;   data.frame call, e.g.:</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(aminoglycosides())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(column_a, column_b, aminoglycosides())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% filter(any(aminoglycosides() == "R"))</span></span>
-<span><span class="co">#&gt;   • your_data[, aminoglycosides()]</span></span>
-<span><span class="co">#&gt;   • your_data[, c("column_a", "column_b", aminoglycosides())]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Now returning a vector of all possible antimicrobials that</span></span>
-<span><span class="co">#&gt; aminoglycosides() can select.</span></span>
-<span><span class="co">#&gt; ℹ The function carbapenems() should be used inside a dplyr verb or</span></span>
-<span><span class="co">#&gt;   data.frame call, e.g.:</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(carbapenems())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% select(column_a, column_b, carbapenems())</span></span>
-<span><span class="co">#&gt;   • your_data %&gt;% filter(any(carbapenems() == "R"))</span></span>
-<span><span class="co">#&gt;   • your_data[, carbapenems()]</span></span>
-<span><span class="co">#&gt;   • your_data[, c("column_a", "column_b", carbapenems())]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Now returning a vector of all possible antimicrobials that carbapenems()</span></span>
-<span><span class="co">#&gt; can select.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="13%">

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9125</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9133</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -183,7 +183,7 @@
       </dl></div><div class="section level2">
       <h2 id="analysing-data">Analysing data<a class="anchor" aria-label="anchor" href="#analysing-data"></a></h2>
 
-      <div class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. With <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination antibiogram(WISCA). This function also comes with support for R Markdown and Quarto. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/antimicrobial_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></div>
+      <div class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. With <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination antibiogram (WISCA). This function also comes with support for R Markdown and Quarto. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/antimicrobial_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></div>
 
 
     </div><div class="section level2">
@@ -193,7 +193,7 @@
 
       <dl><dt>
 
-          <code><a href="antibiogram.html">antibiogram()</a></code> <code><a href="antibiogram.html">plot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">autoplot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">knit_print(<i>&lt;antibiogram&gt;</i>)</a></code>
+          <code><a href="antibiogram.html">antibiogram()</a></code> <code><a href="antibiogram.html">wisca()</a></code> <code><a href="antibiogram.html">plot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">autoplot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">knit_print(<i>&lt;antibiogram&gt;</i>)</a></code>
 
         </dt>
         <dd>Generate Traditional, Combination, Syndromic, or WISCA Antibiograms</dd>
@@ -245,6 +245,12 @@
 
         </dt>
         <dd>Antimicrobial Selectors</dd>
+      </dl><dl><dt>
+
+          <code><a href="top_n_microorganisms.html">top_n_microorganisms()</a></code>
+
+        </dt>
+        <dd>Filter Top <em>n</em> Microorganisms</dd>
       </dl><dl><dt>
 
           <code><a href="mean_amr_distance.html">mean_amr_distance()</a></code> <code><a href="mean_amr_distance.html">amr_distance_from_row()</a></code>
@@ -521,6 +527,23 @@
 
         </dt>
         <dd>Skewness of the Sample</dd>
+      </dl></div><div class="section level2">
+      <h2 id="other-deprecated-functions">Other: deprecated functions<a class="anchor" aria-label="anchor" href="#other-deprecated-functions"></a></h2>
+
+      <div class="section-desc"><p>These functions are deprecated, meaning that they will still work but show a warning that they will be removed in a future version.</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="AMR-deprecated.html">ab_class()</a></code> <code><a href="AMR-deprecated.html">ab_selector()</a></code>
+
+        </dt>
+        <dd>Deprecated Functions</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

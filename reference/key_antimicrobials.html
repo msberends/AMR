@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9125</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9133</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,31 +54,19 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">key_antimicrobials</span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  universal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"amoxicillin/clavulanic acid"</span>, <span class="st">"cefuroxime"</span>,</span>
-<span>    <span class="st">"piperacillin/tazobactam"</span>, <span class="st">"ciprofloxacin"</span>, <span class="st">"trimethoprim/sulfamethoxazole"</span><span class="op">)</span>,</span>
-<span>  gram_negative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gentamicin"</span>, <span class="st">"tobramycin"</span>, <span class="st">"colistin"</span>, <span class="st">"cefotaxime"</span>, <span class="st">"ceftazidime"</span>,</span>
-<span>    <span class="st">"meropenem"</span><span class="op">)</span>,</span>
-<span>  gram_positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vancomycin"</span>, <span class="st">"teicoplanin"</span>, <span class="st">"tetracycline"</span>, <span class="st">"erythromycin"</span>,</span>
-<span>    <span class="st">"oxacillin"</span>, <span class="st">"rifampin"</span><span class="op">)</span>,</span>
-<span>  antifungal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"anidulafungin"</span>, <span class="st">"caspofungin"</span>, <span class="st">"fluconazole"</span>, <span class="st">"miconazole"</span>, <span class="st">"nystatin"</span>,</span>
-<span>    <span class="st">"voriconazole"</span><span class="op">)</span>,</span>
-<span>  only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">key_antimicrobials</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, universal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>,</span>
+<span>  <span class="st">"amoxicillin/clavulanic acid"</span>, <span class="st">"cefuroxime"</span>, <span class="st">"piperacillin/tazobactam"</span>,</span>
+<span>  <span class="st">"ciprofloxacin"</span>, <span class="st">"trimethoprim/sulfamethoxazole"</span><span class="op">)</span>,</span>
+<span>  gram_negative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gentamicin"</span>, <span class="st">"tobramycin"</span>, <span class="st">"colistin"</span>, <span class="st">"cefotaxime"</span>,</span>
+<span>  <span class="st">"ceftazidime"</span>, <span class="st">"meropenem"</span><span class="op">)</span>, gram_positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vancomycin"</span>, <span class="st">"teicoplanin"</span>,</span>
+<span>  <span class="st">"tetracycline"</span>, <span class="st">"erythromycin"</span>, <span class="st">"oxacillin"</span>, <span class="st">"rifampin"</span><span class="op">)</span>,</span>
+<span>  antifungal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"anidulafungin"</span>, <span class="st">"caspofungin"</span>, <span class="st">"fluconazole"</span>, <span class="st">"miconazole"</span>,</span>
+<span>  <span class="st">"nystatin"</span>, <span class="st">"voriconazole"</span><span class="op">)</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">all_antimicrobials</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">antimicrobials_equal</span><span class="op">(</span></span>
-<span>  <span class="va">y</span>,</span>
-<span>  <span class="va">z</span>,</span>
-<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"points"</span>, <span class="st">"keyantimicrobials"</span><span class="op">)</span>,</span>
-<span>  ignore_I <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  points_threshold <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"points"</span>, <span class="st">"keyantimicrobials"</span><span class="op">)</span>,</span>
+<span>  ignore_I <span class="op">=</span> <span class="cn">TRUE</span>, points_threshold <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">

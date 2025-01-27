@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9125</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9133</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -200,6 +200,129 @@ the standard name, “Ciprofloxacin”.</p></li>
 </div>
 </div>
 <div class="section level3">
+<h3 id="calculating-amr">Calculating AMR<a class="anchor" aria-label="anchor" href="#calculating-amr"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> AMR</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>df <span class="op">=</span> AMR.example_isolates</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>result <span class="op">=</span> AMR.resistance(df[<span class="st">"AMX"</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
+<pre><code>[0.59555556]</code></pre>
+</div>
+<div class="section level3">
+<h3 id="generating-antibiograms">Generating Antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
+</h3>
+<p>One of the core functions of the <code>AMR</code> package is
+generating an antibiogram, a table that summarises the antimicrobial
+susceptibility of bacterial isolates. Here’s how you can generate an
+antibiogram from Python:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>result2a <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]])</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="bu">print</span>(result2a)</span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="22%">
+<col width="22%">
+<col width="22%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th>Pathogen</th>
+<th>Amoxicillin</th>
+<th>Ciprofloxacin</th>
+<th>Piperacillin/tazobactam</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>CoNS</td>
+<td>7% (10/142)</td>
+<td>73% (183/252)</td>
+<td>30% (10/33)</td>
+</tr>
+<tr class="even">
+<td>E. coli</td>
+<td>50% (196/392)</td>
+<td>88% (399/456)</td>
+<td>94% (393/416)</td>
+</tr>
+<tr class="odd">
+<td>K. pneumoniae</td>
+<td>0% (0/58)</td>
+<td>96% (53/55)</td>
+<td>89% (47/53)</td>
+</tr>
+<tr class="even">
+<td>P. aeruginosa</td>
+<td>0% (0/30)</td>
+<td>100% (30/30)</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td>P. mirabilis</td>
+<td>None</td>
+<td>94% (34/36)</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td>S. aureus</td>
+<td>6% (8/131)</td>
+<td>90% (171/191)</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td>S. epidermidis</td>
+<td>1% (1/91)</td>
+<td>64% (87/136)</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td>S. hominis</td>
+<td>None</td>
+<td>80% (56/70)</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td>S. pneumoniae</td>
+<td>100% (112/112)</td>
+<td>None</td>
+<td>100% (112/112)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>result2b <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]], mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="bu">print</span>(result2b)</span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="22%">
+<col width="23%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th>Pathogen</th>
+<th>Amoxicillin</th>
+<th>Ciprofloxacin</th>
+<th>Piperacillin/tazobactam</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Gram-negative</td>
+<td>36% (226/631)</td>
+<td>91% (621/684)</td>
+<td>88% (565/641)</td>
+</tr>
+<tr class="even">
+<td>Gram-positive</td>
+<td>43% (305/703)</td>
+<td>77% (560/724)</td>
+<td>86% (296/345)</td>
+</tr>
+</tbody>
+</table>
+<p>In this example, we generate an antibiogram by selecting various
+antibiotics.</p>
+</div>
+<div class="section level3">
 <h3 id="taxonomic-data-sets-now-in-python">Taxonomic Data Sets Now in Python!<a class="anchor" aria-label="anchor" href="#taxonomic-data-sets-now-in-python"></a>
 </h3>
 <p>As a Python user, you might like that the most important data sets of
@@ -207,7 +330,7 @@ the <code>AMR</code> R package, <code>microorganisms</code>,
 <code>antibiotics</code>, <code>clinical_breakpoints</code>, and
 <code>example_isolates</code>, are now available as regular Python data
 frames:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>AMR.microorganisms</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>AMR.microorganisms</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -342,7 +465,7 @@ frames:</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>AMR.antibiotics</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>AMR.antibiotics</span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="4%">
@@ -477,129 +600,6 @@ frames:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section level3">
-<h3 id="calculating-amr">Calculating AMR<a class="anchor" aria-label="anchor" href="#calculating-amr"></a>
-</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">import</span> AMR</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>df <span class="op">=</span> AMR.example_isolates</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>result <span class="op">=</span> AMR.resistance(df[<span class="st">"AMX"</span>])</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
-<pre><code>[0.59555556]</code></pre>
-</div>
-<div class="section level3">
-<h3 id="generating-antibiograms">Generating Antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
-</h3>
-<p>One of the core functions of the <code>AMR</code> package is
-generating an antibiogram, a table that summarises the antimicrobial
-susceptibility of bacterial isolates. Here’s how you can generate an
-antibiogram from Python:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>result2a <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]])</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="bu">print</span>(result2a)</span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="22%">
-<col width="22%">
-<col width="22%">
-<col width="33%">
-</colgroup>
-<thead><tr class="header">
-<th>Pathogen</th>
-<th>Amoxicillin</th>
-<th>Ciprofloxacin</th>
-<th>Piperacillin/tazobactam</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>CoNS</td>
-<td>7% (10/142)</td>
-<td>73% (183/252)</td>
-<td>30% (10/33)</td>
-</tr>
-<tr class="even">
-<td>E. coli</td>
-<td>50% (196/392)</td>
-<td>88% (399/456)</td>
-<td>94% (393/416)</td>
-</tr>
-<tr class="odd">
-<td>K. pneumoniae</td>
-<td>0% (0/58)</td>
-<td>96% (53/55)</td>
-<td>89% (47/53)</td>
-</tr>
-<tr class="even">
-<td>P. aeruginosa</td>
-<td>0% (0/30)</td>
-<td>100% (30/30)</td>
-<td>None</td>
-</tr>
-<tr class="odd">
-<td>P. mirabilis</td>
-<td>None</td>
-<td>94% (34/36)</td>
-<td>None</td>
-</tr>
-<tr class="even">
-<td>S. aureus</td>
-<td>6% (8/131)</td>
-<td>90% (171/191)</td>
-<td>None</td>
-</tr>
-<tr class="odd">
-<td>S. epidermidis</td>
-<td>1% (1/91)</td>
-<td>64% (87/136)</td>
-<td>None</td>
-</tr>
-<tr class="even">
-<td>S. hominis</td>
-<td>None</td>
-<td>80% (56/70)</td>
-<td>None</td>
-</tr>
-<tr class="odd">
-<td>S. pneumoniae</td>
-<td>100% (112/112)</td>
-<td>None</td>
-<td>100% (112/112)</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>result2b <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]], mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="bu">print</span>(result2b)</span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="20%">
-<col width="22%">
-<col width="23%">
-<col width="33%">
-</colgroup>
-<thead><tr class="header">
-<th>Pathogen</th>
-<th>Amoxicillin</th>
-<th>Ciprofloxacin</th>
-<th>Piperacillin/tazobactam</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>Gram-negative</td>
-<td>36% (226/631)</td>
-<td>91% (621/684)</td>
-<td>88% (565/641)</td>
-</tr>
-<tr class="even">
-<td>Gram-positive</td>
-<td>43% (305/703)</td>
-<td>77% (560/724)</td>
-<td>86% (296/345)</td>
-</tr>
-</tbody>
-</table>
-<p>In this example, we generate an antibiogram by selecting various
-antibiotics.</p>
 </div>
 </div>
 <div class="section level2">

@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9125</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9133</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,38 +57,18 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">first_isolate</span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_patient_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_testcode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_specimen <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_icu <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_keyantimicrobials <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  episode_days <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  testcodes_exclude <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  icu_exclude <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  specimen_group <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"points"</span>,</span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phenotype-based"</span>, <span class="st">"episode-based"</span>, <span class="st">"patient-based"</span>, <span class="st">"isolate-based"</span><span class="op">)</span>,</span>
-<span>  ignore_I <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  points_threshold <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  include_unknown <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_untested_sir <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">first_isolate</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, col_date <span class="op">=</span> <span class="cn">NULL</span>, col_patient_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, col_testcode <span class="op">=</span> <span class="cn">NULL</span>, col_specimen <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_icu <span class="op">=</span> <span class="cn">NULL</span>, col_keyantimicrobials <span class="op">=</span> <span class="cn">NULL</span>, episode_days <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>  testcodes_exclude <span class="op">=</span> <span class="cn">NULL</span>, icu_exclude <span class="op">=</span> <span class="cn">FALSE</span>, specimen_group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"points"</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phenotype-based"</span>, <span class="st">"episode-based"</span>,</span>
+<span>  <span class="st">"patient-based"</span>, <span class="st">"isolate-based"</span><span class="op">)</span>, ignore_I <span class="op">=</span> <span class="cn">TRUE</span>, points_threshold <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, include_unknown <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_untested_sir <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">filter_first_isolate</span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_patient_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  episode_days <span class="op">=</span> <span class="fl">365</span>,</span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phenotype-based"</span>, <span class="st">"episode-based"</span>, <span class="st">"patient-based"</span>, <span class="st">"isolate-based"</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">filter_first_isolate</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, col_date <span class="op">=</span> <span class="cn">NULL</span>, col_patient_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, episode_days <span class="op">=</span> <span class="fl">365</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phenotype-based"</span>,</span>
+<span>  <span class="st">"episode-based"</span>, <span class="st">"patient-based"</span>, <span class="st">"isolate-based"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -186,15 +166,16 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.</p>
+    <p>The methodology implemented in these functions is based on the research overview by Hindler <em>et al.</em> (2007, <a href="https://doi.org/10.1086/511864" class="external-link">doi:10.1086/511864</a>
+) and the recommendations outlined in the <a href="https://clsi.org/standards/products/microbiology/documents/m39" class="external-link">CLSI Guideline M39</a>.
+To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.</p>
 <p>These functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> call, see <em>Examples</em>.</p>
 <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href="get_episode.html">is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><div class="section">
 <h3 id="different-methods">Different methods<a class="anchor" aria-label="anchor" href="#different-methods"></a></h3>
 
 
-<p>According to Hindler <em>et al.</em> (2007, <a href="https://doi.org/10.1086/511864" class="external-link">doi:10.1086/511864</a>
-), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).</p>
+<p>According to previously-mentioned sources, there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).</p>
 <p>All mentioned methods are covered in the <code>first_isolate()</code> function:</p><table class="table table"><tr><td><strong>Method</strong></td><td><strong>Function to apply</strong></td></tr><tr><td><strong>Isolate-based</strong></td><td><code>first_isolate(x, method = "isolate-based")</code></td></tr><tr><td><em>(= all isolates)</em></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Patient-based</strong></td><td><code>first_isolate(x, method = "patient-based")</code></td></tr><tr><td><em>(= first isolate per patient)</em></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Episode-based</strong></td><td><code>first_isolate(x, method = "episode-based")</code>, or:</td></tr><tr><td><em>(= first isolate per episode)</em></td><td></td></tr><tr><td>- 7-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 7)</code></td></tr><tr><td>- 30-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 30)</code></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Phenotype-based</strong></td><td><code>first_isolate(x, method = "phenotype-based")</code>, or:</td></tr><tr><td><em>(= first isolate per phenotype)</em></td><td></td></tr><tr><td>- Major difference in any antimicrobial result</td><td>- <code>first_isolate(x, type = "points")</code></td></tr><tr><td>- Any difference in key antimicrobial results</td><td>- <code>first_isolate(x, type = "keyantimicrobials")</code></td></tr></table></div>
 
 <div class="section">
@@ -208,14 +189,14 @@
 <h3 id="patient-based">Patient-based<a class="anchor" aria-label="anchor" href="#patient-based"></a></h3>
 
 
-<p>To include every genus-species combination per patient once, set the <code>episode_days</code> to <code>Inf</code>. Although often inappropriate, this method makes sure that no duplicate isolates are selected from the same patient. In a large longitudinal data set, this could mean that isolates are <em>excluded</em> that were found years after the initial isolate.</p>
+<p>To include every genus-species combination per patient once, set the <code>episode_days</code> to <code>Inf</code>. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are <em>excluded</em> that were found years after the initial isolate.</p>
 </div>
 
 <div class="section">
 <h3 id="episode-based">Episode-based<a class="anchor" aria-label="anchor" href="#episode-based"></a></h3>
 
 
-<p>To include every genus-species combination per patient episode once, set the <code>episode_days</code> to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.</p>
+<p>To include every genus-species combination per patient episode once, set the <code>episode_days</code> to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.</p>
 <p>This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant <em>Staphylococcus aureus</em> (MRSA) isolate cannot be differentiated from a wildtype <em>Staphylococcus aureus</em> isolate.</p>
 </div>
 
