@@ -62,6 +62,8 @@ os.makedirs(r_lib_path, exist_ok=True)
 base = importr('base')
 utils = importr('utils')
 
+base.options(warn = -1)
+
 # Override R library paths globally for the session
 robjects.r(f'.Library <- "{r_lib_path}"')  # Replace default library
 robjects.r(f'.Library.site <- "{r_lib_path}"')  # Replace site-specific library
@@ -116,6 +118,8 @@ example_isolates['date'] = pd.to_datetime(example_isolates['date'])
 microorganisms = pandas2ri.rpy2py(robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]'))
 antibiotics = pandas2ri.rpy2py(robjects.r('AMR::antibiotics[, !sapply(AMR::antibiotics, is.list)]'))
 clinical_breakpoints = pandas2ri.rpy2py(robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]'))
+
+base.options(warn = 0)
 
 print(f"AMR: Done.", flush=True)
 EOL

@@ -173,9 +173,10 @@ reference:
     desc: >
       Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
       With `antibiogram()`, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination
-      antibiogram(WISCA). This function also comes with support for R Markdown and Quarto.
+      antibiogram (WISCA). This function also comes with support for R Markdown and Quarto.
       Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()` or `is_new_episode()`.
-      You can also filter your data on certain resistance in certain antibiotic classes (`carbapenems()`, `aminoglycosides()`), or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
+      You can also filter your data on certain resistance in certain antibiotic classes (`carbapenems()`, `aminoglycosides()`),
+      or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
     contents:
     - "`antibiogram`"
     - "`proportion`"
@@ -184,9 +185,9 @@ reference:
     - "`first_isolate`"
     - "`key_antimicrobials`"
     - "`mdro`"
-    - "`count`"
     - "`bug_drug_combinations`"
     - "`antimicrobial_class_selectors`"
+    - "`top_n_microorganisms`"
     - "`mean_amr_distance`"
     - "`resistance_predict`"
     - "`guess_ab_col`"

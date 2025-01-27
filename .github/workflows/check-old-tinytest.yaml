@@ -122,5 +122,6 @@ jobs:
         if: always()
         run: |
           cd ../AMR.Rcheck
+          ls
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
