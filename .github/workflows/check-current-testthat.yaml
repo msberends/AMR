@@ -1,0 +1,98 @@
+# ==================================================================== #
+# TITLE:                                                               #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
+#                                                                      #
+# SOURCE CODE:                                                         #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
+# https://doi.org/10.18637/jss.v104.i03                                #
+#                                                                      #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   # 
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# ==================================================================== #
+
+on:
+  pull_request:
+    # run in each PR in this repo
+    branches: '**'
+  push:
+    branches: '**'
+  schedule:
+    # also run a schedule everyday at 1 AM.
+    # this is to check that all dependencies are still available (see R/zzz.R)
+    - cron:  '0 1 * * *'
+
+name: check-recent
+
+jobs:
+  R-code-check:
+    runs-on: ${{ matrix.config.os }}
+
+    continue-on-error: ${{ matrix.config.allowfail }}
+
+    name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          # current development version, check all major OSes:
+          - {os: macOS-latest,   r: 'devel', allowfail: false}
+          - {os: windows-latest, r: 'devel', allowfail: false}
+          - {os: ubuntu-latest,  r: 'devel', allowfail: false, http-user-agent: 'release'}
+
+          # current 'release' version, check all major OSes:
+          - {os: macOS-latest,   r: 'release', allowfail: false}
+          - {os: windows-latest, r: 'release', allowfail: false}
+          - {os: ubuntu-latest,  r: 'release', allowfail: false}
+
+          # older versions (see also check-old-tinytest.yaml for even older versions):
+          - {os: ubuntu-latest, r: '4.3', allowfail: false}
+          - {os: ubuntu-latest, r: '4.2', allowfail: false}
+          - {os: ubuntu-latest, r: '4.1', allowfail: false}
+          - {os: ubuntu-latest, r: '4.0', allowfail: false}
+          - {os: ubuntu-latest, r: '3.6', allowfail: false}
+          # when testthat loses support for a version, move it to check-old-tinytest.yaml
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          # use RStudio Package Manager to quickly install packages
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+          upgrade: 'TRUE'
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'

@@ -29,9 +29,6 @@
 
 # we use {tinytest} for older R versions to allow unit testing in R >= 3.0.0.
 
-# use this to quickly use testtthat for more informative errors:
-# testthat::test_dir("inst/tests")
-
 # test only on GitHub Actions - not on CRAN as tests are lengthy
 if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' gets overwritten during 'R CMD check' in GitHub Actions, so:
@@ -71,9 +68,9 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     
     suppressMessages(
       out <- test_package("AMR",
-                          testdir = ifelse(dir.exists("inst/tests"),
-                                           "inst/tests",
-                                           "tests"
+                          testdir = ifelse(dir.exists("inst/testthat"),
+                                           "inst/testthat",
+                                           "testthat"
                           ),
                           verbose = FALSE,
                           color = FALSE

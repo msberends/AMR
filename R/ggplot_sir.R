@@ -211,8 +211,7 @@ ggplot_sir <- function(data,
   meet_criteria(caption, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(x.title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(y.title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-
-  # we work with aes_string later on
+  
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
     x <- x_deparse
@@ -309,8 +308,7 @@ geom_sir <- function(position = NULL,
   if (identical(position, "fill")) {
     position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
   }
-
-  # we work with aes_string later on
+  
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
     x <- x_deparse
@@ -324,7 +322,7 @@ geom_sir <- function(position = NULL,
   } else if (tolower(x) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
     x <- "interpretation"
   }
-
+  
   ggplot2::geom_col(
     data = function(x) {
       sir_df(
@@ -335,7 +333,7 @@ geom_sir <- function(position = NULL,
         combine_SI = combine_SI
       )
     },
-    mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
+    mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x), y = str2lang(y), fill = str2lang(fill))),
     position = position,
     ...
   )

@@ -13,7 +13,7 @@
 #                                                                      #
 # Developed at the University of Groningen and the University Medical  #
 # Center Groningen in The Netherlands, in collaboration with many      #
-# colleagues from around the world, see our website.                   # 
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -27,49 +27,19 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-on:
-  push:
-    # only on main
-    branches: "main"
+library(testthat)
+library(AMR)
 
-name: Publish Python Package to PyPI
+# add functions from the tinytest package (which we use for older R versions)
+expect_inherits <- function(x, y, ...) {
+  expect(inherits(x, y),
+         failure_message = paste0("object has class ", paste0(class(x), collapse = "/"),
+                                  ", required is class ", paste0(y, collapse = "/")))
+}
+expect_stdout <- expect_output
+if (getRversion() < "4.0.0") {
+  deparse1 <- AMR:::deparse1
+}
 
-jobs:
-  update-pypi:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-        
-      - name: Install build dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build twine wheel
-        
-      - name: Build the Python package
-        run: |
-          cd data-raw/
-          bash _generate_python_wrapper.sh
-      
-      - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: "__token__"
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          cd PythonPackage/AMR
-          python -m twine upload dist/*
-          
-      - name: Publish to PyPI Testserver
-        continue-on-error: true
-        env:
-          TWINE_USERNAME: "__token__"
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TEST_TOKEN }}
-        run: |
-          cd PythonPackage/AMR
-          python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+# start unit tests
+test_check("AMR")

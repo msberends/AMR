@@ -1,7 +1,11 @@
-This files contains all context you must know about the AMR package for R.
-First and foremost, you are trained on version 2.1.1.9129. Remember this whenever someone asks which AMR package version you’re at.
---------------------------------
+This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
+First and foremost, you are trained on version 2.1.1.9131. Remember this whenever someone asks which AMR package version you’re at.
+
+Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'NAMESPACE':
 
 
@@ -371,6 +375,7 @@ importFrom(stats,var)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'index.md':
 
 
@@ -688,6 +693,7 @@ This R package is free, open-source software and licensed under the [GNU General
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/AMR-deprecated.Rd':
 
 
@@ -710,6 +716,7 @@ These functions are so-called '\link{Deprecated}'. \strong{They will be removed 
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/AMR-options.Rd':
 
 
@@ -774,6 +781,7 @@ Now the team settings are configured in only one place, and can be maintained th
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/AMR.Rd':
 
 
@@ -870,6 +878,7 @@ Other contributors:
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/WHOCC.Rd':
 
 
@@ -901,6 +910,7 @@ ab_tradenames("flucloxacillin")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/WHONET.Rd':
 
 
@@ -957,6 +967,7 @@ WHONET
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/ab_from_text.Rd':
 
 
@@ -1057,6 +1068,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/ab_property.Rd':
 
 
@@ -1235,6 +1247,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/add_custom_antimicrobials.Rd':
 
 
@@ -1345,6 +1358,7 @@ x[, betalactams()]
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/add_custom_microorganisms.Rd':
 
 
@@ -1464,6 +1478,7 @@ mo_gramstain(c("C. freundii complex", "C. braakii complex"))
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/age.Rd':
 
 
@@ -1518,6 +1533,7 @@ To split ages into groups, use the \code{\link[=age_groups]{age_groups()}} funct
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/age_groups.Rd':
 
 
@@ -1600,6 +1616,7 @@ To determine ages, based on one or more reference dates, use the \code{\link[=ag
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antibiogram.Rd':
 
 
@@ -2002,6 +2019,7 @@ plot(ab2)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antibiotics.Rd':
 
 
@@ -2096,6 +2114,7 @@ antivirals
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobial_class_selectors.Rd':
 
 
@@ -2476,6 +2495,7 @@ if (require("data.table")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.ab.Rd':
 
 
@@ -2587,6 +2607,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.av.Rd':
 
 
@@ -2683,6 +2704,7 @@ av_name("acicl")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.disk.Rd':
 
 
@@ -2760,6 +2782,7 @@ as.sir(df, uti = TRUE)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.mic.Rd':
 
 
@@ -2901,6 +2924,7 @@ if (require("ggplot2")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.mo.Rd':
 
 
@@ -3167,6 +3191,7 @@ The \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_genus]{m
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.sir.Rd':
 
 
@@ -3562,6 +3587,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/atc_online.Rd':
 
 
@@ -3649,6 +3675,7 @@ if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("x
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/av_from_text.Rd':
 
 
@@ -3712,6 +3739,7 @@ av_from_text("28/03/2020 valaciclovir po tid", type = "admin")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/av_property.Rd':
 
 
@@ -3835,6 +3863,7 @@ av_name("J05AB01")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/availability.Rd':
 
 
@@ -3874,6 +3903,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/bug_drug_combinations.Rd':
 
 
@@ -3960,6 +3990,7 @@ bug_drug_combinations(example_isolates,
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/clinical_breakpoints.Rd':
 
 
@@ -4038,6 +4069,7 @@ clinical_breakpoints
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/count.Rd':
 
 
@@ -4241,6 +4273,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/custom_eucast_rules.Rd':
 
 
@@ -4395,6 +4428,7 @@ x2
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/dosage.Rd':
 
 
@@ -4434,6 +4468,7 @@ dosage
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/eucast_rules.Rd':
 
 
@@ -4588,6 +4623,7 @@ eucast_dosage(c("tobra", "genta", "cipro"), "iv", version_breakpoints = 10)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/example_isolates.Rd':
 
 
@@ -4625,6 +4661,7 @@ example_isolates
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/example_isolates_unclean.Rd':
 
 
@@ -4660,6 +4697,7 @@ example_isolates_unclean
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/export_ncbi_biosample.Rd':
 
 
@@ -4687,6 +4725,7 @@ Export Data Set as NCBI BioSample Antibiogram
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/first_isolate.Rd':
 
 
@@ -4871,6 +4910,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/g.test.Rd':
 
 
@@ -5018,6 +5058,7 @@ g.test(x)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/get_episode.Rd':
 
 
@@ -5217,6 +5258,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/ggplot_pca.Rd':
 
 
@@ -5354,6 +5396,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/ggplot_sir.Rd':
 
 
@@ -5540,6 +5583,7 @@ if (require("ggplot2") && require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/guess_ab_col.Rd':
 
 
@@ -5594,6 +5638,7 @@ guess_ab_col(df, as.ab("augmentin"))
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/intrinsic_resistant.Rd':
 
 
@@ -5632,6 +5677,7 @@ intrinsic_resistant
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/italicise_taxonomy.Rd':
 
 
@@ -5670,6 +5716,7 @@ cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/join.Rd':
 
 
@@ -5750,6 +5797,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/key_antimicrobials.Rd':
 
 
@@ -5889,6 +5937,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/kurtosis.Rd':
 
 
@@ -5929,6 +5978,7 @@ kurtosis(rnorm(10000), excess = TRUE)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/like.Rd':
 
 
@@ -6013,6 +6063,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/mdro.Rd':
 
 
@@ -6251,6 +6302,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/mean_amr_distance.Rd':
 
 
@@ -6349,6 +6401,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/microorganisms.Rd':
 
 
@@ -6459,6 +6512,7 @@ microorganisms
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/microorganisms.codes.Rd':
 
 
@@ -6503,6 +6557,7 @@ mo_is_intrinsic_resistant("eco", ab = "vancomycin")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/microorganisms.groups.Rd':
 
 
@@ -6543,6 +6598,7 @@ microorganisms.groups[microorganisms.groups$mo_group == "B_BCTRD_FRGL-C", ]
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/mo_matching_score.Rd':
 
 
@@ -6625,6 +6681,7 @@ mo_matching_score(
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/mo_property.Rd':
 
 
@@ -6991,6 +7048,7 @@ Data set \link{microorganisms}
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/mo_source.Rd':
 
 
@@ -7104,6 +7162,7 @@ If the original file (in the previous case an Excel file) is moved or deleted, t
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/pca.Rd':
 
 
@@ -7199,6 +7258,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/plot.Rd':
 
 
@@ -7464,6 +7524,7 @@ if (require("ggplot2")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/proportion.Rd':
 
 
@@ -7749,6 +7810,7 @@ if (require("dplyr")) {
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/random.Rd':
 
 
@@ -7808,6 +7870,7 @@ random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/resistance_predict.Rd':
 
 
@@ -7961,6 +8024,7 @@ Models: \code{\link[=lm]{lm()}} \code{\link[=glm]{glm()}}
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/skewness.Rd':
 
 
@@ -8000,6 +8064,7 @@ skewness(runif(1000))
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/top_n_microorganisms.Rd':
 
 
@@ -8050,6 +8115,7 @@ top_n_microorganisms(example_isolates,
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/translate.Rd':
 
 
@@ -8135,6 +8201,7 @@ ab_name("amox/clav")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/AMR.Rmd':
 
 
@@ -8493,6 +8560,7 @@ our_data_1st %>%
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/AMR_for_Python.Rmd':
 
 
@@ -8694,6 +8762,7 @@ Whether you're cleaning data or analysing resistance patterns, the `AMR` Python 
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/AMR_with_tidymodels.Rmd':
 
 
@@ -8883,6 +8952,7 @@ This workflow is extensible to other antibiotic classes and resistance patterns,
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/EUCAST.Rmd':
 
 
@@ -8989,6 +9059,7 @@ knitr::kable(eucast_rules(data), align = "lccccccc")
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/MDR.Rmd':
 
 
@@ -9158,6 +9229,7 @@ freq(my_TB_data$mdr)
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/PCA.Rmd':
 
 
@@ -9257,6 +9329,7 @@ ggplot_pca(pca_result, ellipse = TRUE) +
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/WHONET.Rmd':
 
 
@@ -9362,6 +9435,7 @@ tryCatch(
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/datasets.Rmd':
 
 
@@ -9737,6 +9811,7 @@ microorganisms.codes %>%
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/resistance_predict.Rmd':
 
 
@@ -9874,6 +9949,7 @@ summary(model)$coefficients
 
 
 
+----------------------------------------------------------------------------------------------------
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/welcome_to_AMR.Rmd':
 
 
@@ -9943,207 +10019,6 @@ This R package was created for both routine data analysis and academic research 
 <small>
 This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://msberends.github.io/AMR/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
 </small>
-
-
-
-THE PART HEREAFTER CONTAINS THE README OF OUR PYTHON PACKAGE
-
-
----
-title: "AMR for Python"
-output: 
-  rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 3
-vignette: >
-  %\VignetteIndexEntry{AMR for Python}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include = FALSE, results = 'markup'}
-knitr::opts_chunk$set(
-  warning = FALSE,
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7.5,
-  fig.height = 5
-)
-```
-
-# Introduction
-
-The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the [`AMR` Python Package Index](https://pypi.org/project/AMR/).
-
-This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
-
-# Install
-
-1. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
-
-    ```bash
-    pip install AMR
-    ```
-
-2. Make sure you have R installed. There is **no need to install the `AMR` R package**, as it will be installed automatically.
-
-    For Linux:
-
-    ```bash
-    # Ubuntu / Debian
-    sudo apt install r-base
-    # Fedora:
-    sudo dnf install R
-    # CentOS/RHEL
-    sudo yum install R
-    ```
-    
-    For macOS (using [Homebrew](https://brew.sh)):
-    
-    ```bash
-    brew install r
-    ```
-    
-    For Windows, visit the [CRAN download page](https://cran.r-project.org) to download and install R.
-
-# Examples of Usage
-
-## Cleaning Taxonomy
-
-Here’s an example that demonstrates how to clean microorganism and drug names using the `AMR` Python package:
-
-```python
-import pandas as pd
-import AMR
-
-# Sample data
-data = {
-    "MOs": ['E. coli', 'ESCCOL', 'esco', 'Esche coli'],
-    "Drug": ['Cipro', 'CIP', 'J01MA02', 'Ciproxin']
-}
-df = pd.DataFrame(data)
-
-# Use AMR functions to clean microorganism and drug names
-df['MO_clean'] = AMR.mo_name(df['MOs'])
-df['Drug_clean'] = AMR.ab_name(df['Drug'])
-
-# Display the results
-print(df)
-```
-
-| MOs         | Drug      | MO_clean           | Drug_clean    |
-|-------------|-----------|--------------------|---------------|
-| E. coli     | Cipro     | Escherichia coli   | Ciprofloxacin |
-| ESCCOL      | CIP       | Escherichia coli   | Ciprofloxacin |
-| esco        | J01MA02   | Escherichia coli   | Ciprofloxacin |
-| Esche coli  | Ciproxin  | Escherichia coli   | Ciprofloxacin |
-
-### Explanation
-
-* **mo_name:** This function standardises microorganism names. Here, different variations of *Escherichia coli* (such as "E. coli", "ESCCOL", "esco", and "Esche coli") are all converted into the correct, standardised form, "Escherichia coli".
-
-* **ab_name**: Similarly, this function standardises antimicrobial names. The different representations of ciprofloxacin (e.g., "Cipro", "CIP", "J01MA02", and "Ciproxin") are all converted to the standard name, "Ciprofloxacin".
-
-## Calculating AMR
-
-```python
-import AMR
-import pandas as pd
-
-df = AMR.example_isolates
-result = AMR.resistance(df["AMX"])
-print(result)
-```
-
-```
-[0.59555556]
-```
-
-## Generating Antibiograms
-
-One of the core functions of the `AMR` package is generating an antibiogram, a table that summarises the antimicrobial susceptibility of bacterial isolates. Here’s how you can generate an antibiogram from Python:
-
-```python
-result2a = AMR.antibiogram(df[["mo", "AMX", "CIP", "TZP"]])
-print(result2a)
-```
-
-| Pathogen        | Amoxicillin     | Ciprofloxacin   | Piperacillin/tazobactam  |
-|-----------------|-----------------|-----------------|--------------------------|
-| CoNS            | 7% (10/142)     | 73% (183/252)   | 30% (10/33)              |
-| E. coli         | 50% (196/392)   | 88% (399/456)   | 94% (393/416)            |
-| K. pneumoniae   | 0% (0/58)       | 96% (53/55)     | 89% (47/53)              |
-| P. aeruginosa   | 0% (0/30)       | 100% (30/30)    | None                     |
-| P. mirabilis    | None            | 94% (34/36)     | None                     |
-| S. aureus       | 6% (8/131)      | 90% (171/191)   | None                     |
-| S. epidermidis  | 1% (1/91)       | 64% (87/136)    | None                     |
-| S. hominis      | None            | 80% (56/70)     | None                     |
-| S. pneumoniae   | 100% (112/112)  | None            | 100% (112/112)           |
-
-
-```python
-result2b = AMR.antibiogram(df[["mo", "AMX", "CIP", "TZP"]], mo_transform = "gramstain")
-print(result2b)
-```
-
-| Pathogen       | Amoxicillin     | Ciprofloxacin    | Piperacillin/tazobactam  |
-|----------------|-----------------|------------------|--------------------------|
-| Gram-negative  | 36% (226/631)   | 91% (621/684)    | 88% (565/641)            |
-| Gram-positive  | 43% (305/703)   | 77% (560/724)    | 86% (296/345)            |
-
-
-In this example, we generate an antibiogram by selecting various antibiotics.
-
-## Taxonomic Data Sets Now in Python!
-
-As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
-
-```python
-AMR.microorganisms
-```
-
-| mo           | fullname                           | status   | kingdom  | gbif      | gbif_parent | gbif_renamed_to | prevalence |
-|--------------|------------------------------------|----------|----------|-----------|-------------|-----------------|------------|
-| B_GRAMN      | (unknown Gram-negatives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_GRAMP      | (unknown Gram-positives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_ANAER-NEG  | (unknown anaerobic Gram-negatives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_ANAER-POS  | (unknown anaerobic Gram-positives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_ANAER      | (unknown anaerobic bacteria)       | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| ...          | ...                                | ...      | ...      | ...       | ...         | ...             | ...        |
-| B_ZYMMN_POMC | Zymomonas pomaceae                 | accepted | Bacteria | 10744418  | 3221412     | None            | 2.0        |
-| B_ZYMPH      | Zymophilus                         | synonym  | Bacteria | None      | 9475166     | None            | 2.0        |
-| B_ZYMPH_PCVR | Zymophilus paucivorans             | synonym  | Bacteria | None      | None        | None            | 2.0        |
-| B_ZYMPH_RFFN | Zymophilus raffinosivorans         | synonym  | Bacteria | None      | None        | None            | 2.0        |
-| F_ZYZYG      | Zyzygomyces                        | unknown  | Fungi    | None      | 7581        | None            | 2.0        |
-
-```python
-AMR.antibiotics
-```
-
-| ab  | cid         | name                 | group                      | oral_ddd | oral_units | iv_ddd | iv_units |
-|-----|-------------|----------------------|----------------------------|----------|------------|--------|----------|
-| AMA | 4649.0      | 4-aminosalicylic acid| Antimycobacterials         | 12.00    | g          | NaN    | None     |
-| ACM | 6450012.0   | Acetylmidecamycin    | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
-| ASP | 49787020.0  | Acetylspiramycin     | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
-| ALS | 8954.0      | Aldesulfone sodium   | Other antibacterials       | 0.33     | g          | NaN    | None     |
-| AMK | 37768.0     | Amikacin             | Aminoglycosides            | NaN      | None       | 1.0    | g        |
-| ... | ...         | ...                  | ...                        | ...      | ...        | ...    | ...      |
-| VIR | 11979535.0  | Virginiamycine       | Other antibacterials       | NaN      | None       | NaN    | None     |
-| VOR | 71616.0     | Voriconazole         | Antifungals/antimycotics   | 0.40     | g          | 0.4    | g        |
-| XBR | 72144.0     | Xibornol             | Other antibacterials       | NaN      | None       | NaN    | None     |
-| ZID | 77846445.0  | Zidebactam           | Other antibacterials       | NaN      | None       | NaN    | None     |
-| ZFD | NaN         | Zoliflodacin         | None                       | NaN      | None       | NaN    | None     |
-
-
-# Conclusion
-
-With the `AMR` Python package, Python users can now effortlessly call R functions from the `AMR` R package. This eliminates the need for complex `rpy2` configurations and provides a clean, easy-to-use interface for antimicrobial resistance analysis. The examples provided above demonstrate how this can be applied to typical workflows, such as standardising microorganism and antimicrobial names or calculating resistance.
-
-By just running `import AMR`, users can seamlessly integrate the robust features of the R `AMR` package into Python workflows.
-
-Whether you're cleaning data or analysing resistance patterns, the `AMR` Python package makes it easy to work with AMR data in Python.
 
 
 

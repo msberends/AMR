@@ -244,7 +244,7 @@ ggplot_pca <- function(x,
     g <- g + ggplot2::geom_path(
       data = ell,
       ggplot2::aes(colour = groups, group = groups),
-      size = ellipse_size,
+      linewidth = ellipse_size,
       alpha = points_alpha
     )
   }

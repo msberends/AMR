@@ -70,7 +70,6 @@ call_functions <- c(
   "read_excel" = "readxl",
   # ggplot2
   "aes" = "ggplot2",
-  "aes_string" = "ggplot2",
   "arrow" = "ggplot2",
   "autoplot" = "ggplot2",
   "element_blank" = "ggplot2",

@@ -2210,6 +2210,6 @@ devtools::load_all(".")
 
 # run the unit tests
 Sys.setenv(NOT_CRAN = "true")
-testthat::test_file("inst/tests/testthat/test-data.R")
-testthat::test_file("inst/tests/testthat/test-mo.R")
-testthat::test_file("inst/tests/testthat/test-mo_property.R")
+testthat::test_file("tests/testthat/test-data.R")
+testthat::test_file("tests/testthat/test-mo.R")
+testthat::test_file("tests/testthat/test-mo_property.R")

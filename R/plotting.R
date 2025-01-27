@@ -956,7 +956,6 @@ facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
   meet_criteria(facet, allow_class = "character", has_length = 1)
   meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
   
-  # we work with aes_string later on
   facet_deparse <- deparse(substitute(facet))
   if (facet_deparse != "facet") {
     facet <- facet_deparse
@@ -1107,13 +1106,10 @@ labels_sir_count <- function(position = NULL,
   if (identical(position, "fill")) {
     position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
   }
+  
   x_name <- x
   ggplot2::geom_text(
-    mapping = ggplot2::aes_string(
-      label = "lbl",
-      x = x,
-      y = "value"
-    ),
+    mapping = utils::modifyList(ggplot2::aes(), list(label = str2lang("lbl"), x = str2lang(x), y = str2lang("value"))),
     position = position,
     inherit.aes = FALSE,
     size = datalabels.size,
