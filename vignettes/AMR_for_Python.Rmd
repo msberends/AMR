@@ -95,48 +95,6 @@ print(df)
 
 * **ab_name**: Similarly, this function standardises antimicrobial names. The different representations of ciprofloxacin (e.g., "Cipro", "CIP", "J01MA02", and "Ciproxin") are all converted to the standard name, "Ciprofloxacin".
 
-
-## Taxonomic Data Sets Now in Python!
-
-As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
-
-```python
-AMR.microorganisms
-```
-
-| mo           | fullname                           | status   | kingdom  | gbif      | gbif_parent | gbif_renamed_to | prevalence |
-|--------------|------------------------------------|----------|----------|-----------|-------------|-----------------|------------|
-| B_GRAMN      | (unknown Gram-negatives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_GRAMP      | (unknown Gram-positives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_ANAER-NEG  | (unknown anaerobic Gram-negatives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_ANAER-POS  | (unknown anaerobic Gram-positives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| B_ANAER      | (unknown anaerobic bacteria)       | unknown  | Bacteria | None      | None        | None            | 2.0        |
-| ...          | ...                                | ...      | ...      | ...       | ...         | ...             | ...        |
-| B_ZYMMN_POMC | Zymomonas pomaceae                 | accepted | Bacteria | 10744418  | 3221412     | None            | 2.0        |
-| B_ZYMPH      | Zymophilus                         | synonym  | Bacteria | None      | 9475166     | None            | 2.0        |
-| B_ZYMPH_PCVR | Zymophilus paucivorans             | synonym  | Bacteria | None      | None        | None            | 2.0        |
-| B_ZYMPH_RFFN | Zymophilus raffinosivorans         | synonym  | Bacteria | None      | None        | None            | 2.0        |
-| F_ZYZYG      | Zyzygomyces                        | unknown  | Fungi    | None      | 7581        | None            | 2.0        |
-
-```python
-AMR.antibiotics
-```
-
-| ab  | cid         | name                 | group                      | oral_ddd | oral_units | iv_ddd | iv_units |
-|-----|-------------|----------------------|----------------------------|----------|------------|--------|----------|
-| AMA | 4649.0      | 4-aminosalicylic acid| Antimycobacterials         | 12.00    | g          | NaN    | None     |
-| ACM | 6450012.0   | Acetylmidecamycin    | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
-| ASP | 49787020.0  | Acetylspiramycin     | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
-| ALS | 8954.0      | Aldesulfone sodium   | Other antibacterials       | 0.33     | g          | NaN    | None     |
-| AMK | 37768.0     | Amikacin             | Aminoglycosides            | NaN      | None       | 1.0    | g        |
-| ... | ...         | ...                  | ...                        | ...      | ...        | ...    | ...      |
-| VIR | 11979535.0  | Virginiamycine       | Other antibacterials       | NaN      | None       | NaN    | None     |
-| VOR | 71616.0     | Voriconazole         | Antifungals/antimycotics   | 0.40     | g          | 0.4    | g        |
-| XBR | 72144.0     | Xibornol             | Other antibacterials       | NaN      | None       | NaN    | None     |
-| ZID | 77846445.0  | Zidebactam           | Other antibacterials       | NaN      | None       | NaN    | None     |
-| ZFD | NaN         | Zoliflodacin         | None                       | NaN      | None       | NaN    | None     |
-
-
 ## Calculating AMR
 
 ```python
@@ -186,6 +144,47 @@ print(result2b)
 
 
 In this example, we generate an antibiogram by selecting various antibiotics.
+
+## Taxonomic Data Sets Now in Python!
+
+As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
+
+```python
+AMR.microorganisms
+```
+
+| mo           | fullname                           | status   | kingdom  | gbif      | gbif_parent | gbif_renamed_to | prevalence |
+|--------------|------------------------------------|----------|----------|-----------|-------------|-----------------|------------|
+| B_GRAMN      | (unknown Gram-negatives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_GRAMP      | (unknown Gram-positives)           | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_ANAER-NEG  | (unknown anaerobic Gram-negatives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_ANAER-POS  | (unknown anaerobic Gram-positives) | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| B_ANAER      | (unknown anaerobic bacteria)       | unknown  | Bacteria | None      | None        | None            | 2.0        |
+| ...          | ...                                | ...      | ...      | ...       | ...         | ...             | ...        |
+| B_ZYMMN_POMC | Zymomonas pomaceae                 | accepted | Bacteria | 10744418  | 3221412     | None            | 2.0        |
+| B_ZYMPH      | Zymophilus                         | synonym  | Bacteria | None      | 9475166     | None            | 2.0        |
+| B_ZYMPH_PCVR | Zymophilus paucivorans             | synonym  | Bacteria | None      | None        | None            | 2.0        |
+| B_ZYMPH_RFFN | Zymophilus raffinosivorans         | synonym  | Bacteria | None      | None        | None            | 2.0        |
+| F_ZYZYG      | Zyzygomyces                        | unknown  | Fungi    | None      | 7581        | None            | 2.0        |
+
+```python
+AMR.antibiotics
+```
+
+| ab  | cid         | name                 | group                      | oral_ddd | oral_units | iv_ddd | iv_units |
+|-----|-------------|----------------------|----------------------------|----------|------------|--------|----------|
+| AMA | 4649.0      | 4-aminosalicylic acid| Antimycobacterials         | 12.00    | g          | NaN    | None     |
+| ACM | 6450012.0   | Acetylmidecamycin    | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
+| ASP | 49787020.0  | Acetylspiramycin     | Macrolides/lincosamides    | NaN      | None       | NaN    | None     |
+| ALS | 8954.0      | Aldesulfone sodium   | Other antibacterials       | 0.33     | g          | NaN    | None     |
+| AMK | 37768.0     | Amikacin             | Aminoglycosides            | NaN      | None       | 1.0    | g        |
+| ... | ...         | ...                  | ...                        | ...      | ...        | ...    | ...      |
+| VIR | 11979535.0  | Virginiamycine       | Other antibacterials       | NaN      | None       | NaN    | None     |
+| VOR | 71616.0     | Voriconazole         | Antifungals/antimycotics   | 0.40     | g          | 0.4    | g        |
+| XBR | 72144.0     | Xibornol             | Other antibacterials       | NaN      | None       | NaN    | None     |
+| ZID | 77846445.0  | Zidebactam           | Other antibacterials       | NaN      | None       | NaN    | None     |
+| ZFD | NaN         | Zoliflodacin         | None                       | NaN      | None       | NaN    | None     |
+
 
 # Conclusion
 

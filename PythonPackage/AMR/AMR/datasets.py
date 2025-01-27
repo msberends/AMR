@@ -19,6 +19,9 @@ r_lib_path = os.path.join(venv_path, "R_libs")
 os.makedirs(r_lib_path, exist_ok=True)
 # Set the R library path in .libPaths
 base = importr('base')
+# Turn off warnings
+base.options(warn = -1)
+
 base._libPaths(r_lib_path)
 r_amr_lib_path = base._libPaths()[0]
 
@@ -45,6 +48,9 @@ if r_amr_version != python_amr_version:
         utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
     except Exception as e:
         print(f"{BLUE}AMR:{RESET} Could not update: {e}{RESET}", flush=True)
+
+# Restore warnings to default
+base.options(warn = 0)
 
 print(f"{BLUE}AMR:{RESET} Setting up R environment and AMR datasets...", flush=True)
 

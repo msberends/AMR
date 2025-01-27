@@ -60,7 +60,7 @@
 #' 
 #' For estimating antimicrobial coverage, especially when creating a WISCA, the outcome might become more reliable by only including the top *n* species encountered in the data. You can filter on this top *n* using [top_n_microorganisms()]. For example, use `top_n_microorganisms(your_data, n = 10)` as a pre-processing step to only include the top 10 species in the data.
 #' 
-#' Using [get_long_numeric_format()], the antibiogram is converted to a long format containing numeric values. This is ideal for e.g. advanced plotting.
+#' The numeric values of an antibiogram are stored in a long format as the [attribute] `long_numeric`. You can retrieve them using `attributes(x)$long_numeric`, where `x` is the outcome of [antibiogram()] or [wisca()]. This is ideal for e.g. advanced plotting.
 #' 
 #' ### Formatting Type
 #' 
@@ -345,7 +345,8 @@
 #'
 #' ab1 <- antibiogram(example_isolates,
 #'   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-#'   mo_transform = "gramstain"
+#'   mo_transform = "gramstain",
+#'   wisca = TRUE
 #' )
 #' ab2 <- antibiogram(example_isolates,
 #'   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
@@ -648,14 +649,14 @@ antibiogram.default <- function(x,
   }
   
   if (wisca == TRUE) {
-    out_numeric <- out %pm>%
+    long_numeric <- out %pm>%
       pm_summarise(percentage = percentage,
                    lower = lower,
                    upper = upper,
                    numerator = numerator,
                    total = total)
   } else {
-    out_numeric <- out %pm>%
+    long_numeric <- out %pm>%
       pm_summarise(percentage = numerator / total,
                    numerator = numerator,
                    total = total)  
@@ -727,7 +728,7 @@ antibiogram.default <- function(x,
     out
   }
   out$ab <- ab_naming_function(out$ab, t = ab_transform, l = language, s = sep)
-  out_numeric$ab <- ab_naming_function(out_numeric$ab, t = ab_transform, l = language, s = sep)
+  long_numeric$ab <- ab_naming_function(long_numeric$ab, t = ab_transform, l = language, s = sep)
   
   # transform long to wide
   long_to_wide <- function(object) {
@@ -801,14 +802,14 @@ antibiogram.default <- function(x,
   
   out <- as_original_data_class(new_df, class(x), extra_class = "antibiogram")
   rownames(out) <- NULL
-  rownames(out_numeric) <- NULL
+  rownames(long_numeric) <- NULL
   
   structure(out,
             has_syndromic_group = has_syndromic_group,
             combine_SI = combine_SI,
             wisca = wisca,
             conf_interval = conf_interval,
-            out_numeric = as_original_data_class(out_numeric, class(out))
+            long_numeric = as_original_data_class(long_numeric, class(out))
   )
 }
 
@@ -868,7 +869,7 @@ antibiogram.grouped_df <- function(x,
                            conf_interval = conf_interval,
                            interval_side = interval_side,
                            info = i == 1 && info == TRUE)
-    new_out_numeric <- attributes(new_out)$out_numeric
+    new_long_numeric <- attributes(new_out)$long_numeric
     
     if (i == 1) progress$tick()
     
@@ -878,7 +879,7 @@ antibiogram.grouped_df <- function(x,
     
     # remove first column 'Pathogen' (in whatever language)
     new_out <- new_out[, -1, drop = FALSE]
-    new_out_numeric <- new_out_numeric[, -1, drop = FALSE]
+    new_long_numeric <- new_long_numeric[, -1, drop = FALSE]
     
     # add group names to data set
     for (col in rev(seq_len(NCOL(groups) - 1))) {
@@ -886,17 +887,17 @@ antibiogram.grouped_df <- function(x,
       col_value <- groups[i, col, drop = TRUE]
       new_out[, col_name] <- col_value
       new_out <- new_out[, c(col_name, setdiff(names(new_out), col_name))] # set place to 1st col
-      new_out_numeric[, col_name] <- col_value
-      new_out_numeric <- new_out_numeric[, c(col_name, setdiff(names(new_out_numeric), col_name))] # set place to 1st col
+      new_long_numeric[, col_name] <- col_value
+      new_long_numeric <- new_long_numeric[, c(col_name, setdiff(names(new_long_numeric), col_name))] # set place to 1st col
     }
     
     if (i == 1) {
       # the first go
       out <- new_out
-      out_numeric <- new_out_numeric
+      long_numeric <- new_long_numeric
     } else {
       out <- rbind_AMR(out, new_out)
-      out_numeric <- rbind_AMR(out_numeric, new_out_numeric)
+      long_numeric <- rbind_AMR(long_numeric, new_long_numeric)
     }
   }
 
@@ -907,7 +908,7 @@ antibiogram.grouped_df <- function(x,
                    combine_SI = isTRUE(combine_SI),
                    wisca = isTRUE(wisca),
                    conf_interval = conf_interval,
-                   out_numeric = as_original_data_class(out_numeric, class(x)))
+                   long_numeric = as_original_data_class(long_numeric, class(x)))
 }
 
 #' @export
@@ -945,14 +946,6 @@ wisca <- function(x,
               wisca = TRUE,
               simulations = simulations,
               info = info)
-}
-
-#' @export
-#' @param antibiogram the outcome of [antibiogram()] or [wisca()]
-#' @rdname antibiogram
-get_long_numeric_format <- function(antibiogram) {
-  stop_ifnot(inherits(antibiogram, "antibiogram"), "This function only works for the output of `antibiogram()` and `wisca()`.", call = FALSE)
-  attributes(antibiogram)$out_numeric
 }
 
 calculate_priors <- function(data, combine_SI = TRUE) {
@@ -1009,9 +1002,10 @@ tbl_format_footer.antibiogram <- function(x, ...) {
 #' @export
 #' @rdname antibiogram
 plot.antibiogram <- function(x, ...) {
-  df <- attributes(x)$out_numeric
+  df <- attributes(x)$long_numeric
   if (!"mo" %in% colnames(df)) {
-    stop_("Plotting antibiograms using plot() is only possible if they were not created using dplyr groups. Consider using `get_long_numeric_format()` to retrieve raw antibiogram values.")
+    stop_("Plotting antibiograms using `plot()` is only possible if they were not created using dplyr groups. See `?antibiogram` for how to retrieve numeric values in a long format for advanced plotting.",
+          call = FALSE)
   }
   if ("syndromic_group" %in% colnames(df)) {
     # barplot in base R does not support facets - paste columns together
@@ -1063,9 +1057,10 @@ barplot.antibiogram <- function(height, ...) {
 #' @rdname antibiogram
 # will be exported using s3_register() in R/zzz.R
 autoplot.antibiogram <- function(object, ...) {
-  df <- attributes(object)$out_numeric
+  df <- attributes(object)$long_numeric
   if (!"mo" %in% colnames(df)) {
-    stop_("Plotting antibiograms using plot() is only possible if they were not created using dplyr groups. Consider using `get_long_numeric_format()` to retrieve raw antibiogram values.")
+    stop_("Plotting antibiograms using `autoplot()` is only possible if they were not created using dplyr groups. See `?antibiogram` for how to retrieve numeric values in a long format for advanced plotting.",
+          call = FALSE)
   }
   out <- ggplot2::ggplot(df,
                          mapping = ggplot2::aes(
@@ -1107,7 +1102,7 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
   meet_criteria(italicise, allow_class = "logical", has_length = 1)
   meet_criteria(na, allow_class = "character", has_length = 1, allow_NA = TRUE)
   
-  if (isTRUE(italicise) && "mo" %in% colnames(attributes(x)$out_numeric)) {
+  if (isTRUE(italicise) && "mo" %in% colnames(attributes(x)$long_numeric)) {
     # make all microorganism names italic, according to nomenclature
     names_col <- ifelse(isTRUE(attributes(x)$has_syndromic_group), 2, 1)
     x[[names_col]] <- italicise_taxonomy(x[[names_col]], type = "markdown")

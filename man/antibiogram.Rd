@@ -3,7 +3,6 @@
 \name{antibiogram}
 \alias{antibiogram}
 \alias{wisca}
-\alias{get_long_numeric_format}
 \alias{plot.antibiogram}
 \alias{autoplot.antibiogram}
 \alias{knit_print.antibiogram}
@@ -34,8 +33,6 @@ wisca(x, antibiotics = where(is.sir), mo_transform = "shortname",
   col_mo = NULL, language = get_AMR_locale(), minimum = 30,
   combine_SI = TRUE, sep = " + ", simulations = 1000,
   info = interactive())
-
-get_long_numeric_format(antibiogram)
 
 \method{plot}{antibiogram}(x, ...)
 
@@ -83,8 +80,6 @@ get_long_numeric_format(antibiogram)
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{antibiogram}{the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}}
-
 \item{...}{when used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 
 \item{object}{an \code{\link[=antibiogram]{antibiogram()}} object}
@@ -105,7 +100,7 @@ This function returns a table with values between 0 and 100 for \emph{susceptibi
 
 For estimating antimicrobial coverage, especially when creating a WISCA, the outcome might become more reliable by only including the top \emph{n} species encountered in the data. You can filter on this top \emph{n} using \code{\link[=top_n_microorganisms]{top_n_microorganisms()}}. For example, use \code{top_n_microorganisms(your_data, n = 10)} as a pre-processing step to only include the top 10 species in the data.
 
-Using \code{\link[=get_long_numeric_format]{get_long_numeric_format()}}, the antibiogram is converted to a long format containing numeric values. This is ideal for e.g. advanced plotting.
+The numeric values of an antibiogram are stored in a long format as the \link{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}. This is ideal for e.g. advanced plotting.
 \subsection{Formatting Type}{
 
 The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the susceptibility percentage (for WISCA: \code{4-6} indicates the confidence level), \code{15} the numerator, and \code{300} the denominator:
@@ -379,7 +374,8 @@ if (requireNamespace("knitr")) {
 
 ab1 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-  mo_transform = "gramstain"
+  mo_transform = "gramstain",
+  wisca = TRUE
 )
 ab2 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),

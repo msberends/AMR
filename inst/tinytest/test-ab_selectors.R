@@ -28,7 +28,8 @@
 # ==================================================================== #
 
 # antibiotic class selectors
-expect_equal(ncol(example_isolates[, ab_class("antimyco"), drop = FALSE]), 1, tolerance = 0.5)
+expect_equal(ncol(example_isolates[, amr_class("antimyco"), drop = FALSE]), 1, tolerance = 0.5)
+expect_equal(ncol(example_isolates[, amr_selector(name %like% "trim"), drop = FALSE]), 2, tolerance = 0.5)
 expect_equal(ncol(example_isolates[, aminoglycosides(), drop = FALSE]), 4, tolerance = 0.5)
 expect_equal(ncol(example_isolates[, aminopenicillins(), drop = FALSE]), 2, tolerance = 0.5)
 expect_equal(ncol(example_isolates[, betalactams(), drop = FALSE]), 16, tolerance = 0.5)
