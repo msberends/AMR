@@ -27,13 +27,13 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-tryCatch(!is.function(expect_stout), error = function(e) TRUE) {
+if (tryCatch(!is.function(expect_stout), error = function(e) TRUE)) {
   expect_stout <<- testthat::expect_output
 }
-tryCatch(!is.function(expect_inherits), error = function(e) TRUE) {
+if (tryCatch(!is.function(expect_inherits), error = function(e) TRUE)) {
   expect_inherits <<- function(x, y, ...) testthat::expect(inherits(x, y),
-                                                          failure_message = paste0("Expected class ", paste(y, collapse = "/"),
-                                                                                   ", got class ", paste(class(x), collapse = "/")))
+                                                           failure_message = paste0("Expected class ", paste(y, collapse = "/"),
+                                                                                    ", got class ", paste(class(x), collapse = "/")))
 }
 
 expect_equal(AMR:::percentage(0.25), "25%")
