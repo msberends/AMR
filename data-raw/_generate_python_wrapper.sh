@@ -65,7 +65,6 @@ utils = importr('utils')
 base.options(warn = -1)
 
 # Override R library paths globally for the session
-robjects.r(f'.Library <- "{r_lib_path}"')  # Replace default library
 robjects.r(f'.Library.site <- "{r_lib_path}"')  # Replace site-specific library
 base._libPaths(r_lib_path)  # Override .libPaths() as well
 

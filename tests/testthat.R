@@ -37,9 +37,6 @@ expect_inherits <- function(x, y, ...) {
                                   ", required is class ", paste0(y, collapse = "/")))
 }
 expect_stdout <- expect_output
-if (getRversion() < "4.0.0") {
-  deparse1 <- AMR:::deparse1
-}
 
 # start unit tests
 test_check("AMR")

@@ -195,48 +195,26 @@
 #' You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with `flextable::as_flextable()` or `gt::gt()`.
 #'
 #' @section Why Use WISCA?:
-#' WISCA, as outlined by Barbieri *et al.* (\doi{10.1186/s13756-021-00939-2}), stands for 
-#' Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability 
-#' of adequate empirical antimicrobial regimen coverage for specific infection syndromes. 
-#' This method leverages a Bayesian hierarchical logistic regression framework with random 
-#' effects for pathogens and regimens, enabling robust estimates in the presence of sparse 
-#' data. 
+#'  
+#' WISCA, as outlined by Barbieri *et al.* (\doi{10.1186/s13756-021-00939-2}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian hierarchical logistic regression framework with random effects for pathogens and regimens, enabling robust estimates in the presence of sparse data. 
 #'
-#' The Bayesian model assumes conjugate priors for parameter estimation. For example, the 
-#' coverage probability \ifelse{latex}{\deqn{$theta$}}{$theta$} for a given antimicrobial regimen 
-#' is modeled using a Beta distribution as a prior: 
+#' The Bayesian model assumes conjugate priors for parameter estimation. For example, the coverage probability \eqn{\theta} for a given antimicrobial regimen is modelled using a Beta distribution as a prior: 
 #'
-#' \ifelse{latex}{\deqn{$theta$ \sim \text{Beta}($alpha$_0, $beta$_0)}}{
-#' \ifelse{html}{\figure{beta_prior.png}{options: width="300" alt="Beta prior"}}{$theta$ ~ Beta($alpha$_0, $beta$_0)}}
+#' \deqn{\theta \sim \text{Beta}(\alpha_0, \beta_0)}
 #'
-#' where \eqn{$alpha$_0} and \eqn{$beta$_0} represent prior successes and failures, respectively, 
-#' informed by expert knowledge or weakly informative priors (e.g., \eqn{$alpha$_0 = 1, $beta$_0 = 1}).
-#' 
-#' The likelihood function is constructed based on observed data, where the number of covered 
-#' cases for a regimen follows a binomial distribution:
+#' where \eqn{\alpha_0} and \eqn{\beta_0} represent prior successes and failures, respectively, informed by expert knowledge or weakly informative priors (e.g., \eqn{\alpha_0 = 1, \beta_0 = 1}). The likelihood function is constructed based on observed data, where the number of covered cases for a regimen follows a binomial distribution:
 #'
-#' \ifelse{latex}{\deqn{y \sim \text{Binomial}(n, $theta$)}}{
-#' \ifelse{html}{\figure{binomial_likelihood.png}{options: width="300" alt="Binomial likelihood"}}{y ~ Binomial(n, $theta$)}}
+#' \deqn{y \sim \text{Binomial}(n, \theta)}
 #'
-#' Posterior parameter estimates are obtained by combining the prior and likelihood using 
-#' Bayes' theorem. The posterior distribution of \eqn{$theta$} is also a Beta distribution:
+#' Posterior parameter estimates are obtained by combining the prior and likelihood using Bayes' theorem. The posterior distribution of \eqn{\theta} is also a Beta distribution:
 #'
-#' \ifelse{latex}{\deqn{$theta$ | y \sim \text{Beta}($alpha$_0 + y, $beta$_0 + n - y)}}{
-#' \ifelse{html}{\figure{posterior_beta.png}{options: width="300" alt="Beta posterior"}}{$theta$ | y ~ Beta($alpha$_0 + y, $beta$_0 + n - y)}}
+#' \deqn{\theta | y \sim \text{Beta}(\alpha_0 + y, \beta_0 + n - y)}
 #'
-#' For hierarchical modeling, pathogen-level effects (e.g., differences in resistance 
-#' patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. 
-#' This hierarchical structure ensures partial pooling of estimates across groups, 
-#' improving stability in strata with small sample sizes. The model is implemented using 
-#' Hamiltonian Monte Carlo (HMC) sampling.
+#' For hierarchical modelling, pathogen-level effects (e.g., differences in resistance patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. This hierarchical structure ensures partial pooling of estimates across groups, improving stability in strata with small sample sizes. The model is implemented using Hamiltonian Monte Carlo (HMC) sampling.
 #'
-#' Stratified results are provided based on covariates such as age, sex, and clinical 
-#' complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities). 
-#' For example, posterior odds ratios (ORs) are derived to quantify the effect of these 
-#' covariates on coverage probabilities:
+#' Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using `dplyr`'s [group_by()] as a pre-processing step before running [wisca()]. In this case, posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
 #'
-#' \ifelse{latex}{\deqn{\text{OR}_{\text{covariate}} = \frac{\exp($beta$_{\text{covariate}})}{\exp($beta$_0)}}}{
-#' \ifelse{html}{\figure{odds_ratio.png}{options: width="300" alt="Odds ratio formula"}}{OR_covariate = exp(beta_covariate) / exp(beta_0)}}
+#' \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
 #'
 #' By combining empirical data with prior knowledge, WISCA overcomes the limitations 
 #' of traditional combination antibiograms, offering disease-specific, patient-stratified 
@@ -249,6 +227,7 @@
 #' * Klinker KP *et al.* (2021). **Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms**. *Therapeutic Advances in Infectious Disease*, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
 #' * Barbieri E *et al.* (2021). **Development of a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) to guide the choice of the empiric antibiotic treatment for urinary tract infection in paediatric patients: a Bayesian approach** *Antimicrobial Resistance & Infection Control* May 1;10(1):74; \doi{10.1186/s13756-021-00939-2}
 #' * **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' @author Implementation: Dr. Larisse Bolton and Dr. Matthijs Berends
 #' @rdname antibiogram
 #' @name antibiogram
 #' @export
@@ -331,7 +310,8 @@
 #'
 #' ureido <- antibiogram(example_isolates,
 #'   antibiotics = ureidopenicillins(),
-#'   ab_transform = "name"
+#'   ab_transform = "name",
+#'   wisca = TRUE
 #' )
 #'
 #' # in an Rmd file, you would just need to return `ureido` in a chunk,
