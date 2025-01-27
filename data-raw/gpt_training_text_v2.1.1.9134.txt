@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9133. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9134. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1845,9 +1845,9 @@ Note that for types 2 and 3 (Combination Antibiogram and Syndromic Antibiogram),
 
 \subsection{Plotting}{
 
-All types of antibiograms as listed above can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R's \code{\link[=plot]{plot()}} and \code{\link[=barplot]{barplot()}}).
+All types of antibiograms as listed above can be plotted (using \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}} or base \R's \code{\link[=plot]{plot()}} and \code{\link[=barplot]{barplot()}}). As mentioned above, the numeric values of an antibiogram are stored in a long format as the \link[=attributes]{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}.
 
-THe outcome of \code{\link[=antibiogram]{antibiogram()}} can also be used directly in R Markdown / Quarto (i.e., \code{knitr}) for reports. In this case, \code{\link[knitr:kable]{knitr::kable()}} will be applied automatically and microorganism names will even be printed in italics at default (see argument \code{italicise}).
+The outcome of \code{\link[=antibiogram]{antibiogram()}} can also be used directly in R Markdown / Quarto (i.e., \code{knitr}) for reports. In this case, \code{\link[knitr:kable]{knitr::kable()}} will be applied automatically and microorganism names will even be printed in italics at default (see argument \code{italicise}).
 
 You can also use functions from specific 'table reporting' packages to transform the output of \code{\link[=antibiogram]{antibiogram()}} to your needs, e.g. with \code{flextable::as_flextable()} or \code{gt::gt()}.
 }
@@ -1855,7 +1855,7 @@ You can also use functions from specific 'table reporting' packages to transform
 \section{Why Use WISCA?}{
 
 
-WISCA, as outlined by Barbieri \emph{et al.} (\doi{10.1186/s13756-021-00939-2}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian hierarchical logistic regression framework with random effects for pathogens and regimens, enabling robust estimates in the presence of sparse data.
+WISCA, as outlined by Bielicki \emph{et al.} (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian hierarchical logistic regression framework with random effects for pathogens and regimens, enabling robust estimates in the presence of sparse data.
 
 The Bayesian model assumes conjugate priors for parameter estimation. For example, the coverage probability \eqn{\theta} for a given antimicrobial regimen is modelled using a Beta distribution as a prior:
 
@@ -1869,16 +1869,26 @@ Posterior parameter estimates are obtained by combining the prior and likelihood
 
 \deqn{\theta | y \sim \text{Beta}(\alpha_0 + y, \beta_0 + n - y)}
 
+Pathogen incidence, representing the proportion of infections caused by different pathogens, is modelled using a Dirichlet distribution, which is the natural conjugate prior for multinomial outcomes. The Dirichlet distribution is parameterised by a vector of concentration parameters \eqn{\alpha}, where each \eqn{\alpha_i} corresponds to a specific pathogen. The prior is typically chosen to be uniform (\eqn{\alpha_i = 1}), reflecting an assumption of equal prior probability across pathogens.
+
+The posterior distribution of pathogen incidence is then given by:
+
+\deqn{\text{Dirichlet}(\alpha_1 + n_1, \alpha_2 + n_2, \dots, \alpha_K + n_K)}
+
+where \eqn{n_i} is the number of infections caused by pathogen \eqn{i} observed in the data. For practical implementation, pathogen incidences are sampled from their posterior using normalised Gamma-distributed random variables:
+
+\deqn{x_i \sim \text{Gamma}(\alpha_i + n_i, 1)}
+\deqn{p_i = \frac{x_i}{\sum_{j=1}^K x_j}}
+
+where \eqn{x_i} represents unnormalised pathogen counts, and \eqn{p_i} is the normalised proportion for pathogen \eqn{i}.
+
 For hierarchical modelling, pathogen-level effects (e.g., differences in resistance patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. This hierarchical structure ensures partial pooling of estimates across groups, improving stability in strata with small sample sizes. The model is implemented using Hamiltonian Monte Carlo (HMC) sampling.
 
 Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using \code{dplyr}'s \code{\link[=group_by]{group_by()}} as a pre-processing step before running \code{\link[=wisca]{wisca()}}. In this case, posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
 
 \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
 
-By combining empirical data with prior knowledge, WISCA overcomes the limitations
-of traditional combination antibiograms, offering disease-specific, patient-stratified
-estimates with robust uncertainty quantification. This tool is invaluable for antimicrobial
-stewardship programs and empirical treatment guideline refinement.
+By combining empirical data with prior knowledge, WISCA overcomes the limitations of traditional combination antibiograms, offering disease-specific, patient-stratified estimates with robust uncertainty quantification. This tool is invaluable for antimicrobial stewardship programs and empirical treatment guideline refinement.
 }
 
 \examples{
