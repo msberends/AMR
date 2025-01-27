@@ -172,14 +172,14 @@ bug_drug_combinations <- function(x,
     res
   }
   
-  if (include_n_rows == FALSE) {
-    out <- out[, colnames(out)[colnames(out) != "total_rows"], drop = FALSE]
-  }
-  
   if (data_has_groups) {
     out <- apply_group(x, "run_it", groups)
   } else {
     out <- run_it(x)
+  }
+  
+  if (include_n_rows == FALSE) {
+    out <- out[, colnames(out)[colnames(out) != "total_rows"], drop = FALSE]
   }
   
   out <- out %pm>% pm_arrange(mo, ab)
