@@ -100,7 +100,7 @@ This function returns a table with values between 0 and 100 for \emph{susceptibi
 
 For estimating antimicrobial coverage, especially when creating a WISCA, the outcome might become more reliable by only including the top \emph{n} species encountered in the data. You can filter on this top \emph{n} using \code{\link[=top_n_microorganisms]{top_n_microorganisms()}}. For example, use \code{top_n_microorganisms(your_data, n = 10)} as a pre-processing step to only include the top 10 species in the data.
 
-The numeric values of an antibiogram are stored in a long format as the \link{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}. This is ideal for e.g. advanced plotting.
+The numeric values of an antibiogram are stored in a long format as the \link[=attributes]{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}. This is ideal for e.g. advanced plotting.
 \subsection{Formatting Type}{
 
 The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the susceptibility percentage (for WISCA: \code{4-6} indicates the confidence level), \code{15} the numerator, and \code{300} the denominator:

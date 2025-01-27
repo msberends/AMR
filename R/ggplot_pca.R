@@ -261,7 +261,7 @@ ggplot_pca <- function(x,
         type = "open"
       ),
       colour = arrows_colour,
-      size = arrows_size,
+      linewidth = arrows_size,
       alpha = arrows_alpha
     )
     if (arrows_textangled == TRUE) {

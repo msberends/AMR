@@ -36,7 +36,7 @@
 #' @param n_for_each an optional integer specifying the maximum number of rows to retain for each value of the selected property. If `NULL`, all rows within the top *n* groups will be included.
 #' @param col_mo A character string indicating the column in `x` that contains microorganism names or codes. Defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param ... Additional arguments passed on to [mo_property()] when `property` is not `NULL`.
-#' @details This function is useful for preprocessing data before creating [antibiograms][antibiograms()] or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.
+#' @details This function is useful for preprocessing data before creating [antibiograms][antibiogram()] or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.
 #' @export
 #' @seealso [mo_property()], [as.mo()], [antibiogram()]
 #' @examples

@@ -21,6 +21,8 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname,
 
 \item{FUN}{the function to call on the \code{mo} column to transform the microorganism codes - the default is \code{\link[=mo_shortname]{mo_shortname()}}}
 
+\item{include_n_rows}{a \link{logical} to indicate if the total number of rows must be included in the output}
+
 \item{...}{arguments passed on to \code{FUN}}
 
 \item{translate_ab}{a \link{character} of length 1 containing column names of the \link{antibiotics} data set}

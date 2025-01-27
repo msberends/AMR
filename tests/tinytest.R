@@ -27,21 +27,25 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# we use {tinytest} instead of {testthat} because it does not rely on recent R versions - we want to test on R >= 3.0.
+# we use {tinytest} for older R versions to allow unit testing in R >= 3.0.0.
 
-# Run them in RStudio using:
-# rstudioapi::jobRunScript("tests/tinytest.R", name = "AMR Unit Tests", workingDir = getwd(), exportEnv = "tinytest_results")
+# use this to quickly use testtthat for more informative errors:
+# testthat::test_dir("inst/tests")
 
-# test only on GitHub Actions and at using RStudio jobs - not on CRAN as tests are lengthy
-if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(e) FALSE) ||
-  identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
-  # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
+# test only on GitHub Actions - not on CRAN as tests are lengthy
+if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
+  # env var 'R_LIBS_USER' gets overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
+  
   if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
+    
+    # load the package
     library(AMR)
+    
     # set language
     set_AMR_locale("English")
-    # set some functions if on old R
+    
+    # set some functions for older R versions
     if (getRversion() < "3.2.0") {
       anyNA <- AMR:::anyNA
       dir.exists <- AMR:::dir.exists
@@ -64,16 +68,15 @@ if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(
     if (getRversion() < "4.0.0") {
       deparse1 <- AMR:::deparse1
     }
-
-    # start the unit tests
+    
     suppressMessages(
       out <- test_package("AMR",
-        testdir = ifelse(dir.exists("inst/tinytest"),
-          "inst/tinytest",
-          "tinytest"
-        ),
-        verbose = FALSE,
-        color = FALSE
+                          testdir = ifelse(dir.exists("inst/tests"),
+                                           "inst/tests",
+                                           "tests"
+                          ),
+                          verbose = FALSE,
+                          color = FALSE
       )
     )
     cat("\n\nSUMMARY:\n")

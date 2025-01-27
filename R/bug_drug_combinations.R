@@ -36,6 +36,7 @@
 #' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
 #' @param FUN the function to call on the `mo` column to transform the microorganism codes - the default is [mo_shortname()]
 #' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
+#' @param include_n_rows a [logical] to indicate if the total number of rows must be included in the output
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams sir_df
 #' @inheritParams base::formatC
@@ -182,8 +183,8 @@ bug_drug_combinations <- function(x,
     out <- out[, colnames(out)[colnames(out) != "total_rows"], drop = FALSE]
   }
   
-  out <- out %pm>% pm_arrange(mo, ab)
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
+  out <- out %pm>% pm_arrange(mo, ab)
   rownames(out) <- NULL
   structure(out, class = c("bug_drug_combinations", if(data_has_groups) "grouped" else NULL, class(out)))
 }

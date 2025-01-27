@@ -24,7 +24,7 @@ top_n_microorganisms(x, n, property = "fullname", n_for_each = NULL,
 This function filters a data set to include only the top \emph{n} microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, or to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
 }
 \details{
-This function is useful for preprocessing data before creating \link[=antibiograms]{antibiograms} or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.
+This function is useful for preprocessing data before creating \link[=antibiogram]{antibiograms} or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.
 }
 \examples{
 # filter to the top 3 species:

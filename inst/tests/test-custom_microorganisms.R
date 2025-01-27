@@ -37,7 +37,7 @@ suppressMessages(
                species = "asburiae/cloacae")
   )
 )
-  
+
 expect_identical(as.character(as.mo("ENT_ASB_CLO")), "ENT_ASB_CLO")
 expect_identical(mo_name("ENT_ASB_CLO"), "Enterobacter asburiae/cloacae")
 expect_identical(mo_gramstain("ENT_ASB_CLO", language = NULL), "Gram-negative")

@@ -60,7 +60,7 @@
 #' 
 #' For estimating antimicrobial coverage, especially when creating a WISCA, the outcome might become more reliable by only including the top *n* species encountered in the data. You can filter on this top *n* using [top_n_microorganisms()]. For example, use `top_n_microorganisms(your_data, n = 10)` as a pre-processing step to only include the top 10 species in the data.
 #' 
-#' The numeric values of an antibiogram are stored in a long format as the [attribute] `long_numeric`. You can retrieve them using `attributes(x)$long_numeric`, where `x` is the outcome of [antibiogram()] or [wisca()]. This is ideal for e.g. advanced plotting.
+#' The numeric values of an antibiogram are stored in a long format as the [attribute][attributes()] `long_numeric`. You can retrieve them using `attributes(x)$long_numeric`, where `x` is the outcome of [antibiogram()] or [wisca()]. This is ideal for e.g. advanced plotting.
 #' 
 #' ### Formatting Type
 #' 

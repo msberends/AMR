@@ -1,7 +1,3 @@
-BLUE = '\033[94m'
-GREEN = '\033[32m'
-RESET = '\033[0m'
-
 import os
 import sys
 from rpy2 import robjects
@@ -17,18 +13,22 @@ venv_path = sys.prefix
 r_lib_path = os.path.join(venv_path, "R_libs")
 # Ensure the R library path exists
 os.makedirs(r_lib_path, exist_ok=True)
-# Set the R library path in .libPaths
-base = importr('base')
-# Turn off warnings
-base.options(warn = -1)
 
-base._libPaths(r_lib_path)
+# Import base and utils
+base = importr('base')
+utils = importr('utils')
+
+# Override R library paths globally for the session
+robjects.r(f'.Library <- "{r_lib_path}"')  # Replace default library
+robjects.r(f'.Library.site <- "{r_lib_path}"')  # Replace site-specific library
+base._libPaths(r_lib_path)  # Override .libPaths() as well
+
+# Get the effective library path
 r_amr_lib_path = base._libPaths()[0]
 
 # Check if the AMR package is installed in R
-if not isinstalled('AMR', lib_loc = r_amr_lib_path):
-    utils = importr('utils')
-    print(f"{BLUE}AMR:{RESET} Installing AMR package to {BLUE}{r_amr_lib_path}/{RESET}...", flush=True)
+if not isinstalled('AMR', lib_loc=r_amr_lib_path):
+    print(f"AMR: Installing latest AMR R package to {r_amr_lib_path}...", flush=True)
     utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
 
 # Python package version of AMR
@@ -43,16 +43,12 @@ r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_li
 # Compare R and Python package versions
 if r_amr_version != python_amr_version:
     try:
-        print(f"{BLUE}AMR:{RESET} Updating AMR package in {BLUE}{r_amr_lib_path}/{RESET}...", flush=True)
-        utils = importr('utils')
+        print(f"AMR: Updating AMR package in {r_amr_lib_path}...", flush=True)
         utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
     except Exception as e:
-        print(f"{BLUE}AMR:{RESET} Could not update: {e}{RESET}", flush=True)
+        print(f"AMR: Could not update: {e}", flush=True)
 
-# Restore warnings to default
-base.options(warn = 0)
-
-print(f"{BLUE}AMR:{RESET} Setting up R environment and AMR datasets...", flush=True)
+print(f"AMR: Setting up R environment and AMR datasets...", flush=True)
 
 # Activate the automatic conversion between R and pandas DataFrames
 pandas2ri.activate()
@@ -77,4 +73,4 @@ microorganisms = pandas2ri.rpy2py(robjects.r('AMR::microorganisms[, !sapply(AMR:
 antibiotics = pandas2ri.rpy2py(robjects.r('AMR::antibiotics[, !sapply(AMR::antibiotics, is.list)]'))
 clinical_breakpoints = pandas2ri.rpy2py(robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]'))
 
-print(f"{BLUE}AMR:{RESET} {GREEN}Done.{RESET}", flush=True)
+print(f"AMR: Done.", flush=True)
