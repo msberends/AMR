@@ -32,7 +32,7 @@
 #' @description
 #' Create detailed antibiograms with options for traditional, combination, syndromic, and Bayesian WISCA methods.
 #' 
-#' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provides flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
+#' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()])
 #' @param antibiotics vector of any antimicrobial name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antimicrobial selectors][antimicrobial_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as "TZP+TOB" or "cipro + genta", given that columns resembling such antimicrobials exist in `x`. See *Examples*.
 #' @param mo_transform a character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
@@ -54,9 +54,9 @@
 #' @param info 	a [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
 #' @param object an [antibiogram()] object
 #' @param ... when used in [R Markdown or Quarto][knitr::kable()]: arguments passed on to [knitr::kable()] (otherwise, has no use)
-#' @details This function returns a table with values between 0 and 100 for *susceptibility*, not resistance.
+#' @details These functions return a table with values between 0 and 100 for *susceptibility*, not resistance.
 #' 
-#' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
+#' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them with one of the four available algorithms: isolate-based, patient-based, episode-based, or phenotype-based.
 #' 
 #' For estimating antimicrobial coverage, especially when creating a WISCA, the outcome might become more reliable by only including the top *n* species encountered in the data. You can filter on this top *n* using [top_n_microorganisms()]. For example, use `top_n_microorganisms(your_data, n = 10)` as a pre-processing step to only include the top 10 species in the data.
 #' 
@@ -225,7 +225,7 @@
 #'
 #' For hierarchical modelling, pathogen-level effects (e.g., differences in resistance patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. This hierarchical structure ensures partial pooling of estimates across groups, improving stability in strata with small sample sizes. The model is implemented using Hamiltonian Monte Carlo (HMC) sampling.
 #'
-#' Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using `dplyr`'s [group_by()] as a pre-processing step before running [wisca()]. In this case, posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
+#' Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using `dplyr`'s [`group_by()`][dplyr::group_by()] as a pre-processing step before running [wisca()]. Posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
 #'
 #' \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
 #'

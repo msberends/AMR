@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9134. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9135. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1713,12 +1713,12 @@ wisca(x, antibiotics = where(is.sir), mo_transform = "shortname",
 \description{
 Create detailed antibiograms with options for traditional, combination, syndromic, and Bayesian WISCA methods.
 
-Adhering to previously described approaches (see \emph{Source}) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki \emph{et al.}, these functions provides flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
+Adhering to previously described approaches (see \emph{Source}) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki \emph{et al.}, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
 }
 \details{
-This function returns a table with values between 0 and 100 for \emph{susceptibility}, not resistance.
+These functions return a table with values between 0 and 100 for \emph{susceptibility}, not resistance.
 
-\strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set with one of the four available algorithms.
+\strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them with one of the four available algorithms: isolate-based, patient-based, episode-based, or phenotype-based.
 
 For estimating antimicrobial coverage, especially when creating a WISCA, the outcome might become more reliable by only including the top \emph{n} species encountered in the data. You can filter on this top \emph{n} using \code{\link[=top_n_microorganisms]{top_n_microorganisms()}}. For example, use \code{top_n_microorganisms(your_data, n = 10)} as a pre-processing step to only include the top 10 species in the data.
 
@@ -1884,7 +1884,7 @@ where \eqn{x_i} represents unnormalised pathogen counts, and \eqn{p_i} is the no
 
 For hierarchical modelling, pathogen-level effects (e.g., differences in resistance patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. This hierarchical structure ensures partial pooling of estimates across groups, improving stability in strata with small sample sizes. The model is implemented using Hamiltonian Monte Carlo (HMC) sampling.
 
-Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using \code{dplyr}'s \code{\link[=group_by]{group_by()}} as a pre-processing step before running \code{\link[=wisca]{wisca()}}. In this case, posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
+Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using \code{dplyr}'s \code{\link[dplyr:group_by]{group_by()}} as a pre-processing step before running \code{\link[=wisca]{wisca()}}. Posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
 
 \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
 
