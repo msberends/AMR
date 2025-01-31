@@ -1173,7 +1173,7 @@ has_colour <- function() {
     # disable on emacs, which only supports 8 colours
     return(FALSE)
   }
-  has_color <- import_fn("has_color", "crayon")
+  has_color <- import_fn("has_color", "crayon", error_on_fail = FALSE)
   !is.null(has_color) && isTRUE(has_color())
 }
 
