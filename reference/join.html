@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9135</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9136</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 26</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mo           fullname   status kingdom phylum class order family genus species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> B_KLBSL_PNMN Klebsiell… accep… Bacter… Pseud… Gamm… Ente… Enter… Kleb… pneumo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">B_</span>KLBSL<span style="color: #949494;">_</span>PNMN Klebsiell… accep… Bacter… Pseud… Gamm… Ente… Enter… Kleb… pneumo…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 16 more variables: subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   oxygen_tolerance &lt;chr&gt;, source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn_renamed_to &lt;chr&gt;, mycobank &lt;chr&gt;, mycobank_parent &lt;chr&gt;,</span></span>
@@ -113,7 +113,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 26</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mo           fullname   status kingdom phylum class order family genus species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> B_KLBSL_PNMN Klebsiell… accep… Bacter… Pseud… Gamm… Ente… Enter… Kleb… pneumo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">B_</span>KLBSL<span style="color: #949494;">_</span>PNMN Klebsiell… accep… Bacter… Pseud… Gamm… Ente… Enter… Kleb… pneumo…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 16 more variables: subspecies &lt;chr&gt;, rank &lt;chr&gt;, ref &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   oxygen_tolerance &lt;chr&gt;, source &lt;chr&gt;, lpsn &lt;chr&gt;, lpsn_parent &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lpsn_renamed_to &lt;chr&gt;, mycobank &lt;chr&gt;, mycobank_parent &lt;chr&gt;,</span></span>
@@ -153,7 +153,7 @@
 <span class="r-in"><span>    <span class="fu">left_join_microorganisms</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "mo"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">Joining, by = "mo"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"                "patient"             "age"                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "gender"              "ward"                "mo"                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "PEN"                 "OXA"                 "FLC"                </span>
