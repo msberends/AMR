@@ -115,7 +115,6 @@ call_functions <- c(
   "kable" = "knitr",
   "knit_print" = "knitr",
   "opts_chunk" = "knitr",
-  "rmarkdown" = "knitr",
   # pillar
   "pillar_shaft" = "pillar",
   "tbl_format_footer" = "pillar",
@@ -141,8 +140,13 @@ call_functions <- c(
 )
 
 import_functions <- c(import_functions, call_functions)
-suggests <- desc::desc(".")$get_deps()
-suggests <- suggests[which(suggests$type == "Suggests"), ]$package
+
+if (AMR:::pkg_is_available("desc")) {
+  suggests <- desc::desc(".")$get_deps()
+  suggests <- suggests[which(suggests$type == "Suggests"), ]$package
+} else {
+  suggests <- import_functions
+}
 for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])
