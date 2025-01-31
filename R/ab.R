@@ -324,7 +324,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     # INITIAL SEARCH - More uncertain results ----
     if (loop_time <= 2 && fast_mode == FALSE) {
       # only run on first and second try
-
+      
       # try by removing all spaces
       if (x[i] %like% " ") {
         found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), loop_time = loop_time + 2))
@@ -333,11 +333,45 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
           next
         }
       }
-
+      
       # try by removing all spaces and numbers
       if (x[i] %like% " " || x[i] %like% "[0-9]") {
         found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (length(found) > 0 && !is.na(found)) {
+          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+          next
+        }
+      }
+      
+      # reverse a combination, e.g. clavulanic acid/amoxicillin
+      if (x[i] %like% " ") {
+        split <- strsplit(x[i], " ")[[1]]
+        permute <- function(x) {
+          if (length(x) == 1) return(list(x))
+          result <- vector("list", factorial(length(x)))
+          index <- 1
+          for (i in seq_along(x)) {
+            sub_perms <- permute(x[-i])  # Recursively get permutations of remaining elements
+            for (sub in sub_perms) {
+              result[[index]] <- c(x[i], sub)
+              index <- index + 1
+            }
+          }
+          return(result)
+        }
+        permutations <- permute(split)
+        found_perms <- character(length(permutations))
+        for (s in seq_len(length(permutations))) {
+          concat <- paste0(permutations[[s]], collapse = " ")
+          if (concat %in% AMR_env$AB_lookup$generalised_name) {
+            found_perms[s] <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name == concat), "ab", drop = TRUE]
+          } else {
+            found_perms[s] <- suppressWarnings(as.ab(concat, loop_time = loop_time + 2))
+          }
+        }
+        found_perms <- found_perms[!is.na(found_perms)]
+        if (length(found_perms) > 0) {
+          found <- found_perms[order(nchar(found_perms), decreasing = TRUE)][1]
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
         }

@@ -340,17 +340,17 @@ as.mo <- function(x,
         filtr <- which(MO_lookup_current$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 3) {
         # no space and 3 characters - probably a code such as SAU or ECO
-        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", totitle(substr(x_out, 1, 1)), AMR_env$dots, " ", substr(x_out, 2, 3), AMR_env$dots, "\""))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", totitle(substr(x_out, 1, 1)), AMR_env$ellipsis_icon, " ", substr(x_out, 2, 3), AMR_env$ellipsis_icon, "\""))
         filtr <- which(MO_lookup_current$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 1), ".* ", substr(x_out, 2, 3)))
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO
-        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", totitle(substr(x_out, 1, 2)), AMR_env$dots, " ", substr(x_out, 3, 4), AMR_env$dots, "\""))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", totitle(substr(x_out, 1, 2)), AMR_env$ellipsis_icon, " ", substr(x_out, 3, 4), AMR_env$ellipsis_icon, "\""))
         filtr <- which(MO_lookup_current$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
         second_part <- substr(x_out, 4, nchar(x_out))
-        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", gsub("[a-z]*", AMR_env$dots, totitle(first_part), fixed = TRUE), " ", second_part, AMR_env$dots, "\""))
+        msg <<- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on \"", gsub("[a-z]*", AMR_env$ellipsis_icon, totitle(first_part), fixed = TRUE), " ", second_part, AMR_env$ellipsis_icon, "\""))
         filtr <- which(MO_lookup_current$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
         # for genus or species or subspecies

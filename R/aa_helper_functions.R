@@ -1169,57 +1169,12 @@ message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
 }
 
 has_colour <- function() {
-  # this is a base R version of crayon::has_color, but disables colours on emacs
-
   if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {
     # disable on emacs, which only supports 8 colours
     return(FALSE)
   }
-  enabled <- getOption("crayon.enabled")
-  if (!is.null(enabled)) {
-    return(isTRUE(enabled))
-  }
-  rstudio_with_ansi_support <- function(x) {
-    if (Sys.getenv("RSTUDIO", "") == "") {
-      return(FALSE)
-    }
-    if ((cols <- Sys.getenv("RSTUDIO_CONSOLE_COLOR", "")) != "" && !is.na(as.double(cols))) {
-      return(TRUE)
-    }
-    tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) {
-      return(FALSE)
-    }) &&
-      tryCatch(getExportedValue("hasFun", ns = asNamespace("rstudioapi"))("getConsoleHasColor"), error = function(e) {
-        return(FALSE)
-      })
-  }
-  if (rstudio_with_ansi_support() && sink.number() == 0) {
-    return(TRUE)
-  }
-  if (!isatty(stdout())) {
-    return(FALSE)
-  }
-  if (tolower(Sys.info()["sysname"]) == "windows") {
-    if (Sys.getenv("ConEmuANSI") == "ON") {
-      return(TRUE)
-    }
-    if (Sys.getenv("CMDER_ROOT") != "") {
-      return(TRUE)
-    }
-    return(FALSE)
-  }
-  if ("COLORTERM" %in% names(Sys.getenv())) {
-    return(TRUE)
-  }
-  if (Sys.getenv("TERM") == "dumb") {
-    return(FALSE)
-  }
-  grepl(
-    pattern = "^screen|^xterm|^vt100|color|ansi|cygwin|linux",
-    x = Sys.getenv("TERM"),
-    ignore.case = TRUE,
-    perl = TRUE
-  )
+  has_color <- import_fn("has_color", "crayon")
+  !is.null(has_color) && isTRUE(has_color())
 }
 
 # set colours if console has_colour()

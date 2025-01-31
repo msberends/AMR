@@ -34,10 +34,17 @@
 import_functions <- c(
   "%chin%" = "data.table",
   "anti_join" = "dplyr",
+  "as.data.table" = "data.table",
+  "as_tibble" = "tibble",
   "chmatch" = "data.table",
   "cli_abort" = "cli",
   "cur_column" = "dplyr",
+  "cur_group" = "dplyr",
+  "document_position" = "rstudioapi",
+  "document_range" = "rstudioapi",
   "full_join" = "dplyr",
+  "getActiveDocumentContext" = "rstudioapi",
+  "has_color" = "crayon",
   "has_internet" = "curl",
   "html_attr" = "rvest",
   "html_children" = "rvest",
@@ -48,26 +55,28 @@ import_functions <- c(
   "inner_join" = "dplyr",
   "insertText" = "rstudioapi",
   "left_join" = "dplyr",
+  "modifyRange" = "rstudioapi",
   "new_pillar_shaft_simple" = "pillar",
   "progress_bar" = "progress",
   "read_html" = "xml2",
   "right_join" = "dplyr",
   "semi_join" = "dplyr",
-  "showQuestion" = "rstudioapi"
+  "showQuestion" = "rstudioapi",
+  "symbol" = "cli",
+  "tibble" = "tibble",
+  "write.xlsx" = "openxlsx"
 )
 
 # functions that are called directly with ::
 call_functions <- c(
   # cleaner
+  "freq" = "cleaner",
   "freq.default" = "cleaner",
+  "percentage" = "cleaner",
   # cli
   "symbol" = "cli",
-  "ansi_has_hyperlink_support" = "cli",
-  # rstudioapi (RStudio)
-  "isAvailable" = "rstudioapi",
-  "versionInfo" = "rstudioapi",
-  # readxl
-  "read_excel" = "readxl",
+  # curl
+  "has_internet" = "curl",
   # ggplot2
   "aes" = "ggplot2",
   "arrow" = "ggplot2",
@@ -77,6 +86,8 @@ call_functions <- c(
   "element_text" = "ggplot2",
   "expand_limits" = "ggplot2",
   "facet_wrap" = "ggplot2",
+  "fortify" = "ggplot2",
+  "geom_col" = "ggplot2",
   "geom_errorbar" = "ggplot2",
   "geom_path" = "ggplot2",
   "geom_point" = "ggplot2",
@@ -85,10 +96,10 @@ call_functions <- c(
   "geom_text" = "ggplot2",
   "ggplot" = "ggplot2",
   "labs" = "ggplot2",
-  "layer" = "ggplot2",
   "position_dodge2" = "ggplot2",
   "position_fill" = "ggplot2",
   "scale_colour_discrete" = "ggplot2",
+  "scale_discrete_manual" = "ggplot2",
   "scale_fill_discrete" = "ggplot2",
   "scale_fill_manual" = "ggplot2",
   "scale_x_discrete" = "ggplot2",
@@ -99,51 +110,61 @@ call_functions <- c(
   "unit" = "ggplot2",
   "xlab" = "ggplot2",
   "ylab" = "ggplot2",
-  "vec_arith" = "vctrs"
-)
-if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
-  call_functions <- c(call_functions,
-    # skimr
-    "inline_hist" = "skimr",
-    "sfl" = "skimr"
-  )
-}
-
-extended_functions <- c(
-  "freq" = "cleaner",
-  "autoplot" = "ggplot2",
+  # knitr
+  "asis_output" = "knitr",
+  "kable" = "knitr",
+  "knit_print" = "knitr",
+  "opts_chunk" = "knitr",
+  "rmarkdown" = "knitr",
+  # pillar
   "pillar_shaft" = "pillar",
-  "get_skimmers" = "skimr",
+  "tbl_format_footer" = "pillar",
+  "tbl_sum" = "pillar",
   "type_sum" = "pillar",
+  # readxl
+  "read_excel" = "readxl",
+  # rmarkdown
+  "html_vignette" = "rmarkdown",
+  # skimr
+  "get_skimmers" = "skimr",
+  "inline_hist" = "skimr",
+  "sfl" = "skimr",
+  # tibble
+  "tibble" = "tibble",
+  # vctrs
+  "vec_arith" = "vctrs",
   "vec_cast" = "vctrs",
   "vec_math" = "vctrs",
-  "vec_ptype2" = "vctrs"
+  "vec_ptype2" = "vctrs",
+  "vec_ptype_abbr" = "vctrs",
+  "vec_ptype_full" = "vctrs"
 )
 
-import_functions <- c(import_functions, call_functions, extended_functions)
+import_functions <- c(import_functions, call_functions)
+suggests <- desc::desc(".")$get_deps()
+suggests <- suggests[which(suggests$type == "Suggests"), ]$package
 for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])
+  expect_true(pkg %in% suggests,
+              info = paste0("package `", pkg, "` is not in Suggests"))
   # function should exist in foreign pkg namespace
   if (AMR:::pkg_is_available(pkg,
-    also_load = FALSE,
-    min_version = if (pkg == "dplyr") "1.0.0" else NULL
+                             also_load = FALSE,
+                             min_version = if (pkg == "dplyr") "1.0.0" else NULL
   )) {
     expect_true(!is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
-      info = paste0("does not exist (anymore): function `", pkg, "::", fn, "()`")
-    )
+                info = paste0("Function does not exist (anymore): function `", pkg, "::", fn, "()`"))
   } else if (pkg != "rstudioapi") {
-    warning("Package '", pkg, "' does not exist anymore")
+    warning("Package '", pkg, "' not available")
   }
 }
 
 if (AMR:::pkg_is_available("cli")) {
-  expect_true(!is.null(cli::symbol$info))
-}
-if (AMR:::pkg_is_available("cli")) {
-}
-if (AMR:::pkg_is_available("cli")) {
-  expect_true(!is.null(cli::symbol$ellipsis))
+  expect_true(!is.null(cli::symbol$bullet) && is.character(cli::symbol$bullet) && length(cli::symbol$bullet) == 1)
+  expect_true(!is.null(cli::symbol$ellipsis) && is.character(cli::symbol$ellipsis) && length(cli::symbol$ellipsis) == 1)
+  expect_true(!is.null(cli::symbol$info) && is.character(cli::symbol$info) && length(cli::symbol$info) == 1)
+  expect_true(!is.null(cli::symbol$sup_1) && is.character(cli::symbol$sup_1) && length(cli::symbol$sup_1) == 1)
 }
 if (AMR:::pkg_is_available("ggplot2")) {
   # the scale_*_mic() functions rely on these
@@ -152,5 +173,3 @@ if (AMR:::pkg_is_available("ggplot2")) {
   expect_true(is.function(ggplot2::scale_colour_discrete()$transform))
   expect_true(is.function(ggplot2::scale_fill_discrete()$transform))
 }
-
-

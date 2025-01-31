@@ -1,6 +1,6 @@
 Package: AMR
-Version: 2.1.1.9135
-Date: 2025-01-28
+Version: 2.1.1.9136
+Date: 2025-01-31
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -36,14 +36,18 @@ Depends: R (>= 3.0.0)
 Suggests: 
   cleaner,
   cli,
+  crayon,
   curl,
   data.table,
   dplyr,
   ggplot2,
   knitr,
+  openxlsx,
+  pillar,
   progress,
   readxl,
   rmarkdown,
+  rstudioapi,
   rvest,
   skimr,
   testthat,
