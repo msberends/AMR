@@ -141,12 +141,7 @@ call_functions <- c(
 
 import_functions <- c(import_functions, call_functions)
 
-if (AMR:::pkg_is_available("desc")) {
-  suggests <- desc::desc(".")$get_deps()
-  suggests <- suggests[which(suggests$type == "Suggests"), ]$package
-} else {
-  suggests <- import_functions
-}
+suggests <- strsplit(utils::packageDescription(pkg = ".", lib.loc = ".", fields = "Suggests"), "[,\n ]+")[[1]]
 for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])
