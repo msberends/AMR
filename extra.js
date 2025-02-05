@@ -118,7 +118,7 @@ $(document).ready(function() {
       x = x.replace("Christian", "Dr. Christian");
       x = x.replace("Corinna", "Dr. Corinna");
       x = x.replace("Dennis", "Dr. Dennis");
-      x = x.replace("Gwen", "Dr. Gwen");
+      x = x.replace("Gwen", "Prof. Gwen");
       x = x.replace("Jason", "Dr. Jason");
       x = x.replace("Javier", "Prof. Javier");
       x = x.replace("Jonas", "Dr. Jonas");

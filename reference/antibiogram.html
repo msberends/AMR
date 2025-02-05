@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9139</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9140</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,20 +59,22 @@ Adhering to previously described approaches (see Source) and especially the Baye
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">x</span>, antibiotics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, mo_transform <span class="op">=</span> <span class="st">"shortname"</span>,</span>
 <span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>, syndromic_group <span class="op">=</span> <span class="cn">NULL</span>, add_total_n <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wisca</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wisca</span>, <span class="fl">18</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wisca</span>, <span class="fl">14</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">" + "</span>, wisca <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simulations <span class="op">=</span> <span class="fl">1000</span>, conf_interval <span class="op">=</span> <span class="fl">0.95</span>, interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>,</span>
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">wisca</span><span class="op">(</span><span class="va">x</span>, antibiotics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, mo_transform <span class="op">=</span> <span class="st">"shortname"</span>,</span>
 <span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>, syndromic_group <span class="op">=</span> <span class="cn">NULL</span>, add_total_n <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>, <span class="fl">18</span><span class="op">)</span>,</span>
+<span>  only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>, <span class="fl">14</span><span class="op">)</span>,</span>
 <span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">" + "</span>, simulations <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">retrieve_wisca_parameters</span><span class="op">(</span><span class="va">wisca_model</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'antibiogram'</span></span>
 <span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -103,11 +105,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-antibiotics">antibiotics<a class="anchor" aria-label="anchor" href="#arg-antibiotics"></a></dt>
-<dd><p>vector of any antimicrobial name or code (will be evaluated with <code><a href="as.ab.html">as.ab()</a></code>, column name of <code>x</code>, or (any combinations of) <a href="antimicrobial_class_selectors.html">antimicrobial selectors</a> such as <code><a href="antimicrobial_class_selectors.html">aminoglycosides()</a></code> or <code><a href="antimicrobial_class_selectors.html">carbapenems()</a></code>. For combination antibiograms, this can also be set to values separated with <code>"+"</code>, such as "TZP+TOB" or "cipro + genta", given that columns resembling such antimicrobials exist in <code>x</code>. See <em>Examples</em>.</p></dd>
+<dd><p>vector of any antimicrobial name or code (will be evaluated with <code><a href="as.ab.html">as.ab()</a></code>, column name of <code>x</code>, or (any combinations of) <a href="antimicrobial_class_selectors.html">antimicrobial selectors</a> such as <code><a href="antimicrobial_class_selectors.html">aminoglycosides()</a></code> or <code><a href="antimicrobial_class_selectors.html">carbapenems()</a></code>. For combination antibiograms, this can also be set to values separated with <code>"+"</code>, such as <code>"TZP+TOB"</code> or <code>"cipro + genta"</code>, given that columns resembling such antimicrobials exist in <code>x</code>. See <em>Examples</em>.</p></dd>
 
 
 <dt id="arg-mo-transform">mo_transform<a class="anchor" aria-label="anchor" href="#arg-mo-transform"></a></dt>
-<dd><p>a character to transform microorganism input - must be <code>"name"</code>, <code>"shortname"</code> (default), <code>"gramstain"</code>, or one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be <code>NULL</code> to not transform the input.</p></dd>
+<dd><p>a character to transform microorganism input - must be <code>"name"</code>, <code>"shortname"</code> (default), <code>"gramstain"</code>, or one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be <code>NULL</code> to not transform the input or <code>NA</code> to consider all microorganisms 'unknown'.</p></dd>
 
 
 <dt id="arg-ab-transform">ab_transform<a class="anchor" aria-label="anchor" href="#arg-ab-transform"></a></dt>
@@ -127,7 +129,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
-<dd><p>number of digits to use for rounding the susceptibility percentage</p></dd>
+<dd><p>number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise</p></dd>
 
 
 <dt id="arg-formatting-type">formatting_type<a class="anchor" aria-label="anchor" href="#arg-formatting-type"></a></dt>
@@ -155,11 +157,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-wisca">wisca<a class="anchor" aria-label="anchor" href="#arg-wisca"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is <code>FALSE</code>). This will use a Bayesian hierarchical model to estimate regimen coverage probabilities using Montecarlo simulations. Set <code>simulations</code> to adjust.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is <code>FALSE</code>). This will use a Bayesian decision model to estimate regimen coverage probabilities using <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" class="external-link">Monte Carlo simulations</a>. Set <code>simulations</code> to adjust.</p></dd>
 
 
 <dt id="arg-simulations">simulations<a class="anchor" aria-label="anchor" href="#arg-simulations"></a></dt>
-<dd><p>(for WISCA) a numerical value to set the number of Montecarlo simulations</p></dd>
+<dd><p>(for WISCA) a numerical value to set the number of Monte Carlo simulations</p></dd>
 
 
 <dt id="arg-conf-interval">conf_interval<a class="anchor" aria-label="anchor" href="#arg-conf-interval"></a></dt>
@@ -172,6 +174,10 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
+
+
+<dt id="arg-wisca-model">wisca_model<a class="anchor" aria-label="anchor" href="#arg-wisca-model"></a></dt>
+<dd><p>the outcome of <code>wisca()</code> or antibiogram(..., wisca = TRUE)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -199,7 +205,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <h3 id="formatting-type">Formatting Type<a class="anchor" aria-label="anchor" href="#formatting-type"></a></h3>
 
 
-<p>The formatting of the 'cells' of the table can be set with the argument <code>formatting_type</code>. In these examples, <code>5</code> is the susceptibility percentage (for WISCA: <code>4-6</code> indicates the confidence level), <code>15</code> the numerator, and <code>300</code> the denominator:</p><ol><li><p>5</p></li>
+<p>The formatting of the 'cells' of the table can be set with the argument <code>formatting_type</code>. In these examples, <code>5</code> is the antimicrobial coverage (for WISCA: <code>4-6</code> indicates the confidence level), <code>15</code> the numerator, and <code>300</code> the denominator:</p><ol><li><p>5</p></li>
 <li><p>15</p></li>
 <li><p>300</p></li>
 <li><p>15/300</p></li>
@@ -213,16 +219,16 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <li><p>5% (N=15/300)</p>
 <p>Additional options for WISCA (using <code>antibiogram(..., wisca = TRUE)</code> or <code>wisca()</code>):</p></li>
 <li><p>5 (4-6)</p></li>
-<li><p>5% (4-6%)</p></li>
+<li><p>5% (4-6%) - <strong>default for WISCA</strong></p></li>
 <li><p>5 (4-6,300)</p></li>
 <li><p>5% (4-6%,300)</p></li>
 <li><p>5 (4-6,N=300)</p></li>
-<li><p>5% (4-6%,N=300) - <strong>default for WISCA</strong></p></li>
+<li><p>5% (4-6%,N=300)</p></li>
 <li><p>5 (4-6,15/300)</p></li>
 <li><p>5% (4-6%,15/300)</p></li>
 <li><p>5 (4-6,N=15/300)</p></li>
 <li><p>5% (4-6%,N=15/300)</p></li>
-</ol><p>The default is <code>18</code> for WISCA and <code>10</code> for non-WISCA, which can be set globally with the package option <code><a href="AMR-options.html">AMR_antibiogram_formatting_type</a></code>, e.g. <code>options(AMR_antibiogram_formatting_type = 5)</code>.</p>
+</ol><p>The default is <code>14</code> for WISCA and <code>10</code> for non-WISCA, which can be set globally with the package option <code><a href="AMR-options.html">AMR_antibiogram_formatting_type</a></code>, e.g. <code>options(AMR_antibiogram_formatting_type = 5)</code>. Do note that for WISCA, the numerator and denominator are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.</p>
 <p>Set <code>digits</code> (defaults to <code>0</code>) to alter the rounding of the susceptibility percentages.</p>
 </div>
 
@@ -233,7 +239,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <p>There are various antibiogram types, as summarised by Klinker <em>et al.</em> (2021, <a href="https://doi.org/10.1177/20499361211011373" class="external-link">doi:10.1177/20499361211011373</a>
 ), and they are all supported by <code>antibiogram()</code>.</p>
 <p><strong>Use WISCA whenever possible</strong>, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki <em>et al.</em> (2020, <a href="https://doi.org/10.1001.jamanetworkopen.2019.21124" class="external-link">doi:10.1001.jamanetworkopen.2019.21124</a>
-). See the section <em>Why Use WISCA?</em> on this page.</p><ol><li><p><strong>Traditional Antibiogram</strong></p>
+). See the section <em>Explaining WISCA</em> on this page.</p><ol><li><p><strong>Traditional Antibiogram</strong></p>
 <p>Case example: Susceptibility of <em>Pseudomonas aeruginosa</em> to piperacillin/tazobactam (TZP)</p>
 <p>Code example:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
@@ -250,7 +256,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="../reference/antimicrobial_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>            syndromic_group <span class="op">=</span> <span class="st">"ward"</span><span class="op">)</span></span></code></pre><p></p></div></li>
 <li><p><strong>Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</strong></p>
-<p>WISCA can be applied to any antibiogram, see the section <em>Why Use WISCA?</em> on this page for more information.</p>
+<p>WISCA can be applied to any antibiogram, see the section <em>Explaining WISCA</em> on this page for more information.</p>
 <p>Code example:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
@@ -260,33 +266,71 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
 <span>      antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre datasets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).</p></li>
-</ol><p>Grouped <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibbles</a> can also be used to calculate susceptibilities over various groups.</p>
+</ol></div>
+
+<div class="section">
+<h3 id="grouped-tibbles">Grouped tibbles<a class="anchor" aria-label="anchor" href="#grouped-tibbles"></a></h3>
+
+
+<p>For any type of antibiogram, grouped <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibbles</a> can also be used to calculate susceptibilities over various groups.</p>
 <p>Code example:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">has_sepsis</span>, <span class="va">is_neonate</span>, <span class="va">sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span>antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
-<h3 id="inclusion-in-combination-antibiogram-and-syndromic-antibiogram">Inclusion in Combination Antibiogram and Syndromic Antibiogram<a class="anchor" aria-label="anchor" href="#inclusion-in-combination-antibiogram-and-syndromic-antibiogram"></a></h3>
+<h3 id="stepped-approach-for-clinical-insight">Stepped Approach for Clinical Insight<a class="anchor" aria-label="anchor" href="#stepped-approach-for-clinical-insight"></a></h3>
 
 
-<p>Note that for types 2 and 3 (Combination Antibiogram and Syndromic Antibiogram), it is important to realise that susceptibility can be calculated in two ways, which can be set with the <code>only_all_tested</code> argument (default is <code>FALSE</code>). See this example for two antimicrobials, Drug A and Drug B, about how <code>antibiogram()</code> works to calculate the %SI:</p>
+<p>In clinical practice, antimicrobial coverage decisions evolve as more microbiological data becomes available. This theoretical stepped approach ensures empirical coverage can continuously assessed to improve patient outcomes:</p><ol><li><p><strong>Initial Empirical Therapy (Admission / Pre-Culture Data)</strong></p>
+<p>At admission, no pathogen information is available.</p><ul><li><p>Action: broad-spectrum coverage is based on local resistance patterns and syndromic antibiograms.</p></li>
+<li><p>Code example:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="va">selected_regimens</span>,</span>
+<span>            wisca <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            mo_transform <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="co"># all pathogens set to `NA`</span></span></code></pre><p></p></div></li>
+</ul></li>
+<li><p><strong>Refinement with Gram Stain Results</strong></p>
+<p>When a blood culture becomes positive, the Gram stain provides an initial and crucial first stratification (Gram-positive vs. Gram-negative).</p><ul><li><p>Action: narrow coverage based on Gram stain-specific resistance patterns.</p></li>
+<li><p>Code example:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="va">selected_regimens</span>,</span>
+<span>            wisca <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span> <span class="co"># all pathogens set to Gram-pos/Gram-neg</span></span></code></pre><p></p></div></li>
+</ul></li>
+<li><p><strong>Definitive Therapy Based on Species Identification</strong></p>
+<p>After cultivation of the pathogen, full pathogen identification allows precise targeting of therapy.</p><ul><li><p>Action: adjust treatment to pathogen-specific antibiograms, minimizing resistance risks.</p></li>
+<li><p>Code example:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
+<span>            antibiotics <span class="op">=</span> <span class="va">selected_regimens</span>,</span>
+<span>            wisca <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            mo_transform <span class="op">=</span> <span class="st">"shortname"</span><span class="op">)</span> <span class="co"># all pathogens set to 'G. species', e.g., E. coli</span></span></code></pre><p></p></div></li>
+</ul></li>
+</ol><p>By structuring antibiograms around this stepped approach, clinicians can make data-driven adjustments at each stage, ensuring optimal empirical and targeted therapy while reducing unnecessary broad-spectrum antimicrobial use.</p>
+</div>
+
+<div class="section">
+<h3 id="inclusion-in-combination-antibiograms">Inclusion in Combination Antibiograms<a class="anchor" aria-label="anchor" href="#inclusion-in-combination-antibiograms"></a></h3>
+
+
+<p>Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the <code>only_all_tested</code> argument (default is <code>FALSE</code>). See this example for two antimicrobials, Drug A and Drug B, about how <code>antibiogram()</code> works to calculate the %SI:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">--------------------------------------------------------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>                    only_all_tested <span class="ot">=</span> <span class="cn">FALSE</span>  only_all_tested <span class="ot">=</span> <span class="cn">TRUE</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>                    <span class="sc">-----------------------</span>  <span class="sc">-----------------------</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a> Drug A    Drug B   include as  include as   include as  include as</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>                    numerator   denominator  numerator   denominator</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="sc">--------</span>  <span class="sc">--------</span>  <span class="sc">----------</span>  <span class="sc">-----------</span>  <span class="sc">----------</span>  <span class="sc">-----------</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a> S or I    S or I       X            X            X            X</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>   R       S or I       X            X            X            X</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>     S or I       X            X            <span class="sc">-</span>            <span class="sc">-</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> S or I      R          X            X            X            X</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>   R         R          <span class="sc">-</span>            X            <span class="sc">-</span>            X</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>       R          <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> S or I     <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>        X            X            <span class="sc">-</span>            <span class="sc">-</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>   R        <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>        <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>      <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>        <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span>            <span class="sc">-</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a> Drug A    Drug B   considered   considered  considered   considered</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>                    susceptible    tested    susceptible    tested</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="sc">--------</span>  <span class="sc">--------</span>  <span class="sc">-----------</span>  <span class="sc">----------</span>  <span class="sc">-----------</span>  <span class="sc">----------</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a> S or I    S or I        X            X           X            X</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>   R       S or I        X            X           X            X</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>     S or I        X            X           <span class="sc">-</span>            <span class="sc">-</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> S or I      R           X            X           X            X</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>   R         R           <span class="sc">-</span>            X           <span class="sc">-</span>            X</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>       R           <span class="sc">-</span>            <span class="sc">-</span>           <span class="sc">-</span>            <span class="sc">-</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> S or I     <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>         X            X           <span class="sc">-</span>            <span class="sc">-</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>   R        <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>         <span class="sc">-</span>            <span class="sc">-</span>           <span class="sc">-</span>            <span class="sc">-</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>      <span class="er">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>         <span class="sc">-</span>            <span class="sc">-</span>           <span class="sc">-</span>            <span class="sc">-</span></span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="sc">--------------------------------------------------------------------</span></span></code></pre><p></p></div>
 </div>
 
@@ -301,7 +345,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     </div>
     <div class="section level2">
-    <h2 id="why-use-wisca-">Why Use WISCA?<a class="anchor" aria-label="anchor" href="#why-use-wisca-"></a></h2>
+    <h2 id="explaining-wisca">Explaining WISCA<a class="anchor" aria-label="anchor" href="#explaining-wisca"></a></h2>
 
 
 
@@ -515,8 +559,8 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (WISCA / 95% CI): 2 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85-90%,N=641)     98% (97-99%,N=691)     98% (97-99%,N=693)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-pos… 86% (82-89%,N=345)     97% (96-98%,N=1044)    95% (93-97%,N=550)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85.2-90.5%)       98.4% (97.3-99.2%)     97.9% (96.6-98.7%)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-pos… 85.6% (81.9-89.1%)     97.4% (96.4-98.3%)     95.1% (93.2-96.7%)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Piperacillin/tazobactam`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Piperacillin/tazobactam + Gentamicin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​`Piperacillin/tazobactam + Tobramycin`</span></span>
@@ -542,20 +586,20 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Pathogen        |Piperacillin/tazobactam |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------|:-----------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*B. fragilis*   |5% (0-17%,N=20)         |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |CoNS            |32% (17-47%,N=33)       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. cloacae*    |73% (51-88%,N=20)       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. coli*       |94% (92-96%,N=416)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. faecalis*   |95% (82-100%,N=18)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. faecium*    |10% (1-26%,N=18)        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |GBS             |95% (84-100%,N=18)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*K. pneumoniae* |87% (78-95%,N=53)       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*P. aeruginosa* |97% (88-100%,N=27)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*P. mirabilis*  |97% (88-100%,N=27)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. anginosus*  |94% (80-100%,N=16)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. marcescens* |50% (32-69%,N=22)       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. pneumoniae* |99% (97-100%,N=112)     |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. pyogenes*   |95% (81-100%,N=16)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*B. fragilis*   |4.4% (0.1-15.3%)        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |CoNS            |31.4% (17.4-47.1%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. cloacae*    |73.1% (52.1-88.2%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. coli*       |94.3% (91.9-96.3%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. faecalis*   |94.8% (81.5-99.9%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*E. faecium*    |9.7% (1.4-25.6%)        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |GBS             |94.9% (82.5-99.9%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*K. pneumoniae* |87% (77.8-94.3%)        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*P. aeruginosa* |96.4% (86.8-99.9%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*P. mirabilis*  |96.6% (86.9-100%)       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. anginosus*  |94.1% (79.6-99.8%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. marcescens* |49.9% (30.8-67.8%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. pneumoniae* |99.1% (96.9-100%)       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |*S. pyogenes*   |94.2% (81.1-99.8%)      |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
@@ -574,16 +618,21 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="antibiogram-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ggplot2::geom_errorbar(mapping = ggplot2::aes(ymin = lower *     100, ymax = upper * 100), position = ggplot2::position_dodge2(preserve = "single"),     width = 0.5):</span> Problem while computing aesthetics.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Error occurred in the 2nd layer.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'lower' not found</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ab2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="antibiogram-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="antibiogram-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="antibiogram-3.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `lower`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `upper`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in arrows(x0 = bp, y0 = lower, x1 = bp, y1 = upper, angle = 90,     code = 3, length = 0.05, col = "black"):</span> cannot mix zero-length and non-zero-length coordinates</span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ab2</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="antibiogram-4.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="antibiogram-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
