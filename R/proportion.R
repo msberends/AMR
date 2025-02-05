@@ -46,6 +46,8 @@
 #' @param collapse a [logical] to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing
 #' @inheritSection as.sir Interpretation of SIR
 #' @details
+#' For a more automated and comprehensive analysis, consider using [antibiogram()] or [wisca()], which streamline many aspects of susceptibility reporting and, importantly, also support WISCA. The functions described here offer a more hands-on, manual approach for greater customisation.
+#' 
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
 #' 
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()]. Since AMR v3.0, [proportion_SI()] and [proportion_I()] include dose-dependent susceptibility ('SDD').
@@ -63,18 +65,18 @@
 #' --------------------------------------------------------------------
 #'                     only_all_tested = FALSE  only_all_tested = TRUE
 #'                     -----------------------  -----------------------
-#'  Drug A    Drug B   include as  include as   include as  include as
-#'                     numerator   denominator  numerator   denominator
-#' --------  --------  ----------  -----------  ----------  -----------
-#'  S or I    S or I       X            X            X            X
-#'    R       S or I       X            X            X            X
-#'   <NA>     S or I       X            X            -            -
-#'  S or I      R          X            X            X            X
-#'    R         R          -            X            -            X
-#'   <NA>       R          -            -            -            -
-#'  S or I     <NA>        X            X            -            -
-#'    R        <NA>        -            -            -            -
-#'   <NA>      <NA>        -            -            -            -
+#'  Drug A    Drug B   considered   considered  considered   considered
+#'                     susceptible    tested    susceptible    tested
+#' --------  --------  -----------  ----------  -----------  ----------
+#'  S or I    S or I        X            X           X            X
+#'    R       S or I        X            X           X            X
+#'   <NA>     S or I        X            X           -            -
+#'  S or I      R           X            X           X            X
+#'    R         R           -            X           -            X
+#'   <NA>       R           -            -           -            -
+#'  S or I     <NA>         X            X           -            -
+#'    R        <NA>         -            -           -            -
+#'   <NA>      <NA>         -            -           -            -
 #' --------------------------------------------------------------------
 #' ```
 #'

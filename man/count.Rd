@@ -90,18 +90,18 @@ When using more than one variable for \code{...} (= combination therapy), use \c
 \if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
- Drug A    Drug B   include as  include as   include as  include as
-                    numerator   denominator  numerator   denominator
---------  --------  ----------  -----------  ----------  -----------
- S or I    S or I       X            X            X            X
-   R       S or I       X            X            X            X
-  <NA>     S or I       X            X            -            -
- S or I      R          X            X            X            X
-   R         R          -            X            -            X
-  <NA>       R          -            -            -            -
- S or I     <NA>        X            X            -            -
-   R        <NA>        -            -            -            -
-  <NA>      <NA>        -            -            -            -
+ Drug A    Drug B   considered   considered  considered   considered
+                    susceptible    tested    susceptible    tested
+--------  --------  -----------  ----------  -----------  ----------
+ S or I    S or I        X            X           X            X
+   R       S or I        X            X           X            X
+  <NA>     S or I        X            X           -            -
+ S or I      R           X            X           X            X
+   R         R           -            X           -            X
+  <NA>       R           -            -           -            -
+ S or I     <NA>         X            X           -            -
+   R        <NA>         -            -           -            -
+  <NA>      <NA>         -            -           -            -
 --------------------------------------------------------------------
 }\if{html}{\out{</div>}}
 

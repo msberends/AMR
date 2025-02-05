@@ -34,21 +34,21 @@
 #' 
 #' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()])
-#' @param antibiotics vector of any antimicrobial name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antimicrobial selectors][antimicrobial_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as "TZP+TOB" or "cipro + genta", given that columns resembling such antimicrobials exist in `x`. See *Examples*.
-#' @param mo_transform a character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
+#' @param antibiotics vector of any antimicrobial name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antimicrobial selectors][antimicrobial_class_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as `"TZP+TOB"` or `"cipro + genta"`, given that columns resembling such antimicrobials exist in `x`. See *Examples*.
+#' @param mo_transform a character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input or `NA` to consider all microorganisms 'unknown'.
 #' @param ab_transform a character to transform antimicrobial input - must be one of the column names of the [antibiotics] data set (defaults to `"name"`): `r vector_or(colnames(antibiotics), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group a column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
 #' @param add_total_n a [logical] to indicate whether total available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").
 #' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antimicrobials, see *Details*
-#' @param digits number of digits to use for rounding the susceptibility percentage
+#' @param digits number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise
 #' @param formatting_type numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See *Details* > *Formatting Type* for a list of options.
 #' @param col_mo column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param language language to translate text, which defaults to the system language (see [get_AMR_locale()])
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param combine_SI a [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`)
 #' @param sep a separating character for antimicrobial columns in combination antibiograms
-#' @param wisca a [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian hierarchical model to estimate regimen coverage probabilities using Montecarlo simulations. Set `simulations` to adjust.
-#' @param simulations (for WISCA) a numerical value to set the number of Montecarlo simulations
+#' @param wisca a [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Set `simulations` to adjust.
+#' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations
 #' @param conf_interval (for WISCA) a numerical value to set confidence interval (default is `0.95`)
 #' @param interval_side (for WISCA) the side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`
 #' @param info 	a [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
@@ -64,7 +64,7 @@
 #' 
 #' ### Formatting Type
 #' 
-#' The formatting of the 'cells' of the table can be set with the argument `formatting_type`. In these examples, `5` is the susceptibility percentage (for WISCA: `4-6` indicates the confidence level), `15` the numerator, and `300` the denominator:
+#' The formatting of the 'cells' of the table can be set with the argument `formatting_type`. In these examples, `5` is the antimicrobial coverage (for WISCA: `4-6` indicates the confidence level), `15` the numerator, and `300` the denominator:
 #' 
 #' 1. 5
 #' 2. 15
@@ -81,17 +81,17 @@
 #'     
 #'     Additional options for WISCA (using `antibiogram(..., wisca = TRUE)` or `wisca()`):
 #' 13. 5 (4-6)
-#' 14. 5% (4-6%)
+#' 14. 5% (4-6%) - **default for WISCA**
 #' 15. 5 (4-6,300)
 #' 16. 5% (4-6%,300)
 #' 17. 5 (4-6,N=300)
-#' 18. 5% (4-6%,N=300) - **default for WISCA**
+#' 18. 5% (4-6%,N=300)
 #' 19. 5 (4-6,15/300)
 #' 20. 5% (4-6%,15/300)
 #' 21. 5 (4-6,N=15/300)
 #' 22. 5% (4-6%,N=15/300)
 #' 
-#' The default is `18` for WISCA and `10` for non-WISCA, which can be set globally with the package option [`AMR_antibiogram_formatting_type`][AMR-options], e.g. `options(AMR_antibiogram_formatting_type = 5)`.
+#' The default is `14` for WISCA and `10` for non-WISCA, which can be set globally with the package option [`AMR_antibiogram_formatting_type`][AMR-options], e.g. `options(AMR_antibiogram_formatting_type = 5)`. Do note that for WISCA, the numerator and denominator are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
 #' 
 #' Set `digits` (defaults to `0`) to alter the rounding of the susceptibility percentages.
 #'
@@ -99,7 +99,7 @@
 #'
 #' There are various antibiogram types, as summarised by Klinker *et al.* (2021, \doi{10.1177/20499361211011373}), and they are all supported by [antibiogram()].
 #' 
-#' **Use WISCA whenever possible**, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki *et al.* (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section *Why Use WISCA?* on this page.
+#' **Use WISCA whenever possible**, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki *et al.* (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section *Explaining WISCA* on this page.
 #'
 #' 1. **Traditional Antibiogram**
 #'
@@ -137,7 +137,7 @@
 #'
 #' 4. **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**
 #' 
-#'    WISCA can be applied to any antibiogram, see the section *Why Use WISCA?* on this page for more information.
+#'    WISCA can be applied to any antibiogram, see the section *Explaining WISCA* on this page for more information.
 #'
 #'    Code example:
 #'
@@ -152,37 +152,88 @@
 #'    ```
 #'    
 #'    WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre datasets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).
+#' 
+#' ### Grouped tibbles
 #'    
-#' Grouped [tibbles][tibble::tibble] can also be used to calculate susceptibilities over various groups.
+#' For any type of antibiogram, grouped [tibbles][tibble::tibble] can also be used to calculate susceptibilities over various groups.
 #' 
 #' Code example:
 #'
 #' ```r
+#' library(dplyr)
 #' your_data %>%
 #'   group_by(has_sepsis, is_neonate, sex) %>%
 #'   wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
 #' ```
+#' 
+#' ### Stepped Approach for Clinical Insight
+#' 
+#' In clinical practice, antimicrobial coverage decisions evolve as more microbiological data becomes available. This theoretical stepped approach ensures empirical coverage can continuously assessed to improve patient outcomes:
+#' 
+#' 1. **Initial Empirical Therapy (Admission / Pre-Culture Data)**
+#' 
+#'    At admission, no pathogen information is available.
+#'    
+#'    - Action: broad-spectrum coverage is based on local resistance patterns and syndromic antibiograms.
+#'    - Code example:
+#' 
+#'      ```r
+#'      antibiogram(your_data,
+#'                  antibiotics = selected_regimens,
+#'                  wisca = TRUE,
+#'                  mo_transform = NA) # all pathogens set to `NA`
+#'      ```
+#' 
+#' 2. **Refinement with Gram Stain Results**
+#' 
+#'    When a blood culture becomes positive, the Gram stain provides an initial and crucial first stratification (Gram-positive vs. Gram-negative).
+#'    
+#'    - Action: narrow coverage based on Gram stain-specific resistance patterns.
+#'    - Code example:
+#' 
+#'      ```r
+#'      antibiogram(your_data,
+#'                  antibiotics = selected_regimens,
+#'                  wisca = TRUE,
+#'                  mo_transform = "gramstain") # all pathogens set to Gram-pos/Gram-neg
+#'      ```
+#' 
+#' 3. **Definitive Therapy Based on Species Identification**
+#' 
+#'    After cultivation of the pathogen, full pathogen identification allows precise targeting of therapy.
+#'    
+#'    - Action: adjust treatment to pathogen-specific antibiograms, minimizing resistance risks.
+#'    - Code example:
+#' 
+#'      ```r
+#'      antibiogram(your_data,
+#'                  antibiotics = selected_regimens,
+#'                  wisca = TRUE,
+#'                  mo_transform = "shortname") # all pathogens set to 'G. species', e.g., E. coli
+#'      ```
+#' 
+#' By structuring antibiograms around this stepped approach, clinicians can make data-driven adjustments at each stage, ensuring optimal empirical and targeted therapy while reducing unnecessary broad-spectrum antimicrobial use.
 #'
-#' ### Inclusion in Combination Antibiogram and Syndromic Antibiogram
+#' ### Inclusion in Combination Antibiograms
 #'
-#' Note that for types 2 and 3 (Combination Antibiogram and Syndromic Antibiogram), it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (default is `FALSE`). See this example for two antimicrobials, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
-#'
+#' Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (default is `FALSE`). See this example for two antimicrobials, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
+#' 
 #' ```
 #' --------------------------------------------------------------------
 #'                     only_all_tested = FALSE  only_all_tested = TRUE
 #'                     -----------------------  -----------------------
-#'  Drug A    Drug B   include as  include as   include as  include as
-#'                     numerator   denominator  numerator   denominator
-#' --------  --------  ----------  -----------  ----------  -----------
-#'  S or I    S or I       X            X            X            X
-#'    R       S or I       X            X            X            X
-#'   <NA>     S or I       X            X            -            -
-#'  S or I      R          X            X            X            X
-#'    R         R          -            X            -            X
-#'   <NA>       R          -            -            -            -
-#'  S or I     <NA>        X            X            -            -
-#'    R        <NA>        -            -            -            -
-#'   <NA>      <NA>        -            -            -            -
+#'  Drug A    Drug B   considered   considered  considered   considered
+#'                     susceptible    tested    susceptible    tested
+#' --------  --------  -----------  ----------  -----------  ----------
+#'  S or I    S or I        X            X           X            X
+#'    R       S or I        X            X           X            X
+#'   <NA>     S or I        X            X           -            -
+#'  S or I      R           X            X           X            X
+#'    R         R           -            X           -            X
+#'   <NA>       R           -            -           -            -
+#'  S or I     <NA>         X            X           -            -
+#'    R        <NA>         -            -           -            -
+#'   <NA>      <NA>         -            -           -            -
 #' --------------------------------------------------------------------
 #' ```
 #' 
@@ -194,7 +245,7 @@
 #' 
 #' You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with `flextable::as_flextable()` or `gt::gt()`.
 #'
-#' @section Why Use WISCA?:
+#' @section Explaining WISCA:
 #'  
 #' WISCA, as outlined by Bielicki *et al.* (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian hierarchical logistic regression framework with random effects for pathogens and regimens, enabling robust estimates in the presence of sparse data. 
 #'
@@ -361,8 +412,8 @@ antibiogram <- function(x,
                         syndromic_group = NULL,
                         add_total_n = FALSE,
                         only_all_tested = FALSE,
-                        digits = 0,
-                        formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 18, 10)),
+                        digits = ifelse(wisca, 1, 0),
+                        formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 10)),
                         col_mo = NULL,
                         language = get_AMR_locale(),
                         minimum = 30,
@@ -385,8 +436,8 @@ antibiogram.default <- function(x,
                                 syndromic_group = NULL,
                                 add_total_n = FALSE,
                                 only_all_tested = FALSE,
-                                digits = 0,
-                                formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 18, 10)),
+                                digits = ifelse(wisca, 1, 0),
+                                formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 10)),
                                 col_mo = NULL,
                                 language = get_AMR_locale(),
                                 minimum = 30,
@@ -400,7 +451,7 @@ antibiogram.default <- function(x,
   meet_criteria(x, allow_class = "data.frame")
   x <- ascertain_sir_classes(x, "x")
   if (!is.function(mo_transform)) {
-    meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE)
+    meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE, allow_NA = TRUE)
   }
   if (!is.function(ab_transform)) {
     meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antibiotics), allow_NULL = TRUE)
@@ -429,7 +480,9 @@ antibiogram.default <- function(x,
   # transform MOs
   x$`.mo` <- x[, col_mo, drop = TRUE]
   if (is.null(mo_transform)) {
-    # leave as is
+    # leave as is, no transformation
+  } else if (is.na(mo_transform)) {
+    x$`.mo` <- NA_character_
   } else if (is.function(mo_transform)) {
     x$`.mo` <- mo_transform(x$`.mo`)
   } else if (mo_transform == "gramstain") {
@@ -536,6 +589,7 @@ antibiogram.default <- function(x,
     )
   counts <- out
   
+  wisca_params <- NULL
   
   if (wisca == TRUE) {
     # WISCA ----
@@ -547,9 +601,12 @@ antibiogram.default <- function(x,
                                 title = "Calculating beta/gamma parameters for WISCA")
     on.exit(close(progress))
     
-    out$percentage = NA_real_
-    out$lower = NA_real_
-    out$upper = NA_real_
+    out$coverage <- NA_real_
+    out$lower <- NA_real_
+    out$upper <- NA_real_
+    out$gamma_posterior <- NA_real_
+    out$beta_posterior_1 <- NA_real_
+    out$beta_posterior_2 <- NA_real_
     
     for (i in seq_len(NROW(out))) {
       if (out$total[i] == 0) {
@@ -559,22 +616,29 @@ antibiogram.default <- function(x,
       out_current <- out[i, , drop = FALSE]
       priors <- calculate_priors(out_current, combine_SI = combine_SI)
       
+      out$gamma_posterior[i] = priors$gamma_posterior
+      out$beta_posterior_1[i] = priors$beta_posterior_1
+      out$beta_posterior_2[i] = priors$beta_posterior_2
+      
       # Monte Carlo simulation
       coverage_simulations <- replicate(simulations, {
+        
         # simulate pathogen incidence
         # = Dirichlet (Gamma) parameters
-        simulated_incidence <- stats::rgamma(
-          n = length(priors$gamma_posterior),
+        random_incidence <- runif(1, min = 0, max = 1)
+        simulated_incidence <- stats::qgamma(
+          p = random_incidence,
           shape = priors$gamma_posterior,
-          rate = 1 # Scale = 1 for gamma
+          scale = 1
         )
         # normalise
         simulated_incidence <- simulated_incidence / sum(simulated_incidence)
         
         # simulate susceptibility
         # = Beta parameters
-        simulated_susceptibility <- stats::rbeta(
-          n = length(priors$beta_posterior_1),
+        random_susceptibity <- runif(1, min = 0, max = 1)
+        simulated_susceptibility <- stats::qbeta(
+          p = random_susceptibity,
           shape1 = priors$beta_posterior_1,
           shape2 = priors$beta_posterior_2
         )
@@ -592,7 +656,7 @@ antibiogram.default <- function(x,
       }
       coverage_ci <- unname(stats::quantile(coverage_simulations, probs = probs))
       
-      out$percentage[i] <- coverage_mean
+      out$coverage[i] <- coverage_mean
       out$lower[i] <- coverage_ci[1]
       out$upper[i] <- coverage_ci[2]
     }
@@ -640,19 +704,25 @@ antibiogram.default <- function(x,
   
   if (wisca == TRUE) {
     long_numeric <- out %pm>%
-      pm_summarise(percentage = percentage,
-                   lower = lower,
-                   upper = upper,
-                   numerator = numerator,
-                   total = total)
+      pm_summarise(coverage = coverage,
+                   lower_ci = lower,
+                   upper_ci = upper,
+                   n_tested = total,
+                   n_total = total_rows,
+                   n_susceptible = numerator,
+                   p_susceptible = numerator / total,
+                   gamma_posterior = gamma_posterior,
+                   beta_posterior1 = beta_posterior_1,
+                   beta_posterior2 = beta_posterior_2)
   } else {
     long_numeric <- out %pm>%
-      pm_summarise(percentage = numerator / total,
+      pm_summarise(coverage = numerator / total,
                    numerator = numerator,
                    total = total)  
   }
   
   out$digits <- digits # since pm_sumarise() cannot work with an object outside the current frame
+  
   # formatting type:
   # 1. 5
   # 2. 15
@@ -688,12 +758,12 @@ antibiogram.default <- function(x,
   if (formatting_type == 10) out <- out %pm>% pm_summarise(out_value = paste0(round((numerator / total) * 100, digits = digits), "% (", numerator, "/", total, ")"))
   if (formatting_type == 11) out <- out %pm>% pm_summarise(out_value = paste0(round((numerator / total) * 100, digits = digits), " (N=", numerator, "/", total, ")"))
   if (formatting_type == 12) out <- out %pm>% pm_summarise(out_value = paste0(round((numerator / total) * 100, digits = digits), "% (N=", numerator, "/", total, ")"))
-  if (formatting_type == 13) out <- out %pm>% pm_summarise(out_value = paste0(round(percentage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ")"))
-  if (formatting_type == 14) out <- out %pm>% pm_summarise(out_value = paste0(round(percentage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%)"))
-  if (formatting_type == 15) out <- out %pm>% pm_summarise(out_value = paste0(round(percentage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ",", total, ")"))
-  if (formatting_type == 16) out <- out %pm>% pm_summarise(out_value = paste0(round(percentage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%,", total, ")"))
-  if (formatting_type == 17) out <- out %pm>% pm_summarise(out_value = paste0(round(percentage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ",N=", total, ")"))
-  if (formatting_type == 18) out <- out %pm>% pm_summarise(out_value = paste0(round(percentage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%,N=", total, ")"))
+  if (formatting_type == 13) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ")"))
+  if (formatting_type == 14) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%)"))
+  if (formatting_type == 15) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ",", total, ")"))
+  if (formatting_type == 16) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%,", total, ")"))
+  if (formatting_type == 17) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ",N=", total, ")"))
+  if (formatting_type == 18) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%,N=", total, ")"))
   
   # transform names of antibiotics
   ab_naming_function <- function(x, t, l, s) {
@@ -812,8 +882,8 @@ antibiogram.grouped_df <- function(x,
                                    syndromic_group = NULL,
                                    add_total_n = FALSE,
                                    only_all_tested = FALSE,
-                                   digits = 0,
-                                   formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 18, 10)),
+                                   digits = ifelse(wisca, 1, 0),
+                                   formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 10)),
                                    col_mo = NULL,
                                    language = get_AMR_locale(),
                                    minimum = 30,
@@ -910,8 +980,8 @@ wisca <- function(x,
                   syndromic_group = NULL,
                   add_total_n = FALSE,
                   only_all_tested = FALSE,
-                  digits = 0,
-                  formatting_type = getOption("AMR_antibiogram_formatting_type", 18),
+                  digits = 1,
+                  formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
                   col_mo = NULL,
                   language = get_AMR_locale(),
                   minimum = 30,
@@ -938,9 +1008,15 @@ wisca <- function(x,
               info = info)
 }
 
+#' @export
+#' @param wisca_model the outcome of [wisca()] or [antibiogram(..., wisca = TRUE)]
+#' @rdname antibiogram
+retrieve_wisca_parameters <- function(wisca_model, ...) {
+  stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use `wisca()` or `antibiogram(..., wisca = TRUE)` to create a WISCA model.")
+  attributes(wisca_model)$long_numeric
+}
+
 calculate_priors <- function(data, combine_SI = TRUE) {
-  # Ensure data has required columns
-  stopifnot(all(c("mo", "total_rows", "total", "S") %in% colnames(data)))
   if (combine_SI == TRUE && "I" %in% colnames(data)) {
     data$S <- data$S + data$I
   }
@@ -1013,7 +1089,7 @@ plot.antibiogram <- function(x, ...) {
     df_sub <- df[df$mo == mo, , drop = FALSE]
     
     bp <- barplot(
-      height = df_sub$percentage * 100,
+      height = df_sub$coverage * 100,
       xlab = NULL,
       ylab = ifelse(isTRUE(attributes(x)$combine_SI), "%SI", "%S"),
       names.arg = df_sub$ab,
@@ -1055,7 +1131,7 @@ autoplot.antibiogram <- function(object, ...) {
   out <- ggplot2::ggplot(df,
                          mapping = ggplot2::aes(
                            x = ab,
-                           y = percentage * 100,
+                           y = coverage * 100,
                            fill = if ("syndromic_group" %in% colnames(df)) {
                              syndromic_group
                            } else {

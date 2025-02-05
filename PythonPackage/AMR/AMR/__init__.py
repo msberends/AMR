@@ -27,6 +27,7 @@ from .functions import age
 from .functions import age_groups
 from .functions import antibiogram
 from .functions import wisca
+from .functions import retrieve_wisca_parameters
 from .functions import amr_class
 from .functions import amr_selector
 from .functions import aminoglycosides

@@ -85,6 +85,8 @@ These functions can be used to calculate the (co-)resistance or susceptibility o
 \code{\link[=resistance]{resistance()}} should be used to calculate resistance, \code{\link[=susceptibility]{susceptibility()}} should be used to calculate susceptibility.\cr
 }
 \details{
+For a more automated and comprehensive analysis, consider using \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}, which streamline many aspects of susceptibility reporting and, importantly, also support WISCA. The functions described here offer a more hands-on, manual approach for greater customisation.
+
 \strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set with one of the four available algorithms.
 
 The function \code{\link[=resistance]{resistance()}} is equal to the function \code{\link[=proportion_R]{proportion_R()}}. The function \code{\link[=susceptibility]{susceptibility()}} is equal to the function \code{\link[=proportion_SI]{proportion_SI()}}. Since AMR v3.0, \code{\link[=proportion_SI]{proportion_SI()}} and \code{\link[=proportion_I]{proportion_I()}} include dose-dependent susceptibility ('SDD').
@@ -102,18 +104,18 @@ When using more than one variable for \code{...} (= combination therapy), use \c
 \if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
- Drug A    Drug B   include as  include as   include as  include as
-                    numerator   denominator  numerator   denominator
---------  --------  ----------  -----------  ----------  -----------
- S or I    S or I       X            X            X            X
-   R       S or I       X            X            X            X
-  <NA>     S or I       X            X            -            -
- S or I      R          X            X            X            X
-   R         R          -            X            -            X
-  <NA>       R          -            -            -            -
- S or I     <NA>        X            X            -            -
-   R        <NA>        -            -            -            -
-  <NA>      <NA>        -            -            -            -
+ Drug A    Drug B   considered   considered  considered   considered
+                    susceptible    tested    susceptible    tested
+--------  --------  -----------  ----------  -----------  ----------
+ S or I    S or I        X            X           X            X
+   R       S or I        X            X           X            X
+  <NA>     S or I        X            X           -            -
+ S or I      R           X            X           X            X
+   R         R           -            X           -            X
+  <NA>       R           -            -           -            -
+ S or I     <NA>         X            X           -            -
+   R        <NA>         -            -           -            -
+  <NA>      <NA>         -            -           -            -
 --------------------------------------------------------------------
 }\if{html}{\out{</div>}}
 

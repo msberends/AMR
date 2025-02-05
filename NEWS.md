@@ -1,4 +1,4 @@
-# AMR 2.1.1.9139
+# AMR 2.1.1.9140
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
