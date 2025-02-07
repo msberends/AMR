@@ -625,7 +625,7 @@ antibiogram.default <- function(x,
         
         # simulate pathogen incidence
         # = Dirichlet (Gamma) parameters
-        random_incidence <- runif(1, min = 0, max = 1)
+        random_incidence <- stats::runif(1, min = 0, max = 1)
         simulated_incidence <- stats::qgamma(
           p = random_incidence,
           shape = priors$gamma_posterior,
@@ -636,7 +636,7 @@ antibiogram.default <- function(x,
         
         # simulate susceptibility
         # = Beta parameters
-        random_susceptibity <- runif(1, min = 0, max = 1)
+        random_susceptibity <- stats::runif(1, min = 0, max = 1)
         simulated_susceptibility <- stats::qbeta(
           p = random_susceptibity,
           shape1 = priors$beta_posterior_1,
@@ -1009,7 +1009,7 @@ wisca <- function(x,
 }
 
 #' @export
-#' @param wisca_model the outcome of [wisca()] or [antibiogram(..., wisca = TRUE)]
+#' @param wisca_model the outcome of [wisca()] or [`antibiogram(..., wisca = TRUE)`][antibiogram()]
 #' @rdname antibiogram
 retrieve_wisca_parameters <- function(wisca_model, ...) {
   stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use `wisca()` or `antibiogram(..., wisca = TRUE)` to create a WISCA model.")

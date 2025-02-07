@@ -83,7 +83,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{wisca_model}{the outcome of \code{\link[=wisca]{wisca()}} or \link{antibiogram(..., wisca = TRUE)}}
+\item{wisca_model}{the outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}}
 
 \item{...}{when used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 

@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9142. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9143. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1708,7 +1708,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{wisca_model}{the outcome of \code{\link[=wisca]{wisca()}} or \link{antibiogram(..., wisca = TRUE)}}
+\item{wisca_model}{the outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}}
 
 \item{...}{when used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
 
