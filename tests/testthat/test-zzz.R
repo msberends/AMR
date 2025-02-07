@@ -141,8 +141,7 @@ call_functions <- c(
 
 import_functions <- c(import_functions, call_functions)
 
-suggests <- tryCatch(strsplit(pkgload::pkg_desc()$get_field("Suggests"), "[,\n ]+")[[1]],
-                     error = function(e) unname(import_functions))
+suggests <- strsplit(utils::packageDescription("AMR")$Suggests, "[,\n ]+")[[1]]
 for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])

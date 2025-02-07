@@ -460,16 +460,14 @@ eucast_rules <- function(x,
   # >>> Apply Other rules: enzyme inhibitors <<< ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
     if (isTRUE(info)) {
-      cat("\n")
+      cat(paste0("\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
       cat(word_wrap(
-        font_bold(paste0(
-          "Rules by this AMR package (",
-          font_red(paste0(
-            "v", utils::packageDescription("AMR")$Version, ", ",
-            format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y")
-          )), "), see `?eucast_rules`\n"
-        ))
+        paste0("Rules by the ",
+               font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
+               " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
+               "), see `?eucast_rules`\n")
       ))
+      cat("\n\n")
     }
     ab_enzyme <- subset(AMR::antibiotics, name %like% "/")[, c("ab", "name"), drop = FALSE]
     colnames(ab_enzyme) <- c("enzyme_ab", "enzyme_name")
@@ -495,8 +493,8 @@ eucast_rules <- function(x,
 
         ## Set base to R where base + enzyme inhibitor is R ----
         rule_current <- paste0(
-          ab_enzyme$base_name[i], " ('", font_bold(col_base), "') = R if ",
-          tolower(ab_enzyme$enzyme_name[i]), " ('", font_bold(col_enzyme), "') = R"
+          ab_enzyme$base_name[i], " (`", col_base, "`) = R if ",
+          tolower(ab_enzyme$enzyme_name[i]), " (`", col_enzyme, "`) = R"
         )
         if (isTRUE(info)) {
           cat(word_wrap(rule_current,
@@ -536,8 +534,8 @@ eucast_rules <- function(x,
 
         ## Set base + enzyme inhibitor to S where base is S ----
         rule_current <- paste0(
-          ab_enzyme$enzyme_name[i], " ('", font_bold(col_enzyme), "') = S if ",
-          tolower(ab_enzyme$base_name[i]), " ('", font_bold(col_base), "') = S"
+          ab_enzyme$enzyme_name[i], " (`", col_enzyme, "`) = S if ",
+          tolower(ab_enzyme$base_name[i]), " (`", col_base, "`) = S"
         )
 
         if (isTRUE(info)) {
@@ -559,7 +557,8 @@ eucast_rules <- function(x,
           original_data = x.bak,
           warned = warned,
           info = info,
-          verbose = verbose
+          verbose = verbose,
+          overwrite = overwrite
         )
         n_added <- n_added + run_changes$added
         n_changed <- n_changed + run_changes$changed
@@ -1037,9 +1036,9 @@ eucast_rules <- function(x,
     cat(paste0(font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
 
     if (isFALSE(verbose) && total_n_added + total_n_changed > 0) {
-      cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
+      cat("\n", word_wrap("Use `eucast_rules(..., verbose = TRUE)` (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
     } else if (isTRUE(verbose)) {
-      cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
+      cat("\n", word_wrap("Used 'Verbose mode' (`verbose = TRUE`), which returns a data.frame with all specified edits.\nUse `verbose = FALSE` to apply the rules on your data."), "\n\n", sep = "")
     }
   }
 
