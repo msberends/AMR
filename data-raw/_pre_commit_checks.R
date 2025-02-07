@@ -402,13 +402,19 @@ pre_commit_lst$AB_FLUOROQUINOLONES <- antibiotics %>%
 pre_commit_lst$AB_GLYCOPEPTIDES <- antibiotics %>%
   filter(group %like% "glycopeptide") %>%
   pull(ab)
+pre_commit_lst$AB_ISOXAZOLYLPENICILLINS <- antibiotics %>%
+  filter(name %like% "oxacillin|cloxacillin|dicloxacillin|flucloxacillin|meth?icillin") %>%
+  pull(ab)
 pre_commit_lst$AB_LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
 pre_commit_lst$AB_GLYCOPEPTIDES_EXCEPT_LIPO <- pre_commit_lst$AB_GLYCOPEPTIDES[!pre_commit_lst$AB_GLYCOPEPTIDES %in% pre_commit_lst$AB_LIPOGLYCOPEPTIDES]
 pre_commit_lst$AB_LINCOSAMIDES <- antibiotics %>%
-  filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2))) %>%
+  filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2) & name %like% "^(pirlimycin)" & name %unlike% "screening|inducible")) %>%
   pull(ab)
 pre_commit_lst$AB_MACROLIDES <- antibiotics %>%
-  filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2) & name %unlike% "screening|inducible")) %>%
+  filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2) & name %like% "^(acetylmidecamycin|acetylspiramycin|gamith?romycin|kitasamycin|meleumycin|nafith?romycin|solith?romycin|tildipirosin|tilmicosin|tulath?romycin|tylosin|tylvalosin)" & name %unlike% "screening|inducible")) %>%
+  pull(ab)
+pre_commit_lst$AB_MONOBACTAMS <- antibiotics %>%
+  filter(group %like% "monobactam") %>%
   pull(ab)
 pre_commit_lst$AB_NITROFURANS <- antibiotics %>%
   filter(name %like% "^furaz|nitrofura" | atc_group2 %like% "nitrofuran") %>%
@@ -417,7 +423,7 @@ pre_commit_lst$AB_OXAZOLIDINONES <- antibiotics %>%
   filter(group %like% "oxazolidinone") %>%
   pull(ab)
 pre_commit_lst$AB_PENICILLINS <- antibiotics %>%
-  filter(group %like% "penicillin") %>%
+  filter(group %like% "penicillin" & !(name %unlike% "/" & name %like% ".*bactam$")) %>%
   pull(ab)
 pre_commit_lst$AB_PHENICOLS <- antibiotics %>%
   filter(group %like% "phenicol" | atc_group1 %like% "phenicol" | atc_group2 %like% "phenicol") %>%
@@ -442,7 +448,7 @@ pre_commit_lst$AB_TRIMETHOPRIMS <- antibiotics %>%
   filter(group %like% "trimethoprim") %>%
   pull(ab)
 pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
-pre_commit_lst$AB_BETALACTAMS <- c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS)
+pre_commit_lst$AB_BETALACTAMS <- sort(c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS, pre_commit_lst$AB_MONOBACTAMS))
 pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antibiotics %>%
   filter(name %like% "/" & name %unlike% "EDTA" & ab %in% pre_commit_lst$AB_BETALACTAMS) %>%
   pull(ab)

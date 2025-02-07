@@ -45,9 +45,11 @@ from .functions import cephalosporins_4th
 from .functions import cephalosporins_5th
 from .functions import fluoroquinolones
 from .functions import glycopeptides
+from .functions import isoxazolylpenicillins
 from .functions import lincosamides
 from .functions import lipoglycopeptides
 from .functions import macrolides
+from .functions import monobactams
 from .functions import nitrofurans
 from .functions import oxazolidinones
 from .functions import penicillins

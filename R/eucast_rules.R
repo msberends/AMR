@@ -56,7 +56,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply EUCAST Rules
 #'
 #' @description
-#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
+#' Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #'
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
 #' @param x a data set with antibiotic columns, such as `amox`, `AMX` and `AMC`
@@ -72,6 +72,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
 #' @param only_sir_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`)
 #' @param custom_rules custom rules to apply, created with [custom_eucast_rules()]
+#' @param overwrite a [logical] to indicate whether non-`NA` values must be overwritten (defaults to `TRUE`). With `FALSE`, only `NA` values are changed.
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr
@@ -172,6 +173,7 @@ eucast_rules <- function(x,
                          ampc_cephalosporin_resistance = NA,
                          only_sir_columns = FALSE,
                          custom_rules = NULL,
+                         overwrite = TRUE,
                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -184,6 +186,7 @@ eucast_rules <- function(x,
   meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "sir"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
+  meet_criteria(overwrite, allow_class = "logical", has_length = 1)
 
   add_MO_lookup_to_AMR_env()
 
@@ -254,18 +257,18 @@ eucast_rules <- function(x,
       } else {
         # opening
         if (n_added > 0 && n_changed == 0) {
-          cat(font_green(" ("))
+          cat(font_bold(font_green(" (")))
         } else if (n_added == 0 && n_changed > 0) {
-          cat(font_blue(" ("))
+          cat(font_bold(font_blue(" (")))
         } else {
           cat(font_grey(" ("))
         }
         # additions
         if (n_added > 0) {
           if (n_added == 1) {
-            cat(font_green("1 value added"))
+            cat(font_bold(font_green("1 value added")))
           } else {
-            cat(font_green(formatnr(n_added), "values added"))
+            cat(font_bold(font_green(formatnr(n_added), "values added")))
           }
         }
         # separator
@@ -275,16 +278,16 @@ eucast_rules <- function(x,
         # changes
         if (n_changed > 0) {
           if (n_changed == 1) {
-            cat(font_blue("1 value changed"))
+            cat(font_bold(font_blue("1 value changed")))
           } else {
-            cat(font_blue(formatnr(n_changed), "values changed"))
+            cat(font_bold(font_blue(formatnr(n_changed), "values changed")))
           }
         }
         # closing
         if (n_added > 0 && n_changed == 0) {
-          cat(font_green(")\n"))
+          cat(font_bold(font_green(")\n")))
         } else if (n_added == 0 && n_changed > 0) {
-          cat(font_blue(")\n"))
+          cat(font_bold(font_blue(")\n")))
         } else {
           cat(font_grey(")\n"))
         }
@@ -327,6 +330,10 @@ eucast_rules <- function(x,
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
+  if (!"FOX" %in% names(cols_ab) && "FOX1" %in% names(cols_ab)) {
+    # cefoxitin column is missing, but cefoxitin screening is available
+    cols_ab <- c(cols_ab, c(FOX = unname(cols_ab[names(cols_ab) == "FOX1"])))
+  }
 
   # data preparation ----
   if (isTRUE(info) && NROW(x) > 10000) {
@@ -359,10 +366,8 @@ eucast_rules <- function(x,
         # like PEN,FOX S
         x <- paste(paste0(ab_names, collapse = " and "), "are both")
       } else {
-        # like PEN,FOX,GEN S (although dependency on > 2 ABx does not exist at the moment)
-        # nolint start
-        # x <- paste(paste0(ab_names, collapse = " and "), "are all")
-        # nolint end
+        # like PEN,FOX,GEN S
+        x <- paste(paste0(ab_names, collapse = " and "), "are all")
       }
       return(paste0(x, " '", ab_results, "'"))
     } else {
@@ -373,7 +378,7 @@ eucast_rules <- function(x,
           ab_names[2], " is '", ab_results[2], "'"
         )
       } else {
-        # like PEN,FOX,GEN S,R,R (although dependency on > 2 ABx does not exist at the moment)
+        # like PEN,FOX,GEN S,R,R
         paste0(
           ab_names[1], " is '", ab_results[1], "' and ",
           ab_names[2], " is '", ab_results[2], "' and ",
@@ -452,7 +457,7 @@ eucast_rules <- function(x,
   n_added <- 0
   n_changed <- 0
 
-  # Other rules: enzyme inhibitors ------------------------------------------
+  # >>> Apply Other rules: enzyme inhibitors <<< ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
     if (isTRUE(info)) {
       cat("\n")
@@ -488,7 +493,7 @@ eucast_rules <- function(x,
         col_base <- unname(cols_ab[ab_enzyme$base_ab[i]])
         col_enzyme <- unname(cols_ab[ab_enzyme$enzyme_ab[i]])
 
-        # Set base to R where base + enzyme inhibitor is R ----
+        ## Set base to R where base + enzyme inhibitor is R ----
         rule_current <- paste0(
           ab_enzyme$base_name[i], " ('", font_bold(col_base), "') = R if ",
           tolower(ab_enzyme$enzyme_name[i]), " ('", font_bold(col_enzyme), "') = R"
@@ -512,7 +517,8 @@ eucast_rules <- function(x,
           original_data = x.bak,
           warned = warned,
           info = info,
-          verbose = verbose
+          verbose = verbose,
+          overwrite = overwrite
         )
         n_added <- n_added + run_changes$added
         n_changed <- n_changed + run_changes$changed
@@ -528,7 +534,7 @@ eucast_rules <- function(x,
           n_changed <- 0
         }
 
-        # Set base + enzyme inhibitor to S where base is S ----
+        ## Set base + enzyme inhibitor to S where base is S ----
         rule_current <- paste0(
           ab_enzyme$enzyme_name[i], " ('", font_bold(col_enzyme), "') = S if ",
           tolower(ab_enzyme$base_name[i]), " ('", font_bold(col_base), "') = S"
@@ -584,7 +590,7 @@ eucast_rules <- function(x,
     custom_rules <- NULL
   }
 
-  # Official EUCAST rules ---------------------------------------------------
+  # >>> Apply Official EUCAST rules <<< ---------------------------------------------------
   eucast_notification_shown <- FALSE
   if (!is.null(list(...)$eucast_rules_df)) {
     # this allows: eucast_rules(x, eucast_rules_df = AMR:::EUCAST_RULES_DF %>% filter(is.na(have_these_values)))
@@ -594,7 +600,7 @@ eucast_rules <- function(x,
     eucast_rules_df <- EUCAST_RULES_DF
   }
 
-  # filter on user-set guideline versions ----
+  ## filter on user-set guideline versions ----
   if (any(c("all", "breakpoints") %in% rules)) {
     eucast_rules_df <- subset(
       eucast_rules_df,
@@ -609,7 +615,7 @@ eucast_rules <- function(x,
         (reference.rule_group %like% "expert" & reference.version == version_expertrules)
     )
   }
-  # filter out AmpC de-repressed cephalosporin-resistant mutants ----
+  ## filter out AmpC de-repressed cephalosporin-resistant mutants ----
   # no need to filter on version number here - the rules contain these version number, so are inherently filtered
   # cefotaxime, ceftriaxone, ceftazidime
   if (is.null(ampc_cephalosporin_resistance) || isFALSE(ampc_cephalosporin_resistance)) {
@@ -624,7 +630,7 @@ eucast_rules <- function(x,
     eucast_rules_df[which(eucast_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
   }
 
-  # Go over all rules and apply them ----
+  ## Go over all rules and apply them ----
   for (i in seq_len(nrow(eucast_rules_df))) {
     rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule", drop = TRUE]
     rule_current <- eucast_rules_df[i, "reference.rule", drop = TRUE]
@@ -664,19 +670,19 @@ eucast_rules <- function(x,
     }
 
     if (isTRUE(info)) {
-      # Print EUCAST intro ------------------------------------------------------
+      ## Print EUCAST intro ------------------------------------------------------
       if (rule_group_current %unlike% "other" && eucast_notification_shown == FALSE) {
         cat(
           paste0(
             "\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n",
             word_wrap("Rules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)")), "\n",
-            font_blue("https://eucast.org/"), "\n"
+            font_blue(font_url("https://eucast.org/")), "\n"
           )
         )
         eucast_notification_shown <- TRUE
       }
 
-      # Print rule (group) ------------------------------------------------------
+      ## Print rule (group) ------------------------------------------------------
       if (rule_group_current != rule_group_previous) {
         # is new rule group, one of Breakpoints, Expert Rules and Other
         cat(font_bold(
@@ -703,7 +709,7 @@ eucast_rules <- function(x,
           )
         ), "\n")
       }
-      # Print rule  -------------------------------------------------------------
+      ## Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
         cat(italicise_taxonomy(
@@ -717,7 +723,7 @@ eucast_rules <- function(x,
       }
     }
 
-    # Get rule from file ------------------------------------------------------
+    ## Get rule from file ------------------------------------------------------
     if_mo_property <- trimws(eucast_rules_df[i, "if_mo_property", drop = TRUE])
     like_is_one_of <- trimws(eucast_rules_df[i, "like.is.one_of", drop = TRUE])
     mo_value <- trimws(eucast_rules_df[i, "this_value", drop = TRUE])
@@ -824,7 +830,7 @@ eucast_rules <- function(x,
 
     cols <- get_ab_from_namespace(target_antibiotics, cols_ab)
 
-    # Apply rule on data ------------------------------------------------------
+    ## Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes
     run_changes <- edit_sir(
       x = x,
@@ -842,14 +848,15 @@ eucast_rules <- function(x,
       original_data = x.bak,
       warned = warned,
       info = info,
-      verbose = verbose
+      verbose = verbose,
+      overwrite = overwrite
     )
     n_added <- n_added + run_changes$added
     n_changed <- n_changed + run_changes$changed
     verbose_info <- run_changes$verbose_info
     x <- run_changes$output
     warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
-    # Print number of new changes ---------------------------------------------
+    ## Print number of new changes ---------------------------------------------
     if (isTRUE(info) && rule_next != rule_current) {
       # print only on last one of rules in this group
       txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
@@ -859,7 +866,7 @@ eucast_rules <- function(x,
     }
   } # end of going over all rules
 
-  # Apply custom rules ----
+  # >>> Apply custom rules <<< ----
   if (!is.null(custom_rules)) {
     if (isTRUE(info)) {
       cat("\n")
@@ -910,14 +917,15 @@ eucast_rules <- function(x,
         original_data = x.bak,
         warned = warned,
         info = info,
-        verbose = verbose
+        verbose = verbose,
+        overwrite = overwrite
       )
       n_added <- n_added + run_changes$added
       n_changed <- n_changed + run_changes$changed
       verbose_info <- run_changes$verbose_info
       x <- run_changes$output
       warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
-      # Print number of new changes ---------------------------------------------
+      ## Print number of new changes ---------------------------------------------
       if (isTRUE(info) && rule_next != rule_current) {
         # print only on last one of rules in this group
         txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
@@ -940,6 +948,10 @@ eucast_rules <- function(x,
       pm_select(row, pm_everything()) %pm>%
       pm_filter(!is.na(new) | is.na(new) & !is.na(old)) %pm>%
       pm_arrange(row, rule_group, rule_name, col)
+    if (isFALSE(overwrite)) {
+      verbose_info <- verbose_info %pm>%
+        pm_filter(!old %in% levels(NA_sir_))
+    }
     rownames(verbose_info) <- NULL
   }
 
@@ -1074,7 +1086,8 @@ edit_sir <- function(x,
                      original_data,
                      warned,
                      info,
-                     verbose) {
+                     verbose,
+                     overwrite) {
   cols <- unique(cols[!is.na(cols) & !is.null(cols)])
 
   # for Verbose Mode, keep track of all changes and return them
@@ -1101,9 +1114,14 @@ edit_sir <- function(x,
     if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir), na.rm = TRUE)) {
       track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
+    non_SIR <- !(new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI")
     tryCatch(
       # insert into original table
-      new_edits[rows, cols] <- to,
+      if (isTRUE(overwrite)) {
+        new_edits[rows, cols] <- to
+      } else {
+        new_edits[rows, cols][non_SIR] <- to
+      },
       warning = function(w) {
         if (w$message %like% "invalid factor level") {
           xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
@@ -1113,7 +1131,11 @@ edit_sir <- function(x,
             )
             TRUE
           })
-          suppressWarnings(new_edits[rows, cols] <<- to)
+          if (isTRUE(overwrite)) {
+            suppressWarnings(new_edits[rows, cols] <<- to)
+          } else {
+            suppressWarnings(new_edits[rows, cols][non_SIR] <<- to)
+          }
           warning_(
             "in `eucast_rules()`: value \"", to, "\" added to the factor levels of column",
             ifelse(length(cols) == 1, "", "s"),

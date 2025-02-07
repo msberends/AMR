@@ -141,11 +141,8 @@ call_functions <- c(
 
 import_functions <- c(import_functions, call_functions)
 
-suggests <- tryCatch(strsplit(utils::packageDescription(pkg = ".", lib.loc = ".", fields = "Suggests"), "[,\n ]+")[[1]],
-                     error = function(e) {
-                       print(list.files())
-                       return(import_functions)
-                     })
+suggests <- tryCatch(strsplit(pkgload::pkg_desc()$get_field("Suggests"), "[,\n ]+")[[1]],
+                     error = function(e) unname(import_functions))
 for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])

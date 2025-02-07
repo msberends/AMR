@@ -92,7 +92,7 @@ jobs:
           mv DESCRIPTION2 DESCRIPTION
         shell: bash
 
-      - name: Run R CMD check
+      - name: Run R CMD check with tinytest
         if: always()
         env:
           # see https://rstudio.github.io/r-manuals/r-ints/Tools.html for an overview

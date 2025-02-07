@@ -1,4 +1,4 @@
-# AMR 2.1.1.9140
+# AMR 2.1.1.9141
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -45,25 +45,28 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
 * `antibiogram()` function
-  * New argument `formatting_type` to set any of the 12 options for the formatting of all 'cells'. This defaults to `10`, changing the output of antibiograms to cells with `5% (15/300)` instead of the previous standard of just `5`.
+  * New argument `formatting_type` to set any of the 22 options for the formatting of all 'cells'. This defaults to `10` for non-WISCA and `14` for WISCA, changing the output of antibiograms to cells with more info.
   * For this reason, `add_total_n` is now `FALSE` at default since the denominators are added to the cells
   * The `ab_transform` argument now defaults to `"name"`, displaying antibiotic column names instead of codes
 * Antimicrobial selectors (previously: *antibiotic selectors*)
   * 'Antibiotic selectors' are now called 'antimicrobial selectors' since their scope is broader than just antibiotics. All documentation have been updated, and `ab_class()` and `ab_selector()` have been replaced with `amr_class()` and `amr_selector()`. The old functions are now deprecated and will be removed in a future version.
-  * Added selectors `nitrofurans()`, `phenicols()`, and `rifamycins()`
-  * When using antimicrobial selectors (such as `aminoglycosides()`) that exclude non-treatable drugs (such as gentamicin-high), the function now always returns a warning that these can be included using `only_treatable = FALSE`
+  * Added selectors `isoxazolylpenicillins()`, `monobactams()`, `nitrofurans()`, `phenicols()`, and `rifamycins()`
+  * When using antimicrobial selectors that exclude non-treatable drugs (such as gentamicin-high when using `aminoglycosides()`), the function now always returns a warning that these can be included using `only_treatable = FALSE`
   * Added a new argument `return_all` to all selectors, which defaults to `TRUE` to include any match. With `FALSE`, the old behaviour, only the first hit for each unique antimicrobial is returned.
   * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
+  * The selectors `lincosamides()` and `macrolides()` do not overlap anymore - each antibiotic is now classified as either of these and not both
 * `antibiotics` data set
   * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antimicrobial selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
   * Added Efflux (`EFF`), to allow mapping to AMRFinderPlus
+  * Added Tigemonam (`TNM`), a monobactam
 * MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Added new argument `keep_operators` to `as.mic()`. This can be `"all"` (default), `"none"`, or `"edges"`. This argument is also available in the new `rescale_mic()` and `scale_*_mic()` functions.
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
   * Sorting of MIC values (using `sort()`) was fixed in the same manner; `<0.001` now gets sorted before `0.001`, and `>0.001` gets sorted after `0.001`.
   * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
+* `eucast_rules()` now has an argument `overwrite` (default: `TRUE`) to indicate whether non-`NA` values should be overwritten
 * Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (`as.disk()`) is now between 0 and 50 mm
 * Updated `italicise_taxonomy()` to support HTML output
 * `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule

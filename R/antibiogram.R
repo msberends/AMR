@@ -481,10 +481,10 @@ antibiogram.default <- function(x,
   x$`.mo` <- x[, col_mo, drop = TRUE]
   if (is.null(mo_transform)) {
     # leave as is, no transformation
-  } else if (is.na(mo_transform)) {
-    x$`.mo` <- NA_character_
   } else if (is.function(mo_transform)) {
     x$`.mo` <- mo_transform(x$`.mo`)
+  } else if (is.na(mo_transform)) {
+    x$`.mo` <- NA_character_
   } else if (mo_transform == "gramstain") {
     x$`.mo` <- mo_gramstain(x$`.mo`, language = language)
   } else if (mo_transform == "shortname") {
@@ -602,8 +602,8 @@ antibiogram.default <- function(x,
     on.exit(close(progress))
     
     out$coverage <- NA_real_
-    out$lower <- NA_real_
-    out$upper <- NA_real_
+    out$lower_ci <- NA_real_
+    out$upper_ci <- NA_real_
     out$gamma_posterior <- NA_real_
     out$beta_posterior_1 <- NA_real_
     out$beta_posterior_2 <- NA_real_
@@ -657,8 +657,8 @@ antibiogram.default <- function(x,
       coverage_ci <- unname(stats::quantile(coverage_simulations, probs = probs))
       
       out$coverage[i] <- coverage_mean
-      out$lower[i] <- coverage_ci[1]
-      out$upper[i] <- coverage_ci[2]
+      out$lower_ci[i] <- coverage_ci[1]
+      out$upper_ci[i] <- coverage_ci[2]
     }
     # remove progress bar from console
     close(progress)
@@ -705,8 +705,8 @@ antibiogram.default <- function(x,
   if (wisca == TRUE) {
     long_numeric <- out %pm>%
       pm_summarise(coverage = coverage,
-                   lower_ci = lower,
-                   upper_ci = upper,
+                   lower_ci = lower_ci,
+                   upper_ci = upper_ci,
                    n_tested = total,
                    n_total = total_rows,
                    n_susceptible = numerator,
@@ -758,12 +758,12 @@ antibiogram.default <- function(x,
   if (formatting_type == 10) out <- out %pm>% pm_summarise(out_value = paste0(round((numerator / total) * 100, digits = digits), "% (", numerator, "/", total, ")"))
   if (formatting_type == 11) out <- out %pm>% pm_summarise(out_value = paste0(round((numerator / total) * 100, digits = digits), " (N=", numerator, "/", total, ")"))
   if (formatting_type == 12) out <- out %pm>% pm_summarise(out_value = paste0(round((numerator / total) * 100, digits = digits), "% (N=", numerator, "/", total, ")"))
-  if (formatting_type == 13) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ")"))
-  if (formatting_type == 14) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%)"))
-  if (formatting_type == 15) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ",", total, ")"))
-  if (formatting_type == 16) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%,", total, ")"))
-  if (formatting_type == 17) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), ",N=", total, ")"))
-  if (formatting_type == 18) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower * 100, digits = digits), "-", round(upper * 100, digits = digits), "%,N=", total, ")"))
+  if (formatting_type == 13) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), ")"))
+  if (formatting_type == 14) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), "%)"))
+  if (formatting_type == 15) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), ",", total, ")"))
+  if (formatting_type == 16) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), "%,", total, ")"))
+  if (formatting_type == 17) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), ",N=", total, ")"))
+  if (formatting_type == 18) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), "%,N=", total, ")"))
   
   # transform names of antibiotics
   ab_naming_function <- function(x, t, l, s) {
@@ -1100,11 +1100,11 @@ plot.antibiogram <- function(x, ...) {
     )
     
     if (isTRUE(attributes(x)$wisca)) {
-      lower <- df_sub$lower * 100
-      upper <- df_sub$upper * 100
+      lower_ci <- df_sub$lower_ci * 100
+      upper_ci <- df_sub$upper_ci * 100
       arrows(
-        x0 = bp, y0 = lower,  # Start of error bar (lower bound)
-        x1 = bp, y1 = upper,  # End of error bar (upper bound)
+        x0 = bp, y0 = lower_ci,  # Start of error bar (lower bound)
+        x1 = bp, y1 = upper_ci,  # End of error bar (upper bound)
         angle = 90, code = 3, length = 0.05, col = "black"
       )
     }
@@ -1151,7 +1151,7 @@ autoplot.antibiogram <- function(object, ...) {
     )
   if (isTRUE(attributes(object)$wisca)) {
     out <- out + 
-      ggplot2::geom_errorbar(mapping = ggplot2::aes(ymin = lower * 100, ymax = upper * 100),
+      ggplot2::geom_errorbar(mapping = ggplot2::aes(ymin = lower_ci * 100, ymax = upper_ci * 100),
                              position = ggplot2::position_dodge2(preserve = "single"),
                              width = 0.5)
   }

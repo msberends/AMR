@@ -51,8 +51,8 @@
 #' @param include_untested_sir a [logical] to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_sir = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `sir` and consequently requires transforming columns with antibiotic results using [as.sir()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], otherwise arguments passed on to [key_antimicrobials()] (such as `universal`, `gram_negative`, `gram_positive`)
 #' @details
-#' The methodology implemented in these functions is based on the research overview by Hindler *et al.* (2007, \doi{10.1086/511864}) and the recommendations outlined in the [CLSI Guideline M39](https://clsi.org/standards/products/microbiology/documents/m39).
-
+#' The methodology implemented in these functions is strictly based on the recommendations outlined in [CLSI Guideline M39](https://clsi.org/standards/products/microbiology/documents/m39) and the research overview by Hindler *et al.* (2007, \doi{10.1086/511864}).
+#'
 #' To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 #'
 #' These functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
@@ -126,7 +126,7 @@
 #' @seealso [key_antimicrobials()]
 #' @export
 #' @return A [logical] vector
-#' @source Methodology of this function is strictly based on:
+#' @source Methodology of these functions is strictly based on:
 #'
 #' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #'

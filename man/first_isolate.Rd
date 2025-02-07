@@ -5,7 +5,7 @@
 \alias{filter_first_isolate}
 \title{Determine First Isolates}
 \source{
-Methodology of this function is strictly based on:
+Methodology of these functions is strictly based on:
 \itemize{
 \item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 \item Hindler JF and Stelling J (2007). \strong{Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.} Clinical Infectious Diseases, 44(6), 867-873. \doi{10.1086/511864}
@@ -73,7 +73,8 @@ A \link{logical} vector
 Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-The methodology implemented in these functions is based on the research overview by Hindler \emph{et al.} (2007, \doi{10.1086/511864}) and the recommendations outlined in the \href{https://clsi.org/standards/products/microbiology/documents/m39}{CLSI Guideline M39}.
+The methodology implemented in these functions is strictly based on the recommendations outlined in \href{https://clsi.org/standards/products/microbiology/documents/m39}{CLSI Guideline M39} and the research overview by Hindler \emph{et al.} (2007, \doi{10.1086/511864}).
+
 To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 
 These functions are context-aware. This means that the \code{x} argument can be left blank if used inside a \link{data.frame} call, see \emph{Examples}.

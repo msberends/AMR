@@ -165,6 +165,9 @@ def fluoroquinolones(only_sir_columns = False, *args, **kwargs):
 def glycopeptides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.glycopeptides(only_sir_columns = False, *args, **kwargs))
+def isoxazolylpenicillins(only_sir_columns = False, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.isoxazolylpenicillins(only_sir_columns = False, *args, **kwargs))
 def lincosamides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.lincosamides(only_sir_columns = False, *args, **kwargs))
@@ -174,6 +177,9 @@ def lipoglycopeptides(only_sir_columns = False, *args, **kwargs):
 def macrolides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.macrolides(only_sir_columns = False, *args, **kwargs))
+def monobactams(only_sir_columns = False, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.monobactams(only_sir_columns = False, *args, **kwargs))
 def nitrofurans(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.nitrofurans(only_sir_columns = False, *args, **kwargs))

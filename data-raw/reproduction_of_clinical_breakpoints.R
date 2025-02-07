@@ -269,8 +269,8 @@ breakpoints_new <- breakpoints %>%
   ) %>%
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
-    gsub("μ", "u", ., fixed = TRUE) %>% # this is 'mu', \u03bc
-    gsub("µ", "u", ., fixed = TRUE) %>% # this is 'micro', u00b5 (yes, they look the same)
+    gsub("μ", "mc", ., fixed = TRUE) %>% # this is 'mu', \u03bc
+    gsub("µ", "mc", ., fixed = TRUE) %>% # this is 'micro', \u00b5 (yes, they look the same)
     gsub("–", "-", ., fixed = TRUE)) %>%
   arrange(desc(guideline), mo, ab, type, method) %>%
   filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>%

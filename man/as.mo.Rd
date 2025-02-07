@@ -160,7 +160,7 @@ This is based on:
 \item Vincent, R \emph{et al} (2013). \strong{MycoBank gearing up for new horizons.} IMA Fungus, 4(2), 371-9; \doi{10.5598/imafungus.2013.04.02.16}. Accessed from \url{https://www.mycobank.org} on June 24th, 2024.
 \item GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on June 24th, 2024.
 \item Reimer, LC \emph{et al.} (2022). \strong{\emph{BacDive} in 2022: the knowledge base for standardized bacterial and archaeal data.} Nucleic Acids Res., 50(D1):D741-D74; \doi{10.1093/nar/gkab961}. Accessed from \url{https://bacdive.dsmz.de} on July 16th, 2024.
-\item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microorganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://www.cdc.gov/phin/php/phinvads}
+\item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microorganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://www.cdc.gov/phin/php/phinvads/}
 \item Bartlett A \emph{et al.} (2022). \strong{A comprehensive list of bacterial pathogens infecting humans} \emph{Microbiology} 168:001269; \doi{10.1099/mic.0.001269}
 }
 }
