@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9140</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9141</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p>Methodology of this function is strictly based on:</p><ul><li><p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition</strong>, 2022, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p></li>
+    <p>Methodology of these functions is strictly based on:</p><ul><li><p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition</strong>, 2022, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p></li>
 <li><p>Hindler JF and Stelling J (2007). <strong>Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.</strong> Clinical Infectious Diseases, 44(6), 867-873. <a href="https://doi.org/10.1086/511864" class="external-link">doi:10.1086/511864</a></p></li>
 </ul></div>
     <div class="section level2">
@@ -166,9 +166,9 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The methodology implemented in these functions is based on the research overview by Hindler <em>et al.</em> (2007, <a href="https://doi.org/10.1086/511864" class="external-link">doi:10.1086/511864</a>
-) and the recommendations outlined in the <a href="https://clsi.org/standards/products/microbiology/documents/m39" class="external-link">CLSI Guideline M39</a>.
-To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.</p>
+    <p>The methodology implemented in these functions is strictly based on the recommendations outlined in <a href="https://clsi.org/standards/products/microbiology/documents/m39" class="external-link">CLSI Guideline M39</a> and the research overview by Hindler <em>et al.</em> (2007, <a href="https://doi.org/10.1086/511864" class="external-link">doi:10.1086/511864</a>
+).</p>
+<p>To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.</p>
 <p>These functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> call, see <em>Examples</em>.</p>
 <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href="get_episode.html">is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><div class="section">

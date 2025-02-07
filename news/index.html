@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9140</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9141</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,18 +48,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9140" id="amr-2119140">AMR 2.1.1.9140<a class="anchor" aria-label="anchor" href="#amr-2119140"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9141" id="amr-2119141">AMR 2.1.1.9141<a class="anchor" aria-label="anchor" href="#amr-2119141"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using <a href="https://msberends.github.io/AMR/#latest-development-version">the instructions here</a>.)</em></p>
 <div class="section level5">
-<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9140">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9140"></a></h5>
+<h5 id="a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9141">A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)<a class="anchor" aria-label="anchor" href="#a-new-milestone-amr-v30-with-one-health-support--human--veterinary--environmental-2-1-1-9141"></a></h5>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 </div>
 <div class="section level3">
-<h3 id="breaking-2-1-1-9140">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9140"></a></h3>
+<h3 id="breaking-2-1-1-9141">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9141"></a></h3>
 <ul><li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents two years ago</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-2-1-1-9140">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9140"></a></h3>
+<h3 id="new-2-1-1-9141">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9141"></a></h3>
 <ul><li>
 <strong>One Health implementation</strong>
 <ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for veterinary breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
@@ -109,7 +109,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-2-1-1-9140">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9140"></a></h3>
+<h3 id="changed-2-1-1-9141">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9141"></a></h3>
 <ul><li>SIR interpretation
 <ul><li>It is now possible to use column names for argument <code>ab</code>, <code>mo</code>, and <code>uti</code>: <code>as.sir(..., ab = "column1", mo = "column2", uti = "column3")</code>. This greatly improves the flexibility for users.</li>
 <li>Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.</li>
@@ -117,24 +117,26 @@
 </ul></li>
 <li>
 <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function
-<ul><li>New argument <code>formatting_type</code> to set any of the 12 options for the formatting of all ‘cells’. This defaults to <code>10</code>, changing the output of antibiograms to cells with <code>5% (15/300)</code> instead of the previous standard of just <code>5</code>.</li>
+<ul><li>New argument <code>formatting_type</code> to set any of the 22 options for the formatting of all ‘cells’. This defaults to <code>10</code> for non-WISCA and <code>14</code> for WISCA, changing the output of antibiograms to cells with more info.</li>
 <li>For this reason, <code>add_total_n</code> is now <code>FALSE</code> at default since the denominators are added to the cells</li>
 <li>The <code>ab_transform</code> argument now defaults to <code>"name"</code>, displaying antibiotic column names instead of codes</li>
 </ul></li>
 <li>Antimicrobial selectors (previously: <em>antibiotic selectors</em>)
 <ul><li>‘Antibiotic selectors’ are now called ‘antimicrobial selectors’ since their scope is broader than just antibiotics. All documentation have been updated, and <code><a href="../reference/AMR-deprecated.html">ab_class()</a></code> and <code><a href="../reference/AMR-deprecated.html">ab_selector()</a></code> have been replaced with <code><a href="../reference/antimicrobial_class_selectors.html">amr_class()</a></code> and <code><a href="../reference/antimicrobial_class_selectors.html">amr_selector()</a></code>. The old functions are now deprecated and will be removed in a future version.</li>
-<li>Added selectors <code><a href="../reference/antimicrobial_class_selectors.html">nitrofurans()</a></code>, <code><a href="../reference/antimicrobial_class_selectors.html">phenicols()</a></code>, and <code><a href="../reference/antimicrobial_class_selectors.html">rifamycins()</a></code>
+<li>Added selectors <code><a href="../reference/antimicrobial_class_selectors.html">isoxazolylpenicillins()</a></code>, <code><a href="../reference/antimicrobial_class_selectors.html">monobactams()</a></code>, <code><a href="../reference/antimicrobial_class_selectors.html">nitrofurans()</a></code>, <code><a href="../reference/antimicrobial_class_selectors.html">phenicols()</a></code>, and <code><a href="../reference/antimicrobial_class_selectors.html">rifamycins()</a></code>
 </li>
-<li>When using antimicrobial selectors (such as <code><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides()</a></code>) that exclude non-treatable drugs (such as gentamicin-high), the function now always returns a warning that these can be included using <code>only_treatable = FALSE</code>
+<li>When using antimicrobial selectors that exclude non-treatable drugs (such as gentamicin-high when using <code><a href="../reference/antimicrobial_class_selectors.html">aminoglycosides()</a></code>), the function now always returns a warning that these can be included using <code>only_treatable = FALSE</code>
 </li>
 <li>Added a new argument <code>return_all</code> to all selectors, which defaults to <code>TRUE</code> to include any match. With <code>FALSE</code>, the old behaviour, only the first hit for each unique antimicrobial is returned.</li>
 <li>All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select</li>
+<li>The selectors <code><a href="../reference/antimicrobial_class_selectors.html">lincosamides()</a></code> and <code><a href="../reference/antimicrobial_class_selectors.html">macrolides()</a></code> do not overlap anymore - each antibiotic is now classified as either of these and not both</li>
 </ul></li>
 <li>
 <code>antibiotics</code> data set
 <ul><li>Added “clindamycin inducible screening” as <code>CLI1</code>. Since clindamycin is a lincosamide, the antimicrobial selector <code><a href="../reference/antimicrobial_class_selectors.html">lincosamides()</a></code> now contains the argument <code>only_treatable = TRUE</code> (similar to other antibiotic selectors that contain non-treatable drugs)</li>
 <li>Added Amorolfine (<code>AMO</code>, D01AE16), which is now also part of the <code><a href="../reference/antimicrobial_class_selectors.html">antifungals()</a></code> selector</li>
 <li>Added Efflux (<code>EFF</code>), to allow mapping to AMRFinderPlus</li>
+<li>Added Tigemonam (<code>TNM</code>), a monobactam</li>
 </ul></li>
 <li>MICs
 <ul><li>Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)</li>
@@ -143,6 +145,8 @@
 <li>Sorting of MIC values (using <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>) was fixed in the same manner; <code>&lt;0.001</code> now gets sorted before <code>0.001</code>, and <code>&gt;0.001</code> gets sorted after <code>0.001</code>.</li>
 <li>Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range</li>
 </ul></li>
+<li>
+<code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now has an argument <code>overwrite</code> (default: <code>TRUE</code>) to indicate whether non-<code>NA</code> values should be overwritten</li>
 <li>Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (<code><a href="../reference/as.disk.html">as.disk()</a></code>) is now between 0 and 50 mm</li>
 <li>Updated <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> to support HTML output</li>
 <li>
@@ -173,7 +177,7 @@
 <li>Added console colours support of <code>sir</code> class for Positron</li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-2-1-1-9140">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9140"></a></h3>
+<h3 id="other-2-1-1-9141">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9141"></a></h3>
 <ul><li>Added Dr. Larisse Bolton as contributor for her fantastic implementation of WISCA in a mathematically solid way</li>
 <li>Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations</li>
 <li>Greatly improved <code>vctrs</code> integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as <code>dplyr</code>’s <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">rowwise()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/c_across.html" class="external-link">c_across()</a></code> are now supported for e.g. columns of class <code>mic</code>. Despite this, this <code>AMR</code> package is still zero-dependent on any other package, including <code>dplyr</code> and <code>vctrs</code>.</li>
@@ -181,7 +185,7 @@
 <li>Stopped support for SAS (<code>.xpt</code>) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="older-versions-2-1-1-9140">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9140"></a></h3>
+<h3 id="older-versions-2-1-1-9141">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9141"></a></h3>
 <p>This changelog only contains changes from AMR v3.0 (February 2025) and later.</p>
 <ul><li>For prior v2 versions, please see <a href="https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md" class="external-link">our v2 archive</a>.</li>
 <li>For prior v1 versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our v1 archive</a>.</li>
