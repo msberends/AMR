@@ -83,7 +83,7 @@
 #' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 #' 
 #' 
-#' # Plotting using scale_x_mic() ---------------------------------------------
+#' # Plotting using scale_x_mic() -----------------------------------------
 #' \donttest{
 #' if (require("ggplot2")) {
 #'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
@@ -114,6 +114,37 @@
 #'     labs(title = "with scale_x_mic() using a manual 'outside' range")
 #' }
 #' 
+#' # Plotting using scale_y_mic() -----------------------------------------
+#' some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
+#' if (require("ggplot2")) {
+#'   ggplot(data.frame(mic = some_mic_values,
+#'                     group = some_groups),
+#'          aes(group, mic)) +
+#'     geom_boxplot() +
+#'     geom_violin(linetype = 2, colour = "grey", fill = NA) +
+#'     scale_y_mic()
+#' }
+#' if (require("ggplot2")) {
+#'   ggplot(data.frame(mic = some_mic_values,
+#'                     group = some_groups),
+#'          aes(group, mic)) +
+#'     geom_boxplot() +
+#'     geom_violin(linetype = 2, colour = "grey", fill = NA) +
+#'     scale_y_mic(mic_range = c(NA, 2))
+#' }
+#' 
+#' # Plotting using scale_fill_mic() -----------------------------------------
+#' some_counts <- as.integer(runif(20, 5, 50))
+#' if (require("ggplot2")) {
+#'   ggplot(data.frame(mic = some_mic_values,
+#'                    group = some_groups,
+#'                    counts = some_counts,
+#'          aes(group, counts, fill = mic)) +
+#'     geom_col() +
+#'     scale_fill_mic(mic_range = c(0.5, 16))
+#' }
+#' 
+#' # Auto plotting --------------------------------------------------------
 #' if (require("ggplot2")) {
 #'   autoplot(some_mic_values)
 #' }
@@ -124,7 +155,7 @@
 #'   autoplot(some_sir_values)
 #' }
 #' 
-#' # Plotting using scale_y_percent() -----------------------------------------
+#' # Plotting using scale_y_percent() -------------------------------------
 #' if (require("ggplot2")) {
 #'   p <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
 #'                                counts = c(1, 1, 2, 2, 3, 3)),
@@ -145,16 +176,35 @@
 #' }
 NULL
 
-#' @export
-#' @inheritParams as.mic
-#' @param drop a [logical] to remove intermediate MIC values, defaults to `FALSE`
-#' @rdname plot
-scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
-  stop_ifnot_installed("ggplot2")
-  meet_criteria(drop, allow_class = "logical", has_length = 1)
-  scale <- ggplot2::scale_x_discrete(drop = drop, ...)
-  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
+create_scale_mic <- function(aest, keep_operators, mic_range, ...) {
+  ggplot_fn <- getExportedValue(paste0("scale_", aest, "_continuous"),
+                                ns = asNamespace("ggplot2"))
+  args <- list(...)
+  args[c("trans", "transform", "transform_df", "breaks", "labels", "limits")] <- NULL
+  scale <- do.call(ggplot_fn, args)
+  
+  scale$transform <- function(x) {
+    as.double(rescale_mic(x = as.double(x), keep_operators = , "labels", mic_range = mic_range, as.mic = TRUE))
+  }
+  scale$transform_df <- function(self, df) {
+    self$`.values_rescaled` <- rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
+    self$`.values_levels` <- levels(rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = FALSE))
+    if (length(self$`.values_levels`) > 6 & "0.025" %in% self$`.values_levels`) {
+      # TODO weird levelling out leading to 0.025 being redundant
+      self$`.values_levels` <- self$`.values_levels`[self$`.values_levels` != "0.025"]
+    }
+    self$`.values_log` <- log2(as.double(self$`.values_rescaled`))
+    if (aest == "y" && "group" %in% colnames(df)) {
+      df$group <- as.integer(factor(df$x))
+    }
+    df[[aest]] <- self$`.values_log`
+    df
+  }
+  scale$breaks <- function(..., self) log2(as.mic(self$`.values_levels`))
+  scale$labels <- function(..., self) self$`.values_levels`
+  scale$limits <- function(..., self) {
+    rng <- range(log2(as.mic(self$`.values_levels`)))
+    c(rng[1] - 0.5, rng[2] + 0.5)
   }
   scale
 }
@@ -162,40 +212,34 @@ scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE
 #' @export
 #' @inheritParams as.mic
 #' @rdname plot
-scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
-  stop_ifnot_installed("ggplot2")
-  meet_criteria(drop, allow_class = "logical", has_length = 1)
-  scale <- ggplot2::scale_y_discrete(drop = drop, ...)
-  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
-  }
-  scale
+scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  create_scale_mic("x", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
 #' @export
 #' @inheritParams as.mic
 #' @rdname plot
-scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
-  stop_ifnot_installed("ggplot2")
-  meet_criteria(drop, allow_class = "logical", has_length = 1)
-  scale <- ggplot2::scale_colour_discrete(drop = drop, ...)
-  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
-  }
-  scale
+scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  create_scale_mic("y", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
 #' @export
 #' @inheritParams as.mic
 #' @rdname plot
-scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, drop = FALSE, ...) {
-  stop_ifnot_installed("ggplot2")
-  meet_criteria(drop, allow_class = "logical", has_length = 1)
-  scale <- ggplot2::scale_fill_discrete(drop = drop, ...)
-  scale$transform <- function(x, keep_ops = keep_operators, mic_rng = mic_range) {
-    rescale_mic(x = x, keep_operators = keep_ops, mic_range = mic_rng, as.mic = FALSE)
-  }
-  scale
+scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  create_scale_mic("colour", keep_operators = keep_operators, mic_range = mic_range, ...)
+}
+
+#' @export
+#' @inheritParams as.mic
+#' @rdname plot
+scale_color_mic <- scale_colour_mic
+
+#' @export
+#' @inheritParams as.mic
+#' @rdname plot
+scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  create_scale_mic("fill", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
 #' @method plot mic

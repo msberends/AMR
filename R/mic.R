@@ -207,7 +207,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   # remove all after last digit
   x <- gsub("[^0-9]+$", "", x, perl = TRUE)
   # keep only one zero before dot
-  x <- gsub("0+[.]", "0.", x, perl = TRUE)
+  x <- gsub("^0+[.]", "0.", x, perl = TRUE)
   # starting 00 is probably 0.0 if there's no dot yet
   x[x %unlike% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
   # remove last zeroes
@@ -224,7 +224,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   x[x.bak != "" & x == ""] <- "invalid"
   
   na_before <- x[is.na(x) | x == ""] %pm>% length()
-  x[!x %in% VALID_MIC_LEVELS] <- NA
+  x[!as.character(x) %in% VALID_MIC_LEVELS] <- NA
   na_after <- x[is.na(x) | x == ""] %pm>% length()
   
   if (na_before != na_after) {
@@ -273,12 +273,22 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 )
 
 #' @rdname as.mic
-#' @param mic_range a manual range to limit the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to set no limit on one side, e.g., `mic_range = c(NA, 32)`.
+#' @param mic_range a manual range to limit the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent a limit on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
 rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
-  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
+  if (is.numeric(mic_range)) {
+    mic_range <- trimws(format(mic_range, scientific = FALSE))
+    mic_range <- gsub("[.]0+$", "", mic_range)
+    mic_range[mic_range == "NA"] <- NA_character_
+  } else if (is.mic(mic_range)) {
+    mic_range <- as.character(mic_range)
+  }
   stop_ifnot(all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
-             "Values in `mic_range` must be valid MIC values. Unvalid: ", vector_and(mic_range[mic_range %in% c(VALID_MIC_LEVELS, NA)]))
+             "Values in `mic_range` must be valid MIC values. ",
+             "The allowed range is ", format(as.double(as.mic(VALID_MIC_LEVELS)[1]), scientific = FALSE), " to ", format(as.double(as.mic(VALID_MIC_LEVELS)[length(VALID_MIC_LEVELS)]), scientific = FALSE), ". ",
+             "Unvalid: ", vector_and(mic_range[!mic_range %in% c(VALID_MIC_LEVELS, NA)], quotes = FALSE), ".")
+  
   x <- as.mic(x)
   if (is.null(mic_range)) {
     mic_range <- c(NA, NA)
@@ -297,7 +307,7 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   x <- as.mic(x, keep_operators = ifelse(keep_operators == "edges", "none", keep_operators))
   
   if (isTRUE(as.mic)) {
-    if (keep_operators == "edges") {
+    if (keep_operators == "edges" && length(x) > 1) {
       x[x == min(x, na.rm = TRUE)] <- paste0("<=", x[x == min(x, na.rm = TRUE)])
       x[x == max(x, na.rm = TRUE)] <- paste0(">=", x[x == max(x, na.rm = TRUE)])
     }
@@ -342,7 +352,7 @@ as.numeric.mic <- function(x, ...) {
 
 #' @rdname as.mic
 #' @method droplevels mic
-#' @param as.mic a [logical] to indicate whether the `mic` class should be kept - the default is `FALSE`
+#' @param as.mic a [logical] to indicate whether the `mic` class should be kept - the default is `TRUE` for [rescale_mic()] and `FALSE` for [droplevels()]. When setting this to `FALSE` in [rescale_mic()], the output will have factor levels that acknowledge `mic_range`.
 #' @export
 droplevels.mic <- function(x, as.mic = FALSE, ...) {
   x <- as.mic(x) # make sure that currently implemented MIC levels are used

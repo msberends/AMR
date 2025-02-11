@@ -5,6 +5,7 @@
 \alias{scale_x_mic}
 \alias{scale_y_mic}
 \alias{scale_colour_mic}
+\alias{scale_color_mic}
 \alias{scale_fill_mic}
 \alias{plot.mic}
 \alias{autoplot.mic}
@@ -22,17 +23,15 @@
 \alias{labels_sir_count}
 \title{Plotting Helpers for AMR Data Analysis}
 \usage{
-scale_x_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE,
-  ...)
+scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
 
-scale_y_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE,
-  ...)
+scale_y_mic(keep_operators = "edges", mic_range = NULL, ...)
 
-scale_colour_mic(keep_operators = "edges", mic_range = NULL,
-  drop = FALSE, ...)
+scale_colour_mic(keep_operators = "edges", mic_range = NULL, ...)
 
-scale_fill_mic(keep_operators = "edges", mic_range = NULL, drop = FALSE,
-  ...)
+scale_color_mic(keep_operators = "edges", mic_range = NULL, ...)
+
+scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 
 \method{plot}{mic}(x, mo = NULL, ab = NULL, guideline = "EUCAST",
   main = deparse(substitute(x)), ylab = translate_AMR("Frequency", language
@@ -103,9 +102,7 @@ labels_sir_count(position = NULL, x = "antibiotic",
 \arguments{
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to set no limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
-
-\item{drop}{a \link{logical} to remove intermediate MIC values, defaults to \code{FALSE}}
+\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent a limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
 \item{...}{arguments passed on to methods}
 
@@ -196,7 +193,7 @@ plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 
 
-# Plotting using scale_x_mic() ---------------------------------------------
+# Plotting using scale_x_mic() -----------------------------------------
 \donttest{
 if (require("ggplot2")) {
   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
@@ -227,6 +224,37 @@ if (require("ggplot2")) {
     labs(title = "with scale_x_mic() using a manual 'outside' range")
 }
 
+# Plotting using scale_y_mic() -----------------------------------------
+some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                    group = some_groups),
+         aes(group, mic)) +
+    geom_boxplot() +
+    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    scale_y_mic()
+}
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                    group = some_groups),
+         aes(group, mic)) +
+    geom_boxplot() +
+    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    scale_y_mic(mic_range = c(NA, 2))
+}
+
+# Plotting using scale_fill_mic() -----------------------------------------
+some_counts <- as.integer(runif(20, 5, 50))
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                   group = some_groups,
+                   counts = some_counts,
+         aes(group, counts, fill = mic)) +
+    geom_col() +
+    scale_fill_mic(mic_range = c(0.5, 16))
+}
+
+# Auto plotting --------------------------------------------------------
 if (require("ggplot2")) {
   autoplot(some_mic_values)
 }
@@ -237,7 +265,7 @@ if (require("ggplot2")) {
   autoplot(some_sir_values)
 }
 
-# Plotting using scale_y_percent() -----------------------------------------
+# Plotting using scale_y_percent() -------------------------------------
 if (require("ggplot2")) {
   p <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
                                counts = c(1, 1, 2, 2, 3, 3)),
