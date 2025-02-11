@@ -248,7 +248,7 @@ some_counts <- as.integer(runif(20, 5, 50))
 if (require("ggplot2")) {
   ggplot(data.frame(mic = some_mic_values,
                    group = some_groups,
-                   counts = some_counts,
+                   counts = some_counts),
          aes(group, counts, fill = mic)) +
     geom_col() +
     scale_fill_mic(mic_range = c(0.5, 16))
