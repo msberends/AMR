@@ -40,38 +40,46 @@
 #' @param main,title title of the plot
 #' @param xlab,ylab axis title
 #' @param colours_SIR colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.
-#' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see [get_AMR_locale()]) and can be overwritten by setting the package option [`AMR_locale`][AMR-options], e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see [get_AMR_locale()]) and can be overwritten by setting the package option [`AMR_locale`][AMR-options], e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` to prevent translation.
 #' @param expand a [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
 #' @param aesthetics aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
+#' @param eucast_I a [logical] to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be `TRUE` if the default [AMR interpretation guideline][as.sir()] is set to EUCAST (which is the default). With `FALSE`, it will be interpreted as "Intermediate".
 #' @inheritParams as.sir
 #' @inheritParams ggplot_sir
 #' @inheritParams proportion
 #' @details
-#' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
-#'
-#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::clinical_breakpoints$guideline, quotes = TRUE, reverse = TRUE)`.
-#'
-#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline.
+#' ### The `scale_*_mic()` Functions
+#' 
+#' The functions [scale_x_mic()], [scale_y_mic()], [scale_colour_mic()], and [scale_fill_mic()] functions allow to plot the [mic][as.mic()] class (MIC values) on a continuous scale. They allow to rescale the MIC range, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
+#' 
+#' ### The `scale_*_sir()` Functions
+#' 
+#' The functions [scale_x_sir()], [scale_colour_sir()], and [scale_fill_sir()] functions allow to plot the [sir][as.sir()] class (S/I/R values). They can translate the S/I/R values to any of the `r length(AMR:::LANGUAGES_SUPPORTED)` supported languages, and set colour-blind friendly colours to the `colour` and `fill` aesthetics.
 #' 
 #' ### Additional `ggplot2` Functions
 #' 
-#' This package contains several functions that extend the `ggplot2` package, to help in visualising AMR data results. All these functions are internally used by [ggplot_sir()] too.
+#' This package contains more functions that extend the `ggplot2` package, to help in visualising AMR data results. All these functions are internally used by [ggplot_sir()] too.
 #' 
 #' * [facet_sir()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
 #' * [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_y_continuous()].
-#' * [scale_sir_colours()] sets colours to the bars (green for S, yellow for I, and red for R). Has multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
+#' * [scale_sir_colours()] allows to set colours to any aesthetic, even for `shape` or `linetype`.
 #' * [theme_sir()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
 #' * [labels_sir_count()] print datalabels on the bars with percentage and number of isolates, using [ggplot2::geom_text()].
+#' 
+#' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
+#'
+#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::clinical_breakpoints$guideline, quotes = TRUE, reverse = TRUE)`. Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline.
 #' @name plot
 #' @rdname plot
 #' @return The `autoplot()` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
-#'
-#' The `fortify()` functions return a [data.frame] as an extension for usage in the [ggplot2::ggplot()] function.
 #' @param ... arguments passed on to methods
 #' @examples
 #' some_mic_values <- random_mic(size = 100)
 #' some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
 #' some_sir_values <- random_sir(50, prob_SIR = c(0.55, 0.05, 0.30))
+#' 
+#' 
+#' # Plotting using base R's plot() ---------------------------------------
 #'
 #' plot(some_mic_values)
 #' plot(some_disk_values)
@@ -114,8 +122,10 @@
 #'     labs(title = "with scale_x_mic() using a manual 'outside' range")
 #' }
 #' 
+#' 
 #' # Plotting using scale_y_mic() -----------------------------------------
 #' some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
+#' 
 #' if (require("ggplot2")) {
 #'   ggplot(data.frame(mic = some_mic_values,
 #'                     group = some_groups),
@@ -133,18 +143,58 @@
 #'     scale_y_mic(mic_range = c(NA, 2))
 #' }
 #' 
+#' 
 #' # Plotting using scale_fill_mic() -----------------------------------------
 #' some_counts <- as.integer(runif(20, 5, 50))
+#' 
 #' if (require("ggplot2")) {
 #'   ggplot(data.frame(mic = some_mic_values,
 #'                    group = some_groups,
-#'                    counts = some_counts,
+#'                    counts = some_counts),
 #'          aes(group, counts, fill = mic)) +
 #'     geom_col() +
 #'     scale_fill_mic(mic_range = c(0.5, 16))
 #' }
 #' 
-#' # Auto plotting --------------------------------------------------------
+#' # Plotting using scale_x_sir() -----------------------------------------
+#' if (require("ggplot2")) {
+#'   ggplot(data.frame(x = c("I", "R", "S"),
+#'                     y = c(45,323, 573)),
+#'          aes(x, y)) +
+#'     geom_col() +
+#'     scale_x_sir()
+#' }
+#' 
+#' 
+#' # Plotting using scale_y_mic() and scale_colour_sir() ------------------
+#' if (require("ggplot2")) {
+#'   plain <- ggplot(data.frame(mic = some_mic_values,
+#'                              group = some_groups,
+#'                              sir = as.sir(some_mic_values,
+#'                                           mo = "E. coli",
+#'                                           ab = "cipro")),
+#'                   aes(x = group, y = mic, colour = sir)) +
+#'     theme_minimal() +
+#'     geom_boxplot(fill = NA, colour = "grey") +
+#'     geom_jitter(width = 0.25)
+#'   
+#'   plain
+#' }
+#' if (require("ggplot2")) {
+#'   # and now with our MIC and SIR scale functions:
+#'   plain +
+#'     scale_y_mic() +
+#'     scale_colour_sir()
+#' }
+#' if (require("ggplot2")) {
+#'   plain +
+#'     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
+#'     scale_colour_sir(language = "el", eucast_I = FALSE,
+#'                      name = "In Greek!")
+#' }
+#' 
+#' 
+#' # Plotting using ggplot2's autoplot() ----------------------------------
 #' if (require("ggplot2")) {
 #'   autoplot(some_mic_values)
 #' }
@@ -154,6 +204,7 @@
 #' if (require("ggplot2")) {
 #'   autoplot(some_sir_values)
 #' }
+#' 
 #' 
 #' # Plotting using scale_y_percent() -------------------------------------
 #' if (require("ggplot2")) {
@@ -202,9 +253,15 @@ create_scale_mic <- function(aest, keep_operators, mic_range, ...) {
   }
   scale$breaks <- function(..., self) log2(as.mic(self$`.values_levels`))
   scale$labels <- function(..., self) self$`.values_levels`
-  scale$limits <- function(..., self) {
+  scale$limits <- function(x, ..., self) {
     rng <- range(log2(as.mic(self$`.values_levels`)))
-    c(rng[1] - 0.5, rng[2] + 0.5)
+    # add 0.5 extra space
+    rng <- c(rng[1] - 0.5, rng[2] + 0.5)
+    if (!is.na(x[1]) && x[1] == 0) {
+      # scale that start at 0 must remain so, e.g. in case of geom_col()
+      rng[1] <- 0
+    }
+    rng
   }
   scale
 }
@@ -213,6 +270,8 @@ create_scale_mic <- function(aest, keep_operators, mic_range, ...) {
 #' @inheritParams as.mic
 #' @rdname plot
 scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   create_scale_mic("x", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
@@ -220,6 +279,8 @@ scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 #' @inheritParams as.mic
 #' @rdname plot
 scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   create_scale_mic("y", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
@@ -227,6 +288,8 @@ scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 #' @inheritParams as.mic
 #' @rdname plot
 scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   create_scale_mic("colour", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
@@ -239,7 +302,95 @@ scale_color_mic <- scale_colour_mic
 #' @inheritParams as.mic
 #' @rdname plot
 scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
+  meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   create_scale_mic("fill", keep_operators = keep_operators, mic_range = mic_range, ...)
+}
+
+create_scale_sir <- function(aest, colours_SIR, language, eucast_I, ...) {
+  ggplot_fn <- getExportedValue(paste0("scale_", aest, "_discrete"),
+                                ns = asNamespace("ggplot2"))
+  args <- list(...)
+  args[c("aesthetics", "value", "labels", "limits")] <- NULL
+  
+  if (aest == "x") {
+    ggplot_fn <- ggplot2::scale_x_discrete
+    args <- c(args, 
+              list(limits = base::force))
+  } else {
+    ggplot_fn <- ggplot2::scale_discrete_manual
+    args <- c(args, 
+              list(aesthetics = aest,
+                   values = c(S = colours_SIR[1],
+                              SDD = colours_SIR[2],
+                              I = colours_SIR[2],
+                              R = colours_SIR[3],
+                              NI = "grey30"),
+                   limits = base::force))
+  }
+  scale <- do.call(ggplot_fn, args)
+  
+  scale$labels <- function(x) {
+    stop_ifnot(all(x %in% levels(NA_sir_)),
+               "Apply `scale_", aest, "_sir()` to a variable of class 'sir', see `?as.sir`.",
+               call = FALSE)
+    x <- as.character(as.sir(x))
+    if (!is.null(language)) {
+      x[x == "S"] <- "(S) Susceptible"
+      x[x == "SDD"] <- "(SDD) Susceptible dose-dependent"
+      if (eucast_I == TRUE) {
+        x[x == "I"] <- "(I) Susceptible, incr. exp."
+      } else {
+        x[x == "I"] <- "(I) Intermediate"
+      }
+      x[x == "R"] <- "(R) Resistant"
+      x[x == "NI"] <- "(NI) Not interpretable"
+      x <- translate_AMR(x, language = language)
+    }
+    x
+  }
+  scale$limits <- function(x, ...) {
+    # force SIR in the right order
+    x[match(x, levels(NA_sir_))]
+  }
+  
+  scale
+}
+
+#' @rdname plot
+#' @export
+scale_x_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                        language = get_AMR_locale(),
+                        eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+                        ...) {
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  language <- validate_language(language)
+  meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
+  create_scale_sir("x", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I, ...)
+}
+
+#' @rdname plot
+#' @export
+scale_colour_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                             language = get_AMR_locale(),
+                             eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+                             ...) {
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  language <- validate_language(language)
+  meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
+  create_scale_sir("colour", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I, ...)
+}
+
+#' @rdname plot
+#' @export
+scale_fill_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                           language = get_AMR_locale(),
+                           eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+                           ...) {
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  language <- validate_language(language)
+  meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
+  create_scale_sir("fill", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I, ...)
 }
 
 #' @method plot mic
@@ -468,7 +619,7 @@ autoplot.mic <- function(object,
 }
 
 #' @method fortify mic
-#' @rdname plot
+#' @noRd
 # will be exported using s3_register() in R/zzz.R
 fortify.mic <- function(object, ...) {
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
@@ -701,7 +852,7 @@ autoplot.disk <- function(object,
 }
 
 #' @method fortify disk
-#' @rdname plot
+#' @noRd
 # will be exported using s3_register() in R/zzz.R
 fortify.disk <- function(object, ...) {
   stats::setNames(
@@ -861,7 +1012,7 @@ autoplot.sir <- function(object,
 }
 
 #' @method fortify sir
-#' @rdname plot
+#' @noRd
 # will be exported using s3_register() in R/zzz.R
 fortify.sir <- function(object, ...) {
   stats::setNames(
@@ -1037,11 +1188,19 @@ scale_y_percent <- function(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.
 #' @rdname plot
 #' @export
 scale_sir_colours <- function(...,
-                              aesthetics = "fill",
+                              aesthetics,
                               colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B")) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(aesthetics, allow_class = "character", is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  
+  if ("fill" %in% aesthetics && message_not_thrown_before("scale_sir_colours", "fill", entire_session = TRUE)) {
+    warning_("Using `scale_sir_colours()` for the `fill` aesthetic has been superseded by `scale_fill_sir()`, please use that instead. This warning will be shown once per session.")
+  }
+  if (any(c("colour", "color") %in% aesthetics) && message_not_thrown_before("scale_sir_colours", "colour", entire_session = TRUE)) {
+    warning_("Using `scale_sir_colours()` for the `colour` aesthetic has been superseded by `scale_colour_sir()`, please use that instead. This warning will be shown once per session.")
+  }
+  
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
@@ -1057,7 +1216,7 @@ scale_sir_colours <- function(...,
     colours <- replace(original_cols, names(list(...)$colours), list(...)$colours)
     # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
     # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
-    return(ggplot2::scale_fill_manual(values = colours, limits = force))
+    return(ggplot2::scale_fill_manual(values = colours, limits = force, aesthetics = aesthetics))
   }
   if (identical(unlist(list(...)), FALSE)) {
     return(invisible())
