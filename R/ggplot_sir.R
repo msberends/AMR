@@ -244,7 +244,7 @@ ggplot_sir <- function(data,
     theme_sir()
 
   if (fill == "interpretation") {
-    p <- p + scale_sir_colours(aesthetics = "fill", colours = colours)
+    p <- suppressWarnings(p + scale_sir_colours(aesthetics = "fill", colours = colours))
   }
 
   if (identical(position, "fill")) {

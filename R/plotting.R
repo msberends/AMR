@@ -50,11 +50,11 @@
 #' @details
 #' ### The `scale_*_mic()` Functions
 #' 
-#' The functions [scale_x_mic()], [scale_y_mic()], [scale_colour_mic()], and [scale_fill_mic()] functions allow to plot the [mic][as.mic()] class (MIC values) on a continuous scale. They allow to rescale the MIC range, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
+#' The functions [scale_x_mic()], [scale_y_mic()], [scale_colour_mic()], and [scale_fill_mic()] functions allow to plot the [mic][as.mic()] class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
 #' 
 #' ### The `scale_*_sir()` Functions
 #' 
-#' The functions [scale_x_sir()], [scale_colour_sir()], and [scale_fill_sir()] functions allow to plot the [sir][as.sir()] class (S/I/R values). They can translate the S/I/R values to any of the `r length(AMR:::LANGUAGES_SUPPORTED)` supported languages, and set colour-blind friendly colours to the `colour` and `fill` aesthetics.
+#' The functions [scale_x_sir()], [scale_colour_sir()], and [scale_fill_sir()] functions allow to plot the [sir][as.sir()] class in the right order (`r paste(levels(NA_sir_), collapse = " < ")`). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the `r length(AMR:::LANGUAGES_SUPPORTED)` supported languages (use `language = NULL` to keep S/I/R). Also, except for [scale_x_sir()], they set colour-blind friendly colours to the `colour` and `fill` aesthetics.
 #' 
 #' ### Additional `ggplot2` Functions
 #' 
@@ -68,7 +68,7 @@
 #' 
 #' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 #'
-#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::clinical_breakpoints$guideline, quotes = TRUE, reverse = TRUE)`. Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline.
+#' For interpreting MIC values as well as disk diffusion diameters, the default guideline is `r AMR::clinical_breakpoints$guideline[1]`, unless the package option [`AMR_guideline`][AMR-options] is set. See [as.sir()] for more information.
 #' @name plot
 #' @rdname plot
 #' @return The `autoplot()` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
@@ -231,7 +231,8 @@ create_scale_mic <- function(aest, keep_operators, mic_range, ...) {
   ggplot_fn <- getExportedValue(paste0("scale_", aest, "_continuous"),
                                 ns = asNamespace("ggplot2"))
   args <- list(...)
-  args[c("trans", "transform", "transform_df", "breaks", "labels", "limits")] <- NULL
+  # do not take these arguments into account, as they will be overwritten and seem to allow weird behaviour
+  args[c("aesthetics", "trans", "transform", "transform_df", "breaks", "labels", "limits")] <- NULL
   scale <- do.call(ggplot_fn, args)
   
   scale$transform <- function(x) {
@@ -294,8 +295,8 @@ scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 }
 
 #' @export
-#' @inheritParams as.mic
 #' @rdname plot
+#' @usage NULL
 scale_color_mic <- scale_colour_mic
 
 #' @export
@@ -307,32 +308,27 @@ scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
   create_scale_mic("fill", keep_operators = keep_operators, mic_range = mic_range, ...)
 }
 
-create_scale_sir <- function(aest, colours_SIR, language, eucast_I, ...) {
-  ggplot_fn <- getExportedValue(paste0("scale_", aest, "_discrete"),
-                                ns = asNamespace("ggplot2"))
+create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
   args <- list(...)
-  args[c("aesthetics", "value", "labels", "limits")] <- NULL
+  args[c("value", "labels", "limits")] <- NULL
   
-  if (aest == "x") {
+  if (identical(aesthetics, "x")) {
     ggplot_fn <- ggplot2::scale_x_discrete
-    args <- c(args, 
-              list(limits = base::force))
   } else {
     ggplot_fn <- ggplot2::scale_discrete_manual
     args <- c(args, 
-              list(aesthetics = aest,
+              list(aesthetics = aesthetics,
                    values = c(S = colours_SIR[1],
                               SDD = colours_SIR[2],
                               I = colours_SIR[2],
                               R = colours_SIR[3],
-                              NI = "grey30"),
-                   limits = base::force))
+                              NI = "grey30")))
   }
   scale <- do.call(ggplot_fn, args)
   
   scale$labels <- function(x) {
-    stop_ifnot(all(x %in% levels(NA_sir_)),
-               "Apply `scale_", aest, "_sir()` to a variable of class 'sir', see `?as.sir`.",
+    stop_ifnot(all(x %in% c(levels(NA_sir_), NA)),
+               "Apply `scale_", aesthetics[1], "_sir()` to a variable of class 'sir', see `?as.sir`.",
                call = FALSE)
     x <- as.character(as.sir(x))
     if (!is.null(language)) {
@@ -351,7 +347,7 @@ create_scale_sir <- function(aest, colours_SIR, language, eucast_I, ...) {
   }
   scale$limits <- function(x, ...) {
     # force SIR in the right order
-    x[match(x, levels(NA_sir_))]
+    as.character(sort(factor(x, levels = levels(NA_sir_))))
   }
   
   scale
@@ -366,7 +362,7 @@ scale_x_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
-  create_scale_sir("x", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I, ...)
+  create_scale_sir(aesthetics = "x", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I)
 }
 
 #' @rdname plot
@@ -378,8 +374,20 @@ scale_colour_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
-  create_scale_sir("colour", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I, ...)
+  args <- list(...)
+  args$colours_SIR <- colours_SIR
+  args$language <- language
+  args$eucast_I <- eucast_I
+  if (is.null(args$aesthetics)) {
+    args$aesthetics <- "colour"
+  }
+  do.call(create_scale_sir, args)
 }
+
+#' @export
+#' @rdname plot
+#' @usage NULL
+scale_color_sir <- scale_colour_sir
 
 #' @rdname plot
 #' @export
@@ -390,7 +398,14 @@ scale_fill_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
-  create_scale_sir("fill", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I, ...)
+  args <- list(...)
+  args$colours_SIR <- colours_SIR
+  args$language <- language
+  args$eucast_I <- eucast_I
+  if (is.null(args$aesthetics)) {
+    args$aesthetics <- "fill"
+  }
+  do.call(create_scale_sir, args)
 }
 
 #' @method plot mic
@@ -400,7 +415,7 @@ scale_fill_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
 plot.mic <- function(x,
                      mo = NULL,
                      ab = NULL,
-                     guideline = "EUCAST",
+                     guideline = getOption("AMR_guideline", "EUCAST"),
                      main = deparse(substitute(x)),
                      ylab = translate_AMR("Frequency", language = language),
                      xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
@@ -489,7 +504,7 @@ plot.mic <- function(x,
 barplot.mic <- function(height,
                         mo = NULL,
                         ab = NULL,
-                        guideline = "EUCAST",
+                        guideline = getOption("AMR_guideline", "EUCAST"),
                         main = deparse(substitute(height)),
                         ylab = translate_AMR("Frequency", language = language),
                         xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
@@ -530,7 +545,7 @@ barplot.mic <- function(height,
 autoplot.mic <- function(object,
                          mo = NULL,
                          ab = NULL,
-                         guideline = "EUCAST",
+                         guideline = getOption("AMR_guideline", "EUCAST"),
                          title = deparse(substitute(object)),
                          ylab = translate_AMR("Frequency", language = language),
                          xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
@@ -640,7 +655,7 @@ plot.disk <- function(x,
                       xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
                       mo = NULL,
                       ab = NULL,
-                      guideline = "EUCAST",
+                      guideline = getOption("AMR_guideline", "EUCAST"),
                       colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                       language = get_AMR_locale(),
                       expand = TRUE,
@@ -727,7 +742,7 @@ barplot.disk <- function(height,
                          xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
                          mo = NULL,
                          ab = NULL,
-                         guideline = "EUCAST",
+                         guideline = getOption("AMR_guideline", "EUCAST"),
                          colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                          language = get_AMR_locale(),
                          expand = TRUE,
@@ -766,7 +781,7 @@ autoplot.disk <- function(object,
                           title = deparse(substitute(object)),
                           ylab = translate_AMR("Frequency", language = language),
                           xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
-                          guideline = "EUCAST",
+                          guideline = getOption("AMR_guideline", "EUCAST"),
                           colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
                           language = get_AMR_locale(),
                           expand = TRUE,
@@ -1267,6 +1282,11 @@ scale_sir_colours <- function(...,
   # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
   ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = cols, limits = force)
 }
+
+#' @export
+#' @rdname plot
+#' @usage NULL
+scale_sir_colors <- scale_sir_colours
 
 #' @rdname plot
 #' @export

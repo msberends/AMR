@@ -21,18 +21,19 @@
 antibiogram(x, antibiotics = where(is.sir), mo_transform = "shortname",
   ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
   only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
-  formatting_type = getOption("AMR_antibiogram_formatting_type",
-  ifelse(wisca, 14, 10)), col_mo = NULL, language = get_AMR_locale(),
-  minimum = 30, combine_SI = TRUE, sep = " + ", wisca = FALSE,
-  simulations = 1000, conf_interval = 0.95, interval_side = "two-tailed",
+  formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
+  col_mo = NULL, language = get_AMR_locale(), minimum = 30,
+  combine_SI = TRUE, sep = " + ", wisca = FALSE, simulations = 1000,
+  conf_interval = 0.95, interval_side = "two-tailed",
   info = interactive())
 
-wisca(x, antibiotics = where(is.sir), mo_transform = "shortname",
-  ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
-  only_all_tested = FALSE, digits = 1,
+wisca(x, antibiotics = where(is.sir), ab_transform = "name",
+  syndromic_group = NULL, add_total_n = FALSE, only_all_tested = FALSE,
+  digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
   col_mo = NULL, language = get_AMR_locale(), minimum = 30,
   combine_SI = TRUE, sep = " + ", simulations = 1000,
+  conf_interval = 0.95, interval_side = "two-tailed",
   info = interactive())
 
 retrieve_wisca_parameters(wisca_model, ...)
@@ -55,7 +56,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{syndromic_group}{a column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case_when]{case_when()}}. See \emph{Examples}.}
 
-\item{add_total_n}{a \link{logical} to indicate whether total available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").}
+\item{add_total_n}{a \link{logical} to indicate whether \code{n_tested} available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when \code{wisca = TRUE}; in that case, use \code{\link[=retrieve_wisca_parameters]{retrieve_wisca_parameters()}} to get the parameters used for WISCA.}
 
 \item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}}
 
@@ -73,7 +74,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{sep}{a separating character for antimicrobial columns in combination antibiograms}
 
-\item{wisca}{a \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations} to adjust.}
+\item{wisca}{a \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 
 \item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations}
 
@@ -108,7 +109,7 @@ For estimating antimicrobial coverage, especially when creating a WISCA, the out
 The numeric values of an antibiogram are stored in a long format as the \link[=attributes]{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}. This is ideal for e.g. advanced plotting.
 \subsection{Formatting Type}{
 
-The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the antimicrobial coverage (for WISCA: \code{4-6} indicates the confidence level), \code{15} the numerator, and \code{300} the denominator:
+The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the antimicrobial coverage (\code{4-6} indicates the confidence level), \code{15} the number of susceptible isolates, and \code{300} the number of tested (i.e., available) isolates:
 \enumerate{
 \item 5
 \item 15
@@ -119,13 +120,11 @@ The formatting of the 'cells' of the table can be set with the argument \code{fo
 \item 5 (N=300)
 \item 5\% (N=300)
 \item 5 (15/300)
-\item 5\% (15/300) - \strong{default for non-WISCA}
+\item 5\% (15/300)
 \item 5 (N=15/300)
 \item 5\% (N=15/300)
-
-Additional options for WISCA (using \code{antibiogram(..., wisca = TRUE)} or \code{wisca()}):
 \item 5 (4-6)
-\item 5\% (4-6\%) - \strong{default for WISCA}
+\item 5\% (4-6\%) - \strong{default}
 \item 5 (4-6,300)
 \item 5\% (4-6\%,300)
 \item 5 (4-6,N=300)
@@ -136,7 +135,7 @@ Additional options for WISCA (using \code{antibiogram(..., wisca = TRUE)} or \co
 \item 5\% (4-6\%,N=15/300)
 }
 
-The default is \code{14} for WISCA and \code{10} for non-WISCA, which can be set globally with the package option \code{\link[=AMR-options]{AMR_antibiogram_formatting_type}}, e.g. \code{options(AMR_antibiogram_formatting_type = 5)}. Do note that for WISCA, the numerator and denominator are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
+The default is \code{14}, which can be set globally with the package option \code{\link[=AMR-options]{AMR_antibiogram_formatting_type}}, e.g. \code{options(AMR_antibiogram_formatting_type = 5)}. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
 
 Set \code{digits} (defaults to \code{0}) to alter the rounding of the susceptibility percentages.
 }
@@ -145,7 +144,7 @@ Set \code{digits} (defaults to \code{0}) to alter the rounding of the susceptibi
 
 There are various antibiogram types, as summarised by Klinker \emph{et al.} (2021, \doi{10.1177/20499361211011373}), and they are all supported by \code{\link[=antibiogram]{antibiogram()}}.
 
-\strong{Use WISCA whenever possible}, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki \emph{et al.} (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section \emph{Explaining WISCA} on this page.
+For clinical coverage estimations, \strong{use WISCA whenever possible}, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki \emph{et al.} (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section \emph{Explaining WISCA} on this page. Do note that WISCA is pathogen-agnostic, meaning that the outcome is not stratied by pathogen, but rather by syndrome.
 \enumerate{
 \item \strong{Traditional Antibiogram}
 
@@ -215,13 +214,16 @@ In clinical practice, antimicrobial coverage decisions evolve as more microbiolo
 
 At admission, no pathogen information is available.
 \itemize{
-\item Action: broad-spectrum coverage is based on local resistance patterns and syndromic antibiograms.
+\item Action: broad-spectrum coverage is based on local resistance patterns and syndromic antibiograms. Using the pathogen-agnostic yet incidence-weighted WISCA is preferred.
 \item Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = selected_regimens,
-            wisca = TRUE,
             mo_transform = NA) # all pathogens set to `NA`
+
+# preferred: use WISCA
+wisca(your_data,
+      antibiotics = selected_regimens)
 }\if{html}{\out{</div>}}
 }
 \item \strong{Refinement with Gram Stain Results}
@@ -233,7 +235,6 @@ When a blood culture becomes positive, the Gram stain provides an initial and cr
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = selected_regimens,
-            wisca = TRUE,
             mo_transform = "gramstain") # all pathogens set to Gram-pos/Gram-neg
 }\if{html}{\out{</div>}}
 }
@@ -246,7 +247,6 @@ After cultivation of the pathogen, full pathogen identification allows precise t
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = selected_regimens,
-            wisca = TRUE,
             mo_transform = "shortname") # all pathogens set to 'G. species', e.g., E. coli
 }\if{html}{\out{</div>}}
 }
@@ -290,7 +290,7 @@ You can also use functions from specific 'table reporting' packages to transform
 \section{Explaining WISCA}{
 
 
-WISCA, as outlined by Bielicki \emph{et al.} (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian hierarchical logistic regression framework with random effects for pathogens and regimens, enabling robust estimates in the presence of sparse data.
+WISCA, as outlined by Bielicki \emph{et al.} (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian decision model with random effects for pathogen incidence and susceptibility, enabling robust estimates in the presence of sparse data.
 
 The Bayesian model assumes conjugate priors for parameter estimation. For example, the coverage probability \eqn{\theta} for a given antimicrobial regimen is modelled using a Beta distribution as a prior:
 
@@ -324,6 +324,8 @@ Stratified results can be provided based on covariates such as age, sex, and cli
 \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
 
 By combining empirical data with prior knowledge, WISCA overcomes the limitations of traditional combination antibiograms, offering disease-specific, patient-stratified estimates with robust uncertainty quantification. This tool is invaluable for antimicrobial stewardship programs and empirical treatment guideline refinement.
+
+\strong{Note:} WISCA never gives an output on the pathogen/species level, as all incidences and susceptibilities are already weighted for all species.
 }
 
 \examples{
@@ -341,14 +343,12 @@ antibiogram(example_isolates,
 antibiogram(example_isolates,
   antibiotics = aminoglycosides(),
   ab_transform = "atc",
-  mo_transform = "gramstain"
-)
+  mo_transform = "gramstain")
 
 antibiogram(example_isolates,
   antibiotics = carbapenems(),
   ab_transform = "name",
-  mo_transform = "name"
-)
+  mo_transform = "name")
 
 
 # Combined antibiogram -------------------------------------------------
@@ -356,16 +356,14 @@ antibiogram(example_isolates,
 # combined antibiotics yield higher empiric coverage
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain"
-)
+  mo_transform = "gramstain")
 
 # names of antibiotics do not need to resemble columns exactly:
 antibiogram(example_isolates,
   antibiotics = c("Cipro", "cipro + genta"),
   mo_transform = "gramstain",
   ab_transform = "name",
-  sep = " & "
-)
+  sep = " & ")
 
 
 # Syndromic antibiogram ------------------------------------------------
@@ -373,8 +371,7 @@ antibiogram(example_isolates,
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
   antibiotics = c(aminoglycosides(), carbapenems()),
-  syndromic_group = "ward"
-)
+  syndromic_group = "ward")
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
@@ -387,27 +384,24 @@ antibiogram(ex1,
   syndromic_group = ifelse(ex1$ward == "ICU",
     "UCI", "No UCI"
   ),
-  language = "es"
-)
+  language = "es")
 
 
 # WISCA antibiogram ----------------------------------------------------
 
-# can be used for any of the above types - just add `wisca = TRUE`
+# WISCA are not stratified by species, but rather on syndromes
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain",
-  wisca = TRUE
-)
+  syndromic_group = "ward",
+  wisca = TRUE)
 
 
 # Print the output for R Markdown / Quarto -----------------------------
 
 ureido <- antibiogram(example_isolates,
   antibiotics = ureidopenicillins(),
-  ab_transform = "name",
-  wisca = TRUE
-)
+  syndromic_group = "name",
+  wisca = TRUE)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -420,14 +414,11 @@ if (requireNamespace("knitr")) {
 
 ab1 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-  mo_transform = "gramstain",
-  wisca = TRUE
-)
+  mo_transform = "gramstain")
 ab2 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain",
-  syndromic_group = "ward"
-)
+  syndromic_group = "ward")
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)

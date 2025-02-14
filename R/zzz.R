@@ -65,7 +65,7 @@ AMR_env$sir_interpretation_history <- data.frame(
   mo = set_clean_class(character(0), c("mo", "character")),
   host = character(0),
   method = character(0),
-  input = double(0),
+  input = character(0),
   outcome = NA_sir_[0],
   notes = character(0),
   guideline = character(0),

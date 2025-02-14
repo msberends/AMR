@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9146. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9147. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -333,10 +333,12 @@ export(retrieve_wisca_parameters)
 export(rifamycins)
 export(right_join_microorganisms)
 export(scale_color_mic)
+export(scale_color_sir)
 export(scale_colour_mic)
 export(scale_colour_sir)
 export(scale_fill_mic)
 export(scale_fill_sir)
+export(scale_sir_colors)
 export(scale_sir_colours)
 export(scale_x_mic)
 export(scale_x_sir)
@@ -1650,18 +1652,19 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antibiogram.Rd':
 antibiogram(x, antibiotics = where(is.sir), mo_transform = "shortname",
   ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
   only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
-  formatting_type = getOption("AMR_antibiogram_formatting_type",
-  ifelse(wisca, 14, 10)), col_mo = NULL, language = get_AMR_locale(),
-  minimum = 30, combine_SI = TRUE, sep = " + ", wisca = FALSE,
-  simulations = 1000, conf_interval = 0.95, interval_side = "two-tailed",
+  formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
+  col_mo = NULL, language = get_AMR_locale(), minimum = 30,
+  combine_SI = TRUE, sep = " + ", wisca = FALSE, simulations = 1000,
+  conf_interval = 0.95, interval_side = "two-tailed",
   info = interactive())
 
-wisca(x, antibiotics = where(is.sir), mo_transform = "shortname",
-  ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
-  only_all_tested = FALSE, digits = 1,
+wisca(x, antibiotics = where(is.sir), ab_transform = "name",
+  syndromic_group = NULL, add_total_n = FALSE, only_all_tested = FALSE,
+  digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
   col_mo = NULL, language = get_AMR_locale(), minimum = 30,
   combine_SI = TRUE, sep = " + ", simulations = 1000,
+  conf_interval = 0.95, interval_side = "two-tailed",
   info = interactive())
 
 retrieve_wisca_parameters(wisca_model, ...)
@@ -1684,7 +1687,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{syndromic_group}{a column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case_when]{case_when()}}. See \emph{Examples}.}
 
-\item{add_total_n}{a \link{logical} to indicate whether total available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200").}
+\item{add_total_n}{a \link{logical} to indicate whether \code{n_tested} available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when \code{wisca = TRUE}; in that case, use \code{\link[=retrieve_wisca_parameters]{retrieve_wisca_parameters()}} to get the parameters used for WISCA.}
 
 \item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}}
 
@@ -1702,7 +1705,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{sep}{a separating character for antimicrobial columns in combination antibiograms}
 
-\item{wisca}{a \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations} to adjust.}
+\item{wisca}{a \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 
 \item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations}
 
@@ -1737,7 +1740,7 @@ For estimating antimicrobial coverage, especially when creating a WISCA, the out
 The numeric values of an antibiogram are stored in a long format as the \link[=attributes]{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}. This is ideal for e.g. advanced plotting.
 \subsection{Formatting Type}{
 
-The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the antimicrobial coverage (for WISCA: \code{4-6} indicates the confidence level), \code{15} the numerator, and \code{300} the denominator:
+The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the antimicrobial coverage (\code{4-6} indicates the confidence level), \code{15} the number of susceptible isolates, and \code{300} the number of tested (i.e., available) isolates:
 \enumerate{
 \item 5
 \item 15
@@ -1748,13 +1751,11 @@ The formatting of the 'cells' of the table can be set with the argument \code{fo
 \item 5 (N=300)
 \item 5\% (N=300)
 \item 5 (15/300)
-\item 5\% (15/300) - \strong{default for non-WISCA}
+\item 5\% (15/300)
 \item 5 (N=15/300)
 \item 5\% (N=15/300)
-
-Additional options for WISCA (using \code{antibiogram(..., wisca = TRUE)} or \code{wisca()}):
 \item 5 (4-6)
-\item 5\% (4-6\%) - \strong{default for WISCA}
+\item 5\% (4-6\%) - \strong{default}
 \item 5 (4-6,300)
 \item 5\% (4-6\%,300)
 \item 5 (4-6,N=300)
@@ -1765,7 +1766,7 @@ Additional options for WISCA (using \code{antibiogram(..., wisca = TRUE)} or \co
 \item 5\% (4-6\%,N=15/300)
 }
 
-The default is \code{14} for WISCA and \code{10} for non-WISCA, which can be set globally with the package option \code{\link[=AMR-options]{AMR_antibiogram_formatting_type}}, e.g. \code{options(AMR_antibiogram_formatting_type = 5)}. Do note that for WISCA, the numerator and denominator are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
+The default is \code{14}, which can be set globally with the package option \code{\link[=AMR-options]{AMR_antibiogram_formatting_type}}, e.g. \code{options(AMR_antibiogram_formatting_type = 5)}. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
 
 Set \code{digits} (defaults to \code{0}) to alter the rounding of the susceptibility percentages.
 }
@@ -1774,7 +1775,7 @@ Set \code{digits} (defaults to \code{0}) to alter the rounding of the susceptibi
 
 There are various antibiogram types, as summarised by Klinker \emph{et al.} (2021, \doi{10.1177/20499361211011373}), and they are all supported by \code{\link[=antibiogram]{antibiogram()}}.
 
-\strong{Use WISCA whenever possible}, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki \emph{et al.} (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section \emph{Explaining WISCA} on this page.
+For clinical coverage estimations, \strong{use WISCA whenever possible}, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki \emph{et al.} (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section \emph{Explaining WISCA} on this page. Do note that WISCA is pathogen-agnostic, meaning that the outcome is not stratied by pathogen, but rather by syndrome.
 \enumerate{
 \item \strong{Traditional Antibiogram}
 
@@ -1844,13 +1845,16 @@ In clinical practice, antimicrobial coverage decisions evolve as more microbiolo
 
 At admission, no pathogen information is available.
 \itemize{
-\item Action: broad-spectrum coverage is based on local resistance patterns and syndromic antibiograms.
+\item Action: broad-spectrum coverage is based on local resistance patterns and syndromic antibiograms. Using the pathogen-agnostic yet incidence-weighted WISCA is preferred.
 \item Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = selected_regimens,
-            wisca = TRUE,
             mo_transform = NA) # all pathogens set to `NA`
+
+# preferred: use WISCA
+wisca(your_data,
+      antibiotics = selected_regimens)
 }\if{html}{\out{</div>}}
 }
 \item \strong{Refinement with Gram Stain Results}
@@ -1862,7 +1866,6 @@ When a blood culture becomes positive, the Gram stain provides an initial and cr
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = selected_regimens,
-            wisca = TRUE,
             mo_transform = "gramstain") # all pathogens set to Gram-pos/Gram-neg
 }\if{html}{\out{</div>}}
 }
@@ -1875,7 +1878,6 @@ After cultivation of the pathogen, full pathogen identification allows precise t
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = selected_regimens,
-            wisca = TRUE,
             mo_transform = "shortname") # all pathogens set to 'G. species', e.g., E. coli
 }\if{html}{\out{</div>}}
 }
@@ -1919,7 +1921,7 @@ You can also use functions from specific 'table reporting' packages to transform
 \section{Explaining WISCA}{
 
 
-WISCA, as outlined by Bielicki \emph{et al.} (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian hierarchical logistic regression framework with random effects for pathogens and regimens, enabling robust estimates in the presence of sparse data.
+WISCA, as outlined by Bielicki \emph{et al.} (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian decision model with random effects for pathogen incidence and susceptibility, enabling robust estimates in the presence of sparse data.
 
 The Bayesian model assumes conjugate priors for parameter estimation. For example, the coverage probability \eqn{\theta} for a given antimicrobial regimen is modelled using a Beta distribution as a prior:
 
@@ -1953,6 +1955,8 @@ Stratified results can be provided based on covariates such as age, sex, and cli
 \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
 
 By combining empirical data with prior knowledge, WISCA overcomes the limitations of traditional combination antibiograms, offering disease-specific, patient-stratified estimates with robust uncertainty quantification. This tool is invaluable for antimicrobial stewardship programs and empirical treatment guideline refinement.
+
+\strong{Note:} WISCA never gives an output on the pathogen/species level, as all incidences and susceptibilities are already weighted for all species.
 }
 
 \examples{
@@ -1970,14 +1974,12 @@ antibiogram(example_isolates,
 antibiogram(example_isolates,
   antibiotics = aminoglycosides(),
   ab_transform = "atc",
-  mo_transform = "gramstain"
-)
+  mo_transform = "gramstain")
 
 antibiogram(example_isolates,
   antibiotics = carbapenems(),
   ab_transform = "name",
-  mo_transform = "name"
-)
+  mo_transform = "name")
 
 
 # Combined antibiogram -------------------------------------------------
@@ -1985,16 +1987,14 @@ antibiogram(example_isolates,
 # combined antibiotics yield higher empiric coverage
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain"
-)
+  mo_transform = "gramstain")
 
 # names of antibiotics do not need to resemble columns exactly:
 antibiogram(example_isolates,
   antibiotics = c("Cipro", "cipro + genta"),
   mo_transform = "gramstain",
   ab_transform = "name",
-  sep = " & "
-)
+  sep = " & ")
 
 
 # Syndromic antibiogram ------------------------------------------------
@@ -2002,8 +2002,7 @@ antibiogram(example_isolates,
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
   antibiotics = c(aminoglycosides(), carbapenems()),
-  syndromic_group = "ward"
-)
+  syndromic_group = "ward")
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
@@ -2016,27 +2015,24 @@ antibiogram(ex1,
   syndromic_group = ifelse(ex1$ward == "ICU",
     "UCI", "No UCI"
   ),
-  language = "es"
-)
+  language = "es")
 
 
 # WISCA antibiogram ----------------------------------------------------
 
-# can be used for any of the above types - just add `wisca = TRUE`
+# WISCA are not stratified by species, but rather on syndromes
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain",
-  wisca = TRUE
-)
+  syndromic_group = "ward",
+  wisca = TRUE)
 
 
 # Print the output for R Markdown / Quarto -----------------------------
 
 ureido <- antibiogram(example_isolates,
   antibiotics = ureidopenicillins(),
-  ab_transform = "name",
-  wisca = TRUE
-)
+  syndromic_group = "name",
+  wisca = TRUE)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -2049,14 +2045,11 @@ if (requireNamespace("knitr")) {
 
 ab1 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-  mo_transform = "gramstain",
-  wisca = TRUE
-)
+  mo_transform = "gramstain")
 ab2 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain",
-  syndromic_group = "ward"
-)
+  syndromic_group = "ward")
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)
@@ -7339,6 +7332,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/plot.Rd':
 \alias{scale_fill_mic}
 \alias{scale_x_sir}
 \alias{scale_colour_sir}
+\alias{scale_color_sir}
 \alias{scale_fill_sir}
 \alias{plot.mic}
 \alias{autoplot.mic}
@@ -7349,6 +7343,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/plot.Rd':
 \alias{facet_sir}
 \alias{scale_y_percent}
 \alias{scale_sir_colours}
+\alias{scale_sir_colors}
 \alias{theme_sir}
 \alias{labels_sir_count}
 \title{Plotting Helpers for AMR Data Analysis}
@@ -7358,8 +7353,6 @@ scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
 scale_y_mic(keep_operators = "edges", mic_range = NULL, ...)
 
 scale_colour_mic(keep_operators = "edges", mic_range = NULL, ...)
-
-scale_color_mic(keep_operators = "edges", mic_range = NULL, ...)
 
 scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 
@@ -7375,7 +7368,8 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(), eucast_I = getOption("AMR_guideline",
   "EUCAST") == "EUCAST", ...)
 
-\method{plot}{mic}(x, mo = NULL, ab = NULL, guideline = "EUCAST",
+\method{plot}{mic}(x, mo = NULL, ab = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   main = deparse(substitute(x)), ylab = translate_AMR("Frequency", language
   = language),
   xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language =
@@ -7385,8 +7379,9 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
 
 \method{autoplot}{mic}(object, mo = NULL, ab = NULL,
-  guideline = "EUCAST", title = deparse(substitute(object)),
-  ylab = translate_AMR("Frequency", language = language),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  title = deparse(substitute(object)), ylab = translate_AMR("Frequency",
+  language = language),
   xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language =
   language), colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(), expand = TRUE,
@@ -7396,7 +7391,7 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
 \method{plot}{disk}(x, main = deparse(substitute(x)),
   ylab = translate_AMR("Frequency", language = language),
   xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
-  mo = NULL, ab = NULL, guideline = "EUCAST",
+  mo = NULL, ab = NULL, guideline = getOption("AMR_guideline", "EUCAST"),
   colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(), expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
@@ -7405,8 +7400,9 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
 \method{autoplot}{disk}(object, mo = NULL, ab = NULL,
   title = deparse(substitute(object)), ylab = translate_AMR("Frequency",
   language = language), xlab = translate_AMR("Disk diffusion diameter (mm)",
-  language = language), guideline = "EUCAST", colours_SIR = c("#3CAEA3",
-  "#F6D55C", "#ED553B"), language = get_AMR_locale(), expand = TRUE,
+  language = language), guideline = getOption("AMR_guideline", "EUCAST"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+  language = get_AMR_locale(), expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
 
@@ -7499,12 +7495,12 @@ Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC 
 \details{
 \subsection{The \verb{scale_*_mic()} Functions}{
 
-The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous scale. They allow to rescale the MIC range, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
+The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
 }
 
 \subsection{The \verb{scale_*_sir()} Functions}{
 
-The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class (S/I/R values). They can translate the S/I/R values to any of the 20 supported languages, and set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
+The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 20 supported languages (use \code{language = NULL} to keep S/I/R). Also, except for \code{\link[=scale_x_sir]{scale_x_sir()}}, they set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
 }
 
 \subsection{Additional \code{ggplot2} Functions}{
@@ -7520,7 +7516,7 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
-For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2024", "EUCAST 2023", "EUCAST 2022", "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2024", "CLSI 2023", "CLSI 2022", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", and "CLSI 2011". Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline.
+For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2024, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
 \examples{

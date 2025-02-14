@@ -121,13 +121,13 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE) &&
 
   # support for manual colours
   expect_inherits(
-    (ggplot(data.frame(
+    suppressWarnings((ggplot(data.frame(
       x = c("Value1", "Value2", "Value3"),
       y = c(1, 2, 3),
       z = c("Value4", "Value5", "Value6")
     )) +
       geom_col(aes(x = x, y = y, fill = z)) +
-      scale_sir_colours(Value4 = "S", Value5 = "I", Value6 = "R"))$data,
+      scale_sir_colours(aesthetics = "fill", Value4 = "S", Value5 = "I", Value6 = "R"))$data),
     "data.frame"
   )
 }

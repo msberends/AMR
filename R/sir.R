@@ -43,7 +43,7 @@
 #' @param ab a vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
-#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
+#' @param guideline defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
@@ -1361,7 +1361,7 @@ as_sir_method <- function(method_short,
           mo = vectorise_log_entry(mo_current, length(rows)),
           host = vectorise_log_entry(host_current, length(rows)),
           method = vectorise_log_entry(method_coerced, length(rows)),
-          input = vectorise_log_entry(as.double(values), length(rows)),
+          input = vectorise_log_entry(as.character(values), length(rows)),
           outcome = vectorise_log_entry(NA_sir_, length(rows)),
           notes = vectorise_log_entry("NO BREAKPOINT AVAILABLE", length(rows)),
           guideline = vectorise_log_entry(guideline_coerced, length(rows)),
@@ -1430,10 +1430,18 @@ as_sir_method <- function(method_short,
       if (any(breakpoints_current$site %like% "screen", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "screen", na.rm = TRUE)) {
         notes_current <- c(notes_current, "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
       }
+      if (method == "mic" && conserve_capped_values == TRUE && any(as.character(values) %like% "^[<][0-9]")) {
+        notes_current <- c(notes_current, "MIC values 'lower than' are all considered 'S' since conserve_capped_values = TRUE")
+      }
+      if (method == "mic" && conserve_capped_values == TRUE && any(as.character(values) %like% "^[>][0-9]")) {
+        notes_current <- c(notes_current, "MIC values 'greater than' are all considered 'R' since conserve_capped_values = TRUE")
+      }
 
       if (method == "mic") {
         new_sir <- case_when_AMR(
           is.na(values) ~ NA_sir_,
+          conserve_capped_values == TRUE & as.character(values) %like% "^[<][0-9]" ~ as.sir("S"),
+          conserve_capped_values == TRUE & as.character(values) %like% "^[>][0-9]" ~ as.sir("R"),
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
           guideline_coerced %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),
@@ -1471,7 +1479,7 @@ as_sir_method <- function(method_short,
           mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
           host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
           method = vectorise_log_entry(method_coerced, length(rows)),
-          input = vectorise_log_entry(as.double(values), length(rows)),
+          input = vectorise_log_entry(as.character(values), length(rows)),
           outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
           notes = vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
           guideline = vectorise_log_entry(guideline_coerced, length(rows)),

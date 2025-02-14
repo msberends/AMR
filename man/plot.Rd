@@ -9,6 +9,7 @@
 \alias{scale_fill_mic}
 \alias{scale_x_sir}
 \alias{scale_colour_sir}
+\alias{scale_color_sir}
 \alias{scale_fill_sir}
 \alias{plot.mic}
 \alias{autoplot.mic}
@@ -19,6 +20,7 @@
 \alias{facet_sir}
 \alias{scale_y_percent}
 \alias{scale_sir_colours}
+\alias{scale_sir_colors}
 \alias{theme_sir}
 \alias{labels_sir_count}
 \title{Plotting Helpers for AMR Data Analysis}
@@ -28,8 +30,6 @@ scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
 scale_y_mic(keep_operators = "edges", mic_range = NULL, ...)
 
 scale_colour_mic(keep_operators = "edges", mic_range = NULL, ...)
-
-scale_color_mic(keep_operators = "edges", mic_range = NULL, ...)
 
 scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 
@@ -45,7 +45,8 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(), eucast_I = getOption("AMR_guideline",
   "EUCAST") == "EUCAST", ...)
 
-\method{plot}{mic}(x, mo = NULL, ab = NULL, guideline = "EUCAST",
+\method{plot}{mic}(x, mo = NULL, ab = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   main = deparse(substitute(x)), ylab = translate_AMR("Frequency", language
   = language),
   xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language =
@@ -55,8 +56,9 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
 
 \method{autoplot}{mic}(object, mo = NULL, ab = NULL,
-  guideline = "EUCAST", title = deparse(substitute(object)),
-  ylab = translate_AMR("Frequency", language = language),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  title = deparse(substitute(object)), ylab = translate_AMR("Frequency",
+  language = language),
   xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language =
   language), colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(), expand = TRUE,
@@ -66,7 +68,7 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
 \method{plot}{disk}(x, main = deparse(substitute(x)),
   ylab = translate_AMR("Frequency", language = language),
   xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
-  mo = NULL, ab = NULL, guideline = "EUCAST",
+  mo = NULL, ab = NULL, guideline = getOption("AMR_guideline", "EUCAST"),
   colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
   language = get_AMR_locale(), expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
@@ -75,8 +77,9 @@ scale_fill_sir(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
 \method{autoplot}{disk}(object, mo = NULL, ab = NULL,
   title = deparse(substitute(object)), ylab = translate_AMR("Frequency",
   language = language), xlab = translate_AMR("Disk diffusion diameter (mm)",
-  language = language), guideline = "EUCAST", colours_SIR = c("#3CAEA3",
-  "#F6D55C", "#ED553B"), language = get_AMR_locale(), expand = TRUE,
+  language = language), guideline = getOption("AMR_guideline", "EUCAST"),
+  colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+  language = get_AMR_locale(), expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
 
@@ -169,12 +172,12 @@ Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC 
 \details{
 \subsection{The \verb{scale_*_mic()} Functions}{
 
-The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous scale. They allow to rescale the MIC range, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
+The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
 }
 
 \subsection{The \verb{scale_*_sir()} Functions}{
 
-The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class (S/I/R values). They can translate the S/I/R values to any of the 20 supported languages, and set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
+The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 20 supported languages (use \code{language = NULL} to keep S/I/R). Also, except for \code{\link[=scale_x_sir]{scale_x_sir()}}, they set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
 }
 
 \subsection{Additional \code{ggplot2} Functions}{
@@ -190,7 +193,7 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
-For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2024", "EUCAST 2023", "EUCAST 2022", "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2024", "CLSI 2023", "CLSI 2022", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", and "CLSI 2011". Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline.
+For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2024, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
 \examples{
