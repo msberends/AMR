@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9150. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9151. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -430,7 +430,7 @@ With the help of contributors from all corners of the world, the `AMR` package i
 
 #### Filtering and selecting data
 
-One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial class selectors](https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html), which work in base R, `dplyr` and `data.table`:
+One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial selectors](https://msberends.github.io/AMR/reference/antimicrobial_selectors.html), which work in base R, `dplyr` and `data.table`.
 
 ```r
 # AMR works great with dplyr, but it's not required or neccesary
@@ -463,45 +463,29 @@ With only having defined a row filter on Gram-negative bacteria with intrinsic r
 |*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |     |  S  |
 |*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |  S  |  S  |
 
-A base R equivalent would be:
-
-```r
-library(AMR)
-example_isolates$bacteria <- mo_fullname(example_isolates$mo)
-example_isolates[which(mo_is_gram_negative() &
-                         mo_is_intrinsic_resistant(ab = "cefotax")),
-                 c("bacteria", aminoglycosides(), carbapenems())]
-```
-
-This base R code will work in any version of R since April 2013 (R-3.0). Moreover, this code works identically with the `data.table` package, only by starting with:
-
-```r
-example_isolates <- data.table::as.data.table(example_isolates)
-```
-
 #### Generating antibiograms
 
 The `AMR` package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).
 
-If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
+If used inside [R Markdown](https://rmarkdown.rstudio.com) or [Quarto](https://quarto.org), the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
 
 ```r
 antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()))
 ```
 
-| Pathogen                | Amikacin         | Gentamicin      | Imipenem         | Kanamycin        | Meropenem        | Tobramycin       |
-|:------------------------|:----------------:|:---------------:|:----------------:|:----------------:|:----------------:|:----------------:|
-| CoNS                    | 0% (0/43)        | 86% (267/309)   | 52% (25/48)      | 0% (0/43)        | 52% (25/48)      | 22% (12/55)      |
-| *E. coli*               | 100% (171/171)   | 98% (451/460)   | 100% (422/422)   |                  | 100% (418/418)   | 97% (450/462)    |
-| *E. faecalis*           | 0% (0/39)        | 0% (0/39)       | 100% (38/38)     | 0% (0/39)        |                  | 0% (0/39)        |
-| *K. pneumoniae*         |                  | 90% (52/58)     | 100% (51/51)     |                  | 100% (53/53)     | 90% (52/58)      |
-| *P. aeruginosa*         |                  | 100% (30/30)    |                  | 0% (0/30)        |                  | 100% (30/30)     |
-| *P. mirabilis*          |                  | 94% (32/34)     | 94% (30/32)      |                  |                  | 94% (32/34)      |
-| *S. aureus*             |                  | 99% (231/233)   |                  |                  |                  | 98% (84/86)      |
-| *S. epidermidis*        | 0% (0/44)        | 79% (128/163)   |                  | 0% (0/44)        |                  | 51% (45/89)      |
-| *S. hominis*            |                  | 92% (74/80)     |                  |                  |                  | 85% (53/62)      |
-| *S. pneumoniae*         | 0% (0/117)       | 0% (0/117)      |                  | 0% (0/117)       |                  | 0% (0/117)       |
+|     Pathogen     |    Amikacin    |   Gentamicin   |    Imipenem    | Kanamycin  |   Meropenem    |   Tobramycin   |
+|:-----------------|:--------------:|:--------------:|:--------------:|:----------:|:--------------:|:--------------:|
+| CoNS             |   0% (0-8%)    |  86% (82-90%)  |  52% (37-67%)  | 0% (0-8%)  |  52% (37-67%)  |  22% (12-35%)  |
+| *E. coli*        | 100% (98-100%) |  98% (96-99%)  | 100% (99-100%) |            | 100% (99-100%) |  97% (96-99%)  |
+| *E. faecalis*    |   0% (0-9%)    |   0% (0-9%)    | 100% (91-100%) | 0% (0-9%)  |                |   0% (0-9%)    |
+| *K. pneumoniae*  |                |  90% (79-96%)  | 100% (93-100%) |            | 100% (93-100%) |  90% (79-96%)  |
+| *P. aeruginosa*  |                | 100% (88-100%) |                | 0% (0-12%) |                | 100% (88-100%) |
+| *P. mirabilis*   |                |  94% (80-99%)  |  94% (79-99%)  |            |                |  94% (80-99%)  |
+| *S. aureus*      |                | 99% (97-100%)  |                |            |                | 98% (92-100%)  |
+| *S. epidermidis* |   0% (0-8%)    |  79% (71-85%)  |                | 0% (0-8%)  |                |  51% (40-61%)  |
+| *S. hominis*     |                |  92% (84-97%)  |                |            |                |  85% (74-93%)  |
+| *S. pneumoniae*  |   0% (0-3%)    |   0% (0-3%)    |                | 0% (0-3%)  |                |   0% (0-3%)    |
 
 In combination antibiograms, it is clear that combined antibiotics yield higher empiric coverage:
 
@@ -511,10 +495,10 @@ antibiogram(example_isolates,
             mo_transform = "gramstain")
 ```
 
-| Pathogen      | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:--------------|:-----------------------:|:-------------------------------------:|:------------------------------------:|
-| Gram-negative | 88% (565/641)            | 99% (681/691)                        | 98% (679/693)                       |
-| Gram-positive | 86% (296/345)            | 98% (1018/1044)                      | 95% (524/550)                       |
+|Pathogen      | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:-------------|:-----------------------:|:------------------------------------:|:------------------------------------:|
+|Gram-negative |      88% (85-91%)       |             99% (97-99%)             |             98% (97-99%)             |
+|Gram-positive |      86% (82-89%)       |             98% (96-98%)             |             95% (93-97%)             |
 
 Like many other functions in this package, `antibiogram()` comes with support for 20 languages that are often detected automatically based on system language:
 
@@ -526,10 +510,47 @@ antibiogram(example_isolates,
             language = "uk") # Ukrainian
 ```
 
-| Збудник        | Гентаміцин           | Тобраміцин          | Ципрофлоксацин     |
-|:---------------|:--------------------:|:-------------------:|:------------------:|
-| Грамнегативні  | 96% (659/684)        | 96% (658/686)       | 91% (621/684)      |
-| Грампозитивні  | 63% (740/1170)       | 34% (228/665)       | 77% (560/724)      |
+|Збудник       |  Гентаміцин  |  Тобраміцин  | Ципрофлоксацин |
+|:-------------|:------------:|:------------:|:--------------:|
+|Грамнегативні | 96% (95-98%) | 96% (94-97%) |  91% (88-93%)  |
+|Грампозитивні | 63% (60-66%) | 34% (31-38%) |  77% (74-80%)  |
+
+#### Interpreting and plotting MIC and SIR values
+
+The `AMR` package allows interpretation of MIC and disk diffusion values based on CLSI and EUCAST. Moreover, the `ggplot2` package is extended with new scale functions, to allow plotting of log2-distributed MIC values and SIR values.
+
+```r
+library(ggplot2)
+library(AMR)
+
+# generate some random values
+some_mic_values <- random_mic(size = 100)
+some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
+interpretation <- as.sir(some_mic_values,
+                         guideline = "EUCAST 2024",
+                         mo = "E. coli", # or any code or name resembling a known species
+                         ab = "Cipro")   # or any code or name resembling an antibiotic
+
+# create the plot
+ggplot(data.frame(mic = some_mic_values,
+                  group = some_groups,
+                  sir = interpretation),
+       aes(x = group, y = mic, colour = sir)) +
+  theme_minimal() +
+  geom_boxplot(fill = NA, colour = "grey") +
+  geom_jitter(width = 0.25) +
+  
+  # NEW scale function: plot MIC values to x, y, colour or fill
+  scale_y_mic() +
+  
+  # NEW scale function: write out S/I/R in any of the 20 supported languages
+  #                     and set colourblind-friendly colours
+  scale_colour_sir()
+```
+
+<a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis">
+  <img src="./plot_readme.png" style="max-width: 600px;">
+</a>
 
 #### Calculating resistance per group
 
@@ -546,13 +567,13 @@ example_isolates %>%
                         conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
 ```
 
-|ward       | GEN_total_R|GEN_conf_int | TOB_total_R|TOB_conf_int |
-|:---------:|:----------:|:-----------:|:----------:|:-----------:|
-|Clinical   |   0.229    |0.205-0.254  |   0.315    |0.284-0.347  |
-|ICU        |   0.290    |0.253-0.330  |   0.400    |0.353-0.449  |
-|Outpatient |   0.200    |0.131-0.285  |   0.368    |0.254-0.493  |
+|ward       | GEN_total_R | GEN_conf_int | TOB_total_R | TOB_conf_int |
+|:----------|:-----------:|:------------:|:-----------:|:------------:|
+|Clinical   |  0.2289362  | 0.205-0.254  |  0.3147503  | 0.284-0.347  |
+|ICU        |  0.2902655  |  0.253-0.33  |  0.4004739  | 0.353-0.449  |
+|Outpatient |  0.2000000  | 0.131-0.285  |  0.3676471  | 0.254-0.493  |
 
-Or use [antimicrobial class selectors](https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html) to select a series of antibiotic columns:
+Or use [antimicrobial selectors](https://msberends.github.io/AMR/reference/antimicrobial_selectors.html) to select a series of antibiotic columns:
 
 ```r
 library(AMR)
@@ -1679,7 +1700,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
 
-\item{antibiotics}{vector of any antimicrobial name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antimicrobial_class_selectors]{antimicrobial selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as \code{"TZP+TOB"} or \code{"cipro + genta"}, given that columns resembling such antimicrobials exist in \code{x}. See \emph{Examples}.}
+\item{antibiotics}{vector of any antimicrobial name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antimicrobial_selectors]{antimicrobial selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as \code{"TZP+TOB"} or \code{"cipro + genta"}, given that columns resembling such antimicrobials exist in \code{x}. See \emph{Examples}.}
 
 \item{mo_transform}{a character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
 
@@ -2164,13 +2185,13 @@ antivirals
 
 
 ----------------------------------------------------------------------------------------------------
-THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobial_class_selectors.Rd':
+THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobial_selectors.Rd':
 
 
 % Generated by roxygen2: do not edit by hand
 % Please edit documentation in R/amr_selectors.R
-\name{antimicrobial_class_selectors}
-\alias{antimicrobial_class_selectors}
+\name{antimicrobial_selectors}
+\alias{antimicrobial_selectors}
 \alias{amr_class}
 \alias{amr_selector}
 \alias{aminoglycosides}

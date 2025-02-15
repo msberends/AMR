@@ -191,7 +191,7 @@ reference:
     - "`key_antimicrobials`"
     - "`mdro`"
     - "`bug_drug_combinations`"
-    - "`antimicrobial_class_selectors`"
+    - "`antimicrobial_selectors`"
     - "`top_n_microorganisms`"
     - "`mean_amr_distance`"
     - "`resistance_predict`"
