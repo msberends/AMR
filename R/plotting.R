@@ -189,8 +189,8 @@
 #' if (require("ggplot2")) {
 #'   plain +
 #'     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
-#'     scale_colour_sir(language = "el", eucast_I = FALSE,
-#'                      name = "In Greek!")
+#'     scale_colour_sir(language = "nl", eucast_I = FALSE,
+#'                      name = "In Dutch!")
 #' }
 #' 
 #' 
