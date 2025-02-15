@@ -400,7 +400,7 @@ antibiogram(example_isolates,
 
 ureido <- antibiogram(example_isolates,
   antibiotics = ureidopenicillins(),
-  syndromic_group = "name",
+  syndromic_group = "ward",
   wisca = TRUE)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,

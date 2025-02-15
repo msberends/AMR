@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9149. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9150. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -2031,7 +2031,7 @@ antibiogram(example_isolates,
 
 ureido <- antibiogram(example_isolates,
   antibiotics = ureidopenicillins(),
-  syndromic_group = "name",
+  syndromic_group = "ward",
   wisca = TRUE)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,

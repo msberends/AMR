@@ -128,7 +128,9 @@ expect_silent(plot(ab5))
 expect_silent(plot(ab6))
 expect_silent(plot(ab7))
 expect_silent(plot(ab8))
-expect_silent(plot(ab9))
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+  expect_silent(plot(ab9))
+}
 
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(ab1), "gg")
@@ -139,5 +141,7 @@ if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(ab6), "gg")
   expect_inherits(ggplot2::autoplot(ab7), "gg")
   expect_inherits(ggplot2::autoplot(ab8), "gg")
-  expect_inherits(ggplot2::autoplot(ab9), "gg")
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    expect_inherits(ggplot2::autoplot(ab9), "gg")
+  }
 }
