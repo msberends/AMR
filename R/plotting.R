@@ -227,10 +227,16 @@
 #' }
 NULL
 
-create_scale_mic <- function(aest, keep_operators, mic_range, ...) {
+create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
   ggplot_fn <- getExportedValue(paste0("scale_", aest, "_continuous"),
                                 ns = asNamespace("ggplot2"))
   args <- list(...)
+  breaks_set <- args$breaks
+  if (!is.null(args$limits)) {
+    stop_ifnot(is.null(mic_range),
+               "In `scale_", aest, "_mic()`, `limits` cannot be combined with `mic_range`, as they working identically. Use `mic_range` OR `limits`.", call = FALSE)
+    mic_range <- args$limits
+  }
   # do not take these arguments into account, as they will be overwritten and seem to allow weird behaviour
   args[c("aesthetics", "trans", "transform", "transform_df", "breaks", "labels", "limits")] <- NULL
   scale <- do.call(ggplot_fn, args)
@@ -252,8 +258,30 @@ create_scale_mic <- function(aest, keep_operators, mic_range, ...) {
     df[[aest]] <- self$`.values_log`
     df
   }
-  scale$breaks <- function(..., self) log2(as.mic(self$`.values_levels`))
-  scale$labels <- function(..., self) self$`.values_levels`
+  scale$breaks <- function(..., self) {
+    if (!is.null(breaks_set)) {
+      if (is.function(breaks_set)) {
+        breaks_set(...)
+      } else {
+        log2(as.mic(breaks_set))
+      }
+    } else {
+      log2(as.mic(self$`.values_levels`))
+    }
+  }
+  scale$labels <- function(..., self) {
+    if (is.null(breaks_set)) {
+      self$`.values_levels`
+    } else {
+      breaks <- tryCatch(scale$breaks(), error = function(e) NULL)
+      if (!is.null(breaks)) {
+        # for when breaks are set by the user
+        2 ^ breaks
+      } else {
+        self$`.values_levels`
+      }
+    }
+  }
   scale$limits <- function(x, ..., self) {
     rng <- range(log2(as.mic(self$`.values_levels`)))
     # add 0.5 extra space

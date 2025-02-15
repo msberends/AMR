@@ -441,7 +441,7 @@ antibiogram.default <- function(x,
   x <- ascertain_sir_classes(x, "x")
   meet_criteria(wisca, allow_class = "logical", has_length = 1)
   if (isTRUE(wisca)) {
-    if (!missing(mo_transform)) {
+    if (!is.null(mo_transform)) {
       warning_("WISCA must be based on the species level as WISCA parameters are based on this. For that reason, `mo_transform` will be ignored.")
     }
     mo_transform <- function(x) suppressMessages(suppressWarnings(paste(mo_genus(x, keep_synonyms = TRUE, language = NULL), mo_species(x, keep_synonyms = TRUE, language = NULL))))
@@ -469,7 +469,7 @@ antibiogram.default <- function(x,
   
   # try to find columns based on type
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo", info = interactive())
+    col_mo <- search_type_in_df(x = x, type = "mo", info = info)
     stop_if(is.null(col_mo), "`col_mo` must be set")
   }
   # transform MOs
@@ -594,7 +594,7 @@ antibiogram.default <- function(x,
   }
   if (all(out$n_tested < minimum, na.rm = TRUE) && wisca == FALSE) {
     warning_("All combinations had less than `minimum = ", minimum, "` results, returning an empty antibiogram")
-    return(as_original_data_class(data.frame(), class(out), extra_class = "antibiogram"))
+    return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
   } else if (any(out$n_tested < minimum, na.rm = TRUE)) {
     out <- out %pm>%
       # also for WISCA, refrain from anything below 15 isolates:
@@ -612,7 +612,7 @@ antibiogram.default <- function(x,
   }
   
   if (NROW(out) == 0) {
-    return(as_original_data_class(data.frame(), class(out), extra_class = "antibiogram"))
+    return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
   }
   
   out$p_susceptible <- out$n_susceptible / out$n_tested
@@ -927,7 +927,6 @@ antibiogram.default <- function(x,
   rownames(out) <- NULL
   rownames(wisca_parameters) <- NULL
   rownames(long_numeric) <- NULL
-  
   structure(out,
             has_syndromic_group = has_syndromic_group,
             combine_SI = combine_SI,
@@ -943,7 +942,7 @@ antibiogram.default <- function(x,
 #' @export
 antibiogram.grouped_df <- function(x,
                                    antibiotics = where(is.sir),
-                                   mo_transform = function (...) "no_mo",
+                                   mo_transform = NULL,
                                    ab_transform = "name",
                                    syndromic_group = NULL,
                                    add_total_n = FALSE,
@@ -960,6 +959,7 @@ antibiogram.grouped_df <- function(x,
                                    conf_interval = 0.95,
                                    interval_side = "two-tailed",
                                    info = interactive()) {
+  stop_ifnot(is.null(mo_transform), "`mo_transform` must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, which could include the pathogen information (though not necessary). Nonetheless, this makes `mo_transform` redundant.", call = FALSE)
   stop_ifnot(is.null(syndromic_group), "`syndromic_group` must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, making `syndromic_groups` redundant.", call = FALSE)
   groups <- attributes(x)$groups
   n_groups <- NROW(groups)
@@ -969,16 +969,19 @@ antibiogram.grouped_df <- function(x,
                               title = paste("Calculating AMR for", n_groups, "groups"))
   on.exit(close(progress))
   
+  out <- NULL
+  wisca_parameters <- NULL
+  long_numeric <- NULL
+  
   for (i in seq_len(n_groups)) {
-    if (i > 1) progress$tick()
+    progress$tick()
     rows <- unlist(groups[i, ]$.rows)
     if (length(rows) == 0) {
       next
     }
-    
     new_out <- antibiogram(as.data.frame(x)[rows, , drop = FALSE],
                            antibiotics = antibiotics,
-                           mo_transform = function(x) "no_mo",
+                           mo_transform = NULL,
                            ab_transform = ab_transform,
                            syndromic_group = NULL,
                            add_total_n = add_total_n,
@@ -994,17 +997,15 @@ antibiogram.grouped_df <- function(x,
                            simulations = simulations,
                            conf_interval = conf_interval,
                            interval_side = interval_side,
-                           info = i == 1 && info == TRUE)
+                           info = FALSE)
     new_wisca_parameters <- attributes(new_out)$wisca_parameters
     new_long_numeric <- attributes(new_out)$long_numeric
-    
-    if (i == 1) progress$tick()
     
     if (NROW(new_out) == 0) {
       next
     }
     
-    # remove first column 'Pathogen' (in whatever language)
+    # remove first column 'Pathogen' (in whatever language), except WISCA since that never has Pathogen column
     if (isFALSE(wisca)) {
       new_out <- new_out[, -1, drop = FALSE]
       new_long_numeric <- new_long_numeric[, -1, drop = FALSE]
@@ -1037,17 +1038,17 @@ antibiogram.grouped_df <- function(x,
       long_numeric <- rbind_AMR(long_numeric, new_long_numeric)
     }
   }
-
+  
   close(progress)
   
-  out <- structure(as_original_data_class(out, class(x), extra_class = "antibiogram"),
-                   has_syndromic_group = FALSE,
-                   combine_SI = isTRUE(combine_SI),
-                   wisca = isTRUE(wisca),
-                   conf_interval = conf_interval,
-                   formatting_type = formatting_type,
-                   wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
-                   long_numeric = as_original_data_class(long_numeric, class(x)))
+  structure(as_original_data_class(out, class(x), extra_class = "antibiogram"),
+            has_syndromic_group = FALSE,
+            combine_SI = isTRUE(combine_SI),
+            wisca = isTRUE(wisca),
+            conf_interval = conf_interval,
+            formatting_type = formatting_type,
+            wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
+            long_numeric = as_original_data_class(long_numeric, class(x)))
 }
 
 #' @export
@@ -1072,6 +1073,7 @@ wisca <- function(x,
   antibiogram(x = x,
               antibiotics = antibiotics,
               ab_transform = ab_transform,
+              mo_transform = NULL,
               syndromic_group = syndromic_group,
               add_total_n = add_total_n,
               only_all_tested = only_all_tested,

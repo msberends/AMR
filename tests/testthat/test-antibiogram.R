@@ -104,7 +104,7 @@ ab8 <- suppressWarnings(antibiogram(example_isolates,
                                     wisca = TRUE))
 
 expect_inherits(ab8, "antibiogram")
-expect_equal(colnames(ab8), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
+expect_equal(colnames(ab8), c("Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
 
 # grouped tibbles
 
@@ -128,7 +128,7 @@ expect_silent(plot(ab5))
 expect_silent(plot(ab6))
 expect_silent(plot(ab7))
 expect_silent(plot(ab8))
-expect_error(plot(ab9))
+expect_silent(plot(ab9))
 
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(ab1), "gg")
@@ -139,5 +139,5 @@ if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot2::autoplot(ab6), "gg")
   expect_inherits(ggplot2::autoplot(ab7), "gg")
   expect_inherits(ggplot2::autoplot(ab8), "gg")
-  expect_error(ggplot2::autoplot(ab9))
+  expect_inherits(ggplot2::autoplot(ab9), "gg")
 }
