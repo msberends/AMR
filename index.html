@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9150</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9151</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@
 <div class="section level4">
 <h4 id="filtering-and-selecting-data">Filtering and selecting data<a class="anchor" aria-label="anchor" href="#filtering-and-selecting-data"></a>
 </h4>
-<p>One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called <a href="https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html">antimicrobial class selectors</a>, which work in base R, <code>dplyr</code> and <code>data.table</code>:</p>
+<p>One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called <a href="https://msberends.github.io/AMR/reference/antimicrobial_selectors.html">antimicrobial selectors</a>, which work in base R, <code>dplyr</code> and <code>data.table</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
@@ -140,9 +140,9 @@
 <span>         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># antimicrobial selectors:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,</span>
-<span>         <span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>         <span class="fu"><a href="reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
+<span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">bacteria</th>
@@ -246,34 +246,24 @@
 </tr>
 </tbody>
 </table>
-<p>A base R equivalent would be:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
-<span><span class="va">example_isolates</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span></span>
-<span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span></span>
-<span>                         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<p>This base R code will work in any version of R since April 2013 (R-3.0). Moreover, this code works identically with the <code>data.table</code> package, only by starting with:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="generating-antibiograms">Generating antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
 </h4>
 <p>The <code>AMR</code> package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).</p>
-<p>If used inside R Markdown or Quarto, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>If used inside <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> or <a href="https://quarto.org" class="external-link">Quarto</a>, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
 <colgroup>
-<col width="18%">
-<col width="13%">
-<col width="12%">
-<col width="13%">
-<col width="13%">
-<col width="13%">
-<col width="13%">
+<col width="16%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="10%">
+<col width="14%">
+<col width="14%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Pathogen</th>
@@ -287,107 +277,107 @@
 <tbody>
 <tr class="odd">
 <td align="left">CoNS</td>
-<td align="center">0% (0/43)</td>
-<td align="center">86% (267/309)</td>
-<td align="center">52% (25/48)</td>
-<td align="center">0% (0/43)</td>
-<td align="center">52% (25/48)</td>
-<td align="center">22% (12/55)</td>
+<td align="center">0% (0-8%)</td>
+<td align="center">86% (82-90%)</td>
+<td align="center">52% (37-67%)</td>
+<td align="center">0% (0-8%)</td>
+<td align="center">52% (37-67%)</td>
+<td align="center">22% (12-35%)</td>
 </tr>
 <tr class="even">
 <td align="left"><em>E. coli</em></td>
-<td align="center">100% (171/171)</td>
-<td align="center">98% (451/460)</td>
-<td align="center">100% (422/422)</td>
+<td align="center">100% (98-100%)</td>
+<td align="center">98% (96-99%)</td>
+<td align="center">100% (99-100%)</td>
 <td align="center"></td>
-<td align="center">100% (418/418)</td>
-<td align="center">97% (450/462)</td>
+<td align="center">100% (99-100%)</td>
+<td align="center">97% (96-99%)</td>
 </tr>
 <tr class="odd">
 <td align="left"><em>E. faecalis</em></td>
-<td align="center">0% (0/39)</td>
-<td align="center">0% (0/39)</td>
-<td align="center">100% (38/38)</td>
-<td align="center">0% (0/39)</td>
+<td align="center">0% (0-9%)</td>
+<td align="center">0% (0-9%)</td>
+<td align="center">100% (91-100%)</td>
+<td align="center">0% (0-9%)</td>
 <td align="center"></td>
-<td align="center">0% (0/39)</td>
+<td align="center">0% (0-9%)</td>
 </tr>
 <tr class="even">
 <td align="left"><em>K. pneumoniae</em></td>
 <td align="center"></td>
-<td align="center">90% (52/58)</td>
-<td align="center">100% (51/51)</td>
+<td align="center">90% (79-96%)</td>
+<td align="center">100% (93-100%)</td>
 <td align="center"></td>
-<td align="center">100% (53/53)</td>
-<td align="center">90% (52/58)</td>
+<td align="center">100% (93-100%)</td>
+<td align="center">90% (79-96%)</td>
 </tr>
 <tr class="odd">
 <td align="left"><em>P. aeruginosa</em></td>
 <td align="center"></td>
-<td align="center">100% (30/30)</td>
+<td align="center">100% (88-100%)</td>
 <td align="center"></td>
-<td align="center">0% (0/30)</td>
+<td align="center">0% (0-12%)</td>
 <td align="center"></td>
-<td align="center">100% (30/30)</td>
+<td align="center">100% (88-100%)</td>
 </tr>
 <tr class="even">
 <td align="left"><em>P. mirabilis</em></td>
 <td align="center"></td>
-<td align="center">94% (32/34)</td>
-<td align="center">94% (30/32)</td>
+<td align="center">94% (80-99%)</td>
+<td align="center">94% (79-99%)</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">94% (32/34)</td>
+<td align="center">94% (80-99%)</td>
 </tr>
 <tr class="odd">
 <td align="left"><em>S. aureus</em></td>
 <td align="center"></td>
-<td align="center">99% (231/233)</td>
+<td align="center">99% (97-100%)</td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">98% (84/86)</td>
+<td align="center">98% (92-100%)</td>
 </tr>
 <tr class="even">
 <td align="left"><em>S. epidermidis</em></td>
-<td align="center">0% (0/44)</td>
-<td align="center">79% (128/163)</td>
+<td align="center">0% (0-8%)</td>
+<td align="center">79% (71-85%)</td>
 <td align="center"></td>
-<td align="center">0% (0/44)</td>
+<td align="center">0% (0-8%)</td>
 <td align="center"></td>
-<td align="center">51% (45/89)</td>
+<td align="center">51% (40-61%)</td>
 </tr>
 <tr class="odd">
 <td align="left"><em>S. hominis</em></td>
 <td align="center"></td>
-<td align="center">92% (74/80)</td>
+<td align="center">92% (84-97%)</td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">85% (53/62)</td>
+<td align="center">85% (74-93%)</td>
 </tr>
 <tr class="even">
 <td align="left"><em>S. pneumoniae</em></td>
-<td align="center">0% (0/117)</td>
-<td align="center">0% (0/117)</td>
+<td align="center">0% (0-3%)</td>
+<td align="center">0% (0-3%)</td>
 <td align="center"></td>
-<td align="center">0% (0/117)</td>
+<td align="center">0% (0-3%)</td>
 <td align="center"></td>
-<td align="center">0% (0/117)</td>
+<td align="center">0% (0-3%)</td>
 </tr>
 </tbody>
 </table>
 <p>In combination antibiograms, it is clear that combined antibiotics yield higher empiric coverage:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="12%">
 <col width="21%">
 <col width="33%">
-<col width="32%">
+<col width="33%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Pathogen</th>
@@ -398,32 +388,26 @@
 <tbody>
 <tr class="odd">
 <td align="left">Gram-negative</td>
-<td align="center">88% (565/641)</td>
-<td align="center">99% (681/691)</td>
-<td align="center">98% (679/693)</td>
+<td align="center">88% (85-91%)</td>
+<td align="center">99% (97-99%)</td>
+<td align="center">98% (97-99%)</td>
 </tr>
 <tr class="even">
 <td align="left">Gram-positive</td>
-<td align="center">86% (296/345)</td>
-<td align="center">98% (1018/1044)</td>
-<td align="center">95% (524/550)</td>
+<td align="center">86% (82-89%)</td>
+<td align="center">98% (96-98%)</td>
+<td align="center">95% (93-97%)</td>
 </tr>
 </tbody>
 </table>
 <p>Like many other functions in this package, <code><a href="reference/antibiogram.html">antibiogram()</a></code> comes with support for 20 languages that are often detected automatically based on system language:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"tobra"</span>, <span class="st">"genta"</span><span class="op">)</span>, <span class="co"># any arbitrary name or code will work</span></span>
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
 <span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>            language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span></code></pre></div>
 <table class="table">
-<colgroup>
-<col width="20%">
-<col width="27%">
-<col width="26%">
-<col width="25%">
-</colgroup>
 <thead><tr class="header">
 <th align="left">Збудник</th>
 <th align="center">Гентаміцин</th>
@@ -433,24 +417,57 @@
 <tbody>
 <tr class="odd">
 <td align="left">Грамнегативні</td>
-<td align="center">96% (659/684)</td>
-<td align="center">96% (658/686)</td>
-<td align="center">91% (621/684)</td>
+<td align="center">96% (95-98%)</td>
+<td align="center">96% (94-97%)</td>
+<td align="center">91% (88-93%)</td>
 </tr>
 <tr class="even">
 <td align="left">Грампозитивні</td>
-<td align="center">63% (740/1170)</td>
-<td align="center">34% (228/665)</td>
-<td align="center">77% (560/724)</td>
+<td align="center">63% (60-66%)</td>
+<td align="center">34% (31-38%)</td>
+<td align="center">77% (74-80%)</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section level4">
+<h4 id="interpreting-and-plotting-mic-and-sir-values">Interpreting and plotting MIC and SIR values<a class="anchor" aria-label="anchor" href="#interpreting-and-plotting-mic-and-sir-values"></a>
+</h4>
+<p>The <code>AMR</code> package allows interpretation of MIC and disk diffusion values based on CLSI and EUCAST. Moreover, the <code>ggplot2</code> package is extended with new scale functions, to allow plotting of log2-distributed MIC values and SIR values.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># generate some random values</span></span>
+<span><span class="va">some_mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/random.html">random_mic</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">some_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="fl">20</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">interpretation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">some_mic_values</span>,</span>
+<span>                         guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span>,</span>
+<span>                         mo <span class="op">=</span> <span class="st">"E. coli"</span>, <span class="co"># or any code or name resembling a known species</span></span>
+<span>                         ab <span class="op">=</span> <span class="st">"Cipro"</span><span class="op">)</span>   <span class="co"># or any code or name resembling an antibiotic</span></span>
+<span></span>
+<span><span class="co"># create the plot</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mic <span class="op">=</span> <span class="va">some_mic_values</span>,</span>
+<span>                  group <span class="op">=</span> <span class="va">some_groups</span>,</span>
+<span>                  sir <span class="op">=</span> <span class="va">interpretation</span><span class="op">)</span>,</span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">group</span>, y <span class="op">=</span> <span class="va">mic</span>, colour <span class="op">=</span> <span class="va">sir</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, colour <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># NEW scale function: plot MIC values to x, y, colour or fill</span></span>
+<span>  <span class="fu"><a href="reference/plot.html">scale_y_mic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># NEW scale function: write out S/I/R in any of the 20 supported languages</span></span>
+<span>  <span class="co">#                     and set colourblind-friendly colours</span></span>
+<span>  <span class="fu"><a href="reference/plot.html">scale_colour_sir</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis"> <img src="./plot_readme.png" style="max-width: 600px;"></a></p>
+</div>
+<div class="section level4">
 <h4 id="calculating-resistance-per-group">Calculating resistance per group<a class="anchor" aria-label="anchor" href="#calculating-resistance-per-group"></a>
 </h4>
 <p>For a manual approach, you can use the <code>resistance</code> or <code><a href="reference/proportion.html">susceptibility()</a></code> function:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># group by ward:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -461,7 +478,7 @@
 <span>                        conf_int <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/proportion.html">sir_confidence_interval</a></span><span class="op">(</span><span class="va">x</span>, collapse <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="center">ward</th>
+<th align="left">ward</th>
 <th align="center">GEN_total_R</th>
 <th align="center">GEN_conf_int</th>
 <th align="center">TOB_total_R</th>
@@ -469,30 +486,30 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">Clinical</td>
-<td align="center">0.229</td>
+<td align="left">Clinical</td>
+<td align="center">0.2289362</td>
 <td align="center">0.205-0.254</td>
-<td align="center">0.315</td>
+<td align="center">0.3147503</td>
 <td align="center">0.284-0.347</td>
 </tr>
 <tr class="even">
-<td align="center">ICU</td>
-<td align="center">0.290</td>
-<td align="center">0.253-0.330</td>
-<td align="center">0.400</td>
+<td align="left">ICU</td>
+<td align="center">0.2902655</td>
+<td align="center">0.253-0.33</td>
+<td align="center">0.4004739</td>
 <td align="center">0.353-0.449</td>
 </tr>
 <tr class="odd">
-<td align="center">Outpatient</td>
-<td align="center">0.200</td>
+<td align="left">Outpatient</td>
+<td align="center">0.2000000</td>
 <td align="center">0.131-0.285</td>
-<td align="center">0.368</td>
+<td align="center">0.3676471</td>
 <td align="center">0.254-0.493</td>
 </tr>
 </tbody>
 </table>
-<p>Or use <a href="https://msberends.github.io/AMR/reference/antimicrobial_class_selectors.html">antimicrobial class selectors</a> to select a series of antibiotic columns:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Or use <a href="https://msberends.github.io/AMR/reference/antimicrobial_selectors.html">antimicrobial selectors</a> to select a series of antibiotic columns:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -500,7 +517,7 @@
 <span>  <span class="co"># group by ward:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># calculate AMR using resistance(), over all aminoglycosides and polymyxins:</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_class_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            <span class="va">resistance</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">out</span></span></code></pre></div>
 <table class="table">
@@ -539,7 +556,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic columns to names:</span></span>
 <span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -586,7 +603,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic column to ATC codes:</span></span>
 <span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -666,7 +683,7 @@
 </h4>
 <p><a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR" class="external-link">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></span></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
@@ -680,13 +697,13 @@
 <ol style="list-style-type: decimal">
 <li>
 <p>Manually, using:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co"># if you haven't already</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Automatically, using the <a href="https://ropensci.org/r-universe/" class="external-link">rOpenSci R-universe platform</a>, by adding <a href="https://msberends.r-universe.dev" class="external-link">our R-universe address</a> to your list of repositories (‘repos’):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,</span>
 <span>                  msberends <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>After this, you can install and update this <code>AMR</code> package like any official release (e.g., using <code>install.packages("AMR")</code> or in RStudio via <em>Tools</em> &gt; <em>Check for Package Updates…</em>).</p>
