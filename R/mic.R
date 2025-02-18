@@ -43,9 +43,14 @@ VALID_MIC_LEVELS <- c(t(vapply(FUN.VALUE = character(length(VALID_MIC_LEVELS)),
                                c("<", "<=", "", ">=", ">"),
                                paste0,
                                VALID_MIC_LEVELS)))
-COMMON_MIC_VALUES <- c(0.001, 0.002, 0.004, 0.008, 0.016, 0.032, 0.064,
-                       0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32,
-                       64, 128, 256, 512, 1024)
+COMMON_MIC_VALUES <- c(0.0001, 0.0002, 0.0005,
+                       0.001, 0.002, 0.004, 0.008,
+                       0.016, 0.032, 0.064,
+                       0.125, 0.25, 0.5,
+                       1, 2, 4, 8,
+                       16, 32, 64,
+                       128, 256, 512,
+                       1024, 2048, 4096)
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -158,7 +163,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   
   if (is.mic(x) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
     if (!identical(levels(x), VALID_MIC_LEVELS)) {
-      # from an older AMR version - just update MIC factor levels
+      # might be from an older AMR version - just update MIC factor levels
       x <- set_clean_class(factor(as.character(x), levels = VALID_MIC_LEVELS, ordered = TRUE),
                            new_class = c("mic", "ordered", "factor"))
     }
@@ -184,20 +189,19 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   
   # comma to period
   x <- gsub(",", ".", x, fixed = TRUE)
-  # transform scientific notation
-  x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"] <- as.double(x[x %like% "[-]?[0-9]+([.][0-9]+)?e[-]?[0-9]+"])
   # transform Unicode for >= and <=
   x <- gsub("\u2264", "<=", x, fixed = TRUE)
   x <- gsub("\u2265", ">=", x, fixed = TRUE)
   # remove other invalid characters
-  x <- gsub("[^a-zA-Z0-9.><= ]+", "", x, perl = TRUE)
-  # remove space between operator and number ("<= 0.002" -> "<=0.002")
-  x <- gsub("(<|=|>) +", "\\1", x, perl = TRUE)
+  x <- gsub("[^a-zA-Z0-9.><= -]+", "", x, perl = TRUE)
   # transform => to >= and =< to <=
   x <- gsub("=<", "<=", x, fixed = TRUE)
   x <- gsub("=>", ">=", x, fixed = TRUE)
   # Remove leading == and =
   x <- gsub("^=+", "", x)
+  # retrieve signs and remove them from input
+  x_signs <- trimws(gsub("[^>=<]", "", x))
+  x <- trimws(gsub("[>=<]", "", x))
   # dots without a leading zero must start with 0
   x <- gsub("([^0-9]|^)[.]", "\\10.", x, perl = TRUE)
   # values like "<=0.2560.512" should be 0.512
@@ -217,6 +221,12 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   x[x %like% "[.]"] <- gsub("0+$", "", x[x %like% "[.]"])
   # never end with dot
   x <- gsub("[.]$", "", x, perl = TRUE)
+  # remove scientific notation
+  x[x %like% "[0-9]e[-]?[0-9]"] <- trimws(format(suppressWarnings(as.double(x[x %like% "[0-9]e[-]?[0-9]"])), scientific = FALSE))
+  # add signs again
+  x <- paste0(x_signs, x)
+  # remove NAs introduced by format()
+  x <- gsub("(NA)+", "", x)
   # trim it
   x <- trimws2(x)
   

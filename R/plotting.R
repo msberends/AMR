@@ -237,20 +237,33 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
                "In `scale_", aest, "_mic()`, `limits` cannot be combined with `mic_range`, as they working identically. Use `mic_range` OR `limits`.", call = FALSE)
     mic_range <- args$limits
   }
-  # do not take these arguments into account, as they will be overwritten and seem to allow weird behaviour
+  # do not take these arguments into account, as they will be overwritten and seem to allow weird behaviour if set anyway
   args[c("aesthetics", "trans", "transform", "transform_df", "breaks", "labels", "limits")] <- NULL
   scale <- do.call(ggplot_fn, args)
   
   scale$transform <- function(x) {
-    as.double(rescale_mic(x = as.double(x), keep_operators = , "labels", mic_range = mic_range, as.mic = TRUE))
+    as.double(rescale_mic(x = as.double(x), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
   }
   scale$transform_df <- function(self, df) {
     self$`.values_rescaled` <- rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
-    self$`.values_levels` <- levels(rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = FALSE))
-    if (length(self$`.values_levels`) > 6 & "0.025" %in% self$`.values_levels`) {
-      # TODO weird levelling out leading to 0.025 being redundant
-      self$`.values_levels` <- self$`.values_levels`[self$`.values_levels` != "0.025"]
+    
+    # create new breaks and labels here
+    lims <- range(self$`.values_rescaled`)
+    if (!is.na(mic_range[1]) && mic_range[1] < lims[1]) {
+      lims[1] <- mic_range[1]
     }
+    if (!is.na(mic_range[2]) && mic_range[2] > lims[2]) {
+      lims[2] <- mic_range[2]
+    }
+    ind_min <- which(COMMON_MIC_VALUES <= lims[1])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES <= lims[1]] - lims[1]))]  # Closest index where COMMON_MIC_VALUES <= lims[1]
+    ind_max <- which(COMMON_MIC_VALUES >= lims[2])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES >= lims[2]] - lims[2]))]  # Closest index where COMMON_MIC_VALUES >= lims[2]
+    self$`.values_levels` <- as.mic(COMMON_MIC_VALUES[ind_min:ind_max])
+    
+    if (keep_operators %in% c("edges", "all") && length(self$`.values_levels`) > 1) {
+      self$`.values_levels`[1] <- paste0("<=", self$`.values_levels`[1])
+      self$`.values_levels`[length(self$`.values_levels`)] <- paste0(">=", self$`.values_levels`[length(self$`.values_levels`)])
+    }
+   
     self$`.values_log` <- log2(as.double(self$`.values_rescaled`))
     if (aest == "y" && "group" %in% colnames(df)) {
       df$group <- as.integer(factor(df$x))

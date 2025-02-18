@@ -27,12 +27,15 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+# used in multiple functions, also in plotting
+expect_true(all(as.mic(COMMON_MIC_VALUES) %in% VALID_MIC_LEVELS))
+expect_true(all(paste0("<=", as.mic(COMMON_MIC_VALUES)) %in% VALID_MIC_LEVELS))
+expect_true(all(paste0(">=", as.mic(COMMON_MIC_VALUES)) %in% VALID_MIC_LEVELS))
+
 expect_true(as.mic(8) == as.mic("8"))
 expect_true(as.mic("1") > as.mic("<=0.0625"))
 expect_true(as.mic("1") < as.mic(">=32"))
 expect_true(is.mic(as.mic(8)))
-# expect_true(as.mic(1024) < as.mic(">1024"))
-# expect_true(as.mic("<1024") > as.mic("1024"))
 
 
 expect_equal(as.double(as.mic(">=32")), 32)
