@@ -45,6 +45,8 @@
 #' @param aesthetics aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
 #' @param eucast_I a [logical] to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be `TRUE` if the default [AMR interpretation guideline][as.sir()] is set to EUCAST (which is the default). With `FALSE`, it will be interpreted as "Intermediate".
 #' @inheritParams as.sir
+#' @param mic_range A manual range to rescale the MIC values (using [rescale_mic()]), e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent rescaling on one side, e.g., `mic_range = c(NA, 32)`. **Note:** This rescales values but does not filter them - use the ggplot2 `limits` argument separately to exclude values from the plot.
+#' @inheritParams as.mic
 #' @inheritParams ggplot_sir
 #' @inheritParams proportion
 #' @details
@@ -232,84 +234,96 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
                                 ns = asNamespace("ggplot2"))
   args <- list(...)
   breaks_set <- args$breaks
-  if (!is.null(args$limits)) {
-    stop_ifnot(is.null(mic_range),
-               "In `scale_", aest, "_mic()`, `limits` cannot be combined with `mic_range`, as they working identically. Use `mic_range` OR `limits`.", call = FALSE)
-    mic_range <- args$limits
-  }
+  limits_set <- args$limits
+  
   # do not take these arguments into account, as they will be overwritten and seem to allow weird behaviour if set anyway
   args[c("aesthetics", "trans", "transform", "transform_df", "breaks", "labels", "limits")] <- NULL
   scale <- do.call(ggplot_fn, args)
+  scale$mic_breaks_set <- breaks_set
+  scale$mic_limits_set <- limits_set
   
   scale$transform <- function(x) {
     as.double(rescale_mic(x = as.double(x), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
   }
   scale$transform_df <- function(self, df) {
-    self$`.values_rescaled` <- rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
-    
+    stop_if(all(is.na(df[[aest]])),
+            "`scale_", aest, "_mic()`: All MIC values are `NA`. Check your input data.", call = FALSE)
+    self$mic_values_rescaled <- rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
     # create new breaks and labels here
-    lims <- range(self$`.values_rescaled`)
-    if (!is.na(mic_range[1]) && mic_range[1] < lims[1]) {
+    lims <- range(self$mic_values_rescaled, na.rm = TRUE)
+    # support inner and outer mic_range settings (e.g., data ranges 0.5-8 and mic_range is set to 0.025-64)
+    if (!is.null(mic_range) && !is.na(mic_range[1]) && !is.na(lims[1]) && mic_range[1] < lims[1]) {
       lims[1] <- mic_range[1]
     }
-    if (!is.na(mic_range[2]) && mic_range[2] > lims[2]) {
+    if (!is.null(mic_range) && !is.na(mic_range[2]) && !is.na(lims[2]) && mic_range[2] > lims[2]) {
       lims[2] <- mic_range[2]
     }
     ind_min <- which(COMMON_MIC_VALUES <= lims[1])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES <= lims[1]] - lims[1]))]  # Closest index where COMMON_MIC_VALUES <= lims[1]
     ind_max <- which(COMMON_MIC_VALUES >= lims[2])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES >= lims[2]] - lims[2]))]  # Closest index where COMMON_MIC_VALUES >= lims[2]
-    self$`.values_levels` <- as.mic(COMMON_MIC_VALUES[ind_min:ind_max])
     
-    if (keep_operators %in% c("edges", "all") && length(self$`.values_levels`) > 1) {
-      self$`.values_levels`[1] <- paste0("<=", self$`.values_levels`[1])
-      self$`.values_levels`[length(self$`.values_levels`)] <- paste0(">=", self$`.values_levels`[length(self$`.values_levels`)])
+    self$mic_values_levels <- as.mic(COMMON_MIC_VALUES[ind_min:ind_max])
+    
+    if (keep_operators %in% c("edges", "all") && length(self$mic_values_levels) > 1) {
+      self$mic_values_levels[1] <- paste0("<=", self$mic_values_levels[1])
+      self$mic_values_levels[length(self$mic_values_levels)] <- paste0(">=", self$mic_values_levels[length(self$mic_values_levels)])
     }
-   
-    self$`.values_log` <- log2(as.double(self$`.values_rescaled`))
+    
+    self$mic_values_log <- log2(as.double(self$mic_values_rescaled))
     if (aest == "y" && "group" %in% colnames(df)) {
       df$group <- as.integer(factor(df$x))
     }
-    df[[aest]] <- self$`.values_log`
+    df[[aest]] <- self$mic_values_log
     df
   }
+  
   scale$breaks <- function(..., self) {
-    if (!is.null(breaks_set)) {
-      if (is.function(breaks_set)) {
-        breaks_set(...)
+    if (!is.null(self$mic_breaks_set)) {
+      if (is.function(self$mic_breaks_set)) {
+        self$mic_breaks_set(...)
       } else {
-        log2(as.mic(breaks_set))
+        log2(as.mic(self$mic_breaks_set))
       }
     } else {
-      log2(as.mic(self$`.values_levels`))
+      log2(as.mic(self$mic_values_levels))
     }
   }
   scale$labels <- function(..., self) {
-    if (is.null(breaks_set)) {
-      self$`.values_levels`
+    if (is.null(self$mic_breaks_set)) {
+      self$mic_values_levels
     } else {
       breaks <- tryCatch(scale$breaks(), error = function(e) NULL)
       if (!is.null(breaks)) {
         # for when breaks are set by the user
         2 ^ breaks
       } else {
-        self$`.values_levels`
+        self$mic_values_levels
       }
     }
   }
+  
   scale$limits <- function(x, ..., self) {
-    rng <- range(log2(as.mic(self$`.values_levels`)))
-    # add 0.5 extra space
-    rng <- c(rng[1] - 0.5, rng[2] + 0.5)
-    if (!is.na(x[1]) && x[1] == 0) {
-      # scale that start at 0 must remain so, e.g. in case of geom_col()
-      rng[1] <- 0
+    if (!is.null(self$mic_limits_set)) {
+      if (is.function(self$mic_limits_set)) {
+        self$mic_limits_set(...)
+      } else {
+        log2(as.mic(self$mic_limits_set))
+      }
+    } else {
+      rng <- range(log2(as.mic(self$mic_values_levels)))
+      # add 0.5 extra space
+      rng <- c(rng[1] - 0.5, rng[2] + 0.5)
+      if (!is.na(x[1]) && x[1] == 0) {
+        # scale that start at 0 must remain so, e.g. in case of geom_col()
+        rng[1] <- 0
+      }
+      rng
     }
-    rng
   }
+  
   scale
 }
 
 #' @export
-#' @inheritParams as.mic
 #' @rdname plot
 scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
   meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
@@ -318,7 +332,6 @@ scale_x_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 }
 
 #' @export
-#' @inheritParams as.mic
 #' @rdname plot
 scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
   meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
@@ -327,7 +340,6 @@ scale_y_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 }
 
 #' @export
-#' @inheritParams as.mic
 #' @rdname plot
 scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
   meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
@@ -341,7 +353,6 @@ scale_colour_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
 scale_color_mic <- scale_colour_mic
 
 #' @export
-#' @inheritParams as.mic
 #' @rdname plot
 scale_fill_mic <- function(keep_operators = "edges", mic_range = NULL, ...) {
   meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
@@ -475,14 +486,14 @@ plot.mic <- function(x,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   x <- as.mic(x) # make sure that currently implemented MIC levels are used
   
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
-
+  
   x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
@@ -498,18 +509,18 @@ plot.mic <- function(x,
     ...
   )
   barplot(x,
-    col = cols_sub$cols,
-    main = main,
-    ylim = c(0, max(x) * ifelse(any(colours_SIR %in% cols_sub$cols), 1.1, 1)),
-    ylab = ylab,
-    xlab = xlab,
-    axes = FALSE
+          col = cols_sub$cols,
+          main = main,
+          ylim = c(0, max(x) * ifelse(any(colours_SIR %in% cols_sub$cols), 1.1, 1)),
+          ylab = ylab,
+          xlab = xlab,
+          axes = FALSE
   )
   axis(2, seq(0, max(x)))
   if (!is.null(cols_sub$sub)) {
     mtext(side = 3, line = 0.5, adj = 0.5, cex = 0.75, cols_sub$sub)
   }
-
+  
   if (any(colours_SIR %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
@@ -525,16 +536,16 @@ plot.mic <- function(x,
       legend_txt <- c(legend_txt, "(R) Resistant")
       legend_col <- c(legend_col, colours_SIR[3])
     }
-
+    
     legend("top",
-      x.intersp = 0.5,
-      legend = translate_into_language(legend_txt, language = language),
-      fill = legend_col,
-      horiz = TRUE,
-      cex = 0.75,
-      box.lwd = 0,
-      box.col = "#FFFFFF55",
-      bg = "#FFFFFF55"
+           x.intersp = 0.5,
+           legend = translate_into_language(legend_txt, language = language),
+           fill = legend_col,
+           horiz = TRUE,
+           cex = 0.75,
+           box.lwd = 0,
+           box.col = "#FFFFFF55",
+           bg = "#FFFFFF55"
     )
   }
 }
@@ -562,11 +573,11 @@ barplot.mic <- function(height,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   
   height <- as.mic(height) # make sure that currently implemented MIC levels are used
-
+  
   plot(
     x = height,
     main = main,
@@ -606,14 +617,14 @@ autoplot.mic <- function(object,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
   }
   if (!is.null(title)) {
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
-
+  
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
   x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
@@ -636,18 +647,18 @@ autoplot.mic <- function(object,
   df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
   df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
-    levels = translate_into_language(
-      c(
-        "(S) Susceptible",
-        paste("(I)", plot_name_of_I(cols_sub$guideline)),
-        "(R) Resistant"
-      ),
-      language = language
-    ),
-    ordered = TRUE
+                    levels = translate_into_language(
+                      c(
+                        "(S) Susceptible",
+                        paste("(I)", plot_name_of_I(cols_sub$guideline)),
+                        "(R) Resistant"
+                      ),
+                      language = language
+                    ),
+                    ordered = TRUE
   )
   p <- ggplot2::ggplot(df)
-
+  
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
@@ -669,7 +680,7 @@ autoplot.mic <- function(object,
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = mic, y = count))
   }
-
+  
   p +
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
@@ -712,12 +723,12 @@ plot.disk <- function(x,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
-
+  
   x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
@@ -732,20 +743,20 @@ plot.disk <- function(x,
     breakpoint_type = breakpoint_type,
     ...
   )
-
+  
   barplot(x,
-    col = cols_sub$cols,
-    main = main,
-    ylim = c(0, max(x) * ifelse(any(colours_SIR %in% cols_sub$cols), 1.1, 1)),
-    ylab = ylab,
-    xlab = xlab,
-    axes = FALSE
+          col = cols_sub$cols,
+          main = main,
+          ylim = c(0, max(x) * ifelse(any(colours_SIR %in% cols_sub$cols), 1.1, 1)),
+          ylab = ylab,
+          xlab = xlab,
+          axes = FALSE
   )
   axis(2, seq(0, max(x)))
   if (!is.null(cols_sub$sub)) {
     mtext(side = 3, line = 0.5, adj = 0.5, cex = 0.75, cols_sub$sub)
   }
-
+  
   if (any(colours_SIR %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
@@ -762,14 +773,14 @@ plot.disk <- function(x,
       legend_col <- c(legend_col, colours_SIR[1])
     }
     legend("top",
-      x.intersp = 0.5,
-      legend = translate_into_language(legend_txt, language = language),
-      fill = legend_col,
-      horiz = TRUE,
-      cex = 0.75,
-      box.lwd = 0,
-      box.col = "#FFFFFF55",
-      bg = "#FFFFFF55"
+           x.intersp = 0.5,
+           legend = translate_into_language(legend_txt, language = language),
+           fill = legend_col,
+           horiz = TRUE,
+           cex = 0.75,
+           box.lwd = 0,
+           box.col = "#FFFFFF55",
+           bg = "#FFFFFF55"
     )
   }
 }
@@ -797,9 +808,9 @@ barplot.disk <- function(height,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   main <- gsub(" +", " ", paste0(main, collapse = " "))
-
+  
   plot(
     x = height,
     main = main,
@@ -839,14 +850,14 @@ autoplot.disk <- function(object,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
   }
   if (!is.null(title)) {
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
-
+  
   x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
@@ -864,23 +875,23 @@ autoplot.disk <- function(object,
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("disk", "count")
   df$cols <- cols_sub$cols
-
+  
   df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
   df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
   df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
-    levels = translate_into_language(
-      c(
-        "(S) Susceptible",
-        paste("(I)", plot_name_of_I(cols_sub$guideline)),
-        "(R) Resistant"
-      ),
-      language = language
-    ),
-    ordered = TRUE
+                    levels = translate_into_language(
+                      c(
+                        "(S) Susceptible",
+                        paste("(I)", plot_name_of_I(cols_sub$guideline)),
+                        "(R) Resistant"
+                      ),
+                      language = language
+                    ),
+                    ordered = TRUE
   )
   p <- ggplot2::ggplot(df)
-
+  
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
@@ -902,7 +913,7 @@ autoplot.disk <- function(object,
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = disk, y = count))
   }
-
+  
   p +
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
@@ -930,11 +941,11 @@ plot.sir <- function(x,
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-
+  
   data <- as.data.frame(table(x), stringsAsFactors = FALSE)
   colnames(data) <- c("x", "n")
   data$s <- round((data$n / sum(data$n)) * 100, 1)
-
+  
   if (!"S" %in% data$x) {
     data <- rbind_AMR(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE))
   }
@@ -953,9 +964,9 @@ plot.sir <- function(x,
   
   data <- data[!(data$n == 0 & data$x %in% c("SDD", "I", "NI")), , drop = FALSE]
   data$x <- factor(data$x, levels = intersect(unique(data$x), c("S", "SDD", "I", "R", "NI")), ordered = TRUE)
-
+  
   ymax <- pm_if_else(max(data$s) > 95, 105, 100)
-
+  
   plot(
     x = data$x,
     y = data$s,
@@ -970,7 +981,7 @@ plot.sir <- function(x,
   axis(side = 1, at = 1:pm_n_distinct(data$x), labels = levels(data$x), lwd = 0)
   # y axis, 0-100%
   axis(side = 2, at = seq(0, 100, 5))
-
+  
   text(
     x = data$x,
     y = data$s + 4,
@@ -997,25 +1008,25 @@ barplot.sir <- function(height,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
-
+  
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
   # add SDD and N to colours
   colours_SIR <- c(colours_SIR[1:2], colours_SIR[2], colours_SIR[3], "#888888")
   main <- gsub(" +", " ", paste0(main, collapse = " "))
-
+  
   x <- table(height)
   # remove missing I, SDD, and N
   colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
   x <- x[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
   # plot it
   barplot(x,
-    col = colours_SIR,
-    xlab = xlab,
-    main = main,
-    ylab = ylab,
-    axes = FALSE
+          col = colours_SIR,
+          xlab = xlab,
+          main = main,
+          ylab = ylab,
+          axes = FALSE
   )
   axis(2, seq(0, max(x)))
 }
@@ -1035,18 +1046,18 @@ autoplot.sir <- function(object,
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
-
+  
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
   }
   if (!is.null(title)) {
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
-
+  
   if (length(colours_SIR) == 1) {
     colours_SIR <- rep(colours_SIR, 3)
   }
-
+  
   df <- as.data.frame(table(object), stringsAsFactors = TRUE)
   colnames(df) <- c("x", "n")
   df <- df[!(df$n == 0 & df$x %in% c("SDD", "I", "NI")), , drop = FALSE]

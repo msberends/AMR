@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9152. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9153. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -2893,7 +2893,7 @@ rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
 
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent a limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+\item{mic_range}{a manual range to rescale the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
 \item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{TRUE} for \code{\link[=rescale_mic]{rescale_mic()}} and \code{FALSE} for \code{\link[=droplevels]{droplevels()}}. When setting this to \code{FALSE} in \code{\link[=rescale_mic]{rescale_mic()}}, the output will have factor levels that acknowledge \code{mic_range}.}
 
@@ -7455,7 +7455,7 @@ labels_sir_count(position = NULL, x = "antibiotic",
 \arguments{
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent a limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+\item{mic_range}{A manual range to rescale the MIC values (using \code{\link[=rescale_mic]{rescale_mic()}}), e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}. \strong{Note:} This rescales values but does not filter them - use the ggplot2 \code{limits} argument separately to exclude values from the plot.}
 
 \item{...}{arguments passed on to methods}
 

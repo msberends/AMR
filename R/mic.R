@@ -283,7 +283,7 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 )
 
 #' @rdname as.mic
-#' @param mic_range a manual range to limit the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent a limit on one side, e.g., `mic_range = c(NA, 32)`.
+#' @param mic_range a manual range to rescale the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent rescaling on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
 rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)

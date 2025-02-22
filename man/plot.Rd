@@ -111,7 +111,7 @@ labels_sir_count(position = NULL, x = "antibiotic",
 \arguments{
 \item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to limit the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent a limit on one side, e.g., \code{mic_range = c(NA, 32)}.}
+\item{mic_range}{A manual range to rescale the MIC values (using \code{\link[=rescale_mic]{rescale_mic()}}), e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}. \strong{Note:} This rescales values but does not filter them - use the ggplot2 \code{limits} argument separately to exclude values from the plot.}
 
 \item{...}{arguments passed on to methods}
 
