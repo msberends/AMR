@@ -81,20 +81,24 @@
 #' some_sir_values <- random_sir(50, prob_SIR = c(0.55, 0.05, 0.30))
 #' 
 #' 
-#' # Plotting using base R's plot() ---------------------------------------
-#'
-#' plot(some_mic_values)
-#' plot(some_disk_values)
-#' plot(some_sir_values)
-#'
-#' # when providing the microorganism and antibiotic, colours will show interpretations:
-#' plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
-#' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
-#' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
+#' \donttest{
+#' # Plotting using ggplot2's autoplot() for MIC, disk, and SIR -----------
+#' if (require("ggplot2")) {
+#'   autoplot(some_mic_values)
+#' }
+#' if (require("ggplot2")) {
+#'   # when providing the microorganism and antibiotic, colours will show interpretations:
+#'   autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
+#' }
+#' if (require("ggplot2")) {
+#'   # support for 20 languages, various guidelines, and many options
+#'   autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro",
+#'            guideline = "CLSI 2024", language = "no",
+#'            title = "Disk diffusion from the North")
+#' }
 #' 
 #' 
 #' # Plotting using scale_x_mic() -----------------------------------------
-#' \donttest{
 #' if (require("ggplot2")) {
 #'   mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
 #'                                 counts = c(1, 1, 2, 2, 3, 3)),
@@ -142,21 +146,9 @@
 #'          aes(group, mic)) +
 #'     geom_boxplot() +
 #'     geom_violin(linetype = 2, colour = "grey", fill = NA) +
-#'     scale_y_mic(mic_range = c(NA, 2))
+#'     scale_y_mic(mic_range = c(NA, 0.25))
 #' }
 #' 
-#' 
-#' # Plotting using scale_fill_mic() -----------------------------------------
-#' some_counts <- as.integer(runif(20, 5, 50))
-#' 
-#' if (require("ggplot2")) {
-#'   ggplot(data.frame(mic = some_mic_values,
-#'                    group = some_groups,
-#'                    counts = some_counts),
-#'          aes(group, counts, fill = mic)) +
-#'     geom_col() +
-#'     scale_fill_mic(mic_range = c(0.5, 16))
-#' }
 #' 
 #' # Plotting using scale_x_sir() -----------------------------------------
 #' if (require("ggplot2")) {
@@ -191,42 +183,22 @@
 #' if (require("ggplot2")) {
 #'   plain +
 #'     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
-#'     scale_colour_sir(language = "nl", eucast_I = FALSE,
-#'                      name = "In Dutch!")
+#'     scale_colour_sir(language = "pt",
+#'                      name = "Support in 20 languages")
 #' }
 #' 
 #' 
-#' # Plotting using ggplot2's autoplot() ----------------------------------
-#' if (require("ggplot2")) {
-#'   autoplot(some_mic_values)
-#' }
-#' if (require("ggplot2")) {
-#'   autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
-#' }
-#' if (require("ggplot2")) {
-#'   autoplot(some_sir_values)
-#' }
+#' # Plotting using base R's plot() ---------------------------------------
+#'
+#' plot(some_mic_values)
+#' # when providing the microorganism and antibiotic, colours will show interpretations:
+#' plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
 #' 
+#' plot(some_disk_values)
+#' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+#' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 #' 
-#' # Plotting using scale_y_percent() -------------------------------------
-#' if (require("ggplot2")) {
-#'   p <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
-#'                                counts = c(1, 1, 2, 2, 3, 3)),
-#'                          aes(mics, counts / sum(counts))) +
-#'     geom_col()
-#'   print(p)
-#'   
-#'   p2 <- p +
-#'     scale_y_percent() +
-#'     theme_sir()
-#'   print(p2)
-#'   
-#'   p +
-#'     scale_y_percent(breaks = seq(from = 0, to = 1, by = 0.1),
-#'                     limits = c(0, 1)) +
-#'     theme_sir()
-#' }
-#' }
+#' plot(some_sir_values)
 NULL
 
 create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
@@ -243,12 +215,12 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
   scale$mic_limits_set <- limits_set
   
   scale$transform <- function(x) {
-    as.double(rescale_mic(x = as.double(x), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
+    as.double(rescale_mic(x = as.double(as.mic(x)), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
   }
   scale$transform_df <- function(self, df) {
     stop_if(all(is.na(df[[aest]])),
             "`scale_", aest, "_mic()`: All MIC values are `NA`. Check your input data.", call = FALSE)
-    self$mic_values_rescaled <- rescale_mic(x = as.double(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
+    self$mic_values_rescaled <- rescale_mic(x = as.double(as.mic(df[[aest]])), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
     # create new breaks and labels here
     lims <- range(self$mic_values_rescaled, na.rm = TRUE)
     # support inner and outer mic_range settings (e.g., data ranges 0.5-8 and mic_range is set to 0.025-64)
