@@ -249,6 +249,12 @@ def is_mic(x):
 def rescale_mic(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.rescale_mic(x, *args, **kwargs))
+def mic_p50(x, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.mic_p50(x, *args, **kwargs))
+def mic_p90(x, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.mic_p90(x, *args, **kwargs))
 def as_mo(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.as_mo(x, *args, **kwargs))

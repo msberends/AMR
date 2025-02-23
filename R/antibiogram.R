@@ -923,19 +923,16 @@ antibiogram.default <- function(x,
     }
   }
   
-  out <- as_original_data_class(new_df, class(x), extra_class = "antibiogram")
+  out <- structure(as_original_data_class(new_df, class(x), extra_class = "antibiogram"),
+                   has_syndromic_group = has_syndromic_group,
+                   combine_SI = combine_SI,
+                   wisca = wisca,
+                   conf_interval = conf_interval,
+                   formatting_type = formatting_type,
+                   wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
+                   long_numeric = as_original_data_class(long_numeric, class(x)))
   rownames(out) <- NULL
-  rownames(wisca_parameters) <- NULL
-  rownames(long_numeric) <- NULL
-  structure(out,
-            has_syndromic_group = has_syndromic_group,
-            combine_SI = combine_SI,
-            wisca = wisca,
-            conf_interval = conf_interval,
-            formatting_type = formatting_type,
-            wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
-            long_numeric = as_original_data_class(long_numeric, class(x))
-  )
+  out
 }
 
 #' @method antibiogram grouped_df
@@ -1041,14 +1038,16 @@ antibiogram.grouped_df <- function(x,
   
   close(progress)
   
-  structure(as_original_data_class(out, class(x), extra_class = "antibiogram"),
-            has_syndromic_group = FALSE,
-            combine_SI = isTRUE(combine_SI),
-            wisca = isTRUE(wisca),
-            conf_interval = conf_interval,
-            formatting_type = formatting_type,
-            wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
-            long_numeric = as_original_data_class(long_numeric, class(x)))
+  out <- structure(as_original_data_class(out, class(x), extra_class = "antibiogram"),
+                   has_syndromic_group = FALSE,
+                   combine_SI = isTRUE(combine_SI),
+                   wisca = isTRUE(wisca),
+                   conf_interval = conf_interval,
+                   formatting_type = formatting_type,
+                   wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
+                   long_numeric = as_original_data_class(long_numeric, class(x)))
+  rownames(out) <- NULL
+  out
 }
 
 #' @export

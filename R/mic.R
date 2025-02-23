@@ -346,6 +346,21 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   out
 }
 
+#' @rdname as.mic
+#' @details Use [mic_p50()] and [mic_p90()] to get the 50th and 90th percentile of MIC values. They return 'normal' [numeric] values.
+#' @export
+mic_p50 <- function(x, na.rm = FALSE, ...) {
+  x <- as.mic(x)
+  as.double(stats::quantile(x, probs = 0.5, na.rm = na.rm))
+}
+
+#' @rdname as.mic
+#' @export
+mic_p90 <- function(x, na.rm = FALSE, ...) {
+  x <- as.mic(x)
+  as.double(stats::quantile(x, probs = 0.9, na.rm = na.rm))
+}
+
 #' @method as.double mic
 #' @export
 #' @noRd

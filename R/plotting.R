@@ -186,7 +186,7 @@
 #'     scale_colour_sir(language = "pt",
 #'                      name = "Support in 20 languages")
 #' }
-#' 
+#' }
 #' 
 #' # Plotting using base R's plot() ---------------------------------------
 #'

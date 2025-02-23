@@ -383,8 +383,6 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
     # remove redundant columns
     out <- subset(out, select = -c(ci_min, ci_max, isolates))
   }
-
-  rownames(out) <- NULL
-  out <- as_original_data_class(out, class(data.bak)) # will remove tibble groups
-  structure(out, class = c("sir_df", class(out)))
+  
+  as_original_data_class(out, class(data.bak), extra_class = "sir_df") # will remove tibble groups
 }

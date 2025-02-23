@@ -1,4 +1,4 @@
-# AMR 2.1.1.9154
+# AMR 2.1.1.9155
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -38,7 +38,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * **Other**
   * New function `top_n_microorganisms()` to filter a data set to the top *n* of any taxonomic property, e.g., filter to the top 3 species, filter to any species in the top 5 genera, or filter to the top 3 species in each of the top 5 genera
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
-  
+  * New functions `mic_p50()` and `mic_p90()` to retrieve the 50th and 90th percentile of MIC values.
 
 ## Changed
 * SIR interpretation

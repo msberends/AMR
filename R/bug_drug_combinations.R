@@ -185,8 +185,9 @@ bug_drug_combinations <- function(x,
   
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
   out <- out %pm>% pm_arrange(mo, ab)
+  class(out) <- c("bug_drug_combinations", if(data_has_groups) "grouped" else NULL, class(out))
   rownames(out) <- NULL
-  structure(out, class = c("bug_drug_combinations", if(data_has_groups) "grouped" else NULL, class(out)))
+  out
 }
 
 #' @method format bug_drug_combinations

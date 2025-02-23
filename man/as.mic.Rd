@@ -7,6 +7,8 @@
 \alias{is.mic}
 \alias{NA_mic_}
 \alias{rescale_mic}
+\alias{mic_p50}
+\alias{mic_p90}
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
@@ -17,6 +19,10 @@ is.mic(x)
 NA_mic_
 
 rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
+
+mic_p50(x, na.rm = FALSE, ...)
+
+mic_p90(x, na.rm = FALSE, ...)
 
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
@@ -87,6 +93,8 @@ With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be limit
 For \code{ggplot2}, use one of the \code{\link[=scale_x_mic]{scale_*_mic()}} functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 
 \code{NA_mic_} is a missing value of the new \code{mic} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
+
+Use \code{\link[=mic_p50]{mic_p50()}} and \code{\link[=mic_p90]{mic_p90()}} to get the 50th and 90th percentile of MIC values. They return 'normal' \link{numeric} values.
 }
 \examples{
 mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))

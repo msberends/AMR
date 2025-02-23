@@ -288,8 +288,10 @@ antibiogram(example_isolates,
 To create a combined antibiogram, use antibiotic codes or names with a plus `+` character like this:
 
 ```{r comb}
-antibiogram(example_isolates,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+combined_ab <- antibiogram(example_isolates,
+                           antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+                           ab_transform = NULL)
+combined_ab
 ```
 
 ### Syndromic Antibiogram
@@ -304,17 +306,26 @@ antibiogram(example_isolates,
 
 ### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 
-To create a WISCA, you must state combination therapy in the `antibiotics` argument (similar to the Combination Antibiogram), define a syndromic group with the `syndromic_group` argument (similar to the Syndromic Antibiogram) in which cases are predefined based on clinical or demographic characteristics (e.g., endocarditis in 75+ females).  This next example is a simplification without clinical characteristics, but just gives an idea of how a WISCA can be created:
+To create a **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**, simply set `wisca = TRUE` in the `antibiogram()` function, or use the dedicated `wisca()` function. Unlike traditional antibiograms, WISCA provides syndrome-based susceptibility estimates, weighted by pathogen incidence and antimicrobial susceptibility patterns.
 
 ```{r wisca}
-wisca <- antibiogram(example_isolates,
-                     antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-                     mo_transform = "gramstain",
-                     minimum = 10, # this should be >= 30, but now just as example
-                     syndromic_group = ifelse(example_isolates$age >= 65 &
-                                                example_isolates$gender == "M",
-                                              "WISCA Group 1", "WISCA Group 2"))
-wisca
+example_isolates %>%
+  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+        minimum = 10) # Recommended threshold: ≥30
+```
+
+WISCA uses a **Bayesian decision model** to integrate data from multiple pathogens, improving empirical therapy guidance, especially for low-incidence infections. It is **pathogen-agnostic**, meaning results are syndrome-based rather than stratified by microorganism.
+
+For reliable results, ensure your data includes **only first isolates** (use `first_isolate()`) and consider filtering for **the top *n* species** (use `top_n_microorganisms()`), as WISCA outcomes are most meaningful when based on robust incidence estimates.
+
+For **patient- or syndrome-specific WISCA**, run the function on a grouped `tibble`, i.e., using `group_by()` first:
+
+```{r wisca_grouped}
+example_isolates %>%
+  top_n_microorganisms(n = 10) %>%
+  group_by(age_group = age_groups(age, c(25, 50, 75)),
+           gender) %>%
+  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
 ### Plotting antibiograms
@@ -322,7 +333,7 @@ wisca
 Antibiograms can be plotted using `autoplot()` from the `ggplot2` packages, since this `AMR` package provides an extension to that function:
 
 ```{r}
-autoplot(wisca)
+autoplot(combined_ab)
 ```
 
 To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
@@ -347,6 +358,51 @@ our_data_1st %>%
   summarise(amoxicillin = resistance(AMX))
 ```
 
+## Interpreting MIC and Disk Diffusion Values  
+
+Minimal inhibitory concentration (MIC) values and disk diffusion diameters can be interpreted into clinical breakpoints (SIR) using `as.sir()`. Here’s an example with randomly generated MIC values for *Klebsiella pneumoniae* and ciprofloxacin:
+
+```{r mic_interpretation}
+set.seed(123)
+mic_values <- random_mic(100)
+sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+
+my_data <- tibble(MIC = mic_values, SIR = sir_values)
+my_data
+```
+
+This allows direct interpretation according to EUCAST or CLSI breakpoints, facilitating automated AMR data processing.
+
+## Plotting MIC and SIR Interpretations  
+
+We can visualise MIC distributions and their SIR interpretations using `ggplot2`, using the new `scale_y_mic()` for the y-axis and `scale_colour_sir()` to colour-code SIR categories.
+
+```{r mic_plot}
+# add a group
+my_data$group <- rep(c("A", "B", "C", "D"), each = 25) 
+
+ggplot(my_data,
+       aes(x = group, y = MIC, colour = SIR)) +
+  geom_jitter(width = 0.2, size = 2) +
+  geom_boxplot(fill = NA, colour = "grey40") +
+  scale_y_mic() +
+  scale_colour_sir() +
+  labs(title = "MIC Distribution and SIR Interpretation",
+       x = "Sample Groups",
+       y = "MIC (mg/L)")
+```
+
+This plot provides an intuitive way to assess susceptibility patterns across different groups while incorporating clinical breakpoints.  
+
+For a more straightforward and less manual approach, `ggplot2`'s function `autoplot()` has been extended by this package to directly plot MIC and disk diffusion values:
+
+```{r autoplot}
+autoplot(mic_values)
+
+# by providing `mo` and `ab`, colours will indicate the SIR interpretation:
+autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+```
+
 ----
 
-*Author: Dr. Matthijs Berends, 26th Feb 2023*
+*Author: Dr. Matthijs Berends, 23rd Feb 2025*

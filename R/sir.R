@@ -1544,7 +1544,7 @@ sir_interpretation_history <- function(clean = FALSE) {
   if (pkg_is_available("tibble")) {
     out <- import_fn("as_tibble", "tibble")(out)
   }
-  structure(out, class = c("sir_log", class(out)))
+  as_original_data_class(out, class(out), extra_class = "sir_log")
 }
 
 #' @method print sir_log

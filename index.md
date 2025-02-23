@@ -266,30 +266,18 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-[![check-old](https://github.com/msberends/AMR/actions/workflows/check-old.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old.yaml?query=branch%3Amain)
-[![check-recent](https://github.com/msberends/AMR/actions/workflows/check-recent.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-recent.yaml?query=branch%3Amain)
+[![check-old](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml)
+[![check-recent](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
 [![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=main)
 
 Please read our [Developer Guideline here](https://github.com/msberends/AMR/wiki/Developer-Guideline).
 
-The latest and unpublished development version can be installed from GitHub in two ways:
+The latest and unpublished development version can be installed from the [rOpenSci R-universe platform](https://msberends.r-universe.dev/AMR):
 
-1. Manually, using:
-
-   ```r
-   install.packages("remotes") # if you haven't already
-   remotes::install_github("msberends/AMR")
-   ```
-   
-2. Automatically, using the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), by adding [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'):
-
-   ```r
-   options(repos = c(getOption("repos"),
-                     msberends = "https://msberends.r-universe.dev"))
-   ```
-   
-   After this, you can install and update this `AMR` package like any official release (e.g., using `install.packages("AMR")` or in RStudio via *Tools* > *Check for Package Updates...*).
+```r
+install.packages("AMR", repos = "https://msberends.r-universe.dev")
+```
 
 ### Get started
 

@@ -73,6 +73,8 @@ from .functions import is_disk
 from .functions import as_mic
 from .functions import is_mic
 from .functions import rescale_mic
+from .functions import mic_p50
+from .functions import mic_p90
 from .functions import as_mo
 from .functions import is_mo
 from .functions import mo_uncertainties

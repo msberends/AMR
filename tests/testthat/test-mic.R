@@ -28,9 +28,9 @@
 # ==================================================================== #
 
 # used in multiple functions, also in plotting
-expect_true(all(as.mic(COMMON_MIC_VALUES) %in% VALID_MIC_LEVELS))
-expect_true(all(paste0("<=", as.mic(COMMON_MIC_VALUES)) %in% VALID_MIC_LEVELS))
-expect_true(all(paste0(">=", as.mic(COMMON_MIC_VALUES)) %in% VALID_MIC_LEVELS))
+expect_true(all(as.mic(AMR:::COMMON_MIC_VALUES) %in% AMR:::VALID_MIC_LEVELS))
+expect_true(all(paste0("<=", as.mic(AMR:::COMMON_MIC_VALUES)) %in% AMR:::VALID_MIC_LEVELS))
+expect_true(all(paste0(">=", as.mic(AMR:::COMMON_MIC_VALUES)) %in% AMR:::VALID_MIC_LEVELS))
 
 expect_true(as.mic(8) == as.mic("8"))
 expect_true(as.mic("1") > as.mic("<=0.0625"))

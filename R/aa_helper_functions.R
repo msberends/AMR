@@ -1390,6 +1390,9 @@ as_original_data_class <- function(df, old_class = NULL, extra_class = NULL) {
     fn <- function(x) base::as.data.frame(df, stringsAsFactors = FALSE)
   }
   out <- fn(df)
+  # don't keep row names
+  rownames(out) <- NULL
+  # add additional class if needed
   if (!is.null(extra_class)) {
     class(out) <- c(extra_class, class(out))
   }

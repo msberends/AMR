@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9154. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9155. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -262,6 +262,8 @@ export(mdr_cmi2012)
 export(mdr_tb)
 export(mdro)
 export(mean_amr_distance)
+export(mic_p50)
+export(mic_p90)
 export(mo_authors)
 export(mo_class)
 export(mo_cleaning_regex)
@@ -656,30 +658,18 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-[![check-old](https://github.com/msberends/AMR/actions/workflows/check-old.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old.yaml?query=branch%3Amain)
-[![check-recent](https://github.com/msberends/AMR/actions/workflows/check-recent.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-recent.yaml?query=branch%3Amain)
+[![check-old](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml)
+[![check-recent](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
 [![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=main)
 
 Please read our [Developer Guideline here](https://github.com/msberends/AMR/wiki/Developer-Guideline).
 
-The latest and unpublished development version can be installed from GitHub in two ways:
+The latest and unpublished development version can be installed from the [rOpenSci R-universe platform](https://msberends.r-universe.dev/AMR):
 
-1. Manually, using:
-
-   ```r
-   install.packages("remotes") # if you haven't already
-   remotes::install_github("msberends/AMR")
-   ```
-   
-2. Automatically, using the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), by adding [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'):
-
-   ```r
-   options(repos = c(getOption("repos"),
-                     msberends = "https://msberends.r-universe.dev"))
-   ```
-   
-   After this, you can install and update this `AMR` package like any official release (e.g., using `install.packages("AMR")` or in RStudio via *Tools* > *Check for Package Updates...*).
+```r
+install.packages("AMR", repos = "https://msberends.r-universe.dev")
+```
 
 ### Get started
 
@@ -2873,6 +2863,8 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.mic.Rd':
 \alias{is.mic}
 \alias{NA_mic_}
 \alias{rescale_mic}
+\alias{mic_p50}
+\alias{mic_p90}
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
@@ -2883,6 +2875,10 @@ is.mic(x)
 NA_mic_
 
 rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
+
+mic_p50(x, na.rm = FALSE, ...)
+
+mic_p90(x, na.rm = FALSE, ...)
 
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
@@ -2953,6 +2949,8 @@ With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be limit
 For \code{ggplot2}, use one of the \code{\link[=scale_x_mic]{scale_*_mic()}} functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 
 \code{NA_mic_} is a missing value of the new \code{mic} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
+
+Use \code{\link[=mic_p50]{mic_p50()}} and \code{\link[=mic_p90]{mic_p90()}} to get the 50th and 90th percentile of MIC values. They return 'normal' \link{numeric} values.
 }
 \examples{
 mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
@@ -7540,6 +7538,131 @@ The interpretation of "I" will be named "Increased exposure" for all EUCAST guid
 For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2024, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
+\examples{
+some_mic_values <- random_mic(size = 100)
+some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
+some_sir_values <- random_sir(50, prob_SIR = c(0.55, 0.05, 0.30))
+
+
+\donttest{
+# Plotting using ggplot2's autoplot() for MIC, disk, and SIR -----------
+if (require("ggplot2")) {
+  autoplot(some_mic_values)
+}
+if (require("ggplot2")) {
+  # when providing the microorganism and antibiotic, colours will show interpretations:
+  autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
+}
+if (require("ggplot2")) {
+  # support for 20 languages, various guidelines, and many options
+  autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro",
+           guideline = "CLSI 2024", language = "no",
+           title = "Disk diffusion from the North")
+}
+
+
+# Plotting using scale_x_mic() -----------------------------------------
+if (require("ggplot2")) {
+  mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
+                                counts = c(1, 1, 2, 2, 3, 3)),
+                     aes(mics, counts)) +
+    geom_col()
+  mic_plot +
+    labs(title = "without scale_x_mic()")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic() +
+    labs(title = "with scale_x_mic()")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic(keep_operators = "all") +
+    labs(title = "with scale_x_mic() keeping all operators")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic(mic_range = c(1, 16)) +
+    labs(title = "with scale_x_mic() using a manual 'within' range")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic(mic_range = c(0.032, 256)) +
+    labs(title = "with scale_x_mic() using a manual 'outside' range")
+}
+
+
+# Plotting using scale_y_mic() -----------------------------------------
+some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
+
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                    group = some_groups),
+         aes(group, mic)) +
+    geom_boxplot() +
+    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    scale_y_mic()
+}
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                    group = some_groups),
+         aes(group, mic)) +
+    geom_boxplot() +
+    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    scale_y_mic(mic_range = c(NA, 0.25))
+}
+
+
+# Plotting using scale_x_sir() -----------------------------------------
+if (require("ggplot2")) {
+  ggplot(data.frame(x = c("I", "R", "S"),
+                    y = c(45,323, 573)),
+         aes(x, y)) +
+    geom_col() +
+    scale_x_sir()
+}
+
+
+# Plotting using scale_y_mic() and scale_colour_sir() ------------------
+if (require("ggplot2")) {
+  plain <- ggplot(data.frame(mic = some_mic_values,
+                             group = some_groups,
+                             sir = as.sir(some_mic_values,
+                                          mo = "E. coli",
+                                          ab = "cipro")),
+                  aes(x = group, y = mic, colour = sir)) +
+    theme_minimal() +
+    geom_boxplot(fill = NA, colour = "grey") +
+    geom_jitter(width = 0.25)
+  
+  plain
+}
+if (require("ggplot2")) {
+  # and now with our MIC and SIR scale functions:
+  plain +
+    scale_y_mic() +
+    scale_colour_sir()
+}
+if (require("ggplot2")) {
+  plain +
+    scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
+    scale_colour_sir(language = "pt",
+                     name = "Support in 20 languages")
+}
+}
+
+# Plotting using base R's plot() ---------------------------------------
+
+plot(some_mic_values)
+# when providing the microorganism and antibiotic, colours will show interpretations:
+plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
+
+plot(some_disk_values)
+plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
+
+plot(some_sir_values)
+}
 
 
 
@@ -8516,8 +8639,10 @@ antibiogram(example_isolates,
 To create a combined antibiogram, use antibiotic codes or names with a plus `+` character like this:
 
 ```{r comb}
-antibiogram(example_isolates,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+combined_ab <- antibiogram(example_isolates,
+                           antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+                           ab_transform = NULL)
+combined_ab
 ```
 
 ### Syndromic Antibiogram
@@ -8532,17 +8657,26 @@ antibiogram(example_isolates,
 
 ### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 
-To create a WISCA, you must state combination therapy in the `antibiotics` argument (similar to the Combination Antibiogram), define a syndromic group with the `syndromic_group` argument (similar to the Syndromic Antibiogram) in which cases are predefined based on clinical or demographic characteristics (e.g., endocarditis in 75+ females).  This next example is a simplification without clinical characteristics, but just gives an idea of how a WISCA can be created:
+To create a **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**, simply set `wisca = TRUE` in the `antibiogram()` function, or use the dedicated `wisca()` function. Unlike traditional antibiograms, WISCA provides syndrome-based susceptibility estimates, weighted by pathogen incidence and antimicrobial susceptibility patterns.
 
 ```{r wisca}
-wisca <- antibiogram(example_isolates,
-                     antibiotics = c("AMC", "AMC+CIP", "TZP", "TZP+TOB"),
-                     mo_transform = "gramstain",
-                     minimum = 10, # this should be >= 30, but now just as example
-                     syndromic_group = ifelse(example_isolates$age >= 65 &
-                                                example_isolates$gender == "M",
-                                              "WISCA Group 1", "WISCA Group 2"))
-wisca
+example_isolates %>%
+  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+        minimum = 10) # Recommended threshold: ≥30
+```
+
+WISCA uses a **Bayesian decision model** to integrate data from multiple pathogens, improving empirical therapy guidance, especially for low-incidence infections. It is **pathogen-agnostic**, meaning results are syndrome-based rather than stratified by microorganism.
+
+For reliable results, ensure your data includes **only first isolates** (use `first_isolate()`) and consider filtering for **the top *n* species** (use `top_n_microorganisms()`), as WISCA outcomes are most meaningful when based on robust incidence estimates.
+
+For **patient- or syndrome-specific WISCA**, run the function on a grouped `tibble`, i.e., using `group_by()` first:
+
+```{r wisca_grouped}
+example_isolates %>%
+  top_n_microorganisms(n = 10) %>%
+  group_by(age_group = age_groups(age, c(25, 50, 75)),
+           gender) %>%
+  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
 ### Plotting antibiograms
@@ -8550,7 +8684,7 @@ wisca
 Antibiograms can be plotted using `autoplot()` from the `ggplot2` packages, since this `AMR` package provides an extension to that function:
 
 ```{r}
-autoplot(wisca)
+autoplot(combined_ab)
 ```
 
 To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
@@ -8575,9 +8709,54 @@ our_data_1st %>%
   summarise(amoxicillin = resistance(AMX))
 ```
 
+## Interpreting MIC and Disk Diffusion Values  
+
+Minimal inhibitory concentration (MIC) values and disk diffusion diameters can be interpreted into clinical breakpoints (SIR) using `as.sir()`. Here’s an example with randomly generated MIC values for *Klebsiella pneumoniae* and ciprofloxacin:
+
+```{r mic_interpretation}
+set.seed(123)
+mic_values <- random_mic(100)
+sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+
+my_data <- tibble(MIC = mic_values, SIR = sir_values)
+my_data
+```
+
+This allows direct interpretation according to EUCAST or CLSI breakpoints, facilitating automated AMR data processing.
+
+## Plotting MIC and SIR Interpretations  
+
+We can visualise MIC distributions and their SIR interpretations using `ggplot2`, using the new `scale_y_mic()` for the y-axis and `scale_colour_sir()` to colour-code SIR categories.
+
+```{r mic_plot}
+# add a group
+my_data$group <- rep(c("A", "B", "C", "D"), each = 25) 
+
+ggplot(my_data,
+       aes(x = group, y = MIC, colour = SIR)) +
+  geom_jitter(width = 0.2, size = 2) +
+  geom_boxplot(fill = NA, colour = "grey40") +
+  scale_y_mic() +
+  scale_colour_sir() +
+  labs(title = "MIC Distribution and SIR Interpretation",
+       x = "Sample Groups",
+       y = "MIC (mg/L)")
+```
+
+This plot provides an intuitive way to assess susceptibility patterns across different groups while incorporating clinical breakpoints.  
+
+For a more straightforward and less manual approach, `ggplot2`'s function `autoplot()` has been extended by this package to directly plot MIC and disk diffusion values:
+
+```{r autoplot}
+autoplot(mic_values)
+
+# by providing `mo` and `ab`, colours will indicate the SIR interpretation:
+autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+```
+
 ----
 
-*Author: Dr. Matthijs Berends, 26th Feb 2023*
+*Author: Dr. Matthijs Berends, 23rd Feb 2025*
 
 
 

@@ -196,3 +196,128 @@ The interpretation of "I" will be named "Increased exposure" for all EUCAST guid
 For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2024, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
+\examples{
+some_mic_values <- random_mic(size = 100)
+some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
+some_sir_values <- random_sir(50, prob_SIR = c(0.55, 0.05, 0.30))
+
+
+\donttest{
+# Plotting using ggplot2's autoplot() for MIC, disk, and SIR -----------
+if (require("ggplot2")) {
+  autoplot(some_mic_values)
+}
+if (require("ggplot2")) {
+  # when providing the microorganism and antibiotic, colours will show interpretations:
+  autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
+}
+if (require("ggplot2")) {
+  # support for 20 languages, various guidelines, and many options
+  autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro",
+           guideline = "CLSI 2024", language = "no",
+           title = "Disk diffusion from the North")
+}
+
+
+# Plotting using scale_x_mic() -----------------------------------------
+if (require("ggplot2")) {
+  mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
+                                counts = c(1, 1, 2, 2, 3, 3)),
+                     aes(mics, counts)) +
+    geom_col()
+  mic_plot +
+    labs(title = "without scale_x_mic()")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic() +
+    labs(title = "with scale_x_mic()")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic(keep_operators = "all") +
+    labs(title = "with scale_x_mic() keeping all operators")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic(mic_range = c(1, 16)) +
+    labs(title = "with scale_x_mic() using a manual 'within' range")
+}
+if (require("ggplot2")) {
+  mic_plot +
+    scale_x_mic(mic_range = c(0.032, 256)) +
+    labs(title = "with scale_x_mic() using a manual 'outside' range")
+}
+
+
+# Plotting using scale_y_mic() -----------------------------------------
+some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
+
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                    group = some_groups),
+         aes(group, mic)) +
+    geom_boxplot() +
+    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    scale_y_mic()
+}
+if (require("ggplot2")) {
+  ggplot(data.frame(mic = some_mic_values,
+                    group = some_groups),
+         aes(group, mic)) +
+    geom_boxplot() +
+    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    scale_y_mic(mic_range = c(NA, 0.25))
+}
+
+
+# Plotting using scale_x_sir() -----------------------------------------
+if (require("ggplot2")) {
+  ggplot(data.frame(x = c("I", "R", "S"),
+                    y = c(45,323, 573)),
+         aes(x, y)) +
+    geom_col() +
+    scale_x_sir()
+}
+
+
+# Plotting using scale_y_mic() and scale_colour_sir() ------------------
+if (require("ggplot2")) {
+  plain <- ggplot(data.frame(mic = some_mic_values,
+                             group = some_groups,
+                             sir = as.sir(some_mic_values,
+                                          mo = "E. coli",
+                                          ab = "cipro")),
+                  aes(x = group, y = mic, colour = sir)) +
+    theme_minimal() +
+    geom_boxplot(fill = NA, colour = "grey") +
+    geom_jitter(width = 0.25)
+  
+  plain
+}
+if (require("ggplot2")) {
+  # and now with our MIC and SIR scale functions:
+  plain +
+    scale_y_mic() +
+    scale_colour_sir()
+}
+if (require("ggplot2")) {
+  plain +
+    scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
+    scale_colour_sir(language = "pt",
+                     name = "Support in 20 languages")
+}
+}
+
+# Plotting using base R's plot() ---------------------------------------
+
+plot(some_mic_values)
+# when providing the microorganism and antibiotic, colours will show interpretations:
+plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
+
+plot(some_disk_values)
+plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
+
+plot(some_sir_values)
+}
