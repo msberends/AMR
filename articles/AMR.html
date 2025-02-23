@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9154</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9156</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +90,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 22 February 2025.</p>
+generated on 23 February 2025.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -146,21 +146,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2025-02-22</td>
+<td align="center">2025-02-23</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2025-02-22</td>
+<td align="center">2025-02-23</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2025-02-22</td>
+<td align="center">2025-02-23</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -858,20 +858,16 @@ language to be Spanish using the <code>language</code> argument:</p>
 <p>To create a combined antibiogram, use antibiotic codes or names with
 a plus <code>+</code> character like this:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">combined_ab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>                           antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
+<span>                           ab_transform <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="va">combined_ab</span></span></code></pre></div>
 <table class="table">
-<colgroup>
-<col width="14%">
-<col width="20%">
-<col width="32%">
-<col width="32%">
-</colgroup>
 <thead><tr class="header">
 <th align="left">Pathogen</th>
-<th align="left">Piperacillin/tazobactam</th>
-<th align="left">Piperacillin/tazobactam + Gentamicin</th>
-<th align="left">Piperacillin/tazobactam + Tobramycin</th>
+<th align="left">TZP</th>
+<th align="left">TZP + GEN</th>
+<th align="left">TZP + TOB</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -1112,72 +1108,109 @@ argument must be used. This can be any column in the data, or e.g. an
 <div class="section level4">
 <h4 id="weighted-incidence-syndromic-combination-antibiogram-wisca">Weighted-Incidence Syndromic Combination Antibiogram (WISCA)<a class="anchor" aria-label="anchor" href="#weighted-incidence-syndromic-combination-antibiogram-wisca"></a>
 </h4>
-<p>To create a WISCA, you must state combination therapy in the
-<code>antibiotics</code> argument (similar to the Combination
-Antibiogram), define a syndromic group with the
-<code>syndromic_group</code> argument (similar to the Syndromic
-Antibiogram) in which cases are predefined based on clinical or
-demographic characteristics (e.g., endocarditis in 75+ females). This
-next example is a simplification without clinical characteristics, but
-just gives an idea of how a WISCA can be created:</p>
+<p>To create a <strong>Weighted-Incidence Syndromic Combination
+Antibiogram (WISCA)</strong>, simply set <code>wisca = TRUE</code> in
+the <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function, or use the dedicated
+<code><a href="../reference/antibiogram.html">wisca()</a></code> function. Unlike traditional antibiograms, WISCA
+provides syndrome-based susceptibility estimates, weighted by pathogen
+incidence and antimicrobial susceptibility patterns.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">wisca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>                     antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span><span class="op">)</span>,</span>
-<span>                     mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
-<span>                     minimum <span class="op">=</span> <span class="fl">10</span>, <span class="co"># this should be &gt;= 30, but now just as example</span></span>
-<span>                     syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">65</span> <span class="op">&amp;</span></span>
-<span>                                                <span class="va">example_isolates</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"M"</span>,</span>
-<span>                                              <span class="st">"WISCA Group 1"</span>, <span class="st">"WISCA Group 2"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">wisca</span></span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span>antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
+<span>        minimum <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Recommended threshold: ≥30</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="9%">
-<col width="8%">
-<col width="17%">
-<col width="26%">
-<col width="14%">
-<col width="22%">
+<col width="24%">
+<col width="37%">
+<col width="37%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">Syndromic Group</th>
-<th align="left">Pathogen</th>
-<th align="left">Amoxicillin/clavulanic acid</th>
-<th align="left">Amoxicillin/clavulanic acid + Ciprofloxacin</th>
 <th align="left">Piperacillin/tazobactam</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">73.7% (65.8-81.1%)</td>
+<td align="left">97% (94.2-98.7%)</td>
+<td align="left">92.4% (85.9-96.6%)</td>
+</tr></tbody>
+</table>
+<p>WISCA uses a <strong>Bayesian decision model</strong> to integrate
+data from multiple pathogens, improving empirical therapy guidance,
+especially for low-incidence infections. It is
+<strong>pathogen-agnostic</strong>, meaning results are syndrome-based
+rather than stratified by microorganism.</p>
+<p>For reliable results, ensure your data includes <strong>only first
+isolates</strong> (use <code><a href="../reference/first_isolate.html">first_isolate()</a></code>) and consider
+filtering for <strong>the top <em>n</em> species</strong> (use
+<code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>), as WISCA outcomes are most
+meaningful when based on robust incidence estimates.</p>
+<p>For <strong>patient- or syndrome-specific WISCA</strong>, run the
+function on a grouped <code>tibble</code>, i.e., using
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> first:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span>age_group <span class="op">=</span> <span class="fu"><a href="../reference/age_groups.html">age_groups</a></span><span class="op">(</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>           <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span>antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="8%">
+<col width="6%">
+<col width="32%">
+<col width="32%">
+<col width="20%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="left">gender</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
+<th align="left">Piperacillin/tazobactam + Tobramycin</th>
+<th align="left">Piperacillin/tazobactam</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">WISCA Group 1</td>
-<td align="left">Gram-negative</td>
-<td align="left">76% (70-81%)</td>
-<td align="left">95% (92-97%)</td>
-<td align="left">89% (84-92%)</td>
-<td align="left">99% (96-100%)</td>
+<td align="left">25-49</td>
+<td align="left">F</td>
+<td align="left">94.4% (79.6-99.9%)</td>
+<td align="left">94.5% (79.6-99.8%)</td>
+<td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">WISCA Group 2</td>
-<td align="left">Gram-negative</td>
-<td align="left">76% (72-80%)</td>
-<td align="left">98% (96-99%)</td>
-<td align="left">88% (84-91%)</td>
-<td align="left">98% (96-99%)</td>
+<td align="left">25-49</td>
+<td align="left">M</td>
+<td align="left">96.1% (85.4-99.9%)</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="left">WISCA Group 1</td>
-<td align="left">Gram-positive</td>
-<td align="left">76% (72-80%)</td>
-<td align="left">89% (85-92%)</td>
-<td align="left">81% (73-88%)</td>
-<td align="left">95% (91-98%)</td>
+<td align="left">50-74</td>
+<td align="left">F</td>
+<td align="left">97.1% (91.2-99.7%)</td>
+<td align="left">97.7% (91.9-100%)</td>
+<td align="left">93.6% (87.4-97.5%)</td>
 </tr>
 <tr class="even">
-<td align="left">WISCA Group 2</td>
-<td align="left">Gram-positive</td>
-<td align="left">76% (73-79%)</td>
-<td align="left">89% (86-91%)</td>
-<td align="left">88% (83-92%)</td>
-<td align="left">95% (92-97%)</td>
+<td align="left">50-74</td>
+<td align="left">M</td>
+<td align="left">96.7% (90.7-99.5%)</td>
+<td align="left">97% (91-99.8%)</td>
+<td align="left">92.5% (84.3-97.4%)</td>
+</tr>
+<tr class="odd">
+<td align="left">75+</td>
+<td align="left">F</td>
+<td align="left">97.6% (91.7-99.9%)</td>
+<td align="left">95.7% (88.2-99.2%)</td>
+<td align="left">92.1% (85.8-96.4%)</td>
+</tr>
+<tr class="even">
+<td align="left">75+</td>
+<td align="left">M</td>
+<td align="left">97.2% (91.5-99.7%)</td>
+<td align="left">97.1% (89.6-99.9%)</td>
+<td align="left">96.5% (91.3-99.5%)</td>
 </tr>
 </tbody>
 </table>
@@ -1188,8 +1221,8 @@ just gives an idea of how a WISCA can be created:</p>
 <p>Antibiograms can be plotted using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> from the
 <code>ggplot2</code> packages, since this <code>AMR</code> package
 provides an extension to that function:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">wisca</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">combined_ab</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/unnamed-chunk-10-1.png" width="720"></p>
 <p>To calculate antimicrobial resistance in a more sensible way, also by
 correcting for too few results, we use the <code><a href="../reference/proportion.html">resistance()</a></code> and
@@ -1217,12 +1250,12 @@ proportion of R (<code><a href="../reference/proportion.html">proportion_R()</a>
 I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equal to
 <code><a href="../reference/proportion.html">susceptibility()</a></code>). These functions can be used on their
 own:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.4203377</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span><span class="op">)</span></span>
@@ -1232,8 +1265,81 @@ own:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A              0.340</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B              0.551</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C              0.370</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="interpreting-mic-and-disk-diffusion-values">Interpreting MIC and Disk Diffusion Values<a class="anchor" aria-label="anchor" href="#interpreting-mic-and-disk-diffusion-values"></a>
+</h3>
+<p>Minimal inhibitory concentration (MIC) values and disk diffusion
+diameters can be interpreted into clinical breakpoints (SIR) using
+<code><a href="../reference/as.sir.html">as.sir()</a></code>. Here’s an example with randomly generated MIC
+values for <em>Klebsiella pneumoniae</em> and ciprofloxacin:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">sir_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span></span>
+<span><span class="co"><span style="color: #00BB00;">#&gt;   all the details of the breakpoint interpretations.</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span><span style="color: #080808; background-color: #FFFF87;"> NOTE </span></span></span>
+<span><span class="co">#&gt; <span style="color: #080808;">  • Multiple breakpoints available for </span><span style="color: #080808; font-weight: bold;">ciprofloxacin (CIP)</span><span style="color: #080808;"> in </span><span style="color: #080808; font-style: italic;">Klebsiella pneumoniae</span><span style="color: #080808;"> - assuming body site 'Non-meningitis'.</span></span></span>
+<span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>MIC <span class="op">=</span> <span class="va">mic_values</span>, SIR <span class="op">=</span> <span class="va">sir_values</span><span class="op">)</span></span>
+<span><span class="va">my_data</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 100 × 2</span></span></span>
+<span><span class="co">#&gt;          MIC SIR  </span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    16<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     0.005 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     1<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="color: #555555;">&gt;=</span>256<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     0.025 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    16<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.025 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     0.5<span style="color: #555555;">00</span> <span style="color: #080808; background-color: #FFD787;">  I  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     0.005 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre></div>
+<p>This allows direct interpretation according to EUCAST or CLSI
+breakpoints, facilitating automated AMR data processing.</p>
+</div>
+<div class="section level3">
+<h3 id="plotting-mic-and-sir-interpretations">Plotting MIC and SIR Interpretations<a class="anchor" aria-label="anchor" href="#plotting-mic-and-sir-interpretations"></a>
+</h3>
+<p>We can visualise MIC distributions and their SIR interpretations
+using <code>ggplot2</code>, using the new <code><a href="../reference/plot.html">scale_y_mic()</a></code> for
+the y-axis and <code><a href="../reference/plot.html">scale_colour_sir()</a></code> to colour-code SIR
+categories.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># add a group</span></span>
+<span><span class="va">my_data</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">my_data</span>,</span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">group</span>, y <span class="op">=</span> <span class="va">MIC</span>, colour <span class="op">=</span> <span class="va">SIR</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, colour <span class="op">=</span> <span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/plot.html">scale_y_mic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/plot.html">scale_colour_sir</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"MIC Distribution and SIR Interpretation"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Sample Groups"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"MIC (mg/L)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="AMR_files/figure-html/mic_plot-1.png" width="720"></p>
+<p>This plot provides an intuitive way to assess susceptibility patterns
+across different groups while incorporating clinical breakpoints.</p>
+<p>For a more straightforward and less manual approach,
+<code>ggplot2</code>’s function <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> has been
+extended by this package to directly plot MIC and disk diffusion
+values:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span><span class="op">)</span></span></code></pre></div>
+<p><img src="AMR_files/figure-html/autoplot-1.png" width="720"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># by providing `mo` and `ab`, colours will indicate the SIR interpretation:</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="AMR_files/figure-html/autoplot-2.png" width="720"></p>
 <hr>
-<p><em>Author: Dr. Matthijs Berends, 26th Feb 2023</em></p>
+<p><em>Author: Dr. Matthijs Berends, 23rd Feb 2025</em></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

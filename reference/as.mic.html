@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9154</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9156</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,10 @@
 <span><span class="va">NA_mic_</span></span>
 <span></span>
 <span><span class="fu">rescale_mic</span><span class="op">(</span><span class="va">x</span>, <span class="va">mic_range</span>, keep_operators <span class="op">=</span> <span class="st">"edges"</span>, as.mic <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mic_p50</span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mic_p90</span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'mic'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="va">x</span>, as.mic <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -135,6 +139,7 @@
 <p>With <code>rescale_mic()</code>, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.</p>
 <p>For <code>ggplot2</code>, use one of the <code><a href="plot.html">scale_*_mic()</a></code> functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.</p>
 <p><code>NA_mic_</code> is a missing value of the new <code>mic</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
+<p>Use <code>mic_p50()</code> and <code>mic_p90()</code> to get the 50th and 90th percentile of MIC values. They return 'normal' <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> values.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
