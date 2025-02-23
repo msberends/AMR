@@ -1245,7 +1245,7 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
   meet_criteria(italicise, allow_class = "logical", has_length = 1)
   meet_criteria(na, allow_class = "character", has_length = 1, allow_NA = TRUE)
   
-  if (isTRUE(italicise) && "mo" %in% colnames(attributes(x)$long_numeric)) {
+  if (!isTRUE(attributes(x)$wisca) && isTRUE(italicise) && "mo" %in% colnames(attributes(x)$long_numeric)) {
     # make all microorganism names italic, according to nomenclature
     names_col <- ifelse(isTRUE(attributes(x)$has_syndromic_group), 2, 1)
     x[[names_col]] <- italicise_taxonomy(x[[names_col]], type = "markdown")
