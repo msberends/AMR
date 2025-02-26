@@ -27,8 +27,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# expect_warning(as.ab("testab"))
-expect_identical(as.character(suppressWarnings(as.ab("testab"))), NA_character_)
+ab_reset_session()
+
+expect_message(as.ab("testab"))
 
 suppressMessages(
   add_custom_antimicrobials(
