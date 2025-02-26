@@ -349,6 +349,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
           next
         }
       }
@@ -358,6 +359,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
           next
         }
       }
@@ -392,6 +394,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         if (length(found_perms) > 0) {
           found <- found_perms[order(nchar(found_perms), decreasing = TRUE)][1]
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
           next
         }
       }
@@ -418,6 +421,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 2))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -441,6 +445,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 2))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -449,6 +454,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i], perl = TRUE), loop_time = loop_time + 2))
         if (!is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
           next
         }
       }
@@ -457,6 +463,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -471,6 +478,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -483,6 +491,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       found <- suppressWarnings(as.ab(substr(x[i], 1, 7), loop_time = loop_time + 2))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -495,6 +504,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -507,6 +517,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -519,6 +530,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       found <- suppressWarnings(as.ab(x_spelling, loop_time = loop_time + 2, already_regex = TRUE))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
 
@@ -540,6 +552,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
       if (!is.na(found)) {
         x_new[i] <- found[1L]
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
       }
     } # end of loop_time <= 2
@@ -590,11 +603,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   
   # Throw note about uncertainties
   if (isTRUE(info) && length(x_uncertain) > 0 && fast_mode == FALSE) {
+    x_uncertain <- unique(x_uncertain)
     if (message_not_thrown_before("as.ab", "uncertainties", x_bak)) {
-      plural <- c("", "this")
-      if (length(x_uncertain) > 1) {
-        plural <- c("s", "these uncertainties")
-      }
       if (length(x_uncertain) <= 3) {
         examples <- vector_and(
           paste0(
@@ -603,7 +613,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
             ", ", AMR_env$ab_previously_coerced$ab[which(AMR_env$ab_previously_coerced$x_bak %in% x_uncertain)], ")"),
           quotes = FALSE)
       } else {
-        examples <- paste0(nr2char(length(x_uncertain)), " antimicrobial", plural[1])
+        examples <- paste0(nr2char(length(x_uncertain)), " antimicrobials")
       }
       message_("Antimicrobial translation was uncertain for ", examples,
                ". If required, use `add_custom_antimicrobials()` to add custom entries.")

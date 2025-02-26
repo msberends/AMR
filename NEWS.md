@@ -1,4 +1,4 @@
-# AMR 2.1.1.9157
+# AMR 2.1.1.9158
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -80,7 +80,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fixed a bug for when `antibiogram()` returns an empty data set
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
-* Improved overall algorithm of `as.ab()` for better performance and accuracy
+* Improved overall algorithm of `as.ab()` for better performance and accuracy, including the new function `as_reset_session()` to remove earlier coercions.
 * Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically:
   * More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species
   * Genera from the World Health Organization's (WHO) Priority Pathogen List now have the highest prevalence
