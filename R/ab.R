@@ -97,11 +97,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   meet_criteria(flag_multiple_results, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
-  if (is.ab(x)) {
-    return(x)
-  }
-  if (all(x %in% c(AMR_env$AB_lookup$ab, NA))) {
-    # all valid AB codes, but not yet right class
+  if (is.ab(x) || all(x %in% c(AMR_env$AB_lookup$ab, NA))) {
+    # all valid AB codes, but not yet right class or might have additional attributes as AMR selector
+    attributes(x) <- NULL
     return(set_clean_class(x,
       new_class = c("ab", "character")
     ))
@@ -130,9 +128,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
   x <- unique(x_bak_clean) # this means that every x is in fact generalise_antibiotic_name(x)
   x_new <- rep(NA_character_, length(x))
+  x_uncertain <- character(0)
   x_unknown <- character(0)
   x_unknown_ATCs <- character(0)
-
+  
   note_if_more_than_one_found <- function(found, index, from_text) {
     if (loop_time == 1 && isTRUE(length(from_text) > 1)) {
       abnames <- ab_name(from_text, tolower = TRUE, loop_time = loop_time + 1)
@@ -176,6 +175,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
   previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
   x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
+  prev <- x_bak[which(x[which(previously_coerced)] %in% x_bak_clean)]
+  if (any(previously_coerced) && isTRUE(info) && message_not_thrown_before("as.ab", prev, entire_session = TRUE)) {
+    message_(
+      "Returning previously coerced value", ifelse(length(unique(prev)) > 1, "s", ""),
+      " for ", vector_and(prev), ". Run `ab_reset_session()` to reset this. This note will be shown once per session for this input."
+    )
+  }
+
   already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
 
   # fix for NAs
@@ -324,6 +331,18 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     # INITIAL SEARCH - More uncertain results ----
     if (loop_time <= 2 && fast_mode == FALSE) {
       # only run on first and second try
+      
+      # base on the Levensthein distance function if length >= 6
+      if (nchar(x[i]) >= 6) {
+        l_dist <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name,
+                                         ignore.case = FALSE,
+                                         fixed = TRUE,
+                                         costs = c(insertions = 1, deletions = 2, substitutions = 2),
+                                         counts = FALSE))
+        x_new[i] <- AMR_env$AB_lookup$ab[order(l_dist)][1]
+        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
+        next
+      }
       
       # try by removing all spaces
       if (x[i] %like% " ") {
@@ -554,6 +573,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       vector_and(x_unknown_ATCs), "."
     )
   }
+  
+  # Throw note about uncertainties
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   x_unknown <- c(
     x_unknown,
@@ -565,6 +586,28 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
       vector_and(x_unknown), "."
     )
+  }
+  
+  # Throw note about uncertainties
+  if (isTRUE(info) && length(x_uncertain) > 0 && fast_mode == FALSE) {
+    if (message_not_thrown_before("as.ab", "uncertainties", x_bak)) {
+      plural <- c("", "this")
+      if (length(x_uncertain) > 1) {
+        plural <- c("s", "these uncertainties")
+      }
+      if (length(x_uncertain) <= 3) {
+        examples <- vector_and(
+          paste0(
+            '"', x_uncertain, '" (assumed ', 
+            ab_name(AMR_env$ab_previously_coerced$ab[which(AMR_env$ab_previously_coerced$x_bak %in% x_uncertain)], language = NULL, tolower = TRUE),
+            ", ", AMR_env$ab_previously_coerced$ab[which(AMR_env$ab_previously_coerced$x_bak %in% x_uncertain)], ")"),
+          quotes = FALSE)
+      } else {
+        examples <- paste0(nr2char(length(x_uncertain)), " antimicrobial", plural[1])
+      }
+      message_("Antimicrobial translation was uncertain for ", examples,
+               ". If required, use `add_custom_antimicrobials()` to add custom entries.")
+    }
   }
 
   x_result <- x_new[match(x_bak_clean, x)]
@@ -581,6 +624,18 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 #' @export
 is.ab <- function(x) {
   inherits(x, "ab")
+}
+
+#' @rdname as.ab
+#' @export
+ab_reset_session <- function() {
+  if (NROW(AMR_env$ab_previously_coerced) > 0) {
+    message_("Reset ", nr2char(NROW(AMR_env$ab_previously_coerced)), " previously matched input value", ifelse(NROW(AMR_env$ab_previously_coerced) > 1, "s", ""), ".")
+    AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[0, , drop = FALSE]
+    AMR_env$mo_uncertainties <- AMR_env$mo_uncertainties[0, , drop = FALSE]
+  } else {
+    message_("No previously matched input values to reset.")
+  }
 }
 
 # will be exported using s3_register() in R/zzz.R
@@ -606,6 +661,15 @@ type_sum.ab <- function(x, ...) {
 #' @export
 #' @noRd
 print.ab <- function(x, ...) {
+  if (!is.null(attributes(x)$amr_selector)) {
+    function_name <- attributes(x)$amr_selector
+    message_("This 'ab' vector was retrieved using `" , function_name, "()`, which should normally be used inside a `dplyr` verb or `data.frame` call, e.g.:\n",
+             "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
+             "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
+             "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
+             "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
+             "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]")
+  }
   cat("Class 'ab'\n")
   print(as.character(x), quote = FALSE)
 }
@@ -692,7 +756,8 @@ generalise_antibiotic_name <- function(x) {
   # non-character, space or number should be a slash
   x <- gsub("[^A-Z0-9 -)(]", "/", x, perl = TRUE)
   # correct for 'high level' antibiotics
-  x <- gsub("([^A-Z0-9/ -]+)?(HIGH(.?LE?VE?L)?|[^A-Z0-9/]H[^A-Z0-9]?L)([^A-Z0-9 -]+)?", "-HIGH", x, perl = TRUE)
+  x <- trimws(gsub("([^A-Z0-9/ -]+)?(HIGH(.?LE?VE?L)?|[^A-Z0-9/]H[^A-Z0-9]?L)([^A-Z0-9 -]+)?", "-HIGH", x, perl = TRUE))
+  x <- trimws(gsub("^(-HIGH)(.*)", "\\2\\1", x))
   # remove part between brackets if that's followed by another string
   x <- gsub("(.*)+ [(].*[)]", "\\1", x)
   # spaces around non-characters must be removed: amox + clav -> amox/clav

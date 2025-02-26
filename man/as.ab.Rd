@@ -4,11 +4,14 @@
 \alias{as.ab}
 \alias{ab}
 \alias{is.ab}
+\alias{ab_reset_session}
 \title{Transform Input to an Antibiotic ID}
 \usage{
 as.ab(x, flag_multiple_results = TRUE, info = interactive(), ...)
 
 is.ab(x)
+
+ab_reset_session()
 }
 \arguments{
 \item{x}{a \link{character} vector to determine to antibiotic ID}

@@ -218,12 +218,10 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
     as.double(rescale_mic(x = as.double(as.mic(x)), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
   }
   scale$transform_df <- function(self, df) {
-    stop_if(all(is.na(df[[aest]])),
-            "`scale_", aest, "_mic()`: All MIC values are `NA`. Check your input data.", call = FALSE)
     self$mic_values_rescaled <- rescale_mic(x = as.double(as.mic(df[[aest]])), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
     # create new breaks and labels here
     lims <- range(self$mic_values_rescaled, na.rm = TRUE)
-    # support inner and outer mic_range settings (e.g., data ranges 0.5-8 and mic_range is set to 0.025-64)
+    # support inner and outer 'mic_range' settings (e.g., the data ranges 0.5-8 and 'mic_range' is set to 0.025-32)
     if (!is.null(mic_range) && !is.na(mic_range[1]) && !is.na(lims[1]) && mic_range[1] < lims[1]) {
       lims[1] <- mic_range[1]
     }

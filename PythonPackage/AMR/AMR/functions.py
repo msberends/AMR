@@ -228,6 +228,9 @@ def as_ab(x, *args, **kwargs):
 def is_ab(x):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.is_ab(x))
+def ab_reset_session(*args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.ab_reset_session(*args, **kwargs))
 def as_av(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.as_av(x, *args, **kwargs))

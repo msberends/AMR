@@ -441,7 +441,7 @@ antibiogram.default <- function(x,
   x <- ascertain_sir_classes(x, "x")
   meet_criteria(wisca, allow_class = "logical", has_length = 1)
   if (isTRUE(wisca)) {
-    if (!is.null(mo_transform)) {
+    if (!is.null(mo_transform) && !missing(mo_transform)) {
       warning_("WISCA must be based on the species level as WISCA parameters are based on this. For that reason, `mo_transform` will be ignored.")
     }
     mo_transform <- function(x) suppressMessages(suppressWarnings(paste(mo_genus(x, keep_synonyms = TRUE, language = NULL), mo_species(x, keep_synonyms = TRUE, language = NULL))))
@@ -1245,10 +1245,14 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
   meet_criteria(italicise, allow_class = "logical", has_length = 1)
   meet_criteria(na, allow_class = "character", has_length = 1, allow_NA = TRUE)
   
-  if (!isTRUE(attributes(x)$wisca) && isTRUE(italicise) && "mo" %in% colnames(attributes(x)$long_numeric)) {
-    # make all microorganism names italic, according to nomenclature
-    names_col <- ifelse(isTRUE(attributes(x)$has_syndromic_group), 2, 1)
-    x[[names_col]] <- italicise_taxonomy(x[[names_col]], type = "markdown")
+  add_MO_lookup_to_AMR_env()
+  
+  cols_with_mo_names <- vapply(FUN.VALUE = logical(1), x, function(x) any(x %in% AMR_env$MO_lookup$fullname, na.rm = TRUE))
+  if (any(cols_with_mo_names)) {
+    for (i in which(cols_with_mo_names)) {
+      # make all microorganism names italic, according to nomenclature
+      x[[i]] <- italicise_taxonomy(x[[i]], type = "markdown")
+    }
   }
   
   old_option <- getOption("knitr.kable.NA")

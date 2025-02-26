@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9156. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9157. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -151,6 +151,7 @@ export(ab_info)
 export(ab_loinc)
 export(ab_name)
 export(ab_property)
+export(ab_reset_session)
 export(ab_selector)
 export(ab_synonyms)
 export(ab_tradenames)
@@ -2334,7 +2335,7 @@ my_data_with_all_these_columns \%>\%
 \details{
 These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and \code{data.table}. They are heavily inspired by the \link[tidyselect:language]{Tidyverse selection helpers} such as \code{\link[tidyselect:everything]{everything()}}, but are not limited to \code{dplyr} verbs. Nonetheless, they are very convenient to use with \code{dplyr} functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}, see \emph{Examples}.
 
-All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html}{our tutorial} on using these AMR functions for predictive modelling.
+All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html}{our tutorial} on using antimicrobial selectors for predictive modelling.
 
 All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antibiotics} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
@@ -2573,11 +2574,14 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.ab.Rd':
 \alias{as.ab}
 \alias{ab}
 \alias{is.ab}
+\alias{ab_reset_session}
 \title{Transform Input to an Antibiotic ID}
 \usage{
 as.ab(x, flag_multiple_results = TRUE, info = interactive(), ...)
 
 is.ab(x)
+
+ab_reset_session()
 }
 \arguments{
 \item{x}{a \link{character} vector to determine to antibiotic ID}
@@ -9013,9 +9017,6 @@ We begin by loading the required libraries and preparing the `example_isolates` 
 library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
 library(AMR)          # For AMR data analysis
 
-# Load the example_isolates dataset
-data("example_isolates")  # Preloaded dataset with AMR results
-
 # Select relevant columns for prediction
 data <- example_isolates %>%
   # select AB results dynamically
@@ -9136,7 +9137,7 @@ metrics
 - `predict()` generates predictions on the testing set.
 - `metrics()` computes evaluation metrics like accuracy and kappa.
 
-It appears we can predict the Gram based on AMR results with a `r round(metrics$.estimate[1], 3)` accuracy based on AMR results of aminoglycosides and beta-lactam antibiotics. The ROC curve looks like this:
+It appears we can predict the Gram based on AMR results with a `r round(metrics$.estimate[1], 3) * 100`% accuracy based on AMR results of aminoglycosides and beta-lactam antibiotics. The ROC curve looks like this:
 
 ```{r}
 predictions %>%

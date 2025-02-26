@@ -47,7 +47,7 @@
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and `data.table`. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but are not limited to `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #' 
-#' All selectors can also be used in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using these AMR functions for predictive modelling.
+#' All selectors can also be used in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using antimicrobial selectors for predictive modelling.
 #'
 #' All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #'
@@ -747,16 +747,8 @@ amr_select_exec <- function(function_name,
   
   if (is.null(vars_df)) {
     # no data found, no antimicrobials, so no input. Happens if users run e.g. `aminoglycosides()` as a separate command.
-    examples <- paste0(
-      "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
-      "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
-      "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]")
-    message_("The function `" , function_name, "()` should be used inside a `dplyr` verb or `data.frame` call, e.g.:\n",
-             examples,
-             "\n\nNow returning a vector of all possible antimicrobials that `" , function_name, "()` can select.")
-    return(sort(abx))
+    # print.ab will cover the additional printing text
+    return(structure(sort(abx), amr_selector = function_name))
   }
   
   # get the columns with a group names in the chosen ab class

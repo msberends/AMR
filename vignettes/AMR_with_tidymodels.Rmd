@@ -45,9 +45,6 @@ We begin by loading the required libraries and preparing the `example_isolates` 
 library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
 library(AMR)          # For AMR data analysis
 
-# Load the example_isolates dataset
-data("example_isolates")  # Preloaded dataset with AMR results
-
 # Select relevant columns for prediction
 data <- example_isolates %>%
   # select AB results dynamically
@@ -168,7 +165,7 @@ metrics
 - `predict()` generates predictions on the testing set.
 - `metrics()` computes evaluation metrics like accuracy and kappa.
 
-It appears we can predict the Gram based on AMR results with a `r round(metrics$.estimate[1], 3)` accuracy based on AMR results of aminoglycosides and beta-lactam antibiotics. The ROC curve looks like this:
+It appears we can predict the Gram based on AMR results with a `r round(metrics$.estimate[1], 3) * 100`% accuracy based on AMR results of aminoglycosides and beta-lactam antibiotics. The ROC curve looks like this:
 
 ```{r}
 predictions %>%
