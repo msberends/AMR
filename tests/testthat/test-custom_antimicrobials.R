@@ -29,7 +29,7 @@
 
 ab_reset_session()
 
-expect_message(as.ab("testab"))
+expect_message(as.ab("testab", info = TRUE))
 
 suppressMessages(
   add_custom_antimicrobials(
