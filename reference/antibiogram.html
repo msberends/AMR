@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9156</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9158</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -551,8 +551,6 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-in"><span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span>,</span></span>
 <span class="r-in"><span>  wisca <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>WISCA must be based on the species level as WISCA parameters are based on</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> this. For that reason, <span style="background-color: #EEEEEE;">mo_transform</span> will be ignored.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (WISCA / 95% CI): 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
@@ -571,8 +569,6 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-in"><span>  antibiotics <span class="op">=</span> <span class="fu"><a href="antimicrobial_selectors.html">ureidopenicillins</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span>,</span></span>
 <span class="r-in"><span>  wisca <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>WISCA must be based on the species level as WISCA parameters are based on</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> this. For that reason, <span style="background-color: #EEEEEE;">mo_transform</span> will be ignored.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">ureidopenicillins()</span><span style="color: #0000BB;"> using column '</span><span style="color: #0000BB; font-weight: bold;">TZP</span><span style="color: #0000BB;">' (piperacillin/tazobactam)</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># in an Rmd file, you would just need to return `ureido` in a chunk,</span></span></span>

@@ -17,7 +17,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9156</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9158</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,7 +193,7 @@ my_data_with_all_these_columns %&amp;gt;%
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions can be used in data set calls for selecting columns and filtering rows. They work with base <span style="R">R</span>, the Tidyverse, and <code>data.table</code>. They are heavily inspired by the <a href="https://tidyselect.r-lib.org/reference/language.html" class="external-link">Tidyverse selection helpers</a> such as <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, but are not limited to <code>dplyr</code> verbs. Nonetheless, they are very convenient to use with <code>dplyr</code> functions such as <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, see <em>Examples</em>.</p>
-<p>All selectors can also be used in <code>tidymodels</code> packages such as <code>recipe</code> and <code>parsnip</code>. See for more info <a href="https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html">our tutorial</a> on using these AMR functions for predictive modelling.</p>
+<p>All selectors can also be used in <code>tidymodels</code> packages such as <code>recipe</code> and <code>parsnip</code>. See for more info <a href="https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html">our tutorial</a> on using antimicrobial selectors for predictive modelling.</p>
 <p>All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the <a href="antibiotics.html">antibiotics</a> data set. This means that a selector such as <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
 <p>The <code>amr_class()</code> function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the <a href="antibiotics.html">antibiotics</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
 <p>The <code>amr_selector()</code> function can be used to internally filter the <a href="antibiotics.html">antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
@@ -272,16 +272,13 @@ my_data_with_all_these_columns %&amp;gt;%
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># you can use the selectors separately to retrieve all possible antimicrobials:</span></span></span>
 <span class="r-in"><span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ The function </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;"> should be used inside a </span><span style="color: #0000BB; background-color: #EEEEEE;">dplyr</span><span style="color: #0000BB;"> verb or</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  </span><span style="color: #0000BB; background-color: #EEEEEE;">data.frame</span><span style="color: #0000BB;"> call, e.g.:</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ This 'ab' vector was retrieved using </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;">, which should</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  normally be used inside a </span><span style="color: #0000BB; background-color: #EEEEEE;">dplyr</span><span style="color: #0000BB;"> verb or </span><span style="color: #0000BB; background-color: #EEEEEE;">data.frame</span><span style="color: #0000BB;"> call, e.g.:</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  • your_data %&gt;% select(carbapenems())</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  • your_data %&gt;% select(column_a, column_b, carbapenems())</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  • your_data %&gt;% filter(any(carbapenems() == "R"))</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  • your_data[, carbapenems()]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  • your_data[, c("column_a", "column_b", carbapenems())]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Now returning a vector of all possible antimicrobials that </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">can select.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'ab'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] BIA DOR ETP IMR IPE IPM MEM MEV MNC PAN RIA RIT RZM TBP</span>
 <span class="r-in"><span></span></span>
