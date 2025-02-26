@@ -106,10 +106,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     ))
   }
   
-  loop_time <- list(...)$loop_time
-  if (is.null(loop_time)) {
-    loop_time <- 1
-  }
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
   
@@ -134,8 +130,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_unknown_ATCs <- character(0)
   
   note_if_more_than_one_found <- function(found, index, from_text) {
-    if (loop_time == 1 && isTRUE(length(from_text) > 1)) {
-      abnames <- ab_name(from_text, tolower = TRUE, loop_time = loop_time + 1)
+    if (isTRUE(length(from_text) > 1)) {
+      abnames <- ab_name(from_text, tolower = TRUE)
       if (ab_name(found[1L], language = NULL) %like% "(clavulanic acid|(avi|tazo|mono|vabor)bactam)") {
         abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam", "tazobactam", "vaborbactam", "monobactam")]
       }
@@ -190,15 +186,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_new[is.na(x)] <- NA
   already_known[is.na(x)] <- FALSE
   
-  if (loop_time == 1 && sum(already_known) < length(x)) {
+  if (sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
   
   for (i in which(!already_known)) {
-    if (loop_time == 1) {
-      progress$tick()
-    }
+    progress$tick()
     
     if (is.na(x[i]) || is.null(x[i])) {
       next
@@ -218,7 +212,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     }
     
     if (fast_mode == FALSE && flag_multiple_results == TRUE && x[i] %like% "[ ]") {
-      from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], loop_time = loop_time + 1, translate_ab = FALSE)[[1]]),
+      from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], translate_ab = FALSE)[[1]]),
                             error = function(e) character(0)
       )
     } else {
@@ -331,9 +325,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       next
     }
     
-    # INITIAL SEARCH - More uncertain results ----
-    if (loop_time == 1 && fast_mode == FALSE) {
-      # only run on first and second try
+    # More uncertain results ----
+    if (fast_mode == FALSE) {
       
       ab_df <- AMR_env$AB_lookup
       ab_df$length_name <- nchar(ab_df$generalised_name)
@@ -391,23 +384,21 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
   
-  if (loop_time == 1 && sum(already_known) < length(x)) {
+  if (sum(already_known) < length(x)) {
     close(progress)
   }
   
   # save to package env to save time for next time
-  if (loop_time == 1) {
-    AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
-    AMR_env$ab_previously_coerced <- unique(rbind_AMR(
-      AMR_env$ab_previously_coerced,
-      data.frame(
-        x = x,
-        ab = x_new,
-        x_bak = x_bak[match(x, x_bak_clean)],
-        stringsAsFactors = FALSE
-      )
-    ))
-  }
+  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
+  AMR_env$ab_previously_coerced <- unique(rbind_AMR(
+    AMR_env$ab_previously_coerced,
+    data.frame(
+      x = x,
+      ab = x_new,
+      x_bak = x_bak[match(x, x_bak_clean)],
+      stringsAsFactors = FALSE
+    )
+  ))
   
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {

@@ -53,7 +53,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::lintr
+          extra-packages: |
+            any::lintr
+            any::cyclocomp
 
       - name: Lint
         run: |
@@ -63,6 +65,7 @@ jobs:
           linters <- sort(linters[grepl("_linter$", linters)])
           # lose deprecated
           linters <- linters[!grepl("^(closed_curly|open_curly|paren_brace|semicolon_terminator|consecutive_stopifnot|no_tab|single_quotes|unnecessary_nested_if|unneeded_concatenation)_linter$", linters)]
+          linters <- linters[linters != "linter"]
           # and the ones we find unnnecessary
           linters <- linters[!grepl("^(extraction_operator|implicit_integer|line_length|object_name|nonportable_path|is)_linter$", linters)]
           # put the functions in a list

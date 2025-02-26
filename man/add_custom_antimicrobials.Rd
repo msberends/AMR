@@ -50,11 +50,8 @@ Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to
 }
 \examples{
 \donttest{
-
-# returns NA and throws a warning (which is suppressed here):
-suppressWarnings(
-  as.ab("testab")
-)
+# returns a wildly guessed result:
+as.ab("testab")
 
 # now add a custom entry - it will be considered by as.ab() and
 # all ab_*() functions
@@ -90,6 +87,7 @@ ab_atc("Co-fluampicil")
 ab_name("J01CR50")
 
 # even antimicrobial selectors work
+# see ?amr_selector
 x <- data.frame(
   random_column = "some value",
   coflu = as.sir("S"),

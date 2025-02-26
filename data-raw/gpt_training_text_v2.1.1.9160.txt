@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9159. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9160. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1324,11 +1324,8 @@ Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to
 }
 \examples{
 \donttest{
-
-# returns NA and throws a warning (which is suppressed here):
-suppressWarnings(
-  as.ab("testab")
-)
+# returns a wildly guessed result:
+as.ab("testab")
 
 # now add a custom entry - it will be considered by as.ab() and
 # all ab_*() functions
@@ -1364,6 +1361,7 @@ ab_atc("Co-fluampicil")
 ab_name("J01CR50")
 
 # even antimicrobial selectors work
+# see ?amr_selector
 x <- data.frame(
   random_column = "some value",
   coflu = as.sir("S"),

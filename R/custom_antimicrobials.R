@@ -69,11 +69,8 @@
 #' @export
 #' @examples
 #' \donttest{
-#'
-#' # returns NA and throws a warning (which is suppressed here):
-#' suppressWarnings(
-#'   as.ab("testab")
-#' )
+#' # returns a wildly guessed result:
+#' as.ab("testab")
 #'
 #' # now add a custom entry - it will be considered by as.ab() and
 #' # all ab_*() functions
@@ -109,6 +106,7 @@
 #' ab_name("J01CR50")
 #'
 #' # even antimicrobial selectors work
+#' # see ?amr_selector
 #' x <- data.frame(
 #'   random_column = "some value",
 #'   coflu = as.sir("S"),
@@ -155,7 +153,7 @@ add_custom_antimicrobials <- function(x) {
   }
   AMR_env$AB_lookup <- unique(rbind_AMR(AMR_env$AB_lookup, new_df))
 
-  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% x$ab), , drop = FALSE]
+  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% c(x$ab, x$generalised_name) & !AMR_env$ab_previously_coerced$x %in% c(x$ab, x$generalised_name)), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
   message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antibiotics` data set.")
 }

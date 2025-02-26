@@ -59,7 +59,7 @@ expect_equal(ncol(example_isolates[, tetracyclines(), drop = FALSE]), 3, toleran
 expect_equal(ncol(example_isolates[, trimethoprims(), drop = FALSE]), 2, tolerance = 0.5)
 expect_equal(ncol(example_isolates[, ureidopenicillins(), drop = FALSE]), 1, tolerance = 0.5)
 
-expect_message(carbapenems())
+expect_message(expect_stdout(print(carbapenems())))
 expect_error(administrable_per_os())
 
 # Examples:
