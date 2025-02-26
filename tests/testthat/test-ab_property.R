@@ -27,6 +27,8 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+ab_reset_session()
+
 expect_identical(ab_name("AMX", language = NULL), "Amoxicillin")
 expect_identical(ab_atc("AMX"), "J01CA04")
 expect_identical(ab_cid("AMX"), as.integer(33613))
@@ -94,3 +96,4 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
       set_ab_names(NIT:VAN) %>%
       colnames())))
 }
+

@@ -32,6 +32,7 @@
 #' Use this function to determine the antibiotic drug code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x a [character] vector to determine to antibiotic ID
 #' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.
+#' @param language language to coerce input values from any of the `r length(LANGUAGES_SUPPORTED)` supported languages - default to the system language if supported (see [get_AMR_locale()])
 #' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
@@ -67,7 +68,6 @@
 #' as.ab("J 01 FA 01")
 #' as.ab("Erythromycin")
 #' as.ab("eryt")
-#' as.ab("   eryt 123")
 #' as.ab("ERYT")
 #' as.ab("ERY")
 #' as.ab("eritromicine") # spelled wrong, yet works
@@ -92,29 +92,30 @@
 #'     set_ab_names(where(is.sir), property = "atc")
 #' }
 #' }
-as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
+as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), info = interactive(), ...) {
   meet_criteria(x, allow_class = c("character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(flag_multiple_results, allow_class = "logical", has_length = 1)
+  language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-
+  
   if (is.ab(x) || all(x %in% c(AMR_env$AB_lookup$ab, NA))) {
     # all valid AB codes, but not yet right class or might have additional attributes as AMR selector
     attributes(x) <- NULL
     return(set_clean_class(x,
-      new_class = c("ab", "character")
+                           new_class = c("ab", "character")
     ))
   }
-
+  
   loop_time <- list(...)$loop_time
   if (is.null(loop_time)) {
     loop_time <- 1
   }
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
-
+  
   x_bak <- x
   x <- toupper(x)
-
+  
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
@@ -125,7 +126,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   if (already_regex == FALSE) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
   }
-
+  
   x <- unique(x_bak_clean) # this means that every x is in fact generalise_antibiotic_name(x)
   x_new <- rep(NA_character_, length(x))
   x_uncertain <- character(0)
@@ -152,17 +153,17 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
     found[1L]
   }
-
+  
   # Fill in names, AB codes, CID codes and ATC codes directly (`x` is already clean and uppercase)
   known_names <- x %in% AMR_env$AB_lookup$generalised_name
   x_new[known_names] <- AMR_env$AB_lookup$ab[match(x[known_names], AMR_env$AB_lookup$generalised_name)]
   known_codes_ab <- x %in% AMR_env$AB_lookup$ab
-  known_codes_atc <- vapply(FUN.VALUE = logical(1), x, function(x_) x_ %in% unlist(AMR_env$AB_lookup$atc), USE.NAMES = FALSE)
+  known_codes_atc <- vapply(FUN.VALUE = logical(1), gsub(" ", "", x), function(x_) x_ %in% unlist(AMR_env$AB_lookup$atc), USE.NAMES = FALSE)
   known_codes_cid <- x %in% AMR_env$AB_lookup$cid
   x_new[known_codes_ab] <- AMR_env$AB_lookup$ab[match(x[known_codes_ab], AMR_env$AB_lookup$ab)]
   x_new[known_codes_atc] <- AMR_env$AB_lookup$ab[vapply(
     FUN.VALUE = integer(1),
-    x[known_codes_atc],
+    gsub(" ", "", x[known_codes_atc]),
     function(x_) {
       which(vapply(
         FUN.VALUE = logical(1),
@@ -182,29 +183,29 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       " for ", vector_and(prev), ". Run `ab_reset_session()` to reset this. This note will be shown once per session for this input."
     )
   }
-
+  
   already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
-
+  
   # fix for NAs
   x_new[is.na(x)] <- NA
   already_known[is.na(x)] <- FALSE
-
+  
   if (loop_time == 1 && sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
-
+  
   for (i in which(!already_known)) {
     if (loop_time == 1) {
       progress$tick()
     }
-
+    
     if (is.na(x[i]) || is.null(x[i])) {
       next
     }
     if (identical(x[i], "") ||
-      # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it:
-      identical(tolower(x[i]), "bacteria")) {
+        # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it:
+        identical(tolower(x[i]), "bacteria")) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
       next
     }
@@ -215,21 +216,21 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- NA_character_
       next
     }
-
+    
     if (fast_mode == FALSE && flag_multiple_results == TRUE && x[i] %like% "[ ]") {
       from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], loop_time = loop_time + 1, translate_ab = FALSE)[[1]]),
-        error = function(e) character(0)
+                            error = function(e) character(0)
       )
     } else {
       from_text <- character(0)
     }
-
+    
     # old code for phenoxymethylpenicillin (Peni V)
     if (x[i] == "PNV") {
       x_new[i] <- "PHN"
       next
     }
-
+    
     # exact LOINC code
     loinc_found <- unlist(lapply(
       AMR_env$AB_lookup$generalised_loinc,
@@ -240,7 +241,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
+    
     # exact synonym
     synonym_found <- unlist(lapply(
       AMR_env$AB_lookup$generalised_synonyms,
@@ -251,7 +252,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
+    
     # exact abbreviation
     abbr_found <- unlist(lapply(
       AMR_env$AB_lookup$generalised_abbreviations,
@@ -263,7 +264,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
+    
     # length of input is quite long, and Levenshtein distance is only max 2
     if (nchar(x[i]) >= 10) {
       levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name))
@@ -273,7 +274,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         next
       }
     }
-
+    
     # allow characters that resemble others, but only continue when having more than 3 characters
     if (nchar(x[i]) <= 3) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
@@ -303,20 +304,22 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_spelling <- gsub("(O|0)", "(O|0)+", x_spelling, perl = TRUE)
       x_spelling <- gsub("++", "+", x_spelling, fixed = TRUE)
     }
-
+    
     # try if name starts with it
     found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
+    
+    
     # try if name ends with it
     found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
     if (nchar(x[i]) >= 4 && length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
+    
     # and try if any synonym starts with it
     synonym_found <- unlist(lapply(
       AMR_env$AB_lookup$generalised_synonyms,
@@ -327,244 +330,71 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
+    
     # INITIAL SEARCH - More uncertain results ----
-    if (loop_time <= 2 && fast_mode == FALSE) {
+    if (loop_time == 1 && fast_mode == FALSE) {
       # only run on first and second try
       
-      # base on the Levensthein distance function if length >= 6
-      if (nchar(x[i]) >= 6) {
-        l_dist <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name,
-                                         ignore.case = FALSE,
-                                         fixed = TRUE,
-                                         costs = c(insertions = 1, deletions = 2, substitutions = 2),
-                                         counts = FALSE))
-        x_new[i] <- AMR_env$AB_lookup$ab[order(l_dist)][1]
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-      
-      # try by removing all spaces
-      if (x[i] %like% " ") {
-        found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), loop_time = loop_time + 2))
-        if (length(found) > 0 && !is.na(found)) {
-          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-          next
-        }
-      }
-      
-      # try by removing all spaces and numbers
-      if (x[i] %like% " " || x[i] %like% "[0-9]") {
-        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
-        if (length(found) > 0 && !is.na(found)) {
-          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-          next
-        }
-      }
-      
-      # reverse a combination, e.g. clavulanic acid/amoxicillin
-      if (x[i] %like% " ") {
-        split <- strsplit(x[i], " ")[[1]]
-        permute <- function(x) {
-          if (length(x) == 1) return(list(x))
-          result <- vector("list", factorial(length(x)))
-          index <- 1
-          for (i in seq_along(x)) {
-            sub_perms <- permute(x[-i])  # Recursively get permutations of remaining elements
-            for (sub in sub_perms) {
-              result[[index]] <- c(x[i], sub)
-              index <- index + 1
-            }
-          }
-          return(result)
-        }
-        permutations <- permute(split)
-        found_perms <- character(length(permutations))
-        for (s in seq_len(length(permutations))) {
-          concat <- paste0(permutations[[s]], collapse = " ")
-          if (concat %in% AMR_env$AB_lookup$generalised_name) {
-            found_perms[s] <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name == concat), "ab", drop = TRUE]
-          } else {
-            found_perms[s] <- suppressWarnings(as.ab(concat, loop_time = loop_time + 2))
-          }
-        }
-        found_perms <- found_perms[!is.na(found_perms)]
-        if (length(found_perms) > 0) {
-          found <- found_perms[order(nchar(found_perms), decreasing = TRUE)][1]
-          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-          next
-        }
-      }
-
-      # transform back from other languages and try again
-      x_translated <- paste(
-        lapply(
-          strsplit(x[i], "[^A-Z0-9]"),
-          function(y) {
-            for (i in seq_len(length(y))) {
-              for (lang in LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]) {
-                y[i] <- ifelse(tolower(y[i]) %in% tolower(TRANSLATIONS[, lang, drop = TRUE]),
-                  TRANSLATIONS[which(tolower(TRANSLATIONS[, lang, drop = TRUE]) == tolower(y[i]) &
-                    !isFALSE(TRANSLATIONS$fixed)), "pattern"],
-                  y[i]
-                )
-              }
-            }
-            generalise_antibiotic_name(y)
-          }
-        )[[1]],
-        collapse = "/"
-      )
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 2))
-      if (!is.na(x_translated_guess)) {
-        x_new[i] <- x_translated_guess
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-
-      # now also try to coerce brandname combinations like "Amoxy/clavulanic acid"
-      x_translated <- paste(
-        lapply(
-          strsplit(x_translated, "[^A-Z0-9 ]"),
-          function(y) {
-            for (i in seq_len(length(y))) {
-              y_name <- suppressWarnings(ab_name(y[i], language = NULL, loop_time = loop_time + 2))
-              y[i] <- ifelse(!is.na(y_name),
-                y_name,
-                y[i]
-              )
-            }
-            generalise_antibiotic_name(y)
-          }
-        )[[1]],
-        collapse = "/"
-      )
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, loop_time = loop_time + 2))
-      if (!is.na(x_translated_guess)) {
-        x_new[i] <- x_translated_guess
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-
-      # try by removing all trailing capitals
-      if (x[i] %like_case% "[a-z]+[A-Z]+$") {
-        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i], perl = TRUE), loop_time = loop_time + 2))
-        if (!is.na(found)) {
-          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-          next
-        }
-      }
-
-      # keep only letters
-      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i], perl = TRUE), loop_time = loop_time + 2))
-      if (!is.na(found)) {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-
-      # try from a bigger text, like from a health care record, see ?ab_from_text
-      # already calculated above if flag_multiple_results = TRUE
-      if (flag_multiple_results == TRUE) {
-        found <- from_text[1L]
+      ab_df <- AMR_env$AB_lookup
+      ab_df$length_name <- nchar(ab_df$generalised_name)
+      # now retrieve Levensthein distance for name, synonyms, and translated names
+      ab_df$lev_name <- as.double(utils::adist(x[i], ab_df$generalised_name,
+                                               ignore.case = FALSE,
+                                               fixed = TRUE,
+                                               costs = c(insertions = 1, deletions = 1, substitutions = 2),
+                                               counts = FALSE))
+      ab_df$lev_syn <- vapply(FUN.VALUE = double(1),
+                              ab_df$generalised_synonyms, 
+                              function(y) ifelse(length(y[nchar(y) >= 5]) == 0,
+                                                 999,
+                                                 min(as.double(utils::adist(x[i], y[nchar(y) >= 5],  ignore.case = FALSE,
+                                                                            fixed = TRUE,
+                                                                            costs = c(insertions = 1, deletions = 1, substitutions = 2),
+                                                                            counts = FALSE)), na.rm = TRUE)),
+                              USE.NAMES = FALSE)
+      if (!is.null(language) && language != "en") {
+        ab_df$trans <- generalise_antibiotic_name(translate_AMR(ab_df$name, language = language))
+        ab_df$lev_trans <- as.double(utils::adist(x[i], ab_df$trans,
+                                                  ignore.case = FALSE,
+                                                  fixed = TRUE,
+                                                  costs = c(insertions = 1, deletions = 1, substitutions = 2),
+                                                  counts = FALSE))
       } else {
-        found <- tryCatch(suppressWarnings(ab_from_text(x[i], loop_time = loop_time + 2, translate_ab = FALSE)[[1]][1L]),
-          error = function(e) NA_character_
-        )
+        ab_df$lev_trans <- ab_df$lev_name
       }
-      if (!is.na(found)) {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+      
+      if (any(ab_df$lev_name < 5, na.rm = TRUE)) {
+        x_new[i] <- ab_df$ab[order(ab_df$lev_name)][1]
         x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
-      }
-
-      # first 5 except for cephalosporins, then first 7 (those cephalosporins all start quite the same!)
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 5), loop_time = loop_time + 2))
-      if (!is.na(found) && ab_group(found, loop_time = loop_time + 1) %unlike% "cephalosporins") {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-        next
-      }
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 7), loop_time = loop_time + 2))
-      if (!is.na(found)) {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+      } else if (any(ab_df$lev_trans < 5, na.rm = TRUE)) {
+        x_new[i] <- ab_df$ab[order(ab_df$lev_trans)][1]
         x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
-      }
-
-      # make all consonants facultative
-      search_str <- gsub("([BCDFGHJKLMNPQRSTVWXZ])", "\\1*", x[i], perl = TRUE)
-      found <- suppressWarnings(as.ab(search_str, loop_time = loop_time + 2, already_regex = TRUE))
-      # keep at least 4 normal characters
-      if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 4) {
-        found <- NA
-      }
-      if (!is.na(found)) {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+      } else if (any(ab_df$lev_syn < 5, na.rm = TRUE)) {
+        x_new[i] <- ab_df$ab[order(ab_df$lev_syn)][1]
         x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
         next
-      }
-
-      # make all vowels facultative
-      search_str <- gsub("([AEIOUY])", "\\1*", x[i], perl = TRUE)
-      found <- suppressWarnings(as.ab(search_str, loop_time = loop_time + 2, already_regex = TRUE))
-      # keep at least 5 normal characters
-      if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 5) {
-        found <- NA
-      }
-      if (!is.na(found)) {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-
-      # allow misspelling of vowels
-      x_spelling <- gsub("A+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      x_spelling <- gsub("E+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      x_spelling <- gsub("I+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      x_spelling <- gsub("O+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      x_spelling <- gsub("U+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      found <- suppressWarnings(as.ab(x_spelling, loop_time = loop_time + 2, already_regex = TRUE))
-      if (!is.na(found)) {
-        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-
-      # try with switched character, like "mreopenem"
-      for (j in seq_len(nchar(x[i]))) {
-        x_switched <- paste0(
-          # beginning part:
-          substr(x[i], 1, j - 1),
-          # here is the switching of 2 characters:
-          substr(x[i], j + 1, j + 1),
-          substr(x[i], j, j),
-          # ending part:
-          substr(x[i], j + 2, nchar(x[i]))
-        )
-        found <- suppressWarnings(as.ab(x_switched, loop_time = loop_time + 1))
-        if (!is.na(found)) {
-          break
+      } else {
+        # then just take name if Levensthein is max 100% of length of name
+        ab_df$lev_len_ratio <- ab_df$lev_name / ab_df$length_name
+        if (any(ab_df$lev_len_ratio < 1)) {
+          ab_df <- ab_df[ab_df$lev_len_ratio < 1, , drop = FALSE]
+          x_new[i] <- ab_df$ab[order(ab_df$lev_name)][1]
+          x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
+          next
         }
       }
-      if (!is.na(found)) {
-        x_new[i] <- found[1L]
-        x_uncertain <- c(x_uncertain, x_bak[x[i] == x_bak_clean][1])
-        next
-      }
-    } # end of loop_time <= 2
-
-    # not found
+    }
+    
+    # nothing found
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
-
+  
   if (loop_time == 1 && sum(already_known) < length(x)) {
     close(progress)
   }
-
+  
   # save to package env to save time for next time
   if (loop_time == 1) {
     AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
@@ -578,7 +408,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       )
     ))
   }
-
+  
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
@@ -619,14 +449,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
                ". If required, use `add_custom_antimicrobials()` to add custom entries.")
     }
   }
-
+  
   x_result <- x_new[match(x_bak_clean, x)]
   if (length(x_result) == 0) {
     x_result <- NA_character_
   }
-
+  
   set_clean_class(x_result,
-    new_class = c("ab", "character")
+                  new_class = c("ab", "character")
   )
 }
 
@@ -767,16 +597,20 @@ generalise_antibiotic_name <- function(x) {
   x <- gsub("[^A-Z0-9 -)(]", "/", x, perl = TRUE)
   # correct for 'high level' antibiotics
   x <- trimws(gsub("([^A-Z0-9/ -]+)?(HIGH(.?LE?VE?L)?|[^A-Z0-9/]H[^A-Z0-9]?L)([^A-Z0-9 -]+)?", "-HIGH", x, perl = TRUE))
-  x <- trimws(gsub("^(-HIGH)(.*)", "\\2\\1", x))
+  x <- trimws(gsub("^(-HIGH)(.*)", "\\2\\1", x, perl = TRUE))
   # remove part between brackets if that's followed by another string
   x <- gsub("(.*)+ [(].*[)]", "\\1", x)
-  # spaces around non-characters must be removed: amox + clav -> amox/clav
+  # spaces around non-characters must be removed: amox + clav -> amox clav
   x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
   x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
   # remove hyphen after a starting "co"
   x <- gsub("^CO-", "CO", x, perl = TRUE)
   # replace operators with a space
   x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x, perl = TRUE)
+  # replace more than 1 space
+  x <- trimws(gsub(" +", " ", x, perl = TRUE))
+  # move HIGH to end
+  x <- trimws(gsub("(.*) HIGH(.*)", "\\1\\2 HIGH", x, perl = TRUE))
   x
 }
 
@@ -789,9 +623,9 @@ get_translate_ab <- function(translate_ab) {
   } else {
     translate_ab <- tolower(translate_ab)
     stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
-      "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
-      "or TRUE (equals 'name') or FALSE to not translate at all.",
-      call = FALSE
+               "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
+               "or TRUE (equals 'name') or FALSE to not translate at all.",
+               call = FALSE
     )
     translate_ab
   }

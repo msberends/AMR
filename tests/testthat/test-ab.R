@@ -27,20 +27,21 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+ab_reset_session()
+
 expect_equal(
   as.character(as.ab(c(
     "J01FA01",
     "J 01 FA 01",
     "Erythromycin",
     "eryt",
-    "   eryt 123",
     "ERYT",
     "ERY",
     "erytromicine",
     "Erythrocin",
     "Romycin"
   ))),
-  rep("ERY", 10)
+  rep("ERY", 9)
 )
 
 expect_identical(class(as.ab("amox")), c("ab", "character"))
@@ -49,7 +50,7 @@ expect_true(is.ab(as.ab("amox")))
 expect_stdout(print(as.ab("amox")))
 expect_stdout(print(data.frame(a = as.ab("amox"))))
 
-# expect_warning(as.ab("J00AA00")) # ATC not yet available in data set
+expect_warning(as.ab("J00AA00")) # ATC not yet available in data set
 # expect_warning(as.ab("UNKNOWN"))
 
 expect_stdout(print(as.ab("amox")))

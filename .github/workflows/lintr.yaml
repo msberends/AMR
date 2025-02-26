@@ -41,7 +41,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -59,13 +59,15 @@ jobs:
         run: |
           # old: lintr::lint_package(linters = lintr::with_defaults(line_length_linter = NULL, trailing_whitespace_linter = NULL, object_name_linter = NULL, cyclocomp_linter = NULL, object_length_linter = lintr::object_length_linter(length = 50L)), exclusions = list("R/aa_helper_pm_functions.R"))
           # now get ALL linters, not just default ones
-          linters <- ls(envir = asNamespace("lintr"), pattern = "_linter$")
+          linters <- getNamespaceExports(asNamespace("lintr"))
+          linters <- sort(linters[grepl("_linter$", linters)])
           # lose deprecated
-          linters <- linters[!grepl("^(closed_curly|open_curly|paren_brace|semicolon_terminator)_linter$", linters)]
+          linters <- linters[!grepl("^(closed_curly|open_curly|paren_brace|semicolon_terminator|consecutive_stopifnot|no_tab|single_quotes|unnecessary_nested_if|unneeded_concatenation)_linter$", linters)]
           # and the ones we find unnnecessary
           linters <- linters[!grepl("^(extraction_operator|implicit_integer|line_length|object_name|nonportable_path|is)_linter$", linters)]
           # put the functions in a list
-          linters <- lapply(linters, function(l) eval(parse(text = paste0("lintr::", l, "()")), envir = asNamespace("lintr")))
+          linters_list <- lapply(linters, function(l) eval(parse(text = paste0("lintr::", l, "()")), envir = asNamespace("lintr")))
+          names(linters_list) <- linters
           # run them all!
-          lintr::lint_package(linters = linters, exclusions = list("R/aa_helper_pm_functions.R"))
+          lintr::lint_package(linters = linters_list, exclusions = list("R/aa_helper_pm_functions.R"))
         shell: Rscript {0}
