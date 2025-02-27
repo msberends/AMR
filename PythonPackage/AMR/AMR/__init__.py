@@ -28,8 +28,6 @@ from .functions import age_groups
 from .functions import antibiogram
 from .functions import wisca
 from .functions import retrieve_wisca_parameters
-from .functions import amr_class
-from .functions import amr_selector
 from .functions import aminoglycosides
 from .functions import aminopenicillins
 from .functions import antifungals
@@ -61,6 +59,8 @@ from .functions import streptogramins
 from .functions import tetracyclines
 from .functions import trimethoprims
 from .functions import ureidopenicillins
+from .functions import amr_class
+from .functions import amr_selector
 from .functions import administrable_per_os
 from .functions import administrable_iv
 from .functions import not_intrinsic_resistant

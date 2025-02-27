@@ -53,7 +53,7 @@
 #' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are yeasts that reproduce asexually through a process called budding, where a new cell develops from a small protrusion on the parent cell. Taxonomically, these are members of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes) or Pichiomycetes. *True yeasts* quite specifically refers to yeasts in the underlying order Saccharomycetales (such as *Saccharomyces cerevisiae*). Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes or Pichiomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
 #'
 #' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
-#' 
+#'
 #' Determination of bacterial oxygen tolerance ([mo_oxygen_tolerance()]) will be based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicting an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. [This MycoBank URL](`r TAXONOMY_VERSION$MycoBank$url`) will be used for fungi wherever available , [this LPSN URL](`r TAXONOMY_VERSION$MycoBank$url`) for bacteria wherever available, and [this GBIF link](`r TAXONOMY_VERSION$GBIF$url`) otherwise.
@@ -107,12 +107,14 @@
 #' mo_rank("Klebsiella pneumoniae")
 #' mo_url("Klebsiella pneumoniae")
 #' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
-#' 
-#' mo_group_members(c("Streptococcus group A",
-#'                    "Streptococcus group C",
-#'                    "Streptococcus group G",
-#'                    "Streptococcus group L"))
-#' 
+#'
+#' mo_group_members(c(
+#'   "Streptococcus group A",
+#'   "Streptococcus group C",
+#'   "Streptococcus group G",
+#'   "Streptococcus group L"
+#' ))
+#'
 #'
 #' # scientific reference -----------------------------------------------------
 #'
@@ -125,7 +127,7 @@
 #' mo_mycobank("Candida albicans")
 #' mo_mycobank("Candida krusei")
 #' mo_mycobank("Candida krusei", keep_synonyms = TRUE)
-#' 
+#'
 #'
 #' # abbreviations known in the field -----------------------------------------
 #'
@@ -442,13 +444,16 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
   kngd <- AMR_env$MO_lookup$kingdom[match(x.mo, AMR_env$MO_lookup$mo)]
   rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
 
-  out <- factor(case_when_AMR(prev <= 1.15 & kngd == "Bacteria" & rank != "genus" ~ "Pathogenic",
-                              prev < 2 & kngd == "Fungi" ~ "Potentially pathogenic",
-                              prev == 2 & kngd == "Bacteria" ~ "Non-pathogenic",
-                              kngd == "Bacteria" ~ "Potentially pathogenic",
-                              TRUE ~ "Unknown"),
-                levels = c("Pathogenic", "Potentially pathogenic", "Non-pathogenic", "Unknown"),
-                ordered = TRUE
+  out <- factor(
+    case_when_AMR(
+      prev <= 1.15 & kngd == "Bacteria" & rank != "genus" ~ "Pathogenic",
+      prev < 2 & kngd == "Fungi" ~ "Potentially pathogenic",
+      prev == 2 & kngd == "Bacteria" ~ "Non-pathogenic",
+      kngd == "Bacteria" ~ "Potentially pathogenic",
+      TRUE ~ "Unknown"
+    ),
+    levels = c("Pathogenic", "Potentially pathogenic", "Non-pathogenic", "Unknown"),
+    ordered = TRUE
   )
 
   load_mo_uncertainties(metadata)
@@ -606,7 +611,7 @@ mo_oxygen_tolerance <- function(x, language = get_AMR_locale(), keep_synonyms = 
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  
+
   mo_validate(x = x, property = "oxygen_tolerance", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
@@ -620,7 +625,7 @@ mo_is_anaerobic <- function(x, language = get_AMR_locale(), keep_synonyms = getO
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  
+
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
   oxygen <- mo_oxygen_tolerance(x.mo, language = NULL, keep_synonyms = keep_synonyms)
@@ -716,7 +721,7 @@ mo_mycobank <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  
+
   mo_validate(x = x, property = "mycobank", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
@@ -836,21 +841,21 @@ mo_group_members <- function(x, language = get_AMR_locale(), keep_synonyms = get
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  
+
   add_MO_lookup_to_AMR_env()
-  
+
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
-  
+
   members <- lapply(x.mo, function(y) {
     AMR::microorganisms.groups$mo_name[which(AMR::microorganisms.groups$mo_group == y)]
   })
   names(members) <- mo_name(x, keep_synonyms = TRUE, language = language)
-  
+
   if (length(members) == 1) {
     members <- unname(unlist(members))
   }
-  
+
   load_mo_uncertainties(metadata)
   members
 }
@@ -872,8 +877,10 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
   info <- lapply(x, function(y) {
     c(
-      list(mo = as.character(y),
-           rank = mo_rank(y, language = language, keep_synonyms = keep_synonyms)),
+      list(
+        mo = as.character(y),
+        rank = mo_rank(y, language = language, keep_synonyms = keep_synonyms)
+      ),
       mo_taxonomy(y, language = language, keep_synonyms = keep_synonyms),
       list(
         status = mo_status(y, language = language, keep_synonyms = keep_synonyms),
@@ -920,7 +927,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
 
   x.rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
   x.name <- AMR_env$MO_lookup$fullname[match(x.mo, AMR_env$MO_lookup$mo)]
-  
+
   x.lpsn <- AMR_env$MO_lookup$lpsn[match(x.mo, AMR_env$MO_lookup$mo)]
   x.mycobank <- AMR_env$MO_lookup$mycobank[match(x.mo, AMR_env$MO_lookup$mo)]
   x.gbif <- AMR_env$MO_lookup$gbif[match(x.mo, AMR_env$MO_lookup$mo)]
@@ -980,7 +987,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
     Lancefield <- FALSE
   }
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
-  
+
   if (isFALSE(has_Becker_or_Lancefield) && isTRUE(keep_synonyms) && all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     # fastest way to get properties
     if (property == "snomed") {
@@ -988,11 +995,10 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
     } else {
       x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
     }
-    
   } else {
     # get microorganisms data set, but remove synonyms if keep_synonyms is FALSE
     mo_data_check <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$status %in% if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"), , drop = FALSE]
-    
+
     if (all(x %in% c(mo_data_check$mo, NA)) && !has_Becker_or_Lancefield) {
       # do nothing, just don't run the other if-else's
     } else if (all(x %in% c(unlist(mo_data_check[[property]]), NA)) && !has_Becker_or_Lancefield) {
@@ -1003,7 +1009,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
       x <- replace_old_mo_codes(x, property = property)
       x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
     }
-    
+
     # get property reeaaally fast using match()
     if (property == "snomed") {
       x <- lapply(x, function(y) unlist(AMR_env$MO_lookup$snomed[match(y, AMR_env$MO_lookup$mo)]))

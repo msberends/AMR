@@ -33,9 +33,11 @@ expect_message(as.ab("testab", info = TRUE))
 
 suppressMessages(
   add_custom_antimicrobials(
-    data.frame(ab = "TESTAB",
-               name = "Test Antibiotic",
-               group = "Test Group")
+    data.frame(
+      ab = "TESTAB",
+      name = "Test Antibiotic",
+      group = "Test Group"
+    )
   )
 )
 

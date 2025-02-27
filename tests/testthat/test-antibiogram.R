@@ -31,19 +31,22 @@
 # Traditional antibiogram ----------------------------------------------
 
 ab1 <- antibiogram(example_isolates,
-                   antibiotics = c(aminoglycosides(), carbapenems()))
+  antibiotics = c(aminoglycosides(), carbapenems())
+)
 
 ab2 <- antibiogram(example_isolates,
-                   antibiotics = aminoglycosides(),
-                   ab_transform = "atc",
-                   mo_transform = "gramstain",
-                   add_total_n = TRUE)
+  antibiotics = aminoglycosides(),
+  ab_transform = "atc",
+  mo_transform = "gramstain",
+  add_total_n = TRUE
+)
 
 ab3 <- antibiogram(example_isolates,
-                   antibiotics = carbapenems(),
-                   ab_transform = "ab",
-                   mo_transform = "name",
-                   formatting_type = 1)
+  antibiotics = carbapenems(),
+  ab_transform = "ab",
+  mo_transform = "name",
+  formatting_type = 1
+)
 
 expect_inherits(ab1, "antibiogram")
 expect_inherits(ab2, "antibiogram")
@@ -57,15 +60,17 @@ expect_equal(ab3$MEM, c(52, NA, 100, 100, NA))
 
 # combined antibiotics yield higher empiric coverage
 ab4 <- antibiogram(example_isolates,
-                   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-                   mo_transform = "gramstain")
+  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  mo_transform = "gramstain"
+)
 
 ab5 <- antibiogram(example_isolates,
-                   antibiotics = c("TZP", "TZP+TOB"),
-                   mo_transform = "gramstain",
-                   ab_transform = "name",
-                   sep = " & ",
-                   add_total_n = FALSE)
+  antibiotics = c("TZP", "TZP+TOB"),
+  mo_transform = "gramstain",
+  ab_transform = "name",
+  sep = " & ",
+  add_total_n = FALSE
+)
 
 expect_inherits(ab4, "antibiogram")
 expect_inherits(ab5, "antibiogram")
@@ -76,20 +81,23 @@ expect_equal(colnames(ab5), c("Pathogen", "Piperacillin/tazobactam", "Piperacill
 
 # the data set could contain a filter for e.g. respiratory specimens
 ab6 <- antibiogram(example_isolates,
-                   antibiotics = c(aminoglycosides(), carbapenems()),
-                   syndromic_group = "ward",
-                   ab_transform = NULL)
+  antibiotics = c(aminoglycosides(), carbapenems()),
+  syndromic_group = "ward",
+  ab_transform = NULL
+)
 
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Dutch on Dutch systems)
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
 ab7 <- antibiogram(ex1,
-                   antibiotics = aminoglycosides(),
-                   ab_transform = "name",
-                   syndromic_group = ifelse(ex1$ward == "ICU",
-                                            "IC", "Geen IC"),
-                   language = "nl",
-                   add_total_n = TRUE)
+  antibiotics = aminoglycosides(),
+  ab_transform = "name",
+  syndromic_group = ifelse(ex1$ward == "ICU",
+    "IC", "Geen IC"
+  ),
+  language = "nl",
+  add_total_n = TRUE
+)
 
 expect_inherits(ab6, "antibiogram")
 expect_inherits(ab7, "antibiogram")
@@ -100,8 +108,9 @@ expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikaci
 
 # the data set could contain a filter for e.g. respiratory specimens
 ab8 <- suppressWarnings(antibiogram(example_isolates,
-                                    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-                                    wisca = TRUE))
+  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  wisca = TRUE
+))
 
 expect_inherits(ab8, "antibiogram")
 expect_equal(colnames(ab8), c("Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))

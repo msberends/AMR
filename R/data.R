@@ -86,7 +86,7 @@
 #'
 #' @description
 #' A data set containing the full microbial taxonomy (**last updated: `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date, TAXONOMY_VERSION$MycoBank$accessed_date))`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms. This data set is the backbone of this `AMR` package. MO codes can be looked up using [as.mo()] and microorganism properties can be looked up using any of the [`mo_*`][mo_property()] functions.
-#' 
+#'
 #' This data set is carefully crafted, yet made 100% reproducible from public and authoritative taxonomic sources (using [this script](https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R)), namely: *`r TAXONOMY_VERSION$LPSN$name`* for bacteria, *`r TAXONOMY_VERSION$MycoBank$name`* for fungi, and *`r TAXONOMY_VERSION$GBIF$name`* for all others taxons.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms), big.mark = " ")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package. ***This is a unique identifier.***
@@ -141,7 +141,7 @@
 #' Taxonomic entries were imported in this order of importance:
 #' 1. `r TAXONOMY_VERSION$LPSN$name`:\cr\cr
 #'    `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
-#' 
+#'
 #' 2. `r TAXONOMY_VERSION$MycoBank$name`:\cr\cr
 #'    `r TAXONOMY_VERSION$MycoBank$citation` Accessed from <`r TAXONOMY_VERSION$MycoBank$url`> on `r documentation_date(TAXONOMY_VERSION$MycoBank$accessed_date)`.
 #'
@@ -149,10 +149,10 @@
 #'    `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
 #'
 #' Furthermore, these sources were used for additional details:
-#' 
+#'
 #' * `r TAXONOMY_VERSION$BacDive$name`:\cr\cr
 #'   `r TAXONOMY_VERSION$BacDive$citation` Accessed from <`r TAXONOMY_VERSION$BacDive$url`> on `r documentation_date(TAXONOMY_VERSION$BacDive$accessed_date)`.
-#' 
+#'
 #' * `r TAXONOMY_VERSION$SNOMED$name`:\cr\cr
 #'   `r TAXONOMY_VERSION$SNOMED$citation` Accessed from <`r TAXONOMY_VERSION$SNOMED$url`> on `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`.
 #'
@@ -175,13 +175,13 @@
 #' @seealso [as.mo()] [microorganisms]
 #' @examples
 #' microorganisms.codes
-#' 
+#'
 #' # 'ECO' or 'eco' is the WHONET code for E. coli:
 #' microorganisms.codes[microorganisms.codes$code == "ECO", ]
-#' 
+#'
 #' # and therefore, 'eco' will be understood as E. coli in this package:
 #' mo_info("eco")
-#' 
+#'
 #' # works for all AMR functions:
 #' mo_is_intrinsic_resistant("eco", ab = "vancomycin")
 "microorganisms.codes"
@@ -199,7 +199,7 @@
 #' @seealso [as.mo()] [microorganisms]
 #' @examples
 #' microorganisms.groups
-#' 
+#'
 #' # these are all species in the Bacteroides fragilis group, as per WHONET:
 #' microorganisms.groups[microorganisms.groups$mo_group == "B_BCTRD_FRGL-C", ]
 "microorganisms.groups"
@@ -275,12 +275,12 @@
 #' Data Set with Clinical Breakpoints for SIR Interpretation
 #'
 #' @description Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This dataset contain breakpoints for humans, `r length(unique(clinical_breakpoints$host[!clinical_breakpoints$host %in% clinical_breakpoints$type]))` different animal groups, and ECOFFs.
-#' 
+#'
 #' These breakpoints are currently implemented:
 #' - For **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
 #' - For **veterinary microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`;
 #' - For **ECOFFs** (Epidemiological Cut-off Values): EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`.
-#' 
+#'
 #' Use [as.sir()] to transform MICs or disks measurements to SIR values.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(clinical_breakpoints), big.mark = " ")` observations and `r ncol(clinical_breakpoints)` variables:
 #' - `guideline`\cr Name of the guideline
@@ -300,18 +300,18 @@
 #' @details
 #' ### Different types of breakpoints
 #' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quote = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
-#' 
+#'
 #' The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. Use [`as.sir(..., breakpoint_type = ...)`][as.sir()] to interpret raw data using a specific breakpoint type, e.g. `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
-#' 
+#'
 #' ### Imported from WHONET
 #' Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
-#' 
+#'
 #' ### Response from CLSI and EUCAST
 #' The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this `AMR` package.
-#' 
+#'
 #' ### Download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw). They allow for machine reading EUCAST and CLSI guidelines, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI, though initiatives have started to overcome these burdens.
-#' 
+#'
 #' **NOTE:** this `AMR` package (and the WHONET software as well) contains rather complex internal methods to apply the guidelines. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the [microorganisms.groups] data set). It is important that this is considered when using the breakpoints for own use.
 #' @seealso [intrinsic_resistant]
 #' @examples

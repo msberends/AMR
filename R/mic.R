@@ -39,18 +39,22 @@ VALID_MIC_LEVELS <- c(
 )
 VALID_MIC_LEVELS <- trimws(gsub("[.]?0+$", "", format(unique(sort(VALID_MIC_LEVELS)), scientific = FALSE), perl = TRUE))
 operators <- c("<", "<=", "", ">=", ">")
-VALID_MIC_LEVELS <- c(t(vapply(FUN.VALUE = character(length(VALID_MIC_LEVELS)),
-                               c("<", "<=", "", ">=", ">"),
-                               paste0,
-                               VALID_MIC_LEVELS)))
-COMMON_MIC_VALUES <- c(0.0001, 0.0002, 0.0005,
-                       0.001, 0.002, 0.004, 0.008,
-                       0.016, 0.032, 0.064,
-                       0.125, 0.25, 0.5,
-                       1, 2, 4, 8,
-                       16, 32, 64,
-                       128, 256, 512,
-                       1024, 2048, 4096)
+VALID_MIC_LEVELS <- c(t(vapply(
+  FUN.VALUE = character(length(VALID_MIC_LEVELS)),
+  c("<", "<=", "", ">=", ">"),
+  paste0,
+  VALID_MIC_LEVELS
+)))
+COMMON_MIC_VALUES <- c(
+  0.0001, 0.0002, 0.0005,
+  0.001, 0.002, 0.004, 0.008,
+  0.016, 0.032, 0.064,
+  0.125, 0.25, 0.5,
+  1, 2, 4, 8,
+  16, 32, 64,
+  128, 256, 512,
+  1024, 2048, 4096
+)
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -103,7 +107,7 @@ COMMON_MIC_VALUES <- c(0.0001, 0.0002, 0.0005,
 #' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
 #'
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
-#' 
+#'
 #' With [rescale_mic()], existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
 #'
 #' For `ggplot2`, use one of the [`scale_*_mic()`][scale_x_mic()] functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
@@ -123,7 +127,7 @@ COMMON_MIC_VALUES <- c(0.0001, 0.0002, 0.0005,
 #' fivenum(mic_data)
 #' quantile(mic_data)
 #' all(mic_data < 512)
-#' 
+#'
 #' # rescale MICs using rescale_mic()
 #' rescale_mic(mic_data, mic_range = c(4, 16))
 #'
@@ -160,16 +164,17 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   } else if (isFALSE(keep_operators)) {
     keep_operators <- "none"
   }
-  
+
   if (is.mic(x) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
     if (!identical(levels(x), VALID_MIC_LEVELS)) {
       # might be from an older AMR version - just update MIC factor levels
       x <- set_clean_class(factor(as.character(x), levels = VALID_MIC_LEVELS, ordered = TRUE),
-                           new_class = c("mic", "ordered", "factor"))
+        new_class = c("mic", "ordered", "factor")
+      )
     }
     return(x)
   }
-  
+
   x.bak <- NULL
   if (is.numeric(x)) {
     x.bak <- format(x, scientific = FALSE)
@@ -186,7 +191,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   if (is.null(x.bak)) {
     x.bak <- x
   }
-  
+
   # comma to period
   x <- gsub(",", ".", x, fixed = TRUE)
   # transform Unicode for >= and <=
@@ -229,14 +234,14 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   x <- gsub("(NA)+", "", x)
   # trim it
   x <- trimws2(x)
-  
+
   ## previously unempty values now empty - should return a warning later on
   x[x.bak != "" & x == ""] <- "invalid"
-  
+
   na_before <- x[is.na(x) | x == ""] %pm>% length()
   x[!as.character(x) %in% VALID_MIC_LEVELS] <- NA
   na_after <- x[is.na(x) | x == ""] %pm>% length()
-  
+
   if (na_before != na_after) {
     list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
       unique() %pm>%
@@ -244,16 +249,16 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
       vector_and(quotes = TRUE)
     cur_col <- get_current_column()
     warning_("in `as.mic()`: ", na_after - na_before, " result",
-             ifelse(na_after - na_before > 1, "s", ""),
-             ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
-             " truncated (",
-             round(((na_after - na_before) / length(x)) * 100),
-             "%) that were invalid MICs: ",
-             list_missing,
-             call = FALSE
+      ifelse(na_after - na_before > 1, "s", ""),
+      ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+      " truncated (",
+      round(((na_after - na_before) / length(x)) * 100),
+      "%) that were invalid MICs: ",
+      list_missing,
+      call = FALSE
     )
   }
-  
+
   if (keep_operators == "none" && !all(is.na(x))) {
     x <- gsub("[>=<]", "", x)
   } else if (keep_operators == "edges" && !all(is.na(x))) {
@@ -263,9 +268,10 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
     keep <- x[dbls == max(dbls, na.rm = TRUE) | dbls == min(dbls, na.rm = TRUE)]
     x[!x %in% keep] <- gsub("[>=<]", "", x[!x %in% keep])
   }
-  
+
   set_clean_class(factor(x, levels = VALID_MIC_LEVELS, ordered = TRUE),
-                  new_class = c("mic", "ordered", "factor"))
+    new_class = c("mic", "ordered", "factor")
+  )
 }
 
 #' @rdname as.mic
@@ -294,17 +300,19 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   } else if (is.mic(mic_range)) {
     mic_range <- as.character(mic_range)
   }
-  stop_ifnot(all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
-             "Values in `mic_range` must be valid MIC values. ",
-             "The allowed range is ", format(as.double(as.mic(VALID_MIC_LEVELS)[1]), scientific = FALSE), " to ", format(as.double(as.mic(VALID_MIC_LEVELS)[length(VALID_MIC_LEVELS)]), scientific = FALSE), ". ",
-             "Unvalid: ", vector_and(mic_range[!mic_range %in% c(VALID_MIC_LEVELS, NA)], quotes = FALSE), ".")
-  
+  stop_ifnot(
+    all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
+    "Values in `mic_range` must be valid MIC values. ",
+    "The allowed range is ", format(as.double(as.mic(VALID_MIC_LEVELS)[1]), scientific = FALSE), " to ", format(as.double(as.mic(VALID_MIC_LEVELS)[length(VALID_MIC_LEVELS)]), scientific = FALSE), ". ",
+    "Unvalid: ", vector_and(mic_range[!mic_range %in% c(VALID_MIC_LEVELS, NA)], quotes = FALSE), "."
+  )
+
   x <- as.mic(x)
   if (is.null(mic_range)) {
     mic_range <- c(NA, NA)
   }
   mic_range <- as.mic(mic_range)
-  
+
   min_mic <- mic_range[1]
   max_mic <- mic_range[2]
   if (!is.na(min_mic)) {
@@ -313,9 +321,9 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   if (!is.na(max_mic)) {
     x[x > max_mic] <- max_mic
   }
-  
+
   x <- as.mic(x, keep_operators = ifelse(keep_operators == "edges", "none", keep_operators))
-  
+
   if (isTRUE(as.mic)) {
     if (keep_operators == "edges" && length(x) > 1) {
       x[x == min(x, na.rm = TRUE)] <- paste0("<=", x[x == min(x, na.rm = TRUE)])
@@ -323,25 +331,27 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
     }
     return(x)
   }
-  
+
   # create a manual factor with levels only within desired range
   expanded <- plotrange_as_table(x,
-                                 expand = TRUE,
-                                 keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
-                                 mic_range = mic_range)
+    expand = TRUE,
+    keep_operators = ifelse(keep_operators == "edges", "none", keep_operators),
+    mic_range = mic_range
+  )
   if (keep_operators == "edges") {
     names(expanded)[1] <- paste0("<=", names(expanded)[1])
     names(expanded)[length(expanded)] <- paste0(">=", names(expanded)[length(expanded)])
   }
   # MICs contain all MIC levels, so strip this to only existing levels and their intermediate values
   out <- factor(names(expanded),
-                levels = names(expanded),
-                ordered = TRUE)
+    levels = names(expanded),
+    ordered = TRUE
+  )
   # and only keep the ones in the data
   if (keep_operators == "edges") {
-    out <- out[match(x, as.double(as.mic(out, keep_operators = "all")))]  
+    out <- out[match(x, as.double(as.mic(out, keep_operators = "all")))]
   } else {
-    out <- out[match(x, out)]  
+    out <- out[match(x, out)]
   }
   out
 }
@@ -393,16 +403,17 @@ all_valid_mics <- function(x) {
     return(FALSE)
   }
   x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
-                    error = function(e) NA
+    error = function(e) NA
   )
   !any(is.na(x_mic)) && !all(is.na(x))
 }
 
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.mic <- function(x, ...) {
-  if(!identical(levels(x), VALID_MIC_LEVELS) && message_not_thrown_before("pillar_shaft.mic")) {
+  if (!identical(levels(x), VALID_MIC_LEVELS) && message_not_thrown_before("pillar_shaft.mic")) {
     warning_(AMR_env$sup_1_icon, " These columns contain an outdated or altered structure - convert with `as.mic()` to update",
-             call = FALSE)
+      call = FALSE
+    )
   }
   crude_numbers <- as.double(x)
   operators <- gsub("[^<=>]+", "", as.character(x))
@@ -416,7 +427,7 @@ pillar_shaft.mic <- function(x, ...) {
 
 # will be exported using s3_register() in R/zzz.R
 type_sum.mic <- function(x, ...) {
-  if(!identical(levels(x), VALID_MIC_LEVELS)) {
+  if (!identical(levels(x), VALID_MIC_LEVELS)) {
     paste0("mic", AMR_env$sup_1_icon)
   } else {
     "mic"
@@ -428,7 +439,7 @@ type_sum.mic <- function(x, ...) {
 #' @noRd
 print.mic <- function(x, ...) {
   cat("Class 'mic'")
-  if(!identical(levels(x), VALID_MIC_LEVELS)) {
+  if (!identical(levels(x), VALID_MIC_LEVELS)) {
     cat(font_red(" with an outdated or altered structure - convert with `as.mic()` to update"))
   }
   cat("\n")
@@ -649,5 +660,6 @@ Summary.mic <- function(..., na.rm = FALSE) {
   # NextMethod() cannot be called from an anonymous function (`...`), so we get() the generic directly:
   fn <- get(.Generic, envir = .GenericCallEnv)
   fn(as.double(c(...)),
-     na.rm = na.rm)
+    na.rm = na.rm
+  )
 }

@@ -82,10 +82,10 @@ AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
 AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
 
 # take cli symbols and error function if available
-AMR_env$bullet_icon   <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %or% "*"
+AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %or% "*"
 AMR_env$ellipsis_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %or% "..."
-AMR_env$info_icon     <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %or% "i"
-AMR_env$sup_1_icon    <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %or% "*"
+AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %or% "i"
+AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %or% "*"
 
 AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
 
@@ -200,14 +200,14 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
   if (pkg_is_available("tibble")) {
     try(loadNamespace("tibble"), silent = TRUE)
   }
-  
+
   # reference data - they have additional data to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   if (NROW(AB_LOOKUP) != NROW(AMR::antibiotics)) {
     # antibiotics data set was updated - run create_AB_AV_lookup() again
     AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
   }
-  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)  
+  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
 }
 

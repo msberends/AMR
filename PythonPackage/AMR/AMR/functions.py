@@ -114,12 +114,6 @@ def wisca(x, *args, **kwargs):
 def retrieve_wisca_parameters(wisca_model, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.retrieve_wisca_parameters(wisca_model, *args, **kwargs))
-def amr_class(amr_class, *args, **kwargs):
-    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.amr_class(amr_class, *args, **kwargs))
-def amr_selector(filter, *args, **kwargs):
-    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.amr_selector(filter, *args, **kwargs))
 def aminoglycosides(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.aminoglycosides(only_sir_columns = False, *args, **kwargs))
@@ -213,6 +207,12 @@ def trimethoprims(only_sir_columns = False, *args, **kwargs):
 def ureidopenicillins(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.ureidopenicillins(only_sir_columns = False, *args, **kwargs))
+def amr_class(amr_class, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.amr_class(amr_class, *args, **kwargs))
+def amr_selector(filter, *args, **kwargs):
+    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
+    return convert_to_python(amr_r.amr_selector(filter, *args, **kwargs))
 def administrable_per_os(only_sir_columns = False, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.administrable_per_os(only_sir_columns = False, *args, **kwargs))

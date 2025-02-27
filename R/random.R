@@ -97,7 +97,7 @@ random_exec <- function(method_type, size, mo = NULL, ab = NULL) {
     subset(guideline == max(guideline) &
       method == method_type &
       type == "human")
-  
+
   if (!is.null(mo)) {
     mo_coerced <- as.mo(mo)
     mo_include <- c(

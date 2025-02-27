@@ -52,7 +52,7 @@
 #' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
 #' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_df()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
-#' 
+#'
 #' Additional functions include:
 #'
 #' * [facet_sir()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
@@ -121,8 +121,10 @@
 #'   ) %>%
 #'     ggplot() +
 #'     geom_col(aes(x = x, y = y, fill = z)) +
-#'     scale_sir_colours(aesthetics = "fill",
-#'                       Value4 = "S", Value5 = "I", Value6 = "R")
+#'     scale_sir_colours(
+#'       aesthetics = "fill",
+#'       Value4 = "S", Value5 = "I", Value6 = "R"
+#'     )
 #' }
 #' if (require("ggplot2") && require("dplyr")) {
 #'   # resistance of ciprofloxacine per age group
@@ -212,7 +214,7 @@ ggplot_sir <- function(data,
   meet_criteria(caption, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(x.title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(y.title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-  
+
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
     x <- x_deparse
@@ -309,7 +311,7 @@ geom_sir <- function(position = NULL,
   if (identical(position, "fill")) {
     position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
   }
-  
+
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
     x <- x_deparse
@@ -323,7 +325,7 @@ geom_sir <- function(position = NULL,
   } else if (tolower(x) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
     x <- "interpretation"
   }
-  
+
   ggplot2::geom_col(
     data = function(x) {
       sir_df(

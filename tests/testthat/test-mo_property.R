@@ -78,8 +78,10 @@ current_grampos_classes <- c(
   "Thermoleophilia",
   "Thermolithobacteria"
 )
-expect_identical(sort(unique(microorganisms[which(microorganisms$phylum %in% current_grampos_phyla), "class", drop = TRUE])),
-                 current_grampos_classes)
+expect_identical(
+  sort(unique(microorganisms[which(microorganisms$phylum %in% current_grampos_phyla), "class", drop = TRUE])),
+  current_grampos_classes
+)
 
 expect_equal(mo_species("Escherichia coli"), "coli")
 expect_equal(mo_subspecies("Escherichia coli"), "")
@@ -103,11 +105,15 @@ expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
 expect_true(length(mo_group_members("B_HACEK")) > 1)
 expect_inherits(mo_group_members(c("Candida albicans", "Escherichia coli")), "list")
 
-expect_identical(mo_oxygen_tolerance(c("Klebsiella pneumoniae", "Clostridioides difficile")),
-                 c("facultative anaerobe", "anaerobe"))
+expect_identical(
+  mo_oxygen_tolerance(c("Klebsiella pneumoniae", "Clostridioides difficile")),
+  c("facultative anaerobe", "anaerobe")
+)
 
-expect_equal(as.character(table(mo_pathogenicity(example_isolates$mo))),
-             c("1911", "72", "1", "16"))
+expect_equal(
+  as.character(table(mo_pathogenicity(example_isolates$mo))),
+  c("1911", "72", "1", "16")
+)
 
 expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
 expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
@@ -118,8 +124,10 @@ expect_true(mo_url("Candida albicans") %like% "mycobank.org")
 expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
 # test integrity of getting back full names
-expect_identical(microorganisms$fullname[microorganisms$fullname %unlike% "(Fungi|{)"],
-                 suppressWarnings(mo_fullname(microorganisms$fullname[microorganisms$fullname %unlike% "(Fungi|{)"], language = "en", keep_synonyms = TRUE)))
+expect_identical(
+  microorganisms$fullname[microorganisms$fullname %unlike% "(Fungi|{)"],
+  suppressWarnings(mo_fullname(microorganisms$fullname[microorganisms$fullname %unlike% "(Fungi|{)"], language = "en", keep_synonyms = TRUE))
+)
 
 # check languages
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
@@ -169,8 +177,10 @@ expect_identical(
 
 expect_true("Escherichia blattae" %in% mo_synonyms("Shimwellia blattae"))
 expect_true(is.list(mo_synonyms(rep("Shimwellia blattae", 2))))
-expect_identical(mo_current(c("Escherichia blattae", "Escherichia coli")),
-                 c("Shimwellia blattae", "Escherichia coli"))
+expect_identical(
+  mo_current(c("Escherichia blattae", "Escherichia coli")),
+  c("Shimwellia blattae", "Escherichia coli")
+)
 
 expect_identical(mo_ref("Chlamydia psittaci"), "Garcia-Lopez et al., 2019")
 expect_identical(mo_ref("Chlamydophila psittaci", keep_synonyms = TRUE), "Everett et al., 1999")

@@ -511,26 +511,36 @@ word_wrap <- function(...,
 
   # format backticks
   if (pkg_is_available("cli") &&
-      tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE) &&
-      tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) return(FALSE)) && 
-      tryCatch(getExportedValue("versionInfo", ns = asNamespace("rstudioapi"))()$version > "2023.6.0.0", error = function(e) return(FALSE))) {
+    tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE) &&
+    tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) {
+      return(FALSE)
+    }) &&
+    tryCatch(getExportedValue("versionInfo", ns = asNamespace("rstudioapi"))()$version > "2023.6.0.0", error = function(e) {
+      return(FALSE)
+    })) {
     # we are in a recent version of RStudio, so do something nice: add links to our help pages in the console.
     parts <- strsplit(msg, "`", fixed = TRUE)[[1]]
     cmds <- parts %in% paste0(ls(envir = asNamespace("AMR")), "()")
     # functions with a dot are not allowed: https://github.com/rstudio/rstudio/issues/11273#issuecomment-1156193252
     # lead them to the help page of our package
-    parts[cmds & parts %like% "[.]"] <- font_url(url = paste0("ide:help:AMR::", gsub("()", "", parts[cmds & parts %like% "[.]"], fixed = TRUE)),
-                                                 txt = parts[cmds & parts %like% "[.]"])
+    parts[cmds & parts %like% "[.]"] <- font_url(
+      url = paste0("ide:help:AMR::", gsub("()", "", parts[cmds & parts %like% "[.]"], fixed = TRUE)),
+      txt = parts[cmds & parts %like% "[.]"]
+    )
     # otherwise, give a 'click to run' popup
-    parts[cmds & parts %unlike% "[.]"] <- font_url(url = paste0("ide:run:AMR::", parts[cmds & parts %unlike% "[.]"]),
-                                                   txt = parts[cmds & parts %unlike% "[.]"])
+    parts[cmds & parts %unlike% "[.]"] <- font_url(
+      url = paste0("ide:run:AMR::", parts[cmds & parts %unlike% "[.]"]),
+      txt = parts[cmds & parts %unlike% "[.]"]
+    )
     # text starting with `?` must also lead to the help page
-    parts[parts %like% "^[?]"] <- font_url(url = paste0("ide:help:AMR::", gsub("()", "", gsub("^[?]", "", parts[parts %like% "^[?]"]), fixed = TRUE)),
-                                           txt = parts[parts %like% "^[?]"])
+    parts[parts %like% "^[?]"] <- font_url(
+      url = paste0("ide:help:AMR::", gsub("()", "", gsub("^[?]", "", parts[parts %like% "^[?]"]), fixed = TRUE)),
+      txt = parts[parts %like% "^[?]"]
+    )
     msg <- paste0(parts, collapse = "`")
   }
   msg <- gsub("`(.+?)`", font_grey_bg("\\1"), msg)
-  
+
   # clean introduced whitespace in between fullstops
   msg <- gsub("[.] +[.]", "..", msg)
   # remove extra space that was introduced (e.g. "Smith et al. , 2022")
@@ -850,7 +860,7 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
   }
-  
+
   if (identical(class(object), "list") && !"list" %in% allow_class) {
     # coming from Python, possibly - turn lists (not data.frame) to the underlying data type
     object <- unlist(object)
@@ -965,9 +975,11 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
 ascertain_sir_classes <- function(x, obj_name) {
   sirs <- vapply(FUN.VALUE = logical(1), x, is.sir)
   if (!any(sirs, na.rm = TRUE)) {
-    warning_("the data provided in argument `", obj_name,
-             "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
-             "See `?as.sir`.")
+    warning_(
+      "the data provided in argument `", obj_name,
+      "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
+      "See `?as.sir`."
+    )
     sirs_eligible <- is_sir_eligible(x)
     for (col in colnames(x)[sirs_eligible]) {
       x[[col]] <- as.sir(x[[col]])
@@ -1322,8 +1334,10 @@ progress_ticker <- function(n = 1, n_min = 0, print = TRUE, clear = TRUE, title 
       # a close()-method was also added, see below for that
       pb <- progress_bar$new(
         show_after = 0,
-        format = paste0(title,
-                        ifelse(only_bar_percent == TRUE, "[:bar] :percent", "[:bar] :percent (:current/:total,:eta)")),
+        format = paste0(
+          title,
+          ifelse(only_bar_percent == TRUE, "[:bar] :percent", "[:bar] :percent (:current/:total,:eta)")
+        ),
         clear = clear,
         total = n
       )
@@ -1530,7 +1544,7 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", MO_lookup$fullname_lower[which(MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
 
     MO_lookup$genus_lower <- tolower(MO_lookup$genus)
-    
+
     MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
     MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
     MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars

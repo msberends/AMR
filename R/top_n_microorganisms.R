@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 #' Filter Top *n* Microorganisms
-#' 
+#'
 #' This function filters a data set to include only the top *n* microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, or to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
 #' @param x a data frame containing microbial data
 #' @param n an integer specifying the maximum number of unique values of the `property` to include in the output
@@ -42,15 +42,18 @@
 #' @examples
 #' # filter to the top 3 species:
 #' top_n_microorganisms(example_isolates,
-#'                      n = 3)
-#' 
+#'   n = 3
+#' )
+#'
 #' # filter to any species in the top 5 genera:
 #' top_n_microorganisms(example_isolates,
-#'                      n = 5, property = "genus")
-#' 
+#'   n = 5, property = "genus"
+#' )
+#'
 #' # filter to the top 3 species in each of the top 5 genera:
 #' top_n_microorganisms(example_isolates,
-#'                      n = 5, property = "genus", n_for_each = 3)
+#'   n = 5, property = "genus", n_for_each = 3
+#' )
 top_n_microorganisms <- function(x, n, property = "fullname", n_for_each = NULL, col_mo = NULL, ...) {
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(n, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE)
@@ -61,25 +64,25 @@ top_n_microorganisms <- function(x, n, property = "fullname", n_for_each = NULL,
     col_mo <- search_type_in_df(x = x, type = "mo", info = TRUE)
     stop_if(is.null(col_mo), "`col_mo` must be set")
   }
-  
+
   x.bak <- x
-  
+
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE], keep_synonyms = TRUE)
-  
+
   if (is.null(property)) {
     x$prop_val <- x[[col_mo]]
   } else {
     x$prop_val <- mo_property(x[[col_mo]], property = property, ...)
   }
   counts <- sort(table(x$prop_val), decreasing = TRUE)
-  
+
   n <- as.integer(n)
   if (length(counts) < n) {
     n <- length(counts)
   }
   count_values <- names(counts)[seq_len(n)]
-  filtered_rows <- which(x$prop_val %in% count_values) 
-  
+  filtered_rows <- which(x$prop_val %in% count_values)
+
   if (!is.null(n_for_each)) {
     n_for_each <- as.integer(n_for_each)
     filtered_x <- x[filtered_rows, , drop = FALSE]
@@ -92,6 +95,6 @@ top_n_microorganisms <- function(x, n, property = "fullname", n_for_each = NULL,
       })
     )
   }
-  
+
   x.bak[filtered_rows, , drop = FALSE]
 }

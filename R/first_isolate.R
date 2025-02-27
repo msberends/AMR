@@ -466,7 +466,7 @@ first_isolate <- function(x = NULL,
   x$other_pat_or_mo <- !(x$newvar_patient_id == pm_lag(x$newvar_patient_id) & x$newvar_genus_species == pm_lag(x$newvar_genus_species))
 
   x$newvar_episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
-  
+
   x$more_than_episode_ago <- unlist(
     lapply(
       split(
@@ -479,7 +479,7 @@ first_isolate <- function(x = NULL,
     ),
     use.names = FALSE
   )
-  
+
   if (!is.null(col_keyantimicrobials)) {
     # using phenotypes
     x$different_antibiogram <- !unlist(
@@ -498,15 +498,15 @@ first_isolate <- function(x = NULL,
   } else {
     x$different_antibiogram <- FALSE
   }
-  
+
   x$newvar_first_isolate <- x$newvar_row_index_sorted >= row.start &
     x$newvar_row_index_sorted <= row.end &
     x$newvar_genus_species != "" &
     (x$other_pat_or_mo | x$more_than_episode_ago | x$different_antibiogram)
-  
+
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", " ")
-  
+
   # first one as TRUE
   x[row.start, "newvar_first_isolate"] <- TRUE
   # no tests that should be included, or ICU
@@ -517,7 +517,8 @@ first_isolate <- function(x = NULL,
     if (icu_exclude == TRUE) {
       if (isTRUE(info)) {
         message_("Excluding ", format(sum(x$newvar_is_icu, na.rm = TRUE), decimal.mark = decimal.mark, big.mark = big.mark), " isolates from ICU.",
-                 add_fn = font_red)
+          add_fn = font_red
+        )
       }
       x[which(x$newvar_is_icu), "newvar_first_isolate"] <- FALSE
     } else if (isTRUE(info)) {
@@ -673,24 +674,27 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
     return(FALSE)
   }
   # first sort on data availability - count the dots and order that ascending so that highest availability of SIR is on top
-  number_dots <- vapply(FUN.VALUE = integer(1),
-                        antibiogram,
-                        function(x) sum(strsplit(x, "", fixed = TRUE)[[1]] == "."),
-                        USE.NAMES = FALSE)
+  number_dots <- vapply(
+    FUN.VALUE = integer(1),
+    antibiogram,
+    function(x) sum(strsplit(x, "", fixed = TRUE)[[1]] == "."),
+    USE.NAMES = FALSE
+  )
   new_order <- order(number_dots, antibiogram)
   antibiogram.bak <- antibiogram
   antibiogram <- antibiogram[new_order]
-  
+
   out <- rep(NA, length(antibiogram))
   out[1] <- FALSE
   out[2] <- antimicrobials_equal(antibiogram[1], antibiogram[2],
-                                 ignore_I = ignore_I, points_threshold = points_threshold,
-                                 type = type)
+    ignore_I = ignore_I, points_threshold = points_threshold,
+    type = type
+  )
   if (length(antibiogram) == 2) {
     # fast return, no further check required
     return(out)
   }
-  
+
   # we can skip the duplicates - they are never unique antibiograms of course
   duplicates <- duplicated(antibiogram)
   out[3:length(out)][duplicates[3:length(out)] == TRUE] <- TRUE
@@ -698,17 +702,24 @@ duplicated_antibiogram <- function(antibiogram, points_threshold, ignore_I, type
     # fast return, no further check required
     return(c(out[1:2], rep(TRUE, length(out) - 2)))
   }
-  
+
   for (na in antibiogram[is.na(out)]) {
     # check if this antibiogram has any change with other antibiograms
     out[which(antibiogram == na)] <- all(
-      vapply(FUN.VALUE = logical(1),
-             antibiogram[!is.na(out) & antibiogram != na],
-             function(y) antimicrobials_equal(y = y, z = na,
-                                              ignore_I = ignore_I, points_threshold = points_threshold,
-                                              type = type)))
+      vapply(
+        FUN.VALUE = logical(1),
+        antibiogram[!is.na(out) & antibiogram != na],
+        function(y) {
+          antimicrobials_equal(
+            y = y, z = na,
+            ignore_I = ignore_I, points_threshold = points_threshold,
+            type = type
+          )
+        }
+      )
+    )
   }
-  
+
   out <- out[order(new_order)]
   # rerun duplicated again
   duplicates <- duplicated(antibiogram.bak)

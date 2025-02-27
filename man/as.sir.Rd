@@ -258,69 +258,97 @@ if (require("dplyr")) {
   df_wide \%>\% mutate(across(where(is.mic), as.sir))
   df_wide \%>\% mutate_at(vars(amoxicillin:tobra), as.sir)
   df_wide \%>\% mutate(across(amoxicillin:tobra, as.sir))
-  
+
   # approaches that all work with additional arguments:
   df_long \%>\%
     # given a certain data type, e.g. MIC values
     mutate_if(is.mic, as.sir,
-              mo = "bacteria",
-              ab = "antibiotic",
-              guideline = "CLSI")
+      mo = "bacteria",
+      ab = "antibiotic",
+      guideline = "CLSI"
+    )
   df_long \%>\%
-    mutate(across(where(is.mic),
-                  function(x) as.sir(x,
-                                     mo = "bacteria",
-                                     ab = "antibiotic",
-                                     guideline = "CLSI")))
+    mutate(across(
+      where(is.mic),
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          ab = "antibiotic",
+          guideline = "CLSI"
+        )
+      }
+    ))
   df_wide \%>\%
     # given certain columns, e.g. from 'cipro' to 'genta'
     mutate_at(vars(cipro:genta), as.sir,
-              mo = "bacteria",
-              guideline = "CLSI")
+      mo = "bacteria",
+      guideline = "CLSI"
+    )
   df_wide \%>\%
-    mutate(across(cipro:genta,
-                       function(x) as.sir(x,
-                                          mo = "bacteria",
-                                          guideline = "CLSI")))
-                       
+    mutate(across(
+      cipro:genta,
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          guideline = "CLSI"
+        )
+      }
+    ))
+
   # for veterinary breakpoints, add 'host':
   df_long$animal_species <- c("cats", "dogs", "horses", "cattle")
   df_long \%>\%
     # given a certain data type, e.g. MIC values
     mutate_if(is.mic, as.sir,
-              mo = "bacteria",
-              ab = "antibiotic",
-              host = "animal_species",
-              guideline = "CLSI")
+      mo = "bacteria",
+      ab = "antibiotic",
+      host = "animal_species",
+      guideline = "CLSI"
+    )
   df_long \%>\%
-    mutate(across(where(is.mic),
-                  function(x) as.sir(x,
-                                     mo = "bacteria",
-                                     ab = "antibiotic",
-                                     host = "animal_species",
-                                     guideline = "CLSI")))
+    mutate(across(
+      where(is.mic),
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          ab = "antibiotic",
+          host = "animal_species",
+          guideline = "CLSI"
+        )
+      }
+    ))
   df_wide \%>\%
     mutate_at(vars(cipro:genta), as.sir,
-              mo = "bacteria",
-              ab = "antibiotic",
-              host = "animal_species",
-              guideline = "CLSI")
+      mo = "bacteria",
+      ab = "antibiotic",
+      host = "animal_species",
+      guideline = "CLSI"
+    )
   df_wide \%>\%
-    mutate(across(cipro:genta,
-                       function(x) as.sir(x,
-                                          mo = "bacteria",
-                                          host = "animal_species",
-                                          guideline = "CLSI")))
-  
+    mutate(across(
+      cipro:genta,
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          host = "animal_species",
+          guideline = "CLSI"
+        )
+      }
+    ))
+
   # to include information about urinary tract infections (UTI)
-  data.frame(mo = "E. coli",
-             nitrofuratoin = c("<= 2", 32),
-             from_the_bladder = c(TRUE, FALSE)) \%>\%
+  data.frame(
+    mo = "E. coli",
+    nitrofuratoin = c("<= 2", 32),
+    from_the_bladder = c(TRUE, FALSE)
+  ) \%>\%
     as.sir(uti = "from_the_bladder")
 
-  data.frame(mo = "E. coli",
-             nitrofuratoin = c("<= 2", 32),
-             specimen = c("urine", "blood")) \%>\%
+  data.frame(
+    mo = "E. coli",
+    nitrofuratoin = c("<= 2", 32),
+    specimen = c("urine", "blood")
+  ) \%>\%
     as.sir() # automatically determines urine isolates
 
   df_wide \%>\%

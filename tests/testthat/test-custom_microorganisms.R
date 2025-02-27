@@ -27,14 +27,18 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_identical(as.mo("Enterobacter asburiae/cloacae"),
-                 as.mo("Enterobacter asburiae"))
+expect_identical(
+  as.mo("Enterobacter asburiae/cloacae"),
+  as.mo("Enterobacter asburiae")
+)
 
 suppressMessages(
   add_custom_microorganisms(
-    data.frame(mo = "ENT_ASB_CLO",
-               genus = "Enterobacter",
-               species = "asburiae/cloacae")
+    data.frame(
+      mo = "ENT_ASB_CLO",
+      genus = "Enterobacter",
+      species = "asburiae/cloacae"
+    )
   )
 )
 
@@ -44,8 +48,12 @@ expect_identical(mo_gramstain("ENT_ASB_CLO", language = NULL), "Gram-negative")
 
 if (getRversion() >= "3.3.0") {
   # until R 3.2, abbreviate() used a completely different algorithm, making these tests unreproducible
-  expect_identical(paste("B", AMR:::abbreviate_mo("Klebsiella"), AMR:::abbreviate_mo("pneumoniae", 4), sep = "_"),
-                   as.character(as.mo("Klebsiella pneumoniae")))
-  expect_identical(paste("B", AMR:::abbreviate_mo("Aerococcus"), AMR:::abbreviate_mo("urinae", 4), sep = "_"),
-                   as.character(as.mo("Aerococcus urinae")))
+  expect_identical(
+    paste("B", AMR:::abbreviate_mo("Klebsiella"), AMR:::abbreviate_mo("pneumoniae", 4), sep = "_"),
+    as.character(as.mo("Klebsiella pneumoniae"))
+  )
+  expect_identical(
+    paste("B", AMR:::abbreviate_mo("Aerococcus"), AMR:::abbreviate_mo("urinae", 4), sep = "_"),
+    as.character(as.mo("Aerococcus urinae"))
+  )
 }

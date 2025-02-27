@@ -96,4 +96,3 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
       set_ab_names(NIT:VAN) %>%
       colnames())))
 }
-

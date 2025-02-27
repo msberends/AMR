@@ -254,14 +254,14 @@ get_column_abx <- function(x,
   if (sort == TRUE) {
     out <- out[order(names(out), out)]
   }
-  
+
   if (return_all == FALSE) {
     # only keep the first hits, no duplicates
     duplicates <- c(out[duplicated(names(out))], out[duplicated(unname(out))])
     if (length(duplicates) > 0) {
       all_okay <- FALSE
     }
-    
+
     if (isTRUE(info)) {
       if (all_okay == TRUE) {
         message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
@@ -292,7 +292,7 @@ get_column_abx <- function(x,
         }
       }
     }
-    
+
     out <- out[!duplicated(names(out))]
     out <- out[!duplicated(unname(out))]
     if (sort == TRUE) {

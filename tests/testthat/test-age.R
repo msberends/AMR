@@ -35,13 +35,14 @@ expect_equal(
   c(39, 34, 29)
 )
 
-expect_equal(age(
-  x = c("2019-01-01", "2019-04-01", "2019-07-01"),
-  reference = "2019-09-01",
-  exact = TRUE
-),
-c(0.6656393, 0.4191781, 0.1698630),
-tolerance = 0.001
+expect_equal(
+  age(
+    x = c("2019-01-01", "2019-04-01", "2019-07-01"),
+    reference = "2019-09-01",
+    exact = TRUE
+  ),
+  c(0.6656393, 0.4191781, 0.1698630),
+  tolerance = 0.001
 )
 
 expect_error(age(

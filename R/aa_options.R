@@ -44,7 +44,7 @@
 #' * `AMR_keep_synonyms` \cr A [logical] to use in [as.mo()] and all [`mo_*`][mo_property()] functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE`.
 #' * `AMR_locale` \cr A [character] to set the language for the `AMR` package, can be one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. The default is the current system language (if supported, English otherwise).
 #' * `AMR_mo_source` \cr A file location for a manual code list to be used in [as.mo()] and all [`mo_*`][mo_property()] functions. This is explained in [set_mo_source()].
-#' 
+#'
 #' @section Saving Settings Between Sessions:
 #' Settings in \R are not saved globally and are thus lost when \R is exited. You can save your options to your own `.Rprofile` file, which is a user-specific file. You can edit it using:
 #'

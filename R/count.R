@@ -167,9 +167,9 @@ count_SI <- function(..., only_all_tested = FALSE) {
   }
   tryCatch(
     sir_calc(...,
-             ab_result = c("S", "SDD", "I"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE
+      ab_result = c("S", "SDD", "I"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
@@ -183,9 +183,9 @@ count_I <- function(..., only_all_tested = FALSE) {
   }
   tryCatch(
     sir_calc(...,
-             ab_result = c("I", "SDD"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE
+      ab_result = c("I", "SDD"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
@@ -199,9 +199,9 @@ count_IR <- function(..., only_all_tested = FALSE) {
   }
   tryCatch(
     sir_calc(...,
-             ab_result = c("I", "SDD", "R"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE
+      ab_result = c("I", "SDD", "R"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
@@ -212,9 +212,9 @@ count_IR <- function(..., only_all_tested = FALSE) {
 count_R <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-             ab_result = "R",
-             only_all_tested = only_all_tested,
-             only_count = TRUE
+      ab_result = "R",
+      only_all_tested = only_all_tested,
+      only_count = TRUE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )

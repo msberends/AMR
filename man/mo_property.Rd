@@ -262,10 +262,12 @@ mo_rank("Klebsiella pneumoniae")
 mo_url("Klebsiella pneumoniae")
 mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 
-mo_group_members(c("Streptococcus group A",
-                   "Streptococcus group C",
-                   "Streptococcus group G",
-                   "Streptococcus group L"))
+mo_group_members(c(
+  "Streptococcus group A",
+  "Streptococcus group C",
+  "Streptococcus group G",
+  "Streptococcus group L"
+))
 
 
 # scientific reference -----------------------------------------------------

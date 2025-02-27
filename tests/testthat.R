@@ -33,8 +33,11 @@ library(AMR)
 # add functions from the tinytest package (which we use for older R versions)
 expect_inherits <- function(x, y, ...) {
   expect(inherits(x, y),
-         failure_message = paste0("object has class ", paste0(class(x), collapse = "/"),
-                                  ", required is class ", paste0(y, collapse = "/")))
+    failure_message = paste0(
+      "object has class ", paste0(class(x), collapse = "/"),
+      ", required is class ", paste0(y, collapse = "/")
+    )
+  )
 }
 expect_stdout <- expect_output
 

@@ -47,9 +47,9 @@
 #' @inheritSection as.sir Interpretation of SIR
 #' @details
 #' For a more automated and comprehensive analysis, consider using [antibiogram()] or [wisca()], which streamline many aspects of susceptibility reporting and, importantly, also support WISCA. The functions described here offer a more hands-on, manual approach for greater customisation.
-#' 
+#'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set with one of the four available algorithms.
-#' 
+#'
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()]. Since AMR v3.0, [proportion_SI()] and [proportion_I()] include dose-dependent susceptibility ('SDD').
 #'
 #' Use [sir_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
@@ -293,7 +293,7 @@ sir_confidence_interval <- function(...,
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
-  
+
   if (x == 0) {
     out <- c(0, 0)
   } else {
@@ -301,7 +301,7 @@ sir_confidence_interval <- function(...,
     out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
   }
   out <- set_clean_class(out, "numeric")
-  
+
   if (side %in% c("left", "l", "lower", "lowest", "less", "min")) {
     out <- out[1]
   } else if (side %in% c("right", "r", "higher", "highest", "greater", "g", "max")) {
@@ -317,7 +317,7 @@ sir_confidence_interval <- function(...,
     # out[is.na(out)] <- 0
     out <- paste(out, collapse = ifelse(isTRUE(collapse), "-", collapse))
   }
-  
+
   if (n < minimum) {
     warning_("Introducing NA: ",
       ifelse(n == 0, "no", paste("only", n)),

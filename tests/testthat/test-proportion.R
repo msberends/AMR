@@ -109,7 +109,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
       example_isolates$AMX %>% proportion_R()
     )
   )
-  
+
   # expect_warning(example_isolates %>% group_by(ward) %>% summarise(across(KAN, sir_confidence_interval)))
 }
 

@@ -139,8 +139,10 @@ if (require("ggplot2") && require("dplyr")) {
   ) \%>\%
     ggplot() +
     geom_col(aes(x = x, y = y, fill = z)) +
-    scale_sir_colours(aesthetics = "fill",
-                      Value4 = "S", Value5 = "I", Value6 = "R")
+    scale_sir_colours(
+      aesthetics = "fill",
+      Value4 = "S", Value5 = "I", Value6 = "R"
+    )
 }
 if (require("ggplot2") && require("dplyr")) {
   # resistance of ciprofloxacine per age group

@@ -211,7 +211,7 @@ eucast_rules <- function(x,
   breakpoints_info <- EUCAST_VERSION_BREAKPOINTS[[which(as.double(names(EUCAST_VERSION_BREAKPOINTS)) == version_breakpoints)]]
   expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
   # resistantphenotypes_info <- EUCAST_VERSION_RESISTANTPHENOTYPES[[which(as.double(names(EUCAST_VERSION_RESISTANTPHENOTYPES)) == version_resistant_phenotypes)]]
-  
+
   # support old setting (until AMR v1.3.0)
   if (missing(rules) && !is.null(getOption("AMR.eucast_rules"))) {
     rules <- getOption("AMR.eucast_rules")
@@ -462,10 +462,12 @@ eucast_rules <- function(x,
     if (isTRUE(info)) {
       cat(paste0("\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
       cat(word_wrap(
-        paste0("Rules by the ",
-               font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
-               " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
-               "), see `?eucast_rules`\n")
+        paste0(
+          "Rules by the ",
+          font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
+          " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
+          "), see `?eucast_rules`\n"
+        )
       ))
       cat("\n\n")
     }

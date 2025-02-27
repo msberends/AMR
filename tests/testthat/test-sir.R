@@ -88,18 +88,18 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_equal(sum(is.sir(example_isolates)), 40)
 
   expect_stdout(print(tibble(ab = as.sir("S"))))
-  
-  expect_true(example_isolates %>% 
-                select(AMC, MEM) %>% 
-                mutate(MEM = as.sir(ifelse(AMC == "S", "S", MEM))) %>% 
-                pull(MEM) %>% 
-                is.sir())
-  
-  expect_true(example_isolates %>% 
-                select(AMC, MEM) %>% 
-                mutate(MEM = if_else(AMC == "S", "S", MEM)) %>% 
-                pull(MEM) %>% 
-                is.sir())
+
+  expect_true(example_isolates %>%
+    select(AMC, MEM) %>%
+    mutate(MEM = as.sir(ifelse(AMC == "S", "S", MEM))) %>%
+    pull(MEM) %>%
+    is.sir())
+
+  expect_true(example_isolates %>%
+    select(AMC, MEM) %>%
+    mutate(MEM = if_else(AMC == "S", "S", MEM)) %>%
+    pull(MEM) %>%
+    is.sir())
 }
 if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
   expect_inherits(
@@ -124,58 +124,78 @@ expect_equal(as.sir(c("", "-", NA, "NULL")), c(NA_sir_, NA_sir_, NA_sir_, NA_sir
 
 # Human -------------------------------------------------------------------
 
-mics <- as.mic(2 ^ c(-4:6)) # 0.0625 to 64 in factors of 2
-expect_identical(as.character(as.sir(mics, mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
-                                     uti = FALSE, include_PKPD = FALSE)),
-                 c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R"))
-expect_identical(as.character(as.sir(mics, mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
-                                     uti = TRUE, include_PKPD = FALSE)),
-                 c("S", "S", "S", "S", "S", "S", "S", "S", "S", "S", "R"))
-expect_identical(as.character(as.sir(mics, mo = "Escherichia coli", ab = "AMC", guideline = "EUCAST 2022",
-                                     uti = FALSE, include_PKPD = FALSE)),
-                 c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R"))
+mics <- as.mic(2^c(-4:6)) # 0.0625 to 64 in factors of 2
+expect_identical(
+  as.character(as.sir(mics,
+    mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
+    uti = FALSE, include_PKPD = FALSE
+  )),
+  c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R")
+)
+expect_identical(
+  as.character(as.sir(mics,
+    mo = "Enterobacterales", ab = "AMC", guideline = "EUCAST 2022",
+    uti = TRUE, include_PKPD = FALSE
+  )),
+  c("S", "S", "S", "S", "S", "S", "S", "S", "S", "S", "R")
+)
+expect_identical(
+  as.character(as.sir(mics,
+    mo = "Escherichia coli", ab = "AMC", guideline = "EUCAST 2022",
+    uti = FALSE, include_PKPD = FALSE
+  )),
+  c("S", "S", "S", "S", "S", "S", "S", "S", "R", "R", "R")
+)
 
 # test SIR using dplyr's mutate_if(...) and mutate(across(...))
 out1 <- as.sir(as.mic(c(0.256, 0.5, 1, 2)), mo = "Escherichia coli", ab = "ertapenem", guideline = "EUCAST 2023")
 expect_identical(out1, as.sir(c("S", "S", "R", "R")))
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-  out2 <- data.frame(mo = "Escherichia coli",
-                     ab = "ertapenem",
-                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) %>% 
-    mutate(across(where(is.mic), function(x) as.sir(x, mo = "mo", ab = "ab", guideline = "EUCAST 2023"))) %>% 
+  out2 <- data.frame(
+    mo = "Escherichia coli",
+    ab = "ertapenem",
+    some_mics = as.mic(c(0.256, 0.5, 1, 2))
+  ) %>%
+    mutate(across(where(is.mic), function(x) as.sir(x, mo = "mo", ab = "ab", guideline = "EUCAST 2023"))) %>%
     pull(some_mics)
-  out3 <- data.frame(mo = "Escherichia coli",
-                     ab = "ertapenem",
-                     some_mics = as.mic(c(0.256, 0.5, 1, 2))) %>% 
-    mutate_if(is.mic, as.sir, mo = "mo", ab = "ab", guideline = "EUCAST 2023") %>% 
+  out3 <- data.frame(
+    mo = "Escherichia coli",
+    ab = "ertapenem",
+    some_mics = as.mic(c(0.256, 0.5, 1, 2))
+  ) %>%
+    mutate_if(is.mic, as.sir, mo = "mo", ab = "ab", guideline = "EUCAST 2023") %>%
     pull(some_mics)
-  
+
   expect_identical(out1, out2)
   expect_identical(out1, out3)
 }
 
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
-expect_equal(suppressMessages(
-  as.character(
-    as.sir(
-      x = as.mic(c(0.125, 0.5, 1, 2, 4)),
-      mo = "B_STRPT_PNMN",
-      ab = "AMP",
-      guideline = "EUCAST 2020"
+expect_equal(
+  suppressMessages(
+    as.character(
+      as.sir(
+        x = as.mic(c(0.125, 0.5, 1, 2, 4)),
+        mo = "B_STRPT_PNMN",
+        ab = "AMP",
+        guideline = "EUCAST 2020"
+      )
     )
-  )),
+  ),
   c("S", "S", "I", "I", "R")
 )
 # S. pneumoniae/amoxicillin in CLSI 2019: 2-8 ug/ml (R is 8 and > 8)
-expect_equal(suppressMessages(
-  as.character(
-    as.sir(
-      x = as.mic(c(1, 2, 4, 8, 16)),
-      mo = "B_STRPT_PNMN",
-      ab = "AMX",
-      guideline = "CLSI 2019"
+expect_equal(
+  suppressMessages(
+    as.character(
+      as.sir(
+        x = as.mic(c(1, 2, 4, 8, 16)),
+        mo = "B_STRPT_PNMN",
+        ab = "AMX",
+        guideline = "CLSI 2019"
+      )
     )
-  )),
+  ),
   c("S", "S", "I", "R", "R")
 )
 
@@ -241,20 +261,28 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     as.sir(guideline = "CLSI") %>%
     pull(amox_disk) %>%
     is.sir())
-  
+
   # used by group_by() on sir_calc_df(), check some internals to see if grouped calculation without tidyverse works
   groups <- example_isolates %>%
     group_by(mo) %>%
     attributes() %>%
     .$groups
-  expect_equal(nrow(groups),
-               90)
-  expect_equal(class(groups$.rows),
-               c("vctrs_list_of", "vctrs_vctr", "list"))
-  expect_equal(groups$.rows[[1]],
-               c(101, 524, 1368))
-  expect_equal(example_isolates[c(101, 524, 1368), "mo", drop = TRUE],
-               rep(groups$mo[1], 3))
+  expect_equal(
+    nrow(groups),
+    90
+  )
+  expect_equal(
+    class(groups$.rows),
+    c("vctrs_list_of", "vctrs_vctr", "list")
+  )
+  expect_equal(
+    groups$.rows[[1]],
+    c(101, 524, 1368)
+  )
+  expect_equal(
+    example_isolates[c(101, 524, 1368), "mo", drop = TRUE],
+    rep(groups$mo[1], 3)
+  )
 }
 # frequency tables
 if (AMR:::pkg_is_available("cleaner")) {
@@ -295,27 +323,35 @@ expect_message(as.sir(data.frame(
 )))
 
 # SDD vs I in CLSI 2024
-expect_identical(as.sir(as.mic(2 ^ c(-2:4)), mo = "Enterococcus faecium", ab = "Dapto", guideline = "CLSI 2024"),
-                 as.sir(c("SDD", "SDD", "SDD", "SDD", "SDD", "R", "R")))
-expect_identical(as.sir(as.mic(2 ^ c(-2:2)), mo = "Enterococcus faecium", ab = "Cipro
+expect_identical(
+  as.sir(as.mic(2^c(-2:4)), mo = "Enterococcus faecium", ab = "Dapto", guideline = "CLSI 2024"),
+  as.sir(c("SDD", "SDD", "SDD", "SDD", "SDD", "R", "R"))
+)
+expect_identical(
+  as.sir(as.mic(2^c(-2:2)), mo = "Enterococcus faecium", ab = "Cipro
                         ", guideline = "CLSI 2024"),
-                 as.sir(c("S", "S", "S", "I", "R")))
+  as.sir(c("S", "S", "S", "I", "R"))
+)
 
 
 # Veterinary --------------------------------------------------------------
 
 sir_history <- sir_interpretation_history(clean = TRUE)
 
-mics <- as.mic(2 ^ c(-4:6)) # 0.0625 to 64 in factors of 2
-vet <- data.frame(animal = c(rep("cat", 3), rep("dogs", 3), "canine", "equine", "horse", "cattle", "bird"),
-                  PRA = mics,
-                  FLR = mics,
-                  mo = mo_name(rep(c("B_ESCHR_COLI", "B_PSTRL_MLTC", "B_MNNHM_HMLY"), 4)[-1]))
+mics <- as.mic(2^c(-4:6)) # 0.0625 to 64 in factors of 2
+vet <- data.frame(
+  animal = c(rep("cat", 3), rep("dogs", 3), "canine", "equine", "horse", "cattle", "bird"),
+  PRA = mics,
+  FLR = mics,
+  mo = mo_name(rep(c("B_ESCHR_COLI", "B_PSTRL_MLTC", "B_MNNHM_HMLY"), 4)[-1])
+)
 
 out_vet <- as.sir(vet, host = vet$animal, guideline = "CLSI 2023")
 # host column name instead of values
-expect_identical(out_vet,
-                 as.sir(vet, host = "animal", guideline = "CLSI 2023"))
+expect_identical(
+  out_vet,
+  as.sir(vet, host = "animal", guideline = "CLSI 2023")
+)
 
 # check outcomes
 expect_identical(out_vet$PRA, as.sir(c("S", NA, "S", NA, NA, "R", NA, NA, NA, "I", NA)))
@@ -326,11 +362,15 @@ expect_identical(out_vet$PRA, rep(NA_sir_, 11))
 expect_identical(out_vet$FLR, as.sir(c("S", "S", NA, "S", "S", NA, "I", "R", NA, "R", "R")))
 
 sir_history <- sir_interpretation_history()
-expect_identical(sort(sir_history$host),
-                 c("cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",   "cats",
-                   "cats",   "cats",   "cats",   "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",
-                   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",   "dogs",
-                   "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "horse",  "poultry","poultry","poultry","poultry"))
+expect_identical(
+  sort(sir_history$host),
+  c(
+    "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats", "cats",
+    "cats", "cats", "cats", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "cattle", "dogs",
+    "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs", "dogs",
+    "horse", "horse", "horse", "horse", "horse", "horse", "horse", "horse", "horse", "poultry", "poultry", "poultry", "poultry"
+  )
+)
 
 # ECOFF -------------------------------------------------------------------
 
@@ -340,4 +380,3 @@ expect_equal(
 )
 # old method
 expect_warning(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE))
-

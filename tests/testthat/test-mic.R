@@ -176,4 +176,3 @@ expect_true(as.mic("32") <= as.mic(32))
 expect_false(as.mic("32") <= as.mic("<32"))
 expect_true(as.mic("32") <= as.mic("<=32"))
 expect_false(as.mic("32") < as.mic("<=32"))
-

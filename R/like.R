@@ -51,7 +51,7 @@
 #' @examples
 #' # data.table has a more limited version of %like%, so unload it:
 #' try(detach("package:data.table", unload = TRUE), silent = TRUE)
-#' 
+#'
 #' a <- "This is a test"
 #' b <- "TEST"
 #' a %like% b

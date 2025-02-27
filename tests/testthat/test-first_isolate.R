@@ -46,17 +46,28 @@ expect_equal(
 )
 
 # for phenotype determination
-expect_equal(AMR:::duplicated_antibiogram("SSSS", points_threshold = 2, ignore_I = TRUE, type = "points"),
-             FALSE)
-expect_equal(AMR:::duplicated_antibiogram(c("RRR", "SSS"),
-                                          points_threshold = 2, ignore_I = TRUE, type = "points"),
-             c(FALSE, FALSE))
-expect_equal(AMR:::duplicated_antibiogram(c("RRR", "RRR", "SSS"),
-                                          points_threshold = 2, ignore_I = TRUE, type = "points"),
-             c(FALSE, TRUE, FALSE))
-expect_equal(AMR:::duplicated_antibiogram(c("RRR", "RSS", "SSS", "RSS", "RRR", "RRR", "SSS", "RSS", "RSR", "RRR"),
-                                          points_threshold = 2, ignore_I = TRUE, type = "points"),
-             c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE))
+expect_equal(
+  AMR:::duplicated_antibiogram("SSSS", points_threshold = 2, ignore_I = TRUE, type = "points"),
+  FALSE
+)
+expect_equal(
+  AMR:::duplicated_antibiogram(c("RRR", "SSS"),
+    points_threshold = 2, ignore_I = TRUE, type = "points"
+  ),
+  c(FALSE, FALSE)
+)
+expect_equal(
+  AMR:::duplicated_antibiogram(c("RRR", "RRR", "SSS"),
+    points_threshold = 2, ignore_I = TRUE, type = "points"
+  ),
+  c(FALSE, TRUE, FALSE)
+)
+expect_equal(
+  AMR:::duplicated_antibiogram(c("RRR", "RSS", "SSS", "RSS", "RRR", "RRR", "SSS", "RSS", "RSR", "RRR"),
+    points_threshold = 2, ignore_I = TRUE, type = "points"
+  ),
+  c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE)
+)
 
 # Phenotype-based, using key antimicrobials
 expect_equal(
@@ -89,7 +100,9 @@ expect_true(
       col_icu = example_isolates$ward == "ICU",
       info = TRUE,
       icu_exclude = TRUE
-  ), na.rm = TRUE) < 950
+    ),
+    na.rm = TRUE
+  ) < 950
 )
 
 # set 1500 random observations to be of specimen type 'Urine'

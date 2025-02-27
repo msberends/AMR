@@ -29,15 +29,18 @@ This function is useful for preprocessing data before creating \link[=antibiogra
 \examples{
 # filter to the top 3 species:
 top_n_microorganisms(example_isolates,
-                     n = 3)
+  n = 3
+)
 
 # filter to any species in the top 5 genera:
 top_n_microorganisms(example_isolates,
-                     n = 5, property = "genus")
+  n = 5, property = "genus"
+)
 
 # filter to the top 3 species in each of the top 5 genera:
 top_n_microorganisms(example_isolates,
-                     n = 5, property = "genus", n_for_each = 3)
+  n = 5, property = "genus", n_for_each = 3
+)
 }
 \seealso{
 \code{\link[=mo_property]{mo_property()}}, \code{\link[=as.mo]{as.mo()}}, \code{\link[=antibiogram]{antibiogram()}}

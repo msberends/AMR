@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE) &&
-    AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
+  AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
   pdf(NULL) # prevent Rplots.pdf being created
 
   # data should be equal
@@ -43,15 +43,19 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE) &&
       summarise_all(resistance) %>%
       as.double()
   )
-  
-  expect_inherits(example_isolates %>%
-                    select(AMC, CIP) %>%
-                    ggplot_sir(x = "interpretation", facet = "antibiotic"),
-                  "gg")
-  expect_inherits(example_isolates %>%
-                    select(AMC, CIP) %>%
-                    ggplot_sir(x = "antibiotic", facet = "interpretation"),
-                  "gg")
+
+  expect_inherits(
+    example_isolates %>%
+      select(AMC, CIP) %>%
+      ggplot_sir(x = "interpretation", facet = "antibiotic"),
+    "gg"
+  )
+  expect_inherits(
+    example_isolates %>%
+      select(AMC, CIP) %>%
+      ggplot_sir(x = "antibiotic", facet = "interpretation"),
+    "gg"
+  )
 
   expect_equal(
     (example_isolates %>%

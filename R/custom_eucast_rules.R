@@ -90,16 +90,16 @@
 #' ```
 #'
 #' ### Usage of multiple antibiotics and antibiotic group names
-#' 
+#'
 #' You can define antibiotic groups instead of single antibiotics for the rule consequence, which is the part *after* the tilde (~). In the examples above, the antibiotic group `aminopenicillins` includes both ampicillin and amoxicillin.
-#' 
+#'
 #' Rules can also be applied to multiple antibiotics and antibiotic groups simultaneously. Use the `c()` function to combine multiple antibiotics. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
-#' 
+#'
 #' ```r
 #' x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
 #' x
 #' #> A set of custom EUCAST rules:
-#' #> 
+#' #>
 #' #>   1. If TZP is "R" then set to "R":
 #' #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 #' ```
@@ -169,7 +169,7 @@ custom_eucast_rules <- function(...) {
       "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see `?custom_eucast_rules`"
     )
     result_group <- as.character(result)[[2]]
-    result_group<- as.character(str2lang(result_group))
+    result_group <- as.character(str2lang(result_group))
     result_group <- result_group[result_group != "c"]
     result_group_agents <- character(0)
     for (j in seq_len(length(result_group))) {
@@ -178,13 +178,15 @@ custom_eucast_rules <- function(...) {
         result_group[j] <- paste0(result_group[j], "s")
       }
       if (paste0("AB_", toupper(result_group[j])) %in% DEFINED_AB_GROUPS) {
-        result_group_agents <- c(result_group_agents,
-                                 eval(parse(text = paste0("AB_", toupper(result_group[j]))), envir = asNamespace("AMR")))
+        result_group_agents <- c(
+          result_group_agents,
+          eval(parse(text = paste0("AB_", toupper(result_group[j]))), envir = asNamespace("AMR"))
+        )
       } else {
         out_group <- tryCatch(
           suppressWarnings(as.ab(result_group[j],
-                                 fast_mode = TRUE,
-                                 flag_multiple_results = FALSE
+            fast_mode = TRUE,
+            flag_multiple_results = FALSE
           )),
           error = function(e) NA_character_
         )
@@ -194,7 +196,7 @@ custom_eucast_rules <- function(...) {
       }
     }
     result_group_agents <- result_group_agents[!is.na(result_group_agents)]
-    
+
     stop_if(
       length(result_group_agents) == 0,
       "this result of rule ", i, " could not be translated to a single antimicrobial drug/group: \"",

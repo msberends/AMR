@@ -2,8 +2,6 @@
 % Please edit documentation in R/amr_selectors.R
 \name{antimicrobial_selectors}
 \alias{antimicrobial_selectors}
-\alias{amr_class}
-\alias{amr_selector}
 \alias{aminoglycosides}
 \alias{aminopenicillins}
 \alias{antifungals}
@@ -35,17 +33,13 @@
 \alias{tetracyclines}
 \alias{trimethoprims}
 \alias{ureidopenicillins}
+\alias{amr_class}
+\alias{amr_selector}
 \alias{administrable_per_os}
 \alias{administrable_iv}
 \alias{not_intrinsic_resistant}
 \title{Antimicrobial Selectors}
 \usage{
-amr_class(amr_class, only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
-
-amr_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
-
 aminoglycosides(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
@@ -114,6 +108,12 @@ trimethoprims(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 ureidopenicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
+amr_class(amr_class, only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
+
+amr_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
+
 administrable_per_os(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 administrable_iv(only_sir_columns = FALSE, return_all = TRUE, ...)
@@ -122,8 +122,6 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
   version_expertrules = 3.3, ...)
 }
 \arguments{
-\item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
-
 \item{only_sir_columns}{a \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}}
 
 \item{only_treatable}{a \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
@@ -131,6 +129,8 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 \item{return_all}{a \link{logical} to indicate whether all matched columns must be returned (default is \code{TRUE}). With \code{FALSE}, only the first of each unique antimicrobial will be returned, e.g. if both columns \code{"genta"} and \code{"gentamicin"} exist in the data, only the first hit for gentamicin will be returned.}
 
 \item{...}{ignored, only in place to allow future extensions}
+
+\item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
 \item{filter}{an \link{expression} to be evaluated in the \link{antibiotics} data set, such as \code{name \%like\% "trim"}}
 
@@ -160,9 +160,9 @@ All columns in the data in which these functions are called will be searched for
 
 The \code{\link[=amr_class]{amr_class()}} function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the \link{antibiotics} data set within the columns \code{group}, \code{atc_group1} and \code{atc_group2}.
 
-The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antibiotics} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
-
 The \code{\link[=administrable_per_os]{administrable_per_os()}} and \code{\link[=administrable_iv]{administrable_iv()}} functions also rely on the \link{antibiotics} data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the \link{antibiotics} data set.
+
+The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antibiotics} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 
 The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
 }

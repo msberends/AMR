@@ -127,13 +127,15 @@ bug_drug_combinations <- function(x,
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
         m <- as.matrix(table(as.sir(x), useNA = "always"))
-        data.frame(S = m["S", ],
-                   SDD = m["SDD", ],
-                   I = m["I", ],
-                   R = m["R", ],
-                   NI = m["NI", ],
-                   na = m[which(is.na(rownames(m))), ],
-                   stringsAsFactors = FALSE)
+        data.frame(
+          S = m["S", ],
+          SDD = m["SDD", ],
+          I = m["I", ],
+          R = m["R", ],
+          NI = m["NI", ],
+          na = m[which(is.na(rownames(m))), ],
+          stringsAsFactors = FALSE
+        )
       })
       merged <- do.call(rbind_AMR, pivot)
       out_group <- data.frame(
@@ -172,20 +174,20 @@ bug_drug_combinations <- function(x,
     }
     res
   }
-  
+
   if (data_has_groups) {
     out <- apply_group(x, "run_it", groups)
   } else {
     out <- run_it(x)
   }
-  
+
   if (include_n_rows == FALSE) {
     out <- out[, colnames(out)[colnames(out) != "total_rows"], drop = FALSE]
   }
-  
+
   out <- as_original_data_class(out, class(x.bak)) # will remove tibble groups
   out <- out %pm>% pm_arrange(mo, ab)
-  class(out) <- c("bug_drug_combinations", if(data_has_groups) "grouped" else NULL, class(out))
+  class(out) <- c("bug_drug_combinations", if (data_has_groups) "grouped" else NULL, class(out))
   rownames(out) <- NULL
   out
 }

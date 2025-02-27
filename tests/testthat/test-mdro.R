@@ -55,36 +55,38 @@ expect_equal(
 
 # test Dutch P. aeruginosa MDRO
 expect_equal(
-  as.character(mdro(data.frame(
-    mo = as.mo("P. aeruginosa"),
-    cfta = "S",
-    cipr = "S",
-    mero = "S",
-    imip = "S",
-    gent = "S",
-    tobr = "S",
-    pita = "S"
-  ),
-  guideline = "BRMO",
-  col_mo = "mo",
-  info = FALSE
+  as.character(mdro(
+    data.frame(
+      mo = as.mo("P. aeruginosa"),
+      cfta = "S",
+      cipr = "S",
+      mero = "S",
+      imip = "S",
+      gent = "S",
+      tobr = "S",
+      pita = "S"
+    ),
+    guideline = "BRMO",
+    col_mo = "mo",
+    info = FALSE
   )),
   "Negative"
 )
 expect_equal(
-  as.character(mdro(data.frame(
-    mo = as.mo("P. aeruginosa"),
-    cefta = "R",
-    cipr = "R",
-    mero = "R",
-    imip = "R",
-    gent = "R",
-    tobr = "R",
-    pita = "R"
-  ),
-  guideline = "BRMO",
-  col_mo = "mo",
-  info = FALSE
+  as.character(mdro(
+    data.frame(
+      mo = as.mo("P. aeruginosa"),
+      cefta = "R",
+      cipr = "R",
+      mero = "R",
+      imip = "R",
+      gent = "R",
+      tobr = "R",
+      pita = "R"
+    ),
+    guideline = "BRMO",
+    col_mo = "mo",
+    info = FALSE
   )),
   "Positive"
 )

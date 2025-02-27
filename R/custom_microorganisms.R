@@ -250,12 +250,15 @@ add_custom_microorganisms <- function(x) {
     "_",
     trimws(
       paste(abbreviate_mo(x$genus, 5),
-            abbreviate_mo(x$species, 4, hyphen_as_space = TRUE),
-            abbreviate_mo(x$subspecies, 4, hyphen_as_space = TRUE),
-            sep = "_"),
-      whitespace = "_"))
+        abbreviate_mo(x$species, 4, hyphen_as_space = TRUE),
+        abbreviate_mo(x$subspecies, 4, hyphen_as_space = TRUE),
+        sep = "_"
+      ),
+      whitespace = "_"
+    )
+  )
   stop_if(anyDuplicated(c(as.character(AMR_env$MO_lookup$mo), x$mo)), "MO codes must be unique and not match existing MO codes of the AMR package")
-  
+
   # add to package ----
   AMR_env$custom_mo_codes <- c(AMR_env$custom_mo_codes, x$mo)
   class(AMR_env$MO_lookup$mo) <- "character"
@@ -309,19 +312,25 @@ abbreviate_mo <- function(x, minlength = 5, prefix = "", hyphen_as_space = FALSE
   }
   # keep a starting Latin ae
   suppressWarnings(
-    gsub("(\u00C6|\u00E6)+",
-         "AE",
-         toupper(
-           paste0(prefix,
-                  abbreviate(
-                    gsub("^ae",
-                         "\u00E6\u00E6",
-                         x,
-                         ignore.case = TRUE),
-                    minlength = minlength,
-                    use.classes = TRUE,
-                    method = "both.sides",
-                    ...
-                  ))))
+    gsub(
+      "(\u00C6|\u00E6)+",
+      "AE",
+      toupper(
+        paste0(
+          prefix,
+          abbreviate(
+            gsub("^ae",
+              "\u00E6\u00E6",
+              x,
+              ignore.case = TRUE
+            ),
+            minlength = minlength,
+            use.classes = TRUE,
+            method = "both.sides",
+            ...
+          )
+        )
+      )
+    )
   )
 }

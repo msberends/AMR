@@ -117,15 +117,16 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
 }
 
 # azithromycin and clarythromycin must be equal to Erythromycin
-a <- suppressWarnings(as.sir(eucast_rules(data.frame(
-  mo = example_isolates$mo,
-  ERY = example_isolates$ERY,
-  AZM = as.sir("R"),
-  CLR = factor("R"),
-  stringsAsFactors = FALSE
-),
-version_expertrules = 3.1,
-only_sir_columns = FALSE
+a <- suppressWarnings(as.sir(eucast_rules(
+  data.frame(
+    mo = example_isolates$mo,
+    ERY = example_isolates$ERY,
+    AZM = as.sir("R"),
+    CLR = factor("R"),
+    stringsAsFactors = FALSE
+  ),
+  version_expertrules = 3.1,
+  only_sir_columns = FALSE
 )$CLR))
 b <- example_isolates$ERY
 expect_identical(
@@ -160,34 +161,37 @@ expect_stdout(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, ru
 # AmpC de-repressed cephalo mutants
 
 expect_identical(
-  eucast_rules(data.frame(
-    mo = c("Escherichia coli", "Enterobacter cloacae"),
-    cefotax = as.sir(c("S", "S"))
-  ),
-  ampc_cephalosporin_resistance = TRUE,
-  info = FALSE
+  eucast_rules(
+    data.frame(
+      mo = c("Escherichia coli", "Enterobacter cloacae"),
+      cefotax = as.sir(c("S", "S"))
+    ),
+    ampc_cephalosporin_resistance = TRUE,
+    info = FALSE
   )$cefotax,
   as.sir(c("S", "R"))
 )
 
 expect_identical(
-  eucast_rules(data.frame(
-    mo = c("Escherichia coli", "Enterobacter cloacae"),
-    cefotax = as.sir(c("S", "S"))
-  ),
-  ampc_cephalosporin_resistance = NA,
-  info = FALSE
+  eucast_rules(
+    data.frame(
+      mo = c("Escherichia coli", "Enterobacter cloacae"),
+      cefotax = as.sir(c("S", "S"))
+    ),
+    ampc_cephalosporin_resistance = NA,
+    info = FALSE
   )$cefotax,
   as.sir(c("S", NA))
 )
 
 expect_identical(
-  eucast_rules(data.frame(
-    mo = c("Escherichia coli", "Enterobacter cloacae"),
-    cefotax = as.sir(c("S", "S"))
-  ),
-  ampc_cephalosporin_resistance = NULL,
-  info = FALSE
+  eucast_rules(
+    data.frame(
+      mo = c("Escherichia coli", "Enterobacter cloacae"),
+      cefotax = as.sir(c("S", "S"))
+    ),
+    ampc_cephalosporin_resistance = NULL,
+    info = FALSE
   )$cefotax,
   as.sir(c("S", "S"))
 )
@@ -208,12 +212,13 @@ expect_stdout(print(c(x, x)))
 expect_stdout(print(as.list(x, x)))
 
 # this custom rules makes 8 changes
-expect_equal(nrow(eucast_rules(example_isolates,
-  rules = "custom",
-  custom_rules = x,
-  info = FALSE,
-  verbose = TRUE
-)),
-8,
-tolerance = 0.5
+expect_equal(
+  nrow(eucast_rules(example_isolates,
+    rules = "custom",
+    custom_rules = x,
+    info = FALSE,
+    verbose = TRUE
+  )),
+  8,
+  tolerance = 0.5
 )

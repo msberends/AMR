@@ -29,8 +29,8 @@
 
 #' Export Data Set as NCBI BioSample Antibiogram
 #'
-#' 
-#' @param x a data set 
+#'
+#' @param x a data set
 #' @param filename a character string specifying the file name
 #' @param type a character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see <https://www.ncbi.nlm.nih.gov/biosample/docs/>
 #' @keywords internal
@@ -43,11 +43,11 @@ export_ncbi_biosample <- function(x,
   meet_criteria(filename, allow_class = "character", has_length = 1)
   meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("pathogen MIC", "beta-lactamase MIC"))
   meet_criteria(save_as_xlsx, allow_class = "logical", has_length = 1)
-  
+
   out <- x %pm>%
     pm_select(columns)
   stop_if(NROW(out) == 0, "No columns found.")
-  
+
   if (isTRUE(save_as_xlsx)) {
     export <- import_fn("write.xlsx", pkg = "openxlsx", error_on_fail = TRUE)
     export(out, file = filename, overwrite = TRUE, asTable = FALSE)

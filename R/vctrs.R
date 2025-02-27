@@ -59,7 +59,7 @@ vec_cast.logical.amr_selector_any_all <- function(x, to, ...) {
 }
 
 # S3: ab ----
-vec_ptype2.ab.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+vec_ptype2.ab.default <- function(x, y, ..., x_arg = "", y_arg = "") {
   x
 }
 vec_ptype2.ab.ab <- function(x, y, ...) {
@@ -73,7 +73,7 @@ vec_cast.ab.character <- function(x, to, ...) {
 }
 
 # S3: av ----
-vec_ptype2.av.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+vec_ptype2.av.default <- function(x, y, ..., x_arg = "", y_arg = "") {
   x
 }
 vec_ptype2.av.av <- function(x, y, ...) {
@@ -87,7 +87,7 @@ vec_cast.av.character <- function(x, to, ...) {
 }
 
 # S3: mo ----
-vec_ptype2.mo.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+vec_ptype2.mo.default <- function(x, y, ..., x_arg = "", y_arg = "") {
   x
 }
 vec_ptype2.mo.mo <- function(x, y, ...) {
@@ -108,7 +108,7 @@ vec_ptype_full.disk <- function(x, ...) {
 vec_ptype_abbr.disk <- function(x, ...) {
   "dsk"
 }
-vec_ptype2.disk.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+vec_ptype2.disk.default <- function(x, y, ..., x_arg = "", y_arg = "") {
   NA_disk_[0]
 }
 vec_ptype2.disk.disk <- function(x, y, ...) {
@@ -137,7 +137,7 @@ vec_cast.disk.character <- function(x, to, ...) {
 }
 
 # S3: mic ----
-vec_ptype2.mic.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+vec_ptype2.mic.default <- function(x, y, ..., x_arg = "", y_arg = "") {
   # this will make sure that currently implemented MIC levels are returned
   NA_mic_[0]
 }
@@ -181,7 +181,7 @@ vec_arith.mic <- function(op, x, y, ...) {
 }
 
 # S3: sir ----
-vec_ptype2.sir.default <- function (x, y, ..., x_arg = "", y_arg = "") {
+vec_ptype2.sir.default <- function(x, y, ..., x_arg = "", y_arg = "") {
   NA_sir_[0]
 }
 vec_ptype2.sir.sir <- function(x, y, ...) {

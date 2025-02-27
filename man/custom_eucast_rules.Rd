@@ -81,7 +81,7 @@ Rules can also be applied to multiple antibiotics and antibiotic groups simultan
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
 x
 #> A set of custom EUCAST rules:
-#> 
+#>
 #>   1. If TZP is "R" then set to "R":
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}

@@ -34,7 +34,7 @@ expect_identical(av_cid("ACI"), as.integer(135398513))
 expect_inherits(av_tradenames("ACI"), "character")
 expect_inherits(av_tradenames(c("ACI", "ACI")), "list")
 
-expect_identical(av_group("ACI", language = NULL),"Nucleosides and nucleotides excl. reverse transcriptase inhibitors")
+expect_identical(av_group("ACI", language = NULL), "Nucleosides and nucleotides excl. reverse transcriptase inhibitors")
 
 expect_identical(av_name(135398513, language = NULL), "Aciclovir")
 expect_identical(av_name("J05AB01", language = NULL), "Aciclovir")

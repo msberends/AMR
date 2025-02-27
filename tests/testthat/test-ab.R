@@ -80,15 +80,19 @@ expect_equal(
 # based on Levenshtein distance
 expect_identical(ab_name("ceftazidim/avibactam", language = NULL), "Ceftazidime/avibactam")
 
-expect_identical(as.character(as.ab(c("gentamicine High Level",
-                                      "gentamicine High",
-                                      "gentamicine (High Level)",
-                                      "gentamicine (High)",
-                                      "gentamicine HL",
-                                      "gentamicine H-L",
-                                      "gentamicine (HL)",
-                                      "gentamicine (H-L)"))),
-                 rep("GEH", 8))
+expect_identical(
+  as.character(as.ab(c(
+    "gentamicine High Level",
+    "gentamicine High",
+    "gentamicine (High Level)",
+    "gentamicine (High)",
+    "gentamicine HL",
+    "gentamicine H-L",
+    "gentamicine (HL)",
+    "gentamicine (H-L)"
+  ))),
+  rep("GEH", 8)
+)
 
 # assigning and subsetting
 x <- antibiotics$ab

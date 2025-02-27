@@ -50,7 +50,7 @@
 #' @aliases mo
 #' @details
 #' A microorganism (MO) code from this package (class: [`mo`]) is human-readable and typically looks like these examples:
-#' 
+#'
 #' ```
 #'   Code               Full name
 #'   ---------------    --------------------------------------
@@ -85,40 +85,40 @@
 #' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
 #' ### For Mycologists
-#' 
+#'
 #' The [matching score algorithm][mo_matching_score()] gives precedence to bacteria over fungi. If you are only analysing fungi, be sure to use `only_fungi = TRUE`, or better yet, add this to your code and run it once every session:
-#' 
+#'
 #' ```r
 #' options(AMR_only_fungi = TRUE)
 #' ```
-#' 
+#'
 #' This will make sure that no bacteria or other 'non-fungi' will be returned by [as.mo()], or any of the [`mo_*`][mo_property()] functions.
 #'
 #' ### Coagulase-negative and Coagulase-positive Staphylococci
-#' 
+#'
 #' With `Becker = TRUE`, the following staphylococci will be converted to their corresponding coagulase group:
-#' 
+#'
 #' * Coagulase-negative: `r vector_and(gsub("Staphylococcus", "S.", mo_name(MO_CONS[MO_CONS != "B_STPHY_CONS"], keep_synonyms = TRUE)), quotes = "*")`
 #' * Coagulase-positive: `r vector_and(gsub("Staphylococcus", "S.", mo_name(MO_COPS[MO_COPS != "B_STPHY_COPS"], keep_synonyms = TRUE)), quotes = "*")`
-#' 
+#'
 #' This is based on:
-#' 
+#'
 #' * Becker K *et al.* (2014). **Coagulase-Negative Staphylococci.** *Clin Microbiol Rev.* 27(4): 870-926; \doi{10.1128/CMR.00109-13}
 #' * Becker K *et al.* (2019). **Implications of identifying the recently defined members of the *S. aureus* complex, *S. argenteus* and *S. schweitzeri*: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).** *Clin Microbiol Infect*; \doi{10.1016/j.cmi.2019.02.028}
 #' * Becker K *et al.* (2020). **Emergence of coagulase-negative staphylococci.** *Expert Rev Anti Infect Ther.* 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-#' 
+#'
 #' For newly named staphylococcal species, such as *S. brunensis* (2024) and *S. shinii* (2023), we looked up the scientific reference to make sure the species are considered for the correct coagulase group.
-#' 
+#'
 #' ### Lancefield Groups in Streptococci
-#' 
+#'
 #' With `Lancefield = TRUE`, the following streptococci will be converted to their corresponding Lancefield group:
-#' 
+#'
 #' * `r paste(apply(aggregate(mo_name ~ mo_group_name, data = microorganisms.groups[microorganisms.groups$mo_group_name %like_case% "Streptococcus Group [A-Z]$", ], FUN = function(x) vector_and(gsub("Streptococcus", "S.", x, fixed = TRUE), quotes = "*", sort = TRUE)), 1, function(row) paste(row["mo_group_name"], ": ", row["mo_name"], sep = "")), collapse = "\n* ")`
-#' 
+#'
 #' This is based on:
-#' 
+#'
 #' * Lancefield RC (1933). **A serological differentiation of human and other groups of hemolytic streptococci.** *J Exp Med.* 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-#' 
+#'
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
 #'
 #  (source as a section here, so it can be inherited by other man pages)
@@ -161,7 +161,7 @@
 #'   "Ureaplasmium urealytica",
 #'   "Ureaplazma urealitycium"
 #' ))
-#' 
+#'
 #' # input will get cleaned up with the input given in the `cleaning_regex` argument,
 #' # which defaults to `mo_cleaning_regex()`:
 #' cat(mo_cleaning_regex(), "\n")
@@ -202,34 +202,34 @@ as.mo <- function(x,
   meet_criteria(only_fungi, allow_class = "logical", has_length = 1)
   language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-  
+
   add_MO_lookup_to_AMR_env()
-  
+
   if (tryCatch(all(x %in% c(AMR_env$MO_lookup$mo, NA)), error = function(e) FALSE) &&
-      isFALSE(Becker) &&
-      isFALSE(Lancefield) &&
-      isTRUE(keep_synonyms)) {
+    isFALSE(Becker) &&
+    isFALSE(Lancefield) &&
+    isTRUE(keep_synonyms)) {
     # don't look into valid MO codes, just return them
     # is.mo() won't work - MO codes might change between package versions
     return(set_clean_class(x, new_class = c("mo", "character")))
   }
-  
+
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
   x <- replace_old_mo_codes(x, property = "mo")
   # ignore cases that match the ignore pattern
   x <- replace_ignore_pattern(x, ignore_pattern)
-  
+
   x_lower <- tolower(x)
-  
+
   # WHONET: xxx = no growth
   x[x_lower %in% c("", "xxx", "na", "nan")] <- NA_character_
-  
+
   out <- rep(NA_character_, length(x))
-  
+
   # below we use base R's match(), known for powering '%in%', and incredibly fast!
-  
+
   # From reference_df ----
   reference_df <- repair_reference_df(reference_df)
   if (!is.null(reference_df)) {
@@ -261,38 +261,38 @@ as.mo <- function(x,
       " for ", vector_and(x[is.na(old) & !is.na(new)]), ". Run `mo_reset_session()` to reset this. This note will be shown once per session for this input."
     )
   }
-  
+
   # For all other input ----
   if (any(is.na(out) & !is.na(x))) {
     # reset uncertainties
     AMR_env$mo_uncertainties <- AMR_env$mo_uncertainties[0, ]
     AMR_env$mo_failures <- NULL
-    
+
     # Laboratory systems: remove (translated) entries like "no growth", "not E. coli", etc.
     x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
     x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") ")] <- NA_character_
-    
+
     # groups are in our taxonomic table with a capital G
     x <- gsub(" group( |$)", " Group\\1", x, perl = TRUE)
-    
+
     # run over all unique leftovers
     x_unique <- unique(x[is.na(out) & !is.na(x)])
-    
+
     # set up progress bar
     progress <- progress_ticker(n = length(x_unique), n_min = 10, print = info, title = "Converting microorganism input")
     on.exit(close(progress))
-    
+
     msg <- character(0)
-    
+
     MO_lookup_current <- AMR_env$MO_lookup
     if (isTRUE(only_fungi)) {
       MO_lookup_current <- MO_lookup_current[MO_lookup_current$kingdom == "Fungi", , drop = FALSE]
     }
-    
+
     # run it
     x_coerced <- vapply(FUN.VALUE = character(1), x_unique, function(x_search) {
       progress$tick()
-      
+
       # some required cleaning steps
       x_out <- trimws2(x_search)
       # this applies the `cleaning_regex` argument, which defaults to mo_cleaning_regex()
@@ -302,17 +302,17 @@ as.mo <- function(x,
       x_out <- tolower(x_out)
       # when x_search_cleaned are only capitals (such as in codes), make them lowercase to increase matching score
       x_search_cleaned[x_search_cleaned == toupper(x_search_cleaned)] <- x_out[x_search_cleaned == toupper(x_search_cleaned)]
-      
+
       # first check if cleaning led to an exact result, case-insensitive
       if (x_out %in% MO_lookup_current$fullname_lower) {
         return(as.character(MO_lookup_current$mo[match(x_out, MO_lookup_current$fullname_lower)]))
       }
-      
+
       # input must not be too short
       if (nchar(x_out) < 3) {
         return("UNKNOWN")
       }
-      
+
       # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
@@ -326,14 +326,14 @@ as.mo <- function(x,
           minimum_matching_score <- 0.05
         } else if (nchar(gsub("[^a-z]", "", x_parts[1], perl = TRUE)) <= 3) {
           filtr <- which(MO_lookup_current$full_first == substr(x_parts[1], 1, 1) &
-                           (MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
-                              MO_lookup_current$subspecies_first == substr(x_parts[2], 1, 1) |
-                              MO_lookup_current$subspecies_first == substr(x_parts[3], 1, 1)))
+            (MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
+              MO_lookup_current$subspecies_first == substr(x_parts[2], 1, 1) |
+              MO_lookup_current$subspecies_first == substr(x_parts[3], 1, 1)))
         } else {
           filtr <- which(MO_lookup_current$full_first == substr(x_parts[1], 1, 1) |
-                           MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
-                           MO_lookup_current$subspecies_first == substr(x_parts[2], 1, 1) |
-                           MO_lookup_current$subspecies_first == substr(x_parts[3], 1, 1))
+            MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
+            MO_lookup_current$subspecies_first == substr(x_parts[2], 1, 1) |
+            MO_lookup_current$subspecies_first == substr(x_parts[3], 1, 1))
         }
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
@@ -355,15 +355,15 @@ as.mo <- function(x,
       } else {
         # for genus or species or subspecies
         filtr <- which(MO_lookup_current$full_first == substr(x_parts, 1, 1) |
-                         MO_lookup_current$species_first == substr(x_parts, 1, 1) |
-                         MO_lookup_current$subspecies_first == substr(x_parts, 1, 1))
+          MO_lookup_current$species_first == substr(x_parts, 1, 1) |
+          MO_lookup_current$subspecies_first == substr(x_parts, 1, 1))
       }
       if (length(filtr) == 0) {
         mo_to_search <- MO_lookup_current$fullname
       } else {
         mo_to_search <- MO_lookup_current$fullname[filtr]
       }
-      
+
       AMR_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
       m <- mo_matching_score(x = x_search_cleaned, n = mo_to_search)
@@ -385,7 +385,7 @@ as.mo <- function(x,
         m[m < minimum_matching_score] <- NA_real_
         minimum_matching_score_current <- minimum_matching_score
       }
-      
+
       top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
       if (length(top_hits) == 0) {
         warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.", call = FALSE)
@@ -418,12 +418,12 @@ as.mo <- function(x,
       # the actual result:
       as.character(result_mo)
     })
-    
+
     # remove progress bar from console
     close(progress)
     # expand from unique again
     out[is.na(out)] <- x_coerced[match(x[is.na(out)], x_unique)]
-    
+
     # Throw note about uncertainties ----
     if (isTRUE(info) && NROW(AMR_env$mo_uncertainties) > 0) {
       if (message_not_thrown_before("as.mo", "uncertainties", AMR_env$mo_uncertainties$original_input)) {
@@ -446,14 +446,14 @@ as.mo <- function(x,
           "Microorganism translation was uncertain for ", examples,
           ". Run `mo_uncertainties()` to review ", plural[2], ", or use `add_custom_microorganisms()` to add custom entries."
         ))
-        
+
         for (m in msg) {
           message_(m)
         }
       }
     }
   } # end of loop over all yet unknowns
-  
+
   # Keep or replace synonyms ----
   out_current <- synonym_mo_to_accepted_mo(out, fill_in_accepted = FALSE)
   AMR_env$mo_renamed <- list(old = out[!is.na(out_current)])
@@ -466,14 +466,14 @@ as.mo <- function(x,
     # keep synonyms is TRUE, so check if any do have synonyms
     warning_("Function `as.mo()` returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " old taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.", call = FALSE)
   }
-  
+
   # Apply Becker ----
   if (!isTRUE(only_fungi) && (isTRUE(Becker) || Becker == "all")) {
     # warn when species found that are not in:
     # - Becker et al. 2014, PMID 25278577
     # - Becker et al. 2019, PMID 30872103
     # - Becker et al. 2020, PMID 32056452
-    
+
     # comment below code if all staphylococcal species are categorised as CoNS/CoPS
     post_Becker <- paste(
       "Staphylococcus",
@@ -482,13 +482,13 @@ as.mo <- function(x,
     if (any(out %in% AMR_env$MO_lookup$mo[match(post_Becker, AMR_env$MO_lookup$fullname)])) {
       if (message_not_thrown_before("as.mo", "becker")) {
         warning_("in `as.mo()`: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
-                 vector_and(font_italic(gsub("Staphylococcus", "S.", post_Becker, fixed = TRUE), collapse = NULL), quotes = FALSE),
-                 ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
-                 immediate = TRUE, call = FALSE
+          vector_and(font_italic(gsub("Staphylococcus", "S.", post_Becker, fixed = TRUE), collapse = NULL), quotes = FALSE),
+          ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
+          immediate = TRUE, call = FALSE
         )
       }
     }
-    
+
     # 'MO_CONS' and 'MO_COPS' are 'mo' vectors created in R/_pre_commit_checks.R
     out[out %in% MO_CONS] <- "B_STPHY_CONS"
     out[out %in% MO_COPS] <- "B_STPHY_COPS"
@@ -496,11 +496,11 @@ as.mo <- function(x,
       out[out == "B_STPHY_AURS"] <- "B_STPHY_COPS"
     }
   }
-  
+
   # Apply Lancefield ----
   if (!isTRUE(only_fungi) && (isTRUE(Lancefield) || Lancefield == "all")) {
     # (using `%like_case%` to also match subspecies)
-    
+
     # group A - S. pyogenes
     out[out %like_case% "^B_STRPT_PYGN(_|$)"] <- "B_STRPT_GRPA"
     # group B - S. agalactiae
@@ -521,17 +521,17 @@ as.mo <- function(x,
     out[out %like_case% "^B_STRPT_SLVR(_|$)"] <- "B_STRPT_GRPK"
     # group L - only S. dysgalactiae which is also group C & G, so ignore it here
   }
-  
+
   # All unknowns ----
   out[is.na(out) & !is.na(x)] <- "UNKNOWN"
   AMR_env$mo_failures <- unique(x[out == "UNKNOWN" & !toupper(x) %in% c("UNKNOWN", "CON", "UNK") & !x %like_case% "^[(]unknown [a-z]+[)]$" & !is.na(x)])
   if (length(AMR_env$mo_failures) > 0) {
     warning_("The following input could not be coerced and was returned as \"UNKNOWN\": ", vector_and(AMR_env$mo_failures, quotes = TRUE), ".\nYou can retrieve this list with `mo_failures()`.", call = FALSE)
   }
-  
+
   # Return class ----
   set_clean_class(out,
-                  new_class = c("mo", "character")
+    new_class = c("mo", "character")
   )
 }
 
@@ -554,13 +554,13 @@ mo_uncertainties <- function() {
 mo_renamed <- function() {
   add_MO_lookup_to_AMR_env()
   x <- AMR_env$mo_renamed
-  
+
   x$new <- synonym_mo_to_accepted_mo(x$old)
   mo_old <- AMR_env$MO_lookup$fullname[match(x$old, AMR_env$MO_lookup$mo)]
   mo_new <- AMR_env$MO_lookup$fullname[match(x$new, AMR_env$MO_lookup$mo)]
   ref_old <- AMR_env$MO_lookup$ref[match(x$old, AMR_env$MO_lookup$mo)]
   ref_new <- AMR_env$MO_lookup$ref[match(x$new, AMR_env$MO_lookup$mo)]
-  
+
   df_renamed <- data.frame(
     old = mo_old,
     new = mo_new,
@@ -594,10 +594,12 @@ mo_reset_session <- function() {
 #' @rdname as.mo
 #' @export
 mo_cleaning_regex <- function() {
-  parts_to_remove <- c("e?spp([^a-z]+|$)", "e?ssp([^a-z]+|$)", "e?ss([^a-z]+|$)", "e?sp([^a-z]+|$)", "e?subsp", "sube?species", "e?species",
-                       "biovar[a-z]*", "biotype", "serovar[a-z]*", "var([^a-z]+|$)", "serogr.?up[a-z]*",
-                       "titer", "dummy", "Ig[ADEGM]", " ?[a-z-]+[-](resistant|susceptible) ?")
-  
+  parts_to_remove <- c(
+    "e?spp([^a-z]+|$)", "e?ssp([^a-z]+|$)", "e?ss([^a-z]+|$)", "e?sp([^a-z]+|$)", "e?subsp", "sube?species", "e?species",
+    "biovar[a-z]*", "biotype", "serovar[a-z]*", "var([^a-z]+|$)", "serogr.?up[a-z]*",
+    "titer", "dummy", "Ig[ADEGM]", " ?[a-z-]+[-](resistant|susceptible) ?"
+  )
+
   paste0(
     "(",
     "[^A-Za-z- \\(\\)\\[\\]{}]+",
@@ -605,7 +607,8 @@ mo_cleaning_regex <- function() {
     "([({]|\\[).+([})]|\\])",
     "|(^| )(",
     paste0(parts_to_remove[order(1 - nchar(parts_to_remove))], collapse = "|"),
-  "))")
+    "))"
+  )
 }
 
 # UNDOCUMENTED METHODS ----------------------------------------------------
@@ -618,30 +621,30 @@ pillar_shaft.mo <- function(x, ...) {
   out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
   # and grey out every _
   out[!is.na(x)] <- gsub("_", font_subtle("_"), out[!is.na(x)])
-  
+
   # markup NA and UNKNOWN
   out[is.na(x)] <- font_na("  NA")
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
-  
+
   # markup manual codes
   out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo] <- font_blue(out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo], collapse = NULL)
-  
+
   df <- tryCatch(get_current_data(arg_name = "x", call = 0),
-                 error = function(e) NULL
+    error = function(e) NULL
   )
   if (!is.null(df)) {
     mo_cols <- vapply(FUN.VALUE = logical(1), df, is.mo)
   } else {
     mo_cols <- NULL
   }
-  
+
   all_mos <- c(AMR_env$MO_lookup$mo, NA)
   if (!all(x %in% all_mos) ||
-      (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
+    (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
     out[!x %in% all_mos] <- font_italic(
       font_na(x[!x %in% all_mos],
-              collapse = NULL
+        collapse = NULL
       ),
       collapse = NULL
     )
@@ -657,22 +660,26 @@ pillar_shaft.mo <- function(x, ...) {
       call = FALSE
     )
   }
-  
+
   # add the names to the bugs as mouse-over!
   if (tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE)) {
-    out[!x %in% c("UNKNOWN", NA)] <- font_url(url = paste0(x[!x %in% c("UNKNOWN", NA)], ": ",
-                                                           mo_name(x[!x %in% c("UNKNOWN", NA)], keep_synonyms = TRUE)),
-                                              txt = out[!x %in% c("UNKNOWN", NA)])
+    out[!x %in% c("UNKNOWN", NA)] <- font_url(
+      url = paste0(
+        x[!x %in% c("UNKNOWN", NA)], ": ",
+        mo_name(x[!x %in% c("UNKNOWN", NA)], keep_synonyms = TRUE)
+      ),
+      txt = out[!x %in% c("UNKNOWN", NA)]
+    )
   }
-  
+
   # make it always fit exactly
   max_char <- max(nchar(x))
   if (is.na(max_char)) {
     max_char <- 12
   }
   create_pillar_column(out,
-                       align = "left",
-                       width = max_char + ifelse(any(x %in% c(NA, "UNKNOWN")), 2, 0)
+    align = "left",
+    width = max_char + ifelse(any(x %in% c(NA, "UNKNOWN")), 2, 0)
   )
 }
 
@@ -695,21 +702,21 @@ freq.mo <- function(x, ...) {
     .add_header = list(
       `Gram-negative` = paste0(
         format(sum(grams == "Gram-negative", na.rm = TRUE),
-               big.mark = " ",
-               decimal.mark = "."
+          big.mark = " ",
+          decimal.mark = "."
         ),
         " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams),
-                         digits = digits
+          digits = digits
         ),
         ")"
       ),
       `Gram-positive` = paste0(
         format(sum(grams == "Gram-positive", na.rm = TRUE),
-               big.mark = " ",
-               decimal.mark = "."
+          big.mark = " ",
+          decimal.mark = "."
         ),
         " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams),
-                         digits = digits
+          digits = digits
         ),
         ")"
       ),
@@ -871,26 +878,26 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
     more_than_50 <- TRUE
     x <- x[1:50, , drop = FALSE]
   }
-  
+
   cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
-  
+
   add_MO_lookup_to_AMR_env()
-  
+
   col_red <- function(x) font_rose_bg(x, collapse = NULL)
   col_orange <- function(x) font_orange_bg(x, collapse = NULL)
   col_yellow <- function(x) font_yellow_bg(x, collapse = NULL)
   col_green <- function(x) font_green_bg(x, collapse = NULL)
-  
+
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
-                  col_red(" 0.000-0.549 "),
-                  col_orange(" 0.550-0.649 "),
-                  col_yellow(" 0.650-0.749 "),
-                  col_green(" 0.750-1.000"),
-                  add_fn = font_blue
+      col_red(" 0.000-0.549 "),
+      col_orange(" 0.550-0.649 "),
+      col_yellow(" 0.650-0.749 "),
+      col_green(" 0.750-1.000"),
+      add_fn = font_blue
     ), font_green_bg(" "), "\n", sep = "")
   }
-  
+
   score_set_colour <- function(text, scores) {
     # set colours to scores
     text[scores >= 0.75] <- col_green(text[scores >= 0.75])
@@ -899,7 +906,7 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
     text[scores < 0.55] <- col_red(text[scores < 0.55])
     text
   }
-  
+
   txt <- ""
   any_maxed_out <- FALSE
   for (i in seq_len(nrow(x))) {
@@ -911,15 +918,15 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
       }
       scores <- mo_matching_score(x = x[i, ]$input, n = candidates)
       n_candidates <- length(candidates)
-      
+
       candidates_formatted <- italicise(candidates)
       scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       scores_formatted <- score_set_colour(scores_formatted, scores)
-      
+
       # sort on descending scores
       candidates_formatted <- candidates_formatted[order(1 - scores)]
       scores_formatted <- scores_formatted[order(1 - scores)]
-      
+
       candidates <- word_wrap(
         paste0(
           "Also matched: ",
@@ -937,46 +944,46 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
     } else {
       candidates <- ""
     }
-    
+
     score <- mo_matching_score(
       x = x[i, ]$input,
       n = x[i, ]$fullname
     )
     score_formatted <- trimws(formatC(round(score, 3), format = "f", digits = 3))
     txt <- paste(txt,
-                 paste0(
-                   paste0(
-                     "", strrep(font_grey("-"), times = getOption("width", 100)), "\n",
-                     '"', x[i, ]$original_input, '"',
-                     " -> ",
-                     paste0(
-                       font_bold(italicise(x[i, ]$fullname)),
-                       " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
-                     )
-                   ),
-                   collapse = "\n"
-                 ),
-                 ifelse(x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")],
-                        paste0(
-                          strrep(" ", nchar(x[i, ]$original_input) + 6),
-                          ifelse(x[i, ]$keep_synonyms == FALSE,
-                                 # Add note if result was coerced to accepted taxonomic name
-                                 font_red(paste0("This outdated taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL),
-                                 # Or add note if result is currently another taxonomic name
-                                 font_red(paste0(font_bold("Note: "), "The current name is ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", AMR_env$MO_lookup$ref[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], ")."), collapse = NULL)
-                          )
-                        ),
-                        ""
-                 ),
-                 candidates,
-                 sep = "\n"
+      paste0(
+        paste0(
+          "", strrep(font_grey("-"), times = getOption("width", 100)), "\n",
+          '"', x[i, ]$original_input, '"',
+          " -> ",
+          paste0(
+            font_bold(italicise(x[i, ]$fullname)),
+            " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
+          )
+        ),
+        collapse = "\n"
+      ),
+      ifelse(x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")],
+        paste0(
+          strrep(" ", nchar(x[i, ]$original_input) + 6),
+          ifelse(x[i, ]$keep_synonyms == FALSE,
+            # Add note if result was coerced to accepted taxonomic name
+            font_red(paste0("This outdated taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL),
+            # Or add note if result is currently another taxonomic name
+            font_red(paste0(font_bold("Note: "), "The current name is ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", AMR_env$MO_lookup$ref[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], ")."), collapse = NULL)
+          )
+        ),
+        ""
+      ),
+      candidates,
+      sep = "\n"
     )
     txt <- gsub("[\n]+", "\n", txt)
     # remove first and last break
     txt <- gsub("(^[\n]|[\n]$)", "", txt)
     txt <- paste0("\n", txt, "\n")
   }
-  
+
   cat(txt)
   if (isTRUE(any_maxed_out)) {
     cat(font_blue(word_wrap("\nOnly the first ", n, " other matches of each record are shown. Run `print(mo_uncertainties(), n = ...)` to view more entries, or save `mo_uncertainties()` to an object.")))
@@ -994,19 +1001,19 @@ print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
     cat(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of `as.mo()` or any `mo_*()` function are stored.\n", add_fn = font_blue))
     return(invisible(NULL))
   }
-  
+
   x$ref_old[!is.na(x$ref_old)] <- paste0(" (", gsub("et al.", font_italic("et al."), x$ref_old[!is.na(x$ref_old)], fixed = TRUE), ")")
   x$ref_new[!is.na(x$ref_new)] <- paste0(" (", gsub("et al.", font_italic("et al."), x$ref_new[!is.na(x$ref_new)], fixed = TRUE), ")")
   x$ref_old[is.na(x$ref_old)] <- " (author unknown)"
   x$ref_new[is.na(x$ref_new)] <- " (author unknown)"
-  
+
   rows <- seq_len(min(NROW(x), n))
-  
+
   message_(
     "The following microorganism", ifelse(NROW(x) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":\n",
     paste0("  ", AMR_env$bullet_icon, " ", font_italic(x$old[rows], collapse = NULL), x$ref_old[rows],
-           "  ->  ", font_italic(x$new[rows], collapse = NULL), x$ref_new[rows],
-           collapse = "\n"
+      "  ->  ", font_italic(x$new[rows], collapse = NULL), x$ref_new[rows],
+      collapse = "\n"
     ),
     ifelse(NROW(x) > n, paste0("\n\nOnly the first ", n, " (out of ", NROW(x), ") are shown. Run `print(mo_renamed(), n = ...)` to view more entries (might be slow), or save `mo_renamed()` to an object."), "")
   )
@@ -1018,28 +1025,28 @@ convert_colloquial_input <- function(x) {
   x.bak <- trimws2(x)
   x <- trimws2(tolower(x))
   out <- rep(NA_character_, length(x))
-  
+
   # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRPB)
   out[x %like_case% "^g[abcdefghijkl]s$"] <- gsub("g([abcdefghijkl])s",
-                                                  "B_STRPT_GRP\\U\\1",
-                                                  x[x %like_case% "^g[abcdefghijkl]s$"],
-                                                  perl = TRUE
+    "B_STRPT_GRP\\U\\1",
+    x[x %like_case% "^g[abcdefghijkl]s$"],
+    perl = TRUE
   )
   # Streptococci in different languages, like "estreptococos grupo B"
   out[x %like_case% "strepto[ck]o[ck][a-zA-Z ]* [abcdefghijkl]$"] <- gsub(".*e?strepto[ck]o[ck].* ([abcdefghijkl])$",
-                                                                  "B_STRPT_GRP\\U\\1",
-                                                                  x[x %like_case% "strepto[ck]o[ck][a-zA-Z ]* [abcdefghijkl]$"],
-                                                                  perl = TRUE
+    "B_STRPT_GRP\\U\\1",
+    x[x %like_case% "strepto[ck]o[ck][a-zA-Z ]* [abcdefghijkl]$"],
+    perl = TRUE
   )
   out[x %like_case% "strep[a-z]* group [abcdefghijkl]$"] <- gsub(".* ([abcdefghijkl])$",
-                                                                 "B_STRPT_GRP\\U\\1",
-                                                                 x[x %like_case% "strep[a-z]* group [abcdefghijkl]$"],
-                                                                 perl = TRUE
+    "B_STRPT_GRP\\U\\1",
+    x[x %like_case% "strep[a-z]* group [abcdefghijkl]$"],
+    perl = TRUE
   )
   out[x %like_case% "group [abcdefghijkl] strepto[ck]o[ck]"] <- gsub(".*group ([abcdefghijkl]) strepto[ck]o[ck].*",
-                                                                     "B_STRPT_GRP\\U\\1",
-                                                                     x[x %like_case% "group [abcdefghijkl] strepto[ck]o[ck]"],
-                                                                     perl = TRUE
+    "B_STRPT_GRP\\U\\1",
+    x[x %like_case% "group [abcdefghijkl] strepto[ck]o[ck]"],
+    perl = TRUE
   )
   out[x %like_case% "ha?emoly.*strep"] <- "B_STRPT_HAEM"
   out[x %like_case% "(strepto.* [abcg, ]{2,4}$)"] <- "B_STRPT_ABCG"
@@ -1047,23 +1054,23 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "mil+er+i gr"] <- "B_STRPT_MILL"
   out[x %like_case% "((strepto|^s).* viridans|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
   out[x %like_case% "(viridans.* (strepto|^s).*|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
-  
+
   # Salmonella in different languages, like "Salmonella grupo B"
   out[x %like_case% "salmonella.* [abcdefgh]$"] <- gsub(".*salmonella.* ([abcdefgh])$",
-                                                        "B_SLMNL_GRP\\U\\1",
-                                                        x[x %like_case% "salmonella.* [abcdefgh]$"],
-                                                        perl = TRUE
+    "B_SLMNL_GRP\\U\\1",
+    x[x %like_case% "salmonella.* [abcdefgh]$"],
+    perl = TRUE
   )
   out[x %like_case% "group [abcdefgh] salmonella"] <- gsub(".*group ([abcdefgh]) salmonella*",
-                                                           "B_SLMNL_GRP\\U\\1",
-                                                           x[x %like_case% "group [abcdefgh] salmonella"],
-                                                           perl = TRUE
+    "B_SLMNL_GRP\\U\\1",
+    x[x %like_case% "group [abcdefgh] salmonella"],
+    perl = TRUE
   )
-  
+
   # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
   out[x %like_case% "([ck]oagulas[ea].negatie?[vf]|^[ck]o?ns[^a-z]*$)"] <- "B_STPHY_CONS"
   out[x %like_case% "([ck]oagulas[ea].positie?[vf]|^[ck]o?ps[^a-z]*$)"] <- "B_STPHY_COPS"
-  
+
   # Gram stains
   out[x %like_case% "gram[ -]?neg.*"] <- "B_GRAMN"
   out[x %like_case% "( |^)gram[-]( |$)"] <- "B_GRAMN"
@@ -1073,17 +1080,17 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "anaerob[a-z]+ .*gram[ -]?pos.*"] <- "B_ANAER-POS"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ bacter"] <- "B_ANAER"
-  
+
   # coryneform bacteria
   out[x %like_case% "^coryneform"] <- "B_CORYNF"
-  
+
   # yeasts and fungi
   out[x %like_case% "(^| )yeast?"] <- "F_YEAST"
   out[x %like_case% "(^| )fung(us|i)"] <- "F_FUNGUS"
-  
+
   # protozoa
   out[x %like_case% "protozo"] <- "P_PROTOZOAN" # to hit it with most languages, and "protozo" does not occur in the microorganisms data set for anything else
-  
+
   # trivial names known to the field
   out[x %like_case% "meningo[ck]o[ck]"] <- "B_NESSR_MNNG"
   out[x %like_case% "gono[ck]o[ck]"] <- "B_NESSR_GNRR"
@@ -1095,11 +1102,11 @@ convert_colloquial_input <- function(x) {
 
   # unexisting names (con is the WHONET code for contamination)
   out[x %in% c("con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
-  
+
   # WHONET has a lot of E. coli and Vibrio cholerae names
   out[x %like_case% "escherichia coli"] <- "B_ESCHR_COLI"
   out[x %like_case% "vibrio cholerae"] <- "B_VIBRI_CHLR"
-  
+
   out
 }
 
@@ -1191,7 +1198,7 @@ replace_old_mo_codes <- function(x, property) {
         name <- gsub(" .*", " ", name, fixed = TRUE)
         name <- paste0("^", name)
         results <- AMR_env$MO_lookup$mo[AMR_env$MO_lookup$kingdom %like_case% kingdom &
-                                          AMR_env$MO_lookup$fullname_lower %like_case% name]
+          AMR_env$MO_lookup$fullname_lower %like_case% name]
         if (length(results) > 1) {
           all_direct_matches <<- FALSE
         }
@@ -1228,8 +1235,8 @@ replace_old_mo_codes <- function(x, property) {
         "to ", ifelse(n_solved == 1, "a ", ""),
         "currently used MO code", ifelse(n_solved == 1, "", "s"),
         ifelse(n_unsolved > 0,
-               paste0(" and ", n_unsolved, " old MO code", ifelse(n_unsolved == 1, "", "s"), " could not be updated."),
-               "."
+          paste0(" and ", n_unsolved, " old MO code", ifelse(n_unsolved == 1, "", "s"), " could not be updated."),
+          "."
         )
       )
     }
@@ -1258,27 +1265,29 @@ repair_reference_df <- function(reference_df) {
   # has valid own reference_df
   reference_df <- reference_df %pm>%
     pm_filter(!is.na(mo))
-  
+
   # keep only first two columns, second must be mo
   if (colnames(reference_df)[1] == "mo") {
     reference_df <- reference_df %pm>% pm_select(2, "mo")
   } else {
     reference_df <- reference_df %pm>% pm_select(1, "mo")
   }
-  
+
   # remove factors, just keep characters
   colnames(reference_df)[1] <- "x"
   reference_df[, "x"] <- as.character(reference_df[, "x", drop = TRUE])
   reference_df[, "mo"] <- as.character(reference_df[, "mo", drop = TRUE])
-  
+
   # some MO codes might be old
   reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE], reference_df = NULL)
   reference_df
 }
 
 get_mo_uncertainties <- function() {
-  remember <- list(uncertainties = AMR_env$mo_uncertainties,
-                   failures = AMR_env$mo_failures)
+  remember <- list(
+    uncertainties = AMR_env$mo_uncertainties,
+    failures = AMR_env$mo_failures
+  )
   # empty them, otherwise e.g. mo_shortname("Chlamydophila psittaci") will give 3 notes
   AMR_env$mo_uncertainties <- NULL
   AMR_env$mo_failures <- NULL
@@ -1300,9 +1309,9 @@ synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR
   out <- x
   is_still_synonym <- dataset$status[match(out, dataset$mo)] == "synonym"
   limit <- 0
-  while(any(is_still_synonym, na.rm = TRUE) && limit < 5) {
+  while (any(is_still_synonym, na.rm = TRUE) && limit < 5) {
     limit <- limit + 1
-    
+
     # make sure to get the latest name, e.g. Fusarium pulicaris robiniae was first renamed to Fusarium roseum, then to Fusarium sambucinum
     # we need the MO of Fusarium pulicaris robiniae to return the MO of Fusarium sambucinum
     must_be_corrected <- !is.na(is_still_synonym) & is_still_synonym
@@ -1316,13 +1325,13 @@ synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR
 
     is_still_synonym <- dataset$status[match(out, dataset$mo)] == "synonym"
   }
-  
+
   x_no_synonym <- dataset$status[match(x, dataset$mo)] != "synonym"
   out[x_no_synonym] <- NA_character_
   if (isTRUE(fill_in_accepted)) {
     out[!is.na(x_no_synonym) & x_no_synonym] <- x[!is.na(x_no_synonym) & x_no_synonym]
   }
-  
+
   out[is.na(match(x, dataset$mo))] <- NA_character_
   out
 }

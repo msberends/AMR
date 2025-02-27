@@ -183,7 +183,7 @@ Code example:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
             wisca = TRUE)
-            
+
 # this is equal to:
 wisca(your_data,
       antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
@@ -343,12 +343,14 @@ antibiogram(example_isolates,
 antibiogram(example_isolates,
   antibiotics = aminoglycosides(),
   ab_transform = "atc",
-  mo_transform = "gramstain")
+  mo_transform = "gramstain"
+)
 
 antibiogram(example_isolates,
   antibiotics = carbapenems(),
   ab_transform = "name",
-  mo_transform = "name")
+  mo_transform = "name"
+)
 
 
 # Combined antibiogram -------------------------------------------------
@@ -356,14 +358,16 @@ antibiogram(example_isolates,
 # combined antibiotics yield higher empiric coverage
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain")
+  mo_transform = "gramstain"
+)
 
 # names of antibiotics do not need to resemble columns exactly:
 antibiogram(example_isolates,
   antibiotics = c("Cipro", "cipro + genta"),
   mo_transform = "gramstain",
   ab_transform = "name",
-  sep = " & ")
+  sep = " & "
+)
 
 
 # Syndromic antibiogram ------------------------------------------------
@@ -371,7 +375,8 @@ antibiogram(example_isolates,
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
   antibiotics = c(aminoglycosides(), carbapenems()),
-  syndromic_group = "ward")
+  syndromic_group = "ward"
+)
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
@@ -384,7 +389,8 @@ antibiogram(ex1,
   syndromic_group = ifelse(ex1$ward == "ICU",
     "UCI", "No UCI"
   ),
-  language = "es")
+  language = "es"
+)
 
 
 # WISCA antibiogram ----------------------------------------------------
@@ -393,7 +399,8 @@ antibiogram(ex1,
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward",
-  wisca = TRUE)
+  wisca = TRUE
+)
 
 
 # Print the output for R Markdown / Quarto -----------------------------
@@ -401,7 +408,8 @@ antibiogram(example_isolates,
 ureido <- antibiogram(example_isolates,
   antibiotics = ureidopenicillins(),
   syndromic_group = "ward",
-  wisca = TRUE)
+  wisca = TRUE
+)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -414,11 +422,13 @@ if (requireNamespace("knitr")) {
 
 ab1 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-  mo_transform = "gramstain")
+  mo_transform = "gramstain"
+)
 ab2 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain",
-  syndromic_group = "ward")
+  syndromic_group = "ward"
+)
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)

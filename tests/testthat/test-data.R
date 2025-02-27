@@ -68,9 +68,9 @@ if (AMR:::pkg_is_available("tibble")) {
 
 df <- AMR:::AMR_env$MO_lookup
 expect_true(all(c(
-  "mo", "fullname", "status", "kingdom", "phylum", "class", "order", 
-  "family", "genus", "species", "subspecies", "rank", "ref", "source", 
-  "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", 
+  "mo", "fullname", "status", "kingdom", "phylum", "class", "order",
+  "family", "genus", "species", "subspecies", "rank", "ref", "source",
+  "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence",
   "snomed", "kingdom_index", "fullname_lower", "full_first", "species_first"
 ) %in% colnames(df)))
 

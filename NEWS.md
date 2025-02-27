@@ -1,4 +1,4 @@
-# AMR 2.1.1.9160
+# AMR 2.1.1.9163
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -62,6 +62,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
   * Added Efflux (`EFF`), to allow mapping to AMRFinderPlus
   * Added Tigemonam (`TNM`), a monobactam
+  * Added over 1,500 trade names
 * MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)
   * Fixed a bug in `as.mic()` that failed translation of scientifically formatted numbers
@@ -76,12 +77,11 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * `mo_info()` now contains an extra element `rank` and `group_members` (with the contents of the new `mo_group_members()` function)
 * Updated all ATC codes from WHOCC
 * Updated all antibiotic DDDs from WHOCC
-* Added over 1,500 trade names for antibiotics
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fixed a bug for when `antibiogram()` returns an empty data set
 * Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy, including the new function `as_reset_session()` to remove earlier coercions.
-* Improved overall algorithm of `as.mo()` for better performance and accuracy. Specifically:
+* Improved overall algorithm of `as.mo()` for better performance and accuracy, specifically:
   * More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species
   * Genera from the World Health Organization's (WHO) Priority Pathogen List now have the highest prevalence
 * Fixed a bug for `sir_confidence_interval()` when there are no isolates available

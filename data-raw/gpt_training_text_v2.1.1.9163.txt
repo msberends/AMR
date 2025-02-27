@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9160. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9163. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1824,7 +1824,7 @@ Code example:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
             antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
             wisca = TRUE)
-            
+
 # this is equal to:
 wisca(your_data,
       antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
@@ -1984,12 +1984,14 @@ antibiogram(example_isolates,
 antibiogram(example_isolates,
   antibiotics = aminoglycosides(),
   ab_transform = "atc",
-  mo_transform = "gramstain")
+  mo_transform = "gramstain"
+)
 
 antibiogram(example_isolates,
   antibiotics = carbapenems(),
   ab_transform = "name",
-  mo_transform = "name")
+  mo_transform = "name"
+)
 
 
 # Combined antibiogram -------------------------------------------------
@@ -1997,14 +1999,16 @@ antibiogram(example_isolates,
 # combined antibiotics yield higher empiric coverage
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain")
+  mo_transform = "gramstain"
+)
 
 # names of antibiotics do not need to resemble columns exactly:
 antibiogram(example_isolates,
   antibiotics = c("Cipro", "cipro + genta"),
   mo_transform = "gramstain",
   ab_transform = "name",
-  sep = " & ")
+  sep = " & "
+)
 
 
 # Syndromic antibiogram ------------------------------------------------
@@ -2012,7 +2016,8 @@ antibiogram(example_isolates,
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
   antibiotics = c(aminoglycosides(), carbapenems()),
-  syndromic_group = "ward")
+  syndromic_group = "ward"
+)
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
@@ -2025,7 +2030,8 @@ antibiogram(ex1,
   syndromic_group = ifelse(ex1$ward == "ICU",
     "UCI", "No UCI"
   ),
-  language = "es")
+  language = "es"
+)
 
 
 # WISCA antibiogram ----------------------------------------------------
@@ -2034,7 +2040,8 @@ antibiogram(ex1,
 antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward",
-  wisca = TRUE)
+  wisca = TRUE
+)
 
 
 # Print the output for R Markdown / Quarto -----------------------------
@@ -2042,7 +2049,8 @@ antibiogram(example_isolates,
 ureido <- antibiogram(example_isolates,
   antibiotics = ureidopenicillins(),
   syndromic_group = "ward",
-  wisca = TRUE)
+  wisca = TRUE
+)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -2055,11 +2063,13 @@ if (requireNamespace("knitr")) {
 
 ab1 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
-  mo_transform = "gramstain")
+  mo_transform = "gramstain"
+)
 ab2 <- antibiogram(example_isolates,
   antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain",
-  syndromic_group = "ward")
+  syndromic_group = "ward"
+)
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)
@@ -2181,8 +2191,6 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobial_selectors.Rd':
 % Please edit documentation in R/amr_selectors.R
 \name{antimicrobial_selectors}
 \alias{antimicrobial_selectors}
-\alias{amr_class}
-\alias{amr_selector}
 \alias{aminoglycosides}
 \alias{aminopenicillins}
 \alias{antifungals}
@@ -2214,17 +2222,13 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobial_selectors.Rd':
 \alias{tetracyclines}
 \alias{trimethoprims}
 \alias{ureidopenicillins}
+\alias{amr_class}
+\alias{amr_selector}
 \alias{administrable_per_os}
 \alias{administrable_iv}
 \alias{not_intrinsic_resistant}
 \title{Antimicrobial Selectors}
 \usage{
-amr_class(amr_class, only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
-
-amr_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
-
 aminoglycosides(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
@@ -2293,6 +2297,12 @@ trimethoprims(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 ureidopenicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
+amr_class(amr_class, only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
+
+amr_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
+
 administrable_per_os(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 administrable_iv(only_sir_columns = FALSE, return_all = TRUE, ...)
@@ -2301,8 +2311,6 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
   version_expertrules = 3.3, ...)
 }
 \arguments{
-\item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
-
 \item{only_sir_columns}{a \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}}
 
 \item{only_treatable}{a \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
@@ -2310,6 +2318,8 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 \item{return_all}{a \link{logical} to indicate whether all matched columns must be returned (default is \code{TRUE}). With \code{FALSE}, only the first of each unique antimicrobial will be returned, e.g. if both columns \code{"genta"} and \code{"gentamicin"} exist in the data, only the first hit for gentamicin will be returned.}
 
 \item{...}{ignored, only in place to allow future extensions}
+
+\item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
 \item{filter}{an \link{expression} to be evaluated in the \link{antibiotics} data set, such as \code{name \%like\% "trim"}}
 
@@ -2339,9 +2349,9 @@ All columns in the data in which these functions are called will be searched for
 
 The \code{\link[=amr_class]{amr_class()}} function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the \link{antibiotics} data set within the columns \code{group}, \code{atc_group1} and \code{atc_group2}.
 
-The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antibiotics} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
-
 The \code{\link[=administrable_per_os]{administrable_per_os()}} and \code{\link[=administrable_iv]{administrable_iv()}} functions also rely on the \link{antibiotics} data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the \link{antibiotics} data set.
+
+The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antibiotics} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 
 The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
 }
@@ -3533,69 +3543,97 @@ if (require("dplyr")) {
   df_wide \%>\% mutate(across(where(is.mic), as.sir))
   df_wide \%>\% mutate_at(vars(amoxicillin:tobra), as.sir)
   df_wide \%>\% mutate(across(amoxicillin:tobra, as.sir))
-  
+
   # approaches that all work with additional arguments:
   df_long \%>\%
     # given a certain data type, e.g. MIC values
     mutate_if(is.mic, as.sir,
-              mo = "bacteria",
-              ab = "antibiotic",
-              guideline = "CLSI")
+      mo = "bacteria",
+      ab = "antibiotic",
+      guideline = "CLSI"
+    )
   df_long \%>\%
-    mutate(across(where(is.mic),
-                  function(x) as.sir(x,
-                                     mo = "bacteria",
-                                     ab = "antibiotic",
-                                     guideline = "CLSI")))
+    mutate(across(
+      where(is.mic),
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          ab = "antibiotic",
+          guideline = "CLSI"
+        )
+      }
+    ))
   df_wide \%>\%
     # given certain columns, e.g. from 'cipro' to 'genta'
     mutate_at(vars(cipro:genta), as.sir,
-              mo = "bacteria",
-              guideline = "CLSI")
+      mo = "bacteria",
+      guideline = "CLSI"
+    )
   df_wide \%>\%
-    mutate(across(cipro:genta,
-                       function(x) as.sir(x,
-                                          mo = "bacteria",
-                                          guideline = "CLSI")))
-                       
+    mutate(across(
+      cipro:genta,
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          guideline = "CLSI"
+        )
+      }
+    ))
+
   # for veterinary breakpoints, add 'host':
   df_long$animal_species <- c("cats", "dogs", "horses", "cattle")
   df_long \%>\%
     # given a certain data type, e.g. MIC values
     mutate_if(is.mic, as.sir,
-              mo = "bacteria",
-              ab = "antibiotic",
-              host = "animal_species",
-              guideline = "CLSI")
+      mo = "bacteria",
+      ab = "antibiotic",
+      host = "animal_species",
+      guideline = "CLSI"
+    )
   df_long \%>\%
-    mutate(across(where(is.mic),
-                  function(x) as.sir(x,
-                                     mo = "bacteria",
-                                     ab = "antibiotic",
-                                     host = "animal_species",
-                                     guideline = "CLSI")))
+    mutate(across(
+      where(is.mic),
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          ab = "antibiotic",
+          host = "animal_species",
+          guideline = "CLSI"
+        )
+      }
+    ))
   df_wide \%>\%
     mutate_at(vars(cipro:genta), as.sir,
-              mo = "bacteria",
-              ab = "antibiotic",
-              host = "animal_species",
-              guideline = "CLSI")
+      mo = "bacteria",
+      ab = "antibiotic",
+      host = "animal_species",
+      guideline = "CLSI"
+    )
   df_wide \%>\%
-    mutate(across(cipro:genta,
-                       function(x) as.sir(x,
-                                          mo = "bacteria",
-                                          host = "animal_species",
-                                          guideline = "CLSI")))
-  
+    mutate(across(
+      cipro:genta,
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          host = "animal_species",
+          guideline = "CLSI"
+        )
+      }
+    ))
+
   # to include information about urinary tract infections (UTI)
-  data.frame(mo = "E. coli",
-             nitrofuratoin = c("<= 2", 32),
-             from_the_bladder = c(TRUE, FALSE)) \%>\%
+  data.frame(
+    mo = "E. coli",
+    nitrofuratoin = c("<= 2", 32),
+    from_the_bladder = c(TRUE, FALSE)
+  ) \%>\%
     as.sir(uti = "from_the_bladder")
 
-  data.frame(mo = "E. coli",
-             nitrofuratoin = c("<= 2", 32),
-             specimen = c("urine", "blood")) \%>\%
+  data.frame(
+    mo = "E. coli",
+    nitrofuratoin = c("<= 2", 32),
+    specimen = c("urine", "blood")
+  ) \%>\%
     as.sir() # automatically determines urine isolates
 
   df_wide \%>\%
@@ -4438,7 +4476,7 @@ Rules can also be applied to multiple antibiotics and antibiotic groups simultan
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
 x
 #> A set of custom EUCAST rules:
-#> 
+#>
 #>   1. If TZP is "R" then set to "R":
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}
@@ -5624,8 +5662,10 @@ if (require("ggplot2") && require("dplyr")) {
   ) \%>\%
     ggplot() +
     geom_col(aes(x = x, y = y, fill = z)) +
-    scale_sir_colours(aesthetics = "fill",
-                      Value4 = "S", Value5 = "I", Value6 = "R")
+    scale_sir_colours(
+      aesthetics = "fill",
+      Value4 = "S", Value5 = "I", Value6 = "R"
+    )
 }
 if (require("ggplot2") && require("dplyr")) {
   # resistance of ciprofloxacine per age group
@@ -7031,10 +7071,12 @@ mo_rank("Klebsiella pneumoniae")
 mo_url("Klebsiella pneumoniae")
 mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 
-mo_group_members(c("Streptococcus group A",
-                   "Streptococcus group C",
-                   "Streptococcus group G",
-                   "Streptococcus group L"))
+mo_group_members(c(
+  "Streptococcus group A",
+  "Streptococcus group C",
+  "Streptococcus group G",
+  "Streptococcus group L"
+))
 
 
 # scientific reference -----------------------------------------------------
@@ -7547,7 +7589,6 @@ some_mic_values <- random_mic(size = 100)
 some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
 some_sir_values <- random_sir(50, prob_SIR = c(0.55, 0.05, 0.30))
 
-
 \donttest{
 # Plotting using ggplot2's autoplot() for MIC, disk, and SIR -----------
 if (require("ggplot2")) {
@@ -7559,17 +7600,23 @@ if (require("ggplot2")) {
 }
 if (require("ggplot2")) {
   # support for 20 languages, various guidelines, and many options
-  autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro",
-           guideline = "CLSI 2024", language = "no",
-           title = "Disk diffusion from the North")
+  autoplot(some_disk_values,
+    mo = "Escherichia coli", ab = "cipro",
+    guideline = "CLSI 2024", language = "no",
+    title = "Disk diffusion from the North"
+  )
 }
 
 
 # Plotting using scale_x_mic() -----------------------------------------
 if (require("ggplot2")) {
-  mic_plot <- ggplot(data.frame(mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
-                                counts = c(1, 1, 2, 2, 3, 3)),
-                     aes(mics, counts)) +
+  mic_plot <- ggplot(
+    data.frame(
+      mics = as.mic(c(0.25, "<=4", 4, 8, 32, ">=32")),
+      counts = c(1, 1, 2, 2, 3, 3)
+    ),
+    aes(mics, counts)
+  ) +
     geom_col()
   mic_plot +
     labs(title = "without scale_x_mic()")
@@ -7600,17 +7647,25 @@ if (require("ggplot2")) {
 some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
 
 if (require("ggplot2")) {
-  ggplot(data.frame(mic = some_mic_values,
-                    group = some_groups),
-         aes(group, mic)) +
+  ggplot(
+    data.frame(
+      mic = some_mic_values,
+      group = some_groups
+    ),
+    aes(group, mic)
+  ) +
     geom_boxplot() +
     geom_violin(linetype = 2, colour = "grey", fill = NA) +
     scale_y_mic()
 }
 if (require("ggplot2")) {
-  ggplot(data.frame(mic = some_mic_values,
-                    group = some_groups),
-         aes(group, mic)) +
+  ggplot(
+    data.frame(
+      mic = some_mic_values,
+      group = some_groups
+    ),
+    aes(group, mic)
+  ) +
     geom_boxplot() +
     geom_violin(linetype = 2, colour = "grey", fill = NA) +
     scale_y_mic(mic_range = c(NA, 0.25))
@@ -7619,9 +7674,13 @@ if (require("ggplot2")) {
 
 # Plotting using scale_x_sir() -----------------------------------------
 if (require("ggplot2")) {
-  ggplot(data.frame(x = c("I", "R", "S"),
-                    y = c(45,323, 573)),
-         aes(x, y)) +
+  ggplot(
+    data.frame(
+      x = c("I", "R", "S"),
+      y = c(45, 323, 573)
+    ),
+    aes(x, y)
+  ) +
     geom_col() +
     scale_x_sir()
 }
@@ -7629,16 +7688,21 @@ if (require("ggplot2")) {
 
 # Plotting using scale_y_mic() and scale_colour_sir() ------------------
 if (require("ggplot2")) {
-  plain <- ggplot(data.frame(mic = some_mic_values,
-                             group = some_groups,
-                             sir = as.sir(some_mic_values,
-                                          mo = "E. coli",
-                                          ab = "cipro")),
-                  aes(x = group, y = mic, colour = sir)) +
+  plain <- ggplot(
+    data.frame(
+      mic = some_mic_values,
+      group = some_groups,
+      sir = as.sir(some_mic_values,
+        mo = "E. coli",
+        ab = "cipro"
+      )
+    ),
+    aes(x = group, y = mic, colour = sir)
+  ) +
     theme_minimal() +
     geom_boxplot(fill = NA, colour = "grey") +
     geom_jitter(width = 0.25)
-  
+
   plain
 }
 if (require("ggplot2")) {
@@ -7650,8 +7714,10 @@ if (require("ggplot2")) {
 if (require("ggplot2")) {
   plain +
     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
-    scale_colour_sir(language = "pt",
-                     name = "Support in 20 languages")
+    scale_colour_sir(
+      language = "pt",
+      name = "Support in 20 languages"
+    )
 }
 }
 
@@ -8247,15 +8313,18 @@ This function is useful for preprocessing data before creating \link[=antibiogra
 \examples{
 # filter to the top 3 species:
 top_n_microorganisms(example_isolates,
-                     n = 3)
+  n = 3
+)
 
 # filter to any species in the top 5 genera:
 top_n_microorganisms(example_isolates,
-                     n = 5, property = "genus")
+  n = 5, property = "genus"
+)
 
 # filter to the top 3 species in each of the top 5 genera:
 top_n_microorganisms(example_isolates,
-                     n = 5, property = "genus", n_for_each = 3)
+  n = 5, property = "genus", n_for_each = 3
+)
 }
 \seealso{
 \code{\link[=mo_property]{mo_property()}}, \code{\link[=as.mo]{as.mo()}}, \code{\link[=antibiogram]{antibiogram()}}

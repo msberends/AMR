@@ -32,7 +32,7 @@
 #' @description These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations.
 #'
 #' In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up using:
-#' 
+#'
 #' ```r
 #' library(dplyr)
 #' my_data_with_all_these_columns %>%
@@ -46,7 +46,7 @@
 #' @param ... ignored, only in place to allow future extensions
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and `data.table`. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but are not limited to `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
-#' 
+#'
 #' All selectors can also be used in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using antimicrobial selectors for predictive modelling.
 #'
 #' All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
@@ -72,88 +72,88 @@
 #'
 #' # Though they are primarily intended to use for selections and filters.
 #' # Examples sections below are split into 'dplyr', 'base R', and 'data.table':
-#' 
+#'
 #' \donttest{
 #' \dontrun{
 #' # dplyr -------------------------------------------------------------------
-#' 
+#'
 #' library(dplyr, warn.conflicts = FALSE)
-#' 
+#'
 #' example_isolates %>% select(carbapenems())
-#' 
+#'
 #' # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
 #' example_isolates %>% select(mo, aminoglycosides())
-#' 
+#'
 #' # you can combine selectors like you are used with tidyverse
 #' # e.g., for betalactams, but not the ones with an enzyme inhibitor:
 #' example_isolates %>% select(betalactams(), -betalactams_with_inhibitor())
-#' 
+#'
 #' # select only antimicrobials with DDDs for oral treatment
 #' example_isolates %>% select(administrable_per_os())
-#' 
+#'
 #' # get AMR for all aminoglycosides e.g., per ward:
 #' example_isolates %>%
 #'   group_by(ward) %>%
 #'   summarise(across(aminoglycosides(),
 #'                    resistance))
-#' 
+#'
 #' # You can combine selectors with '&' to be more specific:
 #' example_isolates %>%
 #'   select(penicillins() & administrable_per_os())
-#' 
+#'
 #' # get AMR for only drugs that matter - no intrinsic resistance:
 #' example_isolates %>%
 #'   filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>%
 #'   group_by(ward) %>%
 #'   summarise_at(not_intrinsic_resistant(),
 #'                resistance)
-#' 
+#'
 #' # get susceptibility for antimicrobials whose name contains "trim":
 #' example_isolates %>%
 #'   filter(first_isolate()) %>%
 #'   group_by(ward) %>%
 #'   summarise(across(amr_selector(name %like% "trim"), susceptibility))
-#' 
+#'
 #' # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
 #' example_isolates %>%
 #'   select(carbapenems())
-#' 
+#'
 #' # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
 #' example_isolates %>%
 #'   select(mo, aminoglycosides())
-#' 
+#'
 #' # any() and all() work in dplyr's filter() too:
 #' example_isolates %>%
 #'   filter(
 #'     any(aminoglycosides() == "R"),
 #'     all(cephalosporins_2nd() == "R")
 #'   )
-#' 
+#'
 #' # also works with c():
 #' example_isolates %>%
 #'   filter(any(c(carbapenems(), aminoglycosides()) == "R"))
-#' 
+#'
 #' # not setting any/all will automatically apply all():
 #' example_isolates %>%
 #'   filter(aminoglycosides() == "R")
-#' 
+#'
 #' # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
 #' example_isolates %>%
 #'   select(mo, amr_class("mycobact"))
-#' 
+#'
 #' # get bug/drug combinations for only glycopeptides in Gram-positives:
 #' example_isolates %>%
 #'   filter(mo_is_gram_positive()) %>%
 #'   select(mo, glycopeptides()) %>%
 #'   bug_drug_combinations() %>%
 #'   format()
-#' 
+#'
 #' data.frame(
 #'   some_column = "some_value",
 #'   J01CA01 = "S"
 #' ) %>% # ATC code of ampicillin
 #'   select(penicillins()) # only the 'J01CA01' column will be selected
-#' 
+#'
 #' # with recent versions of dplyr, this is all equal:
 #' x <- example_isolates[carbapenems() == "R", ]
 #' y <- example_isolates %>% filter(carbapenems() == "R")
@@ -231,57 +231,6 @@
 #'   dt[any(carbapenems() == "S"), penicillins(), with = FALSE]
 #' }
 #' }
-amr_class <- function(amr_class,
-                      only_sir_columns = FALSE,
-                      only_treatable = TRUE,
-                      return_all = TRUE,
-                      ...) {
-  meet_criteria(amr_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  meet_criteria(return_all, allow_class = "logical", has_length = 1)
-  amr_select_exec(NULL, only_sir_columns = only_sir_columns, amr_class_args = amr_class, only_treatable = only_treatable, return_all = return_all)
-}
-
-#' @rdname antimicrobial_selectors
-#' @details The [amr_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
-#' @export
-amr_selector <- function(filter,
-                         only_sir_columns = FALSE,
-                         only_treatable = TRUE,
-                         return_all = TRUE,
-                         ...) {
-  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  meet_criteria(return_all, allow_class = "logical", has_length = 1)
-  
-  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-  # but it only takes a couple of milliseconds
-  vars_df <- get_current_data(arg_name = NA, call = -2)
-  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df,
-                               info = FALSE, only_sir_columns = only_sir_columns,
-                               sort = FALSE, fn = "amr_selector", return_all = return_all
-  )
-  call <- substitute(filter)
-  agents <- tryCatch(AMR_env$AB_lookup[which(eval(call, envir = AMR_env$AB_lookup)), "ab", drop = TRUE],
-                     error = function(e) stop_(e$message, call = -5)
-  )
-  agents <- ab_in_data[ab_in_data %in% agents]
-  message_agent_names(
-    function_name = "amr_selector",
-    agents = agents,
-    ab_group = NULL,
-    examples = "",
-    call = call
-  )
-  structure(unname(agents),
-            class = c("amr_selector", "character")
-  )
-}
-
-#' @rdname antimicrobial_selectors
-#' @export
 aminoglycosides <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
@@ -536,6 +485,57 @@ ureidopenicillins <- function(only_sir_columns = FALSE, return_all = TRUE, ...) 
 #' @rdname antimicrobial_selectors
 #' @details The [administrable_per_os()] and [administrable_iv()] functions also rely on the [antibiotics] data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the [antibiotics] data set.
 #' @export
+amr_class <- function(amr_class,
+                      only_sir_columns = FALSE,
+                      only_treatable = TRUE,
+                      return_all = TRUE,
+                      ...) {
+  meet_criteria(amr_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  meet_criteria(return_all, allow_class = "logical", has_length = 1)
+  amr_select_exec(NULL, only_sir_columns = only_sir_columns, amr_class_args = amr_class, only_treatable = only_treatable, return_all = return_all)
+}
+
+#' @rdname antimicrobial_selectors
+#' @details The [amr_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
+#' @export
+amr_selector <- function(filter,
+                         only_sir_columns = FALSE,
+                         only_treatable = TRUE,
+                         return_all = TRUE,
+                         ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  meet_criteria(return_all, allow_class = "logical", has_length = 1)
+
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df,
+    info = FALSE, only_sir_columns = only_sir_columns,
+    sort = FALSE, fn = "amr_selector", return_all = return_all
+  )
+  call <- substitute(filter)
+  agents <- tryCatch(AMR_env$AB_lookup[which(eval(call, envir = AMR_env$AB_lookup)), "ab", drop = TRUE],
+    error = function(e) stop_(e$message, call = -5)
+  )
+  agents <- ab_in_data[ab_in_data %in% agents]
+  message_agent_names(
+    function_name = "amr_selector",
+    agents = agents,
+    ab_group = NULL,
+    examples = "",
+    call = call
+  )
+  structure(unname(agents),
+    class = c("amr_selector", "character")
+  )
+}
+
+#' @rdname antimicrobial_selectors
+#' @export
 administrable_per_os <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)
@@ -544,8 +544,8 @@ administrable_per_os <- function(only_sir_columns = FALSE, return_all = TRUE, ..
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df,
-                               info = FALSE, only_sir_columns = only_sir_columns,
-                               sort = FALSE, fn = "administrable_per_os", return_all = return_all
+    info = FALSE, only_sir_columns = only_sir_columns,
+    sort = FALSE, fn = "administrable_per_os", return_all = return_all
   )
   agents_all <- AMR_env$AB_lookup[which(!is.na(AMR_env$AB_lookup$oral_ddd)), "ab", drop = TRUE]
   agents <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% ab_in_data & !is.na(AMR_env$AB_lookup$oral_ddd)), "ab", drop = TRUE]
@@ -559,8 +559,8 @@ administrable_per_os <- function(only_sir_columns = FALSE, return_all = TRUE, ..
       vector_or(
         ab_name(
           sample(agents_all,
-                 size = min(5, length(agents_all)),
-                 replace = FALSE
+            size = min(5, length(agents_all)),
+            replace = FALSE
           ),
           tolower = TRUE,
           language = NULL
@@ -571,7 +571,7 @@ administrable_per_os <- function(only_sir_columns = FALSE, return_all = TRUE, ..
     )
   )
   structure(unname(agents),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 
@@ -585,8 +585,8 @@ administrable_iv <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df,
-                               info = FALSE, only_sir_columns = only_sir_columns,
-                               sort = FALSE, fn = "administrable_iv", return_all = return_all
+    info = FALSE, only_sir_columns = only_sir_columns,
+    sort = FALSE, fn = "administrable_iv", return_all = return_all
   )
   agents_all <- AMR_env$AB_lookup[which(!is.na(AMR_env$AB_lookup$iv_ddd)), "ab", drop = TRUE]
   agents <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% ab_in_data & !is.na(AMR_env$AB_lookup$iv_ddd)), "ab", drop = TRUE]
@@ -598,7 +598,7 @@ administrable_iv <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
     examples = ""
   )
   structure(unname(agents),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 
@@ -613,30 +613,30 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df,
-                               info = FALSE, only_sir_columns = only_sir_columns,
-                               sort = FALSE, fn = "not_intrinsic_resistant", return_all = TRUE
+    info = FALSE, only_sir_columns = only_sir_columns,
+    sort = FALSE, fn = "not_intrinsic_resistant", return_all = TRUE
   )
   # intrinsic vars
   vars_df_R <- tryCatch(
     sapply(
       eucast_rules(vars_df,
-                   col_mo = col_mo,
-                   version_expertrules = version_expertrules,
-                   rules = "expert",
-                   info = FALSE
+        col_mo = col_mo,
+        version_expertrules = version_expertrules,
+        rules = "expert",
+        info = FALSE
       ),
       function(col) {
         tryCatch(!any(is.na(col)) && all(col == "R"),
-                 error = function(e) FALSE
+          error = function(e) FALSE
         )
       }
     ),
     error = function(e) stop_("in not_intrinsic_resistant(): ", e$message, call = FALSE)
   )
-  
+
   agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]
   if (length(agents) > 0 &&
-      message_not_thrown_before("not_intrinsic_resistant", sort(agents))) {
+    message_not_thrown_before("not_intrinsic_resistant", sort(agents))) {
     agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
     agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
     need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
@@ -647,12 +647,12 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
       vector_and(agents_formatted, quotes = FALSE, sort = FALSE)
     )
   }
-  
+
   vars_df_R <- names(vars_df_R)[which(!vars_df_R)]
   # find columns that are abx, but also intrinsic R
   out <- unname(intersect(ab_in_data, vars_df_R))
   structure(out,
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 
@@ -667,13 +667,14 @@ amr_select_exec <- function(function_name,
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   if (!is.null(vars_df)) {
     ab_in_data <- get_column_abx(vars_df,
-                                 info = FALSE,
-                                 only_sir_columns = only_sir_columns,
-                                 sort = FALSE,
-                                 fn = function_name,
-                                 return_all = return_all)
+      info = FALSE,
+      only_sir_columns = only_sir_columns,
+      sort = FALSE,
+      fn = function_name,
+      return_all = return_all
+    )
   }
-  
+
   # untreatable drugs
   if (!is.null(vars_df) && only_treatable == TRUE) {
     untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam)"), "ab", drop = TRUE]
@@ -683,8 +684,8 @@ amr_select_exec <- function(function_name,
           "in `", function_name, "()`: some drugs were ignored since they cannot be used for treating patients: ",
           vector_and(
             ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
-                    language = NULL,
-                    tolower = TRUE
+              language = NULL,
+              tolower = TRUE
             ),
             quotes = FALSE,
             sort = TRUE
@@ -694,12 +695,12 @@ amr_select_exec <- function(function_name,
       ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]
     }
   }
-  
+
   if (!is.null(vars_df) && length(ab_in_data) == 0) {
     message_("No antimicrobial drugs found in the data.")
     return(NULL)
   }
-  
+
   if (is.null(amr_class_args) || isTRUE(function_name %in% c("antifungals", "antimycobacterials"))) {
     ab_group <- NULL
     if (isTRUE(function_name == "antifungals")) {
@@ -727,8 +728,8 @@ amr_select_exec <- function(function_name,
     }
     examples <- paste0(" (such as ", vector_or(
       ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
-              tolower = TRUE,
-              language = NULL
+        tolower = TRUE,
+        language = NULL
       ),
       quotes = FALSE
     ), ")")
@@ -744,16 +745,16 @@ amr_select_exec <- function(function_name,
     function_name <- "amr_class"
     examples <- paste0(" (such as ", find_ab_names(amr_class_args, 2), ")")
   }
-  
+
   if (is.null(vars_df)) {
     # no data found, no antimicrobials, so no input. Happens if users run e.g. `aminoglycosides()` as a separate command.
     # print.ab will cover the additional printing text
     return(structure(sort(abx), amr_selector = function_name))
   }
-  
+
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% abx]
-  
+
   message_agent_names(
     function_name = function_name,
     agents = agents,
@@ -761,9 +762,9 @@ amr_select_exec <- function(function_name,
     examples = examples,
     amr_class_args = amr_class_args
   )
-  
+
   structure(unname(agents),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 
@@ -772,7 +773,8 @@ amr_select_exec <- function(function_name,
 #' @noRd
 print.amr_selector <- function(x, ...) {
   warning_("It should never be needed to print an antimicrobial selector class. Are you using data.table? Then add the argument `with = FALSE`, see our examples at `?amr_selector`.",
-           immediate = TRUE)
+    immediate = TRUE
+  )
   cat("Class 'amr_selector'\n")
   print(as.character(x), quote = FALSE)
 }
@@ -782,7 +784,7 @@ print.amr_selector <- function(x, ...) {
 #' @noRd
 c.amr_selector <- function(...) {
   structure(unlist(lapply(list(...), as.character)),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 
@@ -795,13 +797,13 @@ all_any_amr_selector <- function(type, ..., na.rm = TRUE) {
   }
   cols_ab <- cols_ab[!cols_ab %in% result]
   df <- get_current_data(arg_name = NA, call = -3)
-  
+
   if (type == "all") {
     scope_fn <- all
   } else {
     scope_fn <- any
   }
-  
+
   x_transposed <- as.list(as.data.frame(t(df[, cols_ab, drop = FALSE]), stringsAsFactors = FALSE))
   vapply(
     FUN.VALUE = logical(1),
@@ -875,7 +877,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
     }
   }
   structure(all_any_amr_selector(type = type, e1, e2),
-            class = c("amr_selector_any_all", "logical")
+    class = c("amr_selector_any_all", "logical")
   )
 }
 
@@ -903,7 +905,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
   sir <- c("S", "SDD", "I", "R", "NI")
   e2 <- sir[sir != e2]
   structure(all_any_amr_selector(type = type, e1, e2),
-            class = c("amr_selector_any_all", "logical")
+    class = c("amr_selector_any_all", "logical")
   )
 }
 
@@ -914,7 +916,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
   # this is only required for base R, since tidyselect has already implemented this
   # e.g., for: example_isolates[, penicillins() & administrable_per_os()]
   structure(intersect(unclass(e1), unclass(e2)),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 #' @method | amr_selector
@@ -924,7 +926,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
   # this is only required for base R, since tidyselect has already implemented this
   # e.g., for: example_isolates[, penicillins() | administrable_per_os()]
   structure(union(unclass(e1), unclass(e2)),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 
@@ -943,8 +945,8 @@ find_ab_group <- function(amr_class_args) {
   amr_class_args <- gsub("[^a-zA-Z0-9]", ".*", amr_class_args)
   AMR_env$AB_lookup %pm>%
     subset(group %like% amr_class_args |
-             atc_group1 %like% amr_class_args |
-             atc_group2 %like% amr_class_args) %pm>%
+      atc_group1 %like% amr_class_args |
+      atc_group2 %like% amr_class_args) %pm>%
     pm_pull(group) %pm>%
     unique() %pm>%
     tolower() %pm>%
@@ -954,26 +956,26 @@ find_ab_group <- function(amr_class_args) {
 
 find_ab_names <- function(ab_group, n = 3) {
   ab_group <- gsub("[^a-zA-Z|0-9]", ".*", ab_group)
-  
+
   # try popular first, they have DDDs
   drugs <- AMR_env$AB_lookup[which((!is.na(AMR_env$AB_lookup$iv_ddd) | !is.na(AMR_env$AB_lookup$oral_ddd)) &
-                                     AMR_env$AB_lookup$name %unlike% " " &
-                                     AMR_env$AB_lookup$group %like% ab_group &
-                                     AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
+    AMR_env$AB_lookup$name %unlike% " " &
+    AMR_env$AB_lookup$group %like% ab_group &
+    AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
   if (length(drugs) < n) {
     # now try it all
     drugs <- AMR_env$AB_lookup[which((AMR_env$AB_lookup$group %like% ab_group |
-                                        AMR_env$AB_lookup$atc_group1 %like% ab_group |
-                                        AMR_env$AB_lookup$atc_group2 %like% ab_group) &
-                                       AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
+      AMR_env$AB_lookup$atc_group1 %like% ab_group |
+      AMR_env$AB_lookup$atc_group2 %like% ab_group) &
+      AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
   }
   if (length(drugs) == 0) {
     return("??")
   }
   vector_or(
     ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
-            tolower = TRUE,
-            language = NULL
+      tolower = TRUE,
+      language = NULL
     ),
     quotes = FALSE
   )
@@ -999,11 +1001,11 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
       message_(
         "For `", function_name, "(",
         ifelse(function_name == "amr_class",
-               paste0("\"", amr_class_args, "\""),
-               ifelse(!is.null(call),
-                      paste0(deparse(call), collapse = " "),
-                      ""
-               )
+          paste0("\"", amr_class_args, "\""),
+          ifelse(!is.null(call),
+            paste0(deparse(call), collapse = " "),
+            ""
+          )
         ),
         ")` using ",
         ifelse(length(agents) == 1, "column ", "columns "),

@@ -83,9 +83,9 @@
 #' * `guideline = "BRMO"`
 #'
 #'   The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" ([link](https://www.sri-richtlijnen.nl/brmo))
-#'   
+#'
 #'   Also:
-#'   
+#'
 #'   * `guideline = "BRMO 2017"`
 #'
 #'     The former Dutch national guideline - Werkgroep Infectiepreventie (WIP), RIVM, last revision as of 2017: "Bijzonder Resistente Micro-Organismen (BRMO)"
@@ -219,7 +219,7 @@ mdro <- function(x = NULL,
   if (!any(is_sir_eligible(x))) {
     stop_("There were no possible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
   }
-  
+
   # get gene values as TRUE/FALSE
   if (is.character(esbl)) {
     meet_criteria(esbl, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
@@ -263,7 +263,7 @@ mdro <- function(x = NULL,
   } else if (length(vanB) == 1) {
     vanB <- rep(vanB, NROW(x))
   }
-  
+
   info.bak <- info
   # don't throw info's more than once per call
   if (isTRUE(info)) {
@@ -780,14 +780,14 @@ mdro <- function(x = NULL,
           )
         }
       )
-      
+
       if (any_all == "any") {
         search_function <- any
       } else if (any_all == "all") {
         search_function <- all
       }
       x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE]),
-                                            stringsAsFactors = FALSE
+        stringsAsFactors = FALSE
       ))
       rows_affected <- vapply(
         FUN.VALUE = logical(1),
@@ -799,18 +799,20 @@ mdro <- function(x = NULL,
       rows_not_to_change <- rows[!rows %in% c(rows_affected, rows_to_change)]
       rows_not_to_change <- rows_not_to_change[is.na(x[rows_not_to_change, "reason"])]
       if (is.null(reason)) {
-        reason <- paste0(any_all,
-                         " of the required antibiotics ",
-                         ifelse(any_all == "any", "is", "are"),
-                         " R",
-                         ifelse(!isTRUE(combine_SI), " or I", ""))
+        reason <- paste0(
+          any_all,
+          " of the required antibiotics ",
+          ifelse(any_all == "any", "is", "are"),
+          " R",
+          ifelse(!isTRUE(combine_SI), " or I", "")
+        )
       }
       x[rows_to_change, "MDRO"] <<- to
       x[rows_to_change, "reason"] <<- reason
       x[rows_not_to_change, "reason"] <<- "guideline criteria not met"
     }
   }
-  
+
   trans_tbl2 <- function(txt, rows, lst) {
     if (isTRUE(info)) {
       message_(txt, "...", appendLF = FALSE, as_note = FALSE)
@@ -1519,7 +1521,7 @@ mdro <- function(x = NULL,
     if (length(ESBLs) != 2) {
       ESBLs <- character(0)
     }
-    
+
     # Enterobacterales
     if (length(ESBLs) > 0) {
       trans_tbl(
@@ -1561,9 +1563,9 @@ mdro <- function(x = NULL,
     trans_tbl(
       3,
       rows = which(x[[SXT]] == "R" &
-              (x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
-              (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
-              (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c("Citrobacter freundii", "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
+        (x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
+        (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
+        (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c("Citrobacter freundii", "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
       cols = c(SXT, aminoglycosides, fluoroquinolones),
       any_all = "any",
       reason = "Enterobacterales group II: aminoglycoside + fluoroquinolone + cotrimoxazol"
@@ -1571,20 +1573,20 @@ mdro <- function(x = NULL,
     trans_tbl(
       3,
       rows = which(x[[SXT]] == "R" &
-              x[[GEN]] == "R" &
-              (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
-              paste(x$genus, x$species) == "Serratia marcescens"),
+        x[[GEN]] == "R" &
+        (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
+        paste(x$genus, x$species) == "Serratia marcescens"),
       cols = c(SXT, aminoglycosides_serratia_marcescens, fluoroquinolones),
       any_all = "any",
       reason = "Enterobacterales group II: aminoglycoside + fluoroquinolone + cotrimoxazol"
     )
-    
+
     # Acinetobacter baumannii-calcoaceticus complex
     trans_tbl(
       3,
       rows = which((x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
-              (x[[CIP]] == "R" | x[[LVX]] == "R") &
-              x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]),
+        (x[[CIP]] == "R" | x[[LVX]] == "R") &
+        x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]),
       cols = c(aminoglycosides, CIP, LVX),
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: aminoglycoside + ciprofloxacin or levofloxacin"
@@ -1603,7 +1605,7 @@ mdro <- function(x = NULL,
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: carbapenemase"
     )
-    
+
     # Pseudomonas aeruginosa
     if (ab_missing(PIP) && !ab_missing(TZP)) {
       # take pip/tazo if just pip is not available - many labs only test for pip/tazo because of availability on a Vitek card
@@ -1645,7 +1647,7 @@ mdro <- function(x = NULL,
       any_all = "any",
       reason = "E. faecium: vanA/vanB gene + penicillin group"
     )
-    
+
     # Staphylococcus aureus
     trans_tbl(
       2,
@@ -1661,7 +1663,7 @@ mdro <- function(x = NULL,
       any_all = "any",
       reason = "S. aureus: mecA/mecC gene"
     )
-    
+
     # Candida auris
     trans_tbl(
       3,
@@ -1671,7 +1673,7 @@ mdro <- function(x = NULL,
       reason = "C. auris: regardless of resistance"
     )
   }
-  
+
   if (guideline$code == "brmo2017") {
     # Netherlands 2017 --------------------------------------------------------
     aminoglycosides <- aminoglycosides[!is.na(aminoglycosides)]
@@ -1684,7 +1686,7 @@ mdro <- function(x = NULL,
     if (length(ESBLs) != 2) {
       ESBLs <- character(0)
     }
-    
+
     # Table 1
     trans_tbl(
       3,
@@ -1692,21 +1694,21 @@ mdro <- function(x = NULL,
       c(aminoglycosides, fluoroquinolones),
       "all"
     )
-    
+
     trans_tbl(
       2,
       which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
       carbapenems,
       "any"
     )
-    
+
     trans_tbl(
       2,
       which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
       ESBLs,
       "all"
     )
-    
+
     # Table 2
     trans_tbl(
       2,
@@ -1720,19 +1722,19 @@ mdro <- function(x = NULL,
       c(aminoglycosides, fluoroquinolones),
       "all"
     )
-    
+
     trans_tbl(
       3,
       which(x$genus == "Stenotrophomonas" & x$species == "maltophilia"),
       SXT,
       "all"
     )
-    
+
     if (!ab_missing(MEM) && !ab_missing(IPM) &&
-        !ab_missing(GEN) && !ab_missing(TOB) &&
-        !ab_missing(CIP) &&
-        !ab_missing(CAZ) &&
-        !ab_missing(TZP)) {
+      !ab_missing(GEN) && !ab_missing(TOB) &&
+      !ab_missing(CIP) &&
+      !ab_missing(CAZ) &&
+      !ab_missing(TZP)) {
       x$psae <- 0
       x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"]
       x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"]
@@ -1749,7 +1751,7 @@ mdro <- function(x = NULL,
       "any"
     )
     x[which(x$genus == "Pseudomonas" & x$species == "aeruginosa" & x$psae >= 3), "reason"] <- paste0("at least 3 classes contain R", ifelse(!isTRUE(combine_SI), " or I", ""))
-    
+
     # Table 3
     trans_tbl(
       3,
@@ -1848,7 +1850,7 @@ mdro <- function(x = NULL,
         " (3 required for MDR)"
       )
     } else {
-      #x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
+      # x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
     }
   }
 
@@ -1881,7 +1883,7 @@ mdro <- function(x = NULL,
   } else if (isTRUE(info.bak)) {
     cat("\n")
   }
-  
+
   if (isTRUE(info.bak) && !isTRUE(verbose)) {
     cat("\nRerun with 'verbose = TRUE' to retrieve detailed info and reasons for every MDRO classification.\n")
   }
@@ -1932,8 +1934,8 @@ mdro <- function(x = NULL,
       ordered = TRUE
     )
   }
-  
-  
+
+
   if (isTRUE(verbose)) {
     # fill in empty reasons
     x$reason[is.na(x$reason)] <- "not covered by guideline"

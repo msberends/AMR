@@ -254,7 +254,6 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
           if (message_not_thrown_before("sir_calc_df", combine_SI, entire_session = TRUE)) {
             message_("Note that `sir_calc_df()` will also count dose-dependent susceptibility, 'SDD', as 'SI' when `combine_SI = TRUE`. This note will be shown once for this session.", as_note = FALSE)
           }
-          
         }
         data[, i] <- gsub("(I|S|SDD)", "SI", data[, i, drop = TRUE])
       }
@@ -359,12 +358,12 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
     # don't use as.sir() here, as it would add the class 'sir' and we would like
     # the same data structure as output, regardless of input
     if (out$value[out$interpretation == "SDD"] > 0) {
-      out$interpretation <- factor(out$interpretation, levels = c("S", "SDD", "I", "R"), ordered = TRUE)  
+      out$interpretation <- factor(out$interpretation, levels = c("S", "SDD", "I", "R"), ordered = TRUE)
     } else {
       out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)
     }
   }
-  
+
   out <- out[!is.na(out$interpretation), , drop = FALSE]
 
   if (data_has_groups) {
@@ -383,6 +382,6 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
     # remove redundant columns
     out <- subset(out, select = -c(ci_min, ci_max, isolates))
   }
-  
+
   as_original_data_class(out, class(data.bak), extra_class = "sir_df") # will remove tibble groups
 }

@@ -128,7 +128,7 @@ atc_online_property <- function(atc_code,
 
   for (i in seq_len(length(atc_code))) {
     progress$tick()
-    
+
     if (is.na(atc_code[i])) {
       next
     }

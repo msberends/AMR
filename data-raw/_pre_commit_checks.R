@@ -627,11 +627,14 @@ suppressMessages(set_AMR_locale("English"))
 usethis::ui_info("Checking URLs for redirects")
 invisible(urlchecker::url_update("."))
 
+# Style pkg ---------------------------------------------------------------
+usethis::ui_info("Styling package")
+styler::style_pkg(include_roxygen_examples = FALSE,
+                  exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
 
 # Document pkg ------------------------------------------------------------
 usethis::ui_info("Documenting package")
 suppressMessages(devtools::document(quiet = TRUE))
-
 
 # Finished ----------------------------------------------------------------
 usethis::ui_done("All done")
