@@ -17,7 +17,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9160</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9163</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,13 +68,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">amr_class</span><span class="op">(</span><span class="va">amr_class</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">amr_selector</span><span class="op">(</span><span class="va">filter</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">aminoglycosides</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">aminoglycosides</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">aminopenicillins</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -142,6 +136,12 @@ my_data_with_all_these_columns %&amp;gt;%
 <span></span>
 <span><span class="fu">ureidopenicillins</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">amr_class</span><span class="op">(</span><span class="va">amr_class</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">amr_selector</span><span class="op">(</span><span class="va">filter</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">administrable_per_os</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">administrable_iv</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -154,11 +154,7 @@ my_data_with_all_these_columns %&amp;gt;%
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-amr-class">amr_class<a class="anchor" aria-label="anchor" href="#arg-amr-class"></a></dt>
-<dd><p>an antimicrobial class or a part of it, such as <code>"carba"</code> and <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href="antibiotics.html">antibiotics</a> data set will be searched (case-insensitive) for this value.</p></dd>
-
-
-<dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>
+<dl><dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only columns of class <code>sir</code> must be selected (default is <code>FALSE</code>), see <code><a href="as.sir.html">as.sir()</a></code></p></dd>
 
 
@@ -172,6 +168,10 @@ my_data_with_all_these_columns %&amp;gt;%
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>ignored, only in place to allow future extensions</p></dd>
+
+
+<dt id="arg-amr-class">amr_class<a class="anchor" aria-label="anchor" href="#arg-amr-class"></a></dt>
+<dd><p>an antimicrobial class or a part of it, such as <code>"carba"</code> and <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href="antibiotics.html">antibiotics</a> data set will be searched (case-insensitive) for this value.</p></dd>
 
 
 <dt id="arg-filter">filter<a class="anchor" aria-label="anchor" href="#arg-filter"></a></dt>
@@ -196,8 +196,8 @@ my_data_with_all_these_columns %&amp;gt;%
 <p>All selectors can also be used in <code>tidymodels</code> packages such as <code>recipe</code> and <code>parsnip</code>. See for more info <a href="https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html">our tutorial</a> on using antimicrobial selectors for predictive modelling.</p>
 <p>All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the <a href="antibiotics.html">antibiotics</a> data set. This means that a selector such as <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
 <p>The <code>amr_class()</code> function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the <a href="antibiotics.html">antibiotics</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
-<p>The <code>amr_selector()</code> function can be used to internally filter the <a href="antibiotics.html">antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
 <p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href="antibiotics.html">antibiotics</a> data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href="antibiotics.html">antibiotics</a> data set.</p>
+<p>The <code>amr_selector()</code> function can be used to internally filter the <a href="antibiotics.html">antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
 <p>The <code>not_intrinsic_resistant()</code> function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
     </div>
     <div class="section level2">

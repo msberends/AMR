@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9160</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9163</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -461,69 +461,97 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">amoxicillin</span><span class="op">:</span><span class="va">tobra</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">amoxicillin</span><span class="op">:</span><span class="va">tobra</span>, <span class="va">as.sir</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># approaches that all work with additional arguments:</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="co"># given a certain data type, e.g. MIC values</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>,</span></span>
-<span class="r-in"><span>              mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>              ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
-<span class="r-in"><span>              guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>      ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
+<span class="r-in"><span>      guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                                     mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>                                     ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
-<span class="r-in"><span>                                     guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
+<span class="r-in"><span>          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>          ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
+<span class="r-in"><span>          guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="co"># given certain columns, e.g. from 'cipro' to 'genta'</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>,</span></span>
-<span class="r-in"><span>              mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>              guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>      guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span>,</span></span>
-<span class="r-in"><span>                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                                          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>                                          guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>                       </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="va">cipro</span><span class="op">:</span><span class="va">genta</span>,</span></span>
+<span class="r-in"><span>      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
+<span class="r-in"><span>          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>          guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># for veterinary breakpoints, add 'host':</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span><span class="op">$</span><span class="va">animal_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cats"</span>, <span class="st">"dogs"</span>, <span class="st">"horses"</span>, <span class="st">"cattle"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="co"># given a certain data type, e.g. MIC values</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>,</span></span>
-<span class="r-in"><span>              mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>              ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
-<span class="r-in"><span>              host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
-<span class="r-in"><span>              guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>      ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
+<span class="r-in"><span>      host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
+<span class="r-in"><span>      guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                                     mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>                                     ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
-<span class="r-in"><span>                                     host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
-<span class="r-in"><span>                                     guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
+<span class="r-in"><span>          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>          ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
+<span class="r-in"><span>          host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
+<span class="r-in"><span>          guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>,</span></span>
-<span class="r-in"><span>              mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>              ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
-<span class="r-in"><span>              host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
-<span class="r-in"><span>              guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>      ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
+<span class="r-in"><span>      host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
+<span class="r-in"><span>      guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span>,</span></span>
-<span class="r-in"><span>                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                                          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
-<span class="r-in"><span>                                          host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
-<span class="r-in"><span>                                          guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="va">cipro</span><span class="op">:</span><span class="va">genta</span>,</span></span>
+<span class="r-in"><span>      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>,</span></span>
+<span class="r-in"><span>          mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
+<span class="r-in"><span>          host <span class="op">=</span> <span class="st">"animal_species"</span>,</span></span>
+<span class="r-in"><span>          guideline <span class="op">=</span> <span class="st">"CLSI"</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># to include information about urinary tract infections (UTI)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
-<span class="r-in"><span>             nitrofuratoin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>             from_the_bladder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
+<span class="r-in"><span>    nitrofuratoin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    from_the_bladder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">as.sir</span><span class="op">(</span>uti <span class="op">=</span> <span class="st">"from_the_bladder"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
-<span class="r-in"><span>             nitrofuratoin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>             specimen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"urine"</span>, <span class="st">"blood"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
+<span class="r-in"><span>    nitrofuratoin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    specimen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"urine"</span>, <span class="st">"blood"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">as.sir</span><span class="op">(</span><span class="op">)</span> <span class="co"># automatically determines urine isolates</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -782,16 +810,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 57 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given mo_given host_given ab   mo              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-02-26 <span style="color: #949494;">21:30:46</span>     4 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-02-26 <span style="color: #949494;">21:30:53</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-02-26 <span style="color: #949494;">21:30:53</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-02-26 <span style="color: #949494;">21:30:54</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-02-26 <span style="color: #949494;">21:30:54</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-02-26 <span style="color: #949494;">21:30:46</span>     3 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-02-26 <span style="color: #949494;">21:30:53</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-02-26 <span style="color: #949494;">21:30:53</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-02-26 <span style="color: #949494;">21:30:54</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-02-26 <span style="color: #949494;">21:30:54</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-02-27 <span style="color: #949494;">13:15:27</span>     4 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-02-27 <span style="color: #949494;">13:15:34</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-02-27 <span style="color: #949494;">13:15:34</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-02-27 <span style="color: #949494;">13:15:35</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-02-27 <span style="color: #949494;">13:15:35</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-02-27 <span style="color: #949494;">13:15:27</span>     3 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-02-27 <span style="color: #949494;">13:15:34</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-02-27 <span style="color: #949494;">13:15:34</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-02-27 <span style="color: #949494;">13:15:35</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-02-27 <span style="color: #949494;">13:15:35</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 47 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;chr&gt;, outcome &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
