@@ -59,12 +59,15 @@ jobs:
             any::roxygen2
             any::devtools
             any::usethis
-
-      - name: Lint
+            
+      - name: Remove unneeded folders
         run: |
-          # no not check these folders
+          # do not check these folders
           rm -rf data-raw
           rm -rf tests
+          
+      - name: Lint
+        run: |
           # old: lintr::lint_package(linters = lintr::with_defaults(line_length_linter = NULL, trailing_whitespace_linter = NULL, object_name_linter = NULL, cyclocomp_linter = NULL, object_length_linter = lintr::object_length_linter(length = 50L)), exclusions = list("R/aa_helper_pm_functions.R"))
           # now get ALL linters, not just default ones
           linters <- getNamespaceExports(asNamespace("lintr"))
