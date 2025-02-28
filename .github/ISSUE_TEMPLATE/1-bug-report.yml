@@ -31,8 +31,10 @@ body:
   - type: checkboxes
     id: version-stable
     attributes:
-      label: .
+      label:  
       description: Or click
       options:
         - label: I use the latest CRAN version
+          required: false
+        - label: I use one of the latest GitHub versions
           required: false
