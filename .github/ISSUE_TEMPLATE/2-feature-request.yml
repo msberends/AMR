@@ -16,12 +16,12 @@ body:
       placeholder: Description
     validations:
       required: true
-- type: checkboxes
-  id: field-impact
-  attributes:
-    label: Impacted Field
-    description: Which field are probably impacted by this? You may select more than one, or choose none at all.
-    options:
-      - label: Medical (human) microbiology
-      - label: Veterinary microbiology
-      - label: Environmental microbiology
+  - type: checkboxes
+    id: field-impact
+    attributes:
+      label: Impacted Field
+      description: Which field are probably impacted by this? You may select more than one, or choose none at all.
+      options:
+        - label: Medical (human) microbiology
+        - label: Veterinary microbiology
+        - label: Environmental microbiology
