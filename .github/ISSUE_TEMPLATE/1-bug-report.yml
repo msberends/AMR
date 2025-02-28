@@ -1,0 +1,31 @@
+name: Bug Report
+description: File a bug report.
+labels: "bug"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! You're probably improving the lives of many AMR package users :)
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a clear and concise description.
+      placeholder: Description
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: AMR Package Version
+      description: What version of the AMR package are you running? You can retrieve this by running `packageVersion("AMR")` in R.
+    validations:
+      required: true
+  - type: checkboxes
+    id: version-stable
+    attributes:
+      label: ""
+      description: Or click:
+      options:
+        - label: I use the latest CRAN version
+          required: false
