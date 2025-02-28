@@ -24,7 +24,7 @@ body:
   - type: checkboxes
     id: version-stable
     attributes:
-      label: ""
+      label: AMR Package Version
       description: Or click
       options:
         - label: I use the latest CRAN version
