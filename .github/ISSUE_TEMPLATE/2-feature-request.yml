@@ -1,4 +1,4 @@
-name: Feature Request
+name: Feature or Optimisation Request
 description: I have a suggestion.
 labels: "enhancement"
 body:
@@ -20,7 +20,7 @@ body:
     id: field-impact
     attributes:
       label: Impacted Field
-      description: Which field are probably impacted by this? You may select more than one, or choose none at all.
+      description: Which field is probably impacted by this? You may select more than one, or choose none at all.
       options:
         - label: Medical (human) microbiology
         - label: Veterinary microbiology
