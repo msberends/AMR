@@ -25,7 +25,7 @@ body:
     id: version-stable
     attributes:
       label: ""
-      description: Or click:
+      description: Or click
       options:
         - label: I use the latest CRAN version
           required: false
