@@ -32,3 +32,13 @@ body:
         - One of the latest GitHub versions (2.1.1.9xxx)
     validations:
       required: true
+  - type: checkboxes
+    id: field-impact
+    attributes:
+      label: Impacted Field
+      description: Which field is probably impacted by this? You may select more than one, or choose none at all.
+      options:
+        - label: Medical (human) microbiology
+        - label: Veterinary microbiology
+        - label: Environmental microbiology
+
