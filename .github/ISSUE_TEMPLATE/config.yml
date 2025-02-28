@@ -3,4 +3,6 @@ contact_links:
   - name: AMR Community Support
     url: https://github.com/msberends/AMR/discussions
     about: Please ask and answer questions here.
-
+  - name: Ask our AMR for R Assistant 
+    url: https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant
+    about: Ask questions or code suggestions to our AMR for R Assistant, a ChatGPT manually-trained model able to answer any question about the AMR package.
