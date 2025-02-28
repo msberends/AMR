@@ -5,7 +5,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! You're probably improving the lives of many AMR package users :)
+        Thanks for taking the time to fill out this bug report!
+        
+        You're probably improving the lives of many AMR package users :)
   - type: textarea
     id: description
     attributes:
@@ -18,13 +20,18 @@ body:
     id: version
     attributes:
       label: AMR Package Version
-      description: What version of the AMR package are you running? You can retrieve this by running `packageVersion("AMR")` in R.
+      description: |
+        What version of the AMR package are you running? You can retrieve this by running in R:
+
+        ```r
+        packageVersion("AMR")
+        ```
     validations:
       required: true
   - type: checkboxes
     id: version-stable
     attributes:
-      label: AMR Package Version
+      label: .
       description: Or click
       options:
         - label: I use the latest CRAN version
