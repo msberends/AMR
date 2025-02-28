@@ -1,0 +1,27 @@
+name: Feature Request
+description: I have a suggestion.
+labels: "enhancement"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to make a suggestion!
+
+        We'll be happy to implement on a short notice if this improves the AMR package. Do note that BY FAR most of the content of the current version is because of collaborators like you!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a clear and concise description.
+      placeholder: Description
+    validations:
+      required: true
+- type: checkboxes
+  id: field-impact
+  attributes:
+    label: Impacted Field
+    description: Which field are probably impacted by this? You may select more than one, or choose none at all.
+    options:
+      - label: Medical (human) microbiology
+      - label: Veterinary microbiology
+      - label: Environmental microbiology
