@@ -1,5 +1,5 @@
 name: Bug Report
-description: File a bug report.
+description: I think I found a bug!
 labels: "bug"
 body:
   - type: markdown
@@ -16,7 +16,7 @@ body:
       placeholder: Description
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: version
     attributes:
       label: AMR Package Version
@@ -26,15 +26,9 @@ body:
         ```r
         packageVersion("AMR")
         ```
+      multiple: false
+      options:
+        - Latest CRAN version (2.1.1)
+        - One of the latest GitHub versions (2.1.1.9xxx)
     validations:
       required: true
-  - type: checkboxes
-    id: version-stable
-    attributes:
-      label:  
-      description: Or click
-      options:
-        - label: I use the latest CRAN version
-          required: false
-        - label: I use one of the latest GitHub versions
-          required: false
