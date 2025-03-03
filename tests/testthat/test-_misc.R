@@ -67,10 +67,15 @@ check_df <- function(check_element, return_val = 0) {
 }
 
 df <- example_isolates[, check_df("x")]
-expect_true(is_right, info = "the environmental data cannot be found for base/x")
+expect_true(is_right, info = "the environmental data cannot be found for base/x (1)")
 
-df <- example_isolates[c(1:3), check_df("x")]
-expect_true(is_right, info = "the environmental data cannot be found for base/x")
+if (getRversion() < "4.0.0") {
+  df <- example_isolates[c(1:3), check_df("xx")]
+  expect_true(is_right, info = "the environmental data cannot be found for base/xx")
+} else {
+  df <- example_isolates[c(1:3), check_df("x")]
+  expect_true(is_right, info = "the environmental data cannot be found for base/x (2)")
+}
 
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   df <- example_isolates %>% select(mo, check_df("data123"))
