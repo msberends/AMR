@@ -23,9 +23,9 @@ body:
       description: Which version of the AMR package are you running? You can retrieve this by running `packageVersion("AMR")` in R. If you are not running any of these versions, then please update first and check whether the bug still persists.
       multiple: false
       options:
+        - ''
         - Latest CRAN version (2.1.1)
         - One of the latest GitHub versions (2.1.1.9xxx)
-      default: -1
     validations:
       required: true
   - type: checkboxes
