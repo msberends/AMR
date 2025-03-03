@@ -989,6 +989,8 @@ ascertain_sir_classes <- function(x, obj_name) {
 }
 
 get_current_data <- function(arg_name, call) {
+  # This function enables AMR selectors (e.g., AMR::carbapenems()) to work seamlessly across different environments, including dplyr, base R, data.table, and tidymodels.
+  # It identifies and extracts the appropriate data frame from the current execution context.
   valid_df <- function(x) {
     !is.null(x) && is.data.frame(x)
   }
@@ -1014,14 +1016,17 @@ get_current_data <- function(arg_name, call) {
     }
   }
 
-  # now go over all underlying environments looking for other dplyr, data.table and base R selection environments
+  # now go over all underlying environments looking for other dplyr, tidymodels, data.table and base R selection environments
   with_generic <- vapply(FUN.VALUE = logical(1), frms, function(e) !is.null(e$`.Generic`))
   for (env in frms[which(with_generic)]) {
     if (valid_df(env$`.data`)) {
       # an element `.data` will be in the environment when using dplyr::select()
       return(env$`.data`)
+    } else if (valid_df(env$training)) {
+      # an element `training` will be in the environment when using some tidymodels functions such as `prep()`
+      return(env$training)
     } else if (valid_df(env$data)) {
-      # an element `data` will be in the environment when using older dplyr versions, or tidymodels
+      # an element `data` will be in the environment when using older dplyr versions, or some tidymodels functions such as `fit()`
       return(env$data)
     } else if (valid_df(env$xx)) {
       # an element `xx` will be in the environment for rows + cols in base R, e.g. `example_isolates[c(1:3), carbapenems()]`
@@ -1038,7 +1043,7 @@ get_current_data <- function(arg_name, call) {
   for (env in frms[which(with_tbl)]) {
     if (!is.null(names(env)) && all(c(".tbl", ".vars", ".cols") %in% names(env), na.rm = TRUE)) {
       # an element `.tbl` will be in the environment when using scoped dplyr variants, with or without `dplyr::vars()`
-      # (e.g. `dplyr::summarise_at()` or `dplyr::mutate_at()`)
+      # e.g. `dplyr::summarise_at(carbapenems(), ...)` or `dplyr::mutate_at(vars(carbapenems()), ...)`
       return(env$`.tbl`)
     }
   }
@@ -1206,7 +1211,13 @@ try_colour <- function(..., before, after, collapse = " ") {
   }
 }
 is_dark <- function() {
-  if (is.null(AMR_env$is_dark_theme)) {
+  if (is.null(AMR_env$is_dark_theme) ||
+    is.null(AMR_env$current_theme) ||
+    (
+      !is.null(AMR_env$current_theme) &&
+        AMR_env$current_theme != tryCatch(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$editor, error = function(e) "")
+    )) {
+    AMR_env$current_theme <- tryCatch(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$editor, error = function(e) NULL)
     AMR_env$is_dark_theme <- !has_colour() || tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
   }
   isTRUE(AMR_env$is_dark_theme)

@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9163. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9182. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -9083,8 +9083,8 @@ We begin by loading the required libraries and preparing the `example_isolates` 
 
 ```{r}
 # Load required libraries
-library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
 library(AMR)          # For AMR data analysis
+library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
 
 # Select relevant columns for prediction
 data <- example_isolates %>%
@@ -9122,12 +9122,18 @@ resistance_recipe <- recipe(mo ~ ., data = data) %>%
 resistance_recipe
 ```
 
+For a recipe that includes at least one preprocessing operation, like we have with `step_corr()`, the necessary parameters can be estimated from a training set using `prep()`:
+
+```{r}
+prep(resistance_recipe)
+```
+
 **Explanation:**
 
 - `recipe(mo ~ ., data = data)` will take the `mo` column as outcome and all other columns as predictors.
 - `step_corr()` removes predictors (i.e., antibiotic columns) that have a higher correlation than 90%.
 
-Notice how the recipe contains just the antibiotic selector functions - no need to define the columns specifically.
+Notice how the recipe contains just the antibiotic selector functions - no need to define the columns specifically. In the preparation (retrieved with `prep()`) we can see that the columns or variables `r paste0("'", suppressMessages(prep(resistance_recipe))$steps[[1]]$removals, "'", collapse = " and ")` were removed as they correlate too much with existing, other variables.
 
 #### 2. Specifying the Model
 
@@ -9154,6 +9160,7 @@ We bundle the recipe and model together into a `workflow`, which organizes the e
 resistance_workflow <- workflow() %>%
   add_recipe(resistance_recipe) %>% # Add the preprocessing recipe
   add_model(logistic_model) # Add the logistic regression model
+resistance_workflow
 ```
 
 ### **Training and Evaluating the Model**

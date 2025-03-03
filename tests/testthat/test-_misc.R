@@ -45,17 +45,47 @@ expect_equal(AMR:::trimws2(" test "), "test")
 expect_equal(AMR:::trimws2(" test ", "l"), "test ")
 expect_equal(AMR:::trimws2(" test ", "r"), " test")
 
-# expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX")))
-# expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))
-# expect_warning(AMR:::get_column_abx(example_isolates, hard_dependencies = "FUS"))
 expect_message(AMR:::get_column_abx(example_isolates, soft_dependencies = "FUS"))
-
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-  # expect_warning(AMR:::get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
-  # expect_warning(AMR:::get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
-}
 
 # we rely on "grouped_tbl" being a class of grouped tibbles, so run a test that checks for this:
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
   expect_true(AMR:::is_null_or_grouped_tbl(example_isolates %>% group_by(ward)))
+}
+
+
+# test get_current_data() ----
+
+is_right <- FALSE
+check_df <- function(check_element, return_val = 0) {
+  is_right <<- FALSE
+  for (env in sys.frames()) {
+    if (!is.null(env[[check_element]]) && is.data.frame(env[[check_element]])) {
+      is_right <<- TRUE
+    }
+  }
+  return_val
+}
+
+df <- example_isolates[, check_df("x")]
+expect_true(is_right, info = "the environmental data cannot be found for base/x")
+
+df <- example_isolates[c(1:3), check_df("x")]
+expect_true(is_right, info = "the environmental data cannot be found for base/x")
+
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+  df <- example_isolates %>% select(mo, check_df("data123"))
+  expect_false(is_right, info = "just a check if non-sense is not being gathered by get_current_data()")
+
+  df <- example_isolates %>% select(mo, check_df(".data"))
+  expect_true(is_right, info = "the environmental data cannot be found for dplyr/select()")
+
+  df <- example_isolates %>% select_at(check_df(".tbl"))
+  expect_true(is_right, info = "the environmental data cannot be found for dplyr/select_at()")
+}
+
+if (AMR:::pkg_is_available("tidymodels", also_load = TRUE)) {
+  resistance_recipe <- recipe(mo ~ ., data = example_isolates) %>%
+    step_corr(check_df("training")) %>%
+    prep()
+  expect_true(is_right, info = "the environmental data cannot be found for tidymodels/prep()")
 }
