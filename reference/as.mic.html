@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9163</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9182</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 
 
 <dt id="arg-as-mic">as.mic<a class="anchor" aria-label="anchor" href="#arg-as-mic"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>mic</code> class should be kept - the default is <code>TRUE</code> for <code>rescale_mic()</code> and <code>FALSE</code> for <code><a href="https://rdrr.io/pkg/data.table/man/fdroplevels.html" class="external-link">droplevels()</a></code>. When setting this to <code>FALSE</code> in <code>rescale_mic()</code>, the output will have factor levels that acknowledge <code>mic_range</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>mic</code> class should be kept - the default is <code>TRUE</code> for <code>rescale_mic()</code> and <code>FALSE</code> for <code><a href="https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html" class="external-link">droplevels()</a></code>. When setting this to <code>FALSE</code> in <code>rescale_mic()</code>, the output will have factor levels that acknowledge <code>mic_range</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -135,7 +135,7 @@
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 10    16        A</span></span></code></pre><p></p></div>
 <p>All so-called <a href="https://rdrr.io/r/base/groupGeneric.html" class="external-link">group generic functions</a> are implemented for the MIC class (such as <code>!</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;=</code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2()</a></code>). Some functions of the <code>stats</code> package are also implemented (such as <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code>, <code><a href="https://rdrr.io/r/stats/fivenum.html" class="external-link">fivenum()</a></code>). Since <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var()</a></code> are non-generic functions, these could not be extended. Use <code><a href="https://rdrr.io/r/stats/mad.html" class="external-link">mad()</a></code> as an alternative, or use e.g. <code>sd(as.numeric(x))</code> where <code>x</code> is your vector of MIC values.</p>
 <p>Using <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> or <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> on MIC values will remove the operators and return a numeric vector. Do <strong>not</strong> use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on MIC values as by the <span style="R">R</span> convention on <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>s, it will return the index of the factor levels (which is often useless for regular users).</p>
-<p>Use <code><a href="https://rdrr.io/pkg/data.table/man/fdroplevels.html" class="external-link">droplevels()</a></code> to drop unused levels. At default, it will return a plain factor. Use <code>droplevels(..., as.mic = TRUE)</code> to maintain the <code>mic</code> class.</p>
+<p>Use <code><a href="https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html" class="external-link">droplevels()</a></code> to drop unused levels. At default, it will return a plain factor. Use <code>droplevels(..., as.mic = TRUE)</code> to maintain the <code>mic</code> class.</p>
 <p>With <code>rescale_mic()</code>, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.</p>
 <p>For <code>ggplot2</code>, use one of the <code><a href="plot.html">scale_*_mic()</a></code> functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.</p>
 <p><code>NA_mic_</code> is a missing value of the new <code>mic</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>

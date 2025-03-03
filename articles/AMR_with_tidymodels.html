@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9163</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9182</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,6 +127,7 @@ train, and evaluate the model.</li>
 package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load required libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>          <span class="co"># For AMR data analysis</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>   <span class="co"># For machine learning workflows, and data manipulation (dplyr, tidyr, ...)</span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching packages</span> ────────────────────────────────────── tidymodels 1.3.0 ──</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">broom       </span> 1.0.7     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">recipes     </span> 1.1.1</span></span>
@@ -142,7 +143,6 @@ package.</p>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span>  masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>     masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">recipes</span>::<span style="color: #00BB00;">step()</span>  masks <span style="color: #0000BB;">stats</span>::step()</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>          <span class="co"># For AMR data analysis</span></span>
 <span></span>
 <span><span class="co"># Select relevant columns for prediction</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -201,6 +201,32 @@ three steps: preprocessing, model specification, and fitting.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Operations</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Correlation filter on: <span style="color: #0000BB;">c(aminoglycosides(), betalactams())</span></span></span></code></pre></div>
+<p>For a recipe that includes at least one preprocessing operation, like
+we have with <code>step_corr()</code>, the necessary parameters can be
+estimated from a training set using <code>prep()</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">prep</span><span class="op">(</span><span class="va">resistance_recipe</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">betalactams()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">PEN</span><span style="color: #0000BB;">' (benzylpenicillin), '</span><span style="color: #0000BB; font-weight: bold;">OXA</span><span style="color: #0000BB;">'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   (oxacillin), '</span><span style="color: #0000BB; font-weight: bold;">FLC</span><span style="color: #0000BB;">' (flucloxacillin), '</span><span style="color: #0000BB; font-weight: bold;">AMX</span><span style="color: #0000BB;">' (amoxicillin), '</span><span style="color: #0000BB; font-weight: bold;">AMC</span><span style="color: #0000BB;">'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   (amoxicillin/clavulanic acid), '</span><span style="color: #0000BB; font-weight: bold;">AMP</span><span style="color: #0000BB;">' (ampicillin), '</span><span style="color: #0000BB; font-weight: bold;">TZP</span><span style="color: #0000BB;">'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   (piperacillin/tazobactam), '</span><span style="color: #0000BB; font-weight: bold;">CZO</span><span style="color: #0000BB;">' (cefazolin), '</span><span style="color: #0000BB; font-weight: bold;">FEP</span><span style="color: #0000BB;">' (cefepime), '</span><span style="color: #0000BB; font-weight: bold;">CXM</span><span style="color: #0000BB;">'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   (cefuroxime), '</span><span style="color: #0000BB; font-weight: bold;">FOX</span><span style="color: #0000BB;">' (cefoxitin), '</span><span style="color: #0000BB; font-weight: bold;">CTX</span><span style="color: #0000BB;">' (cefotaxime), '</span><span style="color: #0000BB; font-weight: bold;">CAZ</span><span style="color: #0000BB;">' (ceftazidime),</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   '</span><span style="color: #0000BB; font-weight: bold;">CRO</span><span style="color: #0000BB;">' (ceftriaxone), '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem), and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Inputs</span></span>
+<span><span class="co">#&gt; Number of variables by role</span></span>
+<span><span class="co">#&gt; outcome:    1</span></span>
+<span><span class="co">#&gt; predictor: 20</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Training information</span></span>
+<span><span class="co">#&gt; Training data contained 1968 data points and no incomplete rows.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Operations</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Correlation filter on: <span style="color: #0000BB;">AMX</span> <span style="color: #0000BB;">CTX</span> | <span style="font-style: italic;">Trained</span></span></span></code></pre></div>
 <p><strong>Explanation:</strong></p>
 <ul>
 <li>
@@ -212,14 +238,17 @@ predictors.</li>
 columns) that have a higher correlation than 90%.</li>
 </ul>
 <p>Notice how the recipe contains just the antibiotic selector functions
-- no need to define the columns specifically.</p>
+- no need to define the columns specifically. In the preparation
+(retrieved with <code>prep()</code>) we can see that the columns or
+variables ‘AMX’ and ‘CTX’ were removed as they correlate too much with
+existing, other variables.</p>
 </div>
 <div class="section level4">
 <h4 id="specifying-the-model">2. Specifying the Model<a class="anchor" aria-label="anchor" href="#specifying-the-model"></a>
 </h4>
 <p>We define a logistic regression model since resistance prediction is
 a binary classification task.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Specify a logistic regression model</span></span>
 <span><span class="va">logistic_model</span> <span class="op">&lt;-</span> <span class="fu">logistic_reg</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glm"</span><span class="op">)</span> <span class="co"># Use the Generalized Linear Model engine</span></span>
@@ -242,11 +271,25 @@ engine.</li>
 </h4>
 <p>We bundle the recipe and model together into a <code>workflow</code>,
 which organizes the entire modeling process.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Combine the recipe and model into a workflow</span></span>
 <span><span class="va">resistance_workflow</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">add_recipe</span><span class="op">(</span><span class="va">resistance_recipe</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Add the preprocessing recipe</span></span>
-<span>  <span class="fu">add_model</span><span class="op">(</span><span class="va">logistic_model</span><span class="op">)</span> <span class="co"># Add the logistic regression model</span></span></code></pre></div>
+<span>  <span class="fu">add_model</span><span class="op">(</span><span class="va">logistic_model</span><span class="op">)</span> <span class="co"># Add the logistic regression model</span></span>
+<span><span class="va">resistance_workflow</span></span>
+<span><span class="co">#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Preprocessor:</span> Recipe</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Model:</span> logistic_reg()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; 1 Recipe Step</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; • step_corr()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Model ───────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; Logistic Regression Model Specification (classification)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Computational engine: glm</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -256,7 +299,7 @@ which organizes the entire modeling process.</p>
 <p>To train the model, we split the data into training and testing sets.
 Then, we fit the workflow on the training set and evaluate its
 performance.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Split data into training and testing sets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># For reproducibility</span></span>
 <span><span class="va">data_split</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">data</span>, prop <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="co"># 80% training, 20% testing</span></span>
@@ -265,15 +308,7 @@ performance.</p>
 <span></span>
 <span><span class="co"># Fit the workflow to the training data</span></span>
 <span><span class="va">fitted_workflow</span> <span class="op">&lt;-</span> <span class="va">resistance_workflow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">training_data</span><span class="op">)</span> <span class="co"># Train the model</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span></span>
-<span><span class="co"><span style="color: #0000BB;">#&gt;   (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">betalactams()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">PEN</span><span style="color: #0000BB;">' (benzylpenicillin), '</span><span style="color: #0000BB; font-weight: bold;">OXA</span><span style="color: #0000BB;">'</span></span></span>
-<span><span class="co"><span style="color: #0000BB;">#&gt;   (oxacillin), '</span><span style="color: #0000BB; font-weight: bold;">FLC</span><span style="color: #0000BB;">' (flucloxacillin), '</span><span style="color: #0000BB; font-weight: bold;">AMX</span><span style="color: #0000BB;">' (amoxicillin), '</span><span style="color: #0000BB; font-weight: bold;">AMC</span><span style="color: #0000BB;">'</span></span></span>
-<span><span class="co"><span style="color: #0000BB;">#&gt;   (amoxicillin/clavulanic acid), '</span><span style="color: #0000BB; font-weight: bold;">AMP</span><span style="color: #0000BB;">' (ampicillin), '</span><span style="color: #0000BB; font-weight: bold;">TZP</span><span style="color: #0000BB;">'</span></span></span>
-<span><span class="co"><span style="color: #0000BB;">#&gt;   (piperacillin/tazobactam), '</span><span style="color: #0000BB; font-weight: bold;">CZO</span><span style="color: #0000BB;">' (cefazolin), '</span><span style="color: #0000BB; font-weight: bold;">FEP</span><span style="color: #0000BB;">' (cefepime), '</span><span style="color: #0000BB; font-weight: bold;">CXM</span><span style="color: #0000BB;">'</span></span></span>
-<span><span class="co"><span style="color: #0000BB;">#&gt;   (cefuroxime), '</span><span style="color: #0000BB; font-weight: bold;">FOX</span><span style="color: #0000BB;">' (cefoxitin), '</span><span style="color: #0000BB; font-weight: bold;">CTX</span><span style="color: #0000BB;">' (cefotaxime), '</span><span style="color: #0000BB; font-weight: bold;">CAZ</span><span style="color: #0000BB;">' (ceftazidime),</span></span></span>
-<span><span class="co"><span style="color: #0000BB;">#&gt;   '</span><span style="color: #0000BB; font-weight: bold;">CRO</span><span style="color: #0000BB;">' (ceftriaxone), '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem), and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span></span></code></pre></div>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">training_data</span><span class="op">)</span> <span class="co"># Train the model</span></span></code></pre></div>
 <p><strong>Explanation:</strong></p>
 <ul>
 <li>
@@ -286,7 +321,7 @@ testing sets.</li>
 are internally called again. For training, these functions are called
 since they are stored in the recipe.</p>
 <p>Next, we evaluate the model on the testing data.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make predictions on the testing set</span></span>
 <span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">fitted_workflow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">testing_data</span><span class="op">)</span>                <span class="co"># Generate predictions</span></span>
@@ -338,11 +373,11 @@ kappa.</li>
 <p>It appears we can predict the Gram based on AMR results with a 99.5%
 accuracy based on AMR results of aminoglycosides and beta-lactam
 antibiotics. The ROC curve looks like this:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predictions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">roc_curve</span><span class="op">(</span><span class="va">mo</span>, <span class="va">`.pred_Gram-negative`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
+<p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-8-1.png" width="720"></p>
 </div>
 <div class="section level3">
 <h3 id="conclusion">
