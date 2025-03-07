@@ -769,6 +769,32 @@ antibiogram.default <- function(x,
     # prepare for definitive output
     out <- out_wisca
     wisca_parameters <- wisca_parameters[, colnames(wisca_parameters)[!colnames(wisca_parameters) %in% c(levels(NA_sir_), "lower_ci", "upper_ci", "group")], drop = FALSE]
+    if (isTRUE(has_syndromic_group)) {
+      long_numeric <- out_wisca %pm>%
+        pm_ungroup() %pm>%
+        pm_select(
+          syndromic_group = syndromic_group,
+          ab = ab,
+          coverage = coverage,
+          lower_ci = lower_ci,
+          upper_ci = upper_ci,
+          n_total = n_total,
+          n_tested = n_tested,
+          n_susceptible = n_susceptible
+        )
+    } else {
+      long_numeric <- out_wisca %pm>%
+        pm_ungroup() %pm>%
+        pm_select(
+          ab = ab,
+          coverage = coverage,
+          lower_ci = lower_ci,
+          upper_ci = upper_ci,
+          n_total = n_total,
+          n_tested = n_tested,
+          n_susceptible = n_susceptible
+        )
+    }
   }
 
   out$digits <- digits # since pm_sumarise() cannot work with an object outside the current frame
@@ -1170,9 +1196,7 @@ tbl_format_footer.antibiogram <- function(x, ...) {
 plot.antibiogram <- function(x, ...) {
   df <- attributes(x)$long_numeric
   if (!"mo" %in% colnames(df)) {
-    stop_("Plotting antibiograms using `plot()` is only possible if they were not created using dplyr groups. See `?antibiogram` for how to retrieve numeric values in a long format for advanced plotting.",
-      call = FALSE
-    )
+    df$mo <- ""
   }
   if ("syndromic_group" %in% colnames(df)) {
     # barplot in base R does not support facets - paste columns together
@@ -1226,9 +1250,7 @@ barplot.antibiogram <- function(height, ...) {
 autoplot.antibiogram <- function(object, ...) {
   df <- attributes(object)$long_numeric
   if (!"mo" %in% colnames(df)) {
-    stop_("Plotting antibiograms using `autoplot()` is only possible if they were not created using dplyr groups. See `?antibiogram` for how to retrieve numeric values in a long format for advanced plotting.",
-      call = FALSE
-    )
+    df$mo <- ""
   }
   out <- ggplot2::ggplot(df,
     mapping = ggplot2::aes(
@@ -1243,6 +1265,10 @@ autoplot.antibiogram <- function(object, ...) {
   ) +
     ggplot2::geom_col(position = ggplot2::position_dodge2(preserve = "single")) +
     ggplot2::facet_wrap("mo") +
+    ggplot2::geom_errorbar(
+      mapping = ggplot2::aes(ymin = lower_ci * 100, ymax = upper_ci * 100),
+      position = ggplot2::position_dodge2(preserve = "single", width = 1)
+    ) +
     ggplot2::labs(
       y = ifelse(isTRUE(attributes(object)$combine_SI), "%SI", "%S"),
       x = NULL,
@@ -1252,14 +1278,6 @@ autoplot.antibiogram <- function(object, ...) {
         NULL
       }
     )
-  if (isTRUE(attributes(object)$wisca)) {
-    out <- out +
-      ggplot2::geom_errorbar(
-        mapping = ggplot2::aes(ymin = lower_ci * 100, ymax = upper_ci * 100),
-        position = ggplot2::position_dodge2(preserve = "single"),
-        width = 0.5
-      )
-  }
   out
 }
 

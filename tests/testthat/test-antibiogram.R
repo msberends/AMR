@@ -113,6 +113,8 @@ test_that("antibiogram works", {
   ))
 
   expect_inherits(ab8, "antibiogram")
+  expect_inherits(retrieve_wisca_parameters(ab8), "data.frame")
+  expect_inherits(attributes(ab8)$long_numeric, "data.frame")
   expect_equal(colnames(ab8), c("Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
 
   # grouped tibbles
