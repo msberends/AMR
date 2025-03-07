@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9186</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9187</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1143,9 +1143,9 @@ incidence and antimicrobial susceptibility patterns.</p>
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">73.7% (65.8-81.1%)</td>
-<td align="left">97% (94.2-98.7%)</td>
-<td align="left">92.4% (85.9-96.6%)</td>
+<td align="left">71.7% (57.5-83.6%)</td>
+<td align="left">95.1% (88.9-98.6%)</td>
+<td align="left">91.1% (81.4-96.9%)</td>
 </tr></tbody>
 </table>
 <p>WISCA uses a <strong>Bayesian decision model</strong> to integrate
@@ -1167,63 +1167,77 @@ function on a grouped <code>tibble</code>, i.e., using
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span>age_group <span class="op">=</span> <span class="fu"><a href="../reference/age_groups.html">age_groups</a></span><span class="op">(</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>           <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span>antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
 <col width="8%">
 <col width="6%">
-<col width="32%">
-<col width="32%">
 <col width="20%">
+<col width="32%">
+<col width="32%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">age_group</th>
 <th align="left">gender</th>
+<th align="left">Piperacillin/tazobactam</th>
 <th align="left">Piperacillin/tazobactam + Gentamicin</th>
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
-<th align="left">Piperacillin/tazobactam</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="left">0-24</td>
+<td align="left">F</td>
+<td align="left">66.8% (13.5-98.9%)</td>
+<td align="left">74.6% (30.6-98.9%)</td>
+<td align="left">77.9% (34.5-99.1%)</td>
+</tr>
+<tr class="even">
+<td align="left">0-24</td>
+<td align="left">M</td>
+<td align="left">75.4% (34-99.1%)</td>
+<td align="left">80% (40.6-99.2%)</td>
+<td align="left">76.1% (33.7-99.2%)</td>
+</tr>
+<tr class="odd">
 <td align="left">25-49</td>
 <td align="left">F</td>
-<td align="left">94.4% (79.6-99.9%)</td>
-<td align="left">94.5% (79.6-99.8%)</td>
-<td align="left"></td>
+<td align="left">88.5% (67.7-98.9%)</td>
+<td align="left">91.6% (72.9-99.7%)</td>
+<td align="left">82.6% (49.7-99.3%)</td>
 </tr>
 <tr class="even">
 <td align="left">25-49</td>
 <td align="left">M</td>
-<td align="left">96.1% (85.4-99.9%)</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">74.7% (38.4-97.5%)</td>
+<td align="left">89.4% (66.7-99.7%)</td>
+<td align="left">76.3% (33.1-99.1%)</td>
 </tr>
 <tr class="odd">
 <td align="left">50-74</td>
 <td align="left">F</td>
-<td align="left">97.1% (91.2-99.7%)</td>
-<td align="left">97.7% (91.9-100%)</td>
-<td align="left">93.6% (87.4-97.5%)</td>
+<td align="left">75.4% (61-90.6%)</td>
+<td align="left">95.8% (87.6-99.5%)</td>
+<td align="left">88.3% (71-97.7%)</td>
 </tr>
 <tr class="even">
 <td align="left">50-74</td>
 <td align="left">M</td>
-<td align="left">96.7% (90.7-99.5%)</td>
-<td align="left">97% (91-99.8%)</td>
-<td align="left">92.5% (84.3-97.4%)</td>
+<td align="left">66.9% (46.2-85.6%)</td>
+<td align="left">95.3% (86-99.6%)</td>
+<td align="left">83.7% (62.9-97%)</td>
 </tr>
 <tr class="odd">
 <td align="left">75+</td>
 <td align="left">F</td>
-<td align="left">97.6% (91.7-99.9%)</td>
-<td align="left">95.7% (88.2-99.2%)</td>
-<td align="left">92.1% (85.8-96.4%)</td>
+<td align="left">73.3% (51.3-91.6%)</td>
+<td align="left">96.6% (90-99.7%)</td>
+<td align="left">90.8% (76.5-98.8%)</td>
 </tr>
 <tr class="even">
 <td align="left">75+</td>
 <td align="left">M</td>
-<td align="left">97.2% (91.5-99.7%)</td>
-<td align="left">97.1% (89.6-99.9%)</td>
-<td align="left">96.5% (91.3-99.5%)</td>
+<td align="left">73.9% (55.7-89.4%)</td>
+<td align="left">96.7% (89.9-99.7%)</td>
+<td align="left">92.5% (80.3-98.9%)</td>
 </tr>
 </tbody>
 </table>
