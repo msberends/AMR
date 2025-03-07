@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9183</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9186</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@
 
 
 <dt id="arg-translate-ab">translate_ab<a class="anchor" aria-label="anchor" href="#arg-translate-ab"></a></dt>
-<dd><p>a column name of the <a href="antibiotics.html">antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
+<dd><p>a column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
@@ -162,8 +162,8 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>At default, the names of antibiotics will be shown on the plots using <code><a href="ab_property.html">ab_name()</a></code>. This can be set with the <code>translate_ab</code> argument. See <code><a href="count.html">count_df()</a></code>.</p>
-<p><code>geom_sir()</code> will take any variable from the data that has an <code><a href="as.sir.html">sir</a></code> class (created with <code><a href="as.sir.html">as.sir()</a></code>) using <code><a href="proportion.html">sir_df()</a></code> and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
+    <p>At default, the names of antimicrobials will be shown on the plots using <code><a href="ab_property.html">ab_name()</a></code>. This can be set with the <code>translate_ab</code> argument. See <code><a href="count.html">count_df()</a></code>.</p>
+<p><code>geom_sir()</code> will take any variable from the data that has an <code><a href="as.sir.html">sir</a></code> class (created with <code><a href="as.sir.html">as.sir()</a></code>) using <code><a href="proportion.html">sir_df()</a></code> and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antimicrobials on the x axis.</p>
 <p>Additional functions include:</p><ul><li><p><code><a href="plot.html">facet_sir()</a></code> creates 2d plots (at default based on S/I/R) using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code>.</p></li>
 <li><p><code><a href="plot.html">scale_y_percent()</a></code> transforms the y axis to a 0 to 100% range using <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code>.</p></li>
 <li><p><code><a href="plot.html">scale_sir_colours()</a></code> sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.</p></li>

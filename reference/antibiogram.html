@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9183</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9186</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,10 +60,10 @@ Adhering to previously described approaches (see Source) and especially the Baye
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">x</span>, antibiotics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, mo_transform <span class="op">=</span> <span class="st">"shortname"</span>,</span>
 <span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>, syndromic_group <span class="op">=</span> <span class="cn">NULL</span>, add_total_n <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wisca</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>, <span class="fl">14</span><span class="op">)</span>,</span>
-<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, minimum <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">" + "</span>, wisca <span class="op">=</span> <span class="cn">FALSE</span>, simulations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  conf_interval <span class="op">=</span> <span class="fl">0.95</span>, interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>,</span>
+<span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wisca</span>, <span class="fl">14</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  minimum <span class="op">=</span> <span class="fl">30</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">" + "</span>, wisca <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simulations <span class="op">=</span> <span class="fl">1000</span>, conf_interval <span class="op">=</span> <span class="fl">0.95</span>, interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>,</span>
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">wisca</span><span class="op">(</span><span class="va">x</span>, antibiotics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
@@ -114,7 +114,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-ab-transform">ab_transform<a class="anchor" aria-label="anchor" href="#arg-ab-transform"></a></dt>
-<dd><p>a character to transform antimicrobial input - must be one of the column names of the <a href="antibiotics.html">antibiotics</a> data set (defaults to <code>"name"</code>): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be <code>NULL</code> to not transform the input.</p></dd>
+<dd><p>a character to transform antimicrobial input - must be one of the column names of the <a href="antimicrobials.html">antimicrobials</a> data set (defaults to <code>"name"</code>): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be <code>NULL</code> to not transform the input.</p></dd>
 
 
 <dt id="arg-syndromic-group">syndromic_group<a class="anchor" aria-label="anchor" href="#arg-syndromic-group"></a></dt>
@@ -206,7 +206,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <h3 id="formatting-type">Formatting Type<a class="anchor" aria-label="anchor" href="#formatting-type"></a></h3>
 
 
-<p>The formatting of the 'cells' of the table can be set with the argument <code>formatting_type</code>. In these examples, <code>5</code> is the antimicrobial coverage (<code>4-6</code> indicates the confidence level), <code>15</code> the number of susceptible isolates, and <code>300</code> the number of tested (i.e., available) isolates:</p><ol><li><p>5</p></li>
+<p>The formatting of the 'cells' of the table can be set with the argument <code>formatting_type</code>. In these examples, <code>5</code> indicates the antimicrobial coverage (<code>4-6</code> the confidence level), <code>15</code> the number of susceptible isolates, and <code>300</code> the number of tested (i.e., available) isolates:</p><ol><li><p>5</p></li>
 <li><p>15</p></li>
 <li><p>300</p></li>
 <li><p>15/300</p></li>
@@ -219,16 +219,16 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <li><p>5 (N=15/300)</p></li>
 <li><p>5% (N=15/300)</p></li>
 <li><p>5 (4-6)</p></li>
-<li><p>5% (4-6%) - <strong>default</strong></p></li>
+<li><p>5% (4-6%) - <strong>default for WISCA</strong></p></li>
 <li><p>5 (4-6,300)</p></li>
 <li><p>5% (4-6%,300)</p></li>
 <li><p>5 (4-6,N=300)</p></li>
-<li><p>5% (4-6%,N=300)</p></li>
+<li><p>5% (4-6%,N=300) - <strong>default for non-WISCA</strong></p></li>
 <li><p>5 (4-6,15/300)</p></li>
 <li><p>5% (4-6%,15/300)</p></li>
 <li><p>5 (4-6,N=15/300)</p></li>
 <li><p>5% (4-6%,N=15/300)</p></li>
-</ol><p>The default is <code>14</code>, which can be set globally with the package option <code><a href="AMR-options.html">AMR_antibiogram_formatting_type</a></code>, e.g. <code>options(AMR_antibiogram_formatting_type = 5)</code>. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.</p>
+</ol><p>The default can be set globally with the package option <code><a href="AMR-options.html">AMR_antibiogram_formatting_type</a></code>, e.g. <code>options(AMR_antibiogram_formatting_type = 5)</code>. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.</p>
 <p>Set <code>digits</code> (defaults to <code>0</code>) to alter the rounding of the susceptibility percentages.</p>
 </div>
 
@@ -414,16 +414,16 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 10 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Pathogen       Amikacin    Gentamicin Imipenem Kanamycin Meropenem Tobramycin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> CoNS           0% (0-8%)   86% (82-9… 52% (37… 0% (0-8%) 52% (37-… 22% (12-3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> CoNS           0% (0-8%,N… 86% (82-9… 52% (37… 0% (0-8%… 52% (37-… 22% (12-3…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> E. coli        100% (98-1… 98% (96-9… 100% (9… <span style="color: #BB0000;">NA</span>        100% (99… 97% (96-9…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> E. faecalis    0% (0-9%)   0% (0-9%)  100% (9… 0% (0-9%) <span style="color: #BB0000;">NA</span>        0% (0-9%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> E. faecalis    0% (0-9%,N… 0% (0-9%,… 100% (9… 0% (0-9%… <span style="color: #BB0000;">NA</span>        0% (0-9%,…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> K. pneumoniae  <span style="color: #BB0000;">NA</span>          90% (79-9… 100% (9… <span style="color: #BB0000;">NA</span>        100% (93… 90% (79-9…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> P. aeruginosa  <span style="color: #BB0000;">NA</span>          100% (88-… <span style="color: #BB0000;">NA</span>       0% (0-12… <span style="color: #BB0000;">NA</span>        100% (88-…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> P. mirabilis   <span style="color: #BB0000;">NA</span>          94% (80-9… 94% (79… <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        94% (80-9…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> S. aureus      <span style="color: #BB0000;">NA</span>          99% (97-1… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        98% (92-1…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> S. epidermidis 0% (0-8%)   79% (71-8… <span style="color: #BB0000;">NA</span>       0% (0-8%) <span style="color: #BB0000;">NA</span>        51% (40-6…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> S. epidermidis 0% (0-8%,N… 79% (71-8… <span style="color: #BB0000;">NA</span>       0% (0-8%… <span style="color: #BB0000;">NA</span>        51% (40-6…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> S. hominis     <span style="color: #BB0000;">NA</span>          92% (84-9… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        85% (74-9…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> S. pneumoniae  0% (0-3%)   0% (0-3%)  <span style="color: #BB0000;">NA</span>       0% (0-3%) <span style="color: #BB0000;">NA</span>        0% (0-3%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> S. pneumoniae  0% (0-3%,N… 0% (0-3%,… <span style="color: #BB0000;">NA</span>       0% (0-3%… <span style="color: #BB0000;">NA</span>        0% (0-3%,…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
@@ -435,10 +435,10 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      J01GB01      J01GB03      J01GB04    J01GB06     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 96% (94-97%) 96% (95-98%) 0% (0-10%) 98% (96-99%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-positive 34% (31-38%) 63% (60-66%) 0% (0-1%)  0% (0-1%)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 96% (94-97%,N=686) 96% (95-98%,N=684)  0% (0-10%,N=35) 98% (96-…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-positive 34% (31-38%,N=665) 63% (60-66%,N=1170) 0% (0-1%,N=436) 0% (0-1%…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
@@ -449,13 +449,13 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem) and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 5 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen                                 Imipenem       Meropenem     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Coagulase-negative Staphylococcus (CoNS) 52% (37-67%)   52% (37-67%)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Enterococcus faecalis                    100% (91-100%) <span style="color: #BB0000;">NA</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Escherichia coli                         100% (99-100%) 100% (99-100%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae                    100% (93-100%) 100% (93-100%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Proteus mirabilis                        94% (79-99%)   <span style="color: #BB0000;">NA</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen                                 Imipenem             Meropenem       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Coagulase-negative Staphylococcus (CoNS) 52% (37-67%,N=48)    52% (37-67%,N=4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Enterococcus faecalis                    100% (91-100%,N=38)  <span style="color: #BB0000;">NA</span>              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Escherichia coli                         100% (99-100%,N=422) 100% (99-100%,N…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae                    100% (93-100%,N=51)  100% (93-100%,N…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Proteus mirabilis                        94% (79-99%,N=32)    <span style="color: #BB0000;">NA</span>              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
@@ -470,8 +470,8 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85-91%)           99% (97-99%)           98% (97-99%)          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-pos… 86% (82-89%)           98% (96-98%)           95% (93-97%)          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85-91%,N=641)     99% (97-99%,N=691)     98% (97-99%,N=693)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-pos… 86% (82-89%,N=345)     98% (96-98%,N=1044)    95% (93-97%,N=550)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Piperacillin/tazobactam`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Piperacillin/tazobactam + Gentamicin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​`Piperacillin/tazobactam + Tobramycin`</span></span>
@@ -486,10 +486,10 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-in"><span>  sep <span class="op">=</span> <span class="st">" &amp; "</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      Ciprofloxacin `Ciprofloxacin &amp; Gentamicin`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 91% (88-93%)  99% (97-99%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-positive 77% (74-80%)  93% (91-94%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      Ciprofloxacin      `Ciprofloxacin &amp; Gentamicin`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 91% (88-93%,N=684) 99% (97-99%,N=694)          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-positive 77% (74-80%,N=724) 93% (91-94%,N=847)          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
@@ -519,8 +519,8 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Clinical          S. epider… <span style="color: #BB0000;">NA</span>       82% (72-9… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> ICU               S. epider… <span style="color: #BB0000;">NA</span>       72% (60-8… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Clinical          S. hominis <span style="color: #BB0000;">NA</span>       96% (85-9… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Clinical          S. pneumo… 0% (0-5… 0% (0-5%)  <span style="color: #BB0000;">NA</span>       0% (0-5%) <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ICU               S. pneumo… 0% (0-1… 0% (0-12%) <span style="color: #BB0000;">NA</span>       0% (0-12… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Clinical          S. pneumo… 0% (0-5… 0% (0-5%,… <span style="color: #BB0000;">NA</span>       0% (0-5%… <span style="color: #BB0000;">NA</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ICU               S. pneumo… 0% (0-1… 0% (0-12%… <span style="color: #BB0000;">NA</span>       0% (0-12… <span style="color: #BB0000;">NA</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: Tobramycin &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
@@ -542,10 +542,10 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `Grupo sindrómico` Patógeno Amikacina      Gentamicina   Tobramicina </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No UCI             E. coli  100% (97-100%) 98% (96-99%)  98% (96-99%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> UCI                E. coli  100% (93-100%) 99% (95-100%) 96% (92-99%)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No UCI             E. coli  100% (97-100%,N=119) 98% (96-99%,N=32… 98% (96-99…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> UCI                E. coli  100% (93-100%,N=52)  99% (95-100%,N=1… 96% (92-99…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `plot()` or `ggplot2::autoplot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9183</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9186</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,14 +64,14 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> resembling the <a href="antibiotics.html">antibiotics</a> data set, at least containing columns "ab" and "name"</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> resembling the <a href="antimicrobials.html">antimicrobials</a> data set, at least containing columns "ab" and "name"</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Important:</strong> Due to how <span style="R">R</span> works, the <code>add_custom_antimicrobials()</code> function has to be run in every <span style="R">R</span> session - added antimicrobials are not stored between sessions and are thus lost when <span style="R">R</span> is exited.</p>
 <p>There are two ways to circumvent this and automate the process of adding antimicrobials:</p>
-<p><strong>Method 1:</strong> Using the package option <code><a href="AMR-options.html">AMR_custom_ab</a></code>, which is the preferred method. To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="antibiotics.html">antibiotics</a> data set (containing at the very least columns "ab" and "name") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_ab.rds"</code>, or any remote location.</p></li>
+<p><strong>Method 1:</strong> Using the package option <code><a href="AMR-options.html">AMR_custom_ab</a></code>, which is the preferred method. To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="antimicrobials.html">antimicrobials</a> data set (containing at the very least columns "ab" and "name") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_ab.rds"</code>, or any remote location.</p></li>
 <li><p>Set the file location to the package option <code><a href="AMR-options.html">AMR_custom_ab</a></code>: <code>options(AMR_custom_ab = "~/my_custom_ab.rds")</code>. This can even be a remote file location, such as an https URL. Since options are not saved between <span style="R">R</span> sessions, it is best to save this option to the <code>.Rprofile</code> file so that it will be loaded on start-up of <span style="R">R</span>. To do this, open the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>, add this text and save the file:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Add custom antimicrobial codes:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>AMR_custom_ab <span class="op">=</span> <span class="st">"~/my_custom_ab.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
@@ -106,11 +106,11 @@
 <span class="r-in"><span>    ab <span class="op">=</span> <span class="st">"TESTAB"</span>,</span></span>
 <span class="r-in"><span>    name <span class="op">=</span> <span class="st">"Test Antibiotic"</span>,</span></span>
 <span class="r-in"><span>    <span class="co"># you can add any property present in the</span></span></span>
-<span class="r-in"><span>    <span class="co"># 'antibiotics' data set, such as 'group':</span></span></span>
+<span class="r-in"><span>    <span class="co"># 'antimicrobials' data set, such as 'group':</span></span></span>
 <span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Test Group"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Added one record to the internal </span><span style="color: #0000BB; background-color: #EEEEEE;">antibiotics</span><span style="color: #0000BB;"> data set.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Added one record to the internal </span><span style="color: #0000BB; background-color: #EEEEEE;">antimicrobials</span><span style="color: #0000BB;"> data set.</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># "testab" is now a new antibiotic:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="as.ab.html">as.ab</a></span><span class="op">(</span><span class="st">"testab"</span><span class="op">)</span></span></span>
@@ -179,7 +179,7 @@
 <span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Beta-lactams/penicillins"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Added one record to the internal </span><span style="color: #0000BB; background-color: #EEEEEE;">antibiotics</span><span style="color: #0000BB;"> data set.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Added one record to the internal </span><span style="color: #0000BB; background-color: #EEEEEE;">antimicrobials</span><span style="color: #0000BB;"> data set.</span></span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"Co-fluampicil"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CR50"</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"J01CR50"</span><span class="op">)</span></span></span>

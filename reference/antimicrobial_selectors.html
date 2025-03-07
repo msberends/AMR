@@ -17,7 +17,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9183</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9186</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,11 +171,11 @@ my_data_with_all_these_columns %&amp;gt;%
 
 
 <dt id="arg-amr-class">amr_class<a class="anchor" aria-label="anchor" href="#arg-amr-class"></a></dt>
-<dd><p>an antimicrobial class or a part of it, such as <code>"carba"</code> and <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href="antibiotics.html">antibiotics</a> data set will be searched (case-insensitive) for this value.</p></dd>
+<dd><p>an antimicrobial class or a part of it, such as <code>"carba"</code> and <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href="antimicrobials.html">antimicrobials</a> data set will be searched (case-insensitive) for this value.</p></dd>
 
 
 <dt id="arg-filter">filter<a class="anchor" aria-label="anchor" href="#arg-filter"></a></dt>
-<dd><p>an <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a> to be evaluated in the <a href="antibiotics.html">antibiotics</a> data set, such as <code>name %like% "trim"</code></p></dd>
+<dd><p>an <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a> to be evaluated in the <a href="antimicrobials.html">antimicrobials</a> data set, such as <code>name %like% "trim"</code></p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
@@ -194,10 +194,10 @@ my_data_with_all_these_columns %&amp;gt;%
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions can be used in data set calls for selecting columns and filtering rows. They work with base <span style="R">R</span>, the Tidyverse, and <code>data.table</code>. They are heavily inspired by the <a href="https://tidyselect.r-lib.org/reference/language.html" class="external-link">Tidyverse selection helpers</a> such as <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, but are not limited to <code>dplyr</code> verbs. Nonetheless, they are very convenient to use with <code>dplyr</code> functions such as <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, see <em>Examples</em>.</p>
 <p>All selectors can also be used in <code>tidymodels</code> packages such as <code>recipe</code> and <code>parsnip</code>. See for more info <a href="https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html">our tutorial</a> on using antimicrobial selectors for predictive modelling.</p>
-<p>All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the <a href="antibiotics.html">antibiotics</a> data set. This means that a selector such as <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
-<p>The <code>amr_class()</code> function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the <a href="antibiotics.html">antibiotics</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
-<p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href="antibiotics.html">antibiotics</a> data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href="antibiotics.html">antibiotics</a> data set.</p>
-<p>The <code>amr_selector()</code> function can be used to internally filter the <a href="antibiotics.html">antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
+<p>All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the <a href="antimicrobials.html">antimicrobials</a> data set. This means that a selector such as <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
+<p>The <code>amr_class()</code> function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the <a href="antimicrobials.html">antimicrobials</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
+<p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href="antimicrobials.html">antimicrobials</a> data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href="antimicrobials.html">antimicrobials</a> data set.</p>
+<p>The <code>amr_selector()</code> function can be used to internally filter the <a href="antimicrobials.html">antimicrobials</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
 <p>The <code>not_intrinsic_resistant()</code> function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
     </div>
     <div class="section level2">
@@ -240,7 +240,7 @@ my_data_with_all_these_columns %&amp;gt;%
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
 
 
-<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
 
     <div class="section level2">
@@ -617,7 +617,7 @@ my_data_with_all_these_columns %&amp;gt;%
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="color: #B2B2B2;">  NA</span>  <span style="color: #080808; background-color: #5FD7AF;">  S  </span> <span style="color: #B2B2B2;">  NA</span>  <span style="color: #B2B2B2;">  NA</span>  <span style="color: #B2B2B2;">  NA</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,990 more rows</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># amr_selector() applies a filter in the `antibiotics` data set and is thus</span></span></span>
+<span class="r-in"><span><span class="co"># amr_selector() applies a filter in the `antimicrobials` data set and is thus</span></span></span>
 <span class="r-in"><span><span class="co"># very flexible. For instance, to select antimicrobials with an oral DDD</span></span></span>
 <span class="r-in"><span><span class="co"># of at least 1 gram:</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span>, <span class="fu">amr_selector</span><span class="op">(</span><span class="va">oral_ddd</span> <span class="op">&gt;</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">oral_units</span> <span class="op">==</span> <span class="st">"g"</span><span class="op">)</span><span class="op">]</span></span></span>

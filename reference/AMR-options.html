@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9183</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9186</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
     <h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a></h2>
 
 
-<ul><li><p><code>AMR_antibiogram_formatting_type</code> <br> A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> (1-12) to use in <code><a href="antibiogram.html">antibiogram()</a></code>, to indicate which formatting type to use.</p></li>
+<ul><li><p><code>AMR_antibiogram_formatting_type</code> <br> A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> (1-22) to use in <code><a href="antibiogram.html">antibiogram()</a></code>, to indicate which formatting type to use.</p></li>
 <li><p><code>AMR_breakpoint_type</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate which breakpoint type to use. This must be either "ECOFF", "animal", or "human".</p></li>
 <li><p><code>AMR_cleaning_regex</code> <br> A <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) to use in <code><a href="as.mo.html">as.mo()</a></code> and all <code><a href="mo_property.html">mo_*</a></code> functions, to clean the user input. The default is the outcome of <code><a href="as.mo.html">mo_cleaning_regex()</a></code>, which removes texts between brackets and texts such as "species" and "serovar".</p></li>
 <li><p><code>AMR_custom_ab</code> <br> A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code>.</p></li>
@@ -80,7 +80,7 @@
 <p>In this file, you can set options such as...</p>
 <p></p><div class="sourceCode r"><pre><code><span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>AMR_locale <span class="op">=</span> <span class="st">"pt"</span><span class="op">)</span></span>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>AMR_include_PKPD <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
-<p>...to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with <code><a href="as.sir.html">as.sir()</a></code>.</p><div class="section">
+<p>...to add Portuguese language support of antimicrobials, and allow PK/PD rules when interpreting MIC values with <code><a href="as.sir.html">as.sir()</a></code>.</p><div class="section">
 <h3 id="share-options-within-team">Share Options Within Team<a class="anchor" aria-label="anchor" href="#share-options-within-team"></a></h3>
 
 
