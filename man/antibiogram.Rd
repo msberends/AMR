@@ -21,10 +21,10 @@
 antibiogram(x, antibiotics = where(is.sir), mo_transform = "shortname",
   ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
   only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
-  formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
-  col_mo = NULL, language = get_AMR_locale(), minimum = 30,
-  combine_SI = TRUE, sep = " + ", wisca = FALSE, simulations = 1000,
-  conf_interval = 0.95, interval_side = "two-tailed",
+  formatting_type = getOption("AMR_antibiogram_formatting_type",
+  ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
+  minimum = 30, combine_SI = TRUE, sep = " + ", wisca = FALSE,
+  simulations = 1000, conf_interval = 0.95, interval_side = "two-tailed",
   info = interactive())
 
 wisca(x, antibiotics = where(is.sir), ab_transform = "name",
@@ -52,7 +52,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{mo_transform}{a character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
 
-\item{ab_transform}{a character to transform antimicrobial input - must be one of the column names of the \link{antibiotics} data set (defaults to \code{"name"}): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be \code{NULL} to not transform the input.}
+\item{ab_transform}{a character to transform antimicrobial input - must be one of the column names of the \link{antimicrobials} data set (defaults to \code{"name"}): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be \code{NULL} to not transform the input.}
 
 \item{syndromic_group}{a column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case_when]{case_when()}}. See \emph{Examples}.}
 
@@ -109,7 +109,7 @@ For estimating antimicrobial coverage, especially when creating a WISCA, the out
 The numeric values of an antibiogram are stored in a long format as the \link[=attributes]{attribute} \code{long_numeric}. You can retrieve them using \code{attributes(x)$long_numeric}, where \code{x} is the outcome of \code{\link[=antibiogram]{antibiogram()}} or \code{\link[=wisca]{wisca()}}. This is ideal for e.g. advanced plotting.
 \subsection{Formatting Type}{
 
-The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} is the antimicrobial coverage (\code{4-6} indicates the confidence level), \code{15} the number of susceptible isolates, and \code{300} the number of tested (i.e., available) isolates:
+The formatting of the 'cells' of the table can be set with the argument \code{formatting_type}. In these examples, \code{5} indicates the antimicrobial coverage (\code{4-6} the confidence level), \code{15} the number of susceptible isolates, and \code{300} the number of tested (i.e., available) isolates:
 \enumerate{
 \item 5
 \item 15
@@ -124,18 +124,18 @@ The formatting of the 'cells' of the table can be set with the argument \code{fo
 \item 5 (N=15/300)
 \item 5\% (N=15/300)
 \item 5 (4-6)
-\item 5\% (4-6\%) - \strong{default}
+\item 5\% (4-6\%) - \strong{default for WISCA}
 \item 5 (4-6,300)
 \item 5\% (4-6\%,300)
 \item 5 (4-6,N=300)
-\item 5\% (4-6\%,N=300)
+\item 5\% (4-6\%,N=300) - \strong{default for non-WISCA}
 \item 5 (4-6,15/300)
 \item 5\% (4-6\%,15/300)
 \item 5 (4-6,N=15/300)
 \item 5\% (4-6\%,N=15/300)
 }
 
-The default is \code{14}, which can be set globally with the package option \code{\link[=AMR-options]{AMR_antibiogram_formatting_type}}, e.g. \code{options(AMR_antibiogram_formatting_type = 5)}. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
+The default can be set globally with the package option \code{\link[=AMR-options]{AMR_antibiogram_formatting_type}}, e.g. \code{options(AMR_antibiogram_formatting_type = 5)}. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
 
 Set \code{digits} (defaults to \code{0}) to alter the rounding of the susceptibility percentages.
 }

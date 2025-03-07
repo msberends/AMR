@@ -1,4 +1,4 @@
-# AMR 2.1.1.9183
+# AMR 2.1.1.9186
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -6,14 +6,15 @@
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
 ## Breaking
-* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents two years ago
+* Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Calling `antibiotics` will still work, but now returns a warning.
+* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents two years ago.
 
 ## New
 * **One Health implementation**
   * Function `as.sir()` now has extensive support for veterinary breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
   * The CLSI VET09 guideline has been implemented to address cases where veterinary breakpoints are missing (only applies when `guideline` is set to CLSI)
   * The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://msberends.github.io/AMR/articles/datasets.html).
-  * The `antibiotics` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
+  * The (new) `antimicrobials` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 * **Support for WISCA antibiograms**  
@@ -57,7 +58,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added a new argument `return_all` to all selectors, which defaults to `TRUE` to include any match. With `FALSE`, the old behaviour, only the first hit for each unique antimicrobial is returned.
   * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
   * The selectors `lincosamides()` and `macrolides()` do not overlap anymore - each antibiotic is now classified as either of these and not both
-* `antibiotics` data set
+* `antimicrobials` data set
   * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antimicrobial selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
   * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
   * Added Efflux (`EFF`), to allow mapping to AMRFinderPlus

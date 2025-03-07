@@ -27,5 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_warning(example_isolates[, ab_class("mycobact")])
-expect_warning(example_isolates[, ab_selector(name %like% "trim")])
+test_that("deprecated works", {
+  expect_warning(example_isolates[, ab_class("mycobact")])
+  expect_warning(example_isolates[, ab_selector(name %like% "trim")])
+})

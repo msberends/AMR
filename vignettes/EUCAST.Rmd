@@ -51,7 +51,7 @@ oops
 eucast_rules(oops, info = FALSE)
 ```
 
-A more convenient function is `mo_is_intrinsic_resistant()` that uses the same guideline, but allows to check for one or more specific microorganisms or antibiotics:
+A more convenient function is `mo_is_intrinsic_resistant()` that uses the same guideline, but allows to check for one or more specific microorganisms or antimicrobials:
 
 ```{r, warning = FALSE, message = FALSE}
 mo_is_intrinsic_resistant(

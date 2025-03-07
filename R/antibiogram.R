@@ -36,7 +36,7 @@
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()])
 #' @param antibiotics vector of any antimicrobial name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antimicrobial selectors][antimicrobial_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as `"TZP+TOB"` or `"cipro + genta"`, given that columns resembling such antimicrobials exist in `x`. See *Examples*.
 #' @param mo_transform a character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input or `NA` to consider all microorganisms 'unknown'.
-#' @param ab_transform a character to transform antimicrobial input - must be one of the column names of the [antibiotics] data set (defaults to `"name"`): `r vector_or(colnames(antibiotics), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
+#' @param ab_transform a character to transform antimicrobial input - must be one of the column names of the [antimicrobials] data set (defaults to `"name"`): `r vector_or(colnames(antimicrobials), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group a column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
 #' @param add_total_n a [logical] to indicate whether `n_tested` available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when `wisca = TRUE`; in that case, use [retrieve_wisca_parameters()] to get the parameters used for WISCA.
 #' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antimicrobials, see *Details*
@@ -64,7 +64,7 @@
 #'
 #' ### Formatting Type
 #'
-#' The formatting of the 'cells' of the table can be set with the argument `formatting_type`. In these examples, `5` is the antimicrobial coverage (`4-6` indicates the confidence level), `15` the number of susceptible isolates, and `300` the number of tested (i.e., available) isolates:
+#' The formatting of the 'cells' of the table can be set with the argument `formatting_type`. In these examples, `5` indicates the antimicrobial coverage (`4-6` the confidence level), `15` the number of susceptible isolates, and `300` the number of tested (i.e., available) isolates:
 #'
 #' 1. 5
 #' 2. 15
@@ -79,17 +79,17 @@
 #' 11. 5 (N=15/300)
 #' 12. 5% (N=15/300)
 #' 13. 5 (4-6)
-#' 14. 5% (4-6%) - **default**
+#' 14. 5% (4-6%) - **default for WISCA**
 #' 15. 5 (4-6,300)
 #' 16. 5% (4-6%,300)
 #' 17. 5 (4-6,N=300)
-#' 18. 5% (4-6%,N=300)
+#' 18. 5% (4-6%,N=300) - **default for non-WISCA**
 #' 19. 5 (4-6,15/300)
 #' 20. 5% (4-6%,15/300)
 #' 21. 5 (4-6,N=15/300)
 #' 22. 5% (4-6%,N=15/300)
 #'
-#' The default is `14`, which can be set globally with the package option [`AMR_antibiogram_formatting_type`][AMR-options], e.g. `options(AMR_antibiogram_formatting_type = 5)`. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
+#' The default can be set globally with the package option [`AMR_antibiogram_formatting_type`][AMR-options], e.g. `options(AMR_antibiogram_formatting_type = 5)`. Do note that for WISCA, the total numbers of tested and susceptible isolates are less useful to report, since these are included in the Bayesian model and apparent from the susceptibility and its confidence level.
 #'
 #' Set `digits` (defaults to `0`) to alter the rounding of the susceptibility percentages.
 #'
@@ -412,7 +412,7 @@ antibiogram <- function(x,
                         add_total_n = FALSE,
                         only_all_tested = FALSE,
                         digits = ifelse(wisca, 1, 0),
-                        formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
+                        formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 18)),
                         col_mo = NULL,
                         language = get_AMR_locale(),
                         minimum = 30,
@@ -436,7 +436,7 @@ antibiogram.default <- function(x,
                                 add_total_n = FALSE,
                                 only_all_tested = FALSE,
                                 digits = ifelse(wisca, 1, 0),
-                                formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
+                                formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 18)),
                                 col_mo = NULL,
                                 language = get_AMR_locale(),
                                 minimum = 30,
@@ -460,7 +460,7 @@ antibiogram.default <- function(x,
     meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE, allow_NA = TRUE)
   }
   if (!is.function(ab_transform)) {
-    meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antibiotics), allow_NULL = TRUE)
+    meet_criteria(ab_transform, allow_class = "character", has_length = 1, is_in = colnames(AMR::antimicrobials), allow_NULL = TRUE)
   }
   meet_criteria(syndromic_group, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(add_total_n, allow_class = "logical", has_length = 1)
@@ -962,7 +962,7 @@ antibiogram.grouped_df <- function(x,
                                    add_total_n = FALSE,
                                    only_all_tested = FALSE,
                                    digits = ifelse(wisca, 1, 0),
-                                   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
+                                   formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 18)),
                                    col_mo = NULL,
                                    language = get_AMR_locale(),
                                    minimum = 30,

@@ -27,20 +27,22 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-ab_reset_session()
+test_that("custom ab works", {
+  ab_reset_session()
 
-expect_message(as.ab("testab", info = TRUE))
+  expect_message(as.ab("testab", info = TRUE))
 
-suppressMessages(
-  add_custom_antimicrobials(
-    data.frame(
-      ab = "TESTAB",
-      name = "Test Antibiotic",
-      group = "Test Group"
+  suppressMessages(
+    add_custom_antimicrobials(
+      data.frame(
+        ab = "TESTAB",
+        name = "Test Antibiotic",
+        group = "Test Group"
+      )
     )
   )
-)
 
-expect_identical(as.character(as.ab("testab")), "TESTAB")
-expect_identical(ab_name("testab"), "Test Antibiotic")
-expect_identical(ab_group("testab"), "Test Group")
+  expect_identical(as.character(as.ab("testab")), "TESTAB")
+  expect_identical(ab_name("testab"), "Test Antibiotic")
+  expect_identical(ab_group("testab"), "Test Group")
+})

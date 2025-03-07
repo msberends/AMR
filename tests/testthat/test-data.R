@@ -27,101 +27,103 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# IDs should always be unique
-expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
-expect_identical(class(microorganisms$mo), c("mo", "character"))
-expect_identical(nrow(antibiotics), length(unique(antibiotics$ab)))
-expect_true(all(is.na(antibiotics$atc[duplicated(antibiotics$atc)])))
-expect_identical(class(antibiotics$ab), c("ab", "character"))
+test_that("data works", {
+  # IDs should always be unique
+  expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
+  expect_identical(class(microorganisms$mo), c("mo", "character"))
+  expect_identical(nrow(antimicrobials), length(unique(AMR::antimicrobials$ab)))
+  expect_true(all(is.na(AMR::antimicrobials$atc[duplicated(AMR::antimicrobials$atc)])))
+  expect_identical(class(AMR::antimicrobials$ab), c("ab", "character"))
 
 
-# check cross table reference
-expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
-expect_true(all(example_isolates$mo %in% microorganisms$mo))
-expect_true(all(microorganisms.groups$mo %in% microorganisms$mo))
-expect_true(all(microorganisms.groups$mo_group %in% microorganisms$mo))
-expect_true(all(clinical_breakpoints$mo %in% microorganisms$mo))
-expect_true(all(clinical_breakpoints$ab %in% antibiotics$ab))
-expect_true(all(intrinsic_resistant$mo %in% microorganisms$mo))
-expect_true(all(intrinsic_resistant$ab %in% antibiotics$ab))
-expect_false(any(is.na(microorganisms.codes$code)))
-expect_false(any(is.na(microorganisms.codes$mo)))
-expect_true(all(dosage$ab %in% antibiotics$ab))
-expect_true(all(dosage$name %in% antibiotics$name))
-# check valid disks/MICs
-expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
-expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
-expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
-expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
+  # check cross table reference
+  expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
+  expect_true(all(example_isolates$mo %in% microorganisms$mo))
+  expect_true(all(microorganisms.groups$mo %in% microorganisms$mo))
+  expect_true(all(microorganisms.groups$mo_group %in% microorganisms$mo))
+  expect_true(all(clinical_breakpoints$mo %in% microorganisms$mo))
+  expect_true(all(clinical_breakpoints$ab %in% AMR::antimicrobials$ab))
+  expect_true(all(intrinsic_resistant$mo %in% microorganisms$mo))
+  expect_true(all(intrinsic_resistant$ab %in% AMR::antimicrobials$ab))
+  expect_false(any(is.na(microorganisms.codes$code)))
+  expect_false(any(is.na(microorganisms.codes$mo)))
+  expect_true(all(dosage$ab %in% AMR::antimicrobials$ab))
+  expect_true(all(dosage$name %in% AMR::antimicrobials$name))
+  # check valid disks/MICs
+  expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
+  expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
+  expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
+  expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
 
-# antibiotic names must always be coercible to their original AB code
-expect_identical(as.ab(antibiotics$name), antibiotics$ab)
+  # antibiotic names must always be coercible to their original AB code
+  expect_identical(as.ab(AMR::antimicrobials$name), AMR::antimicrobials$ab)
 
-if (AMR:::pkg_is_available("tibble")) {
-  # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
-  datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
-  for (i in seq_len(length(datasets))) {
-    dataset <- get(datasets[i], envir = asNamespace("AMR"))
-    expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
+  if (AMR:::pkg_is_available("tibble")) {
+    # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
+    datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
+    for (i in seq_len(length(datasets))) {
+      dataset <- get(datasets[i], envir = asNamespace("AMR"))
+      expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
+    }
   }
-}
 
-df <- AMR:::AMR_env$MO_lookup
-expect_true(all(c(
-  "mo", "fullname", "status", "kingdom", "phylum", "class", "order",
-  "family", "genus", "species", "subspecies", "rank", "ref", "source",
-  "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence",
-  "snomed", "kingdom_index", "fullname_lower", "full_first", "species_first"
-) %in% colnames(df)))
+  df <- AMR:::AMR_env$MO_lookup
+  expect_true(all(c(
+    "mo", "fullname", "status", "kingdom", "phylum", "class", "order",
+    "family", "genus", "species", "subspecies", "rank", "ref", "source",
+    "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence",
+    "snomed", "kingdom_index", "fullname_lower", "full_first", "species_first"
+  ) %in% colnames(df)))
 
-expect_inherits(AMR:::MO_CONS, "mo")
+  expect_inherits(AMR:::MO_CONS, "mo")
 
-uncategorised <- subset(
-  microorganisms,
-  genus == "Staphylococcus" &
-    !species %in% c("", "aureus") &
-    !mo %in% c(AMR:::MO_CONS, AMR:::MO_COPS)
-)
-expect_true(NROW(uncategorised) == 0,
-  info = ifelse(NROW(uncategorised) == 0,
-    "All staphylococcal species categorised as CoNS/CoPS.",
-    paste0(
-      "Staphylococcal species not categorised as CoNS/CoPS: S. ",
-      uncategorised$species, " (", uncategorised$mo, ")",
-      collapse = "\n"
+  uncategorised <- subset(
+    microorganisms,
+    genus == "Staphylococcus" &
+      !species %in% c("", "aureus") &
+      !mo %in% c(AMR:::MO_CONS, AMR:::MO_COPS)
+  )
+  expect_true(NROW(uncategorised) == 0,
+    info = ifelse(NROW(uncategorised) == 0,
+      "All staphylococcal species categorised as CoNS/CoPS.",
+      paste0(
+        "Staphylococcal species not categorised as CoNS/CoPS: S. ",
+        uncategorised$species, " (", uncategorised$mo, ")",
+        collapse = "\n"
+      )
     )
   )
-)
 
-# THIS WILL CHECK NON-ASCII STRINGS IN ALL FILES:
+  # THIS WILL CHECK NON-ASCII STRINGS IN ALL FILES:
 
-# check_non_ascii <- function() {
-#   purrr::map_df(
-#     .id = "file",
-#     # list common text files
-#     .x = fs::dir_ls(
-#       recurse = TRUE,
-#       type = "file",
-#       # ignore images, compressed
-#       regexp = "\\.(png|ico|rda|ai|tar.gz|zip|xlsx|csv|pdf|psd)$",
-#       invert = TRUE
-#     ),
-#     .f = function(path) {
-#       x <- readLines(path, warn = FALSE)
-#       # from tools::showNonASCII()
-#       asc <- iconv(x, "latin1", "ASCII")
-#       ind <- is.na(asc) | asc != x
-#       # make data frame
-#       if (any(ind)) {
-#         tibble::tibble(
-#           row = which(ind),
-#           line = iconv(x[ind], "latin1", "ASCII", sub = "byte")
-#         )
-#       } else {
-#         tibble::tibble()
-#       }
-#     }
-#   )
-# }
-# x <- check_non_ascii() %>%
-#   filter(file %unlike% "^(data-raw|docs|git_)")
+  # check_non_ascii <- function() {
+  #   purrr::map_df(
+  #     .id = "file",
+  #     # list common text files
+  #     .x = fs::dir_ls(
+  #       recurse = TRUE,
+  #       type = "file",
+  #       # ignore images, compressed
+  #       regexp = "\\.(png|ico|rda|ai|tar.gz|zip|xlsx|csv|pdf|psd)$",
+  #       invert = TRUE
+  #     ),
+  #     .f = function(path) {
+  #       x <- readLines(path, warn = FALSE)
+  #       # from tools::showNonASCII()
+  #       asc <- iconv(x, "latin1", "ASCII")
+  #       ind <- is.na(asc) | asc != x
+  #       # make data frame
+  #       if (any(ind)) {
+  #         tibble::tibble(
+  #           row = which(ind),
+  #           line = iconv(x[ind], "latin1", "ASCII", sub = "byte")
+  #         )
+  #       } else {
+  #         tibble::tibble()
+  #       }
+  #     }
+  #   )
+  # }
+  # x <- check_non_ascii() %>%
+  #   filter(file %unlike% "^(data-raw|docs|git_)")
+})

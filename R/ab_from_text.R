@@ -33,7 +33,7 @@
 #' @param text text to analyse
 #' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
 #' @param collapse a [character] to pass on to `paste(, collapse = ...)` to only return one [character] per element of `text`, see *Examples*
-#' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. The default is `FALSE`. Using `TRUE` is equal to using "name".
+#' @param translate_ab if `type = "drug"`: a column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()]. The default is `FALSE`. Using `TRUE` is equal to using "name".
 #' @param thorough_search a [logical] to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
 #' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
 #' @param ... arguments passed on to [as.ab()]
@@ -139,10 +139,10 @@ ab_from_text <- function(text,
       })
     } else {
       # no thorough search
-      abbr <- unlist(AMR::antibiotics$abbreviations)
+      abbr <- unlist(AMR::antimicrobials$abbreviations)
       abbr <- abbr[nchar(abbr) >= 4]
-      names_atc <- substr(c(AMR::antibiotics$name, AMR::antibiotics$atc), 1, 5)
-      synonyms <- unlist(AMR::antibiotics$synonyms)
+      names_atc <- substr(c(AMR::antimicrobials$name, AMR::antimicrobials$atc), 1, 5)
+      synonyms <- unlist(AMR::antimicrobials$synonyms)
       synonyms <- synonyms[nchar(synonyms) >= 4]
       # regular expression must not be too long, so split synonyms in two:
       synonyms_part1 <- synonyms[seq_len(0.5 * length(synonyms))]

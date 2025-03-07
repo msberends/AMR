@@ -27,130 +27,131 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+test_that("antibiogram works", {
+  # Traditional antibiogram ----------------------------------------------
 
-# Traditional antibiogram ----------------------------------------------
+  ab1 <- antibiogram(example_isolates,
+    antibiotics = c(aminoglycosides(), carbapenems())
+  )
 
-ab1 <- antibiogram(example_isolates,
-  antibiotics = c(aminoglycosides(), carbapenems())
-)
+  ab2 <- antibiogram(example_isolates,
+    antibiotics = aminoglycosides(),
+    ab_transform = "atc",
+    mo_transform = "gramstain",
+    add_total_n = TRUE
+  )
 
-ab2 <- antibiogram(example_isolates,
-  antibiotics = aminoglycosides(),
-  ab_transform = "atc",
-  mo_transform = "gramstain",
-  add_total_n = TRUE
-)
+  ab3 <- antibiogram(example_isolates,
+    antibiotics = carbapenems(),
+    ab_transform = "ab",
+    mo_transform = "name",
+    formatting_type = 1
+  )
 
-ab3 <- antibiogram(example_isolates,
-  antibiotics = carbapenems(),
-  ab_transform = "ab",
-  mo_transform = "name",
-  formatting_type = 1
-)
+  expect_inherits(ab1, "antibiogram")
+  expect_inherits(ab2, "antibiogram")
+  expect_inherits(ab3, "antibiogram")
+  expect_equal(colnames(ab1), c("Pathogen", "Amikacin", "Gentamicin", "Imipenem", "Kanamycin", "Meropenem", "Tobramycin"))
+  expect_equal(colnames(ab2), c("Pathogen (N min-max)", "J01GB01", "J01GB03", "J01GB04", "J01GB06"))
+  expect_equal(colnames(ab3), c("Pathogen", "IPM", "MEM"))
+  expect_equal(ab3$MEM, c(52, NA, 100, 100, NA))
 
-expect_inherits(ab1, "antibiogram")
-expect_inherits(ab2, "antibiogram")
-expect_inherits(ab3, "antibiogram")
-expect_equal(colnames(ab1), c("Pathogen", "Amikacin", "Gentamicin", "Imipenem", "Kanamycin", "Meropenem", "Tobramycin"))
-expect_equal(colnames(ab2), c("Pathogen (N min-max)", "J01GB01", "J01GB03", "J01GB04", "J01GB06"))
-expect_equal(colnames(ab3), c("Pathogen", "IPM", "MEM"))
-expect_equal(ab3$MEM, c(52, NA, 100, 100, NA))
+  # Combined antibiogram -------------------------------------------------
 
-# Combined antibiogram -------------------------------------------------
+  # combined antibiotics yield higher empiric coverage
+  ab4 <- antibiogram(example_isolates,
+    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+    mo_transform = "gramstain"
+  )
 
-# combined antibiotics yield higher empiric coverage
-ab4 <- antibiogram(example_isolates,
-  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  mo_transform = "gramstain"
-)
+  ab5 <- antibiogram(example_isolates,
+    antibiotics = c("TZP", "TZP+TOB"),
+    mo_transform = "gramstain",
+    ab_transform = "name",
+    sep = " & ",
+    add_total_n = FALSE
+  )
 
-ab5 <- antibiogram(example_isolates,
-  antibiotics = c("TZP", "TZP+TOB"),
-  mo_transform = "gramstain",
-  ab_transform = "name",
-  sep = " & ",
-  add_total_n = FALSE
-)
+  expect_inherits(ab4, "antibiogram")
+  expect_inherits(ab5, "antibiogram")
+  expect_equal(colnames(ab4), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
+  expect_equal(colnames(ab5), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam & Tobramycin"))
 
-expect_inherits(ab4, "antibiogram")
-expect_inherits(ab5, "antibiogram")
-expect_equal(colnames(ab4), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
-expect_equal(colnames(ab5), c("Pathogen", "Piperacillin/tazobactam", "Piperacillin/tazobactam & Tobramycin"))
+  # Syndromic antibiogram ------------------------------------------------
 
-# Syndromic antibiogram ------------------------------------------------
+  # the data set could contain a filter for e.g. respiratory specimens
+  ab6 <- antibiogram(example_isolates,
+    antibiotics = c(aminoglycosides(), carbapenems()),
+    syndromic_group = "ward",
+    ab_transform = NULL
+  )
 
-# the data set could contain a filter for e.g. respiratory specimens
-ab6 <- antibiogram(example_isolates,
-  antibiotics = c(aminoglycosides(), carbapenems()),
-  syndromic_group = "ward",
-  ab_transform = NULL
-)
+  # with a custom language, though this will be determined automatically
+  # (i.e., this table will be in Dutch on Dutch systems)
+  ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
+  ab7 <- antibiogram(ex1,
+    antibiotics = aminoglycosides(),
+    ab_transform = "name",
+    syndromic_group = ifelse(ex1$ward == "ICU",
+      "IC", "Geen IC"
+    ),
+    language = "nl",
+    add_total_n = TRUE
+  )
 
-# with a custom language, though this will be determined automatically
-# (i.e., this table will be in Dutch on Dutch systems)
-ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
-ab7 <- antibiogram(ex1,
-  antibiotics = aminoglycosides(),
-  ab_transform = "name",
-  syndromic_group = ifelse(ex1$ward == "ICU",
-    "IC", "Geen IC"
-  ),
-  language = "nl",
-  add_total_n = TRUE
-)
+  expect_inherits(ab6, "antibiogram")
+  expect_inherits(ab7, "antibiogram")
+  expect_equal(colnames(ab6), c("Syndromic Group", "Pathogen", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
+  expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikacine", "Gentamicine", "Tobramycine"))
 
-expect_inherits(ab6, "antibiogram")
-expect_inherits(ab7, "antibiogram")
-expect_equal(colnames(ab6), c("Syndromic Group", "Pathogen", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
-expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikacine", "Gentamicine", "Tobramycine"))
+  # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 
-# Weighted-incidence syndromic combination antibiogram (WISCA) ---------
+  # the data set could contain a filter for e.g. respiratory specimens
+  ab8 <- suppressWarnings(antibiogram(example_isolates,
+    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+    wisca = TRUE
+  ))
 
-# the data set could contain a filter for e.g. respiratory specimens
-ab8 <- suppressWarnings(antibiogram(example_isolates,
-  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-  wisca = TRUE
-))
+  expect_inherits(ab8, "antibiogram")
+  expect_equal(colnames(ab8), c("Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
 
-expect_inherits(ab8, "antibiogram")
-expect_equal(colnames(ab8), c("Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
+  # grouped tibbles
 
-# grouped tibbles
-
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-  ab9 <- example_isolates %>%
-    group_by(ward, gender) %>%
-    wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
-  expect_equal(colnames(ab9), c("ward", "gender", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
-}
-
-
-# Generate plots with ggplot2 or base R --------------------------------
-
-pdf(NULL) # prevent Rplots.pdf being created
-
-expect_silent(plot(ab1))
-expect_silent(plot(ab2))
-expect_silent(plot(ab3))
-expect_silent(plot(ab4))
-expect_silent(plot(ab5))
-expect_silent(plot(ab6))
-expect_silent(plot(ab7))
-expect_silent(plot(ab8))
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-  expect_silent(plot(ab9))
-}
-
-if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(ggplot2::autoplot(ab1), "gg")
-  expect_inherits(ggplot2::autoplot(ab2), "gg")
-  expect_inherits(ggplot2::autoplot(ab3), "gg")
-  expect_inherits(ggplot2::autoplot(ab4), "gg")
-  expect_inherits(ggplot2::autoplot(ab5), "gg")
-  expect_inherits(ggplot2::autoplot(ab6), "gg")
-  expect_inherits(ggplot2::autoplot(ab7), "gg")
-  expect_inherits(ggplot2::autoplot(ab8), "gg")
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-    expect_inherits(ggplot2::autoplot(ab9), "gg")
+    ab9 <- example_isolates %>%
+      group_by(ward, gender) %>%
+      wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+    expect_equal(colnames(ab9), c("ward", "gender", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
   }
-}
+
+
+  # Generate plots with ggplot2 or base R --------------------------------
+
+  pdf(NULL) # prevent Rplots.pdf being created
+
+  expect_silent(plot(ab1))
+  expect_silent(plot(ab2))
+  expect_silent(plot(ab3))
+  expect_silent(plot(ab4))
+  expect_silent(plot(ab5))
+  expect_silent(plot(ab6))
+  expect_silent(plot(ab7))
+  expect_silent(plot(ab8))
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    expect_silent(plot(ab9))
+  }
+
+  if (AMR:::pkg_is_available("ggplot2")) {
+    expect_inherits(ggplot2::autoplot(ab1), "gg")
+    expect_inherits(ggplot2::autoplot(ab2), "gg")
+    expect_inherits(ggplot2::autoplot(ab3), "gg")
+    expect_inherits(ggplot2::autoplot(ab4), "gg")
+    expect_inherits(ggplot2::autoplot(ab5), "gg")
+    expect_inherits(ggplot2::autoplot(ab6), "gg")
+    expect_inherits(ggplot2::autoplot(ab7), "gg")
+    expect_inherits(ggplot2::autoplot(ab8), "gg")
+    if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+      expect_inherits(ggplot2::autoplot(ab9), "gg")
+    }
+  }
+})

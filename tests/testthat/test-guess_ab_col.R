@@ -27,36 +27,38 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(
-  guess_ab_col(example_isolates, "amox"),
-  "AMX"
-)
-expect_equal(
-  guess_ab_col(example_isolates, "amoxicillin"),
-  "AMX"
-)
-expect_equal(
-  guess_ab_col(example_isolates, "J01AA07"),
-  "TCY"
-)
-expect_equal(
-  guess_ab_col(example_isolates, "tetracycline"),
-  "TCY"
-)
-expect_equal(
-  guess_ab_col(example_isolates, "TETR"),
-  "TCY"
-)
+test_that("guess_ab_col works", {
+  expect_equal(
+    guess_ab_col(example_isolates, "amox"),
+    "AMX"
+  )
+  expect_equal(
+    guess_ab_col(example_isolates, "amoxicillin"),
+    "AMX"
+  )
+  expect_equal(
+    guess_ab_col(example_isolates, "J01AA07"),
+    "TCY"
+  )
+  expect_equal(
+    guess_ab_col(example_isolates, "tetracycline"),
+    "TCY"
+  )
+  expect_equal(
+    guess_ab_col(example_isolates, "TETR"),
+    "TCY"
+  )
 
-df <- data.frame(
-  AMP_ND10 = "R",
-  AMC_ED20 = "S"
-)
-expect_equal(
-  guess_ab_col(df, "ampicillin"),
-  "AMP_ND10"
-)
-expect_equal(
-  guess_ab_col(df, "J01CR02"),
-  "AMC_ED20"
-)
+  df <- data.frame(
+    AMP_ND10 = "R",
+    AMC_ED20 = "S"
+  )
+  expect_equal(
+    guess_ab_col(df, "ampicillin"),
+    "AMP_ND10"
+  )
+  expect_equal(
+    guess_ab_col(df, "J01CR02"),
+    "AMC_ED20"
+  )
+})

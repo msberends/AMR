@@ -27,88 +27,90 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
-  pdf(NULL) # prevent Rplots.pdf being created
+test_that("plotting works", {
+  if (AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
+    pdf(NULL) # prevent Rplots.pdf being created
 
-  # scale_*_mic
-  aesthetics <- c("x", "y", "colour", "fill")
-  expected_methods <- c("transform", "transform_df", "breaks", "labels", "limits")
-  for (aest in aesthetics) {
-    scale_fn_name <- paste0("scale_", aest, "_continuous")
-    scale_obj <- getExportedValue("ggplot2", scale_fn_name)()
+    # scale_*_mic
+    aesthetics <- c("x", "y", "colour", "fill")
+    expected_methods <- c("transform", "transform_df", "breaks", "labels", "limits")
+    for (aest in aesthetics) {
+      scale_fn_name <- paste0("scale_", aest, "_continuous")
+      scale_obj <- getExportedValue("ggplot2", scale_fn_name)()
+      for (method in expected_methods) {
+        expect_true(is.function(scale_obj[[method]]) || method %in% names(scale_obj),
+          info = paste0("Method '", method, "' is missing in ggplot2::", scale_fn_name)
+        )
+      }
+    }
+
+    # scale_*_sir
+    aesthetics <- c("colour", "fill")
+    expected_methods <- c("transform", "transform_df", "labels", "limits")
+    for (aest in aesthetics) {
+      scale_fn_name <- "scale_discrete_manual"
+      scale_obj <- getExportedValue("ggplot2", scale_fn_name)(aesthetics = aest)
+      for (method in expected_methods) {
+        expect_true(is.function(scale_obj[[method]]) || method %in% names(scale_obj),
+          info = paste0("Method '", method, "' is missing in ggplot2::", scale_fn_name)
+        )
+      }
+    }
     for (method in expected_methods) {
-      expect_true(is.function(scale_obj[[method]]) || method %in% names(scale_obj),
-        info = paste0("Method '", method, "' is missing in ggplot2::", scale_fn_name)
+      expect_true(is.function(ggplot2::scale_x_discrete()[[method]]) || method %in% names(ggplot2::scale_x_discrete()),
+        info = paste0("Method '", method, "' is missing in ggplot2::", "scale_x_discrete")
       )
     }
-  }
 
-  # scale_*_sir
-  aesthetics <- c("colour", "fill")
-  expected_methods <- c("transform", "transform_df", "labels", "limits")
-  for (aest in aesthetics) {
-    scale_fn_name <- "scale_discrete_manual"
-    scale_obj <- getExportedValue("ggplot2", scale_fn_name)(aesthetics = aest)
-    for (method in expected_methods) {
-      expect_true(is.function(scale_obj[[method]]) || method %in% names(scale_obj),
-        info = paste0("Method '", method, "' is missing in ggplot2::", scale_fn_name)
-      )
-    }
-  }
-  for (method in expected_methods) {
-    expect_true(is.function(ggplot2::scale_x_discrete()[[method]]) || method %in% names(ggplot2::scale_x_discrete()),
-      info = paste0("Method '", method, "' is missing in ggplot2::", "scale_x_discrete")
+    expect_inherits(
+      ggplot(
+        data.frame(
+          count = c(1, 2, 3, 4),
+          sir = c("S", "I", "R", "SDD")
+        ),
+        aes(x = sir, y = count, fill = sir)
+      ) +
+        geom_col() +
+        scale_x_sir(eucast_I = F, language = "el") +
+        scale_fill_sir(eucast_I = T, language = "nl"),
+      "gg"
+    )
+    expect_inherits(
+      ggplot(
+        data.frame(
+          mic = as.mic(c(2, 4, 8, 16)),
+          sir = as.sir(c("S", "I", "R", "SDD"))
+        ),
+        aes(x = sir, y = mic)
+      ) +
+        geom_point() +
+        scale_y_mic(),
+      "gg"
+    )
+    expect_inherits(
+      ggplot(
+        data.frame(
+          mic = as.mic(c(2, 4, 8, 16)),
+          sir = as.sir(c("S", "I", "R", "SDD"))
+        ),
+        aes(x = sir, y = mic)
+      ) +
+        geom_col() +
+        scale_y_mic(),
+      "gg"
+    )
+    expect_inherits(
+      ggplot(
+        data.frame(
+          mic = as.mic(c(2, 4, 8, 16)),
+          sir = as.sir(c("S", "I", "R", "SDD"))
+        ),
+        aes(x = sir, y = mic)
+      ) +
+        geom_col() +
+        scale_y_mic(mic_range = c(4, 16)) +
+        scale_x_sir(),
+      "gg"
     )
   }
-
-  expect_inherits(
-    ggplot(
-      data.frame(
-        count = c(1, 2, 3, 4),
-        sir = c("S", "I", "R", "SDD")
-      ),
-      aes(x = sir, y = count, fill = sir)
-    ) +
-      geom_col() +
-      scale_x_sir(eucast_I = F, language = "el") +
-      scale_fill_sir(eucast_I = T, language = "nl"),
-    "gg"
-  )
-  expect_inherits(
-    ggplot(
-      data.frame(
-        mic = as.mic(c(2, 4, 8, 16)),
-        sir = as.sir(c("S", "I", "R", "SDD"))
-      ),
-      aes(x = sir, y = mic)
-    ) +
-      geom_point() +
-      scale_y_mic(),
-    "gg"
-  )
-  expect_inherits(
-    ggplot(
-      data.frame(
-        mic = as.mic(c(2, 4, 8, 16)),
-        sir = as.sir(c("S", "I", "R", "SDD"))
-      ),
-      aes(x = sir, y = mic)
-    ) +
-      geom_col() +
-      scale_y_mic(),
-    "gg"
-  )
-  expect_inherits(
-    ggplot(
-      data.frame(
-        mic = as.mic(c(2, 4, 8, 16)),
-        sir = as.sir(c("S", "I", "R", "SDD"))
-      ),
-      aes(x = sir, y = mic)
-    ) +
-      geom_col() +
-      scale_y_mic(mic_range = c(4, 16)) +
-      scale_x_sir(),
-    "gg"
-  )
-}
+})

@@ -235,7 +235,7 @@ breakpoints %>%
   filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) %>%
   pull(WHONET_ABX_CODE) %>%
   unique()
-# they are at the moment all old codes that have the right replacements in `antibiotics`, so we can use as.ab()
+# they are at the moment all old codes that have the right replacements in `antimicrobials`, so we can use as.ab()
 
 
 ## Build new breakpoints table ----

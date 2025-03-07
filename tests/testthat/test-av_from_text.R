@@ -27,32 +27,34 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_identical(
-  av_from_text("28/03/2020 regular aciclovir 500mg po tds")[[1]],
-  as.av("Aciclovir")
-)
-expect_identical(
-  av_from_text("28/03/2020 regular aciclovir 500mg po tds", thorough_search = TRUE)[[1]],
-  as.av("Aciclovir")
-)
-expect_identical(
-  av_from_text("28/03/2020 regular aciclovir 500mg po tds", thorough_search = FALSE)[[1]],
-  as.av("Aciclovir")
-)
-expect_identical(
-  av_from_text("28/03/2020 regular aciclovir 500mg po tds", translate_av = TRUE)[[1]],
-  "Aciclovir"
-)
-expect_identical(
-  av_from_text("administered aciclo and valaciclo", collapse = ", ")[[1]],
-  "ACI, VALA"
-)
+test_that("av_from_text works", {
+  expect_identical(
+    av_from_text("28/03/2020 regular aciclovir 500mg po tds")[[1]],
+    as.av("Aciclovir")
+  )
+  expect_identical(
+    av_from_text("28/03/2020 regular aciclovir 500mg po tds", thorough_search = TRUE)[[1]],
+    as.av("Aciclovir")
+  )
+  expect_identical(
+    av_from_text("28/03/2020 regular aciclovir 500mg po tds", thorough_search = FALSE)[[1]],
+    as.av("Aciclovir")
+  )
+  expect_identical(
+    av_from_text("28/03/2020 regular aciclovir 500mg po tds", translate_av = TRUE)[[1]],
+    "Aciclovir"
+  )
+  expect_identical(
+    av_from_text("administered aciclo and valaciclo", collapse = ", ")[[1]],
+    "ACI, VALA"
+  )
 
-expect_identical(
-  av_from_text("28/03/2020 regular aciclo 500mg po tds", type = "dose")[[1]],
-  500
-)
-expect_identical(
-  av_from_text("28/03/2020 regular aciclo 500mg po tds", type = "admin")[[1]],
-  "oral"
-)
+  expect_identical(
+    av_from_text("28/03/2020 regular aciclo 500mg po tds", type = "dose")[[1]],
+    500
+  )
+  expect_identical(
+    av_from_text("28/03/2020 regular aciclo 500mg po tds", type = "admin")[[1]],
+    "oral"
+  )
+})

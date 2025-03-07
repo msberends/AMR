@@ -63,7 +63,7 @@ data <- example_isolates %>%
 
 **Explanation:**
 
-- `aminoglycosides()` and `betalactams()` dynamically select columns for antibiotics in these classes.
+- `aminoglycosides()` and `betalactams()` dynamically select columns for antimicrobials in these classes.
 - `drop_na()` ensures the model receives complete cases for training.
 
 ### **Defining the Workflow**

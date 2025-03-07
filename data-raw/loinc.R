@@ -50,15 +50,15 @@ loinc_df <- loinc_df %>%
   filter(CLASS %in% c("DRUG/TOX", "ABXBACT")) %>% 
   mutate(name = generalise_antibiotic_name(COMPONENT), .before = 1)
 
-# antibiotics
-antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
-for (i in seq_len(nrow(antibiotics))) {
+# antimicrobials
+antimicrobials$loinc <- as.list(rep(NA_character_, nrow(antimicrobials)))
+for (i in seq_len(nrow(antimicrobials))) {
   message(i)
   loinc_ab <- loinc_df %>%
-    filter(name %like% paste0("^", generalise_antibiotic_name(antibiotics$name[i]))) %>%
+    filter(name %like% paste0("^", generalise_antibiotic_name(antimicrobials$name[i]))) %>%
     pull(LOINC_NUM)
   if (length(loinc_ab) > 0) {
-    antibiotics$loinc[i] <- list(loinc_ab)
+    antimicrobials$loinc[i] <- list(loinc_ab)
   }
 }
 
@@ -75,10 +75,10 @@ for (i in seq_len(nrow(antivirals))) {
 }
 
 # sort and fix for empty values
-for (i in 1:nrow(antibiotics)) {
-  loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc", drop = TRUE][[1]]))))
+for (i in 1:nrow(antimicrobials)) {
+  loinc <- as.character(sort(unique(tolower(antimicrobials[i, "loinc", drop = TRUE][[1]]))))
   loinc <- loinc[loinc != ""]
-  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
+  antimicrobials[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
 }
 for (i in 1:nrow(antivirals)) {
   loinc <- as.character(sort(unique(tolower(antivirals[i, "loinc", drop = TRUE][[1]]))))
@@ -86,17 +86,17 @@ for (i in 1:nrow(antivirals)) {
   antivirals[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
 }
 
-antibiotics <- dataset_UTF8_to_ASCII(as.data.frame(antibiotics, stringsAsFactors = FALSE))
-antibiotics <- dplyr::arrange(antibiotics, name)
+antimicrobials <- dataset_UTF8_to_ASCII(as.data.frame(antimicrobials, stringsAsFactors = FALSE))
+antimicrobials <- dplyr::arrange(antimicrobials, name)
 
 antivirals <- dataset_UTF8_to_ASCII(as.data.frame(antivirals, stringsAsFactors = FALSE))
 antivirals <- dplyr::arrange(antivirals, name)
 
 # remember to update R/aa_globals.R for the documentation
 
-dim(antibiotics) # for R/data.R
-usethis::use_data(antibiotics, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
-rm(antibiotics)
+dim(antimicrobials) # for R/data.R
+usethis::use_data(antimicrobials, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
+rm(antimicrobials)
 
 dim(antivirals) # for R/data.R
 usethis::use_data(antivirals, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)

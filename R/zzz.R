@@ -91,7 +91,7 @@ AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
 
 AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
-.onLoad <- function(lib, pkg) {
+.onLoad <- function(libname, pkgname) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages. This was suggested by the
   # developers of the vctrs package:
@@ -203,15 +203,22 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
   # reference data - they have additional data to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
-  if (NROW(AB_LOOKUP) != NROW(AMR::antibiotics)) {
+  if (NROW(AB_LOOKUP) != NROW(AMR::antimicrobials)) {
     # antibiotics data set was updated - run create_AB_AV_lookup() again
-    AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
+    AB_LOOKUP <- create_AB_AV_lookup(AMR::antimicrobials)
   }
-  AMR_env$AB_lookup <- cbind(AMR::antibiotics, AB_LOOKUP)
+
+  # deprecated antibiotics data set
+  makeActiveBinding("antibiotics", function() {
+    deprecation_warning(old = "antibiotics", new = "antimicrobials", is_function = FALSE, is_dataset = TRUE)
+    AMR::antimicrobials
+  }, env = asNamespace(pkgname))
+
+  AMR_env$AB_lookup <- cbind(AMR::antimicrobials, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
 }
 
-.onAttach <- function(lib, pkg) {
+.onAttach <- function(libname, pkgname) {
   # if custom ab option is available, load it
   if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {
     if (getOption("AMR_custom_ab") %unlike% "[.]rds$") {

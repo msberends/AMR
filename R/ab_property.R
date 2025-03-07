@@ -29,10 +29,10 @@
 
 #' Get Properties of an Antibiotic
 #'
-#' Use these functions to return a specific property of an antibiotic from the [antibiotics] data set. All input values will be evaluated internally with [as.ab()].
+#' Use these functions to return a specific property of an antibiotic from the [antimicrobials] data set. All input values will be evaluated internally with [as.ab()].
 #' @param x any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
-#' @param property one of the column names of one of the [antibiotics] data set: `vector_or(colnames(antibiotics), sort = FALSE)`.
+#' @param property one of the column names of one of the [antimicrobials] data set: `vector_or(colnames(antimicrobials), sort = FALSE)`.
 #' @param language language of the returned text - the default is the current system language (see [get_AMR_locale()]) and can also be set with the package option [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
@@ -55,7 +55,7 @@
 #' - A [data.frame] in case of [set_ab_names()]
 #' - A [character] in all other cases
 #' @export
-#' @seealso [antibiotics]
+#' @seealso [antimicrobials]
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' # all properties:
@@ -337,7 +337,7 @@ ab_url <- function(x, open = FALSE, ...) {
 #' @export
 ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(property, is_in = colnames(AMR::antibiotics), has_length = 1)
+  meet_criteria(property, is_in = colnames(AMR::antimicrobials), has_length = 1)
   language <- validate_language(language)
   translate_into_language(ab_validate(x = x, property = property, ...), language = language)
 }
@@ -347,7 +347,7 @@ ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) 
 #' @export
 set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale(), snake_case = NULL) {
   meet_criteria(data, allow_class = c("data.frame", "character"))
-  meet_criteria(property, is_in = colnames(AMR::antibiotics), has_length = 1, ignore.case = TRUE)
+  meet_criteria(property, is_in = colnames(AMR::antimicrobials), has_length = 1, ignore.case = TRUE)
   language <- validate_language(language)
   meet_criteria(snake_case, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
 

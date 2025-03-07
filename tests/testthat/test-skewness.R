@@ -27,15 +27,17 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(skewness(example_isolates$age),
-  -1.212888,
-  tolerance = 0.00001
-)
-expect_equal(unname(skewness(data.frame(example_isolates$age))),
-  -1.212888,
-  tolerance = 0.00001
-)
-expect_equal(skewness(matrix(example_isolates$age)),
-  -1.212888,
-  tolerance = 0.00001
-)
+test_that("skewness works", {
+  expect_equal(skewness(example_isolates$age),
+    -1.212888,
+    tolerance = 0.00001
+  )
+  expect_equal(unname(skewness(data.frame(example_isolates$age))),
+    -1.212888,
+    tolerance = 0.00001
+  )
+  expect_equal(skewness(matrix(example_isolates$age)),
+    -1.212888,
+    tolerance = 0.00001
+  )
+})

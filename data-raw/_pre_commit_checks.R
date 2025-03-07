@@ -364,98 +364,98 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
 
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
-pre_commit_lst$AB_AMINOGLYCOSIDES <- antibiotics %>%
+pre_commit_lst$AB_AMINOGLYCOSIDES <- antimicrobials %>%
   filter(group %like% "aminoglycoside") %>%
   pull(ab)
 pre_commit_lst$AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
-pre_commit_lst$AB_ANTIFUNGALS <- antibiotics %>%
+pre_commit_lst$AB_ANTIFUNGALS <- antimicrobials %>%
   filter(group %like% "antifungal") %>%
   pull(ab)
-pre_commit_lst$AB_ANTIMYCOBACTERIALS <- antibiotics %>%
+pre_commit_lst$AB_ANTIMYCOBACTERIALS <- antimicrobials %>%
   filter(group %like% "antimycobacterial") %>%
   pull(ab)
-pre_commit_lst$AB_CARBAPENEMS <- antibiotics %>%
+pre_commit_lst$AB_CARBAPENEMS <- antimicrobials %>%
   filter(group %like% "carbapenem") %>%
   pull(ab)
-pre_commit_lst$AB_CEPHALOSPORINS <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS <- antimicrobials %>%
   filter(group %like% "cephalosporin") %>%
   pull(ab)
-pre_commit_lst$AB_CEPHALOSPORINS_1ST <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_1ST <- antimicrobials %>%
   filter(group %like% "cephalosporin.*1") %>%
   pull(ab)
-pre_commit_lst$AB_CEPHALOSPORINS_2ND <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_2ND <- antimicrobials %>%
   filter(group %like% "cephalosporin.*2") %>%
   pull(ab)
-pre_commit_lst$AB_CEPHALOSPORINS_3RD <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_3RD <- antimicrobials %>%
   filter(group %like% "cephalosporin.*3") %>%
   pull(ab)
-pre_commit_lst$AB_CEPHALOSPORINS_4TH <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_4TH <- antimicrobials %>%
   filter(group %like% "cephalosporin.*4") %>%
   pull(ab)
-pre_commit_lst$AB_CEPHALOSPORINS_5TH <- antibiotics %>%
+pre_commit_lst$AB_CEPHALOSPORINS_5TH <- antimicrobials %>%
   filter(group %like% "cephalosporin.*5") %>%
   pull(ab)
 pre_commit_lst$AB_CEPHALOSPORINS_EXCEPT_CAZ <- pre_commit_lst$AB_CEPHALOSPORINS[pre_commit_lst$AB_CEPHALOSPORINS != "CAZ"]
-pre_commit_lst$AB_FLUOROQUINOLONES <- antibiotics %>%
+pre_commit_lst$AB_FLUOROQUINOLONES <- antimicrobials %>%
   filter(atc_group2 %like% "fluoroquinolone" | (group %like% "quinolone" & is.na(atc_group2))) %>%
   pull(ab)
-pre_commit_lst$AB_GLYCOPEPTIDES <- antibiotics %>%
+pre_commit_lst$AB_GLYCOPEPTIDES <- antimicrobials %>%
   filter(group %like% "glycopeptide") %>%
   pull(ab)
-pre_commit_lst$AB_ISOXAZOLYLPENICILLINS <- antibiotics %>%
+pre_commit_lst$AB_ISOXAZOLYLPENICILLINS <- antimicrobials %>%
   filter(name %like% "oxacillin|cloxacillin|dicloxacillin|flucloxacillin|meth?icillin") %>%
   pull(ab)
 pre_commit_lst$AB_LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
 pre_commit_lst$AB_GLYCOPEPTIDES_EXCEPT_LIPO <- pre_commit_lst$AB_GLYCOPEPTIDES[!pre_commit_lst$AB_GLYCOPEPTIDES %in% pre_commit_lst$AB_LIPOGLYCOPEPTIDES]
-pre_commit_lst$AB_LINCOSAMIDES <- antibiotics %>%
+pre_commit_lst$AB_LINCOSAMIDES <- antimicrobials %>%
   filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2) & name %like% "^(pirlimycin)" & name %unlike% "screening|inducible")) %>%
   pull(ab)
-pre_commit_lst$AB_MACROLIDES <- antibiotics %>%
+pre_commit_lst$AB_MACROLIDES <- antimicrobials %>%
   filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2) & name %like% "^(acetylmidecamycin|acetylspiramycin|gamith?romycin|kitasamycin|meleumycin|nafith?romycin|solith?romycin|tildipirosin|tilmicosin|tulath?romycin|tylosin|tylvalosin)" & name %unlike% "screening|inducible")) %>%
   pull(ab)
-pre_commit_lst$AB_MONOBACTAMS <- antibiotics %>%
+pre_commit_lst$AB_MONOBACTAMS <- antimicrobials %>%
   filter(group %like% "monobactam") %>%
   pull(ab)
-pre_commit_lst$AB_NITROFURANS <- antibiotics %>%
+pre_commit_lst$AB_NITROFURANS <- antimicrobials %>%
   filter(name %like% "^furaz|nitrofura" | atc_group2 %like% "nitrofuran") %>%
   pull(ab)
-pre_commit_lst$AB_OXAZOLIDINONES <- antibiotics %>%
+pre_commit_lst$AB_OXAZOLIDINONES <- antimicrobials %>%
   filter(group %like% "oxazolidinone") %>%
   pull(ab)
-pre_commit_lst$AB_PENICILLINS <- antibiotics %>%
+pre_commit_lst$AB_PENICILLINS <- antimicrobials %>%
   filter(group %like% "penicillin" & !(name %unlike% "/" & name %like% ".*bactam$")) %>%
   pull(ab)
-pre_commit_lst$AB_PHENICOLS <- antibiotics %>%
+pre_commit_lst$AB_PHENICOLS <- antimicrobials %>%
   filter(group %like% "phenicol" | atc_group1 %like% "phenicol" | atc_group2 %like% "phenicol") %>%
   pull(ab)
-pre_commit_lst$AB_POLYMYXINS <- antibiotics %>%
+pre_commit_lst$AB_POLYMYXINS <- antimicrobials %>%
   filter(group %like% "polymyxin") %>%
   pull(ab)
-pre_commit_lst$AB_QUINOLONES <- antibiotics %>%
+pre_commit_lst$AB_QUINOLONES <- antimicrobials %>%
   filter(group %like% "quinolone") %>%
   pull(ab)
-pre_commit_lst$AB_RIFAMYCINS <- antibiotics %>%
+pre_commit_lst$AB_RIFAMYCINS <- antimicrobials %>%
   filter(name %like% "Rifampi|Rifabutin|Rifapentine|rifamy") %>%
   pull(ab)
-pre_commit_lst$AB_STREPTOGRAMINS <- antibiotics %>%
+pre_commit_lst$AB_STREPTOGRAMINS <- antimicrobials %>%
   filter(atc_group2 %like% "streptogramin") %>%
   pull(ab)
-pre_commit_lst$AB_TETRACYCLINES <- antibiotics %>%
+pre_commit_lst$AB_TETRACYCLINES <- antimicrobials %>%
   filter(group %like% "tetracycline") %>%
   pull(ab)
 pre_commit_lst$AB_TETRACYCLINES_EXCEPT_TGC <- pre_commit_lst$AB_TETRACYCLINES[pre_commit_lst$AB_TETRACYCLINES != "TGC"]
-pre_commit_lst$AB_TRIMETHOPRIMS <- antibiotics %>%
+pre_commit_lst$AB_TRIMETHOPRIMS <- antimicrobials %>%
   filter(group %like% "trimethoprim") %>%
   pull(ab)
 pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
 pre_commit_lst$AB_BETALACTAMS <- sort(c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS, pre_commit_lst$AB_MONOBACTAMS))
-pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antibiotics %>%
+pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antimicrobials %>%
   filter(name %like% "/" & name %unlike% "EDTA" & ab %in% pre_commit_lst$AB_BETALACTAMS) %>%
   pull(ab)
 # this will be used for documentation:
 pre_commit_lst$DEFINED_AB_GROUPS <- sort(names(pre_commit_lst)[names(pre_commit_lst) %like% "^AB_" & names(pre_commit_lst) != "AB_LOOKUP"])
 
-pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(antibiotics)
+pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(antimicrobials)
 pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(antivirals)
 
 # Export to package as internal data ----
@@ -506,7 +506,7 @@ changed_md5 <- function(object) {
 # give official names to ABs and MOs
 clin_break <- clinical_breakpoints %>%
   mutate(mo_name = microorganisms$fullname[match(mo, microorganisms$mo)], .after = mo) %>%
-  mutate(ab_name = antibiotics$name[match(ab, antibiotics$ab)], .after = ab)
+  mutate(ab_name = antimicrobials$name[match(ab, antimicrobials$ab)], .after = ab)
 if (changed_md5(clin_break)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('clinical_breakpoints')} to {usethis::ui_value('data-raw/')}"))
   write_md5(clin_break)
@@ -560,18 +560,18 @@ if (changed_md5(microorganisms.groups)) {
   try(arrow::write_parquet(microorganisms.groups, "data-raw/microorganisms.groups.parquet"), silent = TRUE)
 }
 
-ab <- dplyr::mutate_if(antibiotics, ~ !is.numeric(.), as.character)
+ab <- dplyr::mutate_if(antimicrobials, ~ !is.numeric(.), as.character)
 if (changed_md5(ab)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('antibiotics')} to {usethis::ui_value('data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('antimicrobials')} to {usethis::ui_value('data-raw/')}"))
   write_md5(ab)
-  try(saveRDS(antibiotics, "data-raw/antibiotics.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(haven::write_sav(ab, "data-raw/antibiotics.sav"), silent = TRUE)
-  try(haven::write_dta(ab, "data-raw/antibiotics.dta"), silent = TRUE)
-  ab_lists <- antibiotics %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
-  try(write.table(ab_lists, "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(openxlsx2::write_xlsx(ab_lists, "data-raw/antibiotics.xlsx"), silent = TRUE)
-  try(arrow::write_feather(antibiotics, "data-raw/antibiotics.feather"), silent = TRUE)
-  try(arrow::write_parquet(antibiotics, "data-raw/antibiotics.parquet"), silent = TRUE)
+  try(saveRDS(antimicrobials, "data-raw/antimicrobials.rds", version = 2, compress = "xz"), silent = TRUE)
+  try(haven::write_sav(ab, "data-raw/antimicrobials.sav"), silent = TRUE)
+  try(haven::write_dta(ab, "data-raw/antimicrobials.dta"), silent = TRUE)
+  ab_lists <- antimicrobials %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
+  try(write.table(ab_lists, "data-raw/antimicrobials.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(openxlsx2::write_xlsx(ab_lists, "data-raw/antimicrobials.xlsx"), silent = TRUE)
+  try(arrow::write_feather(antimicrobials, "data-raw/antimicrobials.feather"), silent = TRUE)
+  try(arrow::write_parquet(antimicrobials, "data-raw/antimicrobials.parquet"), silent = TRUE)
 }
 
 av <- dplyr::mutate_if(antivirals, ~ !is.numeric(.), as.character)

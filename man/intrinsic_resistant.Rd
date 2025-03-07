@@ -8,7 +8,7 @@
 A \link[tibble:tibble]{tibble} with 301 583 observations and 2 variables:
 \itemize{
 \item \code{mo}\cr Microorganism ID
-\item \code{ab}\cr Antibiotic ID
+\item \code{ab}\cr Antimcrobial ID
 }
 }
 \usage{

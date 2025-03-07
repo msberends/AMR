@@ -1,6 +1,6 @@
 from .datasets import example_isolates
 from .datasets import microorganisms
-from .datasets import antibiotics
+from .datasets import antimicrobials
 from .datasets import clinical_breakpoints
 from .functions import ab_class
 from .functions import ab_selector
@@ -138,7 +138,6 @@ from .functions import semi_join_microorganisms
 from .functions import anti_join_microorganisms
 from .functions import key_antimicrobials
 from .functions import all_antimicrobials
-from .functions import antimicrobials_equal
 from .functions import kurtosis
 from .functions import like
 from .functions import mdro

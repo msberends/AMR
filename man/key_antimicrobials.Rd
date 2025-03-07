@@ -21,7 +21,7 @@ antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
   ignore_I = TRUE, points_threshold = 2, ...)
 }
 \arguments{
-\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank to determine automatically}
+\item{x}{a \link{data.frame} with antimicrobials columns, like \code{AMX} or \code{amox}. Can be left blank to determine automatically.}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -112,7 +112,7 @@ antimicrobials_equal(strainA, strainB, type = "keyantimicrobials", ignore_I = FA
 
 \donttest{
 if (require("dplyr")) {
-  # set key antibiotics to a new variable
+  # set key antimicrobials to a new variable
   my_patients <- example_isolates \%>\%
     mutate(keyab = key_antimicrobials(antifungal = NULL)) \%>\% # no need to define `x`
     mutate(

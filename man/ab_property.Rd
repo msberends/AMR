@@ -65,7 +65,7 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 
-\item{property}{one of the column names of one of the \link{antibiotics} data set: \code{vector_or(colnames(antibiotics), sort = FALSE)}.}
+\item{property}{one of the column names of one of the \link{antimicrobials} data set: \code{vector_or(colnames(antimicrobials), sort = FALSE)}.}
 
 \item{data}{a \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names}
 
@@ -81,7 +81,7 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
 }
 }
 \description{
-Use these functions to return a specific property of an antibiotic from the \link{antibiotics} data set. All input values will be evaluated internally with \code{\link[=as.ab]{as.ab()}}.
+Use these functions to return a specific property of an antibiotic from the \link{antimicrobials} data set. All input values will be evaluated internally with \code{\link[=as.ab]{as.ab()}}.
 }
 \details{
 All output \link[=translate]{will be translated} where possible.
@@ -99,7 +99,7 @@ European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{htt
 
 \section{Reference Data Publicly Available}{
 
-All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+All data sets in this \code{AMR} package (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -168,5 +168,5 @@ if (require("dplyr")) {
 }
 }
 \seealso{
-\link{antibiotics}
+\link{antimicrobials}
 }

@@ -27,34 +27,36 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-ab_reset_session()
+test_that("ab_from_text works", {
+  ab_reset_session()
 
-expect_identical(
-  ab_from_text("28/03/2020 amoxicilliin 500mg po tds")[[1]],
-  as.ab("Amoxicillin")
-)
-expect_identical(
-  ab_from_text("28/03/2020 amoxicilliin 500mg po tds", thorough_search = TRUE)[[1]],
-  as.ab("Amoxicillin")
-)
-expect_identical(
-  ab_from_text("28/03/2020 amoxicilliin 500mg po tds", thorough_search = FALSE)[[1]],
-  as.ab("Amoxicillin")
-)
-expect_identical(
-  ab_from_text("28/03/2020 amoxicilliin 500mg po tds", translate_ab = TRUE)[[1]],
-  "Amoxicillin"
-)
-expect_identical(
-  ab_from_text("administered amoxi/clav and cipro", collapse = ", ")[[1]],
-  "AMC, CIP"
-)
+  expect_identical(
+    ab_from_text("28/03/2020 amoxicilliin 500mg po tds")[[1]],
+    as.ab("Amoxicillin")
+  )
+  expect_identical(
+    ab_from_text("28/03/2020 amoxicilliin 500mg po tds", thorough_search = TRUE)[[1]],
+    as.ab("Amoxicillin")
+  )
+  expect_identical(
+    ab_from_text("28/03/2020 amoxicilliin 500mg po tds", thorough_search = FALSE)[[1]],
+    as.ab("Amoxicillin")
+  )
+  expect_identical(
+    ab_from_text("28/03/2020 amoxicilliin 500mg po tds", translate_ab = TRUE)[[1]],
+    "Amoxicillin"
+  )
+  expect_identical(
+    ab_from_text("administered amoxi/clav and cipro", collapse = ", ")[[1]],
+    "AMC, CIP"
+  )
 
-expect_identical(
-  ab_from_text("28/03/2020 amoxicilliin 500mg po tds", type = "dose")[[1]],
-  500
-)
-expect_identical(
-  ab_from_text("28/03/2020 amoxicilliin 500mg po tds", type = "admin")[[1]],
-  "oral"
-)
+  expect_identical(
+    ab_from_text("28/03/2020 amoxicilliin 500mg po tds", type = "dose")[[1]],
+    500
+  )
+  expect_identical(
+    ab_from_text("28/03/2020 amoxicilliin 500mg po tds", type = "admin")[[1]],
+    "oral"
+  )
+})

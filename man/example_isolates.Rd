@@ -13,7 +13,7 @@ A \link[tibble:tibble]{tibble} with 2 000 observations and 46 variables:
 \item \code{gender}\cr Gender of the patient, either "F" or "M"
 \item \code{ward}\cr Ward type where the patient was admitted, either "Clinical", "ICU", or "Outpatient"
 \item \code{mo}\cr ID of microorganism created with \code{\link[=as.mo]{as.mo()}}, see also the \link{microorganisms} data set
-\item \code{PEN:RIF}\cr 40 different antibiotics with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}); these column names occur in the \link{antibiotics} data set and can be translated with \code{\link[=set_ab_names]{set_ab_names()}} or \code{\link[=ab_name]{ab_name()}}
+\item \code{PEN:RIF}\cr 40 different antimicrobials with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}); these column names occur in the \link{antimicrobials} data set and can be translated with \code{\link[=set_ab_names]{set_ab_names()}} or \code{\link[=ab_name]{ab_name()}}
 }
 }
 \usage{

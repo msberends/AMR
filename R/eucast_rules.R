@@ -59,7 +59,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #'
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
-#' @param x a data set with antibiotic columns, such as `amox`, `AMX` and `AMC`
+#' @param x a data set with antimicrobials columns, such as `amox`, `AMX` and `AMC`
 #' @param info a [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions
 #' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value using the package option [`AMR_eucastrules`][AMR-options]: `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
@@ -67,10 +67,10 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
 # @param version_resistant_phenotypes the version number to use for the EUCAST Expected Resistant Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_RESISTANTPHENOTYPES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these version of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
-#' @param ... column name of an antibiotic, see section *Antibiotics* below
-#' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
+#' @param ... column name of an antimicrobial, see section *Antimicrobials* below
+#' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
-#' @param only_sir_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`)
+#' @param only_sir_columns a [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`)
 #' @param custom_rules custom rules to apply, created with [custom_eucast_rules()]
 #' @param overwrite a [logical] to indicate whether non-`NA` values must be overwritten (defaults to `TRUE`). With `FALSE`, only `NA` values are changed.
 #' @inheritParams first_isolate
@@ -101,16 +101,16 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 #'
 #' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `eucast_rules(..., rules = "all")`. You can also set the package option [`AMR_eucastrules`][AMR-options], i.e. run `options(AMR_eucastrules = "all")`.
-#' @section Antibiotics:
-#' To define antibiotics column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
+#' @section Antimicrobials:
+#' To define antimicrobials column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 #'
-#' The following antibiotics are eligible for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://atcddd.fhi.no/atc/structure_and_principles/))', sorted alphabetically:
+#' The following antimicrobials are eligible for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://atcddd.fhi.no/atc/structure_and_principles/))', sorted alphabetically:
 #'
 #' `r create_eucast_ab_documentation()`
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
-#' @return The input of `x`, possibly with edited values of antibiotics. Or, if `verbose = TRUE`, a [data.frame] with all original and new values of the affected bug-drug combinations.
+#' @return The input of `x`, possibly with edited values of antimicrobials. Or, if `verbose = TRUE`, a [data.frame] with all original and new values of the affected bug-drug combinations.
 #' @source
 #' - EUCAST Expert Rules. Version 2.0, 2012.\cr
 #'   Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility testing.** *Clin Microbiol Infect.* 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
@@ -346,7 +346,7 @@ eucast_rules <- function(x,
       strsplit(",") %pm>%
       unlist() %pm>%
       trimws2() %pm>%
-      vapply(FUN.VALUE = character(1), function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
+      vapply(FUN.VALUE = character(1), function(x) if (x %in% AMR::antimicrobials$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
       sort() %pm>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
@@ -471,10 +471,10 @@ eucast_rules <- function(x,
       ))
       cat("\n\n")
     }
-    ab_enzyme <- subset(AMR::antibiotics, name %like% "/")[, c("ab", "name"), drop = FALSE]
+    ab_enzyme <- subset(AMR::antimicrobials, name %like% "/")[, c("ab", "name"), drop = FALSE]
     colnames(ab_enzyme) <- c("enzyme_ab", "enzyme_name")
     ab_enzyme$base_name <- gsub("^([a-zA-Z0-9]+).*", "\\1", ab_enzyme$enzyme_name)
-    ab_enzyme$base_ab <- AMR::antibiotics[match(ab_enzyme$base_name, AMR::antibiotics$name), "ab", drop = TRUE]
+    ab_enzyme$base_ab <- AMR::antimicrobials[match(ab_enzyme$base_name, AMR::antimicrobials$name), "ab", drop = TRUE]
     ab_enzyme <- subset(ab_enzyme, !is.na(base_ab))
     # make ampicillin and amoxicillin interchangable
     ampi <- subset(ab_enzyme, base_ab == "AMX")
@@ -825,7 +825,7 @@ eucast_rules <- function(x,
         #                     error = function(e) integer(0))
         # nolint end
       } else {
-        stop_("only 2 antibiotics supported for source_antibiotics")
+        stop_("only 2 antimicrobials supported for source_antibiotics")
       }
     }
 

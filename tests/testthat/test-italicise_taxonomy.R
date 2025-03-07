@@ -27,21 +27,23 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_identical(
-  italicise_taxonomy("test for E. coli"),
-  "test for *E. coli*"
-)
-expect_identical(
-  italicise_taxonomy("test for E. coli"),
-  italicize_taxonomy("test for E. coli")
-)
-if (AMR:::has_colour()) {
+test_that("italicise_taxonomy works", {
   expect_identical(
-    italicise_taxonomy("test for E. coli", type = "ansi"),
-    "test for \033[3mE. coli\033[23m"
+    italicise_taxonomy("test for E. coli"),
+    "test for *E. coli*"
   )
-}
-expect_identical(
-  italicise_taxonomy("test for E. coli", "html"),
-  "test for <i>E. coli</i>"
-)
+  expect_identical(
+    italicise_taxonomy("test for E. coli"),
+    italicize_taxonomy("test for E. coli")
+  )
+  if (AMR:::has_colour()) {
+    expect_identical(
+      italicise_taxonomy("test for E. coli", type = "ansi"),
+      "test for \033[3mE. coli\033[23m"
+    )
+  }
+  expect_identical(
+    italicise_taxonomy("test for E. coli", "html"),
+    "test for <i>E. coli</i>"
+  )
+})

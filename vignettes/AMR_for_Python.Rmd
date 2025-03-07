@@ -147,7 +147,7 @@ In this example, we generate an antibiogram by selecting various antibiotics.
 
 ## Taxonomic Data Sets Now in Python!
 
-As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antibiotics`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
+As a Python user, you might like that the most important data sets of the `AMR` R package, `microorganisms`, `antimicrobials`, `clinical_breakpoints`, and `example_isolates`, are now available as regular Python data frames:
 
 ```python
 AMR.microorganisms
@@ -168,7 +168,7 @@ AMR.microorganisms
 | F_ZYZYG      | Zyzygomyces                        | unknown  | Fungi    | None      | 7581        | None            | 2.0        |
 
 ```python
-AMR.antibiotics
+AMR.antimicrobials
 ```
 
 | ab  | cid         | name                 | group                      | oral_ddd | oral_units | iv_ddd | iv_units |

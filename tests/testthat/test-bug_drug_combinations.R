@@ -27,14 +27,16 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-b <- suppressWarnings(bug_drug_combinations(example_isolates))
-expect_inherits(b, "bug_drug_combinations")
-expect_stdout(suppressMessages(print(b)))
-expect_true(is.data.frame(format(b)))
-expect_true(is.data.frame(format(b, add_ab_group = FALSE)))
-if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-  expect_true(example_isolates %>%
-    group_by(ward) %>%
-    bug_drug_combinations(FUN = mo_gramstain) %>%
-    is.data.frame())
-}
+test_that("bug/drug works", {
+  b <- suppressWarnings(bug_drug_combinations(example_isolates))
+  expect_inherits(b, "bug_drug_combinations")
+  expect_output(suppressMessages(print(b)))
+  expect_true(is.data.frame(format(b)))
+  expect_true(is.data.frame(format(b, add_ab_group = FALSE)))
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    expect_true(example_isolates %>%
+      group_by(ward) %>%
+      bug_drug_combinations(FUN = mo_gramstain) %>%
+      is.data.frame())
+  }
+})

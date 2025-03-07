@@ -38,11 +38,11 @@ count_df(data, translate_ab = "name", language = get_AMR_locale(),
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.sir]{as.sir()}} if needed.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antibiotics, see section \emph{Combination Therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below}
 
 \item{data}{a \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
 
-\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
 \item{language}{language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -61,7 +61,7 @@ These functions are meant to count isolates. Use the \code{\link[=resistance]{re
 
 The function \code{\link[=count_resistant]{count_resistant()}} is equal to the function \code{\link[=count_R]{count_R()}}. The function \code{\link[=count_susceptible]{count_susceptible()}} is equal to the function \code{\link[=count_SI]{count_SI()}}.
 
-The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
+The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
 The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=sir_df]{sir_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
@@ -85,7 +85,7 @@ This AMR package honours this insight. Use \code{\link[=susceptibility]{suscepti
 
 \section{Combination Therapy}{
 
-When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:
+When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antimicrobials, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE

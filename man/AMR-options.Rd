@@ -9,7 +9,7 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \section{Options}{
 
 \itemize{
-\item \code{AMR_antibiogram_formatting_type} \cr A \link{numeric} (1-12) to use in \code{\link[=antibiogram]{antibiogram()}}, to indicate which formatting type to use.
+\item \code{AMR_antibiogram_formatting_type} \cr A \link{numeric} (1-22) to use in \code{\link[=antibiogram]{antibiogram()}}, to indicate which formatting type to use.
 \item \code{AMR_breakpoint_type} \cr A \link{character} to use in \code{\link[=as.sir]{as.sir()}}, to indicate which breakpoint type to use. This must be either "ECOFF", "animal", or "human".
 \item \code{AMR_cleaning_regex} \cr A \link[base:regex]{regular expression} (case-insensitive) to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to clean the user input. The default is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar".
 \item \code{AMR_custom_ab} \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
@@ -38,7 +38,7 @@ In this file, you can set options such as...
  options(AMR_include_PKPD = TRUE)
 }\if{html}{\out{</div>}}
 
-...to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with \code{\link[=as.sir]{as.sir()}}.
+...to add Portuguese language support of antimicrobials, and allow PK/PD rules when interpreting MIC values with \code{\link[=as.sir]{as.sir()}}.
 \subsection{Share Options Within Team}{
 
 For a more global approach, e.g. within a (data) team, save an options file to a remote file location, such as a shared network drive, and have each user read in this file automatically at start-up. This would work in this way:

@@ -134,7 +134,7 @@ globalVariables(c(
   "affect_mo_name",
   "angle",
   "antibiotic",
-  "antibiotics",
+  "antimicrobials",
   "atc_group1",
   "atc_group2",
   "base_ab",

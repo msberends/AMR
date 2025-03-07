@@ -115,7 +115,7 @@ example_isolates['date'] = pd.to_datetime(example_isolates['date'])
 
 # microorganisms
 microorganisms = pandas2ri.rpy2py(robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]'))
-antibiotics = pandas2ri.rpy2py(robjects.r('AMR::antibiotics[, !sapply(AMR::antibiotics, is.list)]'))
+antimicrobials = pandas2ri.rpy2py(robjects.r('AMR::antimicrobials[, !sapply(AMR::antimicrobials, is.list)]'))
 clinical_breakpoints = pandas2ri.rpy2py(robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]'))
 
 base.options(warn = 0)
@@ -125,7 +125,7 @@ EOL
 
 echo "from .datasets import example_isolates" >> $init_file
 echo "from .datasets import microorganisms" >> $init_file
-echo "from .datasets import antibiotics" >> $init_file
+echo "from .datasets import antimicrobials" >> $init_file
 echo "from .datasets import clinical_breakpoints" >> $init_file
 
 
@@ -239,7 +239,7 @@ for rd_file in "$rd_dir"/*.Rd; do
         }
 
         # Skip functions matching the regex pattern
-        if (func_name_py ~ /^(x |facet|scale|set|get|NA_|microorganisms|antibiotics|clinical_breakpoints|example_isolates)/) {
+        if (func_name_py ~ /^(x |facet|scale|set|get|NA_|microorganisms|antimicrobials|clinical_breakpoints|example_isolates)/) {
             next
         }
 

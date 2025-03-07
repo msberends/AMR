@@ -15,7 +15,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname,
   ",", ".", ","), ...)
 }
 \arguments{
-\item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
+\item{x}{a data set with antimicrobials columns, such as \code{amox}, \code{AMX} and \code{AMC}}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -25,7 +25,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname,
 
 \item{...}{arguments passed on to \code{FUN}}
 
-\item{translate_ab}{a \link{character} of length 1 containing column names of the \link{antibiotics} data set}
+\item{translate_ab}{a \link{character} of length 1 containing column names of the \link{antimicrobials} data set}
 
 \item{language}{language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 

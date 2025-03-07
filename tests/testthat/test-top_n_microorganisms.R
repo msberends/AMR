@@ -27,17 +27,19 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-out1 <- top_n_microorganisms(example_isolates, n = 3)
-out2 <- top_n_microorganisms(example_isolates, n = 5, property = "genus")
-out3 <- top_n_microorganisms(example_isolates, n = 5, property = "genus", n_for_each = 3)
+test_that("top_n_microorganisms works", {
+  out1 <- top_n_microorganisms(example_isolates, n = 3)
+  out2 <- top_n_microorganisms(example_isolates, n = 5, property = "genus")
+  out3 <- top_n_microorganisms(example_isolates, n = 5, property = "genus", n_for_each = 3)
 
-expect_equal(NROW(out1), 1015, tolerance = 0.5)
-expect_equal(NROW(out2), 1742, tolerance = 0.5)
-expect_equal(NROW(out3), 1497, tolerance = 0.5)
+  expect_equal(NROW(out1), 1015, tolerance = 0.5)
+  expect_equal(NROW(out2), 1742, tolerance = 0.5)
+  expect_equal(NROW(out3), 1497, tolerance = 0.5)
 
-expect_equal(length(table(out1$mo)), 3, tolerance = 0.5)
-expect_equal(length(table(out2$mo)), 39, tolerance = 0.5)
-expect_equal(length(table(out3$mo)), 13, tolerance = 0.5)
+  expect_equal(length(table(out1$mo)), 3, tolerance = 0.5)
+  expect_equal(length(table(out2$mo)), 39, tolerance = 0.5)
+  expect_equal(length(table(out3$mo)), 13, tolerance = 0.5)
 
-expect_equal(length(unique(mo_genus(out2$mo))), 5, tolerance = 0.5)
-expect_equal(length(unique(mo_genus(out3$mo))), 5, tolerance = 0.5)
+  expect_equal(length(unique(mo_genus(out2$mo))), 5, tolerance = 0.5)
+  expect_equal(length(unique(mo_genus(out3$mo))), 5, tolerance = 0.5)
+})

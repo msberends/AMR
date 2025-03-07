@@ -27,23 +27,23 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Data Sets with `r format(nrow(antibiotics) + nrow(antivirals), big.mark = " ")` Antimicrobial Drugs
+#' Data Sets with `r format(nrow(antimicrobials) + nrow(antivirals), big.mark = " ")` Antimicrobial Drugs
 #'
-#' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
+#' Two data sets containing all antimicrobials and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antimicrobials] data set. Three identifiers are included in this data set: an antimcrobial ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
 #' @format
-#' ### For the [antibiotics] data set: a [tibble][tibble::tibble] with `r nrow(antibiotics)` observations and `r ncol(antibiotics)` variables:
-#' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.***
+#' ### For the [antimicrobials] data set: a [tibble][tibble::tibble] with `r nrow(antimicrobials)` observations and `r ncol(antimicrobials)` variables:
+#' - `ab`\cr antimcrobial ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.***
 #' - `cid`\cr Compound ID as found in PubChem. ***This is a unique identifier.***
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. ***This is a unique identifier.***
 #' - `group`\cr A short and concise group name, based on WHONET and WHOCC definitions
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02`
 #' - `atc_group1`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like `"Macrolides, lincosamides and streptogramins"`
 #' - `atc_group2`\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like `"Macrolides"`
-#' - `abbr`\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
+#' - `abbr`\cr List of abbreviations as used in many countries, also for antimcrobial susceptibility testing (AST)
 #' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-#' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment, currently available for `r sum(!is.na(antibiotics$oral_ddd))` drugs
+#' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment, currently available for `r sum(!is.na(AMR::antimicrobials$oral_ddd))` drugs
 #' - `oral_units`\cr Units of `oral_ddd`
-#' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(antibiotics$iv_ddd))` drugs
+#' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(AMR::antimicrobials$iv_ddd))` drugs
 #' - `iv_units`\cr Units of `iv_ddd`
 #' - `loinc`\cr All codes associated with the name of the antimicrobial drug from `r TAXONOMY_VERSION$LOINC$citation` Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
@@ -74,12 +74,13 @@
 #' * European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
 #' @inheritSection WHOCC WHOCC
 #' @seealso [microorganisms], [intrinsic_resistant]
+#' @aliases antibiotics
 #' @examples
-#' antibiotics
+#' antimicrobials
 #' antivirals
-"antibiotics"
+"antimicrobials"
 
-#' @rdname antibiotics
+#' @rdname antimicrobials
 "antivirals"
 
 #' Data Set with `r format(nrow(microorganisms), big.mark = " ")` Taxonomic Records of Microorganisms
@@ -214,7 +215,7 @@
 #' - `gender`\cr Gender of the patient, either `r vector_or(example_isolates$gender)`
 #' - `ward`\cr Ward type where the patient was admitted, either `r vector_or(example_isolates$ward)`
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also the [microorganisms] data set
-#' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.sir))` different antibiotics with class [`sir`] (see [as.sir()]); these column names occur in the [antibiotics] data set and can be translated with [set_ab_names()] or [ab_name()]
+#' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.sir))` different antimicrobials with class [`sir`] (see [as.sir()]); these column names occur in the [antimicrobials] data set and can be translated with [set_ab_names()] or [ab_name()]
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
@@ -229,7 +230,7 @@
 #' - `date`\cr date of receipt at the laboratory
 #' - `hospital`\cr ID of the hospital, from A to C
 #' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
-#' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.sir()]
+#' - `AMX:GEN`\cr 4 different antimicrobials that have to be transformed with [as.sir()]
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
@@ -238,7 +239,7 @@
 
 #' Data Set with `r format(nrow(WHONET), big.mark = " ")` Isolates - WHONET Example
 #'
-#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are from our [example_isolates] data set. All patient names were created using online surname generators and are only in place for practice purposes.
+#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antimcrobial results are from our [example_isolates] data set. All patient names were created using online surname generators and are only in place for practice purposes.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(WHONET), big.mark = " ")` observations and `r ncol(WHONET)` variables:
 #' - `Identification number`\cr ID of the sample
 #' - `Specimen number`\cr ID of the specimen
@@ -265,7 +266,7 @@
 #' - `Inducible clindamycin resistance`\cr Clindamycin can be induced?
 #' - `Comment`\cr Other comments
 #' - `Date of data entry`\cr [Date] this data was entered in WHONET
-#' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.sir))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.sir()].
+#' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.sir))` different antimicrobials. You can lookup the abbreviations in the [antimicrobials] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antimcrobial class, using [as.sir()].
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
@@ -290,7 +291,7 @@
 #' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
 #' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
-#' - `ab`\cr Antibiotic code as used by this package, EARS-Net and WHONET, see [as.ab()]
+#' - `ab`\cr Antimcrobial code as used by this package, EARS-Net and WHONET, see [as.ab()]
 #' - `ref_tbl`\cr Info about where the guideline rule can be found
 #' - `disk_dose`\cr Dose of the used disk diffusion method
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
@@ -323,7 +324,7 @@
 #' Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(intrinsic_resistant), big.mark = " ")` observations and `r ncol(intrinsic_resistant)` variables:
 #' - `mo`\cr Microorganism ID
-#' - `ab`\cr Antibiotic ID
+#' - `ab`\cr Antimcrobial ID
 #' @details
 #' This data set is based on `r format_eucast_version_nr(3.3)`.
 #'
@@ -339,7 +340,7 @@
 #'
 #' EUCAST breakpoints used in this package are based on the dosages in this data set. They can be retrieved with [eucast_dosage()].
 #' @format A [tibble][tibble::tibble] with `r format(nrow(dosage), big.mark = " ")` observations and `r ncol(dosage)` variables:
-#' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+#' - `ab`\cr Antimcrobial ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 #' - `name`\cr Official name of the antimicrobial drug as used by WHONET/EARS-Net or the WHO
 #' - `type`\cr Type of the dosage, either `r vector_or(dosage$type)`
 #' - `dose`\cr Dose, such as "2 g" or "25 mg/kg"

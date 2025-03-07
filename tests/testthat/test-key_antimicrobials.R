@@ -27,14 +27,16 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(length(key_antimicrobials(example_isolates, antifungal = NULL)), nrow(example_isolates))
-expect_false(all(is.na(key_antimicrobials(example_isolates, antifungal = NULL))))
-expect_true(antimicrobials_equal("SSS", "SSS", type = "points"))
-expect_false(antimicrobials_equal("SSS", "SRS", type = "keyantimicrobials"))
-expect_true(antimicrobials_equal("SSS", "SRS", type = "points"))
-expect_true(antimicrobials_equal("SSS", "SIS", ignore_I = TRUE, type = "keyantimicrobials"))
-expect_false(antimicrobials_equal("SSS", "SIS", ignore_I = FALSE, type = "keyantimicrobials"))
-expect_true(antimicrobials_equal(".SS", "SI.", ignore_I = TRUE, type = "keyantimicrobials"))
-expect_false(antimicrobials_equal(".SS", "SI.", ignore_I = FALSE, type = "keyantimicrobials"))
+test_that("key_antimicrobials works", {
+  expect_equal(length(key_antimicrobials(example_isolates, antifungal = NULL)), nrow(example_isolates))
+  expect_false(all(is.na(key_antimicrobials(example_isolates, antifungal = NULL))))
+  expect_true(antimicrobials_equal("SSS", "SSS", type = "points"))
+  expect_false(antimicrobials_equal("SSS", "SRS", type = "keyantimicrobials"))
+  expect_true(antimicrobials_equal("SSS", "SRS", type = "points"))
+  expect_true(antimicrobials_equal("SSS", "SIS", ignore_I = TRUE, type = "keyantimicrobials"))
+  expect_false(antimicrobials_equal("SSS", "SIS", ignore_I = FALSE, type = "keyantimicrobials"))
+  expect_true(antimicrobials_equal(".SS", "SI.", ignore_I = TRUE, type = "keyantimicrobials"))
+  expect_false(antimicrobials_equal(".SS", "SI.", ignore_I = FALSE, type = "keyantimicrobials"))
 
-# expect_warning(key_antimicrobials(example_isolates[rep(1, 10), , drop = FALSE]))
+  # expect_warning(key_antimicrobials(example_isolates[rep(1, 10), , drop = FALSE]))
+})

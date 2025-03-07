@@ -49,9 +49,9 @@
 #' @param x.title text to show as x axis description
 #' @param y.title text to show as y axis description
 #' @param ... other arguments passed on to [geom_sir()] or, in case of [scale_sir_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
-#' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
+#' @details At default, the names of antimicrobials will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
-#' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_df()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+#' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_df()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antimicrobials on the x axis.
 #'
 #' Additional functions include:
 #'
@@ -320,7 +320,7 @@ geom_sir <- function(position = NULL,
     x <- substr(x, 2, nchar(x) - 1)
   }
 
-  if (tolower(x) %in% tolower(c("ab", "abx", "antibiotics"))) {
+  if (tolower(x) %in% tolower(c("ab", "abx", "antimicrobials"))) {
     x <- "antibiotic"
   } else if (tolower(x) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
     x <- "interpretation"

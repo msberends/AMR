@@ -27,16 +27,12 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("random works", {
-  expect_inherits(random_mic(100), "mic")
-  expect_inherits(random_mic(100, mo = "Klebsiella pneumoniae"), "mic")
-  expect_inherits(random_mic(100, mo = "Klebsiella pneumoniae", ab = "meropenem"), "mic")
-  expect_inherits(random_mic(100, ab = "meropenem"), "mic")
-  # no normal factors of 2
-  expect_inherits(random_mic(100, "Haemophilus influenzae", "ceftaroline"), "mic")
-  expect_inherits(random_disk(100), "disk")
-  expect_inherits(random_disk(100, mo = "Klebsiella pneumoniae"), "disk")
-  expect_inherits(random_disk(100, mo = "Klebsiella pneumoniae", ab = "meropenem"), "disk")
-  expect_inherits(random_disk(100, ab = "meropenem"), "disk")
-  expect_inherits(random_sir(100), "sir")
-})
+# add functions from the tinytest package (which we use for older R versions)
+expect_inherits <- function(x, y, ...) {
+  expect(inherits(x, y),
+    failure_message = paste0(
+      "object has class ", paste0(class(x), collapse = "/"),
+      ", required is class ", paste0(y, collapse = "/")
+    )
+  )
+}

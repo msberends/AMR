@@ -130,9 +130,9 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 
 \item{...}{ignored, only in place to allow future extensions}
 
-\item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
+\item{amr_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antimicrobials} data set will be searched (case-insensitive) for this value.}
 
-\item{filter}{an \link{expression} to be evaluated in the \link{antibiotics} data set, such as \code{name \%like\% "trim"}}
+\item{filter}{an \link{expression} to be evaluated in the \link{antimicrobials} data set, such as \code{name \%like\% "trim"}}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -156,13 +156,13 @@ These functions can be used in data set calls for selecting columns and filterin
 
 All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html}{our tutorial} on using antimicrobial selectors for predictive modelling.
 
-All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antibiotics} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antimicrobials} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
-The \code{\link[=amr_class]{amr_class()}} function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the \link{antibiotics} data set within the columns \code{group}, \code{atc_group1} and \code{atc_group2}.
+The \code{\link[=amr_class]{amr_class()}} function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the \link{antimicrobials} data set within the columns \code{group}, \code{atc_group1} and \code{atc_group2}.
 
-The \code{\link[=administrable_per_os]{administrable_per_os()}} and \code{\link[=administrable_iv]{administrable_iv()}} functions also rely on the \link{antibiotics} data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the \link{antibiotics} data set.
+The \code{\link[=administrable_per_os]{administrable_per_os()}} and \code{\link[=administrable_iv]{administrable_iv()}} functions also rely on the \link{antimicrobials} data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the \link{antimicrobials} data set.
 
-The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antibiotics} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
+The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antimicrobials} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 
 The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
 }
@@ -205,7 +205,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 
 \section{Reference Data Publicly Available}{
 
-All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+All data sets in this \code{AMR} package (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -341,7 +341,7 @@ example_isolates[any(carbapenems() == "R"), penicillins()]
 # and erythromycin is not a penicillin:
 example_isolates[, penicillins() & administrable_per_os()]
 
-# amr_selector() applies a filter in the `antibiotics` data set and is thus
+# amr_selector() applies a filter in the `antimicrobials` data set and is thus
 # very flexible. For instance, to select antimicrobials with an oral DDD
 # of at least 1 gram:
 example_isolates[, amr_selector(oral_ddd > 1 & oral_units == "g")]

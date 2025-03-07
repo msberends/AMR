@@ -30,9 +30,9 @@
 library(AMR)
 library(dplyr)
 int_resis <- data.frame(mo = microorganisms$mo, stringsAsFactors = FALSE)
-for (i in seq_len(nrow(antibiotics))) {
+for (i in seq_len(nrow(antimicrobials))) {
   int_resis$new <- as.sir("S")
-  colnames(int_resis)[ncol(int_resis)] <- antibiotics$ab[i]
+  colnames(int_resis)[ncol(int_resis)] <- antimicrobials$ab[i]
 }
 
 int_resis <- eucast_rules(int_resis,
@@ -49,14 +49,14 @@ int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.sir(x) | x == "R
   select(mo, ab = name)
 
 # remove lab drugs
-untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
+untreatable <- antimicrobials[which(antimicrobials$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
 # takes ages with filter()..., weird
 int_resis3 <- int_resis2[which(!int_resis2$ab %in% untreatable), ]
 class(int_resis3$ab) <- c("ab", "character")
 int_resis3
 
 all(int_resis3$mo %in% microorganisms$mo)
-all(int_resis3$ab %in% antibiotics$ab)
+all(int_resis3$ab %in% antimicrobials$ab)
 
 intrinsic_resistant <- df_remove_nonASCII(int_resis3)
 usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")

@@ -39,6 +39,11 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     # load the package
     library(AMR)
     
+    test_that <- function(desc, code) {
+      code
+    }
+    expect_output <- tinytest::expect_stdout
+    
     # set language
     set_AMR_locale("English")
     

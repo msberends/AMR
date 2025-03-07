@@ -30,7 +30,7 @@
 #' Determine Multidrug-Resistant Organisms (MDRO)
 #'
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national, or custom guidelines.
-#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank for automatic determination.
+#' @param x a [data.frame] with antimicrobials columns, like `AMX` or `amox`. Can be left blank for automatic determination.
 #' @param guideline a specific guideline to follow, see sections *Supported international / national guidelines* and *Using Custom Guidelines* below. When left empty, the publication by Magiorakos *et al.* (see below) will be followed.
 #' @param esbl [logical] values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins)
 #' @param carbapenemase [logical] values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins)
@@ -38,13 +38,13 @@
 #' @param mecC [logical] values, or a column name containing logical values, indicating the presence of a *mecC* gene (or production of its proteins)
 #' @param vanA [logical] values, or a column name containing logical values, indicating the presence of a *vanA* gene (or production of its proteins)
 #' @param vanB [logical] values, or a column name containing logical values, indicating the presence of a *vanB* gene (or production of its proteins)
-#' @param ... in case of [custom_mdro_guideline()]: a set of rules, see section *Using Custom Guidelines* below. Otherwise: column name of an antibiotic, see section *Antibiotics* below.
+#' @param ... in case of [custom_mdro_guideline()]: a set of rules, see section *Using Custom Guidelines* below. Otherwise: column name of an antibiotic, see section *Antimicrobials* below.
 #' @param as_factor a [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector
 #' @inheritParams eucast_rules
 #' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
-#' @inheritSection eucast_rules Antibiotics
+#' @inheritSection eucast_rules Antimicrobials
 #' @details
 #' These functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
 #'
@@ -801,7 +801,7 @@ mdro <- function(x = NULL,
       if (is.null(reason)) {
         reason <- paste0(
           any_all,
-          " of the required antibiotics ",
+          " of the required antimicrobials ",
           ifelse(any_all == "any", "is", "are"),
           " R",
           ifelse(!isTRUE(combine_SI), " or I", "")
@@ -1126,7 +1126,7 @@ mdro <- function(x = NULL,
     x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
     if (isTRUE(verbose)) {
       x[which(x$MDRO == 4), "reason"] <- paste(
-        "all antibiotics in all",
+        "all antimicrobials in all",
         x$classes_in_guideline[which(x$MDRO == 4)],
         "classes were tested R",
         ifelse(!isTRUE(combine_SI), " or I", "")
@@ -1850,7 +1850,7 @@ mdro <- function(x = NULL,
         " (3 required for MDR)"
       )
     } else {
-      # x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
+      # x[which(x$MDRO == 1), "reason"] <- "too few antimicrobials are R"
     }
   }
 

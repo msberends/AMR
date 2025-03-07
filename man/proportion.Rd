@@ -58,7 +58,7 @@ sir_df(data, translate_ab = "name", language = get_AMR_locale(),
 
 \item{as_percent}{a \link{logical} to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antibiotics, see section \emph{Combination Therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below}
 
 \item{ab_result}{antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"}
 
@@ -70,7 +70,7 @@ sir_df(data, translate_ab = "name", language = get_AMR_locale(),
 
 \item{data}{a \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
 
-\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
 \item{language}{language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -99,7 +99,7 @@ The function \code{\link[=proportion_df]{proportion_df()}} takes any variable fr
 }
 \section{Combination Therapy}{
 
-When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:
+When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antimicrobials, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE

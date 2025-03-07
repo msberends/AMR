@@ -29,7 +29,7 @@
 
 #' Transform Input to an Antibiotic ID
 #'
-#' Use this function to determine the antibiotic drug code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
+#' Use this function to determine the antimicrobial drug code of one or more antimicrobials. The data set [antimicrobials] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x a [character] vector to determine to antibiotic ID
 #' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.
 #' @param language language to coerce input values from any of the `r length(LANGUAGES_SUPPORTED)` supported languages - default to the system language if supported (see [get_AMR_locale()])
@@ -37,7 +37,7 @@
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
-#' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
+#' @details All entries in the [antimicrobials] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
 #'
 #' All these properties will be searched for the user input. The [as.ab()] can correct for different forms of misspelling:
 #'
@@ -58,7 +58,7 @@
 #' @aliases ab
 #' @return A [character] [vector] with additional class [`ab`]
 #' @seealso
-#' * [antibiotics] for the [data.frame] that is being used to determine ATCs
+#' * [antimicrobials] for the [data.frame] that is being used to determine ATCs
 #' * [ab_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
 #' @inheritSection AMR Reference Data Publicly Available
 #' @export
@@ -411,7 +411,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: these ATC codes are not (yet) in the antibiotics data set: ",
+      "in `as.ab()`: these ATC codes are not (yet) in the antimicrobials data set: ",
       vector_and(x_unknown_ATCs), "."
     )
   }
@@ -629,9 +629,9 @@ get_translate_ab <- function(translate_ab) {
     return(FALSE)
   } else {
     translate_ab <- tolower(translate_ab)
-    stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
-      "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
-      "or TRUE (equals 'name') or FALSE to not translate at all.",
+    stop_ifnot(translate_ab %in% colnames(AMR::antimicrobials),
+      "invalid value for 'translate_ab', this must be a column name of the `antimicrobials` data set\n",
+      "or `TRUE` (equals 'name') or `FALSE` to not translate at all.",
       call = FALSE
     )
     translate_ab

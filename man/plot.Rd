@@ -151,7 +151,7 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 \item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
 
-\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 

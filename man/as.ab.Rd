@@ -29,10 +29,10 @@ ab_reset_session()
 A \link{character} \link{vector} with additional class \code{\link{ab}}
 }
 \description{
-Use this function to determine the antibiotic drug code of one or more antibiotics. The data set \link{antibiotics} will be searched for abbreviations, official names and synonyms (brand names).
+Use this function to determine the antimicrobial drug code of one or more antimicrobials. The data set \link{antimicrobials} will be searched for abbreviations, official names and synonyms (brand names).
 }
 \details{
-All entries in the \link{antibiotics} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
+All entries in the \link{antimicrobials} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
 
 All these properties will be searched for the user input. The \code{\link[=as.ab]{as.ab()}} can correct for different forms of misspelling:
 \itemize{
@@ -68,7 +68,7 @@ The WHOCC is located in Oslo at the Norwegian Institute of Public Health and fun
 
 \section{Reference Data Publicly Available}{
 
-All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+All data sets in this \code{AMR} package (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -104,7 +104,7 @@ if (require("dplyr")) {
 }
 \seealso{
 \itemize{
-\item \link{antibiotics} for the \link{data.frame} that is being used to determine ATCs
+\item \link{antimicrobials} for the \link{data.frame} that is being used to determine ATCs
 \item \code{\link[=ab_from_text]{ab_from_text()}} for a function to retrieve antimicrobial drugs from clinical text (from health care records)
 }
 }

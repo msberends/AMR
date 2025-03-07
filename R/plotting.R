@@ -1230,7 +1230,7 @@ facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 
   if (tolower(facet) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
     facet <- "interpretation"
-  } else if (tolower(facet) %in% tolower(c("ab", "abx", "antibiotics"))) {
+  } else if (tolower(facet) %in% tolower(c("ab", "abx", "antimicrobials"))) {
     facet <- "antibiotic"
   }
 

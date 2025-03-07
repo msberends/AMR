@@ -444,9 +444,6 @@ def key_antimicrobials(x = None, *args, **kwargs):
 def all_antimicrobials(x = None, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.all_antimicrobials(x = None, *args, **kwargs))
-def antimicrobials_equal(y, *args, **kwargs):
-    """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
-    return convert_to_python(amr_r.antimicrobials_equal(y, *args, **kwargs))
 def kurtosis(x, *args, **kwargs):
     """See our website of the R package for the manual: https://msberends.github.io/AMR/index.html"""
     return convert_to_python(amr_r.kurtosis(x, *args, **kwargs))

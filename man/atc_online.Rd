@@ -21,7 +21,7 @@ atc_online_ddd(atc_code, ...)
 atc_online_ddd_units(atc_code, ...)
 }
 \arguments{
-\item{atc_code}{a \link{character} (vector) with ATC code(s) of antibiotics, will be coerced with \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_atc]{ab_atc()}} internally if not a valid ATC code}
+\item{atc_code}{a \link{character} (vector) with ATC code(s) of antimicrobials, will be coerced with \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_atc]{ab_atc()}} internally if not a valid ATC code}
 
 \item{property}{property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see \emph{Examples}.}
 
@@ -34,7 +34,7 @@ atc_online_ddd_units(atc_code, ...)
 \item{...}{arguments to pass on to \code{atc_property}}
 }
 \description{
-Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
+Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antimicrobial), such as the name, defined daily dose (DDD) or standard unit.
 }
 \details{
 Options for argument \code{administration}:

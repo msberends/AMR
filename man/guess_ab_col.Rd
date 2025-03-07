@@ -20,10 +20,10 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE,
 A column name of \code{x}, or \code{NULL} when no result is found.
 }
 \description{
-This tries to find a column name in a data set based on information from the \link{antibiotics} data set. Also supports WHONET abbreviations.
+This tries to find a column name in a data set based on information from the \link{antimicrobials} data set. Also supports WHONET abbreviations.
 }
 \details{
-You can look for an antibiotic (trade) name or abbreviation and it will search \code{x} and the \link{antibiotics} data set for any column containing a name or code of that antibiotic.
+You can look for an antibiotic (trade) name or abbreviation and it will search \code{x} and the \link{antimicrobials} data set for any column containing a name or code of that antibiotic.
 }
 \examples{
 df <- data.frame(

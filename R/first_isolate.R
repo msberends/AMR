@@ -364,7 +364,7 @@ first_isolate <- function(x = NULL,
     specimen_group <- NULL
   }
 
-  # filter on specimen group and keyantibiotics when they are filled in
+  # filter on specimen group and keyantimicrobials when they are filled in
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
     if (isTRUE(info) && message_not_thrown_before("first_isolate", "excludingspecimen")) {

@@ -14,7 +14,7 @@ A \link[tibble:tibble]{tibble} with 34 063 observations and 14 variables:
 \item \code{site}\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
 \item \code{rank_index}\cr Taxonomic rank index of \code{mo} from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
-\item \code{ab}\cr Antibiotic code as used by this package, EARS-Net and WHONET, see \code{\link[=as.ab]{as.ab()}}
+\item \code{ab}\cr Antimcrobial code as used by this package, EARS-Net and WHONET, see \code{\link[=as.ab]{as.ab()}}
 \item \code{ref_tbl}\cr Info about where the guideline rule can be found
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"

@@ -35,9 +35,9 @@
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param as_percent a [logical] to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
-#' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antibiotics, see section *Combination Therapy* below
+#' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antimicrobials, see section *Combination Therapy* below
 #' @param data a [data.frame] containing columns with class [`sir`] (see [as.sir()])
-#' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]
+#' @param translate_ab a column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
 #' @param combine_SI a [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is `TRUE`
 #' @param ab_result antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"
@@ -58,7 +58,7 @@
 #'
 #' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination Therapy:
-#' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
+#' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antimicrobials, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
 #'
 #'
 #' ```

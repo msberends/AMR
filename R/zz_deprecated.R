@@ -29,11 +29,15 @@
 
 #' Deprecated Functions
 #'
-#' These functions are so-called '[Deprecated]'. **They will be removed in a future version of this package.** Using these functions will give a warning with the name of the function it has been replaced by (if there is one).
+#' These objects are so-called '[Deprecated]'. **They will be removed in a future version of this package.** Using these will give a warning with the name of the alternative object it has been replaced by (if there is one).
 #' @keywords internal
 #' @name AMR-deprecated
 #' @rdname AMR-deprecated
 NULL
+
+#' @rdname AMR-deprecated
+#' @export
+"antibiotics"
 
 #' @rdname AMR-deprecated
 #' @export
@@ -50,7 +54,7 @@ ab_selector <- function(...) {
 }
 
 
-deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_function = TRUE) {
+deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_function = TRUE, is_dataset = FALSE) {
   if (is.null(old)) {
     warning_(extra_msg)
   } else {
@@ -61,17 +65,25 @@ deprecation_warning <- function(old = NULL, new = NULL, extra_msg = NULL, is_fun
         old <- paste0(old, "()")
         new <- paste0(new, "()")
         type <- "function"
+      } else if (isTRUE(is_dataset)) {
+        type <- "dataset"
       } else {
         type <- "argument"
       }
       warning_(
         ifelse(is.null(new),
           paste0("The `", old, "` ", type, " is no longer in use"),
-          paste0("The `", old, "` ", type, " has been replaced with `", new, "` and will be removed in a future version")
+          ifelse(type == "dataset",
+            paste0("The `", old, "` ", type, " has been renamed to `", new, "`"),
+            paste0("The `", old, "` ", type, " has been replaced with `", new, "` and will be removed in a future version")
+          )
         ),
-        ifelse(type == "argument",
-          ". While the old argument still works, it will be removed in a future version, so please update your code.",
-          ", see `?AMR-deprecated`."
+        ifelse(type == "dataset",
+          ". The old name will be removed in future version, so please update your code.",
+          ifelse(type == "argument",
+            ". While the old argument still works, it will be removed in a future version, so please update your code.",
+            ", see `?AMR-deprecated`."
+          )
         ),
         ifelse(!is.null(extra_msg),
           paste0(" ", extra_msg),

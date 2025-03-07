@@ -27,54 +27,56 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(
-  as.character(as.av(c(
-    "J05AB01",
-    "J 05 AB 01",
-    "Aciclovir",
-    "aciclo",
-    "   aciclo 123",
-    "ACICL",
-    "ACI",
-    "Virorax",
-    "Zovirax"
-  ))),
-  rep("ACI", 9)
-)
+test_that("av works", {
+  expect_equal(
+    as.character(as.av(c(
+      "J05AB01",
+      "J 05 AB 01",
+      "Aciclovir",
+      "aciclo",
+      "   aciclo 123",
+      "ACICL",
+      "ACI",
+      "Virorax",
+      "Zovirax"
+    ))),
+    rep("ACI", 9)
+  )
 
-expect_identical(class(as.av("acic")), c("av", "character"))
-expect_identical(class(antivirals$av), c("av", "character"))
-expect_true(is.av(as.av("acic")))
-expect_stdout(print(as.av("acic")))
-expect_stdout(print(data.frame(a = as.av("acic"))))
+  expect_identical(class(as.av("acic")), c("av", "character"))
+  expect_identical(class(antivirals$av), c("av", "character"))
+  expect_true(is.av(as.av("acic")))
+  expect_output(print(as.av("acic")))
+  expect_output(print(data.frame(a = as.av("acic"))))
 
-# expect_warning(as.av("J00AA00")) # ATC not yet available in data set
-# expect_warning(as.av("UNKNOWN"))
+  # expect_warning(as.av("J00AA00")) # ATC not yet available in data set
+  # expect_warning(as.av("UNKNOWN"))
 
-expect_stdout(print(as.av("acic")))
+  expect_output(print(as.av("acic")))
 
-expect_equal(
-  as.character(as.av("zovirax")),
-  "ACI"
-)
+  expect_equal(
+    as.character(as.av("zovirax")),
+    "ACI"
+  )
 
-expect_equal(
-  as.character(as.av(c("Abacaivr", "Celvudine"))),
-  c("ABA", "CLE")
-)
+  expect_equal(
+    as.character(as.av(c("Abacaivr", "Celvudine"))),
+    c("ABA", "CLE")
+  )
 
-# expect_warning(as.av("Abacavir Clevudine"))
+  # expect_warning(as.av("Abacavir Clevudine"))
 
-# based on Levenshtein distance
-expect_identical(av_name("adevofir dypifo", language = NULL), "Adefovir dipivoxil")
+  # based on Levenshtein distance
+  expect_identical(av_name("adevofir dypifo", language = NULL), "Adefovir dipivoxil")
 
-# assigning and subsetting
-x <- antivirals$av
-expect_inherits(x[1], "av")
-expect_inherits(x[[1]], "av")
-expect_inherits(c(x[1], x[9]), "av")
-expect_inherits(unique(x[1], x[9]), "av")
-expect_inherits(rep(x[1], 2), "av")
-# expect_warning(x[1] <- "invalid code")
-# expect_warning(x[[1]] <- "invalid code")
-# expect_warning(c(x[1], "test"))
+  # assigning and subsetting
+  x <- antivirals$av
+  expect_inherits(x[1], "av")
+  expect_inherits(x[[1]], "av")
+  expect_inherits(c(x[1], x[9]), "av")
+  expect_inherits(unique(x[1], x[9]), "av")
+  expect_inherits(rep(x[1], 2), "av")
+  # expect_warning(x[1] <- "invalid code")
+  # expect_warning(x[[1]] <- "invalid code")
+  # expect_warning(c(x[1], "test"))
+})

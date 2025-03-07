@@ -33,7 +33,7 @@ geom_sir(position = NULL, x = c("antibiotic", "interpretation"),
 
 \item{limits}{a \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
 
-\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
 \item{combine_SI}{a \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
 
@@ -67,9 +67,9 @@ geom_sir(position = NULL, x = c("antibiotic", "interpretation"),
 Use these functions to create bar plots for AMR data analysis. All functions rely on \link[ggplot2:ggplot]{ggplot2} functions.
 }
 \details{
-At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} argument. See \code{\link[=count_df]{count_df()}}.
+At default, the names of antimicrobials will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} argument. See \code{\link[=count_df]{count_df()}}.
 
-\code{\link[=geom_sir]{geom_sir()}} will take any variable from the data that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) using \code{\link[=sir_df]{sir_df()}} and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+\code{\link[=geom_sir]{geom_sir()}} will take any variable from the data that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) using \code{\link[=sir_df]{sir_df()}} and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antimicrobials on the x axis.
 
 Additional functions include:
 \itemize{

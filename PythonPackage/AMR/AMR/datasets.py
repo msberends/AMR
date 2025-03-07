@@ -71,7 +71,7 @@ example_isolates['date'] = pd.to_datetime(example_isolates['date'])
 
 # microorganisms
 microorganisms = pandas2ri.rpy2py(robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]'))
-antibiotics = pandas2ri.rpy2py(robjects.r('AMR::antibiotics[, !sapply(AMR::antibiotics, is.list)]'))
+antimicrobials = pandas2ri.rpy2py(robjects.r('AMR::antimicrobials[, !sapply(AMR::antimicrobials, is.list)]'))
 clinical_breakpoints = pandas2ri.rpy2py(robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]'))
 
 base.options(warn = 0)

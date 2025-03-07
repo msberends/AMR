@@ -89,11 +89,11 @@
 #' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
-#' ### Usage of multiple antibiotics and antibiotic group names
+#' ### Usage of multiple antimicrobials and antimicrobial group names
 #'
-#' You can define antibiotic groups instead of single antibiotics for the rule consequence, which is the part *after* the tilde (~). In the examples above, the antibiotic group `aminopenicillins` includes both ampicillin and amoxicillin.
+#' You can define antimicrobial groups instead of single antimicrobials for the rule consequence, which is the part *after* the tilde (~). In the examples above, the antimicrobial group `aminopenicillins` includes both ampicillin and amoxicillin.
 #'
-#' Rules can also be applied to multiple antibiotics and antibiotic groups simultaneously. Use the `c()` function to combine multiple antibiotics. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
+#' Rules can also be applied to multiple antimicrobials and antimicrobial groups simultaneously. Use the `c()` function to combine multiple antimicrobials. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
 #'
 #' ```r
 #' x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
@@ -104,7 +104,7 @@
 #' #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 #' ```
 #'
-#' These `r length(DEFINED_AB_GROUPS)` antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
+#' These `r length(DEFINED_AB_GROUPS)` antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
 #'
 #' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0(tolower(gsub("^AB_", "", x)), "\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
 #' @returns A [list] containing the custom rules

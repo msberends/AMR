@@ -27,25 +27,27 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(kurtosis(example_isolates$age),
-  5.227999,
-  tolerance = 0.00001
-)
+test_that("kurtosis works", {
+  expect_equal(kurtosis(example_isolates$age),
+    5.227999,
+    tolerance = 0.00001
+  )
 
-expect_equal(unname(kurtosis(data.frame(example_isolates$age))),
-  5.227999,
-  tolerance = 0.00001
-)
-expect_equal(unname(kurtosis(data.frame(example_isolates$age), excess = TRUE)),
-  2.227999,
-  tolerance = 0.00001
-)
+  expect_equal(unname(kurtosis(data.frame(example_isolates$age))),
+    5.227999,
+    tolerance = 0.00001
+  )
+  expect_equal(unname(kurtosis(data.frame(example_isolates$age), excess = TRUE)),
+    2.227999,
+    tolerance = 0.00001
+  )
 
-expect_equal(kurtosis(matrix(example_isolates$age)),
-  5.227999,
-  tolerance = 0.00001
-)
-expect_equal(kurtosis(matrix(example_isolates$age), excess = TRUE),
-  2.227999,
-  tolerance = 0.00001
-)
+  expect_equal(kurtosis(matrix(example_isolates$age)),
+    5.227999,
+    tolerance = 0.00001
+  )
+  expect_equal(kurtosis(matrix(example_isolates$age), excess = TRUE),
+    2.227999,
+    tolerance = 0.00001
+  )
+})

@@ -72,11 +72,11 @@ eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE)
 }\if{html}{\out{</div>}}
 }
 
-\subsection{Usage of multiple antibiotics and antibiotic group names}{
+\subsection{Usage of multiple antimicrobials and antimicrobial group names}{
 
-You can define antibiotic groups instead of single antibiotics for the rule consequence, which is the part \emph{after} the tilde (~). In the examples above, the antibiotic group \code{aminopenicillins} includes both ampicillin and amoxicillin.
+You can define antimicrobial groups instead of single antimicrobials for the rule consequence, which is the part \emph{after} the tilde (~). In the examples above, the antimicrobial group \code{aminopenicillins} includes both ampicillin and amoxicillin.
 
-Rules can also be applied to multiple antibiotics and antibiotic groups simultaneously. Use the \code{c()} function to combine multiple antibiotics. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
+Rules can also be applied to multiple antimicrobials and antimicrobial groups simultaneously. Use the \code{c()} function to combine multiple antimicrobials. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
 x
@@ -86,7 +86,7 @@ x
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}
 
-These 34 antibiotic groups are allowed in the rules (case-insensitive) and can be used in any combination:
+These 34 antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
 \itemize{
 \item aminoglycosides\cr(amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, and tobramycin-high)
 \item aminopenicillins\cr(amoxicillin and ampicillin)

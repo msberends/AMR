@@ -30,7 +30,7 @@
 #' (Key) Antimicrobials for First Weighted Isolates
 #'
 #' These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see [first_isolate()]). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.
-#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank to determine automatically
+#' @param x a [data.frame] with antimicrobials columns, like `AMX` or `amox`. Can be left blank to determine automatically.
 #' @param y,z [character] vectors to compare
 #' @inheritParams first_isolate
 #' @param universal names of **broad-spectrum** antimicrobial drugs, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antimicrobial drugs
@@ -73,7 +73,6 @@
 #' - Tetracycline
 #' - Vancomycin
 #'
-#'
 #' The default antimicrobial drugs used for **fungi** (set in `antifungal`) are:
 #'
 #' - Anidulafungin
@@ -102,7 +101,7 @@
 #'
 #' \donttest{
 #' if (require("dplyr")) {
-#'   # set key antibiotics to a new variable
+#'   # set key antimicrobials to a new variable
 #'   my_patients <- example_isolates %>%
 #'     mutate(keyab = key_antimicrobials(antifungal = NULL)) %>% # no need to define `x`
 #'     mutate(
@@ -192,7 +191,7 @@ key_antimicrobials <- function(x = NULL,
       )
     }
 
-    generate_antimcrobials_string(x[which(filter), c(universal, values), drop = FALSE])
+    generate_antimicrobials_string(x[which(filter), c(universal, values), drop = FALSE])
   }
 
   if (is.null(universal)) {
@@ -264,10 +263,10 @@ all_antimicrobials <- function(x = NULL,
     sort = FALSE, fn = "all_antimicrobials"
   )
 
-  generate_antimcrobials_string(x[, cols, drop = FALSE])
+  generate_antimicrobials_string(x[, cols, drop = FALSE])
 }
 
-generate_antimcrobials_string <- function(df) {
+generate_antimicrobials_string <- function(df) {
   if (NCOL(df) == 0) {
     return(rep("", NROW(df)))
   }

@@ -38,8 +38,8 @@
 #' my_data_with_all_these_columns %>%
 #'   select(cephalosporins())
 #' ```
-#' @param amr_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
-#' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
+#' @param amr_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antimicrobials] data set will be searched (case-insensitive) for this value.
+#' @param filter an [expression] to be evaluated in the [antimicrobials] data set, such as `name %like% "trim"`
 #' @param only_sir_columns a [logical] to indicate whether only columns of class `sir` must be selected (default is `FALSE`), see [as.sir()]
 #' @param only_treatable a [logical] to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
 #' @param return_all a [logical] to indicate whether all matched columns must be returned (default is `TRUE`). With `FALSE`, only the first of each unique antimicrobial will be returned, e.g. if both columns `"genta"` and `"gentamicin"` exist in the data, only the first hit for gentamicin will be returned.
@@ -49,9 +49,9 @@
 #'
 #' All selectors can also be used in `tidymodels` packages such as `recipe` and `parsnip`. See for more info [our tutorial](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html) on using antimicrobial selectors for predictive modelling.
 #'
-#' All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+#' All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antimicrobials] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #'
-#' The [amr_class()] function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the [antibiotics] data set within the columns `group`, `atc_group1` and `atc_group2`.
+#' The [amr_class()] function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the [antimicrobials] data set within the columns `group`, `atc_group1` and `atc_group2`.
 #' @section Full list of supported (antimicrobial) classes:
 #'
 #' `r paste0(" * ", na.omit(sapply(DEFINED_AB_GROUPS, function(ab) ifelse(tolower(gsub("^AB_", "", ab)) %in% ls(envir = asNamespace("AMR")), paste0("[", tolower(gsub("^AB_", "", ab)), "()] can select: \\cr ", vector_and(paste0(ab_name(eval(parse(text = ab), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), " (", eval(parse(text = ab), envir = asNamespace("AMR")), ")"), quotes = FALSE, sort = TRUE)), character(0)), USE.NAMES = FALSE)), "\n", collapse = "")`
@@ -193,7 +193,7 @@
 #' # and erythromycin is not a penicillin:
 #' example_isolates[, penicillins() & administrable_per_os()]
 #'
-#' # amr_selector() applies a filter in the `antibiotics` data set and is thus
+#' # amr_selector() applies a filter in the `antimicrobials` data set and is thus
 #' # very flexible. For instance, to select antimicrobials with an oral DDD
 #' # of at least 1 gram:
 #' example_isolates[, amr_selector(oral_ddd > 1 & oral_units == "g")]
@@ -483,7 +483,7 @@ ureidopenicillins <- function(only_sir_columns = FALSE, return_all = TRUE, ...) 
 }
 
 #' @rdname antimicrobial_selectors
-#' @details The [administrable_per_os()] and [administrable_iv()] functions also rely on the [antibiotics] data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the [antibiotics] data set.
+#' @details The [administrable_per_os()] and [administrable_iv()] functions also rely on the [antimicrobials] data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the [antimicrobials] data set.
 #' @export
 amr_class <- function(amr_class,
                       only_sir_columns = FALSE,
@@ -498,7 +498,7 @@ amr_class <- function(amr_class,
 }
 
 #' @rdname antimicrobial_selectors
-#' @details The [amr_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
+#' @details The [amr_selector()] function can be used to internally filter the [antimicrobials] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 #' @export
 amr_selector <- function(filter,
                          only_sir_columns = FALSE,
@@ -799,9 +799,9 @@ all_any_amr_selector <- function(type, ..., na.rm = TRUE) {
   df <- get_current_data(arg_name = NA, call = -3)
 
   if (type == "all") {
-    scope_fn <- all
+    scope_fn <- base::all
   } else {
-    scope_fn <- any
+    scope_fn <- base::any
   }
 
   x_transposed <- as.list(as.data.frame(t(df[, cols_ab, drop = FALSE]), stringsAsFactors = FALSE))
@@ -932,12 +932,14 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
 
 is_any <- function(el1) {
   syscalls <- paste0(trimws2(deparse(sys.calls())), collapse = " ")
-  el1 <- gsub("(.*),.*", "\\1", el1)
+  el1 <- gsub("(", "\\(", el1, fixed = TRUE)
+  el1 <- gsub(")", "\\)", el1, fixed = TRUE)
   syscalls %like% paste0("[^_a-zA-Z0-9]any\\(", "(c\\()?", el1)
 }
 is_all <- function(el1) {
   syscalls <- paste0(trimws2(deparse(sys.calls())), collapse = " ")
-  el1 <- gsub("(.*),.*", "\\1", el1)
+  el1 <- gsub("(", "\\(", el1, fixed = TRUE)
+  el1 <- gsub(")", "\\)", el1, fixed = TRUE)
   syscalls %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
 }
 

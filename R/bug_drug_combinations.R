@@ -35,7 +35,7 @@
 #' @param add_ab_group a [logical] to indicate where the group of the antimicrobials must be included as a first column
 #' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
 #' @param FUN the function to call on the `mo` column to transform the microorganism codes - the default is [mo_shortname()]
-#' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
+#' @param translate_ab a [character] of length 1 containing column names of the [antimicrobials] data set
 #' @param include_n_rows a [logical] to indicate if the total number of rows must be included in the output
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams sir_df
@@ -93,7 +93,7 @@ bug_drug_combinations <- function(x,
 
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
 
-  # select only groups and antibiotics
+  # select only groups and antimicrobials
   if (is_null_or_grouped_tbl(x.bak)) {
     data_has_groups <- TRUE
     groups <- get_group_names(x.bak)

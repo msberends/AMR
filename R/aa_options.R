@@ -31,7 +31,7 @@
 #'
 #' This is an overview of all the package-specific [options()] you can set in the `AMR` package.
 #' @section Options:
-#' * `AMR_antibiogram_formatting_type` \cr A [numeric] (1-12) to use in [antibiogram()], to indicate which formatting type to use.
+#' * `AMR_antibiogram_formatting_type` \cr A [numeric] (1-22) to use in [antibiogram()], to indicate which formatting type to use.
 #' * `AMR_breakpoint_type` \cr A [character] to use in [as.sir()], to indicate which breakpoint type to use. This must be either `r vector_or(clinical_breakpoints$type)`.
 #' * `AMR_cleaning_regex` \cr A [regular expression][base::regex] (case-insensitive) to use in [as.mo()] and all [`mo_*`][mo_property()] functions, to clean the user input. The default is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar".
 #' * `AMR_custom_ab` \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in [add_custom_antimicrobials()].
@@ -59,7 +59,7 @@
 #'  options(AMR_include_PKPD = TRUE)
 #'  ```
 #'
-#' ...to add Portuguese language support of antibiotics, and allow PK/PD rules when interpreting MIC values with [as.sir()].
+#' ...to add Portuguese language support of antimicrobials, and allow PK/PD rules when interpreting MIC values with [as.sir()].
 #'
 #' ### Share Options Within Team
 #'

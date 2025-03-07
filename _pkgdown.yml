@@ -151,9 +151,9 @@ reference:
     - "`add_custom_microorganisms`"
     - "`mo_source`"
 
-  - title: "Preparing data: antibiotics"
+  - title: "Preparing data: antimicrobials"
     desc: >
-      Use these functions to get valid properties of antibiotics from any input or to clean your input.
+      Use these functions to get valid properties of antimicrobials from any input or to clean your input.
       You can even retrieve drug names and doses from clinical text records, using `ab_from_text()`.
     contents:
     - "`as.ab`"
@@ -236,7 +236,7 @@ reference:
       for more information about how to work with functions in this package.
     contents:
     - "`microorganisms`"
-    - "`antibiotics`"
+    - "`antimicrobials`"
     - "`clinical_breakpoints`"
     - "`example_isolates`"
     - "`microorganisms.codes`"

@@ -27,35 +27,37 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-unjoined <- example_isolates
-inner <- inner_join_microorganisms(example_isolates)
-left <- left_join_microorganisms(example_isolates)
-semi <- semi_join_microorganisms(example_isolates)
-anti <- anti_join_microorganisms(example_isolates)
-suppressWarnings(right <- right_join_microorganisms(example_isolates))
-suppressWarnings(full <- full_join_microorganisms(example_isolates))
+test_that("join_microorganisms works", {
+  unjoined <- example_isolates
+  inner <- inner_join_microorganisms(example_isolates)
+  left <- left_join_microorganisms(example_isolates)
+  semi <- semi_join_microorganisms(example_isolates)
+  anti <- anti_join_microorganisms(example_isolates)
+  suppressWarnings(right <- right_join_microorganisms(example_isolates))
+  suppressWarnings(full <- full_join_microorganisms(example_isolates))
 
-expect_true(ncol(unjoined) < ncol(inner))
-expect_true(nrow(unjoined) == nrow(inner))
+  expect_true(ncol(unjoined) < ncol(inner))
+  expect_true(nrow(unjoined) == nrow(inner))
 
-expect_true(ncol(unjoined) < ncol(left))
-expect_true(nrow(unjoined) == nrow(left))
+  expect_true(ncol(unjoined) < ncol(left))
+  expect_true(nrow(unjoined) == nrow(left))
 
-expect_true(ncol(semi) == ncol(semi))
-expect_true(nrow(semi) == nrow(semi))
+  expect_true(ncol(semi) == ncol(semi))
+  expect_true(nrow(semi) == nrow(semi))
 
-expect_true(nrow(anti) == 0)
+  expect_true(nrow(anti) == 0)
 
-expect_true(nrow(unjoined) < nrow(right))
-expect_true(nrow(unjoined) < nrow(full))
+  expect_true(nrow(unjoined) < nrow(right))
+  expect_true(nrow(unjoined) < nrow(full))
 
-expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI")), 1)
-expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI", by = c("mo" = "mo"))), 1)
+  expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI")), 1)
+  expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI", by = c("mo" = "mo"))), 1)
 
-expect_equal(nrow(left_join_microorganisms("B_ESCHR_COLI")), 1)
+  expect_equal(nrow(left_join_microorganisms("B_ESCHR_COLI")), 1)
 
-expect_equal(nrow(semi_join_microorganisms("B_ESCHR_COLI")), 1)
-expect_equal(nrow(anti_join_microorganisms("B_ESCHR_COLI")), 0)
+  expect_equal(nrow(semi_join_microorganisms("B_ESCHR_COLI")), 1)
+  expect_equal(nrow(anti_join_microorganisms("B_ESCHR_COLI")), 0)
 
-# expect_warning(right_join_microorganisms("B_ESCHR_COLI"))
-# expect_warning(full_join_microorganisms("B_ESCHR_COLI"))
+  # expect_warning(right_join_microorganisms("B_ESCHR_COLI"))
+  # expect_warning(full_join_microorganisms("B_ESCHR_COLI"))
+})

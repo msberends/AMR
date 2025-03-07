@@ -29,8 +29,8 @@
 
 #' Get ATC Properties from WHOCC Website
 #'
-#' Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
-#' @param atc_code a [character] (vector) with ATC code(s) of antibiotics, will be coerced with [as.ab()] and [ab_atc()] internally if not a valid ATC code
+#' Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antimicrobial), such as the name, defined daily dose (DDD) or standard unit.
+#' @param atc_code a [character] (vector) with ATC code(s) of antimicrobials, will be coerced with [as.ab()] and [ab_atc()] internally if not a valid ATC code
 #' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see *Examples*.
 #' @param administration type of administration when using `property = "Adm.R"`, see *Details*
 #' @param url url of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.
@@ -98,7 +98,7 @@ atc_online_property <- function(atc_code,
   html_text <- import_fn("html_text", "rvest")
   read_html <- import_fn("read_html", "xml2")
 
-  if (!all(atc_code %in% unlist(AMR::antibiotics$atc))) {
+  if (!all(atc_code %in% unlist(AMR::antimicrobials$atc))) {
     atc_code <- as.character(ab_atc(atc_code, only_first = TRUE))
   }
 

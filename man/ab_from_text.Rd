@@ -15,7 +15,7 @@ ab_from_text(text, type = c("drug", "dose", "administration"),
 
 \item{collapse}{a \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}}
 
-\item{translate_ab}{if \code{type = "drug"}: a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. The default is \code{FALSE}. Using \code{TRUE} is equal to using "name".}
+\item{translate_ab}{if \code{type = "drug"}: a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. The default is \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
 \item{thorough_search}{a \link{logical} to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
 
