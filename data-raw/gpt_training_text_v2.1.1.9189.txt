@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9188. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9189. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -879,6 +879,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Aislinn Cook (\href{https://orcid.org/0000-0002-9189-7815}{ORCID}) [contributor]
   \item Andrew P. Norgan (\href{https://orcid.org/0000-0002-2955-2066}{ORCID}) [contributor]
   \item Anita Williams (\href{https://orcid.org/0000-0002-5295-8451}{ORCID}) [contributor]
   \item Annick Lenglet (\href{https://orcid.org/0000-0003-2013-8405}{ORCID}) [contributor]

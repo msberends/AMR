@@ -1,4 +1,4 @@
-# AMR 2.1.1.9188
+# AMR 2.1.1.9189
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -6,8 +6,8 @@
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
 ## Breaking
-* Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Calling `antibiotics` will still work, but now returns a warning.
-* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents two years ago.
+* Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
+* Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over two years ago.
 
 ## New
 * **One Health implementation**
@@ -95,7 +95,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Added console colours support of `sir` class for Positron
 
 ## Other
-* Added Dr. Larisse Bolton as contributor for her fantastic implementation of WISCA in a mathematically solid way
+* Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Greatly updated and expanded documentation
@@ -103,7 +103,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## Older Versions
 
-This changelog only contains changes from AMR v3.0 (February 2025) and later.
+This changelog only contains changes from AMR v3.0 (March 2025) and later.
 
 * For prior v2 versions, please see [our v2 archive](https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md).
 * For prior v1 versions, please see [our v1 archive](https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md).

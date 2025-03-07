@@ -35,8 +35,9 @@ $(document).ready(function() {
 
   // replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");
-  $(".citation h2:nth(0)").text("All contributors");
-  $(".citation h2:nth(1)").text("How to Cite");
+  $(".template-citation-authors h1:nth(0)").text("Contributors and Citation");
+  $(".template-citation-authors h2:nth(0)").text("All contributors");
+  $(".template-citation-authors h2:nth(1)").text("How to Cite");
 
   // remove \donttest and \dontrun texts in Examples
   if ($("#ref-examples ~ div pre").length > 0) {
@@ -69,6 +70,8 @@ $(document).ready(function() {
     if (typeof(x) != "undefined") {
       const prefix = '<img src="lang_';
       const suffix = '.svg" style="height: 13px !important; border: 1px solid #cccccc; aspect-ratio: 1 / 0.6; object-fit: cover; vertical-align: initial !important;"> ';
+      // bit weird, but we refer to languages here! So "uk" is Ukrain, not UK - take "en" for that.
+      x = x.replace("Aislinn", prefix + "en" + suffix + "Aislinn");
       x = x.replace("Alex", prefix + "de" + suffix + "Alex");
       x = x.replace("Andrew", prefix + "us" + suffix + "Andrew");
       x = x.replace("Anita", prefix + "au" + suffix + "Anita");

@@ -61,6 +61,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Aislinn Cook (\href{https://orcid.org/0000-0002-9189-7815}{ORCID}) [contributor]
   \item Andrew P. Norgan (\href{https://orcid.org/0000-0002-2955-2066}{ORCID}) [contributor]
   \item Anita Williams (\href{https://orcid.org/0000-0002-5295-8451}{ORCID}) [contributor]
   \item Annick Lenglet (\href{https://orcid.org/0000-0003-2013-8405}{ORCID}) [contributor]
