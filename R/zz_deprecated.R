@@ -36,6 +36,7 @@
 NULL
 
 #' @rdname AMR-deprecated
+#' @usage NULL
 #' @export
 "antibiotics"
 

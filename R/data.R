@@ -74,7 +74,6 @@
 #' * European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
 #' @inheritSection WHOCC WHOCC
 #' @seealso [microorganisms], [intrinsic_resistant]
-#' @aliases antibiotics
 #' @examples
 #' antimicrobials
 #' antivirals

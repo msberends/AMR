@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9186. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9187. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -735,8 +735,6 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/AMR-deprecated.Rd':
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 487 rows and 14 columns.
 }
 \usage{
-antibiotics
-
 ab_class(...)
 
 ab_selector(...)
@@ -2498,7 +2496,6 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobials.Rd':
 \docType{data}
 \name{antimicrobials}
 \alias{antimicrobials}
-\alias{antibiotics}
 \alias{antivirals}
 \title{Data Sets with 607 Antimicrobial Drugs}
 \format{

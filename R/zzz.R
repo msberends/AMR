@@ -210,7 +210,9 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
   # deprecated antibiotics data set
   makeActiveBinding("antibiotics", function() {
-    deprecation_warning(old = "antibiotics", new = "antimicrobials", is_function = FALSE, is_dataset = TRUE)
+    if (interactive()) {
+      deprecation_warning(old = "antibiotics", new = "antimicrobials", is_function = FALSE, is_dataset = TRUE)
+    }
     AMR::antimicrobials
   }, env = asNamespace(pkgname))
 

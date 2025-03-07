@@ -3,7 +3,6 @@
 \docType{data}
 \name{antimicrobials}
 \alias{antimicrobials}
-\alias{antibiotics}
 \alias{antivirals}
 \title{Data Sets with 607 Antimicrobial Drugs}
 \format{

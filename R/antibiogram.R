@@ -606,9 +606,6 @@ antibiogram.default <- function(x,
     warning_("All combinations had less than `minimum = ", minimum, "` results, returning an empty antibiogram")
     return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
   } else if (any(out$n_tested < minimum, na.rm = TRUE)) {
-    out <- out %pm>%
-      # also for WISCA, refrain from anything below 15 isolates:
-      subset(n_tested > 15)
     mins <- sum(out$n_tested < minimum, na.rm = TRUE)
     if (wisca == FALSE) {
       out <- out %pm>%
@@ -620,7 +617,6 @@ antibiogram.default <- function(x,
       warning_("Number of tested isolates per regimen should exceed ", minimum, " for each species. Coverage estimates might be inaccurate.", call = FALSE)
     }
   }
-
   if (NROW(out) == 0) {
     return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
   }
@@ -671,6 +667,7 @@ antibiogram.default <- function(x,
       out_wisca <- out %pm>%
         pm_group_by(ab)
     }
+
     out_wisca <- out_wisca %pm>%
       pm_summarise(
         coverage = NA_real_,
@@ -680,6 +677,7 @@ antibiogram.default <- function(x,
         n_tested = sum(n_tested, na.rm = TRUE),
         n_susceptible = sum(n_susceptible, na.rm = TRUE)
       )
+
     out_wisca$p_susceptible <- out_wisca$n_susceptible / out_wisca$n_tested
 
     if (isTRUE(has_syndromic_group)) {
