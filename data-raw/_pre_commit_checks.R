@@ -492,9 +492,11 @@ write_md5 <- function(object) {
   close(conn)
 }
 changed_md5 <- function(object) {
+  path <- paste0("data-raw/", deparse(substitute(object)), ".md5")
+  if (!file.exists(path)) return(TRUE)
   tryCatch(
     {
-      conn <- file(paste0("data-raw/", deparse(substitute(object)), ".md5"))
+      conn <- file(path)
       compared <- md5(object) != readLines(con = conn)
       close(conn)
       compared

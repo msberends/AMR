@@ -18,23 +18,23 @@
 }
 }
 \usage{
-antibiogram(x, antibiotics = where(is.sir), mo_transform = "shortname",
+antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
   only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
   formatting_type = getOption("AMR_antibiogram_formatting_type",
   ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
   minimum = 30, combine_SI = TRUE, sep = " + ", wisca = FALSE,
   simulations = 1000, conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive())
+  info = interactive(), ...)
 
-wisca(x, antibiotics = where(is.sir), ab_transform = "name",
+wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
   syndromic_group = NULL, add_total_n = FALSE, only_all_tested = FALSE,
   digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
   col_mo = NULL, language = get_AMR_locale(), minimum = 30,
   combine_SI = TRUE, sep = " + ", simulations = 1000,
   conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive())
+  info = interactive(), ...)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -48,7 +48,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
 
-\item{antibiotics}{vector of any antimicrobial name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antimicrobial_selectors]{antimicrobial selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as \code{"TZP+TOB"} or \code{"cipro + genta"}, given that columns resembling such antimicrobials exist in \code{x}. See \emph{Examples}.}
+\item{antimicrobials}{vector of any antimicrobial name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antimicrobial_selectors]{antimicrobial selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as \code{"TZP+TOB"} or \code{"cipro + genta"}, given that columns resembling such antimicrobials exist in \code{x}. See \emph{Examples}.}
 
 \item{mo_transform}{a character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
 
@@ -84,9 +84,9 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{wisca_model}{the outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}}
-
 \item{...}{when used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
+
+\item{wisca_model}{the outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}}
 
 \item{object}{an \code{\link[=antibiogram]{antibiogram()}} object}
 
@@ -153,7 +153,7 @@ Case example: Susceptibility of \emph{Pseudomonas aeruginosa} to piperacillin/ta
 Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = "TZP")
+            antimicrobials = "TZP")
 }\if{html}{\out{</div>}}
 \item \strong{Combination Antibiogram}
 
@@ -162,7 +162,7 @@ Case example: Additional susceptibility of \emph{Pseudomonas aeruginosa} to TZP 
 Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 }\if{html}{\out{</div>}}
 \item \strong{Syndromic Antibiogram}
 
@@ -171,7 +171,7 @@ Case example: Susceptibility of \emph{Pseudomonas aeruginosa} to TZP among respi
 Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = penicillins(),
+            antimicrobials = penicillins(),
             syndromic_group = "ward")
 }\if{html}{\out{</div>}}
 \item \strong{Weighted-Incidence Syndromic Combination Antibiogram (WISCA)}
@@ -181,12 +181,12 @@ WISCA can be applied to any antibiogram, see the section \emph{Explaining WISCA}
 Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
             wisca = TRUE)
 
 # this is equal to:
 wisca(your_data,
-      antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 }\if{html}{\out{</div>}}
 
 WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre datasets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).
@@ -202,7 +202,7 @@ Code example:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
 your_data \%>\%
   group_by(has_sepsis, is_neonate, sex) \%>\%
-  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 }\if{html}{\out{</div>}}
 }
 
@@ -218,12 +218,12 @@ At admission, no pathogen information is available.
 \item Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = selected_regimens,
+            antimicrobials = selected_regimens,
             mo_transform = NA) # all pathogens set to `NA`
 
 # preferred: use WISCA
 wisca(your_data,
-      antibiotics = selected_regimens)
+      antimicrobials = selected_regimens)
 }\if{html}{\out{</div>}}
 }
 \item \strong{Refinement with Gram Stain Results}
@@ -234,7 +234,7 @@ When a blood culture becomes positive, the Gram stain provides an initial and cr
 \item Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = selected_regimens,
+            antimicrobials = selected_regimens,
             mo_transform = "gramstain") # all pathogens set to Gram-pos/Gram-neg
 }\if{html}{\out{</div>}}
 }
@@ -246,7 +246,7 @@ After cultivation of the pathogen, full pathogen identification allows precise t
 \item Code example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{antibiogram(your_data,
-            antibiotics = selected_regimens,
+            antimicrobials = selected_regimens,
             mo_transform = "shortname") # all pathogens set to 'G. species', e.g., E. coli
 }\if{html}{\out{</div>}}
 }
@@ -337,17 +337,17 @@ example_isolates
 # Traditional antibiogram ----------------------------------------------
 
 antibiogram(example_isolates,
-  antibiotics = c(aminoglycosides(), carbapenems())
+  antimicrobials = c(aminoglycosides(), carbapenems())
 )
 
 antibiogram(example_isolates,
-  antibiotics = aminoglycosides(),
+  antimicrobials = aminoglycosides(),
   ab_transform = "atc",
   mo_transform = "gramstain"
 )
 
 antibiogram(example_isolates,
-  antibiotics = carbapenems(),
+  antimicrobials = carbapenems(),
   ab_transform = "name",
   mo_transform = "name"
 )
@@ -355,15 +355,15 @@ antibiogram(example_isolates,
 
 # Combined antibiogram -------------------------------------------------
 
-# combined antibiotics yield higher empiric coverage
+# combined antimicrobials yield higher empiric coverage
 antibiogram(example_isolates,
-  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   mo_transform = "gramstain"
 )
 
-# names of antibiotics do not need to resemble columns exactly:
+# names of antimicrobials do not need to resemble columns exactly:
 antibiogram(example_isolates,
-  antibiotics = c("Cipro", "cipro + genta"),
+  antimicrobials = c("Cipro", "cipro + genta"),
   mo_transform = "gramstain",
   ab_transform = "name",
   sep = " & "
@@ -374,7 +374,7 @@ antibiogram(example_isolates,
 
 # the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
-  antibiotics = c(aminoglycosides(), carbapenems()),
+  antimicrobials = c(aminoglycosides(), carbapenems()),
   syndromic_group = "ward"
 )
 
@@ -384,7 +384,7 @@ ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Spanish on Spanish systems)
 antibiogram(ex1,
-  antibiotics = aminoglycosides(),
+  antimicrobials = aminoglycosides(),
   ab_transform = "name",
   syndromic_group = ifelse(ex1$ward == "ICU",
     "UCI", "No UCI"
@@ -397,7 +397,7 @@ antibiogram(ex1,
 
 # WISCA are not stratified by species, but rather on syndromes
 antibiogram(example_isolates,
-  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward",
   wisca = TRUE
 )
@@ -406,7 +406,7 @@ antibiogram(example_isolates,
 # Print the output for R Markdown / Quarto -----------------------------
 
 ureido <- antibiogram(example_isolates,
-  antibiotics = ureidopenicillins(),
+  antimicrobials = ureidopenicillins(),
   syndromic_group = "ward",
   wisca = TRUE
 )
@@ -421,11 +421,11 @@ if (requireNamespace("knitr")) {
 # Generate plots with ggplot2 or base R --------------------------------
 
 ab1 <- antibiogram(example_isolates,
-  antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
+  antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain"
 )
 ab2 <- antibiogram(example_isolates,
-  antibiotics = c("AMC", "CIP", "TZP", "TZP+TOB"),
+  antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain",
   syndromic_group = "ward"
 )

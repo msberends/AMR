@@ -65,6 +65,7 @@ jobs:
           # do not check these folders
           rm -rf data-raw
           rm -rf tests
+          rm -rf vignettes
           
       - name: Lint
         run: |
@@ -76,7 +77,7 @@ jobs:
           linters <- linters[!grepl("^(closed_curly|open_curly|paren_brace|semicolon_terminator|consecutive_stopifnot|no_tab|single_quotes|unnecessary_nested_if|unneeded_concatenation)_linter$", linters)]
           linters <- linters[linters != "linter"]
           # and the ones we find unnnecessary
-          linters <- linters[!grepl("^(extraction_operator|implicit_integer|line_length|object_length|object_name|object_usage|nonportable_path|is)_linter$", linters)]
+          linters <- linters[!grepl("^(commented_code|extraction_operator|implicit_integer|indentation|line_length|namespace|nonportable_path|object_length|object_name|object_usage|is)_linter$", linters)]
           # put the functions in a list
           linters_list <- lapply(linters, function(l) eval(parse(text = paste0("lintr::", l, "()")), envir = asNamespace("lintr")))
           names(linters_list) <- linters

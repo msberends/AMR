@@ -235,7 +235,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   translate_ab <- get_translate_ab(translate_ab)
 
   data.bak <- data
-  # select only groups and antibiotics
+  # select only groups and antimicrobials
   if (is_null_or_grouped_tbl(data)) {
     data_has_groups <- TRUE
     groups <- get_group_names(data)

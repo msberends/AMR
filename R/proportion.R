@@ -58,7 +58,7 @@
 #'
 #' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination Therapy:
-#' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antimicrobials, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
+#' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antimicrobials/variables that you test them for. See this example for two antimicrobials, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
 #'
 #'
 #' ```

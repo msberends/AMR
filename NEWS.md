@@ -1,4 +1,4 @@
-# AMR 2.1.1.9189
+# AMR 2.1.1.9190
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -48,8 +48,9 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
   * Fix for `conserve_capped_values`, which now again works as expected: in MIC values, `<x` will always be S, `>x` will always be R
 * `antibiogram()` function
-  * New argument `formatting_type` to set any of the 22 options for the formatting of all 'cells'. This defaults to `10` for non-WISCA and `14` for WISCA, changing the output of antibiograms to cells with more info.
-  * For this reason, `add_total_n` is now `FALSE` at default since the denominators are added to the cells
+  * Argument `antibiotics` has been renamed to `antimicrobials`. Using `antibiotics` will still work, but now returns a warning.
+  * Added argument `formatting_type` to set any of the 22 options for the formatting of all 'cells'. This defaults to `18` for non-WISCA and `14` for WISCA, changing the output of antibiograms to cells with more info.
+  * For this reason, `add_total_n` is now `FALSE` at default since the denominators are added to the cells for non-WISCA. For WISCA, the denominator is not useful anyway.
   * The `ab_transform` argument now defaults to `"name"`, displaying antibiotic column names instead of codes
 * Antimicrobial selectors (previously: *antibiotic selectors*)
   * 'Antibiotic selectors' are now called 'antimicrobial selectors' since their scope is broader than just antibiotics. All documentation have been updated, and `ab_class()` and `ab_selector()` have been replaced with `amr_class()` and `amr_selector()`. The old functions are now deprecated and will be removed in a future version.

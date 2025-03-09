@@ -204,14 +204,14 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
   # reference data - they have additional data to improve algorithm speed
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   if (NROW(AB_LOOKUP) != NROW(AMR::antimicrobials)) {
-    # antibiotics data set was updated - run create_AB_AV_lookup() again
+    # antimicrobials data set was updated - run create_AB_AV_lookup() again
     AB_LOOKUP <- create_AB_AV_lookup(AMR::antimicrobials)
   }
 
   # deprecated antibiotics data set
   makeActiveBinding("antibiotics", function() {
     if (interactive()) {
-      deprecation_warning(old = "antibiotics", new = "antimicrobials", is_function = FALSE, is_dataset = TRUE)
+      deprecation_warning(old = "antibiotics", new = "antimicrobials", is_dataset = TRUE)
     }
     AMR::antimicrobials
   }, env = asNamespace(pkgname))

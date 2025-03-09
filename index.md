@@ -26,7 +26,7 @@ The `AMR` package is a [free and open-source](#copyright) R package with [zero d
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
-After installing this package, R knows [**~52,000 distinct microbial species**](./reference/microorganisms.html) (updated December 2022) and all [**~600 antimicrobial and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl).
+After installing this package, R knows [**~52,000 distinct microbial species**](./reference/microorganisms.html) (updated December 2022) and all [**~600 antimicrobial and antiviral drugs**](./reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl).
 
 ##### Used in over 175 countries, available in 20 languages
 
@@ -81,7 +81,7 @@ If used inside [R Markdown](https://rmarkdown.rstudio.com) or [Quarto](https://q
 
 ```r
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()),
+            antimicrobials = c(aminoglycosides(), carbapenems()),
             formatting_type = 14)
 ```
 
@@ -98,11 +98,11 @@ antibiogram(example_isolates,
 | *S. hominis*     |                |  92% (84-97%)  |                |            |                |  85% (74-93%)  |
 | *S. pneumoniae*  |   0% (0-3%)    |   0% (0-3%)    |                | 0% (0-3%)  |                |   0% (0-3%)    |
 
-In combination antibiograms, it is clear that combined antibiotics yield higher empiric coverage:
+In combination antibiograms, it is clear that combined antimicrobials yield higher empiric coverage:
 
 ```r
 antibiogram(example_isolates,
-            antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
             mo_transform = "gramstain",
             formatting_type = 14)
 ```
@@ -116,7 +116,7 @@ Like many other functions in this package, `antibiogram()` comes with support fo
 
 ```r
 antibiogram(example_isolates,
-            antibiotics = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
+            antimicrobials = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
             mo_transform = "gramstain",
             ab_transform = "name",
             formatting_type = 14,
