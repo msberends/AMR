@@ -870,7 +870,9 @@ antibiogram.default <- function(x,
   if (formatting_type == 20) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), "%,", n_susceptible, "/", n_tested, ")"))
   if (formatting_type == 21) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), " (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), ",N=", n_susceptible, "/", n_tested, ")"))
   if (formatting_type == 22) out <- out %pm>% pm_summarise(out_value = paste0(round(coverage * 100, digits = digits), "% (", round(lower_ci * 100, digits = digits), "-", round(upper_ci * 100, digits = digits), "%,N=", n_susceptible, "/", n_tested, ")"))
-  out$out_value[out$out_value %like% "^NA"] <- NA_character_
+  if (formatting_type >= 4) {
+    out$out_value[out$out_value %like% "^NA"] <- NA_character_
+  }
 
   # transform names of antimicrobials
   ab_naming_function <- function(x, t, l, s) {
@@ -1260,6 +1262,15 @@ autoplot.antibiogram <- function(object, ...) {
   if (!"mo" %in% colnames(df)) {
     df$mo <- ""
   }
+  groups <- colnames(df)[seq_len(which(colnames(df) %in% c("mo", "ab"))[1] - 1)]
+  group_name <- paste(groups, collapse = "/")
+  if (length(groups) > 1) {
+    df$syndromic_group <- apply(df[groups], 1, function(x) {
+      paste(stats::na.omit(x), collapse = "/")
+    })
+  } else if ("syndromic_group" %in% colnames(df)) {
+    group_name <- colnames(object)[1]
+  }
   out <- ggplot2::ggplot(df,
     mapping = ggplot2::aes(
       x = ab,
@@ -1272,7 +1283,6 @@ autoplot.antibiogram <- function(object, ...) {
     )
   ) +
     ggplot2::geom_col(position = ggplot2::position_dodge2(preserve = "single")) +
-    ggplot2::facet_wrap("mo") +
     ggplot2::geom_errorbar(
       mapping = ggplot2::aes(ymin = lower_ci * 100, ymax = upper_ci * 100),
       position = ggplot2::position_dodge2(preserve = "single", width = 1)
@@ -1281,11 +1291,15 @@ autoplot.antibiogram <- function(object, ...) {
       y = ifelse(isTRUE(attributes(object)$combine_SI), "%SI", "%S"),
       x = NULL,
       fill = if ("syndromic_group" %in% colnames(df)) {
-        colnames(object)[1]
+        group_name
       } else {
         NULL
       }
     )
+  if (!all(df$mo == "", na.rm = TRUE)) {
+    out <- out +
+      ggplot2::facet_wrap("mo")
+  }
   out
 }
 

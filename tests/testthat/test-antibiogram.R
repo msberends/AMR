@@ -31,18 +31,18 @@ test_that("antibiogram works", {
   # Traditional antibiogram ----------------------------------------------
 
   ab1 <- antibiogram(example_isolates,
-    antibiotics = c(aminoglycosides(), carbapenems())
+    antimicrobials = c(aminoglycosides(), carbapenems())
   )
 
   ab2 <- antibiogram(example_isolates,
-    antibiotics = aminoglycosides(),
+    antimicrobials = aminoglycosides(),
     ab_transform = "atc",
     mo_transform = "gramstain",
     add_total_n = TRUE
   )
 
   ab3 <- antibiogram(example_isolates,
-    antibiotics = carbapenems(),
+    antimicrobials = carbapenems(),
     ab_transform = "ab",
     mo_transform = "name",
     formatting_type = 1
@@ -58,14 +58,14 @@ test_that("antibiogram works", {
 
   # Combined antibiogram -------------------------------------------------
 
-  # combined antibiotics yield higher empiric coverage
+  # combined antibiogram yield higher empiric coverage
   ab4 <- antibiogram(example_isolates,
-    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+    antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
     mo_transform = "gramstain"
   )
 
   ab5 <- antibiogram(example_isolates,
-    antibiotics = c("TZP", "TZP+TOB"),
+    antimicrobials = c("TZP", "TZP+TOB"),
     mo_transform = "gramstain",
     ab_transform = "name",
     sep = " & ",
@@ -81,7 +81,7 @@ test_that("antibiogram works", {
 
   # the data set could contain a filter for e.g. respiratory specimens
   ab6 <- antibiogram(example_isolates,
-    antibiotics = c(aminoglycosides(), carbapenems()),
+    antimicrobials = c(aminoglycosides(), carbapenems()),
     syndromic_group = "ward",
     ab_transform = NULL
   )
@@ -90,7 +90,7 @@ test_that("antibiogram works", {
   # (i.e., this table will be in Dutch on Dutch systems)
   ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
   ab7 <- antibiogram(ex1,
-    antibiotics = aminoglycosides(),
+    antimicrobials = aminoglycosides(),
     ab_transform = "name",
     syndromic_group = ifelse(ex1$ward == "ICU",
       "IC", "Geen IC"
@@ -108,7 +108,7 @@ test_that("antibiogram works", {
 
   # the data set could contain a filter for e.g. respiratory specimens
   ab8 <- suppressWarnings(antibiogram(example_isolates,
-    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+    antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
     wisca = TRUE
   ))
 
@@ -118,11 +118,12 @@ test_that("antibiogram works", {
   expect_equal(colnames(ab8), c("Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
 
   # grouped tibbles
-
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-    ab9 <- example_isolates %>%
-      group_by(ward, gender) %>%
-      wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
+    expect_warning(
+      ab9 <- example_isolates %>%
+        group_by(ward, gender) %>%
+        wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+    )
     expect_equal(colnames(ab9), c("ward", "gender", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
   }
 
