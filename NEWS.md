@@ -1,4 +1,4 @@
-# AMR 2.1.1.9191
+# AMR 2.1.1.9192
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -59,11 +59,13 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added a new argument `return_all` to all selectors, which defaults to `TRUE` to include any match. With `FALSE`, the old behaviour, only the first hit for each unique antimicrobial is returned.
   * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
   * The selectors `lincosamides()` and `macrolides()` do not overlap anymore - each antibiotic is now classified as either of these and not both
+  * Fixed selector `fluoroquinolones()`, which now really only selects second-generation quinolones and up (first-generation quinolones do not contain a fluorine group)
 * `antimicrobials` data set
-  * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antimicrobial selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antibiotic selectors that contain non-treatable drugs)
-  * Added Amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
-  * Added Efflux (`EFF`), to allow mapping to AMRFinderPlus
-  * Added Tigemonam (`TNM`), a monobactam
+  * Added "clindamycin inducible screening" as `CLI1`. Since clindamycin is a lincosamide, the antimicrobial selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antimicrobial selectors that contain non-treatable drugs)
+  * Added amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
+  * Added efflux (`EFF`), to allow mapping to AMRFinderPlus
+  * Added tigemonam (`TNM`), a monobactam
+  * Added bleomycin (`BLM`), a glycopeptide
   * Added over 1,500 trade names
 * MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)

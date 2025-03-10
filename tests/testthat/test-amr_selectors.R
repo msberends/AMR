@@ -29,8 +29,6 @@
 
 test_that("amr selectors works", {
   # antibiotic class selectors
-  expect_equal(ncol(example_isolates[, amr_class("antimyco"), drop = FALSE]), 1, tolerance = 0.5)
-  expect_equal(ncol(example_isolates[, amr_selector(name %like% "trim"), drop = FALSE]), 2, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, aminoglycosides(), drop = FALSE]), 4, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, aminopenicillins(), drop = FALSE]), 2, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, betalactams(), drop = FALSE]), 16, tolerance = 0.5)
@@ -53,12 +51,15 @@ test_that("amr selectors works", {
   expect_equal(ncol(example_isolates[, penicillins(), drop = FALSE]), 7, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, phenicols(), drop = FALSE]), 1, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, polymyxins(), drop = FALSE]), 1, tolerance = 0.5)
+  expect_equal(ncol(example_isolates[, quinolones(), drop = FALSE]), 2, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, rifamycins(), drop = FALSE]), 1, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, streptogramins(), drop = FALSE]), 0, tolerance = 0.5)
-  expect_equal(ncol(example_isolates[, quinolones(), drop = FALSE]), 2, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, tetracyclines(), drop = FALSE]), 3, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, trimethoprims(), drop = FALSE]), 2, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, ureidopenicillins(), drop = FALSE]), 1, tolerance = 0.5)
+
+  expect_equal(ncol(example_isolates[, amr_class("antimyco"), drop = FALSE]), 1, tolerance = 0.5)
+  expect_equal(ncol(example_isolates[, amr_selector(name %like% "trim"), drop = FALSE]), 2, tolerance = 0.5)
 
   expect_message(expect_output(print(carbapenems())))
   expect_error(administrable_per_os())

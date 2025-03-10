@@ -397,7 +397,8 @@ pre_commit_lst$AB_CEPHALOSPORINS_5TH <- antimicrobials %>%
   pull(ab)
 pre_commit_lst$AB_CEPHALOSPORINS_EXCEPT_CAZ <- pre_commit_lst$AB_CEPHALOSPORINS[pre_commit_lst$AB_CEPHALOSPORINS != "CAZ"]
 pre_commit_lst$AB_FLUOROQUINOLONES <- antimicrobials %>%
-  filter(atc_group2 %like% "fluoroquinolone" | (group %like% "quinolone" & is.na(atc_group2))) %>%
+  # see DOI 10.23937/2378-3656/1410369, more specifically this table: https://www.clinmedjournals.org/articles/cmrcr/cmrcr-8-369-table1.html
+  filter((group %like% "quinolone" | atc_group1 %like% "quinolone" | atc_group2 %like% "quinolone") & name %unlike% " acid|nalidixic|cinoxacin|flumequine|oxolinic|piromidic|pipemidic|rosoxacin") %>%
   pull(ab)
 pre_commit_lst$AB_GLYCOPEPTIDES <- antimicrobials %>%
   filter(group %like% "glycopeptide") %>%
@@ -432,7 +433,7 @@ pre_commit_lst$AB_POLYMYXINS <- antimicrobials %>%
   filter(group %like% "polymyxin") %>%
   pull(ab)
 pre_commit_lst$AB_QUINOLONES <- antimicrobials %>%
-  filter(group %like% "quinolone") %>%
+  filter(group %like% "quinolone" | atc_group1 %like% "quinolone" | atc_group2 %like% "quinolone") %>%
   pull(ab)
 pre_commit_lst$AB_RIFAMYCINS <- antimicrobials %>%
   filter(name %like% "Rifampi|Rifabutin|Rifapentine|rifamy") %>%
