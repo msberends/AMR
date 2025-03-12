@@ -40,7 +40,8 @@ is_sir_eligible(x, threshold = 0.05)
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
-  include_screening = getOption("AMR_include_screening", FALSE),
+  substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
+  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
   verbose = FALSE, ...)
@@ -49,7 +50,8 @@ is_sir_eligible(x, threshold = 0.05)
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
-  include_screening = getOption("AMR_include_screening", FALSE),
+  substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
+  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
   verbose = FALSE, ...)
@@ -58,7 +60,8 @@ is_sir_eligible(x, threshold = 0.05)
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
-  include_screening = getOption("AMR_include_screening", FALSE),
+  substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
+  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
   verbose = FALSE)
@@ -87,6 +90,8 @@ sir_interpretation_history(clean = FALSE)
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 
 \item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
+
+\item{substitute_missing_r_breakpoint}{a \link{logical} to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is \code{FALSE}. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be \code{"S"} or \code{NA}. Setting this to \code{TRUE} will convert the \code{NA}s to \code{"R"} only if the R breakpoint is missing. Can also be set with the package option \code{\link[=AMR-options]{AMR_substitute_missing_r_breakpoint}}.}
 
 \item{include_screening}{a \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_screening}}.}
 
@@ -190,7 +195,7 @@ To determine which isolates are multi-drug resistant, be sure to run \code{\link
 
 \subsection{Machine-Readable Clinical Breakpoints}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 34 063 rows and 14 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 34 382 rows and 14 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{

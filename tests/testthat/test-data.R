@@ -45,15 +45,15 @@ test_that("data works", {
   expect_true(all(clinical_breakpoints$ab %in% AMR::antimicrobials$ab))
   expect_true(all(intrinsic_resistant$mo %in% microorganisms$mo))
   expect_true(all(intrinsic_resistant$ab %in% AMR::antimicrobials$ab))
-  expect_false(any(is.na(microorganisms.codes$code)))
-  expect_false(any(is.na(microorganisms.codes$mo)))
+  expect_false(anyNA(microorganisms.codes$code))
+  expect_false(anyNA(microorganisms.codes$mo))
   expect_true(all(dosage$ab %in% AMR::antimicrobials$ab))
   expect_true(all(dosage$name %in% AMR::antimicrobials$name))
   # check valid disks/MICs
-  expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
-  expect_false(any(is.na(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
-  expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE]))))
-  expect_false(any(is.na(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE]))))
+  expect_false(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE])))
+  expect_true(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE])))
+  expect_false(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE])))
+  expect_true(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE])))
 
   # antibiotic names must always be coercible to their original AB code
   expect_identical(as.ab(AMR::antimicrobials$name), AMR::antimicrobials$ab)

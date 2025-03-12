@@ -271,7 +271,8 @@ breakpoints_new <- breakpoints %>%
   mutate(disk_dose = disk_dose %>%
     gsub("μ", "mc", ., fixed = TRUE) %>% # this is 'mu', \u03bc
     gsub("µ", "mc", ., fixed = TRUE) %>% # this is 'micro', \u00b5 (yes, they look the same)
-    gsub("–", "-", ., fixed = TRUE)) %>%
+    gsub("–", "-", ., fixed = TRUE) %>%
+    gsub("(?<=\\d)(?=[a-zA-Z])", " ", ., perl = TRUE)) %>% # make sure we keep a space after a number, e.g. "1mcg" to "1 mcg"
   arrange(desc(guideline), mo, ab, type, method) %>%
   filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>%
   distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
@@ -299,7 +300,7 @@ breakpoints_new <- breakpoints_new %>%
 m <- unique(as.double(as.mic(levels(as.mic(1)))))
 
 # WHONET has no >1024 but instead uses 1025, 513, etc, so as.mic() cannot be used to clean.
-# instead, clean based on MIC factor levels
+# instead, raise these one higher valid MIC factor level:
 breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- m[which(m == 128) + 1]
 breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- m[which(m == 256) + 1]
 breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
@@ -316,9 +317,9 @@ breakpoints_new %>%
               values_fill = list(n = 0)) |>
   View()
 
-breakpoints_new[which(breakpoints_new$method == "MIC" &
-                        is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- max(m)
-# raise these one higher valid MIC factor level:
+# 2025-03-12 don't do this anymore - we now use as.sir(..., substitute_missing_r_breakpoint = TRUE/FALSE, ...)
+# breakpoints_new[which(breakpoints_new$method == "MIC" &
+#                         is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- max(m)
 
 
 # fix streptococci in WHONET table of EUCAST: Strep A, B, C and G must only include these groups and not all streptococci:
@@ -373,7 +374,8 @@ breakpoints_new <- breakpoints_new %>%
     breakpoint_R
   ))
 # fill missing R breakpoint where there is an S breakpoint
-breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
+# 2025-03-12 don't do this anymore - we now use as.sir(..., substitute_missing_r_breakpoint = TRUE/FALSE, ...)
+# breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
 
 
 # check the strange duplicates
@@ -392,7 +394,7 @@ breakpoints_new <- breakpoints_new %>%
 # check again
 breakpoints_new %>% filter(guideline == "EUCAST 2024", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
-clinical_breakpoints %>% filter(guideline == "EUCAST 2023", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+clinical_breakpoints %>% filter(guideline == "EUCAST 2024", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 
 # must have "human" and "ECOFF"
 breakpoints_new %>% filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCAST 2020", method == "MIC")

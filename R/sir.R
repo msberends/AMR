@@ -46,6 +46,7 @@
 #' @param guideline defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
+#' @param substitute_missing_r_breakpoint a [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s to `"R"` only if the R breakpoint is missing. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
 #' @param include_screening a [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD a [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the package option [`AMR_include_PKPD`][AMR-options].
 #' @param breakpoint_type the type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
@@ -563,6 +564,7 @@ as.sir.mic <- function(x,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::clinical_breakpoints,
+                       substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
                        include_screening = getOption("AMR_include_screening", FALSE),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
@@ -580,6 +582,7 @@ as.sir.mic <- function(x,
     conserve_capped_values = conserve_capped_values,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
+    substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
     breakpoint_type = breakpoint_type,
@@ -598,6 +601,7 @@ as.sir.disk <- function(x,
                         uti = NULL,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::clinical_breakpoints,
+                        substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
                         include_screening = getOption("AMR_include_screening", FALSE),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
@@ -615,10 +619,11 @@ as.sir.disk <- function(x,
     conserve_capped_values = FALSE,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
+    substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
     include_screening = include_screening,
     include_PKPD = include_PKPD,
     breakpoint_type = breakpoint_type,
-    host = NULL,
+    host = host,
     verbose = verbose,
     ...
   )
@@ -634,6 +639,7 @@ as.sir.data.frame <- function(x,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE,
                               reference_data = AMR::clinical_breakpoints,
+                              substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
                               include_screening = getOption("AMR_include_screening", FALSE),
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
@@ -646,6 +652,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
+  meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1)
   meet_criteria(include_screening, allow_class = "logical", has_length = 1)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
@@ -797,6 +804,7 @@ as.sir.data.frame <- function(x,
           conserve_capped_values = conserve_capped_values,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
+          substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
           breakpoint_type = breakpoint_type,
@@ -817,6 +825,7 @@ as.sir.data.frame <- function(x,
           uti = uti,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
+          substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
           include_screening = include_screening,
           include_PKPD = include_PKPD,
           breakpoint_type = breakpoint_type,
@@ -925,6 +934,7 @@ as_sir_method <- function(method_short,
                           conserve_capped_values,
                           add_intrinsic_resistance,
                           reference_data,
+                          substitute_missing_r_breakpoint,
                           include_screening,
                           include_PKPD,
                           breakpoint_type,
@@ -939,6 +949,7 @@ as_sir_method <- function(method_short,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
+  meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
   check_reference_data(reference_data, .call_depth = -2)
@@ -1321,7 +1332,9 @@ as_sir_method <- function(method_short,
     # This seems to not work well: as.sir(as.mic(c(4, ">4", ">=4", 8, ">8", ">=8")), ab = "AMC", mo = "E. coli", breakpoint_type = "animal", host = "dogs", guideline = "CLSI 2024")
 
     ## fall-back methods for veterinary guidelines ----
-    if (breakpoint_type == "animal" && !host_current %in% breakpoints_current$host) {
+    ## TODO actually implement this well
+    if (FALSE) {
+      # if (breakpoint_type == "animal" && !host_current %in% breakpoints_current$host) {
       if (guideline_coerced %like% "CLSI") {
         # VET09 says that staph/strep/enterococcus BP can be extrapolated to all Gr+ cocci except for intrinsic resistance, so take all Gr+ cocci:
         gram_plus_cocci_vet09 <- microorganisms$mo[microorganisms$genus %in% c("Staphylococcus", "Streptococcus", "Peptostreptococcus", "Aerococcus", "Micrococcus") & microorganisms$rank == "genus"] # TODO should probably include genera that were either of these before
@@ -1474,6 +1487,10 @@ as_sir_method <- function(method_short,
       }
       if (method == "mic" && conserve_capped_values == TRUE && any(as.character(values) %like% "^[>][0-9]")) {
         notes_current <- c(notes_current, "MIC values 'greater than' are all considered 'R' since conserve_capped_values = TRUE")
+      }
+      if (isTRUE(substitute_missing_r_breakpoint) && !is.na(breakpoints_current$breakpoint_S) && is.na(breakpoints_current$breakpoint_R)) {
+        breakpoints_current$breakpoint_R <- breakpoints_current$breakpoint_S # breakpoints_current only has 1 row at this moment
+        notes_current <- c(notes_current, "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE")
       }
 
       if (method == "mic") {

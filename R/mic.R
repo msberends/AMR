@@ -191,6 +191,10 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   if (is.null(x.bak)) {
     x.bak <- x
   }
+  # remove NAs on beforehand to not count them
+  x.bak <- gsub("(NA)+", "", x.bak)
+  # and trim
+  x.bak <- trimws2(x.bak)
 
   # comma to period
   x <- gsub(",", ".", x, fixed = TRUE)
