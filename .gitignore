@@ -21,6 +21,7 @@ packrat/lib*/
 packrat/src/
 data-raw/taxa.txt
 data-raw/taxon.tab
+data-raw/CLSI*.pdf
 data-raw/DSMZ_bactnames.xlsx
 data-raw/country_analysis_url_token.R
 data-raw/country_analysis2.R

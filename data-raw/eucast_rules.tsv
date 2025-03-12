@@ -226,109 +226,140 @@ genus	is	Bacillus	NOR	R	fluoroquinolones	R	Bacillus	Breakpoints	11	added in 11
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	12	
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	12	
 order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints	12	
-genus	is	Staphylococcus	PEN, FOX	S	betalactams_with_inhibitor	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	FOX	R	betalactams	R	Staphylococcus	Breakpoints	12	
-genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	FOX	S	carbapenems, cephalosporins_except_CAZ	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	FOX	I	carbapenems, cephalosporins_except_CAZ	I	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	FOX	R	carbapenems, cephalosporins_except_CAZ	R	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	NOR	S	MFX	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	NOR	S	CIP, LVX	I	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	NOR	R	MFX, CIP, LVX	R	Staphylococcus	Breakpoints	12	
+order	is	Enterobacterales	LEX	S	CZO	I	Enterobacterales (Order)	Breakpoints	12	
+order	is	Enterobacterales	CFR	S	CZO	I	Enterobacterales (Order)	Breakpoints	12	
+genus	is	Salmonella	PEF-S	S	CIP	S	Enterobacterales (Order)	Breakpoints	12	
+genus	is	Salmonella	PEF-S	I	CIP	I	Enterobacterales (Order)	Breakpoints	12	
+genus	is	Salmonella	PEF-S	R	CIP	R	Enterobacterales (Order)	Breakpoints	12	
+genus_species	is	Yersinia enterocolitica	TCY	S	DOX	S	Enterobacterales (Order)	Breakpoints	12	
+genus_species	is	Yersinia enterocolitica	TCY	I	DOX	I	Enterobacterales (Order)	Breakpoints	12	
+genus_species	is	Yersinia enterocolitica	TCY	R	DOX	R	Enterobacterales (Order)	Breakpoints	12	
+genus_species	is	Staphylococcus aureus	FOX-S	R	penicillins	R	Staphylococcus	Breakpoints	12	See last sentence: Isolates that test resistant to cefoxitin are resistant to all penicillins
+genus_species	is	Staphylococcus aureus	PEN, FOX-S	S, S	penicillins	S	Staphylococcus	Breakpoints	12	
+genus_species	is	Staphylococcus aureus	PEN, FOX-S	R, S	betalactams_with_inhibitor, isoxazolylpenicillins, NAF	S	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	FOX-S	R	PEN, PHN, AMP, AMX, PIP, TIC	R	Staphylococcus	Breakpoints	12	
+genus_species	is	Staphylococcus saprophyticus	AMP	S	AMP, SAM, AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	FOX-S	S	BPR, CAC, CAT, CCL, CCP, CCV, CCX, CDC, CDR, CEB, CEC, CED, CEM, CEP, CEQ, CFA, CFM, CFM1, CFP, CFR, CFS, CFZ, CHE, CID, CMX, CMZ, CND, CPA, CPC, CPD, CPI, CPL, CPM, CPO, CPR, CPT, CPX, CRD, CRO, CSE, CSL, CSU, CTC, CTF, CTL, CTS, CTT, CTX, CTZ, CXA, CXM, CZD, CZL, CZO, CZP, CZX, DIT, DIX, DIZ, FDC, FEP, FNC, FOV, FOX, FOX-S, FPT, FPZ, HAP, LOR, LTM, MAN, RID, TIO, ZOP	S	Staphylococcus	Breakpoints	12	sort(c(cephalosporins()[!cephalosporins() %in% as.ab(c("cefalexin", "ceftazidim", "ceftazidim/avibactam", "ceftibuten", "ceftolozan/tazobactam"))]))
+genus	is	Staphylococcus	FOX-S	I	BPR, CAC, CAT, CCL, CCP, CCV, CCX, CDC, CDR, CEB, CEC, CED, CEM, CEP, CEQ, CFA, CFM, CFM1, CFP, CFR, CFS, CFZ, CHE, CID, CMX, CMZ, CND, CPA, CPC, CPD, CPI, CPL, CPM, CPO, CPR, CPT, CPX, CRD, CRO, CSE, CSL, CSU, CTC, CTF, CTL, CTS, CTT, CTX, CTZ, CXA, CXM, CZD, CZL, CZO, CZP, CZX, DIT, DIX, DIZ, FDC, FEP, FNC, FOV, FOX, FOX-S, FPT, FPZ, HAP, LOR, LTM, MAN, RID, TIO, ZOP	I	Staphylococcus	Breakpoints	12	sort(c(cephalosporins()[!cephalosporins() %in% as.ab(c("cefalexin", "ceftazidim", "ceftazidim/avibactam", "ceftibuten", "ceftolozan/tazobactam"))]))
+genus	is	Staphylococcus	FOX-S	R	BPR, CAC, CAT, CCL, CCP, CCV, CCX, CDC, CDR, CEB, CEC, CED, CEM, CEP, CEQ, CFA, CFM, CFM1, CFP, CFR, CFS, CFZ, CHE, CID, CMX, CMZ, CND, CPA, CPC, CPD, CPI, CPL, CPM, CPO, CPR, CPT, CPX, CRD, CRO, CSE, CSL, CSU, CTC, CTF, CTL, CTS, CTT, CTX, CTZ, CXA, CXM, CZD, CZL, CZO, CZP, CZX, DIT, DIX, DIZ, FDC, FEP, FNC, FOV, FOX, FOX-S, FPT, FPZ, HAP, LOR, LTM, MAN, RID, TIO, ZOP	R	Staphylococcus	Breakpoints	12	sort(c(cephalosporins()[!cephalosporins() %in% as.ab(c("cefalexin", "ceftazidim", "ceftazidim/avibactam", "ceftibuten", "ceftolozan/tazobactam"))]))
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	R	PEN, PHN, AMP, AMX, PIP, TIC	R	Staphylococcus	Breakpoints	12	
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	S	BPR, CAC, CAT, CCL, CCP, CCV, CCX, CDC, CDR, CEB, CEC, CED, CEM, CEP, CEQ, CFA, CFM, CFM1, CFP, CFR, CFS, CFZ, CHE, CID, CMX, CMZ, CND, CPA, CPC, CPD, CPI, CPL, CPM, CPO, CPR, CPT, CPX, CRD, CRO, CSE, CSL, CSU, CTC, CTF, CTL, CTS, CTT, CTX, CTZ, CXA, CXM, CZD, CZL, CZO, CZP, CZX, DIT, DIX, DIZ, FDC, FEP, FNC, FOV, FOX, FOX-S, FPT, FPZ, HAP, LOR, LTM, MAN, RID, TIO, ZOP	S	Staphylococcus	Breakpoints	12	sort(c(cephalosporins()[!cephalosporins() %in% as.ab(c("cefalexin", "ceftazidim", "ceftazidim/avibactam", "ceftibuten", "ceftolozan/tazobactam"))]))
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	I	BPR, CAC, CAT, CCL, CCP, CCV, CCX, CDC, CDR, CEB, CEC, CED, CEM, CEP, CEQ, CFA, CFM, CFM1, CFP, CFR, CFS, CFZ, CHE, CID, CMX, CMZ, CND, CPA, CPC, CPD, CPI, CPL, CPM, CPO, CPR, CPT, CPX, CRD, CRO, CSE, CSL, CSU, CTC, CTF, CTL, CTS, CTT, CTX, CTZ, CXA, CXM, CZD, CZL, CZO, CZP, CZX, DIT, DIX, DIZ, FDC, FEP, FNC, FOV, FOX, FOX-S, FPT, FPZ, HAP, LOR, LTM, MAN, RID, TIO, ZOP	I	Staphylococcus	Breakpoints	12	sort(c(cephalosporins()[!cephalosporins() %in% as.ab(c("cefalexin", "ceftazidim", "ceftazidim/avibactam", "ceftibuten", "ceftolozan/tazobactam"))]))
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	R	BPR, CAC, CAT, CCL, CCP, CCV, CCX, CDC, CDR, CEB, CEC, CED, CEM, CEP, CEQ, CFA, CFM, CFM1, CFP, CFR, CFS, CFZ, CHE, CID, CMX, CMZ, CND, CPA, CPC, CPD, CPI, CPL, CPM, CPO, CPR, CPT, CPX, CRD, CRO, CSE, CSL, CSU, CTC, CTF, CTL, CTS, CTT, CTX, CTZ, CXA, CXM, CZD, CZL, CZO, CZP, CZX, DIT, DIX, DIZ, FDC, FEP, FNC, FOV, FOX, FOX-S, FPT, FPZ, HAP, LOR, LTM, MAN, RID, TIO, ZOP	R	Staphylococcus	Breakpoints	12	sort(c(cephalosporins()[!cephalosporins() %in% as.ab(c("cefalexin", "ceftazidim", "ceftazidim/avibactam", "ceftibuten", "ceftolozan/tazobactam"))]))
+genus_species	is	Staphylococcus aureus	FOX-S	S	CPT	S	Staphylococcus	Breakpoints	12	
+genus_species	is	Staphylococcus aureus	FOX-S	S	BPR	S	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	FOX-S	S	carbapenems	S	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	FOX-S	I	carbapenems	I	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	FOX-S	R	carbapenems	R	Staphylococcus	Breakpoints	12	
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	S	carbapenems	S	Staphylococcus	Breakpoints	12	Not explicitly mentioned in guidelines in this section, but previous section about these 3 species do mention OXA as preferred method
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	I	carbapenems	I	Staphylococcus	Breakpoints	12	Not explicitly mentioned in guidelines in this section, but previous section about these 3 species do mention OXA as preferred method
+genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	R	carbapenems	R	Staphylococcus	Breakpoints	12	Not explicitly mentioned in guidelines in this section, but previous section about these 3 species do mention OXA as preferred method
+genus	is	Staphylococcus	NOR-S	S	MFX	S	Staphylococcus	Breakpoints	12	
+genus	is	Staphylococcus	NOR-S	S	CIP, LVX	I	Staphylococcus	Breakpoints	12	
+genus_species	is	Staphylococcus aureus	VAN	S	DAL, ORI	S	Staphylococcus	Breakpoints	12	
+genus_species	is	Staphylococcus aureus	FOX-S, VAN	R, S	TLV	S	Staphylococcus	Breakpoints	12	MRSA isolates are in this file safely denoted as FOX resistant
 genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	TCY	S	DOX, MNO	S	Staphylococcus	Breakpoints	12	
-genus	is	Staphylococcus	TCY	R	DOX, MNO	R	Staphylococcus	Breakpoints	12	
-genus	is	Enterococcus	AMP	S	AMX, AMC, PIP, TZP	S	Enterococcus	Breakpoints	12	
-genus	is	Enterococcus	AMP	I	AMX, AMC, PIP, TZP	I	Enterococcus	Breakpoints	12	
-genus	is	Enterococcus	AMP	R	AMX, AMC, PIP, TZP	R	Enterococcus	Breakpoints	12	
-genus	is	Enterococcus	NOR	S	CIP, LVX	S	Enterococcus	Breakpoints	12	
-genus	is	Enterococcus	NOR	I	CIP, LVX	I	Enterococcus	Breakpoints	12	
-genus	is	Enterococcus	NOR	R	CIP, LVX	R	Enterococcus	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	S	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	I	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	R	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	S	MFX	S	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	S	LVX	I	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	R	MFX, LVX	R	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	Staphylococcus	Breakpoints	12	
+genus	is	Enterococcus	AMP	S	AMP, SAM, AMX, AMC, PIP, TZP	S	Enterococcus	Breakpoints	12	
+genus	is	Enterococcus	AMP	I	AMP, SAM, AMX, AMC, PIP, TZP	I	Enterococcus	Breakpoints	12	
+genus	is	Enterococcus	AMP	R	AMP, SAM, AMX, AMC, PIP, TZP	R	Enterococcus	Breakpoints	12	
+genus	is	Enterococcus	NOR-S	S	CIP, LVX	S	Enterococcus	Breakpoints	12	
+genus	is	Enterococcus	NOR-S	I	CIP, LVX	I	Enterococcus	Breakpoints	12	
+genus	is	Enterococcus	NOR-S	R	CIP, LVX	R	Enterococcus	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	S	penicillins	S	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	I	penicillins	I	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	R	penicillins	R	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	is	Streptococcus Group B	PEN	S	AMC, AMP, AMX, APL, APX, AXS, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CRB, CRN, EPC, HET, LEN, MEC, MEZ, MSU, MTM, NAF, PEN, PHE, PIP, PIS, PME, PNM, PNO, PRB, PRC, PRP, PSU, PVM, SAM, SBC, SLT6, SRX, TAL, TCC, TEM, TIC, TZP	S	Streptococcus groups A, B, C, G	Breakpoints	12	penicillins()[!penicillins() %in% c("PHN", isoxazolylpenicillins())]
+genus_species	is	Streptococcus Group B	PEN	I	AMC, AMP, AMX, APL, APX, AXS, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CRB, CRN, EPC, HET, LEN, MEC, MEZ, MSU, MTM, NAF, PEN, PHE, PIP, PIS, PME, PNM, PNO, PRB, PRC, PRP, PSU, PVM, SAM, SBC, SLT6, SRX, TAL, TCC, TEM, TIC, TZP	I	Streptococcus groups A, B, C, G	Breakpoints	12	penicillins()[!penicillins() %in% c("PHN", isoxazolylpenicillins())]
+genus_species	is	Streptococcus Group B	PEN	R	AMC, AMP, AMX, APL, APX, AXS, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CRB, CRN, EPC, HET, LEN, MEC, MEZ, MSU, MTM, NAF, PEN, PHE, PIP, PIS, PME, PNM, PNO, PRB, PRC, PRP, PSU, PVM, SAM, SBC, SLT6, SRX, TAL, TCC, TEM, TIC, TZP	R	Streptococcus groups A, B, C, G	Breakpoints	12	penicillins()[!penicillins() %in% c("PHN", isoxazolylpenicillins())]
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	cephalosporins	S	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	I	cephalosporins	I	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	R	cephalosporins	R	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	carbapenems	S	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	I	carbapenems	I	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	R	carbapenems	R	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR-S	S	MFX	S	Streptococcus groups A, B, C, G	Breakpoints	12	does not explicitly state that it is for other fluoroquinolones
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR-S	S	LVX	I	Streptococcus groups A, B, C, G	Breakpoints	12	does not explicitly state that it is for other fluoroquinolones
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR-S	R	MFX, LVX	R	Streptococcus groups A, B, C, G	Breakpoints	12	does not explicitly state that it is for other fluoroquinolones
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	VAN	S	DAL, ORI	S	Streptococcus groups A, B, C, G	Breakpoints	12	
 genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	S	AZM, CLR, RXT	S	Streptococcus groups A, B, C, G	Breakpoints	12	
 genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	I	AZM, CLR, RXT	I	Streptococcus groups A, B, C, G	Breakpoints	12	
 genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	R	AZM, CLR, RXT	R	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY	S	DOX, MNO	S	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY	R	DOX, MNO	R	Streptococcus groups A, B, C, G	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	AMP	S	AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	AMP	I	AMX, AMC, PIP, TZP	I	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	AMP	R	AMX, AMC, PIP, TZP	R	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	NOR	S	MFX	S	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	NOR	S	LVX	I	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	NOR	R	MFX, LVX	R	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	S	DOX, MNO	S	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	R	DOX, MNO	R	Streptococcus groups A, B, C, G	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	Streptococcus pneumoniae	Breakpoints	12	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV"))
+genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	Streptococcus pneumoniae	Breakpoints	12	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV"))
+genus_species	is	Streptococcus pneumoniae	OXA-S	S	CEC	I	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	PEN	S	CEC	I	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	OXA-S	R	PEN, PHN	R	Streptococcus pneumoniae	Breakpoints	12	from flowchart: when OXA < 20 or PEN > 0.06
+genus_species	is	Streptococcus pneumoniae	PEN	R	PHN	R	Streptococcus pneumoniae	Breakpoints	12	from flowchart: when OXA < 20 or PEN > 0.06
+genus_species	is	Streptococcus pneumoniae	AMP	S	AMX, AMC, SAM, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	AMP	I	AMX, AMC, SAM, PIP, TZP	I	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	AMP	R	AMX, AMC, SAM, PIP, TZP	R	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	NOR-S	S	MFX	S	Streptococcus pneumoniae	Breakpoints	12	does not explicitly state that it is for other fluoroquinolones
+genus_species	is	Streptococcus pneumoniae	NOR-S	S	LVX	I	Streptococcus pneumoniae	Breakpoints	12	does not explicitly state that it is for other fluoroquinolones
+genus_species	is	Streptococcus pneumoniae	NOR-S	R	MFX, LVX	R	Streptococcus pneumoniae	Breakpoints	12	does not explicitly state that it is for other fluoroquinolones
 genus_species	is	Streptococcus pneumoniae	ERY	S	AZM, CLR, RXT	S	Streptococcus pneumoniae	Breakpoints	12	
 genus_species	is	Streptococcus pneumoniae	ERY	I	AZM, CLR, RXT	I	Streptococcus pneumoniae	Breakpoints	12	
 genus_species	is	Streptococcus pneumoniae	ERY	R	AZM, CLR, RXT	R	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	TCY	S	DOX, MNO	S	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Streptococcus pneumoniae	TCY	R	DOX, MNO	R	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Viridans group streptococci	Breakpoints	12	
-genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	S	AMX, AMC, PIP, TZP	S	Viridans group streptococci	Breakpoints	12	
-genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	I	AMX, AMC, PIP, TZP	I	Viridans group streptococci	Breakpoints	12	
-genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	R	AMX, AMC, PIP, TZP	R	Viridans group streptococci	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	AMP	S	AMX, PIP	S	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	AMP	I	AMX, PIP	I	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	AMP	R	AMX, PIP	R	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	AMC	S	TZP	S	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	AMC	I	TZP	I	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	AMC	R	TZP	R	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Haemophilus influenzae	NAL	S	CIP, LVX, MFX, OFX	S	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	TCY-S	S	DOX, MNO	S	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Streptococcus pneumoniae	TCY-S	R	DOX, MNO	R	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	PEN-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PIP, SAM, TZP	S	Viridans group streptococci	Breakpoints	12	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
+genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	PEN-S	R	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PIP, SAM, TZP	R	Viridans group streptococci	Breakpoints	12	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
+genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	S	AMX, AMC, SAM, PIP, TZP	S	Viridans group streptococci	Breakpoints	12	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
+genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	I	AMX, AMC, SAM, PIP, TZP	I	Viridans group streptococci	Breakpoints	12	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
+genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	R	AMX, AMC, SAM, PIP, TZP	R	Viridans group streptococci	Breakpoints	12	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
+genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP	S	Haemophilus influenzae	Breakpoints	12	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()])
+genus_species	is	Haemophilus influenzae	PEN-S, BTL-S	R, R	AMP, AMX, PIP	R	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Haemophilus influenzae	AMC	R	SAM	R	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Haemophilus influenzae	NAL-S	S	CIP, LVX, MFX, OFX	S	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Haemophilus influenzae	NAL-S	R	CIP, LVX, MFX, OFX	R	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	TCY	S	DOX, MNO	S	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	TCY	R	DOX, MNO	R	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Moraxella catarrhalis	NOR	S	CIP, LVX, MFX, OFX	S	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Moraxella catarrhalis	NOR	R	CIP, LVX, MFX, OFX	R	Streptococcus pneumoniae	Breakpoints	12	
+genus_species	is	Moraxella catarrhalis	BTL-S	R	AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC	R	Moraxella catarrhalis	Breakpoints	12	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
 genus_species	is	Moraxella catarrhalis	AMC	S	TZP	S	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	AMC	I	TZP	I	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	AMC	R	TZP	R	Moraxella catarrhalis	Breakpoints	12	
-genus_species	is	Moraxella catarrhalis	NAL	S	CIP, LVX, MFX, OFX	S	Moraxella catarrhalis	Breakpoints	12	
+genus_species	is	Moraxella catarrhalis	NAL-S	S	CIP, LVX, MFX, OFX	S	Moraxella catarrhalis	Breakpoints	12	
+genus_species	is	Moraxella catarrhalis	NAL-S	R	CIP, LVX, MFX, OFX	R	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	TCY	R	DOX, MNO	R	Moraxella catarrhalis	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	BTL-S	R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, S	AMP, AMX	S	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, I	AMP, AMX	I	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	Neisseria meningitidis	Breakpoints	12	
+genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	Neisseria meningitidis	Breakpoints	12	
+genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	Neisseria meningitidis	Breakpoints	12	
 genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	Pasteurella multocida	Breakpoints	12	
 genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	Pasteurella multocida	Breakpoints	12	
 genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	Pasteurella multocida	Breakpoints	12	
-genus_species	is	Pasteurella multocida	NOR	S	CIP, LVX	S	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Pasteurella multocida	NOR	R	CIP, LVX	R	Streptococcus pneumoniae	Breakpoints	12	
-genus_species	is	Campylobacter coli	ERY	S	AZM, CLR	S	Campylobacter coli	Breakpoints	12	
-genus_species	is	Campylobacter coli	ERY	I	AZM, CLR	I	Campylobacter coli	Breakpoints	12	
-genus_species	is	Campylobacter coli	ERY	R	AZM, CLR	R	Campylobacter coli	Breakpoints	12	
-genus_species	is	Campylobacter coli	TCY	S	DOX	S	Campylobacter coli	Breakpoints	12	
-genus_species	is	Campylobacter coli	TCY	I	DOX	I	Campylobacter coli	Breakpoints	12	
-genus_species	is	Campylobacter coli	TCY	R	DOX	R	Campylobacter coli	Breakpoints	12	
-genus_species	is	Campylobacter jejuni	ERY	S	AZM, CLR	S	Campylobacter jejuni	Breakpoints	12	
-genus_species	is	Campylobacter jejuni	ERY	I	AZM, CLR	I	Campylobacter jejuni	Breakpoints	12	
-genus_species	is	Campylobacter jejuni	ERY	R	AZM, CLR	R	Campylobacter jejuni	Breakpoints	12	
-genus_species	is	Campylobacter jejuni	TCY	S	DOX	S	Campylobacter jejuni	Breakpoints	12	
-genus_species	is	Campylobacter jejuni	TCY	I	DOX	I	Campylobacter jejuni	Breakpoints	12	
-genus_species	is	Campylobacter jejuni	TCY	R	DOX	R	Campylobacter jejuni	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	AMP	S	AMX	S	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	AMP	I	AMX	I	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	AMP	R	AMX	R	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	CIP	S	LVX	S	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	CIP	I	LVX	I	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus sanguinicola	CIP	R	LVX	R	Aerococcus urinae	Breakpoints	12	
-genus_species	is	Aerococcus urinae	AMP	S	AMX	S	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus urinae	AMP	I	AMX	I	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus urinae	AMP	R	AMX	R	Aerococcus sanguinicola	Breakpoints	12	
-genus_species	is	Aerococcus urinae	NOR	S	fluoroquinolones	S	Aerococcus urinae	Breakpoints	12	
-genus_species	is	Aerococcus urinae	NOR	I	fluoroquinolones	I	Aerococcus urinae	Breakpoints	12	
-genus_species	is	Aerococcus urinae	NOR	R	fluoroquinolones	R	Aerococcus urinae	Breakpoints	12	
-genus_species	is	Aerococcus urinae	CIP	S	LVX	S	Aerococcus urinae	Breakpoints	12	
-genus_species	is	Aerococcus urinae	CIP	I	LVX	I	Aerococcus urinae	Breakpoints	12	
-genus_species	is	Aerococcus urinae	CIP	R	LVX	R	Aerococcus urinae	Breakpoints	12	
+genus_species	is	Pasteurella multocida	NAL-S	S	CIP, LVX	S	Pasteurella multocida	Breakpoints	12	
+genus_species	is	Pasteurella multocida	NAL-S	R	CIP, LVX	R	Pasteurella multocida	Breakpoints	12	
+genus_species	is	Pasteurella multocida	TCY-S	S	DOX	S	Neisseria meningitidis	Breakpoints	12	
+genus_species	is	Pasteurella multocida	TCY-S	I	DOX	I	Neisseria meningitidis	Breakpoints	12	
+genus_species	is	Pasteurella multocida	TCY-S	R	DOX	R	Neisseria meningitidis	Breakpoints	12	
+genus_species	one_of	Campylobacter coli, Campylobacter jejuni	ERY	S	AZM, CLR	S	Campylobacter coli/jejuni	Breakpoints	12	
+genus_species	one_of	Campylobacter coli, Campylobacter jejuni	ERY	I	AZM, CLR	I	Campylobacter coli/jejuni	Breakpoints	12	
+genus_species	one_of	Campylobacter coli, Campylobacter jejuni	ERY	R	AZM, CLR	R	Campylobacter coli/jejuni	Breakpoints	12	
+genus_species	one_of	Campylobacter coli, Campylobacter jejuni	TCY	S	DOX	S	Campylobacter coli/jejuni	Breakpoints	12	
+genus_species	one_of	Campylobacter coli, Campylobacter jejuni	TCY	I	DOX	I	Campylobacter coli/jejuni	Breakpoints	12	
+genus_species	one_of	Campylobacter coli, Campylobacter jejuni	TCY	R	DOX	R	Campylobacter coli/jejuni	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	Aerococcus sanguinicola/urinae	Breakpoints	12	
+genus_species	is	Kingella kingae	BTL-S	R	PEN, AMP, AMX	R	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	PEN	S	AMP, AMX	S	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	PEN	I	AMP, AMX	I	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	PEN	R	AMP, AMX	R	Kingella kingae	Breakpoints	12	
@@ -337,19 +368,19 @@ genus_species	is	Kingella kingae	ERY	I	AZM, CLR	I	Kingella kingae	Breakpoints	12
 genus_species	is	Kingella kingae	ERY	R	AZM, CLR	R	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	TCY	S	DOX	S	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	TCY	R	DOX	R	Kingella kingae	Breakpoints	12	
-genus	is	Vibrio	PEF	S	CIP, LVX	S	Vibrio spp.	Breakpoints	12	
-genus	is	Vibrio	PEF	I	CIP, LVX	I	Vibrio spp.	Breakpoints	12	
-genus	is	Vibrio	PEF	R	CIP, LVX	R	Vibrio spp.	Breakpoints	12	
+genus	is	Vibrio	PEF-S	S	CIP, LVX	S	Vibrio spp.	Breakpoints	12	
+genus	is	Vibrio	PEF-S	I	CIP, LVX	I	Vibrio spp.	Breakpoints	12	
+genus	is	Vibrio	PEF-S	R	CIP, LVX	R	Vibrio spp.	Breakpoints	12	
 genus	is	Vibrio	ERY	S	AZM	S	Vibrio spp.	Breakpoints	12	
 genus	is	Vibrio	ERY	I	AZM	I	Vibrio spp.	Breakpoints	12	
 genus	is	Vibrio	ERY	R	AZM	R	Vibrio spp.	Breakpoints	12	
-genus	is	Vibrio	TCY	S	DOX	S	Vibrio spp.	Breakpoints	12	
-genus	is	Vibrio	TCY	I	DOX	I	Vibrio spp.	Breakpoints	12	
-genus	is	Vibrio	TCY	R	DOX	R	Vibrio spp.	Breakpoints	12	
-genus	is	Bacillus	NOR	S	CIP, LVX	S	Bacillus	Breakpoints	12	
-genus	is	Bacillus	NOR	R	CIP, LVX	R	Bacillus	Breakpoints	12	
-genus_species	is	Burkholderia pseudomallei	TCY	S	DOX	I	Burkholderia pseudomallei	Breakpoints	12	
-genus_species	is	Burkholderia pseudomallei	TCY	R	DOX	R	Burkholderia pseudomallei	Breakpoints	12	
+genus	is	Vibrio	TCY-S	S	DOX	S	Vibrio spp.	Breakpoints	12	
+genus	is	Vibrio	TCY-S	I	DOX	I	Vibrio spp.	Breakpoints	12	
+genus	is	Vibrio	TCY-S	R	DOX	R	Vibrio spp.	Breakpoints	12	
+genus	is	Bacillus	NOR-S	S	CIP, LVX	I	Bacillus	Breakpoints	12	
+genus	is	Bacillus	NOR-S	R	CIP, LVX	R	Bacillus	Breakpoints	12	
+genus_species	is	Burkholderia pseudomallei	TCY-S	S	DOX	I	Burkholderia pseudomallei	Breakpoints	12	
+genus_species	is	Burkholderia pseudomallei	TCY-S	R	DOX	R	Burkholderia pseudomallei	Breakpoints	12	
 order	is	Enterobacterales			PEN, glycopeptides_except_lipo, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules	3.1	
 fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules	3.1	
 fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules	3.1	
@@ -498,9 +529,7 @@ fullname	like	^(Serratia|Providencia|Morganella morganii)			TGC	R	Expert Rules o
 genus	is	Salmonella			cephalosporins_2nd	R	Expert Rules on Salmonella	Expert Rules	3.2	
 genus	is	Salmonella			aminoglycosides	R	Expert Rules on Salmonella	Expert Rules	3.2	
 genus	is	Salmonella	PEF	R	CIP	R	Expert Rules on Salmonella	Expert Rules	3.2	
-genus_species	is	Staphylococcus aureus	FOX1	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	is	Staphylococcus aureus	FOX	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.2	
-genus_species	is	Staphylococcus aureus	FOX1	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	is	Staphylococcus aureus	FOX	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	one_of	Staphylococcus aureus, Staphylococcus lugdunensis	PEN	R	AMP, AMX, AZL, BAM, CRB, CRN, EPC, HET, MEC, MEZ, MTM, PIP, PME, PVM, SBC, TAL, TEM, TIC	R	Expert Rules on Staphylococcus	Expert Rules	3.2	all penicillins without beta-lactamse inhibitor
 genus	is	Staphylococcus	ERY, CLI	S	macrolides, lincosamides	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
@@ -618,9 +647,7 @@ fullname	like	^(Serratia|Providencia|Morganella morganii)			TGC	R	Expert Rules o
 genus	is	Salmonella			cephalosporins_2nd	R	Expert Rules on Salmonella	Expert Rules	3.3	
 genus	is	Salmonella			aminoglycosides	R	Expert Rules on Salmonella	Expert Rules	3.3	
 genus	is	Salmonella	PEF	R	CIP	R	Expert Rules on Salmonella	Expert Rules	3.3	
-genus_species	is	Staphylococcus aureus	FOX1	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
 genus_species	is	Staphylococcus aureus	FOX	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
-genus_species	is	Staphylococcus aureus	FOX1	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
 genus_species	is	Staphylococcus aureus	FOX	S	betalactams_with_inhibitor	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
 genus_species	one_of	Staphylococcus aureus, Staphylococcus lugdunensis	PEN	R	AMP, AMX, AZL, BAM, CRB, CRN, EPC, HET, MEC, MEZ, MTM, PIP, PME, PVM, SBC, TAL, TEM, TIC	R	Expert Rules on Staphylococcus	Expert Rules	3.3	all penicillins without beta-lactamse inhibitor
 genus	is	Staphylococcus	ERY, CLI	S	macrolides, lincosamides	S	Expert Rules on Staphylococcus	Expert Rules	3.3	

@@ -4,9 +4,9 @@
 \name{antimicrobials}
 \alias{antimicrobials}
 \alias{antivirals}
-\title{Data Sets with 608 Antimicrobial Drugs}
+\title{Data Sets with 614 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antimicrobials} data set: a \link[tibble:tibble]{tibble} with 488 observations and 14 variables:}{
+\subsection{For the \link{antimicrobials} data set: a \link[tibble:tibble]{tibble} with 494 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr antimcrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{\strong{This is a unique identifier.}}
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}

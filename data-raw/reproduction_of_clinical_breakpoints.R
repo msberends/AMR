@@ -222,7 +222,7 @@ unknown <- breakpoints %>%
 breakpoints %>% 
   filter(code %in% unknown) %>% 
   count(GUIDELINES, YEAR, ORGANISM_CODE, BREAKPOINT_TYPE, sort = TRUE)
-# 2024-06-14: these codes are currently: clu, kma, fso, tyi. No clue (are not in MO list of WHONET), and they are only ECOFFs, so remove them:
+# 2025-03-11: these codes are currently: clu, kma, fso, tyi. No clue (are not in MO list of WHONET), and they are only ECOFFs, so remove them:
 breakpoints <- breakpoints %>% 
   filter(!is.na(mo))
 
@@ -235,7 +235,7 @@ breakpoints %>%
   filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) %>%
   pull(WHONET_ABX_CODE) %>%
   unique()
-# they are at the moment all old codes that have the right replacements in `antimicrobials`, so we can use as.ab()
+# they are at the moment all old codes ("CFC", "ROX", "FIX") that have the right replacements in `antimicrobials`, so we can use as.ab()
 
 
 ## Build new breakpoints table ----
@@ -290,25 +290,36 @@ breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.d
 # regarding animal breakpoints, CLSI has adults and foals for horses, but only for amikacin - only keep adult horses
 breakpoints_new %>% 
   filter(host %like% "foal") %>%
-  View()
+  count(guideline, host)
 breakpoints_new <- breakpoints_new %>% 
   filter(host %unlike% "foal") %>% 
   mutate(host = ifelse(host %like% "horse", "horse", host))
 
 # FIXES FOR WHONET ERRORS ----
+m <- unique(as.double(as.mic(levels(as.mic(1)))))
 
 # WHONET has no >1024 but instead uses 1025, 513, etc, so as.mic() cannot be used to clean.
 # instead, clean based on MIC factor levels
-m <- unique(as.double(as.mic(levels(as.mic(1)))))
+breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- m[which(m == 128) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- m[which(m == 256) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
+
+# a lot of R breakpoints are missing, though none of the S breakpoints are missing:
+anyNA(breakpoints_new$breakpoint_S)
+
+breakpoints_new %>% 
+  filter(is.na(breakpoint_R)) %>% 
+  count(guideline, host) |>
+  pivot_wider(names_from = host,
+              values_from = n,
+              values_fill = list(n = 0)) |>
+  View()
+
 breakpoints_new[which(breakpoints_new$method == "MIC" &
-  is.na(breakpoints_new$breakpoint_S)), "breakpoint_S"] <- min(m)
-breakpoints_new[which(breakpoints_new$method == "MIC" &
-  is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- max(m)
+                        is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- max(m)
 # raise these one higher valid MIC factor level:
-breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- 128
-breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- 256
-breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- 512
-breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- 1024
+
 
 # fix streptococci in WHONET table of EUCAST: Strep A, B, C and G must only include these groups and not all streptococci:
 breakpoints_new$mo[breakpoints_new$mo == "B_STRPT" & breakpoints_new$ref_tbl %like% "^strep.* a.* b.*c.*g"] <- as.mo("B_STRPT_ABCG")
