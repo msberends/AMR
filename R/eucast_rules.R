@@ -642,7 +642,7 @@ eucast_rules <- function(x,
           add_fn = font_red
         )
       }
-      cols_ab <- c(cols_ab, setNames(unname(cols_ab[names(cols_ab) == ab]), ab_s))
+      cols_ab <- c(cols_ab, stats::setNames(unname(cols_ab[names(cols_ab) == ab]), ab_s))
     }
   }
 

@@ -114,7 +114,7 @@
 #'   options(AMR_breakpoint_type = "animal")
 #' ```
 #'
-####### TODO When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
+###### TODO When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
 #'
 #' ### After Interpretation
 #'

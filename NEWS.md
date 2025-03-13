@@ -1,4 +1,4 @@
-# AMR 2.1.1.9196
+# AMR 2.1.1.9197
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -12,7 +12,6 @@ This package now supports not only tools for AMR data analysis in clinical setti
 ## New
 * **One Health implementation**
   * Function `as.sir()` now has extensive support for veterinary breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
-  * The CLSI VET09 guideline has been implemented to address cases where veterinary breakpoints are missing (only applies when `guideline` is set to CLSI)
   * The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://msberends.github.io/AMR/articles/datasets.html).
   * The (new) `antimicrobials` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
   * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
