@@ -5088,18 +5088,15 @@
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"TCY"	"C. jejuni, C. coli"		2	2	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CMPYL_JEJN"	2	"TLT"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"CLI"	"ECOFF"		16	16	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"ERY"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TCY"	"ECOFF"		0.25	0.25	FALSE	FALSE
-"EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_CRNBC_SKZK"	2	"TOB"	"ECOFF"		2	2	FALSE	FALSE
@@ -7265,18 +7262,15 @@
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"TCY"	"Campylobacter jejuni and coli"		2	2	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CMPYL_JEJN"	2	"TLT"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"CLI"	"ECOFF"		16	16	FALSE	FALSE
-"EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"ERY"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
-"EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
-"EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
-"EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TCY"	"ECOFF"		0.25	0.25	FALSE	FALSE
-"EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"ECOFF"		2	2	FALSE	FALSE
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_CRNBC_SKZK"	2	"TOB"	"ECOFF"		2	2	FALSE	FALSE
@@ -9272,12 +9266,12 @@
 "EUCAST 2019"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter jejuni and coli"		8	8	FALSE	FALSE
 "EUCAST 2019"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2019"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"		4	4	FALSE	FALSE
-"EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
-"EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
-"EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2019"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2019"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2019"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
-"EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
-"EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2019"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2019"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2019"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2019"	"human"	"human"	"DISK"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."	"5 mcg"	25	25	FALSE	FALSE
 "EUCAST 2019"	"human"	"human"	"MIC"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."		1	1	FALSE	FALSE
@@ -10104,12 +10098,12 @@
 "EUCAST 2018"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter jejuni and coli"		8	8	FALSE	FALSE
 "EUCAST 2018"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2018"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"		4	4	FALSE	FALSE
-"EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
-"EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
-"EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2018"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2018"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2018"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
-"EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
-"EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2018"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2018"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2018"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2018"	"human"	"human"	"DISK"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."	"5 mcg"	25	25	FALSE	FALSE
 "EUCAST 2018"	"human"	"human"	"MIC"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."		1	1	FALSE	FALSE
@@ -10907,12 +10901,12 @@
 "EUCAST 2017"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter jejuni and coli"		8	8	FALSE	FALSE
 "EUCAST 2017"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2017"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"		4	4	FALSE	FALSE
-"EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
-"EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
-"EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2017"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2017"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2017"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
-"EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
-"EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2017"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2017"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2017"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2017"	"human"	"human"	"DISK"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."	"5 mcg"	25	25	FALSE	FALSE
 "EUCAST 2017"	"human"	"human"	"MIC"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."		1	1	FALSE	FALSE
@@ -11697,12 +11691,12 @@
 "EUCAST 2016"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter jejuni and coli"		8	8	FALSE	FALSE
 "EUCAST 2016"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2016"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"		4	4	FALSE	FALSE
-"EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
-"EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
-"EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2016"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2016"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2016"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
-"EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
-"EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2016"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2016"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2016"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2016"	"human"	"human"	"DISK"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."	"5 mcg"	25	25	FALSE	FALSE
 "EUCAST 2016"	"human"	"human"	"MIC"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."		1	1	FALSE	FALSE
@@ -12439,12 +12433,12 @@
 "EUCAST 2015"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter jejuni and coli"		8	8	FALSE	FALSE
 "EUCAST 2015"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2015"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"		4	4	FALSE	FALSE
-"EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
-"EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
-"EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2015"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2015"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2015"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
-"EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
-"EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2015"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2015"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2015"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2015"	"human"	"human"	"DISK"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."	"5 mcg"	25	25	FALSE	FALSE
 "EUCAST 2015"	"human"	"human"	"MIC"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."		1	1	FALSE	FALSE
@@ -13157,12 +13151,12 @@
 "EUCAST 2014"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter jejuni and coli"		8	8	FALSE	FALSE
 "EUCAST 2014"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2014"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter jejuni and coli"		4	4	FALSE	FALSE
-"EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C. difficile"		4		FALSE	FALSE
-"EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C. difficile"		2		FALSE	FALSE
-"EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C. difficile"		4		FALSE	FALSE
+"EUCAST 2014"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2014"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2014"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C. difficile"		2	2	FALSE	FALSE
-"EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C. difficile"		0.004		FALSE	FALSE
-"EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C. difficile"		0.25		FALSE	FALSE
+"EUCAST 2014"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2014"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2014"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C. difficile"		2	2	FALSE	FALSE
 "EUCAST 2014"	"human"	"human"	"DISK"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."	"5 mcg"	25	25	FALSE	FALSE
 "EUCAST 2014"	"human"	"human"	"MIC"		"B_CRYNB"	3	"CIP"	"Corynebacterium spp."		1	1	FALSE	FALSE
@@ -13871,12 +13865,12 @@
 "EUCAST 2013"	"human"	"human"	"MIC"		"B_CMPYL_COLI"	2	"ERY"	"Campylobacter"		8	8	FALSE	FALSE
 "EUCAST 2013"	"human"	"human"	"DISK"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter"	"15 mcg"	20	20	FALSE	FALSE
 "EUCAST 2013"	"human"	"human"	"MIC"		"B_CMPYL_JEJN"	2	"ERY"	"Campylobacter"		4	4	FALSE	FALSE
-"EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"C.difficile"		4		FALSE	FALSE
-"EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"C.difficile"		2		FALSE	FALSE
-"EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"C.difficile"		4		FALSE	FALSE
+"EUCAST 2013"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2013"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2013"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"C.difficile"		2	2	FALSE	FALSE
-"EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"C.difficile"		0.004		FALSE	FALSE
-"EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"C.difficile"		0.25		FALSE	FALSE
+"EUCAST 2013"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2013"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2013"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"C.difficile"		2	2	FALSE	FALSE
 "EUCAST 2013"	"human"	"human"	"MIC"		"B_ENTRC"	3	"AMC"	"Enterococcus"		4	8	FALSE	FALSE
 "EUCAST 2013"	"human"	"human"	"DISK"		"B_ENTRC"	3	"AMP"	"Enterococcus"	"2 mcg"	10	8	FALSE	FALSE
@@ -14559,12 +14553,12 @@
 "EUCAST 2012"	"human"	"human"	"MIC"		"B_ANAER-POS"	6	"TIC"	"Unknown"		8	16	FALSE	FALSE
 "EUCAST 2012"	"human"	"human"	"MIC"		"B_ANAER-POS"	6	"TZP"	"Unknown"		8	16	FALSE	FALSE
 "EUCAST 2012"	"human"	"human"	"MIC"		"B_ANAER-POS"	6	"VAN"	"Unknown"		2	2	FALSE	FALSE
-"EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"Unknown"		4		FALSE	FALSE
-"EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"Unknown"		2		FALSE	FALSE
-"EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"Unknown"		4		FALSE	FALSE
+"EUCAST 2012"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"DAP"	"ECOFF"		4	4	FALSE	FALSE
+"EUCAST 2012"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"FUS"	"ECOFF"		2	2	FALSE	FALSE
+"EUCAST 2012"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"MFX"	"ECOFF"		4	4	FALSE	FALSE
 "EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"MTR"	"Unknown"		2	2	FALSE	FALSE
-"EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"Unknown"		0.004		FALSE	FALSE
-"EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"Unknown"		0.25		FALSE	FALSE
+"EUCAST 2012"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"RIF"	"ECOFF"		0.004	0.004	FALSE	FALSE
+"EUCAST 2012"	"ECOFF"	"ECOFF"	"MIC"		"B_CRDDS_DFFC"	2	"TGC"	"ECOFF"		0.25	0.25	FALSE	FALSE
 "EUCAST 2012"	"human"	"human"	"MIC"		"B_CRDDS_DFFC"	2	"VAN"	"Unknown"		2	2	FALSE	FALSE
 "EUCAST 2012"	"human"	"human"	"MIC"		"B_ENTRC"	3	"AMC"	"Unknown"		4	8	FALSE	FALSE
 "EUCAST 2012"	"human"	"human"	"DISK"		"B_ENTRC"	3	"AMP"	"Unknown"	"2 mcg"	10	8	FALSE	FALSE

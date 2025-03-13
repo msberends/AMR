@@ -304,12 +304,13 @@ eucast_rules <- function(x,
       "AMX",
       "CIP",
       "ERY",
-      "FOX1",
+      "FOX-S",
       "GEN",
       "MFX",
-      "NAL",
-      "NOR",
-      "PEN",
+      "NAL-S",
+      "NOR-S",
+      "OXA-S",
+      "PEN-S",
       "PIP",
       "TCY",
       "TIC",
@@ -329,10 +330,6 @@ eucast_rules <- function(x,
       message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many EUCAST rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
-  }
-  if (!"FOX" %in% names(cols_ab) && "FOX1" %in% names(cols_ab)) {
-    # cefoxitin column is missing, but cefoxitin screening is available
-    cols_ab <- c(cols_ab, c(FOX = unname(cols_ab[names(cols_ab) == "FOX1"])))
   }
 
   # data preparation ----
@@ -629,6 +626,24 @@ eucast_rules <- function(x,
       ampc_cephalosporin_resistance <- "R"
     }
     eucast_rules_df[which(eucast_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
+  }
+
+  # sometimes, the screenings are missing but the names are actually available
+  # we only hints on remaining rows in `eucast_rules_df`
+  screening_abx <- c("FOX", "BTL", "CLI", "NAL", "NOR", "OXA", "PEF", "PEN", "TCY")
+  screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(EUCAST_RULES_DF$and_these_antibiotics[!is.na(EUCAST_RULES_DF$and_these_antibiotics)], ", *")))]
+  for (ab in screening_abx) {
+    ab_s <- paste0(ab, "-S")
+    if (ab %in% names(cols_ab) && !ab_s %in% names(cols_ab)) {
+      if (isTRUE(info)) {
+        message_("Using column '", cols_ab[names(cols_ab) == ab],
+          "' as ", ab_name(ab_s, language = NULL, tolower = TRUE),
+          " since a column '", ab_s, "' is missing but required for the chosen rules",
+          add_fn = font_red
+        )
+      }
+      cols_ab <- c(cols_ab, setNames(unname(cols_ab[names(cols_ab) == ab]), ab_s))
+    }
   }
 
   ## Go over all rules and apply them ----

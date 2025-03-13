@@ -343,6 +343,14 @@ breakpoints_new$mo[breakpoints_new$mo == "B_STPHY" & breakpoints_new$ab == "NIT"
 # WHONET sets the 2023 breakpoints for SAM to MIC of 16/32 for Enterobacterales, should be MIC 8/32 like AMC (see issue #123 on github.com/msberends/AMR)
 # UPDATE 2024-02-22: fixed now
 
+# There's a problem with C. diff in EUCAST where breakpoint_R is missing - they are listed as normal human breakpoints but are ECOFF
+rows <- which(breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$mo == "B_CRDDS_DFFC" & is.na(breakpoints_new$breakpoint_R) & !is.na(breakpoints_new$breakpoint_S))
+breakpoints_new$type[rows] <- "ECOFF"
+breakpoints_new$host[rows] <- "ECOFF"
+breakpoints_new$ref_tbl[rows] <- "ECOFF"
+breakpoints_new$breakpoint_R[rows] <- breakpoints_new$breakpoint_S[rows]
+breakpoints_new <- distinct(breakpoints_new, .keep_all = TRUE)
+
 # determine rank again now that some changes were made on taxonomic level (genus -> species)
 breakpoints_new <- breakpoints_new %>% 
   mutate(rank_index = case_when(
