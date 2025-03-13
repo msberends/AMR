@@ -1,4 +1,4 @@
-# AMR 2.1.1.9194
+# AMR 2.1.1.9195
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -62,8 +62,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The selectors `lincosamides()` and `macrolides()` do not overlap anymore - each antibiotic is now classified as either of these and not both
   * Fixed selector `fluoroquinolones()`, which now really only selects second-generation quinolones and up (first-generation quinolones do not contain a fluorine group)
 * `antimicrobials` data set
-  * Added agents used for screening, with an ID all ending with `-S`: benzylpenicillin screening test (`PEN-S`), clindamycin inducible screening test (`CLI-S`), nalidixic acid screening test (`NAL-S`), norfloxacin screening test (`NOR-S`), oxacillin screening test (`OXA-S`), pefloxacin screening test (`PEF-S`), and tetracycline screening test (`TCY-S`). The ID of cefoxitin screening was renamed from `FOX1` to `FOX-S`, while the old code remains to work.
-  * Since clindamycin is a lincosamide, the antimicrobial selector `lincosamides()` now contains the argument `only_treatable = TRUE` (similar to other antimicrobial selectors that contain non-treatable drugs)
+  * Added agents used for screening, with an ID all ending with `-S`: benzylpenicillin screening test (`PEN-S`), beta-lactamase screening test (`BTL-S`), clindamycin inducible screening test (`CLI-S`), nalidixic acid screening test (`NAL-S`), norfloxacin screening test (`NOR-S`), oxacillin screening test (`OXA-S`), pefloxacin screening test (`PEF-S`), and tetracycline screening test (`TCY-S`). The ID of cefoxitin screening was renamed from `FOX1` to `FOX-S`, while the old code remains to work.
+  * For this reason, the antimicrobial selectors `lincosamides()`, `isoxazolylpenicillins()`, `quinolones()`, `fluoroquinolones()`, `tetracyclines()` now contain the argument `only_treatable = TRUE` (similar to other antimicrobial selectors that contain non-treatable drugs)
   * Added amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
   * Added efflux (`EFF`), to allow mapping to AMRFinderPlus
   * Added tigemonam (`TNM`), a monobactam

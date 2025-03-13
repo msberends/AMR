@@ -338,10 +338,10 @@ cephalosporins_5th <- function(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 #' @rdname antimicrobial_selectors
 #' @export
-fluoroquinolones <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+fluoroquinolones <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)
-  amr_select_exec("fluoroquinolones", only_sir_columns = only_sir_columns, return_all = return_all)
+  amr_select_exec("fluoroquinolones", only_sir_columns = only_sir_columns, only_treatable = only_treatable, return_all = return_all)
 }
 
 #' @rdname antimicrobial_selectors
@@ -354,10 +354,10 @@ glycopeptides <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
 
 #' @rdname antimicrobial_selectors
 #' @export
-isoxazolylpenicillins <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+isoxazolylpenicillins <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)
-  amr_select_exec("isoxazolylpenicillins", only_sir_columns = only_sir_columns, return_all = return_all)
+  amr_select_exec("isoxazolylpenicillins", only_sir_columns = only_sir_columns, only_treatable = only_treatable, return_all = return_all)
 }
 
 #' @rdname antimicrobial_selectors
@@ -436,10 +436,10 @@ polymyxins <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_a
 
 #' @rdname antimicrobial_selectors
 #' @export
-quinolones <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+quinolones <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)
-  amr_select_exec("quinolones", only_sir_columns = only_sir_columns, return_all = return_all)
+  amr_select_exec("quinolones", only_sir_columns = only_sir_columns, only_treatable = only_treatable, return_all = return_all)
 }
 
 #' @rdname antimicrobial_selectors
@@ -460,10 +460,10 @@ streptogramins <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
 
 #' @rdname antimicrobial_selectors
 #' @export
-tetracyclines <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+tetracyclines <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)
-  amr_select_exec("tetracyclines", only_sir_columns = only_sir_columns, return_all = return_all)
+  amr_select_exec("tetracyclines", only_sir_columns = only_sir_columns, only_treatable = only_treatable, return_all = return_all)
 }
 
 #' @rdname antimicrobial_selectors
@@ -676,12 +676,12 @@ amr_select_exec <- function(function_name,
   }
 
   # untreatable drugs
+  untreatable <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam)")]
   if (!is.null(vars_df) && only_treatable == TRUE) {
-    untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam)"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "amr_class", "untreatable")) {
         warning_(
-          "in `", function_name, "()`: some drugs were ignored since they cannot be used for treating patients: ",
+          "in `", function_name, "()`: some drugs were ignored since they cannot be used for treatment: ",
           vector_and(
             ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
               language = NULL,
@@ -749,6 +749,26 @@ amr_select_exec <- function(function_name,
   if (is.null(vars_df)) {
     # no data found, no antimicrobials, so no input. Happens if users run e.g. `aminoglycosides()` as a separate command.
     # print.ab will cover the additional printing text
+    if (only_treatable == TRUE) {
+      if (message_not_thrown_before(function_name, "amr_class", "untreatable")) {
+        message_(
+          "in `", function_name, "()`: ",
+          vector_and(
+            paste0(
+              ab_name(abx[abx %in% untreatable],
+                language = NULL,
+                tolower = TRUE
+              ),
+              " (`", abx[abx %in% untreatable], "`)"
+            ),
+            quotes = FALSE,
+            sort = TRUE,
+            initial_captital = TRUE
+          ), ifelse(length(abx[abx %in% untreatable]) == 1, " is ", " are "), "not included since `only_treatable = TRUE`."
+        )
+      }
+      abx <- abx[!abx %in% untreatable]
+    }
     return(structure(sort(abx), amr_selector = function_name))
   }
 

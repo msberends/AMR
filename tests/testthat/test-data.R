@@ -49,6 +49,15 @@ test_that("data works", {
   expect_false(anyNA(microorganisms.codes$mo))
   expect_true(all(dosage$ab %in% AMR::antimicrobials$ab))
   expect_true(all(dosage$name %in% AMR::antimicrobials$name))
+  eucast_abx <- AMR:::EUCAST_RULES_DF$and_these_antibiotics
+  eucast_abx <- unique(unlist(strsplit(eucast_abx[!is.na(eucast_abx)], ", +")))
+  expect_true(all(eucast_abx %in% AMR::antimicrobials$ab),
+    info = paste0(
+      "Missing in `antimicrobials` data set: ",
+      toString(eucast_abx[which(!eucast_abx %in% AMR::antimicrobials$ab)])
+    )
+  )
+
   # check valid disks/MICs
   expect_false(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE])))
   expect_true(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE])))

@@ -2099,6 +2099,12 @@ taxonomy$mo[duplicated(taxonomy$mo)]
 any(duplicated(taxonomy$fullname))
 taxonomy$fullname[duplicated(taxonomy$fullname)]
 
+
+# Set unknown ranks -------------------------------------------------------------------------------
+
+taxonomy$rank[which(taxonomy$fullname %like% "unknown")] <- "(unknown rank)"
+
+
 # Some final checks -------------------------------------------------------------------------------
 
 fix_old_mos <- function(dataset) {

@@ -790,6 +790,21 @@ antimicrobials[which(antimicrobials$ab == "CLI-S"), "abbreviations"][[1]] <- lis
 antimicrobials <- antimicrobials |>
   bind_rows(
     antimicrobials |>
+      filter(ab == "EFF") |>
+      mutate(ab = "BTL-S",
+             name = paste("Beta-lactamase", "screening test"),
+             cid = NA_real_,
+             atc = list(character(0)),
+             atc_group1 = NA_character_,
+             atc_group2 = NA_character_,
+             abbreviations = list(c("beta-lactamase", "betalactamase", "bl screen", "blt screen")),
+             synonyms = list(character(0)),
+             oral_ddd = NA_real_,
+             oral_units = NA_character_,
+             iv_ddd = NA_real_,
+             iv_units = NA_character_,
+             loinc = list(character(0))),
+    antimicrobials |>
       filter(ab == "PEN") |>
       mutate(ab = "PEN-S",
              name = paste(name, "screening test"),

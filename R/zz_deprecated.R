@@ -61,7 +61,7 @@ ab_selector <- function(...) {
 deprecation_warning <- function(old = NULL, new = NULL, fn = NULL, extra_msg = NULL, is_function = FALSE, is_dataset = FALSE, is_argument = FALSE) {
   if (is.null(old)) {
     warning_(extra_msg)
-  } else {
+  } else if (message_not_thrown_before("deprecation", old, new, entire_session = TRUE)) {
     env <- paste0("deprecated_", old)
     if (!env %in% names(AMR_env)) {
       AMR_env[[paste0("deprecated_", old)]] <- 1

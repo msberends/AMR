@@ -70,11 +70,13 @@ cephalosporins_4th(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 cephalosporins_5th(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-fluoroquinolones(only_sir_columns = FALSE, return_all = TRUE, ...)
+fluoroquinolones(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 glycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-isoxazolylpenicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
+isoxazolylpenicillins(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 lincosamides(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
@@ -96,13 +98,15 @@ phenicols(only_sir_columns = FALSE, return_all = TRUE, ...)
 polymyxins(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
-quinolones(only_sir_columns = FALSE, return_all = TRUE, ...)
+quinolones(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 rifamycins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 streptogramins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-tetracyclines(only_sir_columns = FALSE, return_all = TRUE, ...)
+tetracyclines(only_sir_columns = FALSE, only_treatable = TRUE,
+  return_all = TRUE, ...)
 
 trimethoprims(only_sir_columns = FALSE, return_all = TRUE, ...)
 

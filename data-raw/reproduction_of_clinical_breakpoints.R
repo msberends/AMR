@@ -346,14 +346,14 @@ breakpoints_new$mo[breakpoints_new$mo == "B_STPHY" & breakpoints_new$ab == "NIT"
 # determine rank again now that some changes were made on taxonomic level (genus -> species)
 breakpoints_new <- breakpoints_new %>% 
   mutate(rank_index = case_when(
-    is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
     mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
     mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
     mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
     mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
     mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
     mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
-    TRUE ~ 6
+    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
+    TRUE ~ 7
   ))
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:

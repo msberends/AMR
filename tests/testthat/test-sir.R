@@ -124,6 +124,9 @@ test_that("sir works", {
 
   # Human -------------------------------------------------------------------
 
+  # these are used in the script
+  expect_true(all(c("B_GRAMN", "B_GRAMP", "B_ANAER-NEG", "B_ANAER-POS", "B_ANAER") %in% AMR::microorganisms$mo))
+
   mics <- as.mic(2^c(-4:6)) # 0.0625 to 64 in factors of 2
   expect_identical(
     as.character(as.sir(mics,

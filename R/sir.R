@@ -1270,10 +1270,13 @@ as_sir_method <- function(method_short,
     }
   }
 
+  mo_grams <- suppressWarnings(suppressMessages(mo_gramstain(df_unique$mo, language = NULL, keep_synonyms = FALSE)))
+
   # run the rules (df_unique is a row combination per mo/ab/uti/host) ----
   for (i in seq_len(nrow(df_unique))) {
     p$tick()
     mo_current <- df_unique[i, "mo", drop = TRUE]
+    mo_gram_current <- mo_grams[i]
     ab_current <- df_unique[i, "ab", drop = TRUE]
     host_current <- df_unique[i, "host", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
@@ -1300,11 +1303,24 @@ as_sir_method <- function(method_short,
     mo_current_class <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$class[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
     mo_current_rank <- AMR_env$MO_lookup$rank[match(mo_current, AMR_env$MO_lookup$mo)]
     mo_current_name <- AMR_env$MO_lookup$fullname[match(mo_current, AMR_env$MO_lookup$mo)]
+    mo_current_oxygen_tolerance <- AMR_env$MO_lookup$oxygen_tolerance[match(mo_current, AMR_env$MO_lookup$mo)]
     if (mo_current %in% AMR::microorganisms.groups$mo) {
       # get the species group (might be more than 1 entry)
       mo_current_species_group <- AMR::microorganisms.groups$mo_group[which(AMR::microorganisms.groups$mo == mo_current)]
     } else {
       mo_current_species_group <- NULL
+    }
+    mo_current_gram <- structure(character(0), class = c("mo", "character"))
+    if (identical(mo_gram_current, "Gram-negative")) {
+      mo_current_gram <- c(mo_current_gram, "B_GRAMN")
+      if (identical(mo_current_oxygen_tolerance, "anaerobe")) {
+        mo_current_gram <- c(mo_current_gram, "B_ANAER", "B_ANAER-NEG")
+      }
+    } else if (identical(mo_gram_current, "Gram-positive")) {
+      mo_current_gram <- c(mo_current_gram, "B_GRAMP")
+      if (identical(mo_current_oxygen_tolerance, "anaerobe")) {
+        mo_current_gram <- c(mo_current_gram, "B_ANAER", "B_ANAER-POS")
+      }
     }
     mo_current_other <- structure("UNKNOWN", class = c("mo", "character"))
     # formatted for notes
@@ -1325,6 +1341,7 @@ as_sir_method <- function(method_short,
         mo_current, mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
         mo_current_species_group,
+        mo_current_gram,
         mo_current_other
       ))
 

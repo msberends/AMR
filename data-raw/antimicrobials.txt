@@ -39,6 +39,7 @@
 "PEN"	5904	"Benzylpenicillin"	"Beta-lactams/penicillins"	"J01CE01,S01AA14"	"Combinations of antibacterials"	"Combinations of antibacterials"	"bepe,pen,peni,peni g,penicillin,penicillin g,pg"	"abbocillin,ayercillin,bencilpenicilina,benzopenicillin,benzylpenicilline,benzylpenicilling,benzylpenicillinum,bicillin,cillora,cilloral,cilopen,compocilling,cosmopen,dropcillin,freepenicilling,freepenicillinii,galofak,gelacillin,liquacillin,megacillin,pencilling,penicillin,penicilling,pentids,permapen,pfizerpen,pfizerpeng,pharmacillin,pradupen,specillineg,ursopen"			3.6	"g"	""
 "PEN-S"		"Benzylpenicillin screening test"	"Beta-lactams/penicillins"	"NA"			"pen screen"	""					""
 "BES"	10178705	"Besifloxacin"	"Fluoroquinolones"	"S01AE08"			""	"besivance"					"73606-6,73628-0,73651-2"
+"BTL-S"		"Beta-lactamase screening test"	"Other"	"NA"			"beta-lactamase,betalactamase,bl screen,blt screen"	""					""
 "BIA"	71339	"Biapenem"	"Carbapenems"	"J01DH05"			""	"biapenern,bipenem,omegacin"			1.2	"g"	"41665-1,41666-9,41667-7,41728-7"
 "BCZ"	65807	"Bicyclomycin"	"Other antibacterials"	"NA"			"bicozamycin"	"aizumycin,bacfeed,bacteron,bicozamicina,bicozamycin,bicozamycine,bicozamycinum"					""
 "BLM"	5360373	"Bleomycin"	"Glycopeptides"	"L01DC01"			""	"ble,bleo"					""
