@@ -3,14 +3,14 @@
 These breakpoints are currently implemented:
 For clinical microbiology: EUCAST 2011-2024 and CLSI 2011-2024;
 For veterinary microbiology: EUCAST 2021-2024 and CLSI 2019-2024;
-For ECOFFs (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.
+For ECOFFs (Epidemiological Cut-off Values): EUCAST 2012-2024 and CLSI 2022-2024.
 
 
 All breakpoints used for interpretation are available in our clinical_breakpoints data set."><meta property="og:description" content="Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. as.sir() transforms the input to a new class sir, which is an ordered factor containing the levels S, SDD, I, R, NI.
 These breakpoints are currently implemented:
 For clinical microbiology: EUCAST 2011-2024 and CLSI 2011-2024;
 For veterinary microbiology: EUCAST 2021-2024 and CLSI 2019-2024;
-For ECOFFs (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.
+For ECOFFs (Epidemiological Cut-off Values): EUCAST 2012-2024 and CLSI 2022-2024.
 
 
 All breakpoints used for interpretation are available in our clinical_breakpoints data set."><meta property="og:image" content="https://msberends.github.io/AMR/logo.svg"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script></head><body>
@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9195</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9196</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     <p>Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. <code>as.sir()</code> transforms the input to a new class <code>sir</code>, which is an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> containing the levels <code>S</code>, <code>SDD</code>, <code>I</code>, <code>R</code>, <code>NI</code>.</p>
 <p>These breakpoints are currently implemented:</p><ul><li><p>For <strong>clinical microbiology</strong>: EUCAST 2011-2024 and CLSI 2011-2024;</p></li>
 <li><p>For <strong>veterinary microbiology</strong>: EUCAST 2021-2024 and CLSI 2019-2024;</p></li>
-<li><p>For <strong>ECOFFs</strong> (Epidemiological Cut-off Values): EUCAST 2020-2024 and CLSI 2022-2024.</p></li>
+<li><p>For <strong>ECOFFs</strong> (Epidemiological Cut-off Values): EUCAST 2012-2024 and CLSI 2022-2024.</p></li>
 </ul><p>All breakpoints used for interpretation are available in our <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set.</p>
     </div>
 
@@ -125,7 +125,6 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     <p>For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:</p><ul><li><p><strong>CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data</strong>, 2011-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p></li>
 <li><p><strong>CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing</strong>, 2011-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m100/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m100/</a>.</p></li>
 <li><p><strong>CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals</strong>, 2019-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet01/" class="external-link">https://clsi.org/standards/products/veterinary-medicine/documents/vet01/</a>.</p></li>
-<li><p><strong>CLSI VET09: Understanding Susceptibility Test Data as a Component of Antimicrobial Stewardship in Veterinary Settings</strong>, 2019-2024, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet09/" class="external-link">https://clsi.org/standards/products/veterinary-medicine/documents/vet09/</a>.</p></li>
 <li><p><strong>EUCAST Breakpoint tables for interpretation of MICs and zone diameters</strong>, 2011-2024, <em>European Committee on Antimicrobial Susceptibility Testing</em> (EUCAST). <a href="https://www.eucast.org/clinical_breakpoints" class="external-link">https://www.eucast.org/clinical_breakpoints</a>.</p></li>
 <li><p><strong>WHONET</strong> as a source for machine-reading the clinical breakpoints (<a href="https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet">read more here</a>), 1989-2024, <em>WHO Collaborating Centre for Surveillance of Antimicrobial Resistance</em>. <a href="https://whonet.org/" class="external-link">https://whonet.org/</a>.</p></li>
 </ul></div>
@@ -258,7 +257,6 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <p>For veterinary guidelines, these might be the best options:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_breakpoint_type =</span> <span class="st">"animal"</span>)</span></code></pre><p></p></div>
-<p>When applying veterinary breakpoints (by setting <code>host</code> or by setting <code>breakpoint_type = "animal"</code>), the <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet09/" class="external-link">CLSI VET09 guideline</a> will be applied to cope with missing animal species-specific breakpoints.</p>
 </div>
 
 <div class="section">
@@ -273,7 +271,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <h3 id="machine-readable-clinical-breakpoints">Machine-Readable Clinical Breakpoints<a class="anchor" aria-label="anchor" href="#machine-readable-clinical-breakpoints"></a></h3>
 
 
-<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 34 382 rows and 14 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
+<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 34 376 rows and 14 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
 </div>
 
 <div class="section">
@@ -682,9 +680,15 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Please note that in the absence of specific veterinary breakpoints for</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  certain animal hosts, the CLSI guideline VET09 will be applied where</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  possible.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
@@ -696,24 +700,6 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Please note that in the absence of specific veterinary breakpoints for</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  certain animal hosts, the CLSI guideline VET09 will be applied where</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  possible.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Please note that in the absence of specific veterinary breakpoints for</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  certain animal hosts, the CLSI guideline VET09 will be applied where</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  possible.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">antibiotic</span><span style="color: #0000BB;">' (TESTAB, test Antibiotic), </span><span style="color: #0000BB; font-weight: bold;">CLSI</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
@@ -737,10 +723,6 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Please note that in the absence of specific veterinary breakpoints for</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  certain animal hosts, the CLSI guideline VET09 will be applied where</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  possible.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
@@ -817,16 +799,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 55 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given mo_given host_given ab   mo              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-13 <span style="color: #949494;">13:36:01</span>     4 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-13 <span style="color: #949494;">13:36:09</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-13 <span style="color: #949494;">13:36:10</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-03-13 <span style="color: #949494;">13:36:11</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-13 <span style="color: #949494;">13:36:12</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-13 <span style="color: #949494;">13:36:01</span>     3 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-13 <span style="color: #949494;">13:36:09</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-13 <span style="color: #949494;">13:36:10</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-13 <span style="color: #949494;">13:36:11</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-13 <span style="color: #949494;">13:36:12</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-13 <span style="color: #949494;">14:43:20</span>     4 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-13 <span style="color: #949494;">14:43:29</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-13 <span style="color: #949494;">14:43:29</span>     4 genta    Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-03-13 <span style="color: #949494;">14:43:31</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-13 <span style="color: #949494;">14:43:31</span>     4 genta    Escheri… cattle     GEN  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-13 <span style="color: #949494;">14:43:20</span>     3 AMX      B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-13 <span style="color: #949494;">14:43:29</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-13 <span style="color: #949494;">14:43:29</span>     3 tobra    Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBCTR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-13 <span style="color: #949494;">14:43:31</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-13 <span style="color: #949494;">14:43:31</span>     3 tobra    Escheri… horses     TOB  <span style="color: #949494;">B_</span>ESCHR<span style="color: #949494;">_</span>COLI    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 45 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;chr&gt;, outcome &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>

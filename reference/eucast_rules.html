@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9195</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9196</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -217,13 +217,13 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">eucast_rules()</span>: not all columns with antimicrobial results are of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'sir'. Transform them on beforehand, with e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(VAN:AMX)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(CXM:AMX)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is_sir_eligible, as.sir)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate(across(where(is_sir_eligible), as.sir))</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       mo VAN AMX COL CAZ CXM PEN FOX</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Staphylococcus aureus   -   S   R   R   -   S   S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Staphylococcus aureus   -   S   R   R   S   S   S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Enterococcus faecalis   -   -   R   R   R   S   R</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3       Escherichia coli   R   -   -   -   -   R   S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4  Klebsiella pneumoniae   R   R   -   -   -   R   S</span>
@@ -235,27 +235,27 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">eucast_rules()</span>: not all columns with antimicrobial results are of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'sir'. Transform them on beforehand, with e.g.:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(VAN:AMX)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(CXM:AMX)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is_sir_eligible, as.sir)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate(across(where(is_sir_eligible), as.sir))</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   row col           mo_fullname old new rule   rule_group</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 AMX Staphylococcus aureus   -   S       Breakpoints</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1 CAZ Staphylococcus aureus   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1 COL Staphylococcus aureus   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2 CAZ Enterococcus faecalis   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2 COL Enterococcus faecalis   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2 CXM Enterococcus faecalis   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1 CXM Staphylococcus aureus   -   S       Breakpoints</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1 CAZ Staphylococcus aureus   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1 COL Staphylococcus aureus   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2 CAZ Enterococcus faecalis   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2 COL Enterococcus faecalis   -   R      Expert Rules</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                 rule_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                          Staphylococcus</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Table 4: Intrinsic resistance in gram-positive bacteria</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                          Staphylococcus</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                 rule_source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           'EUCAST Clinical Breakpoint Tables' v12.0, 2022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           'EUCAST Clinical Breakpoint Tables' v12.0, 2022</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
