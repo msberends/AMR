@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9192</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9195</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,7 @@
 <li><p><code>AMR_guideline</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to set the default guideline for interpreting MIC values and disk diffusion diameters with <code><a href="as.sir.html">as.sir()</a></code>. Can be only the guideline name (e.g., <code>"CLSI"</code>) or the name with a year (e.g. <code>"CLSI 2019"</code>). The default to the latest implemented EUCAST guideline, currently <code>"EUCAST 2024"</code>. Supported guideline are currently EUCAST (2011-2024) and CLSI (2011-2024).</p></li>
 <li><p><code>AMR_ignore_pattern</code> <br> A <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> to ignore (i.e., make <code>NA</code>) any match given in <code><a href="as.mo.html">as.mo()</a></code> and all <code><a href="mo_property.html">mo_*</a></code> functions.</p></li>
 <li><p><code>AMR_include_PKPD</code> <br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>.</p></li>
+<li><p><code>AMR_substitute_missing_r_breakpoint</code> <br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate that missing R breakpoints must be substituted with <code>"R"</code> - the default is <code>FALSE</code>.</p></li>
 <li><p><code>AMR_include_screening</code> <br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate that clinical breakpoints for screening are allowed - the default is <code>FALSE</code>.</p></li>
 <li><p><code>AMR_keep_synonyms</code> <br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to use in <code><a href="as.mo.html">as.mo()</a></code> and all <code><a href="mo_property.html">mo_*</a></code> functions, to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>.</p></li>
 <li><p><code>AMR_locale</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to set the language for the <code>AMR</code> package, can be one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr), or Ukrainian (uk). The default is the current system language (if supported, English otherwise).</p></li>

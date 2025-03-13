@@ -21,7 +21,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9192</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9195</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 34 063 observations and 14 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 34 382 observations and 14 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
 <li><p><code>type</code><br> Breakpoint type, either "ECOFF", "animal", or "human"</p></li>
 <li><p><code>host</code><br> Host of infectious agent. This is mostly useful for veterinary breakpoints and is either "ECOFF", "aquatic", "cats", "cattle", "dogs", "horse", "human", "poultry", or "swine"</p></li>
 <li><p><code>method</code><br> Testing method, either "DISK" or "MIC"</p></li>
@@ -88,7 +88,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 <li><p><code>ref_tbl</code><br> Info about where the guideline rule can be found</p></li>
 <li><p><code>disk_dose</code><br> Dose of the used disk diffusion method</p></li>
 <li><p><code>breakpoint_S</code><br> Lowest MIC value or highest number of millimetres that leads to "S"</p></li>
-<li><p><code>breakpoint_R</code><br> Highest MIC value or lowest number of millimetres that leads to "R"</p></li>
+<li><p><code>breakpoint_R</code><br> Highest MIC value or lowest number of millimetres that leads to "R", can be <code>NA</code></p></li>
 <li><p><code>uti</code><br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> value (<code>TRUE</code>/<code>FALSE</code>) to indicate whether the rule applies to a urinary tract infection (UTI)</p></li>
 <li><p><code>is_SDD</code><br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> value (<code>TRUE</code>/<code>FALSE</code>) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 24 breakpoints.</p></li>
 </ul></div>
@@ -134,7 +134,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">clinical_breakpoints</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 34,063 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 34,382 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    guideline   type  host  method site    mo            rank_index ab   ref_tbl </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2024 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 MEM  A. xylo…</span>
@@ -147,7 +147,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2024 human human DISK   Uncomp… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2024 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2024 human human MIC    Uncomp… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 34,053 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 34,372 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: disk_dose &lt;chr&gt;, breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   uti &lt;lgl&gt;, is_SDD &lt;lgl&gt;</span></span>
 </code></pre></div>
