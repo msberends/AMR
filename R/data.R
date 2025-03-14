@@ -306,6 +306,8 @@
 #' ### Imported from WHONET
 #' Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
 #'
+#' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_clinical_breakpoints.R>.
+#'
 #' ### Response from CLSI and EUCAST
 #' The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this `AMR` package.
 #'

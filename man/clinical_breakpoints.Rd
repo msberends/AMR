@@ -49,6 +49,8 @@ The default is \code{"human"}, which can also be set with the package option \co
 \subsection{Imported from WHONET}{
 
 Clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}. The developers of WHONET and this \code{AMR} package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
+
+Our import and reproduction script can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_clinical_breakpoints.R}.
 }
 
 \subsection{Response from CLSI and EUCAST}{

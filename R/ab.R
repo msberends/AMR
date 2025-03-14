@@ -211,6 +211,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       next
     }
 
+    # screening, but written without the hyphen, e.g., FOXS instead of FOX-S
+    if (substr(x[i], 4, 4) == "S" && paste0(substr(x[i], 1, 3), "-S") %in% AMR_env$AB_lookup$ab) {
+      x_new[i] <- paste0(substr(x[i], 1, 3), "-S")
+      next
+    }
+
     if (fast_mode == FALSE && flag_multiple_results == TRUE && x[i] %like% "[ ]") {
       from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], translate_ab = FALSE)[[1]]),
         error = function(e) character(0)
@@ -305,7 +311,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
 
     # try if name ends with it
     found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]

@@ -1060,3 +1060,4 @@ for (i in 1:nrow(antimicrobials)) {
 
 usethis::use_data(antimicrobials, overwrite = TRUE, version = 2, compress = "xz")
 rm(antimicrobials)
+devtools::load_all(".")

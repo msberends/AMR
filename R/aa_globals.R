@@ -30,12 +30,18 @@
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and clinical_breakpoints
 # (sourcing "data-raw/_pre_commit_checks.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list(
-  # "13.0" = list(
-  #   version_txt = "v13.0",
-  #   year = 2023,
-  #   title = "'EUCAST Clinical Breakpoint Tables'",
-  #   url = "https://www.eucast.org/clinical_breakpoints/"
-  # ),
+  "14.0" = list(
+    version_txt = "v14.0",
+    year = 2024,
+    title = "'EUCAST Clinical Breakpoint Tables'",
+    url = "https://www.eucast.org/clinical_breakpoints/"
+  ),
+  "13.1" = list(
+    version_txt = "v13.1",
+    year = 2023,
+    title = "'EUCAST Clinical Breakpoint Tables'",
+    url = "https://www.eucast.org/clinical_breakpoints/"
+  ),
   "12.0" = list(
     version_txt = "v12.0",
     year = 2022,

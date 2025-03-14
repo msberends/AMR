@@ -1,4 +1,4 @@
-# AMR 2.1.1.9197
+# AMR 2.1.1.9198
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -61,8 +61,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The selectors `lincosamides()` and `macrolides()` do not overlap anymore - each antibiotic is now classified as either of these and not both
   * Fixed selector `fluoroquinolones()`, which now really only selects second-generation quinolones and up (first-generation quinolones do not contain a fluorine group)
 * `antimicrobials` data set
-  * Added agents used for screening, with an ID all ending with `-S`: benzylpenicillin screening test (`PEN-S`), beta-lactamase screening test (`BTL-S`), clindamycin inducible screening test (`CLI-S`), nalidixic acid screening test (`NAL-S`), norfloxacin screening test (`NOR-S`), oxacillin screening test (`OXA-S`), pefloxacin screening test (`PEF-S`), and tetracycline screening test (`TCY-S`). The ID of cefoxitin screening was renamed from `FOX1` to `FOX-S`, while the old code remains to work.
-  * For this reason, the antimicrobial selectors `lincosamides()`, `isoxazolylpenicillins()`, `quinolones()`, `fluoroquinolones()`, `tetracyclines()` now contain the argument `only_treatable = TRUE` (similar to other antimicrobial selectors that contain non-treatable drugs)
+  * Added agents used for screening, with an ID all ending with `-S`: benzylpenicillin screening test (`PEN-S`), beta-lactamase screening test (`BTL-S`), cefotaxime screening test (`CTX-S`), clindamycin inducible screening test (`CLI-S`), nalidixic acid screening test (`NAL-S`), norfloxacin screening test (`NOR-S`), oxacillin screening test (`OXA-S`), pefloxacin screening test (`PEF-S`), and tetracycline screening test (`TCY-S`). The ID of cefoxitin screening was renamed from `FOX1` to `FOX-S`, while the old code remains to work.
+  * For this reason, the antimicrobial selectors `cephalosporins()`, `cephalosporins_3rd()`, `lincosamides()`, `isoxazolylpenicillins()`, `quinolones()`, `fluoroquinolones()`, and `tetracyclines()` now contain the argument `only_treatable = TRUE` (similar to other antimicrobial selectors that contain non-treatable drugs)
   * Added amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
   * Added efflux (`EFF`), to allow mapping to AMRFinderPlus
   * Added tigemonam (`TNM`), a monobactam
@@ -75,7 +75,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
   * Sorting of MIC values (using `sort()`) was fixed in the same manner; `<0.001` now gets sorted before `0.001`, and `>0.001` gets sorted after `0.001`.
   * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
-* `eucast_rules()` now has an argument `overwrite` (default: `TRUE`) to indicate whether non-`NA` values should be overwritten
+* `eucast_rules()` now has an argument `overwrite` (default: `FALSE`) to indicate whether non-`NA` values should be overwritten
 * Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (`as.disk()`) is now between 0 and 50 mm
 * Updated `italicise_taxonomy()` to support HTML output
 * `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule

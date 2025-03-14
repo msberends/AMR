@@ -8,7 +8,7 @@
 \alias{ab_selector}
 \title{Deprecated Functions}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 495 rows and 14 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 496 rows and 14 columns.
 }
 \usage{
 ab_class(...)

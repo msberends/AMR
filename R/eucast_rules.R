@@ -72,7 +72,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
 #' @param only_sir_columns a [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`)
 #' @param custom_rules custom rules to apply, created with [custom_eucast_rules()]
-#' @param overwrite a [logical] to indicate whether non-`NA` values must be overwritten (defaults to `TRUE`). With `FALSE`, only `NA` values are changed.
+#' @param overwrite A [logical] indicating whether to overwrite non-`NA` values (default: `FALSE`). When `FALSE`, only `NA` values are modified. To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant."
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr
@@ -167,13 +167,13 @@ eucast_rules <- function(x,
                          info = interactive(),
                          rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
                          verbose = FALSE,
-                         version_breakpoints = 12.0,
+                         version_breakpoints = 14.0,
                          version_expertrules = 3.3,
                          # TODO version_resistant_phenotypes = 1.2,
                          ampc_cephalosporin_resistance = NA,
                          only_sir_columns = FALSE,
                          custom_rules = NULL,
-                         overwrite = TRUE,
+                         overwrite = FALSE,
                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -630,10 +630,10 @@ eucast_rules <- function(x,
 
   # sometimes, the screenings are missing but the names are actually available
   # we only hints on remaining rows in `eucast_rules_df`
-  screening_abx <- c("FOX", "BTL", "CLI", "NAL", "NOR", "OXA", "PEF", "PEN", "TCY")
+  screening_abx <- as.character(AMR::antimicrobials$ab[which(AMR::antimicrobials$ab %like% "-S$")])
   screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(EUCAST_RULES_DF$and_these_antibiotics[!is.na(EUCAST_RULES_DF$and_these_antibiotics)], ", *")))]
-  for (ab in screening_abx) {
-    ab_s <- paste0(ab, "-S")
+  for (ab_s in screening_abx) {
+    ab <- gsub("-S$", "", ab_s)
     if (ab %in% names(cols_ab) && !ab_s %in% names(cols_ab)) {
       if (isTRUE(info)) {
         message_("Using column '", cols_ab[names(cols_ab) == ab],
@@ -1130,7 +1130,7 @@ edit_sir <- function(x,
     if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir), na.rm = TRUE)) {
       track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
-    non_SIR <- !(new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI")
+    non_SIR <- is.na(new_edits[rows, cols]) | !(new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI")
     tryCatch(
       # insert into original table
       if (isTRUE(overwrite)) {

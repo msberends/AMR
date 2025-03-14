@@ -92,6 +92,7 @@
 "CND"	43507	"Ceforanide"	"Cephalosporins (2nd gen.)"	"J01DC11"	"Other beta-lactam antibacterials"	"Second-generation cephalosporins"	""	"ceforanido,ceforanidum,precef,radacef"			4	"g"	"103-2,104-0,105-7,106-5,18885-4,55643-1"
 "CSE"	9830519	"Cefoselis"	"Cephalosporins (4th gen.)"	"NA"			""	"cefoselissulfate,wincef,winsef"					""
 "CTX"	5742673	"Cefotaxime"	"Cephalosporins (3rd gen.)"	"J01DD01"	"Other beta-lactam antibacterials"	"Third-generation cephalosporins"	"cfot,cft,cftx,ct,ctx,fot,tax,xct"	"cefotaxim,cefotaxima,cefotaximaacid,cefotaximeacid,cefotaximhikma,cefotaximum,cephotaxime,claforan,omnatax"			4	"g"	"101479-4,101480-2,107-3,108-1,109-9,110-7,18886-2,25238-7,31138-1,31139-9,3446-2,35769-9,35770-7,35771-5,41671-9,50632-9,52128-6,54191-2,54192-0,54193-8,55189-5,55644-9,6989-8,80961-6"
+"CTX-S"		"Cefotaxime screening test"	"Cephalosporins (3rd gen.)"	"NA"			"ctx screen"	""					""
 "CTC"	9575353	"Cefotaxime/clavulanic acid"	"Cephalosporins (3rd gen.)"	"J01DD51"			"cxcl,xctl"	""					""
 "CTS"	9574753	"Cefotaxime/sulbactam"	"Cephalosporins (3rd gen.)"	"NA"			""	""					"54191-2,54192-0,54193-8,55644-9"
 "CTT"	53025	"Cefotetan"	"Cephalosporins (2nd gen.)"	"J01DC05"	"Other beta-lactam antibacterials"	"Second-generation cephalosporins"	"cftt,cn,cte,ctn,ctt,tans"	"apacef,cefotan,cefotetanacid,cefotetanfreeacid,cefotetanum"			4	"g"	"111-5,112-3,113-1,114-9,18887-0,25239-5,3447-0,41672-7,41673-5,41674-3,41729-5,6990-6"

@@ -636,8 +636,12 @@ styler::style_pkg(include_roxygen_examples = FALSE,
                   exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
 
 # Document pkg ------------------------------------------------------------
-usethis::ui_info("Documenting package")
-suppressMessages(devtools::document(quiet = TRUE))
+if (interactive()) {
+  message("Skipping document in interactive mode")
+} else {
+  usethis::ui_info("Documenting package")
+  suppressMessages(devtools::document(quiet = TRUE))
+}
 
 # Finished ----------------------------------------------------------------
 usethis::ui_done("All done")

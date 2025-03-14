@@ -21,9 +21,9 @@ Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility test
 \usage{
 eucast_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
-  verbose = FALSE, version_breakpoints = 12, version_expertrules = 3.3,
+  verbose = FALSE, version_breakpoints = 14, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = FALSE,
-  custom_rules = NULL, overwrite = TRUE, ...)
+  custom_rules = NULL, overwrite = FALSE, ...)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 }
@@ -38,7 +38,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be "12.0", "11.0", or "10.0".}
+\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be "14.0", "13.1", "12.0", "11.0", or "10.0".}
 
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
 
@@ -48,7 +48,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{custom_rules}{custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}}
 
-\item{overwrite}{a \link{logical} to indicate whether non-\code{NA} values must be overwritten (defaults to \code{TRUE}). With \code{FALSE}, only \code{NA} values are changed.}
+\item{overwrite}{A \link{logical} indicating whether to overwrite non-\code{NA} values (default: \code{FALSE}). When \code{FALSE}, only \code{NA} values are modified. To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant."}
 
 \item{...}{column name of an antimicrobial, see section \emph{Antimicrobials} below}
 
