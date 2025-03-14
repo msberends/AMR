@@ -626,7 +626,7 @@ as.sir.disk <- function(x,
     ab = ab,
     guideline = guideline,
     uti = uti,
-    capped_mic_handling = FALSE, # there are no MICs here
+    capped_mic_handling = "standard", # will be ignored for non-MIC anyway
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
     substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
