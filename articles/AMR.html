@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9198</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9200</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,8 +63,11 @@
 <li class="nav-item"><a class="nav-link" href="../authors.html"><span class="fa fa-users"></span> Authors</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa far fa-newspaper"></span> Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/msberends/AMR"><span class="fa fab fa-github"></span> Source Code</a></li>
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa fa-newspaper"></span> Changelog</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/msberends/AMR"><span class="fa fa-github"></span> Source Code</a></li>
       </ul>
 </div>
 
@@ -262,6 +265,8 @@ user input can be used:</p>
 <p>Now we can thus clean our data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="va">our_data</span><span class="op">$</span><span class="va">bacteria</span>, info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ Retrieved values from the </span><span style="color: #0000BB; background-color: #EEEEEE;">microorganisms.codes</span><span style="color: #0000BB;"> data set for "ESCCOL",</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   "KLEPNE", "STAAUR", and "STRPNE".</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">ℹ Microorganism translation was uncertain for four microorganisms. Run</span></span></span>
 <span><span class="co"><span style="color: #0000BB;">#&gt;   </span><span style="color: #0000BB; background-color: #EEEEEE;">mo_uncertainties()</span><span style="color: #0000BB;"> to review these uncertainties, or use</span></span></span>
 <span><span class="co"><span style="color: #0000BB;">#&gt;   </span><span style="color: #0000BB; background-color: #EEEEEE;">add_custom_microorganisms()</span><span style="color: #0000BB;"> to add custom entries.</span></span></span></code></pre></div>

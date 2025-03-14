@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9198</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9200</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,8 +34,10 @@
 <li class="nav-item"><a class="nav-link" href="../articles/AMR_for_Python.html"><span class="fa fab fa-python"></span> AMR for Python</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Manual</a></li>
 <li class="nav-item"><a class="nav-link" href="../authors.html"><span class="fa fa-users"></span> Authors</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa far fa-newspaper"></span> Changelog</a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/msberends/AMR"><span class="fa fab fa-github"></span> Source Code</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa fa-newspaper"></span> Changelog</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/msberends/AMR"><span class="fa fa-github"></span> Source Code</a></li>
       </ul></div>
 
 
@@ -127,35 +129,13 @@
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">ampicillin</span><span style="color: #0000BB;">' (AMP), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in as.sir(): argument <span style="background-color: #EEEEEE;">capped_mic_handling</span> must be a text string, i.e. not be <span style="background-color: #EEEEEE;">TRUE</span> or</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="background-color: #EEEEEE;">FALSE</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># interpret whole data set, pretend to be all from urinary tract infections:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">df</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: column '</span><span style="color: #0000BB; font-weight: bold;">AMP</span><span style="color: #0000BB;">' (ampicillin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: column '</span><span style="color: #0000BB; font-weight: bold;">CIP</span><span style="color: #0000BB;">' (ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: column '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: column '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">' (tobramycin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP  CIP GEN TOB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S &lt;NA&gt;   S   S</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> in as.sir(): argument <span style="background-color: #EEEEEE;">capped_mic_handling</span> must be a text string, i.e. not be <span style="background-color: #EEEEEE;">TRUE</span> or</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="background-color: #EEEEEE;">FALSE</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
