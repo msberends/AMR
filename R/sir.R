@@ -496,9 +496,11 @@ as.sir.default <- function(x,
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
-        warning_("in `as.sir()`: the input seems to contain MIC values. You can transform them with `as.mic()` before running `as.sir()` to interpret them.")
+        warning_("in `as.sir()`: input values were guessed to be MIC values - preferably transform them with `as.mic()` before running `as.sir()`.")
+        return(as.sir(as.mic(x), ...))
       } else if (all_valid_disks(x)) {
-        warning_("in `as.sir()`: the input seems to contain disk diffusion values. You can transform them with `as.disk()` before running `as.sir()` to interpret them.")
+        warning_("in `as.sir()`: input values were guessed to be disk diffusion values - preferably transform them with `as.disk()` before running `as.sir()`.")
+        return(as.sir(as.disk(x), ...))
       }
     }
 
