@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("top_n_microorganisms works", {
+test_that("test-top_n_microorganisms.R", {
   out1 <- top_n_microorganisms(example_isolates, n = 3)
   out2 <- top_n_microorganisms(example_isolates, n = 5, property = "genus")
   out3 <- top_n_microorganisms(example_isolates, n = 5, property = "genus", n_for_each = 3)

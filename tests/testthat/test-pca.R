@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("pca works", {
+test_that("test-pca.R", {
   resistance_data <- structure(
     list(
       order = c("Bacillales", "Enterobacterales", "Enterobacterales"),

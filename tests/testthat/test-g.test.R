@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("g.test works", {
+test_that("test-g.test.R", {
   # GOODNESS-OF-FIT
 
   # example 1: clearfield rice vs. red rice

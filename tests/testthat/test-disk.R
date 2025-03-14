@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("disk works", {
+test_that("test-disk.R", {
   expect_true(as.disk(8) == as.disk("8"))
   expect_true(is.disk(as.disk(8)))
 

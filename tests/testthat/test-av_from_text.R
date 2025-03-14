@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("av_from_text works", {
+test_that("test-av_from_text.R", {
   expect_identical(
     av_from_text("28/03/2020 regular aciclovir 500mg po tds")[[1]],
     as.av("Aciclovir")

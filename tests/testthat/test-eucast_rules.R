@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("eucast_rules works", {
+test_that("test-eucast_rules.R", {
   # thoroughly check input table
   expect_equal(
     colnames(AMR:::EUCAST_RULES_DF),
@@ -42,8 +42,14 @@ test_that("eucast_rules works", {
   )
   MOs_mentioned <- unique(AMR:::EUCAST_RULES_DF$this_value)
   MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
-  MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned, keep_synonyms = TRUE, language = NULL)))
-  expect_true(length(MOs_mentioned[MOs_test != MOs_mentioned]) == 0)
+  MOs_test <- suppressWarnings(
+    trimws(paste(
+      mo_genus(MOs_mentioned, keep_synonyms = TRUE, language = NULL),
+      mo_species(MOs_mentioned, keep_synonyms = TRUE, language = NULL)
+    ))
+  )
+  MOs_test[MOs_test == ""] <- mo_fullname(MOs_mentioned[MOs_test == ""], keep_synonyms = TRUE, language = NULL)
+  expect_equal(MOs_mentioned, MOs_test)
 
   expect_error(suppressWarnings(eucast_rules(example_isolates, col_mo = "Non-existing")))
   expect_error(eucast_rules(x = "text"))
@@ -108,7 +114,7 @@ test_that("eucast_rules works", {
             TIC = as.sir("R"),
             PIP = as.sir("S")
           ) %>%
-          eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE) %>%
+          eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE, overwrite = TRUE) %>%
           pull(PIP) %>%
           unique() %>%
           as.character()
@@ -127,6 +133,7 @@ test_that("eucast_rules works", {
       stringsAsFactors = FALSE
     ),
     version_expertrules = 3.1,
+    overwrite = TRUE,
     only_sir_columns = FALSE
   )$CLR))
   b <- example_isolates$ERY
@@ -168,6 +175,7 @@ test_that("eucast_rules works", {
         cefotax = as.sir(c("S", "S"))
       ),
       ampc_cephalosporin_resistance = TRUE,
+      overwrite = TRUE,
       info = FALSE
     )$cefotax,
     as.sir(c("S", "R"))
@@ -180,6 +188,7 @@ test_that("eucast_rules works", {
         cefotax = as.sir(c("S", "S"))
       ),
       ampc_cephalosporin_resistance = NA,
+      overwrite = TRUE,
       info = FALSE
     )$cefotax,
     as.sir(c("S", NA))
@@ -192,6 +201,7 @@ test_that("eucast_rules works", {
         cefotax = as.sir(c("S", "S"))
       ),
       ampc_cephalosporin_resistance = NULL,
+      overwrite = TRUE,
       info = FALSE
     )$cefotax,
     as.sir(c("S", "S"))
@@ -218,6 +228,7 @@ test_that("eucast_rules works", {
       rules = "custom",
       custom_rules = x,
       info = FALSE,
+      overwrite = TRUE,
       verbose = TRUE
     )),
     8,

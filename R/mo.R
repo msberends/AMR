@@ -242,7 +242,14 @@ as.mo <- function(x,
   # one exception: "Fungi" matches the kingdom, but instead it should return the 'unknown' code for fungi
   out[out == "F_[KNG]_FUNGI"] <- "F_FUNGUS"
   # From known codes ----
-  out[is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code] <- AMR::microorganisms.codes$mo[match(toupper(x)[is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code], AMR::microorganisms.codes$code)]
+  ind <- is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code
+  out[ind] <- AMR::microorganisms.codes$mo[match(toupper(x)[ind], AMR::microorganisms.codes$code)]
+  if (length(which(ind)) > 0 && isTRUE(info) && message_not_thrown_before("as.mo_microorganisms.codes", is.na(out), toupper(x))) {
+    message_(
+      "Retrieved value", ifelse(sum(ind) > 1, "s", ""),
+      " from the `microorganisms.codes` data set for ", vector_and(toupper(x)[ind]), "."
+    )
+  }
   # From SNOMED ----
   # based on this extremely fast gem: https://stackoverflow.com/a/11002456/4575331
   snomeds <- unlist(AMR_env$MO_lookup$snomed)

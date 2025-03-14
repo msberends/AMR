@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("amr selectors works", {
+test_that("test-amr selectors.R", {
   # antibiotic class selectors
   expect_equal(ncol(example_isolates[, aminoglycosides(), drop = FALSE]), 4, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, aminopenicillins(), drop = FALSE]), 2, tolerance = 0.5)

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("key_antimicrobials works", {
+test_that("test-key_antimicrobials.R", {
   expect_equal(length(key_antimicrobials(example_isolates, antifungal = NULL)), nrow(example_isolates))
   expect_false(all(is.na(key_antimicrobials(example_isolates, antifungal = NULL))))
   expect_true(antimicrobials_equal("SSS", "SSS", type = "points"))

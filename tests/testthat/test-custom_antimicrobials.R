@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("custom ab works", {
+test_that("test-custom ab.R", {
   ab_reset_session()
 
   expect_message(as.ab("testab", info = TRUE))

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("data works", {
+test_that("test-data.R", {
   # IDs should always be unique
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
   expect_identical(class(microorganisms$mo), c("mo", "character"))

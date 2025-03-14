@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("mdro works", {
+test_that("test-mdro.R", {
   expect_error(mdro(example_isolates, guideline = c("BRMO", "MRGN"), info = TRUE))
   expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 

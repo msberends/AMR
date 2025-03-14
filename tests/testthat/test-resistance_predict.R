@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("resistance_predict works", {
+test_that("test-resistance_predict.R", {
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     expect_output(AMX_R <- example_isolates %>%
       filter(mo == "B_ESCHR_COLI") %>%

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("bug/drug works", {
+test_that("test-bug/drug.R", {
   b <- suppressWarnings(bug_drug_combinations(example_isolates))
   expect_inherits(b, "bug_drug_combinations")
   expect_output(suppressMessages(print(b)))

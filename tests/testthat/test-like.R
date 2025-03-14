@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("like works", {
+test_that("test-like.R", {
   expect_true(sum("test" %like% c("^t", "^s")) == 1)
 
   expect_true("test" %like% "test")

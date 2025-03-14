@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("antibiogram works", {
+test_that("test-antibiogram.R", {
   # Traditional antibiogram ----------------------------------------------
 
   ab1 <- antibiogram(example_isolates,

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("italicise_taxonomy works", {
+test_that("test-italicise_taxonomy.R", {
   expect_identical(
     italicise_taxonomy("test for E. coli"),
     "test for *E. coli*"

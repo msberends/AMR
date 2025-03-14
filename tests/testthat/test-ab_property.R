@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("ab_property works", {
+test_that("test-ab_property.R", {
   ab_reset_session()
 
   expect_identical(ab_name("AMX", language = NULL), "Amoxicillin")

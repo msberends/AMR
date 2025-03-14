@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("misc works", {
+test_that("test-misc.R", {
   expect_equal(AMR:::percentage(0.25), "25%")
   expect_equal(AMR:::percentage(0.5), "50%")
   expect_equal(AMR:::percentage(0.500, digits = 1), "50.0%")

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("random works", {
+test_that("test-random.R", {
   expect_inherits(random_mic(100), "mic")
   expect_inherits(random_mic(100, mo = "Klebsiella pneumoniae"), "mic")
   expect_inherits(random_mic(100, mo = "Klebsiella pneumoniae", ab = "meropenem"), "mic")

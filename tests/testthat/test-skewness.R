@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("skewness works", {
+test_that("test-skewness.R", {
   expect_equal(skewness(example_isolates$age),
     -1.212888,
     tolerance = 0.00001

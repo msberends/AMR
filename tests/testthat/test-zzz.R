@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("zzz works", {
+test_that("test-zzz.R", {
   # Check if these functions still exist in their package (all are in Suggests field)
   # Since GitHub Actions runs every night, we will get emailed when a dependency fails based on this unit test
 

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("ab works", {
+test_that("test-ab.R", {
   ab_reset_session()
 
   expect_equal(

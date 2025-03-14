@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("vctrs works", {
+test_that("test-vctrs.R", {
   # extra tests for {vctrs} pkg support
   if (AMR:::pkg_is_available("tibble")) {
     test <- tibble::tibble(

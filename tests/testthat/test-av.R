@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("av works", {
+test_that("test-av.R", {
   expect_equal(
     as.character(as.av(c(
       "J05AB01",

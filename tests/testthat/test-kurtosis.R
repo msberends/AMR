@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("kurtosis works", {
+test_that("test-kurtosis.R", {
   expect_equal(kurtosis(example_isolates$age),
     5.227999,
     tolerance = 0.00001

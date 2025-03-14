@@ -27,6 +27,6 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("availibility works", {
+test_that("test-availibility.R", {
   expect_inherits(availability(example_isolates), "data.frame")
 })

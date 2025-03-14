@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("proportion works", {
+test_that("test-proportion.R", {
   expect_equal(proportion_R(example_isolates$AMX), resistance(example_isolates$AMX))
   expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX))
   # AMX resistance in `example_isolates`

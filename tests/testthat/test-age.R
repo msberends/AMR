@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("age works", {
+test_that("test-age.R", {
   expect_equal(
     age(
       x = c("1980-01-01", "1985-01-01", "1990-01-01"),

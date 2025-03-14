@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("ab_property works", {
+test_that("test-ab_property.R", {
   expect_identical(av_name("ACI", language = NULL), "Aciclovir")
   expect_identical(av_atc("ACI"), "J05AB01")
   expect_identical(av_cid("ACI"), as.integer(135398513))

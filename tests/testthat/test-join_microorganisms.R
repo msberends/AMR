@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("join_microorganisms works", {
+test_that("test-join_microorganisms.R", {
   unjoined <- example_isolates
   inner <- inner_join_microorganisms(example_isolates)
   left <- left_join_microorganisms(example_isolates)

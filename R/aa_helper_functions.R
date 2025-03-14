@@ -532,9 +532,14 @@ word_wrap <- function(...,
       url = paste0("ide:run:AMR::", parts[cmds & parts %unlike% "[.]"]),
       txt = parts[cmds & parts %unlike% "[.]"]
     )
+    # datasets should give help page as well
+    parts[parts %in% c("antimicrobials", "microorganisms", "microorganisms.codes", "microorganisms.groups")] <- font_url(
+      url = paste0("ide:help:AMR::", gsub("()", "", parts[parts %in% c("antimicrobials", "microorganisms", "microorganisms.codes", "microorganisms.groups")], fixed = TRUE)),
+      txt = parts[parts %in% c("antimicrobials", "microorganisms", "microorganisms.codes", "microorganisms.groups")]
+    )
     # text starting with `?` must also lead to the help page
     parts[parts %like% "^[?]"] <- font_url(
-      url = paste0("ide:help:AMR::", gsub("()", "", gsub("^[?]", "", parts[parts %like% "^[?]"]), fixed = TRUE)),
+      url = paste0("ide:help:AMR::", parts[parts %like% "^[?]"]),
       txt = parts[parts %like% "^[?]"]
     )
     msg <- paste0(parts, collapse = "`")

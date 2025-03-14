@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("first_isolate works", {
+test_that("test-first_isolate.R", {
   # all four methods
   expect_equal(
     sum(first_isolate(x = example_isolates, method = "isolate-based", info = TRUE), na.rm = TRUE),

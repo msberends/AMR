@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("atc_online works", {
+test_that("test-atc_online.R", {
   if (AMR:::pkg_is_available("curl") &&
     AMR:::pkg_is_available("rvest") &&
     AMR:::pkg_is_available("xml2") &&

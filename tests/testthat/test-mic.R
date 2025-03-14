@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("mic works", {
+test_that("test-mic.R", {
   # used in multiple functions, also in plotting
   expect_true(all(as.mic(AMR:::COMMON_MIC_VALUES) %in% AMR:::VALID_MIC_LEVELS))
   expect_true(all(paste0("<=", as.mic(AMR:::COMMON_MIC_VALUES)) %in% AMR:::VALID_MIC_LEVELS))

@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 
-test_that("custom mo works", {
+test_that("test-custom mo.R", {
   expect_identical(
     as.mo("Enterobacter asburiae/cloacae"),
     as.mo("Enterobacter asburiae")

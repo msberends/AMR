@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("plotting works", {
+test_that("test-plotting.R", {
   if (AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
     pdf(NULL) # prevent Rplots.pdf being created
 

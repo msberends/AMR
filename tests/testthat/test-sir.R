@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("sir works", {
+test_that("test-sir.R", {
   # Existing SIR ------------------------------------------------------------
 
   # we must only have EUCAST and CLSI, because otherwise the rules in as.sir() will fail

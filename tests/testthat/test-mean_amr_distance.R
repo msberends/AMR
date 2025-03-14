@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("mean_amr_distance works", {
+test_that("test-mean_amr_distance.R", {
   vctr_disk <- as.disk(c(20:25))
   vctr_mic <- as.mic(2^c(0:5))
   vctr_sir <- as.sir(c("S", "S", "I", "I", "R", "R"))

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("translate works", {
+test_that("test-translate.R", {
   expect_identical(mo_genus("B_GRAMP", language = "pt"), "(gênero desconhecido)")
 
   expect_identical(mo_fullname("CoNS", "cs"), "Koaguláza-negativní stafylokok (KNS)")

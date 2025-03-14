@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("mo_property works", {
+test_that("test-mo_property.R", {
   expect_equal(mo_kingdom("Escherichia coli"), "Bacteria")
   expect_equal(mo_kingdom("Escherichia coli"), mo_domain("Escherichia coli"))
   expect_equal(mo_phylum("Escherichia coli"), "Pseudomonadota")

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("count works", {
+test_that("test-count.R", {
   expect_equal(count_resistant(example_isolates$AMX), count_R(example_isolates$AMX))
   expect_equal(count_susceptible(example_isolates$AMX), count_SI(example_isolates$AMX))
   expect_equal(count_all(example_isolates$AMX), n_sir(example_isolates$AMX))

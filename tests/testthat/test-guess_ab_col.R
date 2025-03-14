@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-test_that("guess_ab_col works", {
+test_that("test-guess_ab_col.R", {
   expect_equal(
     guess_ab_col(example_isolates, "amox"),
     "AMX"
