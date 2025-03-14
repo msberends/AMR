@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9196</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9198</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,9 +59,9 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">eucast_rules</span><span class="op">(</span><span class="va">x</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_eucastrules"</span>, default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>, <span class="st">"expert"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, version_breakpoints <span class="op">=</span> <span class="fl">12</span>, version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, version_breakpoints <span class="op">=</span> <span class="fl">14</span>, version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,</span>
 <span>  ampc_cephalosporin_resistance <span class="op">=</span> <span class="cn">NA</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  custom_rules <span class="op">=</span> <span class="cn">NULL</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  custom_rules <span class="op">=</span> <span class="cn">NULL</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="va">ab</span>, administration <span class="op">=</span> <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -104,7 +104,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-version-breakpoints">version_breakpoints<a class="anchor" aria-label="anchor" href="#arg-version-breakpoints"></a></dt>
-<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be "12.0", "11.0", or "10.0".</p></dd>
+<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be "14.0", "13.1", "12.0", "11.0", or "10.0".</p></dd>
 
 
 <dt id="arg-version-expertrules">version_expertrules<a class="anchor" aria-label="anchor" href="#arg-version-expertrules"></a></dt>
@@ -124,7 +124,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether non-<code>NA</code> values must be overwritten (defaults to <code>TRUE</code>). With <code>FALSE</code>, only <code>NA</code> values are changed.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> indicating whether to overwrite non-<code>NA</code> values (default: <code>FALSE</code>). When <code>FALSE</code>, only <code>NA</code> values are modified. To ensure compliance with EUCAST guidelines, <strong>this should remain</strong> <code>FALSE</code>, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant."</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -224,10 +224,10 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       mo VAN AMX COL CAZ CXM PEN FOX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  Staphylococcus aureus   -   S   R   R   S   S   S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Enterococcus faecalis   -   -   R   R   R   S   R</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Escherichia coli   R   -   -   -   -   R   S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Klebsiella pneumoniae   R   R   -   -   -   R   S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Pseudomonas aeruginosa   R   R   -   -   R   R   R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Enterococcus faecalis   -   -   R   R   R   S   S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Escherichia coli   R   -   -   -   -   S   S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Klebsiella pneumoniae   R   R   -   -   -   S   S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Pseudomonas aeruginosa   R   R   -   -   R   S   S</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># do not apply EUCAST rules, but rather get a data.frame</span></span></span>
@@ -254,8 +254,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                 rule_source</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           'EUCAST Clinical Breakpoint Tables' v12.0, 2022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           'EUCAST Clinical Breakpoint Tables' v12.0, 2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           'EUCAST Clinical Breakpoint Tables' v14.0, 2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           'EUCAST Clinical Breakpoint Tables' v14.0, 2024</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
