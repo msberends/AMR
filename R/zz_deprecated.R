@@ -41,6 +41,7 @@ NULL
 "antibiotics"
 
 # REMEMBER to also remove the deprecated `antibiotics` argument in `antibiogram()`
+# REMEMBER to also remove the deprecated `converse_capped_values` argument in `as.sir()`
 
 #' @rdname AMR-deprecated
 #' @export

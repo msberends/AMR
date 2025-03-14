@@ -98,12 +98,14 @@ body.amr-for-python * {
 .bg-primary .navbar-nav .nav-link:focus {
   color: var(--amr-green-light) !important;
 }
-.navbar-dark .navbar-nav .nav-item > .nav-link:hover,
-.navbar-light .navbar-nav .nav-item>.nav-link:hover {
+.navbar-nav .nav-item > .nav-link:hover {
   background: none !important;
 }
-.navbar-dark input[type="search"] {
+input[type="search"] {
   background-color: var(--amr-green-light) !important;
+  max-width: 160px;
+  border-color: var(--amr-green-dark) !important;
+  border-radius: 2px !important;
 }
 .navbar-nav .nav-item > .nav-link {
   border-radius: 0 !important;

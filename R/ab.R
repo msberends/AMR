@@ -172,11 +172,11 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
   previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
   x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
-  prev <- x_bak[which(x[which(previously_coerced)] %in% x_bak_clean)]
-  if (any(previously_coerced) && isTRUE(info) && message_not_thrown_before("as.ab", prev, entire_session = TRUE)) {
+  if (any(previously_coerced) && isTRUE(info) && message_not_thrown_before("as.ab", entire_session = TRUE)) {
     message_(
-      "Returning previously coerced value", ifelse(length(unique(prev)) > 1, "s", ""),
-      " for ", vector_and(prev), ". Run `ab_reset_session()` to reset this. This note will be shown once per session for this input."
+      "Returning previously coerced ",
+      ifelse(length(unique(which(x[which(previously_coerced)] %in% x_bak_clean))) > 1, "value for an antimicrobial", "values for various antimicrobials"),
+      ". Run `ab_reset_session()` to reset this. This note will be shown once per session."
     )
   }
 

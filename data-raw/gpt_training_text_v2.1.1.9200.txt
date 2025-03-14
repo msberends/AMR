@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9199. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9200. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -764,6 +764,7 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \itemize{
 \item \code{AMR_antibiogram_formatting_type} \cr A \link{numeric} (1-22) to use in \code{\link[=antibiogram]{antibiogram()}}, to indicate which formatting type to use.
 \item \code{AMR_breakpoint_type} \cr A \link{character} to use in \code{\link[=as.sir]{as.sir()}}, to indicate which breakpoint type to use. This must be either "ECOFF", "animal", or "human".
+\item \code{AMR_capped_mic_handling} \cr A \link{character} to use in \code{\link[=as.sir]{as.sir()}}, to indicate how capped MIC values (\code{<}, \code{<=}, \code{>}, \code{>=}) should be interpreted. Must be one of \code{"standard"}, \code{"strict"}, \code{"relaxed"}, or \code{"inverse"} - the default is \code{"standard"}.
 \item \code{AMR_cleaning_regex} \cr A \link[base:regex]{regular expression} (case-insensitive) to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to clean the user input. The default is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar".
 \item \code{AMR_custom_ab} \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
 \item \code{AMR_custom_mo} \cr A file location to an RDS file, to use custom microorganisms with this package. This is explained in \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}}.
@@ -3340,7 +3341,8 @@ is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
-  conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
+  capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
@@ -3360,7 +3362,8 @@ is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{data.frame}(x, ..., col_mo = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
-  conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
+  capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
@@ -3387,7 +3390,19 @@ sir_interpretation_history(clean = FALSE)
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
-\item{conserve_capped_values}{a \link{logical} to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
+\item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:
+\itemize{
+\item \code{"standard"} (default)\cr
+\code{<=} and \code{>=} return \code{"NI"} if the value is \strong{within} the breakpoint guideline range, while \code{<} and \code{>} are interpreted normally.
+\item \code{"strict"}\cr
+Enforces conservative handling; \code{<} always returns \code{"S"}, \code{>} always returns \code{"R"}, and \code{<=}/\code{>=} return \code{"NI"} when within breakpoint guideline range.
+\item \code{"relaxed"}\cr
+Ignores all signs, treating values as their numeric equivalents (e.g., \verb{>0.5} is regarded \code{0.5}).
+\item \code{"inverse"}\cr
+Opposite of \code{"standard"}; \code{<} always returns \code{"S"}, \code{>} always returns \code{"R"}, and \code{<=}/\code{>=} are treated as their numeric equivalents
+}
+
+The default \code{"standard"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
 
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 
@@ -3443,7 +3458,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 }\if{html}{\out{</div>}}
-\item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+\item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "strict"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{

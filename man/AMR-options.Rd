@@ -11,6 +11,7 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \itemize{
 \item \code{AMR_antibiogram_formatting_type} \cr A \link{numeric} (1-22) to use in \code{\link[=antibiogram]{antibiogram()}}, to indicate which formatting type to use.
 \item \code{AMR_breakpoint_type} \cr A \link{character} to use in \code{\link[=as.sir]{as.sir()}}, to indicate which breakpoint type to use. This must be either "ECOFF", "animal", or "human".
+\item \code{AMR_capped_mic_handling} \cr A \link{character} to use in \code{\link[=as.sir]{as.sir()}}, to indicate how capped MIC values (\code{<}, \code{<=}, \code{>}, \code{>=}) should be interpreted. Must be one of \code{"standard"}, \code{"strict"}, \code{"relaxed"}, or \code{"inverse"} - the default is \code{"standard"}.
 \item \code{AMR_cleaning_regex} \cr A \link[base:regex]{regular expression} (case-insensitive) to use in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions, to clean the user input. The default is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar".
 \item \code{AMR_custom_ab} \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
 \item \code{AMR_custom_mo} \cr A file location to an RDS file, to use custom microorganisms with this package. This is explained in \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}}.

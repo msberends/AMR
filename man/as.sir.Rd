@@ -37,7 +37,8 @@ is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
-  conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
+  capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
@@ -57,7 +58,8 @@ is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{data.frame}(x, ..., col_mo = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
-  conserve_capped_values = FALSE, add_intrinsic_resistance = FALSE,
+  capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
@@ -84,7 +86,19 @@ sir_interpretation_history(clean = FALSE)
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
-\item{conserve_capped_values}{a \link{logical} to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
+\item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:
+\itemize{
+\item \code{"standard"} (default)\cr
+\code{<=} and \code{>=} return \code{"NI"} if the value is \strong{within} the breakpoint guideline range, while \code{<} and \code{>} are interpreted normally.
+\item \code{"strict"}\cr
+Enforces conservative handling; \code{<} always returns \code{"S"}, \code{>} always returns \code{"R"}, and \code{<=}/\code{>=} return \code{"NI"} when within breakpoint guideline range.
+\item \code{"relaxed"}\cr
+Ignores all signs, treating values as their numeric equivalents (e.g., \verb{>0.5} is regarded \code{0.5}).
+\item \code{"inverse"}\cr
+Opposite of \code{"standard"}; \code{<} always returns \code{"S"}, \code{>} always returns \code{"R"}, and \code{<=}/\code{>=} are treated as their numeric equivalents
+}
+
+The default \code{"standard"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
 
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 
@@ -140,7 +154,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 }\if{html}{\out{</div>}}
-\item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+\item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "strict"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{
