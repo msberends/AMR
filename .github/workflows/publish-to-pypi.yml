@@ -86,10 +86,12 @@ jobs:
           # Delete all existing files from the working tree (safely)
           git rm -rf . || true
           mv .git PythonPackage/AMR/
+          ls -lh PythonPackage/AMR/
           find . -mindepth 1 ! -name 'PythonPackage' -exec rm -rf {} +
       
           mv PythonPackage/AMR/* .
           rm -rf PythonPackage
+          ls -lh
           
           # Commit and push if changes exist
           git add .

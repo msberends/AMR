@@ -98,5 +98,4 @@ jobs:
       - name: Show files
         if: matrix.config.os == 'ubuntu-latest'
         run: |
-          ls /home/runner/work/AMR/AMR/check/**/tests*/testthat/
-          ls /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
+          ls -lh /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
