@@ -626,25 +626,28 @@ suppressMessages(reset_AMR_locale())
 devtools::load_all(quiet = TRUE)
 suppressMessages(set_AMR_locale("English"))
 
-# Update URLs -------------------------------------------------------------
-usethis::ui_info("Checking URLs for redirects")
-invisible(urlchecker::url_update("."))
-
-# Style pkg ---------------------------------------------------------------
-usethis::ui_info("Styling package")
-styler::style_pkg(include_roxygen_examples = FALSE,
-                  exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
-
-# Document pkg ------------------------------------------------------------
-files_changed <- function(paths = c("R/", "data/")) {
+files_changed <- function(paths = "^(R|data)/") {
   tryCatch({
     changed_files <- system("git diff --name-only", intern = TRUE)
-    any(changed_files %like% "^(R|data)/")
+    any(changed_files %like% paths)
   }, error = function(e) TRUE)
 }
-if (interactive()) {
-  message("Skipping document in interactive mode")
-} else if (files_changed()) {
+
+# Update URLs -------------------------------------------------------------
+if (files_changed()) {
+  usethis::ui_info("Checking URLs for redirects")
+  invisible(urlchecker::url_update("."))
+}
+
+# Style pkg ---------------------------------------------------------------
+if (files_changed(paths = "^(R|tests)/")) {
+  sethis::ui_info("Styling package")
+  styler::style_pkg(include_roxygen_examples = FALSE,
+                    exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
+}
+
+# Document pkg ------------------------------------------------------------
+if (files_changed()) {
   usethis::ui_info("Documenting package")
   suppressMessages(devtools::document(quiet = TRUE))
 }
