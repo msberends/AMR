@@ -85,10 +85,9 @@ jobs:
           
           # Delete all existing files from the working tree (safely)
           git rm -rf . || true
+          mv .git PythonPackage/AMR/
           find . -mindepth 1 ! -name 'PythonPackage' -exec rm -rf {} +
       
-          # Copy over only PythonPackage/AMR contents from main
-          git checkout main -- PythonPackage/AMR
           mv PythonPackage/AMR/* .
           rm -rf PythonPackage
           
