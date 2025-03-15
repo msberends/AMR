@@ -45,14 +45,22 @@
 #' @inheritParams first_isolate
 #' @param guideline defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
-#'   - `"standard"` (default)\cr
-#'     `<=` and `>=` return `"NI"` if the value is **within** the breakpoint guideline range, while `<` and `>` are interpreted normally.
-#'   - `"strict"`\cr
-#'     Enforces conservative handling; `<` always returns `"S"`, `>` always returns `"R"`, and `<=`/`>=` return `"NI"` when within breakpoint guideline range.
-#'   - `"relaxed"`\cr
-#'     Ignores all signs, treating values as their numeric equivalents (e.g., `>0.5` is regarded `0.5`).
-#'   - `"inverse"`\cr
-#'     Opposite of `"standard"`; `<` always returns `"S"`, `>` always returns `"R"`, and `<=`/`>=` are treated as their numeric equivalents
+#'
+#' `"none"`
+#'   * `<=` and `>=` are treated as-is.
+#'   * `<` and `>` are treated as-is.
+#'
+#' `"conservative"`
+#'   * `<=` and `>=` return `"NI"` (non-interpretable) if the MIC is within the breakpoint guideline range.
+#'   * `<` always returns `"S"`, and `>` always returns `"R"`.
+#'
+#' `"standard"` (default)
+#'   * `<=` and `>=` return `"NI"` (non-interpretable) if the MIC is within the breakpoint guideline range.
+#'   * `<` and `>` are treated as-is.
+#'
+#' `"inverse"`
+#'   * `<=` and `>=` are treated as-is.
+#'   * `<` always returns `"S"`, and `>` always returns `"R"`.
 #'
 #' The default `"standard"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
@@ -64,6 +72,7 @@
 #' @param verbose a [logical] to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
+#' @param conserve_capped_values deprecated, use `capped_mic_handling` instead
 #' @param ... for using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details
 #' *Note: The clinical breakpoints in this package were validated through, and imported from, [WHONET](https://whonet.org). The public use of this `AMR` package has been endorsed by both CLSI and EUCAST. See [clinical_breakpoints] for more information.*
@@ -85,7 +94,7 @@
 #'      # for veterinary breakpoints, also set `host`:
 #'      your_data %>% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 #'      ```
-#'    * Operators like "<=" will be stripped before interpretation. When using `capped_mic_handling = "strict"`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`capped_mic_handling = "standard"`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+#'    * Operators like "<=" will be stripped before interpretation. When using `capped_mic_handling = "conservative"`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`capped_mic_handling = "standard"`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, SIR interpretation can be done very easily with either:
 #'      ```r
@@ -582,6 +591,7 @@ as.sir.mic <- function(x,
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        host = NULL,
                        verbose = FALSE,
+                       conserve_capped_values = NULL,
                        ...) {
   as_sir_method(
     method_short = "mic",
@@ -656,16 +666,13 @@ as.sir.data.frame <- function(x,
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                               host = NULL,
-                              verbose = FALSE) {
-  if (isTRUE(list(...)$converse_capped_values)) {
-    deprecation_warning(old = "converse_capped_values", new = "capped_mic_handling", fn = "as.sir", is_argument = TRUE)
-    capped_mic_handling <- "strict"
-  }
+                              verbose = FALSE,
+                              conserve_capped_values = NULL) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "strict", "relaxed", "inverse"))
+  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "conservative", "none", "inverse"))
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1)
@@ -956,17 +963,18 @@ as_sir_method <- function(method_short,
                           breakpoint_type,
                           host,
                           verbose,
+                          conserve_capped_values = NULL,
                           ...) {
-  if (isTRUE(list(...)$converse_capped_values)) {
-    deprecation_warning(old = "converse_capped_values", new = "capped_mic_handling", fn = "as.sir", is_argument = TRUE)
-    capped_mic_handling <- "strict"
+  if (isTRUE(conserve_capped_values)) {
+    deprecation_warning(old = "conserve_capped_values", new = "capped_mic_handling", fn = "as.sir", is_argument = TRUE)
+    capped_mic_handling <- "conservative"
   }
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, .call_depth = -2)
   meet_criteria(ab, allow_class = c("ab", "character"), has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(guideline, allow_class = "character", has_length = 1, .call_depth = -2)
   meet_criteria(uti, allow_class = c("logical", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
-  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "strict", "relaxed", "inverse"), .call_depth = -2)
+  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "conservative", "none", "inverse"), .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
@@ -979,7 +987,7 @@ as_sir_method <- function(method_short,
 
   # backward compatibilty
   dots <- list(...)
-  dots <- dots[which(!names(dots) %in% c("warn", "mo.bak", "is_data.frame", "conserve_capped_values"))]
+  dots <- dots[which(!names(dots) %in% c("warn", "mo.bak", "is_data.frame"))]
   if (length(dots) != 0) {
     warning_("These arguments in `as.sir()` are no longer used: ", vector_and(names(dots), quotes = "`"), ".", call = FALSE)
   }
@@ -1526,13 +1534,13 @@ as_sir_method <- function(method_short,
       if (any(breakpoints_current$site %like% "screen", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "screen", na.rm = TRUE)) {
         notes_current <- c(notes_current, "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
       }
-      if (capped_mic_handling %in% c("strict", "inverse") && any(as.character(values) %like% "^[<][0-9]")) {
+      if (capped_mic_handling %in% c("conservative", "inverse") && any(as.character(values) %like% "^[<][0-9]")) {
         notes_current <- c(notes_current, paste0("MIC values with the sign '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""))
       }
-      if (capped_mic_handling %in% c("strict", "inverse") && any(as.character(values) %like% "^[>][0-9]")) {
+      if (capped_mic_handling %in% c("conservative", "inverse") && any(as.character(values) %like% "^[>][0-9]")) {
         notes_current <- c(notes_current, paste0("MIC values with the sign '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""))
       }
-      if (capped_mic_handling %in% c("strict", "standard") && any(as.character(values) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R, na.rm = TRUE)) {
+      if (capped_mic_handling %in% c("conservative", "standard") && any(as.character(values) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R, na.rm = TRUE)) {
         notes_current <- c(notes_current, paste0("MIC values within the breakpoint guideline range with the sign '<=' or '>=' are considered 'NI' since capped_mic_handling = \"", capped_mic_handling, "\""))
       }
       if (isTRUE(substitute_missing_r_breakpoint) && !is.na(breakpoints_current$breakpoint_S) && is.na(breakpoints_current$breakpoint_R)) {
@@ -1543,9 +1551,9 @@ as_sir_method <- function(method_short,
       if (method == "mic") {
         new_sir <- case_when_AMR(
           is.na(values) ~ NA_sir_,
-          capped_mic_handling %in% c("strict", "inverse") & as.character(values) %like% "^[<][0-9]" ~ as.sir("S"),
-          capped_mic_handling %in% c("strict", "inverse") & as.character(values) %like% "^[>][0-9]" ~ as.sir("R"),
-          capped_mic_handling %in% c("strict", "standard") & as.character(values) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R ~ as.sir("NI"),
+          capped_mic_handling %in% c("conservative", "inverse") & as.character(values) %like% "^[<][0-9]" ~ as.sir("S"),
+          capped_mic_handling %in% c("conservative", "inverse") & as.character(values) %like% "^[>][0-9]" ~ as.sir("R"),
+          capped_mic_handling %in% c("conservative", "standard") & as.character(values) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R ~ as.sir("NI"),
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
           guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
           guideline_coerced %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),

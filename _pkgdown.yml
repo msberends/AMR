@@ -62,7 +62,7 @@ footer:
 
 home:
   sidebar:
-    structure: [toc, links, authors]
+    structure: [toc, authors]
 
 navbar:
   title: "AMR (for R)"

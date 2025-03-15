@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9201. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9203. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the  file, the  file, and all the  files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -3348,7 +3348,7 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, ...)
+  verbose = FALSE, conserve_capped_values = NULL, ...)
 
 \method{as.sir}{disk}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -3369,7 +3369,7 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE)
+  verbose = FALSE, conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 }
@@ -3391,15 +3391,29 @@ sir_interpretation_history(clean = FALSE)
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
 \item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:
+
+\code{"none"}
 \itemize{
-\item \code{"standard"} (default)\cr
-\code{<=} and \code{>=} return \code{"NI"} if the value is \strong{within} the breakpoint guideline range, while \code{<} and \code{>} are interpreted normally.
-\item \code{"strict"}\cr
-Enforces conservative handling; \code{<} always returns \code{"S"}, \code{>} always returns \code{"R"}, and \code{<=}/\code{>=} return \code{"NI"} when within breakpoint guideline range.
-\item \code{"relaxed"}\cr
-Ignores all signs, treating values as their numeric equivalents (e.g., \verb{>0.5} is regarded \code{0.5}).
-\item \code{"inverse"}\cr
-Opposite of \code{"standard"}; \code{<} always returns \code{"S"}, \code{>} always returns \code{"R"}, and \code{<=}/\code{>=} are treated as their numeric equivalents
+\item \code{<=} and \code{>=} are treated as-is.
+\item \code{<} and \code{>} are treated as-is.
+}
+
+\code{"conservative"}
+\itemize{
+\item \code{<=} and \code{>=} return \code{"NI"} (non-interpretable) if the MIC is within the breakpoint guideline range.
+\item \code{<} always returns \code{"S"}, and \code{>} always returns \code{"R"}.
+}
+
+\code{"standard"} (default)
+\itemize{
+\item \code{<=} and \code{>=} return \code{"NI"} (non-interpretable) if the MIC is within the breakpoint guideline range.
+\item \code{<} and \code{>} are treated as-is.
+}
+
+\code{"inverse"}
+\itemize{
+\item \code{<=} and \code{>=} are treated as-is.
+\item \code{<} always returns \code{"S"}, and \code{>} always returns \code{"R"}.
 }
 
 The default \code{"standard"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
@@ -3419,6 +3433,8 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 \item{host}{a vector (or column name) with \link{character}s to indicate the host. Only useful for veterinary breakpoints, as it requires \code{breakpoint_type = "animal"}. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with \code{\link[=set_AMR_locale]{set_AMR_locale()}} (though it will be automatically guessed based on the system language).}
 
 \item{verbose}{a \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
+
+\item{conserve_capped_values}{deprecated, use \code{capped_mic_handling} instead}
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -3458,7 +3474,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 }\if{html}{\out{</div>}}
-\item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "strict"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+\item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "conservative"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{

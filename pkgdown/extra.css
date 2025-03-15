@@ -101,11 +101,21 @@ body.amr-for-python * {
 .navbar-nav .nav-item > .nav-link:hover {
   background: none !important;
 }
+.navbar .algolia-autocomplete .aa-dropdown-menu {
+  background-color: var(--amr-green-dark) !important;
+}
 input[type="search"] {
+  color: var(--bs-tertiary-bg) !important;
   background-color: var(--amr-green-light) !important;
   max-width: 160px;
   border-color: var(--amr-green-dark) !important;
   border-radius: 2px !important;
+}
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--bs-tertiary-bg) !important;
+  text-decoration: none !important;
+  color: var(--bs-body-color) !important;
 }
 .navbar-nav .nav-item > .nav-link {
   border-radius: 0 !important;
