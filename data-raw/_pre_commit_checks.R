@@ -636,9 +636,15 @@ styler::style_pkg(include_roxygen_examples = FALSE,
                   exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
 
 # Document pkg ------------------------------------------------------------
+files_changed <- function(paths = c("R/", "data/")) {
+  tryCatch({
+    changed_files <- system("git diff --name-only", intern = TRUE)
+    any(changed_files %like% "^(R|data)/")
+  }, error = function(e) TRUE)
+}
 if (interactive()) {
   message("Skipping document in interactive mode")
-} else {
+} else if (files_changed()) {
   usethis::ui_info("Documenting package")
   suppressMessages(devtools::document(quiet = TRUE))
 }
