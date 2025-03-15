@@ -94,3 +94,15 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          
+      - name: Show files
+        if: matrix.config.os == 'ubuntu-latest'
+        run: |
+          ls /home/runner/work/AMR/AMR/
+          ls /home/runner/work/AMR/AMR/check
+          ls /home/runner/work/AMR/AMR/check/**
+          ls /home/runner/work/AMR/AMR/check/**/tests*
+          ls /home/runner/work/AMR/AMR/check/**/tests*/testthat/
+          ls /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
+        shell: Rscript {0}
+          /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
