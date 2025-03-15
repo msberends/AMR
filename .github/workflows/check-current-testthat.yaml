@@ -104,5 +104,4 @@ jobs:
           ls /home/runner/work/AMR/AMR/check/**/tests*
           ls /home/runner/work/AMR/AMR/check/**/tests*/testthat/
           ls /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
-        shell: Rscript {0}
-          /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
+
