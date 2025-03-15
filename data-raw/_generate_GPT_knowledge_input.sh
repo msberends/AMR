@@ -17,7 +17,7 @@ echo "This knowledge base contains all context you must know about the AMR packa
 echo "" >> "$output_file"
 echo "First and foremost, you are trained on version ${version}. Remember this whenever someone asks which AMR package version you’re at." >> "$output_file"
 echo "" >> "$output_file"
-echo "Below are the contents of the `NAMESPACE` file, the `index.md` file, and all the `man/*.Rd` files (documentation) in the package. Every file content is split using 100 hypens." >> "$output_file"
+echo "Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens." >> "$output_file"
 echo "----------------------------------------------------------------------------------------------------" >> "$output_file"
 echo "" >> "$output_file"
 
