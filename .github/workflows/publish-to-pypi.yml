@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      PyPI_TOKEN: ${{ secrets.PyPI }}
     
     steps:
       - name: Checkout code
@@ -85,7 +85,7 @@ jobs:
           rm -rf PythonPackage
 
           git init
-          git remote add origin https://$GITHUB_PAT@github.com/msberends/AMR
+          git remote add origin https://$PyPI_TOKEN@github.com/msberends/AMR
           git checkout --orphan python-wrapper
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -94,4 +94,4 @@ jobs:
           git add .
           git commit -m "Python wrapper update"
           # git push origin python-wrapper --force
-          git push https://$GITHUB_PAT@github.com/msberends/AMR.git python-wrapper --force
+          git push https://$PyPI_TOKEN@github.com/msberends/AMR.git python-wrapper --force

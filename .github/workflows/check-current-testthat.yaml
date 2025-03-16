@@ -98,9 +98,9 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: testthat-snapshots
+          name: 'AMR-{matrix.config.os}-r{matrix.config.r}-result'
           path: |
-            /Users/runner/work/AMR/AMR/check/*[.](zip|gz)
-            /Users/runner/work/AMR/AMR/check/**/*[.](zip|gz)
-            /Users/runner/work/AMR/AMR/check/**/**/*[.](zip|gz)
+            /Users/runner/work/AMR/AMR/check/*.(zip|gz)
+            /Users/runner/work/AMR/AMR/check/**/*.(zip|gz)
+            /Users/runner/work/AMR/AMR/check/**/**/*.(zip|gz)
           if-no-files-found: warn
