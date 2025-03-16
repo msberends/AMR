@@ -38,6 +38,9 @@ jobs:
   update-pypi:
     runs-on: ubuntu-latest
     
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

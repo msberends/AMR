@@ -95,7 +95,7 @@ jobs:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
           
-      - name: Debug: List all files in check directory
+      - name: List all files in check directory
         run: |
           find /Users/runner/work/AMR/AMR/check -type f
 
