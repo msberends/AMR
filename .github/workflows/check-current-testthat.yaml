@@ -95,7 +95,12 @@ jobs:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
           
-      - name: Show files
-        if: matrix.config.os == 'ubuntu-latest'
+      - name: Debug: List all files in check directory
         run: |
-          ls -lh /home/runner/work/AMR/AMR/check/**/tests*/testthat/_snaps
+          find /Users/runner/work/AMR/AMR/check -type f
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: testthat-snapshots
+          path: /Users/runner/work/AMR/AMR/check/**/*snaps
+          if-no-files-found: warn

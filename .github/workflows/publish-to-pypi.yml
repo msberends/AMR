@@ -76,24 +76,18 @@ jobs:
 
       - name: Git push to python-wrapper branch
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "<>"
-          
-          # Create and switch to python-wrapper branch (orphan if it doesn't exist)
-          git fetch origin python-wrapper || true
-          git checkout python-wrapper || git checkout --orphan python-wrapper
-          
-          # Delete all existing files from the working tree (safely)
-          git rm -rf . || true
-          mv .git PythonPackage/AMR/
-          ls -lh PythonPackage/AMR/
-          find . -mindepth 1 ! -name 'PythonPackage' -exec rm -rf {} +
-      
+          find . -mindepth 1 ! -path './PythonPackage*' -exec rm -rf {} +
+
           mv PythonPackage/AMR/* .
           rm -rf PythonPackage
-          ls -lh
-          
-          # Commit and push if changes exist
+
+          git init
+          git remote add origin https://github.com/msberends/AMR
+          git checkout --orphan python-wrapper
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git rm -rf . || true
           git add .
-          git commit -m "Python wrapper update" || echo "No changes to commit"
+          git commit -m "Python wrapper update"
           git push origin python-wrapper --force
