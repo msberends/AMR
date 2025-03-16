@@ -94,9 +94,13 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          artifact-name: 'AMR-{matrix.config.os}-r{matrix.config.r}-result'
 
       - uses: actions/upload-artifact@v4
         with:
           name: testthat-snapshots
-          path: /Users/runner/work/AMR/AMR/check/**/*snaps
+          path: |
+            /Users/runner/work/AMR/AMR/check/*[.](zip|gz)
+            /Users/runner/work/AMR/AMR/check/**/*[.](zip|gz)
+            /Users/runner/work/AMR/AMR/check/**/**/*[.](zip|gz)
           if-no-files-found: warn

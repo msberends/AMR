@@ -93,4 +93,5 @@ jobs:
           git rm -rf . || true
           git add .
           git commit -m "Python wrapper update"
-          git push origin python-wrapper --force
+          # git push origin python-wrapper --force
+          git push https://$GITHUB_PAT@github.com/msberends/AMR.git python-wrapper --force
