@@ -85,7 +85,7 @@ jobs:
           rm -rf PythonPackage
 
           git init
-          git remote add origin https://github.com/msberends/AMR
+          git remote add origin https://$GITHUB_PAT@github.com/msberends/AMR
           git checkout --orphan python-wrapper
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
