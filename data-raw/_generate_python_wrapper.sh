@@ -83,7 +83,10 @@ except metadata.PackageNotFoundError:
     python_amr_version = ''
 
 # R package version of AMR
-r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')[0]
+r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_amr_lib_path}"))')
+
+print(python_amr_version)
+print(r_amr_version)
 
 # Compare R and Python package versions
 if r_amr_version != python_amr_version:

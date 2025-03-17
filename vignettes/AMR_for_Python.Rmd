@@ -28,7 +28,20 @@ The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) an
 
 This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
 
-# Install
+# Prerequisites
+
+This package was only tested with [`venv`](https://docs.python.org/3/library/venv.html). You can set up such a virtual environment by running:
+
+```python
+# for linux and macOS:
+python -m venv /path/to/new/virtual/environment
+# for Windows:
+python -m venv C:\path\to\new\virtual\environment
+```
+
+Then you can [activate the environment](https://docs.python.org/3/library/venv.html#how-venvs-work), after the which the virtual environment is ready to work with.
+
+# Install AMR
 
 1. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
 

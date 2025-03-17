@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9215. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9216. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -8920,7 +8920,20 @@ The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) an
 
 This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
 
-# Install
+# Prerequisites
+
+This package was only tested with [`venv`](https://docs.python.org/3/library/venv.html). You can set up such a virtual environment by running:
+
+```python
+# for linux and macOS:
+python -m venv /path/to/new/virtual/environment
+# for Windows:
+python -m venv C:\path\to\new\virtual\environment
+```
+
+Then you can [activate the environment](https://docs.python.org/3/library/venv.html#how-venvs-work), after the which the virtual environment is ready to work with.
+
+# Install AMR
 
 1. Since the Python package is available on the official [Python Package Index](https://pypi.org/project/AMR/), you can just run:
 
