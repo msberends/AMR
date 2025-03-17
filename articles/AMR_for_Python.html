@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9215</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9216</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,27 +104,40 @@ need to have R installed, Python users can now easily work with AMR data
 directly through Python code.</p>
 </div>
 <div class="section level2">
-<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+<h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
+</h2>
+<p>This package was only tested with <a href="https://docs.python.org/3/library/venv.html" class="external-link"><code>venv</code></a>.
+You can set up such a virtual environment by running:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># for linux and macOS:</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>python <span class="op">-</span>m venv <span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>new<span class="op">/</span>virtual<span class="op">/</span>environment</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># for Windows:</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>python <span class="op">-</span>m venv C:\path\to\new\virtual\environment</span></code></pre></div>
+<p>Then you can <a href="https://docs.python.org/3/library/venv.html#how-venvs-work" class="external-link">activate
+the environment</a>, after the which the virtual environment is ready to
+work with.</p>
+</div>
+<div class="section level2">
+<h2 id="install-amr">Install AMR<a class="anchor" aria-label="anchor" href="#install-amr"></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li>
 <p>Since the Python package is available on the official <a href="https://pypi.org/project/AMR/" class="external-link">Python Package Index</a>, you can
 just run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">pip</span> install AMR</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install AMR</span></code></pre></div>
 </li>
 <li>
 <p>Make sure you have R installed. There is <strong>no need to
 install the <code>AMR</code> R package</strong>, as it will be installed
 automatically.</p>
 <p>For Linux:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Ubuntu / Debian</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">sudo</span> apt install r-base</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># Fedora:</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">sudo</span> dnf install R</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># CentOS/RHEL</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="fu">sudo</span> yum install R</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Ubuntu / Debian</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">sudo</span> apt install r-base</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Fedora:</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">sudo</span> dnf install R</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># CentOS/RHEL</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="fu">sudo</span> yum install R</span></code></pre></div>
 <p>For macOS (using <a href="https://brew.sh" class="external-link">Homebrew</a>):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">brew</span> install r</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">brew</span> install r</span></code></pre></div>
 <p>For Windows, visit the <a href="https://cran.r-project.org" class="external-link">CRAN
 download page</a> to download and install R.</p>
 </li>
@@ -138,22 +151,22 @@ download page</a> to download and install R.</p>
 </h3>
 <p>Here’s an example that demonstrates how to clean microorganism and
 drug names using the <code>AMR</code> Python package:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="im">import</span> AMR</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># Sample data</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>data <span class="op">=</span> {</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="st">"MOs"</span>: [<span class="st">'E. coli'</span>, <span class="st">'ESCCOL'</span>, <span class="st">'esco'</span>, <span class="st">'Esche coli'</span>],</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="st">"Drug"</span>: [<span class="st">'Cipro'</span>, <span class="st">'CIP'</span>, <span class="st">'J01MA02'</span>, <span class="st">'Ciproxin'</span>]</span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>}</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co"># Use AMR functions to clean microorganism and drug names</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>df[<span class="st">'MO_clean'</span>] <span class="op">=</span> AMR.mo_name(df[<span class="st">'MOs'</span>])</span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>df[<span class="st">'Drug_clean'</span>] <span class="op">=</span> AMR.ab_name(df[<span class="st">'Drug'</span>])</span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># Display the results</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="bu">print</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">import</span> AMR</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Sample data</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="st">"MOs"</span>: [<span class="st">'E. coli'</span>, <span class="st">'ESCCOL'</span>, <span class="st">'esco'</span>, <span class="st">'Esche coli'</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="st">"Drug"</span>: [<span class="st">'Cipro'</span>, <span class="st">'CIP'</span>, <span class="st">'J01MA02'</span>, <span class="st">'Ciproxin'</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># Use AMR functions to clean microorganism and drug names</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>df[<span class="st">'MO_clean'</span>] <span class="op">=</span> AMR.mo_name(df[<span class="st">'MOs'</span>])</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>df[<span class="st">'Drug_clean'</span>] <span class="op">=</span> AMR.ab_name(df[<span class="st">'Drug'</span>])</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co"># Display the results</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="bu">print</span>(df)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th>MOs</th>
@@ -207,12 +220,12 @@ the standard name, “Ciprofloxacin”.</p></li>
 <div class="section level3">
 <h3 id="calculating-amr">Calculating AMR<a class="anchor" aria-label="anchor" href="#calculating-amr"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> AMR</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>df <span class="op">=</span> AMR.example_isolates</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>result <span class="op">=</span> AMR.resistance(df[<span class="st">"AMX"</span>])</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> AMR</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>df <span class="op">=</span> AMR.example_isolates</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>result <span class="op">=</span> AMR.resistance(df[<span class="st">"AMX"</span>])</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div>
 <pre><code>[0.59555556]</code></pre>
 </div>
 <div class="section level3">
@@ -222,8 +235,8 @@ the standard name, “Ciprofloxacin”.</p></li>
 generating an antibiogram, a table that summarises the antimicrobial
 susceptibility of bacterial isolates. Here’s how you can generate an
 antibiogram from Python:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>result2a <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]])</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="bu">print</span>(result2a)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>result2a <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]])</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="bu">print</span>(result2a)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="22%">
@@ -294,8 +307,8 @@ antibiogram from Python:</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>result2b <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]], mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="bu">print</span>(result2b)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>result2b <span class="op">=</span> AMR.antibiogram(df[[<span class="st">"mo"</span>, <span class="st">"AMX"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>]], mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="bu">print</span>(result2b)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="20%">
@@ -335,7 +348,7 @@ the <code>AMR</code> R package, <code>microorganisms</code>,
 <code>antimicrobials</code>, <code>clinical_breakpoints</code>, and
 <code>example_isolates</code>, are now available as regular Python data
 frames:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>AMR.microorganisms</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>AMR.microorganisms</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -470,7 +483,7 @@ frames:</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>AMR.antimicrobials</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>AMR.antimicrobials</span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="4%">
