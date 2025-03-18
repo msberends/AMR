@@ -28,13 +28,11 @@ antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   info = interactive(), ...)
 
 wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
-  syndromic_group = NULL, add_total_n = FALSE, only_all_tested = FALSE,
-  digits = 1,
+  syndromic_group = NULL, digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
-  col_mo = NULL, language = get_AMR_locale(), minimum = 30,
-  combine_SI = TRUE, sep = " + ", simulations = 1000,
-  conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), ...)
+  col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
+  sep = " + ", simulations = 1000, conf_interval = 0.95,
+  interval_side = "two-tailed", info = interactive(), ...)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -48,7 +46,25 @@ retrieve_wisca_parameters(wisca_model, ...)
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
 
-\item{antimicrobials}{vector of any antimicrobial name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antimicrobial_selectors]{antimicrobial selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as \code{"TZP+TOB"} or \code{"cipro + genta"}, given that columns resembling such antimicrobials exist in \code{x}. See \emph{Examples}.}
+\item{antimicrobials}{a vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:
+\itemize{
+\item Any antimicrobial name or code
+\item A column name in \code{x} that contains SIR values
+\item Any \link[=antimicrobial_selectors]{antimicrobial selector}, such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}
+\item A combination of the above, using \code{c()}, e.g.:
+\itemize{
+\item \code{c(aminoglycosides(), "AMP", "AMC")}
+\item \code{c(aminoglycosides(), carbapenems())}
+}
+\item Combination therapy, indicated by using \code{"+"}, with or without \link[=antimicrobial_selectors]{antimicrobial selectors}, e.g.:
+\itemize{
+\item \code{"TZP+TOB"}
+\item \code{"cipro + genta"}
+\item \code{carbapenems() + "GEN"}
+\item \code{carbapenems() + c("", "GEN")}
+\item \code{carbapenems() + c("", aminoglycosides())}
+}
+}}
 
 \item{mo_transform}{a character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
 
@@ -358,6 +374,12 @@ antibiogram(example_isolates,
 # combined antimicrobials yield higher empiric coverage
 antibiogram(example_isolates,
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+  mo_transform = "gramstain"
+)
+
+# you can use any antimicrobial selector with `+` too:
+antibiogram(example_isolates,
+  antimicrobials = ureidopenicillins() + c("", "GEN", "tobra"),
   mo_transform = "gramstain"
 )
 

@@ -19,8 +19,10 @@ for (Jxx in c("J01", "J02", "J04")) {
   complete_vector <- c(complete_vector, out)
 }
 
+complete_vector.bak <- complete_vector
 next_codes <- gsub("(.*?) .*", "\\1", complete_vector)
 for (Jxxx in next_codes) {
+  message("Checking ", Jxxx)
   site <- gsub("{code}", Jxxx, url, fixed = TRUE)
   tbl <- site |>
     read_html() |>
@@ -36,7 +38,7 @@ for (Jxxx in next_codes) {
 next_codes <- gsub("(.*?) .*", "\\1", complete_vector[complete_vector %like% "[A-Z][0-9][0-9][A-Z][A-Z]"])
 complete_tbl <- NULL
 for (Jxxxxx in next_codes) {
-  message(Jxxxxx)
+  message("Checking ", Jxxxxx)
   site <- gsub("{code}", Jxxxxx, url, fixed = TRUE)
   tbl <- site |>
     read_html() |>
@@ -66,20 +68,37 @@ new_ab <- complete_tbl |>
   ) |>
   mutate(name = paste0(substr(toupper(name), 1, 1), substr(name, 2, 999))) |>
   mutate(name = gsub(" and ", "/", name)) |>
-  filter(name %unlike% "^Combinations") |>
+  filter(name %unlike% "^Combinations",
+         name %unlike% "/beta[-]lactamase inhibitor",
+         name %unlike% "combinations") |>
   arrange(name)
+
+new_atcs <- new_ab |>
+  mutate(name_gen = generalise_antibiotic_name(name)) |>
+  filter(name_gen %in% AMR_env$AB_lookup$generalised_name) |>
+  mutate(ab = as.ab(name_gen))
+new_atcs$atc_group1 <- complete_vector
+for (i in seq_len(nrow(new_atcs))) {
+  # fill in DDDs and ATC code
+  antimicrobials$oral_ddd[which(antimicrobials$ab == new_atcs$ab[i])] <- new_atcs$oral_ddd[i]
+  antimicrobials$oral_units[which(antimicrobials$ab == new_atcs$ab[i])] <- new_atcs$oral_units[i]
+  antimicrobials$iv_ddd[which(antimicrobials$ab == new_atcs$ab[i])] <- new_atcs$iv_ddd[i]
+  antimicrobials$iv_units[which(antimicrobials$ab == new_atcs$ab[i])] <- new_atcs$iv_units[i]
+  antimicrobials$atc[which(antimicrobials$ab == new_atcs$ab[i])] <- list(c(antimicrobials$atc[which(antimicrobials$ab == new_atcs$ab[i])][[1]], new_atcs$atc[i]))
+}
+
 
 # check these - any new?
 new_ab |>
-  filter(!name %in% antibiotics$name | !atc %in% unlist(antibiotics$atc)) |>
+  filter(!name %in% antimicrobials$name | !atc %in% unlist(antimicrobials$atc)) |>
   mutate(
     name_old = ab_name(atc, language = NULL),
-    new = !atc %in% unlist(antibiotics$atc)
+    new = !atc %in% unlist(antimicrobials$atc)
   ) |>
   View()
 
 
-atc_ref <- antibiotics |>
+atc_ref <- antimicrobials |>
   select(ab, group, atc_group1, atc_group2) |>
   mutate(atc = ab_atc(ab, only_first = TRUE)) |>
   filter(!is.na(atc)) |>
@@ -91,7 +110,7 @@ atc_ref <- atc_ref |>
   arrange(atc, group, atc_group1, atc_group2) |>
   distinct(atc, .keep_all = TRUE)
 
-antibiotics |>
+antimicrobials |>
   bind_rows(new |>
     select(-group, -atc_group1, -atc_group2) |>
     left_join(atc_ref, by = c("atc_part" = "atc")) %>%

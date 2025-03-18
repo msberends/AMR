@@ -34,7 +34,19 @@
 #'
 #' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
 #' @param x a [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()])
-#' @param antimicrobials vector of any antimicrobial name or code (will be evaluated with [as.ab()], column name of `x`, or (any combinations of) [antimicrobial selectors][antimicrobial_selectors] such as [aminoglycosides()] or [carbapenems()]. For combination antibiograms, this can also be set to values separated with `"+"`, such as `"TZP+TOB"` or `"cipro + genta"`, given that columns resembling such antimicrobials exist in `x`. See *Examples*.
+#' @param antimicrobials a vector specifying the antimicrobials to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:
+#'   - Any antimicrobial name or code
+#'   - A column name in `x` that contains SIR values
+#'   - Any [antimicrobial selector][antimicrobial_selectors], such as [aminoglycosides()] or [carbapenems()]
+#'   - A combination of the above, using `c()`, e.g.:
+#'     - `c(aminoglycosides(), "AMP", "AMC")`
+#'     - `c(aminoglycosides(), carbapenems())`
+#'   - Combination therapy, indicated by using `"+"`, with or without [antimicrobial selectors][antimicrobial_selectors], e.g.:
+#'     - `"TZP+TOB"`
+#'     - `"cipro + genta"`
+#'     - `carbapenems() + "GEN"`
+#'     - `carbapenems() + c("", "GEN")`
+#'     - `carbapenems() + c("", aminoglycosides())`
 #' @param mo_transform a character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input or `NA` to consider all microorganisms 'unknown'.
 #' @param ab_transform a character to transform antimicrobial input - must be one of the column names of the [antimicrobials] data set (defaults to `"name"`): `r vector_or(colnames(antimicrobials), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group a column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
@@ -49,8 +61,8 @@
 #' @param sep a separating character for antimicrobial columns in combination antibiograms
 #' @param wisca a [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Set `simulations`, `conf_interval`, and `interval_side` to adjust.
 #' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations
-#' @param conf_interval (for WISCA) a numerical value to set confidence interval (default is `0.95`)
-#' @param interval_side (for WISCA) the side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`
+#' @param conf_interval a numerical value to set confidence interval (default is `0.95`)
+#' @param interval_side the side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`
 #' @param info 	a [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
 #' @param object an [antibiogram()] object
 #' @param ... when used in [R Markdown or Quarto][knitr::kable()]: arguments passed on to [knitr::kable()] (otherwise, has no use)
@@ -322,6 +334,12 @@
 #' # combined antimicrobials yield higher empiric coverage
 #' antibiogram(example_isolates,
 #'   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+#'   mo_transform = "gramstain"
+#' )
+#' 
+#' # you can use any antimicrobial selector with `+` too:
+#' antibiogram(example_isolates,
+#'   antimicrobials = ureidopenicillins() + c("", "GEN", "tobra"),
 #'   mo_transform = "gramstain"
 #' )
 #'
@@ -1129,13 +1147,10 @@ wisca <- function(x,
                   antimicrobials = where(is.sir),
                   ab_transform = "name",
                   syndromic_group = NULL,
-                  add_total_n = FALSE,
-                  only_all_tested = FALSE,
                   digits = 1,
                   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
                   col_mo = NULL,
                   language = get_AMR_locale(),
-                  minimum = 30,
                   combine_SI = TRUE,
                   sep = " + ",
                   simulations = 1000,
@@ -1149,13 +1164,12 @@ wisca <- function(x,
     ab_transform = ab_transform,
     mo_transform = NULL,
     syndromic_group = syndromic_group,
-    add_total_n = add_total_n,
-    only_all_tested = only_all_tested,
+    add_total_n = FALSE,
+    only_all_tested = FALSE,
     digits = digits,
     formatting_type = formatting_type,
     col_mo = col_mo,
     language = language,
-    minimum = minimum,
     combine_SI = combine_SI,
     sep = sep,
     wisca = TRUE,

@@ -155,6 +155,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_new[known_names] <- AMR_env$AB_lookup$ab[match(x[known_names], AMR_env$AB_lookup$generalised_name)]
   known_codes_ab <- x %in% AMR_env$AB_lookup$ab
   known_codes_atc <- vapply(FUN.VALUE = logical(1), gsub(" ", "", x), function(x_) x_ %in% unlist(AMR_env$AB_lookup$atc), USE.NAMES = FALSE)
+  known_codes_synonyms <- vapply(FUN.VALUE = logical(1), gsub(" ", "", tolower(x)), function(x_) x_ %in% tolower(unlist(AMR_env$AB_lookup$synonyms)), USE.NAMES = FALSE)
   known_codes_cid <- x %in% AMR_env$AB_lookup$cid
   x_new[known_codes_ab] <- AMR_env$AB_lookup$ab[match(x[known_codes_ab], AMR_env$AB_lookup$ab)]
   x_new[known_codes_atc] <- AMR_env$AB_lookup$ab[vapply(
@@ -165,6 +166,18 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
         FUN.VALUE = logical(1),
         AMR_env$AB_lookup$atc,
         function(atc) x_ %in% atc
+      ))[1L]
+    },
+    USE.NAMES = FALSE
+  )]
+  x_new[known_codes_synonyms] <- AMR_env$AB_lookup$ab[vapply(
+    FUN.VALUE = integer(1),
+    gsub(" ", "", tolower(x[known_codes_synonyms])),
+    function(x_) {
+      which(vapply(
+        FUN.VALUE = logical(1),
+        AMR_env$AB_lookup$synonyms,
+        function(syns) x_ %in% tolower(syns)
       ))[1L]
     },
     USE.NAMES = FALSE
@@ -180,7 +193,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     )
   }
 
-  already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
+  already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_synonyms | known_codes_cid | previously_coerced
 
   # fix for NAs
   x_new[is.na(x)] <- NA

@@ -148,7 +148,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"amr_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobials that the function would be able to select or filter.
 }
 \description{
-These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations.
+These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations. They can be used in base \R, tidyverse, tidymodels, and \code{data.table}.
 
 In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up using:
 

@@ -29,7 +29,7 @@
 
 #' Antimicrobial Selectors
 #'
-#' @description These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations.
+#' @description These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations. They can be used in base \R, tidyverse, tidymodels, and `data.table`.
 #'
 #' In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up using:
 #'
@@ -947,6 +947,15 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
   # e.g., for: example_isolates[, penicillins() | administrable_per_os()]
   structure(union(unclass(e1), unclass(e2)),
     class = c("amr_selector", "character")
+  )
+}
+#' @method + amr_selector
+#' @export
+#' @noRd
+`+.amr_selector` <- function(e1, e2) {
+  # this is useful for `antibiogram()`: antibiogram(example_isolates, carbapenems() + c("", "GEN", "TOB"))
+  structure(as.character(outer(e1, e2, paste, sep = " + ")),
+            class = c("amr_selector", "character")
   )
 }
 

@@ -308,7 +308,7 @@ genus_species	one_of	"Streptococcus milleri, Streptococcus acidominimus, Strepto
 genus_species	one_of	"Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis"	AMP	I	"AMX, AMC, SAM, PIP, TZP"	I	Viridans group streptococci	Breakpoints	12	"paste(""Streptococcus"", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == ""B_STRPT_VIRI"")]), collapse = "", "")"
 genus_species	one_of	"Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis"	AMP	R	"AMX, AMC, SAM, PIP, TZP"	R	Viridans group streptococci	Breakpoints	12	"paste(""Streptococcus"", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == ""B_STRPT_VIRI"")]), collapse = "", "")"
 genus_species	is	Haemophilus influenzae	PEN-S	S	"AMC, AMP, AMX, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP"	S	Haemophilus influenzae	Breakpoints	12	"x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == ""EUCAST 2022"" & clinical_breakpoints$mo == as.mo(""H. influenzae""))]), ""IMR"", ""MEV""); sort(x[x %in% betalactams()])"
-genus_species	is	Haemophilus influenzae	"PEN-S, BTL-S"	"R, R"	"AMP, AMX, PIP"	R	Haemophilus influenzae	Breakpoints	12	
+genus_species	is	Haemophilus influenzae	"PEN-S, BLA-S"	"R, R"	"AMP, AMX, PIP"	R	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	AMC	R	SAM	R	Haemophilus influenzae	Breakpoints	12	
@@ -317,7 +317,7 @@ genus_species	is	Haemophilus influenzae	NAL-S	I	"CIP, LVX, MFX, OFX"	I	Haemophil
 genus_species	is	Haemophilus influenzae	NAL-S	R	"CIP, LVX, MFX, OFX"	R	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	TCY	S	"DOX, MNO"	S	Haemophilus influenzae	Breakpoints	12	
 genus_species	is	Haemophilus influenzae	TCY	R	"DOX, MNO"	R	Haemophilus influenzae	Breakpoints	12	
-genus_species	is	Moraxella catarrhalis	BTL-S	R	"AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC"	R	Moraxella catarrhalis	Breakpoints	12	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
+genus_species	is	Moraxella catarrhalis	BLA-S	R	"AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC"	R	Moraxella catarrhalis	Breakpoints	12	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
 genus_species	is	Moraxella catarrhalis	AMC	S	TZP	S	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	AMC	I	TZP	I	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	AMC	R	TZP	R	Moraxella catarrhalis	Breakpoints	12	
@@ -327,10 +327,10 @@ genus_species	is	Moraxella catarrhalis	ERY	S	"AZM, CLR, RXT"	S	Moraxella catarrh
 genus_species	is	Moraxella catarrhalis	ERY	R	"AZM, CLR, RXT"	R	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	TCY	S	"DOX, MNO"	S	Moraxella catarrhalis	Breakpoints	12	
 genus_species	is	Moraxella catarrhalis	TCY	R	"DOX, MNO"	R	Moraxella catarrhalis	Breakpoints	12	
-genus_species	is	Neisseria gonorrhoeae	BTL-S	R	"AMP, AMX"	R	Neisseria gonorrhoeae	Breakpoints	12	
-genus_species	is	Neisseria gonorrhoeae	"BTL-S, PEN"	"S, S"	"AMP, AMX"	S	Neisseria gonorrhoeae	Breakpoints	12	
-genus_species	is	Neisseria gonorrhoeae	"BTL-S, PEN"	"S, I"	"AMP, AMX"	I	Neisseria gonorrhoeae	Breakpoints	12	
-genus_species	is	Neisseria gonorrhoeae	"BTL-S, PEN"	"S, R"	"AMP, AMX"	R	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	BLA-S	R	"AMP, AMX"	R	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	"BLA-S, PEN"	"S, S"	"AMP, AMX"	S	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	"BLA-S, PEN"	"S, I"	"AMP, AMX"	I	Neisseria gonorrhoeae	Breakpoints	12	
+genus_species	is	Neisseria gonorrhoeae	"BLA-S, PEN"	"S, R"	"AMP, AMX"	R	Neisseria gonorrhoeae	Breakpoints	12	
 genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	Neisseria meningitidis	Breakpoints	12	
 genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	Neisseria meningitidis	Breakpoints	12	
 genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	Neisseria meningitidis	Breakpoints	12	
@@ -386,7 +386,7 @@ genus_species	is	"Aerococcus sanguinicola, Aerococcus urinae"	CIP	R	LVX	R	Aeroco
 genus_species	is	"Aerococcus sanguinicola, Aerococcus urinae"	NOR-S	S	fluoroquinolones	S	Aerococcus sanguinicola/urinae	Breakpoints	12	
 genus_species	is	"Aerococcus sanguinicola, Aerococcus urinae"	NOR-S	I	fluoroquinolones	I	Aerococcus sanguinicola/urinae	Breakpoints	12	
 genus_species	is	"Aerococcus sanguinicola, Aerococcus urinae"	NOR-S	R	fluoroquinolones	R	Aerococcus sanguinicola/urinae	Breakpoints	12	
-genus_species	is	Kingella kingae	BTL-S	R	"PEN, AMP, AMX"	R	Kingella kingae	Breakpoints	12	
+genus_species	is	Kingella kingae	BLA-S	R	"PEN, AMP, AMX"	R	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	PEN	S	"AMP, AMX"	S	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	PEN	I	"AMP, AMX"	I	Kingella kingae	Breakpoints	12	
 genus_species	is	Kingella kingae	PEN	R	"AMP, AMX"	R	Kingella kingae	Breakpoints	12	
@@ -493,7 +493,7 @@ genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptoc
 genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	I	AMX, AMC, SAM, PIP, TZP	I	Viridans group streptococci	Breakpoints	13.1	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	R	AMX, AMC, SAM, PIP, TZP	R	Viridans group streptococci	Breakpoints	13.1	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP	S	Haemophilus influenzae	Breakpoints	13.1	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()])
-genus_species	is	Haemophilus influenzae	PEN-S, BTL-S	R, R	AMP, AMX, PIP	R	Haemophilus influenzae	Breakpoints	13.1	
+genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	Haemophilus influenzae	Breakpoints	13.1	
 genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	Haemophilus influenzae	Breakpoints	13.1	
 genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	Haemophilus influenzae	Breakpoints	13.1	
 genus_species	is	Haemophilus influenzae	AMC	R	SAM	R	Haemophilus influenzae	Breakpoints	13.1	
@@ -502,7 +502,7 @@ genus_species	is	Haemophilus influenzae	NAL-S	I	CIP, LVX, MFX, OFX	I	Haemophilus
 genus_species	is	Haemophilus influenzae	NAL-S	R	CIP, LVX, MFX, OFX	R	Haemophilus influenzae	Breakpoints	13.1	
 genus_species	is	Haemophilus influenzae	TCY	S	DOX, MNO	S	Haemophilus influenzae	Breakpoints	13.1	
 genus_species	is	Haemophilus influenzae	TCY	R	DOX, MNO	R	Haemophilus influenzae	Breakpoints	13.1	
-genus_species	is	Moraxella catarrhalis	BTL-S	R	AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC	R	Moraxella catarrhalis	Breakpoints	13.1	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
+genus_species	is	Moraxella catarrhalis	BLA-S	R	AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC	R	Moraxella catarrhalis	Breakpoints	13.1	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
 genus_species	is	Moraxella catarrhalis	AMC	S	TZP	S	Moraxella catarrhalis	Breakpoints	13.1	
 genus_species	is	Moraxella catarrhalis	AMC	I	TZP	I	Moraxella catarrhalis	Breakpoints	13.1	
 genus_species	is	Moraxella catarrhalis	AMC	R	TZP	R	Moraxella catarrhalis	Breakpoints	13.1	
@@ -512,10 +512,10 @@ genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhal
 genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints	13.1	
 genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints	13.1	
 genus_species	is	Moraxella catarrhalis	TCY	R	DOX, MNO	R	Moraxella catarrhalis	Breakpoints	13.1	
-genus_species	is	Neisseria gonorrhoeae	BTL-S	R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	13.1	
-genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, S	AMP, AMX	S	Neisseria gonorrhoeae	Breakpoints	13.1	
-genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, I	AMP, AMX	I	Neisseria gonorrhoeae	Breakpoints	13.1	
-genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	13.1	
+genus_species	is	Neisseria gonorrhoeae	BLA-S	R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	13.1	
+genus_species	is	Neisseria gonorrhoeae	BLA-S, PEN	S, S	AMP, AMX	S	Neisseria gonorrhoeae	Breakpoints	13.1	
+genus_species	is	Neisseria gonorrhoeae	BLA-S, PEN	S, I	AMP, AMX	I	Neisseria gonorrhoeae	Breakpoints	13.1	
+genus_species	is	Neisseria gonorrhoeae	BLA-S, PEN	S, R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	13.1	
 genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	Neisseria meningitidis	Breakpoints	13.1	
 genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	Neisseria meningitidis	Breakpoints	13.1	
 genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	Neisseria meningitidis	Breakpoints	13.1	
@@ -571,7 +571,7 @@ genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	Aerococc
 genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	Aerococcus sanguinicola/urinae	Breakpoints	13.1	
 genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	Aerococcus sanguinicola/urinae	Breakpoints	13.1	
 genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	Aerococcus sanguinicola/urinae	Breakpoints	13.1	
-genus_species	is	Kingella kingae	BTL-S	R	PEN, AMP, AMX	R	Kingella kingae	Breakpoints	13.1	
+genus_species	is	Kingella kingae	BLA-S	R	PEN, AMP, AMX	R	Kingella kingae	Breakpoints	13.1	
 genus_species	is	Kingella kingae	PEN	S	AMP, AMX	S	Kingella kingae	Breakpoints	13.1	
 genus_species	is	Kingella kingae	PEN	I	AMP, AMX	I	Kingella kingae	Breakpoints	13.1	
 genus_species	is	Kingella kingae	PEN	R	AMP, AMX	R	Kingella kingae	Breakpoints	13.1	
@@ -679,7 +679,7 @@ genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptoc
 genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	I	AMX, AMC, SAM, PIP, TZP	I	Viridans group streptococci	Breakpoints	14	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 genus_species	one_of	Streptococcus milleri, Streptococcus acidominimus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus anginosus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus constellatus, Streptococcus criceti, Streptococcus cristatus, Streptococcus downei, Streptococcus equinus, Streptococcus ferus, Streptococcus gordonii, Streptococcus intermedius, Streptococcus macacae, Streptococcus mitis, Streptococcus mutans, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus oralis, Streptococcus parasanguinis, Streptococcus ratti, Streptococcus salivarius, Streptococcus salivarius, Streptococcus thermophilus, Streptococcus sanguinis, Streptococcus sobrinus, Streptococcus suis, Streptococcus uberis, Streptococcus vestibularis	AMP	R	AMX, AMC, SAM, PIP, TZP	R	Viridans group streptococci	Breakpoints	14	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP	S	Haemophilus influenzae	Breakpoints	14	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()])
-genus_species	is	Haemophilus influenzae	PEN-S, BTL-S	R, R	AMP, AMX, PIP	R	Haemophilus influenzae	Breakpoints	14	
+genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	Haemophilus influenzae	Breakpoints	14	
 genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	Haemophilus influenzae	Breakpoints	14	
 genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	Haemophilus influenzae	Breakpoints	14	
 genus_species	is	Haemophilus influenzae	AMC	R	SAM	R	Haemophilus influenzae	Breakpoints	14	
@@ -688,7 +688,7 @@ genus_species	is	Haemophilus influenzae	NAL-S	I	CIP, LVX, MFX, OFX	I	Haemophilus
 genus_species	is	Haemophilus influenzae	NAL-S	R	CIP, LVX, MFX, OFX	R	Haemophilus influenzae	Breakpoints	14	
 genus_species	is	Haemophilus influenzae	TCY	S	DOX, MNO	S	Haemophilus influenzae	Breakpoints	14	
 genus_species	is	Haemophilus influenzae	TCY	R	DOX, MNO	R	Haemophilus influenzae	Breakpoints	14	
-genus_species	is	Moraxella catarrhalis	BTL-S	R	AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC	R	Moraxella catarrhalis	Breakpoints	14	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
+genus_species	is	Moraxella catarrhalis	BLA-S	R	AMP, AMX, APL, APX, AZD, AZL, BAM, BNB, BNP, CIC, CLM, CLO, CRB, CRN, DIC, EPC, FLC, HET, LEN, MEC, MET, MEZ, MTM, NAF, OXA, PEN, PHE, PHN, PIP, PME, PNM, PRB, PRC, PRP, PVM, SBC, SLT6, SRX, TAL, TEM, TIC	R	Moraxella catarrhalis	Breakpoints	14	penicillins()[!penicillins() %in% betalactams_with_inhibitor()]
 genus_species	is	Moraxella catarrhalis	AMC	S	TZP	S	Moraxella catarrhalis	Breakpoints	14	
 genus_species	is	Moraxella catarrhalis	AMC	I	TZP	I	Moraxella catarrhalis	Breakpoints	14	
 genus_species	is	Moraxella catarrhalis	AMC	R	TZP	R	Moraxella catarrhalis	Breakpoints	14	
@@ -698,10 +698,10 @@ genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhal
 genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints	14	
 genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints	14	
 genus_species	is	Moraxella catarrhalis	TCY	R	DOX, MNO	R	Moraxella catarrhalis	Breakpoints	14	
-genus_species	is	Neisseria gonorrhoeae	BTL-S	R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	14	
-genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, S	AMP, AMX	S	Neisseria gonorrhoeae	Breakpoints	14	
-genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, I	AMP, AMX	I	Neisseria gonorrhoeae	Breakpoints	14	
-genus_species	is	Neisseria gonorrhoeae	BTL-S, PEN	S, R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	14	
+genus_species	is	Neisseria gonorrhoeae	BLA-S	R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	14	
+genus_species	is	Neisseria gonorrhoeae	BLA-S, PEN	S, S	AMP, AMX	S	Neisseria gonorrhoeae	Breakpoints	14	
+genus_species	is	Neisseria gonorrhoeae	BLA-S, PEN	S, I	AMP, AMX	I	Neisseria gonorrhoeae	Breakpoints	14	
+genus_species	is	Neisseria gonorrhoeae	BLA-S, PEN	S, R	AMP, AMX	R	Neisseria gonorrhoeae	Breakpoints	14	
 genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	Neisseria meningitidis	Breakpoints	14	
 genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	Neisseria meningitidis	Breakpoints	14	
 genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	Neisseria meningitidis	Breakpoints	14	
@@ -755,7 +755,7 @@ genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	Aerococc
 genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	Aerococcus sanguinicola/urinae	Breakpoints	14	
 genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	Aerococcus sanguinicola/urinae	Breakpoints	14	
 genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	Aerococcus sanguinicola/urinae	Breakpoints	14	
-genus_species	is	Kingella kingae	BTL-S	R	PEN, AMP, AMX	R	Kingella kingae	Breakpoints	14	
+genus_species	is	Kingella kingae	BLA-S	R	PEN, AMP, AMX	R	Kingella kingae	Breakpoints	14	
 genus_species	is	Kingella kingae	PEN	S	AMP, AMX	S	Kingella kingae	Breakpoints	14	
 genus_species	is	Kingella kingae	PEN	I	AMP, AMX	I	Kingella kingae	Breakpoints	14	
 genus_species	is	Kingella kingae	PEN	R	AMP, AMX	R	Kingella kingae	Breakpoints	14	

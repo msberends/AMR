@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9216. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9217. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -13,6 +13,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'NAMESPACE':
 
 S3method("!=",amr_selector)
 S3method("&",amr_selector)
+S3method("+",amr_selector)
 S3method("==",amr_selector)
 S3method("[",ab)
 S3method("[",av)
@@ -1682,13 +1683,11 @@ antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   info = interactive(), ...)
 
 wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
-  syndromic_group = NULL, add_total_n = FALSE, only_all_tested = FALSE,
-  digits = 1,
+  syndromic_group = NULL, digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
-  col_mo = NULL, language = get_AMR_locale(), minimum = 30,
-  combine_SI = TRUE, sep = " + ", simulations = 1000,
-  conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), ...)
+  col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
+  sep = " + ", simulations = 1000, conf_interval = 0.95,
+  interval_side = "two-tailed", info = interactive(), ...)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -1702,7 +1701,25 @@ retrieve_wisca_parameters(wisca_model, ...)
 \arguments{
 \item{x}{a \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
 
-\item{antimicrobials}{vector of any antimicrobial name or code (will be evaluated with \code{\link[=as.ab]{as.ab()}}, column name of \code{x}, or (any combinations of) \link[=antimicrobial_selectors]{antimicrobial selectors} such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}. For combination antibiograms, this can also be set to values separated with \code{"+"}, such as \code{"TZP+TOB"} or \code{"cipro + genta"}, given that columns resembling such antimicrobials exist in \code{x}. See \emph{Examples}.}
+\item{antimicrobials}{a vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:
+\itemize{
+\item Any antimicrobial name or code
+\item A column name in \code{x} that contains SIR values
+\item Any \link[=antimicrobial_selectors]{antimicrobial selector}, such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}
+\item A combination of the above, using \code{c()}, e.g.:
+\itemize{
+\item \code{c(aminoglycosides(), "AMP", "AMC")}
+\item \code{c(aminoglycosides(), carbapenems())}
+}
+\item Combination therapy, indicated by using \code{"+"}, with or without \link[=antimicrobial_selectors]{antimicrobial selectors}, e.g.:
+\itemize{
+\item \code{"TZP+TOB"}
+\item \code{"cipro + genta"}
+\item \code{carbapenems() + "GEN"}
+\item \code{carbapenems() + c("", "GEN")}
+\item \code{carbapenems() + c("", aminoglycosides())}
+}
+}}
 
 \item{mo_transform}{a character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
 
@@ -2015,6 +2032,12 @@ antibiogram(example_isolates,
   mo_transform = "gramstain"
 )
 
+# you can use any antimicrobial selector with `+` too:
+antibiogram(example_isolates,
+  antimicrobials = ureidopenicillins() + c("", "GEN", "tobra"),
+  mo_transform = "gramstain"
+)
+
 # names of antimicrobials do not need to resemble columns exactly:
 antibiogram(example_isolates,
   antimicrobials = c("Cipro", "cipro + genta"),
@@ -2255,7 +2278,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"amr_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobials that the function would be able to select or filter.
 }
 \description{
-These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations.
+These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations. They can be used in base \R, tidyverse, tidymodels, and \code{data.table}.
 
 In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up using:
 
@@ -8916,22 +8939,23 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the [`AMR` Python Package Index](https://pypi.org/project/AMR/).
+The `AMR` package for R is a powerful tool for antimicrobial resistance (AMR) analysis. It provides extensive features for handling microbial and antimicrobial data. However, for those who work primarily in Python, we now have a more intuitive option available: the [`AMR` Python package](https://pypi.org/project/AMR/).
 
-This Python package is a wrapper round the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
+This Python package is a wrapper around the `AMR` R package. It uses the `rpy2` package internally. Despite the need to have R installed, Python users can now easily work with AMR data directly through Python code.
 
 # Prerequisites
 
-This package was only tested with [`venv`](https://docs.python.org/3/library/venv.html). You can set up such a virtual environment by running:
+This package was only tested with a [virtual environment (venv)](https://docs.python.org/3/library/venv.html). You can set up such an environment by running:
 
 ```python
-# for linux and macOS:
+# linux and macOS:
 python -m venv /path/to/new/virtual/environment
-# for Windows:
+
+# Windows:
 python -m venv C:\path\to\new\virtual\environment
 ```
 
-Then you can [activate the environment](https://docs.python.org/3/library/venv.html#how-venvs-work), after the which the virtual environment is ready to work with.
+Then you can [activate the environment](https://docs.python.org/3/library/venv.html#how-venvs-work), after which the venv is ready to work with.
 
 # Install AMR
 

@@ -263,6 +263,8 @@ get_synonyms <- function(CID, clean = TRUE) {
       next
     }
     
+    all_cids <- CID[i]
+    
     # we will now get the closest compounds with a 96% threshold
     similar_cids <- tryCatch(
       data.table::fread(
@@ -276,10 +278,10 @@ get_synonyms <- function(CID, clean = TRUE) {
       )[[1]],
       error = function(e) NA_character_
     )
-    # include the current CID of course
-    all_cids <- unique(c(CID[i], similar_cids))
-    # but leave out all CIDs that we have in our antimicrobials dataset to prevent duplication
-    all_cids <- all_cids[!all_cids %in% antimicrobials$cid[!is.na(antimicrobials$cid)]]
+    # leave out all CIDs that we have in our antimicrobials dataset to prevent duplication
+    similar_cids <- similar_cids[!similar_cids %in% antimicrobials$cid[!is.na(antimicrobials$cid)]]
+    all_cids <- unique(c(all_cids, similar_cids))
+    
     # for each one, we are getting the synonyms
     current_syns <- character(0)
     for (j in seq_len(length(all_cids))) {
@@ -312,13 +314,17 @@ get_synonyms <- function(CID, clean = TRUE) {
         ))
         synonyms_txt <- gsub("Co-", "Co", synonyms_txt, fixed = TRUE)
         synonyms_txt <- gsub(" ?(mono)?sodium ?", "", ignore.case = TRUE, synonyms_txt)
+        synonyms_txt <- gsub(" ?HCl ?", "", ignore.case = TRUE, synonyms_txt)
         synonyms_txt <- gsub(" ?(injection|pediatric) ?", "", ignore.case = TRUE, synonyms_txt)
-        # only length 6 to 20 and no txt with reading marks or numbers and must start with capital letter (= brand)
+        synonyms_txt <- gsub("[^a-z]+$", "", ignore.case = TRUE, synonyms_txt)
+        # only length 5 to 20 and lower-case names starting with a capital letter
         synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(5:20) &
-                                       !grepl("[-&{},_0-9/:]", synonyms_txt) &
-                                       grepl("^[A-Z]", synonyms_txt, ignore.case = FALSE)]
+                                       grepl("^[A-Z][a-z]+$", synonyms_txt, ignore.case = FALSE)]
         synonyms_txt <- unlist(strsplit(synonyms_txt, ";", fixed = TRUE))
       }
+      
+      # synonyms must not be set for other agents, so remove the duplicates
+      synonyms_txt <- synonyms_txt[!synonyms_txt %in% unlist(synonyms)]
       
       current_syns <- c(current_syns, synonyms_txt)
     }
@@ -335,20 +341,14 @@ synonyms <- get_synonyms(CIDs)
 synonyms.bak <- synonyms
 synonyms <- synonyms.bak
 
-# add existing ones (will be cleaned later)
-for (i in seq_len(length(synonyms))) {
-  old <- unname(unlist(AMR::antimicrobials[i, "synonyms", drop = TRUE]))
-  synonyms[[i]] <- c(unname(synonyms[[i]]), old)
-}
-
 antimicrobials$synonyms <- synonyms
 
 stop("remember to remove co-trimoxazole as synonyms from SMX (Sulfamethoxazole), so it only exists in SXT!")
 sulfa <- antimicrobials[which(antimicrobials$ab == "SMX"), "synonyms", drop = TRUE][[1]]
+add_to_cotrim <- sulfa[sulfa %unlike% "^[s-z]"]
 cotrim <- antimicrobials[which(antimicrobials$ab == "SXT"), "synonyms", drop = TRUE][[1]]
-# 2024-10-06 not the case anymore, no overlapping names: sulfa[sulfa %in% cotrim]
-sulfa <- sulfa[!sulfa %in% cotrim]
-antimicrobials[which(antimicrobials$ab == "SMX"), "synonyms"][[1]][[1]] <- sulfa
+antimicrobials[which(antimicrobials$ab == "SMX"), "synonyms"][[1]][[1]] <- sulfa[!sulfa %in% add_to_cotrim]
+antimicrobials[which(antimicrobials$ab == "SXT"), "synonyms"][[1]][[1]] <- c(cotrim, add_to_cotrim)
 
 
 # now go to end of this file
@@ -791,7 +791,7 @@ antimicrobials <- antimicrobials |>
   bind_rows(
     antimicrobials |>
       filter(ab == "EFF") |>
-      mutate(ab = "BTL-S",
+      mutate(ab = "BLA-S",
              name = paste("Beta-lactamase", "screening test"),
              cid = NA_real_,
              atc = list(character(0)),
