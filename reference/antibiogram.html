@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9216</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9217</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,13 +69,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">wisca</span><span class="op">(</span><span class="va">x</span>, antimicrobials <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>  syndromic_group <span class="op">=</span> <span class="cn">NULL</span>, add_total_n <span class="op">=</span> <span class="cn">FALSE</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  digits <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  syndromic_group <span class="op">=</span> <span class="cn">NULL</span>, digits <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>, <span class="fl">14</span><span class="op">)</span>,</span>
-<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, minimum <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">" + "</span>, simulations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  conf_interval <span class="op">=</span> <span class="fl">0.95</span>, interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>,</span>
-<span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">" + "</span>, simulations <span class="op">=</span> <span class="fl">1000</span>, conf_interval <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">retrieve_wisca_parameters</span><span class="op">(</span><span class="va">wisca_model</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -108,7 +106,19 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-antimicrobials">antimicrobials<a class="anchor" aria-label="anchor" href="#arg-antimicrobials"></a></dt>
-<dd><p>vector of any antimicrobial name or code (will be evaluated with <code><a href="as.ab.html">as.ab()</a></code>, column name of <code>x</code>, or (any combinations of) <a href="antimicrobial_selectors.html">antimicrobial selectors</a> such as <code><a href="antimicrobial_selectors.html">aminoglycosides()</a></code> or <code><a href="antimicrobial_selectors.html">carbapenems()</a></code>. For combination antibiograms, this can also be set to values separated with <code>"+"</code>, such as <code>"TZP+TOB"</code> or <code>"cipro + genta"</code>, given that columns resembling such antimicrobials exist in <code>x</code>. See <em>Examples</em>.</p></dd>
+<dd><p>a vector specifying the antimicrobials to include in the antibiogram (see <em>Examples</em>). Will be evaluated using <code><a href="guess_ab_col.html">guess_ab_col()</a></code>. This can be:</p><ul><li><p>Any antimicrobial name or code</p></li>
+<li><p>A column name in <code>x</code> that contains SIR values</p></li>
+<li><p>Any <a href="antimicrobial_selectors.html">antimicrobial selector</a>, such as <code><a href="antimicrobial_selectors.html">aminoglycosides()</a></code> or <code><a href="antimicrobial_selectors.html">carbapenems()</a></code></p></li>
+<li><p>A combination of the above, using <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, e.g.:</p><ul><li><p><code>c(aminoglycosides(), "AMP", "AMC")</code></p></li>
+<li><p><code>c(aminoglycosides(), carbapenems())</code></p></li>
+</ul></li>
+<li><p>Combination therapy, indicated by using <code>"+"</code>, with or without <a href="antimicrobial_selectors.html">antimicrobial selectors</a>, e.g.:</p><ul><li><p><code>"TZP+TOB"</code></p></li>
+<li><p><code>"cipro + genta"</code></p></li>
+<li><p><code>carbapenems() + "GEN"</code></p></li>
+<li><p><code>carbapenems() + c("", "GEN")</code></p></li>
+<li><p><code>carbapenems() + c("", aminoglycosides())</code></p></li>
+</ul></li>
+</ul></dd>
 
 
 <dt id="arg-mo-transform">mo_transform<a class="anchor" aria-label="anchor" href="#arg-mo-transform"></a></dt>
@@ -480,6 +490,23 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># you can use any antimicrobial selector with `+` too:</span></span></span>
+<span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
+<span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="antimicrobial_selectors.html">ureidopenicillins</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"GEN"</span>, <span class="st">"tobra"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">ureidopenicillins()</span><span style="color: #0000BB;"> using column '</span><span style="color: #0000BB; font-weight: bold;">TZP</span><span style="color: #0000BB;">' (piperacillin/tazobactam)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85-91%,N=641)     99% (97-99%,N=691)     98% (97-99%,N=693)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-pos… 86% (82-89%,N=345)     98% (96-98%,N=1044)    95% (93-97%,N=550)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Piperacillin/tazobactam`,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Piperacillin/tazobactam + Gentamicin`,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​`Piperacillin/tazobactam + Tobramycin`</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># names of antimicrobials do not need to resemble columns exactly:</span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cipro"</span>, <span class="st">"cipro + genta"</span><span class="op">)</span>,</span></span>
@@ -563,9 +590,9 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (WISCA / 95% CI): 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          76.2% (59.9-88.6%)        94.9% (85.2-99.2%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               60.3% (42.8-78.9%)        90.9% (77.4-98.1%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        67.2% (39-92%)            89.9% (68.6-99.4%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          76.5% (60.8-88%)          95.3% (86.4-99.2%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               60.3% (42.1-80.7%)        90.6% (76.4-98.1%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        66.8% (38.4-91.3%)        89.7% (69.9-99.5%)                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -591,8 +618,8 @@ $$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Syndromic Group |Piperacillin/tazobactam |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------|:-----------------------|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |76% (60-88.6%)          |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |59.8% (40.7-80.1%)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |66.2% (38.1-91.3%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |59.8% (40.7-79.7%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |66.2% (37.9-91.3%)      |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
