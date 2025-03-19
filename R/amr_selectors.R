@@ -955,7 +955,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
 `+.amr_selector` <- function(e1, e2) {
   # this is useful for `antibiogram()`: antibiogram(example_isolates, carbapenems() + c("", "GEN", "TOB"))
   structure(as.character(outer(e1, e2, paste, sep = " + ")),
-            class = c("amr_selector", "character")
+    class = c("amr_selector", "character")
   )
 }
 

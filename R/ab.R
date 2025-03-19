@@ -358,7 +358,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
         FUN.VALUE = double(1),
         ab_df$generalised_synonyms,
         function(y) {
-          ifelse(length(y[nchar(y) >= 5]) == 0,
+          ifelse(all(is.na(y)) || length(y[nchar(y) >= 5]) == 0,
             999,
             min(as.double(utils::adist(x[i], y[nchar(y) >= 5],
               ignore.case = FALSE,

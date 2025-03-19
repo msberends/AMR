@@ -336,7 +336,7 @@
 #'   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
 #'   mo_transform = "gramstain"
 #' )
-#' 
+#'
 #' # you can use any antimicrobial selector with `+` too:
 #' antibiogram(example_isolates,
 #'   antimicrobials = ureidopenicillins() + c("", "GEN", "tobra"),
