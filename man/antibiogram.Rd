@@ -94,9 +94,9 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations}
 
-\item{conf_interval}{(for WISCA) a numerical value to set confidence interval (default is \code{0.95})}
+\item{conf_interval}{a numerical value to set confidence interval (default is \code{0.95})}
 
-\item{interval_side}{(for WISCA) the side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}}
+\item{interval_side}{the side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}}
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 

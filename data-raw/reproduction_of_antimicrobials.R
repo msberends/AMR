@@ -1048,12 +1048,12 @@ for (i in 1:nrow(antimicrobials)) {
   if (antimicrobials$ab[i] == "VAN") syn <- syn[syn %unlike% "^tei?ch?o"]
   if (antimicrobials$ab[i] == "CLR") syn <- syn[syn %unlike% "^ery"]
   antimicrobials[i, "atc"][[1]] <- ifelse(length(atc) == 0, list(NA_character_), list(atc))
-  antimicrobials[i, "abbreviations"][[1]] <- ifelse(length(abb) == 0, list(""), list(abb))
-  antimicrobials[i, "synonyms"][[1]] <- ifelse(length(syn) == 0, list(""), list(syn))
+  antimicrobials[i, "abbreviations"][[1]] <- ifelse(length(abb) == 0, list(NA_character_), list(abb))
+  antimicrobials[i, "synonyms"][[1]] <- ifelse(length(syn) == 0, list(NA_character_), list(syn))
   if ("loinc" %in% colnames(antimicrobials)) {
     loinc <- as.character(sort(unique(tolower(antimicrobials[i, "loinc", drop = TRUE][[1]]))))
     loinc <- loinc[loinc != ""]
-    antimicrobials[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
+    antimicrobials[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(NA_character_), list(loinc))
   }
 }
 

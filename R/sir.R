@@ -812,7 +812,7 @@ as.sir.data.frame <- function(x,
     x_mo <- as.mo(x[, col_mo, drop = TRUE])
   }
 
-  for (i in seq_len(length(ab_cols))) {
+  for (i in seq_along(ab_cols)) {
     if (types[i] == "mic") {
       x[, ab_cols[i]] <- x %pm>%
         pm_pull(ab_cols[i]) %pm>%
@@ -1621,7 +1621,7 @@ as_sir_method <- function(method_short,
     }
     notes <- unique(notes)
     if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
-      for (i in seq_len(length(notes))) {
+      for (i in seq_along(notes)) {
         message(word_wrap("  ", AMR_env$bullet_icon, " ", notes[i], add_fn = font_black))
       }
     } else {

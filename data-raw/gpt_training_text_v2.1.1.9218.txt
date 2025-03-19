@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9217. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9218. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1749,9 +1749,9 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations}
 
-\item{conf_interval}{(for WISCA) a numerical value to set confidence interval (default is \code{0.95})}
+\item{conf_interval}{a numerical value to set confidence interval (default is \code{0.95})}
 
-\item{interval_side}{(for WISCA) the side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}}
+\item{interval_side}{the side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}}
 
 \item{info}{a \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
 

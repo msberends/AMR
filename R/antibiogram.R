@@ -565,7 +565,7 @@ antibiogram.default <- function(x,
     # make list unique
     antimicrobials <- unique(user_ab)
     # go through list to set AMR in combinations
-    for (i in seq_len(length(antimicrobials))) {
+    for (i in seq_along(antimicrobials)) {
       abx <- antimicrobials[[i]]
       for (ab in abx) {
         # make sure they are SIR columns
@@ -896,7 +896,7 @@ antibiogram.default <- function(x,
   ab_naming_function <- function(x, t, l, s) {
     x <- strsplit(x, s, fixed = TRUE)
     out <- character(length = length(x))
-    for (i in seq_len(length(x))) {
+    for (i in seq_along(x)) {
       a <- x[[i]]
       if (is.null(t)) {
         # leave as is
@@ -941,7 +941,7 @@ antibiogram.default <- function(x,
 
   if (isTRUE(has_syndromic_group)) {
     grps <- unique(out$syndromic_group)
-    for (i in seq_len(length(grps))) {
+    for (i in seq_along(grps)) {
       grp <- grps[i]
       if (i == 1) {
         new_df <- long_to_wide(out[which(out$syndromic_group == grp), , drop = FALSE])
