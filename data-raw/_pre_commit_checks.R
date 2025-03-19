@@ -628,7 +628,8 @@ suppressMessages(set_AMR_locale("English"))
 
 files_changed <- function(paths = "^(R|data)/") {
   tryCatch({
-    changed_files <- system("git diff --name-only", intern = TRUE)
+    changed_files <- system("git status", intern = TRUE)
+    changed_files <- unlist(strsplit(changed_files, " "))
     any(changed_files %like% paths)
   }, error = function(e) TRUE)
 }
@@ -641,7 +642,7 @@ if (files_changed()) {
 
 # Style pkg ---------------------------------------------------------------
 if (files_changed(paths = "^(R|tests)/")) {
-  sethis::ui_info("Styling package")
+  usethis::ui_info("Styling package")
   styler::style_pkg(include_roxygen_examples = FALSE,
                     exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
 }
