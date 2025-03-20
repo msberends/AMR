@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-ab_property.R", {
+  skip_on_cran()
+
   expect_identical(av_name("ACI", language = NULL), "Aciclovir")
   expect_identical(av_atc("ACI"), "J05AB01")
   expect_identical(av_cid("ACI"), as.integer(135398513))

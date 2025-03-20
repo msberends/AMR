@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-get_episode.R", {
+  skip_on_cran()
+
   x <- data.frame(dates = as.Date(c("2021-01-01", "2021-01-02", "2021-01-05", "2021-01-08", "2021-02-21", "2021-02-22", "2021-02-23", "2021-02-24", "2021-03-01", "2021-03-01")))
   x$absolute <- get_episode(x$dates, episode_days = 7)
   x$relative <- get_episode(x$dates, case_free_days = 7)

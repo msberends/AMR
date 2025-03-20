@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-guess_ab_col.R", {
+  skip_on_cran()
+
   expect_equal(
     guess_ab_col(example_isolates, "amox"),
     "AMX"

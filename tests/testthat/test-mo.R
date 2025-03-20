@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-mo.R", {
+  skip_on_cran()
+
   MOs <- subset(microorganisms, !is.na(mo) & nchar(mo) > 3)
   expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo, keep_synonyms = TRUE)))
 

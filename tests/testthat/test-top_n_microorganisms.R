@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-top_n_microorganisms.R", {
+  skip_on_cran()
+
   out1 <- top_n_microorganisms(example_isolates, n = 3)
   out2 <- top_n_microorganisms(example_isolates, n = 5, property = "genus")
   out3 <- top_n_microorganisms(example_isolates, n = 5, property = "genus", n_for_each = 3)

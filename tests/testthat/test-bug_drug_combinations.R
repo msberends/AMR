@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-bug/drug.R", {
+  skip_on_cran()
+
   b <- suppressWarnings(bug_drug_combinations(example_isolates))
   expect_inherits(b, "bug_drug_combinations")
   expect_output(suppressMessages(print(b)))

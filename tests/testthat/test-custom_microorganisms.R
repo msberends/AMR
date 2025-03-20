@@ -29,6 +29,8 @@
 
 
 test_that("test-custom mo.R", {
+  skip_on_cran()
+
   expect_identical(
     as.mo("Enterobacter asburiae/cloacae"),
     as.mo("Enterobacter asburiae")

@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-italicise_taxonomy.R", {
+  skip_on_cran()
+
   expect_identical(
     italicise_taxonomy("test for E. coli"),
     "test for *E. coli*"

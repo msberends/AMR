@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-join_microorganisms.R", {
+  skip_on_cran()
+
   unjoined <- example_isolates
   inner <- inner_join_microorganisms(example_isolates)
   left <- left_join_microorganisms(example_isolates)

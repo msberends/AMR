@@ -28,5 +28,7 @@
 # ==================================================================== #
 
 test_that("test-availibility.R", {
+  skip_on_cran()
+
   expect_inherits(availability(example_isolates), "data.frame")
 })

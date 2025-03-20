@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-first_isolate.R", {
+  skip_on_cran()
+
   # all four methods
   expect_equal(
     sum(first_isolate(x = example_isolates, method = "isolate-based", info = TRUE), na.rm = TRUE),

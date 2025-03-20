@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-random.R", {
+  skip_on_cran()
+
   expect_inherits(random_mic(100), "mic")
   expect_inherits(random_mic(100, mo = "Klebsiella pneumoniae"), "mic")
   expect_inherits(random_mic(100, mo = "Klebsiella pneumoniae", ab = "meropenem"), "mic")

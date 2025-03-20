@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-g.test.R", {
+  skip_on_cran()
+
   # GOODNESS-OF-FIT
 
   # example 1: clearfield rice vs. red rice

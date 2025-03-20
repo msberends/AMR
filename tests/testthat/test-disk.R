@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-disk.R", {
+  skip_on_cran()
+
   expect_true(as.disk(8) == as.disk("8"))
   expect_true(is.disk(as.disk(8)))
 

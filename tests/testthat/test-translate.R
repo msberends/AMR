@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-translate.R", {
+  skip_on_cran()
+
   expect_identical(mo_genus("B_GRAMP", language = "pt"), "(gênero desconhecido)")
 
   expect_identical(mo_fullname("CoNS", "cs"), "Koaguláza-negativní stafylokok (KNS)")

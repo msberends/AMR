@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-like.R", {
+  skip_on_cran()
+
   expect_true(sum("test" %like% c("^t", "^s")) == 1)
 
   expect_true("test" %like% "test")

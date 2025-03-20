@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-vctrs.R", {
+  skip_on_cran()
+
   # extra tests for {vctrs} pkg support
   if (AMR:::pkg_is_available("tibble")) {
     test <- tibble::tibble(

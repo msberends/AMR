@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-pca.R", {
+  skip_on_cran()
+
   resistance_data <- structure(
     list(
       order = c("Bacillales", "Enterobacterales", "Enterobacterales"),

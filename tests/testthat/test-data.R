@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-data.R", {
+  skip_on_cran()
+
   # IDs should always be unique
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
   expect_identical(class(microorganisms$mo), c("mo", "character"))

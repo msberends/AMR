@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-antibiogram.R", {
+  skip_on_cran()
+
   # Traditional antibiogram ----------------------------------------------
 
   ab1 <- antibiogram(example_isolates,

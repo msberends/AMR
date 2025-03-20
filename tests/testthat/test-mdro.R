@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-mdro.R", {
+  skip_on_cran()
+
   expect_error(mdro(example_isolates, guideline = c("BRMO", "MRGN"), info = TRUE))
   expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 

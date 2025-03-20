@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-_deprecated.R", {
+  skip_on_cran()
+
   expect_warning(example_isolates[, ab_class("mycobact")])
   expect_warning(example_isolates[, ab_selector(name %like% "trim")])
 })

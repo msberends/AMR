@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-ab_property.R", {
+  skip_on_cran()
+
   ab_reset_session()
 
   expect_identical(ab_name("AMX", language = NULL), "Amoxicillin")

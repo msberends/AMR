@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-eucast_rules.R", {
+  skip_on_cran()
+
   # thoroughly check input table
   expect_equal(
     colnames(AMR:::EUCAST_RULES_DF),

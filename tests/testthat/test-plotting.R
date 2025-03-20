@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-plotting.R", {
+  skip_on_cran()
+
   if (AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
     pdf(NULL) # prevent Rplots.pdf being created
 

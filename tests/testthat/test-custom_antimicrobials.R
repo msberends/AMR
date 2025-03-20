@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-custom ab.R", {
+  skip_on_cran()
+
   ab_reset_session()
 
   expect_message(as.ab("testab", info = TRUE))

@@ -43,6 +43,7 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
       code
     }
     expect_output <- tinytest::expect_stdout
+    skip_on_cran <- function() invisible(NULL)
     
     # set language
     set_AMR_locale("English")

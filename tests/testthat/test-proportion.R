@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-proportion.R", {
+  skip_on_cran()
+
   expect_equal(proportion_R(example_isolates$AMX), resistance(example_isolates$AMX))
   expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX))
   # AMX resistance in `example_isolates`

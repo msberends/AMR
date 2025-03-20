@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-misc.R", {
+  skip_on_cran()
+
   expect_equal(AMR:::percentage(0.25), "25%")
   expect_equal(AMR:::percentage(0.5), "50%")
   expect_equal(AMR:::percentage(0.500, digits = 1), "50.0%")

@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-kurtosis.R", {
+  skip_on_cran()
+
   expect_equal(kurtosis(example_isolates$age),
     5.227999,
     tolerance = 0.00001

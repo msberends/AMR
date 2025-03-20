@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-av_from_text.R", {
+  skip_on_cran()
+
   expect_identical(
     av_from_text("28/03/2020 regular aciclovir 500mg po tds")[[1]],
     as.av("Aciclovir")

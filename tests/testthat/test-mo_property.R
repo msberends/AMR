@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-mo_property.R", {
+  skip_on_cran()
+
   expect_equal(mo_kingdom("Escherichia coli"), "Bacteria")
   expect_equal(mo_kingdom("Escherichia coli"), mo_domain("Escherichia coli"))
   expect_equal(mo_phylum("Escherichia coli"), "Pseudomonadota")

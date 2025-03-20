@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-av.R", {
+  skip_on_cran()
+
   expect_equal(
     as.character(as.av(c(
       "J05AB01",

@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-ggplot_sir.R", {
+  skip_on_cran()
+
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE) &&
     AMR:::pkg_is_available("ggplot2", also_load = TRUE)) {
     pdf(NULL) # prevent Rplots.pdf being created

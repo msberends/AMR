@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-ab.R", {
+  skip_on_cran()
+
   ab_reset_session()
 
   expect_equal(

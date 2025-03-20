@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-sir.R", {
+  skip_on_cran()
+
   # Existing SIR ------------------------------------------------------------
 
   # we must only have EUCAST and CLSI, because otherwise the rules in as.sir() will fail

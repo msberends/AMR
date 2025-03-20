@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-amr selectors.R", {
+  skip_on_cran()
+
   # antibiotic class selectors
   expect_equal(ncol(example_isolates[, aminoglycosides(), drop = FALSE]), 4, tolerance = 0.5)
   expect_equal(ncol(example_isolates[, aminopenicillins(), drop = FALSE]), 2, tolerance = 0.5)

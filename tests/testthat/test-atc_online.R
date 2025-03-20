@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-atc_online.R", {
+  skip_on_cran()
+
   if (AMR:::pkg_is_available("curl") &&
     AMR:::pkg_is_available("rvest") &&
     AMR:::pkg_is_available("xml2") &&

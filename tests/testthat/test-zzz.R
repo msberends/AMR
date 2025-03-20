@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-zzz.R", {
+  skip_on_cran()
+
   # Check if these functions still exist in their package (all are in Suggests field)
   # Since GitHub Actions runs every night, we will get emailed when a dependency fails based on this unit test
 

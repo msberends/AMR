@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-mean_amr_distance.R", {
+  skip_on_cran()
+
   vctr_disk <- as.disk(c(20:25))
   vctr_mic <- as.mic(2^c(0:5))
   vctr_sir <- as.sir(c("S", "S", "I", "I", "R", "R"))

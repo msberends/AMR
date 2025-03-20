@@ -28,6 +28,8 @@
 # ==================================================================== #
 
 test_that("test-skewness.R", {
+  skip_on_cran()
+
   expect_equal(skewness(example_isolates$age),
     -1.212888,
     tolerance = 0.00001
