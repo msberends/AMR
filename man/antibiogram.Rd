@@ -58,8 +58,9 @@ retrieve_wisca_parameters(wisca_model, ...)
 }
 \item Combination therapy, indicated by using \code{"+"}, with or without \link[=antimicrobial_selectors]{antimicrobial selectors}, e.g.:
 \itemize{
-\item \code{"TZP+TOB"}
 \item \code{"cipro + genta"}
+\item \code{"TZP+TOB"}
+\item \code{c("TZP", "TZP+GEN", "TZP+TOB")}
 \item \code{carbapenems() + "GEN"}
 \item \code{carbapenems() + c("", "GEN")}
 \item \code{carbapenems() + c("", aminoglycosides())}

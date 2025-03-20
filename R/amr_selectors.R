@@ -954,9 +954,10 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
 #' @noRd
 `+.amr_selector` <- function(e1, e2) {
   # this is useful for `antibiogram()`: antibiogram(example_isolates, carbapenems() + c("", "GEN", "TOB"))
-  structure(as.character(outer(e1, e2, paste, sep = " + ")),
-    class = c("amr_selector", "character")
-  )
+  # this is also implemented for ab class, to allow direct console usage
+  out <- as.character(outer(e1, e2, paste, sep = " + "))
+  out <- gsub(" [+] $", "", out)
+  structure(out, class = c("amr_selector", "character"))
 }
 
 is_any <- function(el1) {

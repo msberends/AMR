@@ -2,6 +2,7 @@
 
 S3method("!=",amr_selector)
 S3method("&",amr_selector)
+S3method("+",ab)
 S3method("+",amr_selector)
 S3method("==",amr_selector)
 S3method("[",ab)

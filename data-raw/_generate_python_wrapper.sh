@@ -73,26 +73,23 @@ if not isinstalled('AMR', lib_loc=r_lib_path):
     print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
     utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
 
-# Retrieve Python AMR version
-try:
-    python_amr_version = metadata.version('AMR')
-except metadata.PackageNotFoundError:
-    python_amr_version = ''
-
-# Retrieve R AMR version
-r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
-r_amr_version = str(r_amr_version[0])
-
-print(python_amr_version)
-print(r_amr_version)
-
-# Compare R and Python package versions
-if r_amr_version != python_amr_version:
-    try:
-        print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
-        utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
-    except Exception as e:
-        print(f"AMR: Could not update: {e}", flush=True)
+# # Retrieve Python AMR version
+# try:
+#     python_amr_version = metadata.version('AMR')
+# except metadata.PackageNotFoundError:
+#     python_amr_version = ''
+# 
+# # Retrieve R AMR version
+# r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
+# r_amr_version = str(r_amr_version[0])
+# 
+# # Compare R and Python package versions
+# if r_amr_version != python_amr_version:
+#     try:
+#         print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
+#         utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
+#     except Exception as e:
+#         print(f"AMR: Could not update: {e}", flush=True)
 
 print(f"AMR: Setting up R environment and AMR datasets...", flush=True)
 

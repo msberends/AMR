@@ -42,8 +42,9 @@
 #'     - `c(aminoglycosides(), "AMP", "AMC")`
 #'     - `c(aminoglycosides(), carbapenems())`
 #'   - Combination therapy, indicated by using `"+"`, with or without [antimicrobial selectors][antimicrobial_selectors], e.g.:
-#'     - `"TZP+TOB"`
 #'     - `"cipro + genta"`
+#'     - `"TZP+TOB"`
+#'     - `c("TZP", "TZP+GEN", "TZP+TOB")`
 #'     - `carbapenems() + "GEN"`
 #'     - `carbapenems() + c("", "GEN")`
 #'     - `carbapenems() + c("", aminoglycosides())`

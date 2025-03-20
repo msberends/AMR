@@ -539,7 +539,7 @@ word_wrap <- function(...,
     )
     # text starting with `?` must also lead to the help page
     parts[parts %like% "^[?]"] <- font_url(
-      url = paste0("ide:help:AMR::", parts[parts %like% "^[?]"]),
+      url = paste0("ide:help:AMR::", gsub("?", "", parts[parts %like% "^[?]"], fixed = TRUE)),
       txt = parts[parts %like% "^[?]"]
     )
     msg <- paste0(parts, collapse = "`")

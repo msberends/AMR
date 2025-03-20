@@ -610,6 +610,16 @@ rep.ab <- function(x, ...) {
   y
 }
 
+#' @method + ab
+#' @export
+#' @noRd
+`+.ab` <- function(e1, e2) {
+  # this does not return ab class, it should just allow console usage of e.g., carbapenems() + c("", aminoglycosides())
+  out <- as.character(outer(e1, e2, paste, sep = " + "))
+  out <- gsub(" [+] $", "", out)
+  out
+}
+
 generalise_antibiotic_name <- function(x) {
   x <- toupper(x)
   # remove suffices
