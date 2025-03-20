@@ -201,6 +201,10 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   # transform Unicode for >= and <=
   x <- gsub("\u2264", "<=", x, fixed = TRUE)
   x <- gsub("\u2265", ">=", x, fixed = TRUE)
+  if (any(x %like% "[0-9]/.*[0-9]", na.rm = TRUE)) {
+    warning_("Some MICs were combined values, only the first values are kept")
+    x[x %like% "[0-9]/.*[0-9]"] <- gsub("/.*", "", x[x %like% "[0-9]/.*[0-9]"])
+  }
   # remove other invalid characters
   x <- gsub("[^a-zA-Z0-9.><= -]+", "", x, perl = TRUE)
   # transform => to >= and =< to <=
