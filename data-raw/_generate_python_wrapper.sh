@@ -44,52 +44,52 @@ description_file="../DESCRIPTION"
 cat <<EOL > "$datasets_file"
 import os
 import sys
-from rpy2 import robjects
-from rpy2.robjects import pandas2ri
-from rpy2.robjects.packages import importr, isinstalled
 import pandas as pd
 import importlib.metadata as metadata
 
 # Get the path to the virtual environment
 venv_path = sys.prefix
-
-# Define R library path within the venv
 r_lib_path = os.path.join(venv_path, "R_libs")
-# Ensure the R library path exists
 os.makedirs(r_lib_path, exist_ok=True)
+
+# Set environment variable before importing rpy2
+os.environ['R_LIBS_SITE'] = r_lib_path
+
+from rpy2 import robjects
+from rpy2.robjects import pandas2ri
+from rpy2.robjects.packages import importr, isinstalled
 
 # Import base and utils
 base = importr('base')
 utils = importr('utils')
 
-base.options(warn = -1)
+base.options(warn=-1)
 
-# Override R library paths globally for the session
-robjects.r(f'.Library.site <- "{r_lib_path}"')  # Replace site-specific library
-base._libPaths(r_lib_path)  # Override .libPaths() as well
-
-# Get the effective library path
-r_amr_lib_path = base._libPaths()[0]
+# Ensure library paths explicitly
+base._libPaths(r_lib_path)
 
 # Check if the AMR package is installed in R
-if not isinstalled('AMR', lib_loc=r_amr_lib_path):
-    print(f"AMR: Installing latest AMR R package to {r_amr_lib_path}...", flush=True)
+if not isinstalled('AMR', lib_loc=r_lib_path):
+    print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
     utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
 
-# Python package version of AMR
+# Retrieve Python AMR version
 try:
     python_amr_version = metadata.version('AMR')
 except metadata.PackageNotFoundError:
     python_amr_version = ''
 
-# R package version of AMR
-r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_amr_lib_path}"))')
+# Retrieve R AMR version
+r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
 r_amr_version = str(r_amr_version[0])
+
+print(python_amr_version)
+print(r_amr_version)
 
 # Compare R and Python package versions
 if r_amr_version != python_amr_version:
     try:
-        print(f"AMR: Updating AMR package in {r_amr_lib_path}...", flush=True)
+        print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
         utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
     except Exception as e:
         print(f"AMR: Could not update: {e}", flush=True)
