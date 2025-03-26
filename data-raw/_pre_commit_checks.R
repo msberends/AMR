@@ -448,6 +448,9 @@ pre_commit_lst$AB_TETRACYCLINES_EXCEPT_TGC <- pre_commit_lst$AB_TETRACYCLINES[pr
 pre_commit_lst$AB_TRIMETHOPRIMS <- antimicrobials %>%
   filter(group %like% "trimethoprim") %>%
   pull(ab)
+pre_commit_lst$AB_SULFONAMIDES <- antimicrobials %>%
+  filter(group %like% "trimethoprim" & name %unlike% "trimethoprim") %>%
+  pull(ab)
 pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
 pre_commit_lst$AB_BETALACTAMS <- sort(c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS, pre_commit_lst$AB_MONOBACTAMS))
 pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antimicrobials %>%

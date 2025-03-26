@@ -243,31 +243,47 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
     as.double(rescale_mic(x = as.double(as.mic(x)), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
   }
   scale$transform_df <- function(self, df) {
-    self$mic_values_rescaled <- rescale_mic(x = as.double(as.mic(df[[aest]])), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
-    # create new breaks and labels here
-    lims <- range(self$mic_values_rescaled, na.rm = TRUE)
-    # support inner and outer 'mic_range' settings (e.g., the data ranges 0.5-8 and 'mic_range' is set to 0.025-32)
-    if (!is.null(mic_range) && !is.na(mic_range[1]) && !is.na(lims[1]) && mic_range[1] < lims[1]) {
-      lims[1] <- mic_range[1]
-    }
-    if (!is.null(mic_range) && !is.na(mic_range[2]) && !is.na(lims[2]) && mic_range[2] > lims[2]) {
-      lims[2] <- mic_range[2]
-    }
-    ind_min <- which(COMMON_MIC_VALUES <= lims[1])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES <= lims[1]] - lims[1]))] # Closest index where COMMON_MIC_VALUES <= lims[1]
-    ind_max <- which(COMMON_MIC_VALUES >= lims[2])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES >= lims[2]] - lims[2]))] # Closest index where COMMON_MIC_VALUES >= lims[2]
+    if (!aest %in% colnames(df)) {
+      # support for geom_hline() and geom_vline()
+      if ("yintercept" %in% colnames(df)) {
+        aest_val <- "yintercept"
+      } else if ("xintercept" %in% colnames(df)) {
+        aest_val <- "xintercept"
+      } else {
+        stop_("No support for plotting df with `scale_", aest, "_mic()` with columns ", vector_and(colnames(df), sort = FALSE))
+      }
+      out <- rescale_mic(x = as.double(as.mic(df[[aest_val]])), keep_operators = "none", mic_range = NULL, as.mic = TRUE)
+      if (!is.null(self$mic_values_rescaled) && any(out < min(self$mic_values_rescaled, na.rm = TRUE) | out > max(self$mic_values_rescaled, na.rm = TRUE), na.rm = TRUE)) {
+        warning_("The value for `", aest_val, "` is outside the plotted MIC range, consider using/updating the `mic_range` argument in `scale_", aest, "_mic()`.")
+      }
+      df[[aest_val]] <- log2(as.double(out))
+    } else {
+      self$mic_values_rescaled <- rescale_mic(x = as.double(as.mic(df[[aest]])), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
+      # create new breaks and labels here
+      lims <- range(self$mic_values_rescaled, na.rm = TRUE)
+      # support inner and outer 'mic_range' settings (e.g., the data ranges 0.5-8 and 'mic_range' is set to 0.025-32)
+      if (!is.null(mic_range) && !is.na(mic_range[1]) && !is.na(lims[1]) && mic_range[1] < lims[1]) {
+        lims[1] <- mic_range[1]
+      }
+      if (!is.null(mic_range) && !is.na(mic_range[2]) && !is.na(lims[2]) && mic_range[2] > lims[2]) {
+        lims[2] <- mic_range[2]
+      }
+      ind_min <- which(COMMON_MIC_VALUES <= lims[1])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES <= lims[1]] - lims[1]))] # Closest index where COMMON_MIC_VALUES <= lims[1]
+      ind_max <- which(COMMON_MIC_VALUES >= lims[2])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES >= lims[2]] - lims[2]))] # Closest index where COMMON_MIC_VALUES >= lims[2]
 
-    self$mic_values_levels <- as.mic(COMMON_MIC_VALUES[ind_min:ind_max])
+      self$mic_values_levels <- as.mic(COMMON_MIC_VALUES[ind_min:ind_max])
 
-    if (keep_operators %in% c("edges", "all") && length(self$mic_values_levels) > 1) {
-      self$mic_values_levels[1] <- paste0("<=", self$mic_values_levels[1])
-      self$mic_values_levels[length(self$mic_values_levels)] <- paste0(">=", self$mic_values_levels[length(self$mic_values_levels)])
-    }
+      if (keep_operators %in% c("edges", "all") && length(unique(self$mic_values_levels)) > 1) {
+        self$mic_values_levels[1] <- paste0("<=", self$mic_values_levels[1])
+        self$mic_values_levels[length(self$mic_values_levels)] <- paste0(">=", self$mic_values_levels[length(self$mic_values_levels)])
+      }
 
-    self$mic_values_log <- log2(as.double(self$mic_values_rescaled))
-    if (aest == "y" && "group" %in% colnames(df)) {
-      df$group <- as.integer(factor(df$x))
+      self$mic_values_log <- log2(as.double(self$mic_values_rescaled))
+      if (aest == "y" && "group" %in% colnames(df) && "x" %in% colnames(df)) {
+        df$group <- as.integer(factor(df$x))
+      }
+      df[[aest]] <- self$mic_values_log
     }
-    df[[aest]] <- self$mic_values_log
     df
   }
 

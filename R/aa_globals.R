@@ -81,14 +81,14 @@ EUCAST_VERSION_EXPERT_RULES <- list(
     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
   )
 )
-# EUCAST_VERSION_RESISTANTPHENOTYPES <- list(
-#   "1.2" = list(
-#     version_txt = "v1.2",
-#     year = 2023,
-#     title = "'Expected Resistant Phenotypes'",
-#     url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
-#   )
-# )
+EUCAST_VERSION_EXPECTED_PHENOTYPES <- list(
+  "1.2" = list(
+    version_txt = "v1.2",
+    year = 2023,
+    title = "'EUCAST Expected Resistant Phenotypes'",
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
+  )
+)
 
 TAXONOMY_VERSION <- list(
   GBIF = list(

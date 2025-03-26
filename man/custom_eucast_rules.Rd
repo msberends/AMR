@@ -51,7 +51,7 @@ df
 #> 1      Escherichia coli   R    S     S
 #> 2 Klebsiella pneumoniae   R    S     S
 
-eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE)
+eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE, overwrite = TRUE)
 #>                      mo TZP ampi cipro
 #> 1      Escherichia coli   R    R     S
 #> 2 Klebsiella pneumoniae   R    R     S
@@ -65,7 +65,7 @@ There is one exception in columns used for the rules: all column names of the \l
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
 
-eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE)
+eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE, overwrite = TRUE)
 #>                      mo TZP ampi cipro
 #> 1      Escherichia coli   R    S     S
 #> 2 Klebsiella pneumoniae   R    R     S
@@ -86,7 +86,7 @@ x
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}
 
-These 34 antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
+These 35 antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
 \itemize{
 \item aminoglycosides\cr(amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, and tobramycin-high)
 \item aminopenicillins\cr(amoxicillin and ampicillin)
@@ -118,6 +118,7 @@ These 34 antimicrobial groups are allowed in the rules (case-insensitive) and ca
 \item quinolones\cr(besifloxacin, cinoxacin, ciprofloxacin, ciprofloxacin/metronidazole, ciprofloxacin/ornidazole, ciprofloxacin/tinidazole, clinafloxacin, danofloxacin, delafloxacin, difloxacin, enoxacin, enrofloxacin, finafloxacin, fleroxacin, flumequine, garenoxacin, gatifloxacin, gemifloxacin, grepafloxacin, lascufloxacin, levofloxacin, levofloxacin/ornidazole, levonadifloxacin, lomefloxacin, marbofloxacin, metioxate, miloxacin, moxifloxacin, nadifloxacin, nalidixic acid, nalidixic acid screening test, nemonoxacin, nifuroquine, nitroxoline, norfloxacin, norfloxacin screening test, norfloxacin/metronidazole, norfloxacin/tinidazole, ofloxacin, ofloxacin/ornidazole, orbifloxacin, oxolinic acid, pazufloxacin, pefloxacin, pefloxacin screening test, pipemidic acid, piromidic acid, pradofloxacin, premafloxacin, prulifloxacin, rosoxacin, rufloxacin, sarafloxacin, sitafloxacin, sparfloxacin, temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and trovafloxacin)
 \item rifamycins\cr(rifabutin, rifampicin, rifampicin/ethambutol/isoniazid, rifampicin/isoniazid, rifampicin/pyrazinamide/ethambutol/isoniazid, rifampicin/pyrazinamide/isoniazid, rifamycin, and rifapentine)
 \item streptogramins\cr(pristinamycin and quinupristin/dalfopristin)
+\item sulfonamides\cr(brodimoprim, sulfadiazine, sulfadiazine/tetroxoprim, sulfadimethoxine, sulfadimidine, sulfafurazole, sulfaisodimidine, sulfalene, sulfamazone, sulfamerazine, sulfamethizole, sulfamethoxazole, sulfamethoxypyridazine, sulfametomidine, sulfametoxydiazine, sulfamoxole, sulfanilamide, sulfaperin, sulfaphenazole, sulfapyridine, sulfathiazole, and sulfathiourea)
 \item tetracyclines\cr(cetocycline, chlortetracycline, clomocycline, demeclocycline, doxycycline, eravacycline, lymecycline, metacycline, minocycline, omadacycline, oxytetracycline, penimepicycline, rolitetracycline, sarecycline, tetracycline, tetracycline screening test, and tigecycline)
 \item tetracyclines_except_tgc\cr(cetocycline, chlortetracycline, clomocycline, demeclocycline, doxycycline, eravacycline, lymecycline, metacycline, minocycline, omadacycline, oxytetracycline, penimepicycline, rolitetracycline, sarecycline, tetracycline, and tetracycline screening test)
 \item trimethoprims\cr(brodimoprim, sulfadiazine, sulfadiazine/tetroxoprim, sulfadiazine/trimethoprim, sulfadimethoxine, sulfadimidine, sulfadimidine/trimethoprim, sulfafurazole, sulfaisodimidine, sulfalene, sulfamazone, sulfamerazine, sulfamerazine/trimethoprim, sulfamethizole, sulfamethoxazole, sulfamethoxypyridazine, sulfametomidine, sulfametoxydiazine, sulfametrole/trimethoprim, sulfamoxole, sulfamoxole/trimethoprim, sulfanilamide, sulfaperin, sulfaphenazole, sulfapyridine, sulfathiazole, sulfathiourea, trimethoprim, and trimethoprim/sulfamethoxazole)
@@ -138,6 +139,7 @@ eucast_rules(example_isolates,
   rules = "custom",
   custom_rules = x,
   info = FALSE,
+  overwrite = TRUE,
   verbose = TRUE
 )
 

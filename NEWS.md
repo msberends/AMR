@@ -1,4 +1,4 @@
-# AMR 2.1.1.9224
+# AMR 2.1.1.9225
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -26,6 +26,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Also updated other kingdoms, welcoming a total of 2,149 new records from 2023 and 927 from 2024.
 * **Updated clinical breakpoints**
   * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disk diffusion interpretations.
+  * Added all Expected Resistant Phenotypes from EUCAST (v1.2). The default `rules` for `eucast_rules()` are now: `c("breakpoints", "expected_phenotypes")`.
   * `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Currently, the `clinical_breakpoints` data set contains 24 breakpoints that can return the value "SDD" instead of "I".
   * EUCAST interpretive rules (using `eucast_rules()`) are now available for EUCAST 12 (2022), 13 (2023), and 14 (2024).
 * **New advanced ggplot2 extensions for MIC and SIR plotting and transforming**
@@ -48,6 +49,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
   * Combined MIC values (e.g., from CLSI) are now supported
   * The argument `conserve_capped_values` in `as.sir()` has been replaced with `capped_mic_handling`, which allows greater flexibility in handling capped MIC values (`<`, `<=`, `>`, `>=`). The four available options (`"standard"`, `"strict"`, `"relaxed"`, `"inverse"`) provide full control over whether these values should be interpreted conservatively or ignored. Using `conserve_capped_values` is now deprecated and returns a warning.
+  * Added argument `info` so silence all console messages
 * `antibiogram()` function
   * Argument `antibiotics` has been renamed to `antimicrobials`. Using `antibiotics` will still work, but now returns a warning.
   * Added argument `formatting_type` to set any of the 22 options for the formatting of all 'cells'. This defaults to `18` for non-WISCA and `14` for WISCA, changing the output of antibiograms to cells with more info.
@@ -55,7 +57,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The `ab_transform` argument now defaults to `"name"`, displaying antibiotic column names instead of codes
 * Antimicrobial selectors (previously: *antibiotic selectors*)
   * 'Antibiotic selectors' are now called 'antimicrobial selectors' since their scope is broader than just antibiotics. All documentation have been updated, and `ab_class()` and `ab_selector()` have been replaced with `amr_class()` and `amr_selector()`. The old functions are now deprecated and will be removed in a future version.
-  * Added selectors `isoxazolylpenicillins()`, `monobactams()`, `nitrofurans()`, `phenicols()`, and `rifamycins()`
+  * Added selectors `isoxazolylpenicillins()`, `monobactams()`, `nitrofurans()`, `phenicols()`, `rifamycins()`, and `sulfonamides()`
   * When using antimicrobial selectors that exclude non-treatable drugs (such as gentamicin-high when using `aminoglycosides()`), the function now always returns a warning that these can be included using `only_treatable = FALSE`
   * Added a new argument `return_all` to all selectors, which defaults to `TRUE` to include any match. With `FALSE`, the old behaviour, only the first hit for each unique antimicrobial is returned.
   * All selectors can now be run as a separate command to retrieve a vector of all possible antimicrobials that the selector can select
@@ -102,6 +104,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 ## Other
 * Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
+* Added Prof. Kat Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Greatly updated and expanded documentation
 * Stopped support for SAS (`.xpt`) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.

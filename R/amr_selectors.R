@@ -460,6 +460,14 @@ streptogramins <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
 
 #' @rdname antimicrobial_selectors
 #' @export
+sulfonamides <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(return_all, allow_class = "logical", has_length = 1)
+  amr_select_exec("sulfonamides", only_sir_columns = only_sir_columns, return_all = return_all)
+}
+
+#' @rdname antimicrobial_selectors
+#' @export
 tetracyclines <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)

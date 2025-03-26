@@ -464,6 +464,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 #' @rdname as.sir
 #' @export
 #' @param S,I,R,NI,SDD a case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
+#' @param info a [logical] to print information about the process
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x,
                            S = "^(S|U)+$",
@@ -471,7 +472,14 @@ as.sir.default <- function(x,
                            R = "^(R)+$",
                            NI = "^(N|NI|V)+$",
                            SDD = "^(SDD|D|H)+$",
+                           info = TRUE,
                            ...) {
+  meet_criteria(S, allow_class = "character", has_length = 1)
+  meet_criteria(I, allow_class = "character", has_length = 1)
+  meet_criteria(R, allow_class = "character", has_length = 1)
+  meet_criteria(NI, allow_class = "character", has_length = 1)
+  meet_criteria(SDD, allow_class = "character", has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
   if (inherits(x, "sir")) {
     return(as_sir_structure(x))
   }
@@ -591,6 +599,7 @@ as.sir.mic <- function(x,
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        host = NULL,
                        verbose = FALSE,
+                       info = TRUE,
                        conserve_capped_values = NULL,
                        ...) {
   as_sir_method(
@@ -610,6 +619,8 @@ as.sir.mic <- function(x,
     breakpoint_type = breakpoint_type,
     host = host,
     verbose = verbose,
+    info = info,
+    conserve_capped_values = conserve_capped_values,
     ...
   )
 }
@@ -629,6 +640,7 @@ as.sir.disk <- function(x,
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                         host = NULL,
                         verbose = FALSE,
+                        info = TRUE,
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -667,6 +679,7 @@ as.sir.data.frame <- function(x,
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                               host = NULL,
                               verbose = FALSE,
+                              info = TRUE,
                               conserve_capped_values = NULL) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
@@ -681,6 +694,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
   x.bak <- x
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
@@ -697,10 +711,10 @@ as.sir.data.frame <- function(x,
 
   # -- host
   if (missing(breakpoint_type) && any(host %in% clinical_breakpoints$host[!clinical_breakpoints$host %in% c("human", "ECOFF")], na.rm = TRUE)) {
-    message_("Assuming `breakpoint_type = \"animal\"` since `host` contains animal species.")
+    if (isTRUE(info)) message_("Assuming `breakpoint_type = \"animal\"` since `host` contains animal species.")
     breakpoint_type <- "animal"
   } else if (any(!suppressMessages(convert_host(host)) %in% c("human", "ECOFF"), na.rm = TRUE)) {
-    message_("Assuming `breakpoint_type = \"animal\"`.")
+    if (isTRUE(info)) message_("Assuming `breakpoint_type = \"animal\"`.")
     breakpoint_type <- "animal"
   }
   if (breakpoint_type == "animal") {
@@ -745,13 +759,15 @@ as.sir.data.frame <- function(x,
       } else {
         plural <- c("", "s", "a ")
       }
-      message_(
-        "Assuming value", plural[1], " ",
-        vector_and(values, quotes = TRUE),
-        " in column '", font_bold(col_specimen),
-        "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
-        ".\n  Use `as.sir(uti = FALSE)` to prevent this."
-      )
+      if (isTRUE(info)) {
+        message_(
+          "Assuming value", plural[1], " ",
+          vector_and(values, quotes = TRUE),
+          " in column '", font_bold(col_specimen),
+          "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+          ".\n  Use `as.sir(uti = FALSE)` to prevent this."
+        )
+      }
     } else {
       # no data about UTI's found
       uti <- NULL
@@ -833,6 +849,8 @@ as.sir.data.frame <- function(x,
           breakpoint_type = breakpoint_type,
           host = host,
           verbose = verbose,
+          info = info,
+          conserve_capped_values = conserve_capped_values,
           is_data.frame = TRUE
         )
     } else if (types[i] == "disk") {
@@ -854,6 +872,7 @@ as.sir.data.frame <- function(x,
           breakpoint_type = breakpoint_type,
           host = host,
           verbose = verbose,
+          info = info,
           is_data.frame = TRUE
         )
     } else if (types[i] == "sir") {
@@ -863,24 +882,28 @@ as.sir.data.frame <- function(x,
       if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
         # only print message if values are not already clean
-        message_("Cleaning values in column '", font_bold(ab), "' (",
-          ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-          ab_name(ab_coerced, tolower = TRUE), ")... ",
-          appendLF = FALSE,
-          as_note = FALSE
-        )
+        if (isTRUE(info)) {
+          message_("Cleaning values in column '", font_bold(ab), "' (",
+            ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
+            ab_name(ab_coerced, tolower = TRUE), ")... ",
+            appendLF = FALSE,
+            as_note = FALSE
+          )
+        }
       } else if (!is.sir(x.bak[, ab_cols[i], drop = TRUE])) {
         show_message <- TRUE
         # only print message if class not already set
-        message_("Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
-          ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-          ab_name(ab_coerced, tolower = TRUE, language = NULL), ")... ",
-          appendLF = FALSE,
-          as_note = FALSE
-        )
+        if (isTRUE(info)) {
+          message_("Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
+            ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
+            ab_name(ab_coerced, tolower = TRUE, language = NULL), ")... ",
+            appendLF = FALSE,
+            as_note = FALSE
+          )
+        }
       }
       x[, ab_cols[i]] <- as.sir.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
-      if (show_message == TRUE) {
+      if (show_message == TRUE && isTRUE(info)) {
         message(font_green_bg(" OK "))
       }
     }
@@ -963,6 +986,7 @@ as_sir_method <- function(method_short,
                           breakpoint_type,
                           host,
                           verbose,
+                          info,
                           conserve_capped_values = NULL,
                           ...) {
   if (isTRUE(conserve_capped_values)) {
@@ -984,6 +1008,7 @@ as_sir_method <- function(method_short,
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(verbose, allow_class = "logical", has_length = 1, .call_depth = -2)
+  meet_criteria(info, allow_class = "logical", has_length = 1, .call_depth = -2)
 
   # backward compatibilty
   dots <- list(...)
@@ -996,7 +1021,7 @@ as_sir_method <- function(method_short,
 
   guideline_coerced <- get_guideline(guideline, reference_data)
 
-  if (message_not_thrown_before("as.sir", "sir_interpretation_history")) {
+  if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
     message()
     message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations.\n\n", add_fn = font_green)
   }
@@ -1007,13 +1032,13 @@ as_sir_method <- function(method_short,
   if (breakpoint_type == "animal") {
     if (is.null(host)) {
       host <- "dogs"
-      if (message_not_thrown_before("as.sir", "host_missing")) {
+      if (isTRUE(info) && message_not_thrown_before("as.sir", "host_missing")) {
         message_("Animal hosts not set in `host`, assuming `host = \"dogs\"`, since these have the highest breakpoint availability.\n\n")
       }
     }
   } else {
     if (!is.null(host) && !all(toupper(as.character(host)) %in% c("HUMAN", "ECOFF"))) {
-      if (message_not_thrown_before("as.sir", "assumed_breakpoint_animal")) {
+      if (isTRUE(info) && message_not_thrown_before("as.sir", "assumed_breakpoint_animal")) {
         message_("Assuming `breakpoint_type = \"animal\"`, since `host` is set.", ifelse(guideline_coerced %like% "EUCAST", " Do you also need to set `guideline = \"CLSI\"`?", ""), "\n\n")
       }
       breakpoint_type <- "animal"
@@ -1038,12 +1063,12 @@ as_sir_method <- function(method_short,
   }
   host.bak <- host
   host <- convert_host(host)
-  if (any(is.na(host) & !is.na(host.bak)) && message_not_thrown_before("as.sir", "missing_hosts")) {
+  if (any(is.na(host) & !is.na(host.bak)) && isTRUE(info) && message_not_thrown_before("as.sir", "missing_hosts")) {
     warning_("The following animal host(s) could not be coerced: ", vector_and(host.bak[is.na(host) & !is.na(host.bak)]), immediate = TRUE)
     message() # new line
   }
   # TODO add a switch to turn this off? In interactive sessions perhaps ask the user. Default should be On.
-  # if (breakpoint_type == "animal" && message_not_thrown_before("as.sir", "host_missing_breakpoints")) {
+  # if (breakpoint_type == "animal" && isTRUE(info) && message_not_thrown_before("as.sir", "host_missing_breakpoints")) {
   #   if (guideline_coerced %like% "CLSI") {
   #     message_("Please note that in the absence of specific veterinary breakpoints for certain animal hosts, the CLSI guideline VET09 will be applied where possible.\n\n")
   #   }
@@ -1144,11 +1169,13 @@ as_sir_method <- function(method_short,
   # be sure to take current taxonomy, as the 'clinical_breakpoints' data set only contains current taxonomy
   mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, info = FALSE)))
   if (all(is.na(ab))) {
-    message_("Returning NAs for unknown antibiotic: ", vector_and(ab.bak, sort = FALSE, quotes = TRUE),
-      ". Rename this column to a valid name or code, and check the output with `as.ab()`.",
-      add_fn = font_red,
-      as_note = FALSE
-    )
+    if (isTRUE(info)) {
+      message_("Returning NAs for unknown antibiotic: ", vector_and(ab.bak, sort = FALSE, quotes = TRUE),
+        ". Rename this column to a valid name or code, and check the output with `as.ab()`.",
+        add_fn = font_red,
+        as_note = FALSE
+      )
+    }
     return(as.sir(rep(NA, length(x))))
   }
   if (length(mo) == 1) {
@@ -1168,8 +1195,10 @@ as_sir_method <- function(method_short,
     uti <- rep(uti, length(x))
   }
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
-    if (message_not_thrown_before("as.sir", "intrinsic")) {
-      warning_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
+    if (isTRUE(info) && message_not_thrown_before("as.sir", "intrinsic")) {
+      message_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.",
+        add_fn = font_red
+      )
     }
   }
 
@@ -1269,7 +1298,7 @@ as_sir_method <- function(method_short,
     add_intrinsic_resistance_to_AMR_env()
   }
 
-  if (nrow(df_unique) < 10 || nrow(breakpoints) == 0) {
+  if (isTRUE(info) && nrow(df_unique) < 10 || nrow(breakpoints) == 0) {
     # only print intro under 10 items, otherwise progressbar will print this and then it will be printed double
     message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   }
@@ -1279,14 +1308,16 @@ as_sir_method <- function(method_short,
 
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
-    message(
-      paste0(font_rose_bg(" WARNING "), "\n"),
-      font_black(paste0(
-        "  ", AMR_env$bullet_icon, " No ", guideline_coerced, " ", method_coerced, " breakpoints available for ",
-        suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE))),
-        " (", unique(ab_coerced), ")."
-      ), collapse = "\n")
-    )
+    if (isTRUE(info)) {
+      message(
+        paste0(font_rose_bg(" WARNING "), "\n"),
+        font_black(paste0(
+          "  ", AMR_env$bullet_icon, " No ", guideline_coerced, " ", method_coerced, " breakpoints available for ",
+          suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE))),
+          " (", unique(ab_coerced), ")."
+        ), collapse = "\n")
+      )
+    }
 
     load_mo_uncertainties(metadata_mo)
     return(rep(NA_sir_, nrow(df)))
@@ -1609,26 +1640,28 @@ as_sir_method <- function(method_short,
 
   close(p)
   # printing messages
-  if (has_progress_bar == TRUE) {
-    # the progress bar has overwritten the intro text, so:
-    message_(intro_txt, appendLF = FALSE, as_note = FALSE)
-  }
-  if (length(notes) > 0) {
-    if (isTRUE(rise_warning)) {
-      message(font_rose_bg(" WARNING "))
-    } else {
-      message(font_yellow_bg(" NOTE "))
+  if (isTRUE(info)) {
+    if (has_progress_bar == TRUE) {
+      # the progress bar has overwritten the intro text, so:
+      message_(intro_txt, appendLF = FALSE, as_note = FALSE)
     }
-    notes <- unique(notes)
-    if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
-      for (i in seq_along(notes)) {
-        message(word_wrap("  ", AMR_env$bullet_icon, " ", notes[i], add_fn = font_black))
+    if (length(notes) > 0) {
+      if (isTRUE(rise_warning)) {
+        message(font_rose_bg(" WARNING "))
+      } else {
+        message(font_yellow_bg(" NOTE "))
+      }
+      notes <- unique(notes)
+      if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
+        for (i in seq_along(notes)) {
+          message(word_wrap("  ", AMR_env$bullet_icon, " ", notes[i], add_fn = font_black))
+        }
+      } else {
+        message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
       }
     } else {
-      message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
+      message(font_green_bg(" OK "))
     }
-  } else {
-    message(font_green_bg(" OK "))
   }
 
   load_mo_uncertainties(metadata_mo)

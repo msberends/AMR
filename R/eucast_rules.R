@@ -61,11 +61,11 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
 #' @param x a data set with antimicrobials columns, such as `amox`, `AMX` and `AMC`
 #' @param info a [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions
-#' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value using the package option [`AMR_eucastrules`][AMR-options]: `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
+#' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_eucastrules`][AMR-options]: `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
+#' @param version_expected_phenotypes the version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
-# @param version_resistant_phenotypes the version number to use for the EUCAST Expected Resistant Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_RESISTANTPHENOTYPES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these version of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... column name of an antimicrobial, see section *Antimicrobials* below
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
@@ -146,14 +146,14 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #'
 #' # apply EUCAST rules: some results wil be changed
-#' b <- eucast_rules(a)
+#' b <- eucast_rules(a, overwrite = TRUE)
 #'
 #' head(b)
 #'
 #'
 #' # do not apply EUCAST rules, but rather get a data.frame
 #' # containing all details about the transformations:
-#' c <- eucast_rules(a, verbose = TRUE)
+#' c <- eucast_rules(a, overwrite = TRUE, verbose = TRUE)
 #' head(c)
 #' }
 #'
@@ -165,11 +165,11 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 eucast_rules <- function(x,
                          col_mo = NULL,
                          info = interactive(),
-                         rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
+                         rules = getOption("AMR_eucastrules", default = c("breakpoints", "expected_phenotypes")),
                          verbose = FALSE,
                          version_breakpoints = 14.0,
+                         version_expected_phenotypes = 1.2,
                          version_expertrules = 3.3,
-                         # TODO version_resistant_phenotypes = 1.2,
                          ampc_cephalosporin_resistance = NA,
                          only_sir_columns = FALSE,
                          custom_rules = NULL,
@@ -178,11 +178,11 @@ eucast_rules <- function(x,
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-  meet_criteria(rules, allow_class = "character", has_length = c(1, 2, 3, 4, 5), is_in = c("breakpoints", "expert", "other", "all", "custom"))
+  meet_criteria(rules, allow_class = "character", has_length = c(1, 2, 3, 4, 5, 6), is_in = c("breakpoints", "expected_phenotypes", "expert", "other", "all", "custom"))
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
+  meet_criteria(version_expected_phenotypes, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPECTED_PHENOTYPES)))
   meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
-  # meet_criteria(version_resistant_phenotypes, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_RESISTANTPHENOTYPES)))
   meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "sir"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
@@ -209,13 +209,8 @@ eucast_rules <- function(x,
   }
 
   breakpoints_info <- EUCAST_VERSION_BREAKPOINTS[[which(as.double(names(EUCAST_VERSION_BREAKPOINTS)) == version_breakpoints)]]
+  expected_phenotypes_info <- EUCAST_VERSION_EXPECTED_PHENOTYPES[[which(as.double(names(EUCAST_VERSION_EXPECTED_PHENOTYPES)) == version_expected_phenotypes)]]
   expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
-  # resistantphenotypes_info <- EUCAST_VERSION_RESISTANTPHENOTYPES[[which(as.double(names(EUCAST_VERSION_RESISTANTPHENOTYPES)) == version_resistant_phenotypes)]]
-
-  # support old setting (until AMR v1.3.0)
-  if (missing(rules) && !is.null(getOption("AMR.eucast_rules"))) {
-    rules <- getOption("AMR.eucast_rules")
-  }
 
   if (interactive() && isTRUE(verbose) && isTRUE(info)) {
     txt <- paste0(
@@ -390,6 +385,24 @@ eucast_rules <- function(x,
     }
     suppressWarnings(as.sir(x))
   }
+  expand_groups <- function(entry) {
+    parts <- trimws(strsplit(entry, ",")[[1]])
+    group_names <- tolower(AMR::microorganisms.groups$mo_group_name)
+    mo_names <- AMR::microorganisms.groups$mo_name
+    group_names_lc <- tolower(group_names)
+    result <- unlist(lapply(parts, function(part) {
+      match_idx <- which(group_names_lc == tolower(part))
+      if (length(match_idx) > 0) {
+        mo_names[match_idx]
+      } else {
+        part
+      }
+    }))
+    # only the ones with genus or genus/species, not subspecies (as genus_species will be matched)
+    spaces <- vapply(FUN.VALUE = integer(1), strsplit(result, " "), length)
+    result <- result[spaces < 3]
+    return(paste0(unique(result), collapse = ", "))
+  }
 
   # Preparing the data ------------------------------------------------------
 
@@ -440,15 +453,6 @@ eucast_rules <- function(x,
   x$genus_species <- trimws(paste(x$genus, x$species))
   if (isTRUE(info) && NROW(x) > 10000) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
-  }
-
-  if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {
-    all_staph <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$genus == "Staphylococcus"), , drop = FALSE]
-    all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL, info = FALSE))
-  }
-  if (any(x$genus == "Streptococcus", na.rm = TRUE)) {
-    all_strep <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$genus == "Streptococcus"), , drop = FALSE]
-    all_strep$Lancefield <- suppressWarnings(mo_name(all_strep$mo, Lancefield = TRUE, language = NULL, info = FALSE))
   }
 
   n_added <- 0
@@ -577,7 +581,17 @@ eucast_rules <- function(x,
   } else {
     if (isTRUE(info)) {
       cat("\n")
-      message_("Skipping inheritance rules defined by this AMR package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R. Add \"other\" or \"all\" to the `rules` argument to apply those rules.")
+      message_(paste0(
+        font_red("Skipping inhibitor-inheritance rules defined by this AMR package: setting "),
+        font_green_bg(" S "),
+        font_red(" to drug+inhibitor where drug is "),
+        font_green_bg(" S "),
+        font_red(", and setting "),
+        font_rose_bg(" R "),
+        font_red(" to drug where drug+inhibitor is "),
+        font_rose_bg(" R "),
+        font_red(". Add \"other\" or \"all\" to the `rules` argument to apply those rules.")
+      ))
     }
   }
 
@@ -592,26 +606,43 @@ eucast_rules <- function(x,
   eucast_notification_shown <- FALSE
   if (!is.null(list(...)$eucast_rules_df)) {
     # this allows: eucast_rules(x, eucast_rules_df = AMR:::EUCAST_RULES_DF %>% filter(is.na(have_these_values)))
-    eucast_rules_df <- list(...)$eucast_rules_df
+    eucast_rules_df_total <- list(...)$eucast_rules_df
   } else {
     # otherwise internal data file, created in data-raw/_pre_commit_checks.R
-    eucast_rules_df <- EUCAST_RULES_DF
+    eucast_rules_df_total <- EUCAST_RULES_DF
   }
 
   ## filter on user-set guideline versions ----
+  eucast_rules_df <- data.frame()
   if (any(c("all", "breakpoints") %in% rules)) {
-    eucast_rules_df <- subset(
-      eucast_rules_df,
-      reference.rule_group %unlike% "breakpoint" |
-        (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints)
-    )
+    eucast_rules_df <- eucast_rules_df %pm>%
+      rbind_AMR(eucast_rules_df_total %pm>%
+        subset(reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
+    # eucast_rules_df <- subset(
+    #   eucast_rules_df,
+    #   reference.rule_group %unlike% "breakpoint" |
+    #     (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints)
+    # )
+  }
+  if (any(c("all", "expected_phenotypes") %in% rules)) {
+    eucast_rules_df <- eucast_rules_df %pm>%
+      rbind_AMR(eucast_rules_df_total %pm>%
+        subset(reference.rule_group %like% "expected" & reference.version == version_expected_phenotypes))
+    # eucast_rules_df <- subset(
+    #   eucast_rules_df,
+    #   reference.rule_group %unlike% "expected" |
+    #     (reference.rule_group %like% "expected" & reference.version == version_expected_phenotypes)
+    # )
   }
   if (any(c("all", "expert") %in% rules)) {
-    eucast_rules_df <- subset(
-      eucast_rules_df,
-      reference.rule_group %unlike% "expert" |
-        (reference.rule_group %like% "expert" & reference.version == version_expertrules)
-    )
+    eucast_rules_df <- eucast_rules_df %pm>%
+      rbind_AMR(eucast_rules_df_total %pm>%
+        subset(reference.rule_group %like% "expert" & reference.version == version_expertrules))
+    # eucast_rules_df <- subset(
+    #   eucast_rules_df,
+    #   reference.rule_group %unlike% "expert" |
+    #     (reference.rule_group %like% "expert" & reference.version == version_expertrules)
+    # )
   }
   ## filter out AmpC de-repressed cephalosporin-resistant mutants ----
   # no need to filter on version number here - the rules contain these version number, so are inherently filtered
@@ -657,6 +688,9 @@ eucast_rules <- function(x,
     if (rule_group_current %like% "breakpoint" && !any(c("all", "breakpoints") %in% rules)) {
       next
     }
+    if (rule_group_current %like% "expected" && !any(c("all", "expected_phenotypes") %in% rules)) {
+      next
+    }
     if (rule_group_current %like% "expert" && !any(c("all", "expert") %in% rules)) {
       next
     }
@@ -677,6 +711,7 @@ eucast_rules <- function(x,
         )
       }
     }
+
     if (i == 1) {
       rule_previous <- ""
       rule_group_previous <- ""
@@ -712,15 +747,25 @@ eucast_rules <- function(x,
               )
             ),
             ifelse(
-              rule_group_current %like% "expert",
+              rule_group_current %like% "expected",
               paste0(
                 "\n",
                 word_wrap(
-                  expertrules_info$title, " (",
-                  font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n"
+                  expected_phenotypes_info$title, " (",
+                  font_red(paste0(expected_phenotypes_info$version_txt, ", ", expected_phenotypes_info$year)), ")\n"
                 )
               ),
-              ""
+              ifelse(
+                rule_group_current %like% "expert",
+                paste0(
+                  "\n",
+                  word_wrap(
+                    expertrules_info$title, " (",
+                    font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n"
+                  )
+                ),
+                "" # Default empty string if none of the conditions are met
+              )
             )
           )
         ), "\n")
@@ -743,47 +788,15 @@ eucast_rules <- function(x,
     if_mo_property <- trimws(eucast_rules_df[i, "if_mo_property", drop = TRUE])
     like_is_one_of <- trimws(eucast_rules_df[i, "like.is.one_of", drop = TRUE])
     mo_value <- trimws(eucast_rules_df[i, "this_value", drop = TRUE])
+    source_antibiotics <- eucast_rules_df[i, "and_these_antibiotics", drop = TRUE]
+    source_value <- trimws(unlist(strsplit(eucast_rules_df[i, "have_these_values", drop = TRUE], ",", fixed = TRUE)))
+    target_antibiotics <- eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]
+    target_value <- eucast_rules_df[i, "to_value", drop = TRUE]
 
-    # be sure to comprise all coagulase-negative/-positive staphylococci when they are mentioned
-    if (mo_value %like% "coagulase" && any(x$genus == "Staphylococcus", na.rm = TRUE)) {
-      if (mo_value %like% "negative") {
-        eucast_rules_df[i, "this_value"] <- paste0(
-          "^(", paste0(
-            all_staph[which(all_staph$CNS_CPS %like% "negative"),
-              "fullname",
-              drop = TRUE
-            ],
-            collapse = "|"
-          ),
-          ")$"
-        )
-      } else {
-        eucast_rules_df[i, "this_value"] <- paste0(
-          "^(", paste0(
-            all_staph[which(all_staph$CNS_CPS %like% "positive"),
-              "fullname",
-              drop = TRUE
-            ],
-            collapse = "|"
-          ),
-          ")$"
-        )
-      }
-      like_is_one_of <- "like"
-    }
-    # be sure to comprise all beta-haemolytic Streptococci (Lancefield groups A, B, C and G) when they are mentioned
-    if (mo_value %like% "group [ABCG]" && any(x$genus == "Streptococcus", na.rm = TRUE)) {
-      eucast_rules_df[i, "this_value"] <- paste0(
-        "^(", paste0(
-          all_strep[which(all_strep$Lancefield %like% "group [ABCG]"),
-            "fullname",
-            drop = TRUE
-          ],
-          collapse = "|"
-        ),
-        ")$"
-      )
-      like_is_one_of <- "like"
+    # if amo_value contains a group name, expand that name with all species in it
+    if (any(trimws(strsplit(mo_value, ",")[[1]]) %in% AMR::microorganisms.groups$mo_group_name, na.rm = TRUE)) {
+      like_is_one_of <- "one_of"
+      mo_value <- expand_groups(mo_value)
     }
 
     if (like_is_one_of == "is") {
@@ -802,13 +815,8 @@ eucast_rules <- function(x,
       stop("invalid value for column 'like.is.one_of'", call. = FALSE)
     }
 
-    source_antibiotics <- eucast_rules_df[i, "and_these_antibiotics", drop = TRUE]
-    source_value <- trimws(unlist(strsplit(eucast_rules_df[i, "have_these_values", drop = TRUE], ",", fixed = TRUE)))
-    target_antibiotics <- eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]
-    target_value <- eucast_rules_df[i, "to_value", drop = TRUE]
-
     if (is.na(source_antibiotics)) {
-      rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value),
+      rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value),
         error = function(e) integer(0)
       )
     } else {
@@ -820,25 +828,17 @@ eucast_rules <- function(x,
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
         rows <- tryCatch(
-          which(x[, if_mo_property, drop = TRUE] %like% mo_value &
+          which((x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value) &
             as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
           error = function(e) integer(0)
         )
       } else if (length(source_antibiotics) == 2) {
         rows <- tryCatch(
-          which(x[, if_mo_property, drop = TRUE] %like% mo_value &
+          which((x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value) &
             as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
             as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
           error = function(e) integer(0)
         )
-        # nolint start
-        # } else if (length(source_antibiotics) == 3) {
-        #   rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value
-        #                           & as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
-        #                           & as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
-        #                           & as.sir_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
-        #                     error = function(e) integer(0))
-        # nolint end
       } else {
         stop_("only 2 antimicrobials supported for source_antibiotics")
       }
@@ -855,7 +855,10 @@ eucast_rules <- function(x,
         rule_text, rule_group_current, rule_current,
         ifelse(rule_group_current %like% "breakpoint",
           paste0(breakpoints_info$title, " ", breakpoints_info$version_txt, ", ", breakpoints_info$year),
-          paste0(expertrules_info$title, " ", expertrules_info$version_txt, ", ", expertrules_info$year)
+          ifelse(rule_group_current %like% "expected",
+            paste0(expected_phenotypes_info$title, " ", expected_phenotypes_info$version_txt, ", ", expected_phenotypes_info$year),
+            paste0(expertrules_info$title, " ", expertrules_info$version_txt, ", ", expertrules_info$year)
+          )
         )
       ),
       rows = rows,
@@ -1130,7 +1133,12 @@ edit_sir <- function(x,
     if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir), na.rm = TRUE)) {
       track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
-    non_SIR <- is.na(new_edits[rows, cols]) | !(new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI")
+    isNA <- is.na(new_edits[rows, cols])
+    isSIR <- !isNA & (new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI")
+    non_SIR <- !isSIR
+    if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
+      warning_("Some values had SIR values and were not overwritten, since `overwrite = FALSE`.")
+    }
     tryCatch(
       # insert into original table
       if (isTRUE(overwrite)) {

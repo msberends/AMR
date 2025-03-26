@@ -30,6 +30,7 @@
 \alias{quinolones}
 \alias{rifamycins}
 \alias{streptogramins}
+\alias{sulfonamides}
 \alias{tetracyclines}
 \alias{trimethoprims}
 \alias{ureidopenicillins}
@@ -106,6 +107,8 @@ quinolones(only_sir_columns = FALSE, only_treatable = TRUE,
 rifamycins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 streptogramins(only_sir_columns = FALSE, return_all = TRUE, ...)
+
+sulfonamides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 tetracyclines(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
@@ -203,6 +206,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 \item \code{\link[=quinolones]{quinolones()}} can select: \cr besifloxacin (BES), cinoxacin (CIN), ciprofloxacin (CIP), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), flumequine (FLM), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), lascufloxacin (LSC), levofloxacin (LVX), levofloxacin/ornidazole (LEO), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nalidixic acid (NAL), nalidixic acid screening test (NAL-S), nemonoxacin (NEM), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), norfloxacin screening test (NOR-S), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin (OFX), ofloxacin/ornidazole (OOR), orbifloxacin (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF), pefloxacin screening test (PEF-S), pipemidic acid (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and trovafloxacin (TVA)
 \item \code{\link[=rifamycins]{rifamycins()}} can select: \cr rifabutin (RIB), rifampicin (RIF), rifampicin/ethambutol/isoniazid (REI), rifampicin/isoniazid (RFI), rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI), rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), and rifapentine (RFP)
 \item \code{\link[=streptogramins]{streptogramins()}} can select: \cr pristinamycin (PRI) and quinupristin/dalfopristin (QDA)
+\item \code{\link[=sulfonamides]{sulfonamides()}} can select: \cr brodimoprim (BDP), sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT), sulfadimethoxine (SUD), sulfadimidine (SDM), sulfafurazole (SLF), sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO), sulfamerazine (SLF3), sulfamethizole (SLF4), sulfamethoxazole (SMX), sulfamethoxypyridazine (SLF5), sulfametomidine (SLF6), sulfametoxydiazine (SLF7), sulfamoxole (SLF8), sulfanilamide (SLF9), sulfaperin (SLF10), sulfaphenazole (SLF11), sulfapyridine (SLF12), sulfathiazole (SUT), and sulfathiourea (SLF13)
 \item \code{\link[=tetracyclines]{tetracyclines()}} can select: \cr cetocycline (CTO), chlortetracycline (CTE), clomocycline (CLM1), demeclocycline (DEM), doxycycline (DOX), eravacycline (ERV), lymecycline (LYM), metacycline (MTC), minocycline (MNO), omadacycline (OMC), oxytetracycline (OXY), penimepicycline (PNM1), rolitetracycline (RLT), sarecycline (SRC), tetracycline (TCY), tetracycline screening test (TCY-S), and tigecycline (TGC)
 \item \code{\link[=trimethoprims]{trimethoprims()}} can select: \cr brodimoprim (BDP), sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT), sulfadiazine/trimethoprim (SLT1), sulfadimethoxine (SUD), sulfadimidine (SDM), sulfadimidine/trimethoprim (SLT2), sulfafurazole (SLF), sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO), sulfamerazine (SLF3), sulfamerazine/trimethoprim (SLT3), sulfamethizole (SLF4), sulfamethoxazole (SMX), sulfamethoxypyridazine (SLF5), sulfametomidine (SLF6), sulfametoxydiazine (SLF7), sulfametrole/trimethoprim (SLT4), sulfamoxole (SLF8), sulfamoxole/trimethoprim (SLT5), sulfanilamide (SLF9), sulfaperin (SLF10), sulfaphenazole (SLF11), sulfapyridine (SLF12), sulfathiazole (SUT), sulfathiourea (SLF13), trimethoprim (TMP), and trimethoprim/sulfamethoxazole (SXT)
 \item \code{\link[=ureidopenicillins]{ureidopenicillins()}} can select: \cr azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), and piperacillin/tazobactam (TZP)

@@ -2107,6 +2107,11 @@ taxonomy$rank[which(taxonomy$fullname %like% "unknown")] <- "(unknown rank)"
 
 # Some final checks -------------------------------------------------------------------------------
 
+# this happened in early 2025, check that MO codes do not have repeated elements
+# fixed it then like this: microorganisms$mo <- gsub("B_SCLLM_CNNM_LNSM_LNSM_LNSM_LNSM", "B_SCLLM_CNNM", microorganisms$mo)
+taxonomy |> filter(mo %like% "_.*_.*_.*_") |> View()
+
+
 fix_old_mos <- function(dataset) {
   df <- dataset %>% mutate(mo = as.character(mo))
   df$mo[which(!df$mo %in% taxonomy$mo)] <- df %>% filter(!mo %in% taxonomy$mo) %>% mutate(name = mo_name(mo, keep_synonyms = TRUE), new_mo = taxonomy$mo[match(name, taxonomy$fullname)]) %>% pull(new_mo)

@@ -333,7 +333,7 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   x <- as.mic(x, keep_operators = ifelse(keep_operators == "edges", "none", keep_operators))
 
   if (isTRUE(as.mic)) {
-    if (keep_operators == "edges" && length(x) > 1) {
+    if (keep_operators == "edges" && length(unique(x)) > 1) {
       x[x == min(x, na.rm = TRUE)] <- paste0("<=", x[x == min(x, na.rm = TRUE)])
       x[x == max(x, na.rm = TRUE)] <- paste0(">=", x[x == max(x, na.rm = TRUE)])
     }

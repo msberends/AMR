@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 78 678 Taxonomic Records of Microorganisms}
+\title{Data Set with 78 679 Taxonomic Records of Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 78 678 observations and 26 variables:
+A \link[tibble:tibble]{tibble} with 78 679 observations and 26 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{\strong{This is a unique identifier.}}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{\strong{This is a unique identifier.}}
@@ -14,7 +14,7 @@ A \link[tibble:tibble]{tibble} with 78 678 observations and 26 variables:
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, such as \code{"species"} or \code{"genus"}
 \item \code{ref}\cr Author(s) and year of related scientific publication. This contains only the \emph{first surname} and year of the \emph{latest} authors, e.g. "Wallis \emph{et al.} 2006 \emph{emend.} Smith and Jones 2018" becomes "Smith \emph{et al.}, 2018". This field is directly retrieved from the source specified in the column \code{source}. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.
 \item \code{oxygen_tolerance} \cr Oxygen tolerance, either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile". These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 68.3\% of all ~39 000 bacteria in the data set contain an oxygen tolerance.
-\item \code{source}\cr Either "GBIF", "LPSN", "MycoBank", or "manually added" (see \emph{Source})
+\item \code{source}\cr Either "GBIF", "LPSN", "Manually added", "MycoBank", or "manually added" (see \emph{Source})
 \item \code{lpsn}\cr Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set. \emph{\strong{This is a unique identifier}}, though available for only ~33 000 records.
 \item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
 \item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
@@ -80,7 +80,7 @@ Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://ww
 For convenience, some entries were added manually:
 \itemize{
 \item ~1 500 entries of \emph{Salmonella}, such as the city-like serovars and groups A to H
-\item 36 species groups (such as the beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.), of which the group compositions are stored in the \link{microorganisms.groups} data set
+\item 37 species groups (such as the beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.), of which the group compositions are stored in the \link{microorganisms.groups} data set
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 \item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)

@@ -69,7 +69,7 @@
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    S     S
 #'
-#' eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE)
+#' eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE, overwrite = TRUE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    R     S
 #' #> 2 Klebsiella pneumoniae   R    R     S
@@ -83,7 +83,7 @@
 #' y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
 #'                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
 #'
-#' eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE)
+#' eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE, overwrite = TRUE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    R     S
@@ -121,6 +121,7 @@
 #'   rules = "custom",
 #'   custom_rules = x,
 #'   info = FALSE,
+#'   overwrite = TRUE,
 #'   verbose = TRUE
 #' )
 #'

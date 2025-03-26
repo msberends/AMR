@@ -27,8 +27,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# this data set is being used in the clinical_breakpoints data set, and thus by as.sir().
-# it prevents the breakpoints table from being extremely long for species that are part of a species group.
+# This data set is being used in the clinical_breakpoints data set, and thus by as.sir().
+# It prevents the breakpoints table from being extremely long for species that are part of a species group.
+# Also used by eucast_rules() to expand group names.
 
 library(dplyr)
 library(readr)
@@ -143,6 +144,10 @@ microorganisms.groups <- whonet_organisms %>%
   filter(mo_group != "B_CTRBC_FRND-C") %>% 
   bind_rows(tibble(mo_group = as.mo("B_CTRBC_FRND-C"),
                    mo = paste("Citrobacter", c("freundii", "braakii", "gillenii", "murliniae", "portucalensis", "sedlakii", "werkmanii", "youngae")) %>% as.mo(keep_synonyms = TRUE))) %>% 
+  # Klebsiella pneumoniae complex
+  filter(mo_group != "B_KLBSL_PNMN-C") %>% 
+  bind_rows(tibble(mo_group = as.mo("B_KLBSL_PNMN-C"),
+                   mo = paste("Klebsiella", c("africana", "pneumoniae", "quasipneumoniae", "quasivariicola", "variicola")) %>% as.mo(keep_synonyms = TRUE))) %>% 
   # Yersinia pseudotuberculosis complex in the NCBI Taxonomy Browser:
   # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1649845
   filter(mo_group != "B_YERSN_PSDT-C") %>% 
@@ -164,21 +169,18 @@ for (group in unique(microorganisms.groups$mo_group)) {
     filter(mo %like% spp & rank == "subspecies") %>%
     pull(mo)
   # add them
-  microorganisms.groups <- microorganisms.groups %>% bind_rows(tibble(mo_group = group, mo = mos))
+  microorganisms.groups <- microorganisms.groups %>% bind_rows(tibble(mo_group = as.mo(group), mo = mos))
 }
 
 # add full names, arrange and clean
 microorganisms.groups <- microorganisms.groups %>%
   mutate(mo_group_name = mo_name(mo_group, keep_synonyms = TRUE, language = NULL),
-         mo_name = mo_name(mo, keep_synonyms = TRUE, language = NULL)) %>% 
+         mo_name = mo_name(mo, keep_synonyms = TRUE, language = NULL)) %>%
   arrange(mo_group_name, mo_name) %>% 
-  filter(mo_group != mo) %>% 
-  distinct() %>% 
+  filter(mo_group != mo) %>%
+  distinct() %>%
   dataset_UTF8_to_ASCII()
 mo_uncertainties()
-
-# add subspecies to all species
-
 
 class(microorganisms.groups$mo_group) <- c("mo", "character")
 class(microorganisms.groups$mo) <- c("mo", "character")

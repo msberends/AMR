@@ -1,6 +1,6 @@
 Package: AMR
-Version: 2.1.1.9224
-Date: 2025-03-20
+Version: 2.1.1.9225
+Date: 2025-03-26
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -20,12 +20,15 @@ Authors@R: c(
   person(given = c("Dmytro"),                       family = "Mykhailenko", role = "ctb"),
   person(given = c("Eric", "H.", "L.", "C.", "M."), family = "Hazenberg",   role = "ctb"),
   person(given = c("Gwen"),                         family = "Knight",      role = "ctb", comment = c(ORCID = "0000-0002-7263-9896")),
+  person(given = c("Jane"),                         family = "Hawkey",      role = "ctb", comment = c(ORCID = "0000-0001-9661-5293")),
   person(given = c("Jason"),                        family = "Stull",       role = "ctb", comment = c(ORCID = "0000-0002-9028-8153")),
   person(given = c("Javier"),                       family = "Sanchez",     role = "ctb", comment = c(ORCID = "0000-0003-2605-8094")),
   person(given = c("Jonas"),                        family = "Salm",        role = "ctb"),
   person(given = c("Judith", "M."),                 family = "Fonville",    role = "ctb"),
+  person(given = c("Kathryn"),                      family = "Holt",        role = "ctb", comment = c(ORCID = "0000-0003-3949-2471")),
   person(given = c("Larisse"),                      family = "Bolton",      role = "ctb", comment = c(ORCID = "0000-0001-7879-2173")),
   person(given = c("Matthew"),                      family = "Saab",        role = "ctb"),
+  person(given = c("Natacha"),                      family = "Couto",       role = "ctb", comment = c(ORCID = "0000-0002-9152-5464")),
   person(given = c("Peter"),                        family = "Dutey-Magni", role = "ctb", comment = c(ORCID = "0000-0002-8942-9836")),
   person(given = c("Rogier", "P."),                 family = "Schade",      role = "ctb"),
   person(given = c("Sofia"),                        family = "Ny",          role = "ctb", comment = c(ORCID = "0000-0002-2017-1363")),
