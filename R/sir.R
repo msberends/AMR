@@ -1715,11 +1715,7 @@ pillar_shaft.sir <- function(x, ...) {
     out[x == "S"] <- font_green_bg("  S  ")
     out[x == "I"] <- font_orange_bg("  I  ")
     out[x == "SDD"] <- font_orange_bg(" SDD ")
-    if (is_dark()) {
-      out[x == "R"] <- font_red_bg("  R  ")
-    } else {
-      out[x == "R"] <- font_rose_bg("  R  ")
-    }
+    out[x == "R"] <- font_rose_bg("  R  ")
   }
   create_pillar_column(out, align = "left", width = 5)
 }

@@ -1299,7 +1299,13 @@ font_purple_bg <- function(..., collapse = " ") {
   try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;89m", after = "\033[49m", collapse = collapse)
 }
 font_rose_bg <- function(..., collapse = " ") {
-  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;217m", after = "\033[49m", collapse = collapse)
+  if (is_dark()) {
+    # this is #ed553b (picked to be colourblind-safe with other SIR colours)
+    try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;203m", after = "\033[49m", collapse = collapse)
+  } else {
+    # also colourblind-safe but softer
+    try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;217m", after = "\033[49m", collapse = collapse)
+  }
 }
 font_na <- function(..., collapse = " ") {
   font_red(..., collapse = collapse)

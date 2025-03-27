@@ -656,7 +656,9 @@ eucast_rules <- function(x,
     if (isTRUE(ampc_cephalosporin_resistance)) {
       ampc_cephalosporin_resistance <- "R"
     }
-    eucast_rules_df[which(eucast_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
+    if (!is.null(eucast_rules_df$reference.rule)) {
+      eucast_rules_df[which(eucast_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
+    }
   }
 
   # sometimes, the screenings are missing but the names are actually available

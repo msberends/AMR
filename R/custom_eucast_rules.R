@@ -253,7 +253,7 @@ print.custom_eucast_rules <- function(x, ...) {
     if (is.na(rule$result_value)) {
       val <- font_red("<NA>")
     } else if (rule$result_value == "R") {
-      val <- font_red_bg(" R ")
+      val <- font_rose_bg(" R ")
     } else if (rule$result_value == "S") {
       val <- font_green_bg(" S ")
     } else {
@@ -297,7 +297,7 @@ format_custom_query_rule <- function(query, colours = has_colour()) {
   query <- gsub(" %in% ", sub("{text}", " is one of ", txt, fixed = TRUE), query, fixed = TRUE)
   query <- gsub(" %like% ", sub("{text}", " resembles ", txt, fixed = TRUE), query, fixed = TRUE)
   if (colours == TRUE) {
-    query <- gsub('"R"', font_red_bg(" R "), query, fixed = TRUE)
+    query <- gsub('"R"', font_rose_bg(" R "), query, fixed = TRUE)
     query <- gsub('"S"', font_green_bg(" S "), query, fixed = TRUE)
     query <- gsub('"I"', font_orange_bg(" I "), query, fixed = TRUE)
   }
