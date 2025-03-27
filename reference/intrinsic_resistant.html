@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9224</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9227</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,12 +61,13 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 301 583 observations and 2 variables:</p><ul><li><p><code>mo</code><br> Microorganism ID</p></li>
-<li><p><code>ab</code><br> Antimcrobial ID</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 196 665 observations and 2 variables:</p><ul><li><p><code>mo</code><br> Microorganism ID</p></li>
+<li><p><code>ab</code><br> Antimicrobial ID</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This data set is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021).</p><div class="section">
+    <p>This data set is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expected Resistant Phenotypes' v1.2</a> (2023).</p>
+<p>This data set is internally used by <code><a href="antimicrobial_selectors.html">not_intrinsic_resistant()</a></code> (an <a href="antimicrobial_selectors.html">antimicrobial selector</a>) and <code><a href="mo_property.html">mo_is_intrinsic_resistant()</a></code></p><div class="section">
 <h3 id="direct-download">Direct download<a class="anchor" aria-label="anchor" href="#direct-download"></a></h3>
 
 
@@ -79,20 +80,20 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">intrinsic_resistant</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 301,583 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mo          ab  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">B_</span>GRAMP     ATM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">B_</span>GRAMP     COL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">B_</span>GRAMP     NAL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">B_</span>GRAMP     PLB </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">B_</span>GRAMP     TEM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">B_</span>ANAER-POS ATM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">B_</span>ANAER-POS COL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">B_</span>ANAER-POS NAL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">B_</span>ANAER-POS PLB </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">B_</span>ANAER-POS TEM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 301,573 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 196,665 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    mo      ab  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">B_</span>ACRHB ACM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">B_</span>ACRHB ASP </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">B_</span>ACRHB AVO </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">B_</span>ACRHB AZM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">B_</span>ACRHB PEN </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">B_</span>ACRHB BLM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">B_</span>ACRHB CDZ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">B_</span>ACRHB CLR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">B_</span>ACRHB CLI </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">B_</span>ACRHB CYC </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 196,655 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

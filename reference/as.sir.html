@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9224</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9227</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, S <span class="op">=</span> <span class="st">"^(S|U)+$"</span>, I <span class="op">=</span> <span class="st">"^(I)+$"</span>, R <span class="op">=</span> <span class="st">"^(R)+$"</span>,</span>
-<span>  NI <span class="op">=</span> <span class="st">"^(N|NI|V)+$"</span>, SDD <span class="op">=</span> <span class="st">"^(SDD|D|H)+$"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  NI <span class="op">=</span> <span class="st">"^(N|NI|V)+$"</span>, SDD <span class="op">=</span> <span class="st">"^(SDD|D|H)+$"</span>, info <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'mic'</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, mo <span class="op">=</span> <span class="cn">NULL</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -96,7 +96,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span>  <span class="cn">FALSE</span><span class="op">)</span>, include_screening <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_screening"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  breakpoint_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_breakpoint_type"</span>, <span class="st">"human"</span><span class="op">)</span>, host <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, info <span class="op">=</span> <span class="cn">TRUE</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'disk'</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, mo <span class="op">=</span> <span class="cn">NULL</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -107,7 +107,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span>  <span class="cn">FALSE</span><span class="op">)</span>, include_screening <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_screening"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  breakpoint_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_breakpoint_type"</span>, <span class="st">"human"</span><span class="op">)</span>, host <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, info <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -119,7 +119,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span>  <span class="cn">FALSE</span><span class="op">)</span>, include_screening <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_screening"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  breakpoint_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_breakpoint_type"</span>, <span class="st">"human"</span><span class="op">)</span>, host <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, info <span class="op">=</span> <span class="cn">TRUE</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">sir_interpretation_history</span><span class="op">(</span>clean <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -150,6 +150,10 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 <dt id="arg-s-i-r-ni-sdd">S, I, R, NI, SDD<a class="anchor" aria-label="anchor" href="#arg-s-i-r-ni-sdd"></a></dt>
 <dd><p>a case-independent <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> to translate input to this result. This regular expression will be run <em>after</em> all non-letters and whitespaces are removed from the input.</p></dd>
+
+
+<dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to print information about the process</p></dd>
 
 
 <dt id="arg-mo">mo<a class="anchor" aria-label="anchor" href="#arg-mo"></a></dt>
@@ -815,16 +819,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 65 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given   mo_given host_given ab   mo             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-20 <span style="color: #949494;">22:33:36</span>     1 ampicillin Strep p… human      AMP  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-20 <span style="color: #949494;">22:33:36</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-20 <span style="color: #949494;">22:33:36</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-27 <span style="color: #949494;">14:43:05</span>     1 ampicillin Strep p… human      AMP  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-27 <span style="color: #949494;">14:43:06</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-27 <span style="color: #949494;">14:43:06</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">  NA</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-20 <span style="color: #949494;">22:33:36</span>     1 GEN        Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-20 <span style="color: #949494;">22:33:37</span>     1 TOB        Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-20 <span style="color: #949494;">22:33:37</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-20 <span style="color: #949494;">22:33:38</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-20 <span style="color: #949494;">22:33:38</span>     2 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-20 <span style="color: #949494;">22:33:38</span>     3 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-27 <span style="color: #949494;">14:43:06</span>     1 GEN        Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-27 <span style="color: #949494;">14:43:06</span>     1 TOB        Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-27 <span style="color: #949494;">14:43:07</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-27 <span style="color: #949494;">14:43:07</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-27 <span style="color: #949494;">14:43:07</span>     2 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-27 <span style="color: #949494;">14:43:07</span>     3 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 55 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;chr&gt;, outcome &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>

@@ -17,7 +17,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9224</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9227</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,6 +137,8 @@ my_data_with_all_these_columns %&amp;gt;%
 <span></span>
 <span><span class="fu">streptogramins</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">sulfonamides</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">tetracyclines</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -155,7 +157,7 @@ my_data_with_all_these_columns %&amp;gt;%
 <span><span class="fu">administrable_iv</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, return_all <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">not_intrinsic_resistant</span><span class="op">(</span>only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  version_expertrules <span class="op">=</span> <span class="fl">3.3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>  version_expected_phenotypes <span class="op">=</span> <span class="fl">1.2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -190,8 +192,8 @@ my_data_with_all_these_columns %&amp;gt;%
 <dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
-<dt id="arg-version-expertrules">version_expertrules<a class="anchor" aria-label="anchor" href="#arg-version-expertrules"></a></dt>
-<dd><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".</p></dd>
+<dt id="arg-version-expected-phenotypes">version_expected_phenotypes<a class="anchor" aria-label="anchor" href="#arg-version-expected-phenotypes"></a></dt>
+<dd><p>the version number to use for the EUCAST Expected Phenotypes. Can be "1.2".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -206,7 +208,7 @@ my_data_with_all_these_columns %&amp;gt;%
 <p>The <code>amr_class()</code> function can be used to filter/select on a manually defined antimicrobial class. It searches for results in the <a href="antimicrobials.html">antimicrobials</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
 <p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href="antimicrobials.html">antimicrobials</a> data set - antimicrobials will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href="antimicrobials.html">antimicrobials</a> data set.</p>
 <p>The <code>amr_selector()</code> function can be used to internally filter the <a href="antimicrobials.html">antimicrobials</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
-<p>The <code>not_intrinsic_resistant()</code> function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
+<p>The <code>not_intrinsic_resistant()</code> function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expected Resistant Phenotypes' v1.2</a> (2023) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
     </div>
     <div class="section level2">
     <h2 id="full-list-of-supported-antimicrobial-classes">Full list of supported (antimicrobial) classes<a class="anchor" aria-label="anchor" href="#full-list-of-supported-antimicrobial-classes"></a></h2>
@@ -240,6 +242,7 @@ my_data_with_all_these_columns %&amp;gt;%
 <li><p><code>quinolones()</code> can select: <br> besifloxacin (BES), cinoxacin (CIN), ciprofloxacin (CIP), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), flumequine (FLM), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), lascufloxacin (LSC), levofloxacin (LVX), levofloxacin/ornidazole (LEO), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nalidixic acid (NAL), nalidixic acid screening test (NAL-S), nemonoxacin (NEM), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), norfloxacin screening test (NOR-S), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin (OFX), ofloxacin/ornidazole (OOR), orbifloxacin (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF), pefloxacin screening test (PEF-S), pipemidic acid (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and trovafloxacin (TVA)</p></li>
 <li><p><code>rifamycins()</code> can select: <br> rifabutin (RIB), rifampicin (RIF), rifampicin/ethambutol/isoniazid (REI), rifampicin/isoniazid (RFI), rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI), rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), and rifapentine (RFP)</p></li>
 <li><p><code>streptogramins()</code> can select: <br> pristinamycin (PRI) and quinupristin/dalfopristin (QDA)</p></li>
+<li><p><code>sulfonamides()</code> can select: <br> brodimoprim (BDP), sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT), sulfadimethoxine (SUD), sulfadimidine (SDM), sulfafurazole (SLF), sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO), sulfamerazine (SLF3), sulfamethizole (SLF4), sulfamethoxazole (SMX), sulfamethoxypyridazine (SLF5), sulfametomidine (SLF6), sulfametoxydiazine (SLF7), sulfamoxole (SLF8), sulfanilamide (SLF9), sulfaperin (SLF10), sulfaphenazole (SLF11), sulfapyridine (SLF12), sulfathiazole (SUT), and sulfathiourea (SLF13)</p></li>
 <li><p><code>tetracyclines()</code> can select: <br> cetocycline (CTO), chlortetracycline (CTE), clomocycline (CLM1), demeclocycline (DEM), doxycycline (DOX), eravacycline (ERV), lymecycline (LYM), metacycline (MTC), minocycline (MNO), omadacycline (OMC), oxytetracycline (OXY), penimepicycline (PNM1), rolitetracycline (RLT), sarecycline (SRC), tetracycline (TCY), tetracycline screening test (TCY-S), and tigecycline (TGC)</p></li>
 <li><p><code>trimethoprims()</code> can select: <br> brodimoprim (BDP), sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT), sulfadiazine/trimethoprim (SLT1), sulfadimethoxine (SUD), sulfadimidine (SDM), sulfadimidine/trimethoprim (SLT2), sulfafurazole (SLF), sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO), sulfamerazine (SLF3), sulfamerazine/trimethoprim (SLT3), sulfamethizole (SLF4), sulfamethoxazole (SMX), sulfamethoxypyridazine (SLF5), sulfametomidine (SLF6), sulfametoxydiazine (SLF7), sulfametrole/trimethoprim (SLT4), sulfamoxole (SLF8), sulfamoxole/trimethoprim (SLT5), sulfanilamide (SLF9), sulfaperin (SLF10), sulfaphenazole (SLF11), sulfapyridine (SLF12), sulfathiazole (SUT), sulfathiourea (SLF13), trimethoprim (TMP), and trimethoprim/sulfamethoxazole (SXT)</p></li>
 <li><p><code>ureidopenicillins()</code> can select: <br> azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), and piperacillin/tazobactam (TZP)</p></li>
