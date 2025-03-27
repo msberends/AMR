@@ -33,7 +33,7 @@
 
 format_eucast_version_nr <- function(version, markdown = TRUE) {
   # for documentation - adds title, version number, year and url in markdown language
-  lst <- c(EUCAST_VERSION_BREAKPOINTS, EUCAST_VERSION_EXPERT_RULES)
+  lst <- c(EUCAST_VERSION_BREAKPOINTS, EUCAST_VERSION_EXPECTED_PHENOTYPES, EUCAST_VERSION_EXPERT_RULES)
   version <- format(unique(version), nsmall = 1)
   txt <- character(0)
   for (i in seq_len(length(version))) {

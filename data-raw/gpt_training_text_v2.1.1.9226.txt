@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9225. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9226. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -988,14 +988,14 @@ A \link[tibble:tibble]{tibble} with 500 observations and 53 variables:
 \item \verb{Inducible clindamycin resistance}\cr Clindamycin can be induced?
 \item \code{Comment}\cr Other comments
 \item \verb{Date of data entry}\cr \link{Date} this data was entered in WHONET
-\item \code{AMP_ND10:CIP_EE}\cr 28 different antimicrobials. You can lookup the abbreviations in the \link{antimicrobials} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antimcrobial class, using \code{\link[=as.sir]{as.sir()}}.
+\item \code{AMP_ND10:CIP_EE}\cr 28 different antimicrobials. You can lookup the abbreviations in the \link{antimicrobials} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antimicrobial class, using \code{\link[=as.sir]{as.sir()}}.
 }
 }
 \usage{
 WHONET
 }
 \description{
-This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antimcrobial results are from our \link{example_isolates} data set. All patient names were created using online surname generators and are only in place for practice purposes.
+This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antimicrobial results are from our \link{example_isolates} data set. All patient names were created using online surname generators and are only in place for practice purposes.
 }
 \details{
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
@@ -2264,7 +2264,7 @@ administrable_per_os(only_sir_columns = FALSE, return_all = TRUE, ...)
 administrable_iv(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
-  version_expertrules = 3.3, ...)
+  version_expected_phenotypes = 1.2, ...)
 }
 \arguments{
 \item{only_sir_columns}{a \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}}
@@ -2281,7 +2281,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 
 \item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
+\item{version_expected_phenotypes}{the version number to use for the EUCAST Expected Phenotypes. Can be "1.2".}
 }
 \value{
 When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"amr_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobials that the function would be able to select or filter.
@@ -2309,7 +2309,7 @@ The \code{\link[=administrable_per_os]{administrable_per_os()}} and \code{\link[
 
 The \code{\link[=amr_selector]{amr_selector()}} function can be used to internally filter the \link{antimicrobials} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 
-The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
+The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of \emph{E. coli} and \emph{K. pneumoniae} and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023) to determine intrinsic resistance, using the \code{\link[=eucast_rules]{eucast_rules()}} function internally. Because of this determination, this function is quite slow in terms of performance.
 }
 \section{Full list of supported (antimicrobial) classes}{
 
@@ -2543,14 +2543,14 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/antimicrobials.Rd':
 \format{
 \subsection{For the \link{antimicrobials} data set: a \link[tibble:tibble]{tibble} with 496 observations and 14 variables:}{
 \itemize{
-\item \code{ab}\cr antimcrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{\strong{This is a unique identifier.}}
+\item \code{ab}\cr antimicrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{\strong{This is a unique identifier.}}
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}
 \item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{\strong{This is a unique identifier.}}
 \item \code{group}\cr A short and concise group name, based on WHONET and WHOCC definitions
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
 \item \code{atc_group1}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
-\item \code{abbr}\cr List of abbreviations as used in many countries, also for antimcrobial susceptibility testing (AST)
+\item \code{abbr}\cr List of abbreviations as used in many countries, also for antimicrobial susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
 \item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 179 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
@@ -2591,7 +2591,7 @@ antimicrobials
 antivirals
 }
 \description{
-Two data sets containing all antimicrobials and antivirals. Use \code{\link[=as.ab]{as.ab()}} or one of the \code{\link[=ab_property]{ab_*}} functions to retrieve values from the \link{antimicrobials} data set. Three identifiers are included in this data set: an antimcrobial ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
+Two data sets containing all antimicrobials and antivirals. Use \code{\link[=as.ab]{as.ab()}} or one of the \code{\link[=ab_property]{ab_*}} functions to retrieve values from the \link{antimicrobials} data set. Three identifiers are included in this data set: an antimicrobial ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
 }
 \details{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
@@ -4212,7 +4212,7 @@ A \link[tibble:tibble]{tibble} with 34 376 observations and 14 variables:
 \item \code{site}\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
 \item \code{rank_index}\cr Taxonomic rank index of \code{mo} from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
-\item \code{ab}\cr Antimcrobial code as used by this package, EARS-Net and WHONET, see \code{\link[=as.ab]{as.ab()}}
+\item \code{ab}\cr Antimicrobial code as used by this package, EARS-Net and WHONET, see \code{\link[=as.ab]{as.ab()}}
 \item \code{ref_tbl}\cr Info about where the guideline rule can be found
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
@@ -4649,7 +4649,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/dosage.Rd':
 \format{
 A \link[tibble:tibble]{tibble} with 503 observations and 9 variables:
 \itemize{
-\item \code{ab}\cr Antimcrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+\item \code{ab}\cr Antimicrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{name}\cr Official name of the antimicrobial drug as used by WHONET/EARS-Net or the WHO
 \item \code{type}\cr Type of the dosage, either "high_dosage", "standard_dosage", or "uncomplicated_uti"
 \item \code{dose}\cr Dose, such as "2 g" or "25 mg/kg"
@@ -5866,10 +5866,10 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/intrinsic_resistant.Rd':
 \alias{intrinsic_resistant}
 \title{Data Set with Bacterial Intrinsic Resistance}
 \format{
-A \link[tibble:tibble]{tibble} with 301 583 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 196 665 observations and 2 variables:
 \itemize{
 \item \code{mo}\cr Microorganism ID
-\item \code{ab}\cr Antimcrobial ID
+\item \code{ab}\cr Antimicrobial ID
 }
 }
 \usage{
@@ -5879,7 +5879,9 @@ intrinsic_resistant
 Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
 }
 \details{
-This data set is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).
+This data set is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023).
+
+This data set is internally used by \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} (an \link[=antimicrobial_selectors]{antimicrobial selector}) and \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}
 \subsection{Direct download}{
 
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
@@ -7099,7 +7101,7 @@ Determination of the Gram stain (\code{\link[=mo_gramstain]{mo_gramstain()}}) wi
 
 Determination of yeasts (\code{\link[=mo_is_yeast]{mo_is_yeast()}}) will be based on the taxonomic kingdom and class. \emph{Budding yeasts} are yeasts that reproduce asexually through a process called budding, where a new cell develops from a small protrusion on the parent cell. Taxonomically, these are members of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes) or Pichiomycetes. \emph{True yeasts} quite specifically refers to yeasts in the underlying order Saccharomycetales (such as \emph{Saccharomyces cerevisiae}). Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes or Pichiomycetes, the function will return \code{TRUE}. It returns \code{FALSE} otherwise (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}).
 
-Determination of intrinsic resistance (\code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}) will be based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antimicrobials).
+Determination of intrinsic resistance (\code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}) will be based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antimicrobials).
 
 Determination of bacterial oxygen tolerance (\code{\link[=mo_oxygen_tolerance]{mo_oxygen_tolerance()}}) will be based on BacDive, see \emph{Source}. The function \code{\link[=mo_is_anaerobic]{mo_is_anaerobic()}} only returns \code{TRUE} if the oxygen tolerance is \code{"anaerobe"}, indicting an obligate anaerobic species or genus. It always returns \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
 

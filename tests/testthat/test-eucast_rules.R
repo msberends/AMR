@@ -47,7 +47,8 @@ test_that("test-eucast_rules.R", {
   MOs_test <- suppressWarnings(
     trimws(paste(
       mo_genus(MOs_mentioned, keep_synonyms = TRUE, language = NULL),
-      mo_species(MOs_mentioned, keep_synonyms = TRUE, language = NULL)
+      mo_species(MOs_mentioned, keep_synonyms = TRUE, language = NULL),
+      mo_subspecies(MOs_mentioned, keep_synonyms = TRUE, language = NULL)
     ))
   )
   MOs_test[MOs_test == ""] <- mo_fullname(MOs_mentioned[MOs_test == ""], keep_synonyms = TRUE, language = NULL)

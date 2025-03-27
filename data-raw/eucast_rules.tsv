@@ -783,36 +783,6 @@ genus_species	is	Brucella melitensis	TCY-S	S	DOX	S	Brucella melitensis	Breakpoin
 genus_species	is	Brucella melitensis	TCY-S	R	DOX	R	Brucella melitensis	Breakpoints	14	
 genus_species	is	Burkholderia pseudomallei	TCY-S	S	DOX	I	Burkholderia pseudomallei	Breakpoints	14	
 genus_species	is	Burkholderia pseudomallei	TCY-S	R	DOX	R	Burkholderia pseudomallei	Breakpoints	14	
-
-
-
-
-
-genus_species	one_of	Citrobacter koseri, Citrobacter amalonaticus			AMP, AMX, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Citrobacter freundii			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	one_of	Enterobacter cloacae complex 			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Escherichia hermannii 			AMP, AMX, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Hafnia alvei 			AMP, AMX, PLB, COL	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Klebsiella aerogenes 			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	one_of	Klebsiella pneumoniae complex			AMX, AMP, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Klebsiella oxytoca			AMX, AMP, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Leclercia adecarboxylata			FOS	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Morganella morganii 			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, tetracyclines, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Plesiomonas shigelloides 			AMX, AMP, SAM	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Proteus mirabilis 			tetracyclines, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Proteus penneri 			AMP, AMX, CZO, CEP, LEX, CFR, CXM, tetracyclines, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Proteus vulgaris 			AMP, AMX, CZO, CEP, LEX, CFR, CXM, tetracyclines, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Providencia rettgeri 			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, tetracyclines, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Providencia stuartii			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, tetracyclines, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus	is	Raoultella			AMP, AMX, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Serratia marcescens			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, FOX, CXM, PLB, COL, NIT	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Yersinia enterocolitica			AMP, AMX, AMC, SAM, TIC, CZO, CEP, LEX, CFR, FOX	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Yersinia pseudotuberculosis			PLB, COL	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Aeromonas hydrophila			AMP, AMX, SAM	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Aeromonas veronii			AMP, AMX, SAM, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Aeromonas dhakensis			AMP, AMX, SAM, FOX	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Aeromonas caviae			AMP, AMX, SAM	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
-genus_species	is	Aeromonas jandaei			AMP, AMX, SAM, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
 order	is	Enterobacterales			PEN, glycopeptides, lipoglycopeptides, FUS, macrolides, lincosamides, streptogramins, RIF, oxazolidinones	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
 genus_species	one_of	Citrobacter koseri, Citrobacter amalonaticus			AMP, AMX, TIC	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
 genus_species	is	Citrobacter freundii			AMP, AMX, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Expected resistant phenotype in Enterobacterales and Aeromonas spp.	Expected phenotypes	1.2	
@@ -850,7 +820,7 @@ genus_species	is	Pseudomonas aeruginosa			AMP, AMX, AMC, SAM, CTX, CRO, ETP, CHL
 genus_species	is	Stenotrophomonas maltophilia			AMP, AMX, AMC, SAM, TIC, PIP, TZP, CTX, CRO, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 2: Expected resistant phenotype in non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus	is	Chryseobacterium			AMP, AMX, AMC, SAM, TIC, TCC, CTX, CRO, CAZ, ATM, ETP, IPM, MEM, aminoglycosides, PLB, COL	R	Table 2: Expected resistant phenotype in non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus_species	is	Haemophilus influenzae			FUS, streptogramins	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
-genus_species	is	Moraxella catarrhalis R			TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
+genus_species	is	Moraxella catarrhalis			TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus	is	Neisseria			TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus_species	one_of	Campylobacter jejuni, Campylobacter coli 			FUS, streptogramins, TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	

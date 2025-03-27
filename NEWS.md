@@ -1,4 +1,4 @@
-# AMR 2.1.1.9225
+# AMR 2.1.1.9226
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -27,6 +27,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * **Updated clinical breakpoints**
   * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disk diffusion interpretations.
   * Added all Expected Resistant Phenotypes from EUCAST (v1.2). The default `rules` for `eucast_rules()` are now: `c("breakpoints", "expected_phenotypes")`.
+  * Updated the `intrinsic_resistant` data set, which is now based on EUCAST Expected Resistant Phenotypes v1.2
   * `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Currently, the `clinical_breakpoints` data set contains 24 breakpoints that can return the value "SDD" instead of "I".
   * EUCAST interpretive rules (using `eucast_rules()`) are now available for EUCAST 12 (2022), 13 (2023), and 14 (2024).
 * **New advanced ggplot2 extensions for MIC and SIR plotting and transforming**

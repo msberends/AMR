@@ -659,6 +659,7 @@ as.sir.disk <- function(x,
     breakpoint_type = breakpoint_type,
     host = host,
     verbose = verbose,
+    info = info,
     ...
   )
 }

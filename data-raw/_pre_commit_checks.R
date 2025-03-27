@@ -633,7 +633,7 @@ files_changed <- function(paths = "^(R|data)/") {
   tryCatch({
     changed_files <- system("git status", intern = TRUE)
     changed_files <- unlist(strsplit(changed_files, " "))
-    any(changed_files %like% paths)
+    any(changed_files %like% paths[paths != "R/sysdata.rda"])
   }, error = function(e) TRUE)
 }
 

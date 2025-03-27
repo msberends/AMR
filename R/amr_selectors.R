@@ -612,9 +612,9 @@ administrable_iv <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
 
 #' @rdname antimicrobial_selectors
 #' @inheritParams eucast_rules
-#' @details The [not_intrinsic_resistant()] function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies `r format_eucast_version_nr(names(EUCAST_VERSION_EXPERT_RULES[1]))` to determine intrinsic resistance, using the [eucast_rules()] function internally. Because of this determination, this function is quite slow in terms of performance.
+#' @details The [not_intrinsic_resistant()] function can be used to only select antimicrobials that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))` to determine intrinsic resistance, using the [eucast_rules()] function internally. Because of this determination, this function is quite slow in terms of performance.
 #' @export
-not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, version_expertrules = 3.3, ...) {
+not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, version_expected_phenotypes = 1.2, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
@@ -629,8 +629,9 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
     sapply(
       eucast_rules(vars_df,
         col_mo = col_mo,
-        version_expertrules = version_expertrules,
-        rules = "expert",
+        version_expected_phenotypes = version_expected_phenotypes,
+        rules = "expected_phenotypes",
+        overwrite = TRUE,
         info = FALSE
       ),
       function(col) {
