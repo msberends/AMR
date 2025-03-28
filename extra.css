@@ -130,6 +130,10 @@ input[type="search"] {
 .template-home .endorse_img {
   width: 150px;
 }
+blockquote {
+  padding: 1.25rem 1.25rem;
+  border-left: 1rem solid var(--amr-green-dark);
+}
 
 /* 
 this shows on top of every sidebar to the right
