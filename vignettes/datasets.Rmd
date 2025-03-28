@@ -40,18 +40,17 @@ download_txt <- function(filename) {
   msg <- paste0(
     "It was last updated on ",
     trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")),
-    ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
+    ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
   )
-  github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/"
-  filename <- paste0("../data-raw/", filename)
-  rds <- paste0(filename, ".rds")
-  txt <- paste0(filename, ".txt")
-  excel <- paste0(filename, ".xlsx")
-  feather <- paste0(filename, ".feather")
-  parquet <- paste0(filename, ".parquet")
-  xpt <- paste0(filename, ".xpt")
-  spss <- paste0(filename, ".sav")
-  stata <- paste0(filename, ".dta")
+  github_base <- "https://github.com/msberends/AMR/raw/main/"
+  local_filename <- paste0("../data-raw/datasets/", filename)
+  rds <- paste0(local_filename, ".rds")
+  txt <- paste0(local_filename, ".txt")
+  excel <- paste0(local_filename, ".xlsx")
+  feather <- paste0(local_filename, ".feather")
+  parquet <- paste0(local_filename, ".parquet")
+  spss <- paste0(local_filename, ".sav")
+  stata <- paste0(local_filename, ".dta")
   create_txt <- function(filename, type, software, exists) {
     if (isTRUE(exists)) {
       paste0(
@@ -69,7 +68,6 @@ download_txt <- function(filename) {
     file.exists(excel),
     file.exists(feather),
     file.exists(parquet),
-    file.exists(xpt),
     file.exists(spss),
     file.exists(stata)
   )) {
@@ -80,7 +78,6 @@ download_txt <- function(filename) {
       create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
       create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
       create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
-      # create_txt(xpt, "xpt", "SAS transport (XPT) file", file.exists(xpt)),
       create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
       create_txt(stata, "dta", "Stata DTA file", file.exists(stata))
     )
@@ -113,7 +110,7 @@ print_df <- function(x, rows = 6) {
 
 All reference data (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
-On this page, we explain how to download them and how the structure of the data sets look like. 
+> If you are working in Python, be sure to use our [AMR for Python](https://msberends.github.io/AMR/articles/AMR_for_Python.html) package. It allows all relevant AMR data sets to be natively available in Python.
 
 ## `microorganisms`: Full Microbial Taxonomy
 
@@ -127,17 +124,7 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 The tab-separated text file and Microsoft Excel workbook both contain all SNOMED codes as comma separated values.
 
-### Source
-
-This data set contains the full microbial taxonomy of `r AMR:::nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the `r AMR:::TAXONOMY_VERSION$LPSN$name`, `r AMR:::TAXONOMY_VERSION$MycoBank$name`, and the `r AMR:::TAXONOMY_VERSION$GBIF$name`:
-
-* `r AMR:::TAXONOMY_VERSION$LPSN$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$LPSN$url`> on `r AMR:::documentation_date(AMR:::TAXONOMY_VERSION$LPSN$accessed_date)`.
-* `r AMR:::TAXONOMY_VERSION$MycoBank$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$MycoBank$url`> on `r AMR:::documentation_date(AMR:::TAXONOMY_VERSION$MycoBank$accessed_date)`.
-* `r AMR:::TAXONOMY_VERSION$GBIF$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$GBIF$url`> on `r AMR:::documentation_date(AMR:::TAXONOMY_VERSION$GBIF$accessed_date)`.
-* `r AMR:::TAXONOMY_VERSION$BacDive$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$BacDive$url`> on `r AMR:::documentation_date(AMR:::TAXONOMY_VERSION$BacDive$accessed_date)`.
-* `r AMR:::TAXONOMY_VERSION$SNOMED$citation` URL: <`r AMR:::TAXONOMY_VERSION$SNOMED$url`>
-
-### Example content
+**Example content**
 
 Included (sub)species per taxonomic kingdom:
 
@@ -149,7 +136,7 @@ microorganisms %>%
   print_df()
 ```
 
-Example rows when filtering on genus *Escherichia*:
+First 6 rows when filtering on genus *Escherichia*:
 
 ```{r, echo = FALSE}
 microorganisms %>%
@@ -168,16 +155,7 @@ This data set is in R available as `antimicrobials`, after you load the `AMR` pa
 
 The tab-separated text, Microsoft Excel, SPSS, and Stata files all contain the ATC codes, common abbreviations, trade names and LOINC codes as comma separated values.
 
-### Source
-
-This data set contains all EARS-Net and ATC codes gathered from WHO and WHONET, and all compound IDs from PubChem. It also contains all brand names (synonyms) as found on PubChem and Defined Daily Doses (DDDs) for oral and parenteral administration.
-
-* [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://atcddd.fhi.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
-* [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
-* [WHONET software 2019](https://whonet.org)
-* [LOINC (Logical Observation Identifiers Names and Codes)](https://loinc.org)
-
-### Example content
+**Example content**
 
 ```{r, echo = FALSE}
 antimicrobials %>%
@@ -185,31 +163,6 @@ antimicrobials %>%
   print_df()
 ```
 
-
-## `antivirals`: Antiviral Drugs
-
-`r structure_txt(antivirals)`
-
-This data set is in R available as `antivirals`, after you load the `AMR` package.
-
-`r download_txt("antivirals")`
-
-The tab-separated text, Microsoft Excel, SPSS, and Stata files all contain the trade names and LOINC codes as comma separated values.
-
-### Source
-
-This data set contains all ATC codes gathered from WHO and all compound IDs from PubChem. It also contains all brand names (synonyms) as found on PubChem and Defined Daily Doses (DDDs) for oral and parenteral administration.
-
-* [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://atcddd.fhi.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
-* [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
-* [LOINC (Logical Observation Identifiers Names and Codes)](https://loinc.org)
-
-### Example content
-
-```{r, echo = FALSE}
-antivirals %>%
-  print_df()
-```
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
@@ -219,22 +172,28 @@ This data set is in R available as `clinical_breakpoints`, after you load the `A
 
 `r download_txt("clinical_breakpoints")`
 
-### Source
-
-This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`).
-
-Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their development on the WHONET software.
-
-The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, the WHO, and developers of WHONET and the `AMR` package.
-
-**NOTE:** this `AMR` package (and the WHONET software as well) contains internal methods to apply the guidelines, which is rather complex. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the `microorganisms.groups` data set). It is important that this is considered when using the breakpoints for own use.
-
-### Example content
+**Example content**
 
 ```{r, echo = FALSE}
 clinical_breakpoints %>%
   mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>%
   mutate(ab_name = ab_name(ab, language = NULL), .after = ab) %>%
+  print_df()
+```
+
+
+## `microorganisms.groups`: Species Groups and Microbiological Complexes
+
+`r structure_txt(microorganisms.groups)`
+
+This data set is in R available as `microorganisms.groups`, after you load the `AMR` package.
+
+`r download_txt("microorganisms.groups")`
+
+**Example content**
+
+```{r, echo = FALSE}
+microorganisms.groups %>%
   print_df()
 ```
 
@@ -247,11 +206,7 @@ This data set is in R available as `intrinsic_resistant`, after you load the `AM
 
 `r download_txt("intrinsic_resistant")`
 
-### Source
-
-This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on `r AMR:::format_eucast_version_nr("3.3")`.
-
-### Example content
+**Example content**
 
 Example rows when filtering on *Enterobacter cloacae*:
 
@@ -275,13 +230,7 @@ This data set is in R available as `dosage`, after you load the `AMR` package.
 
 `r download_txt("dosage")`
 
-### Source
-
-EUCAST breakpoints used in this package are based on the dosages in this data set.
-
-Currently included dosages in the data set are meant for: `r AMR:::format_eucast_version_nr(unique(dosage$eucast_version))`.
-
-### Example content
+**Example content**
 
 ```{r, echo = FALSE}
 dosage %>%
@@ -297,11 +246,7 @@ This data set is in R available as `example_isolates`, after you load the `AMR` 
 
 `r download_txt("example_isolates")`
 
-### Source
-
-This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis.
-
-### Example content
+**Example content**
 
 ```{r, echo = FALSE}
 example_isolates %>%
@@ -316,34 +261,10 @@ This data set is in R available as `example_isolates_unclean`, after you load th
 
 `r download_txt("example_isolates_unclean")`
 
-### Source
-
-This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis.
-
-### Example content
+**Example content**
 
 ```{r, echo = FALSE}
 example_isolates_unclean %>%
-  print_df()
-```
-
-
-## `microorganisms.groups`: Species Groups and Microbiological Complexes
-
-`r structure_txt(microorganisms.groups)`
-
-This data set is in R available as `microorganisms.groups`, after you load the `AMR` package.
-
-`r download_txt("microorganisms.groups")`
-
-### Source
-
-This data set contains species groups and microbiological complexes, which are used in the `clinical_breakpoints` data set.
-
-### Example content
-
-```{r, echo = FALSE}
-microorganisms.groups %>%
   print_df()
 ```
 
@@ -356,14 +277,27 @@ This data set is in R available as `microorganisms.codes`, after you load the `A
 
 `r download_txt("microorganisms.codes")`
 
-### Source
-
-This data set contains commonly used codes for microorganisms, from laboratory systems and [WHONET](https://whonet.org).
-
-### Example content
+**Example content**
 
 ```{r, echo = FALSE}
 microorganisms.codes %>%
   print_df()
 ```
 
+
+## `antivirals`: Antiviral Drugs
+
+`r structure_txt(antivirals)`
+
+This data set is in R available as `antivirals`, after you load the `AMR` package.
+
+`r download_txt("antivirals")`
+
+The tab-separated text, Microsoft Excel, SPSS, and Stata files all contain the trade names and LOINC codes as comma separated values.
+
+**Example content**
+
+```{r, echo = FALSE}
+antivirals %>%
+  print_df()
+```

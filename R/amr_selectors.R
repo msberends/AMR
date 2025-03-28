@@ -59,7 +59,7 @@
 #' @name antimicrobial_selectors
 #' @return When used inside selecting or filtering, this returns a [character] vector of column names, with additional class `"amr_selector"`. When used individually, this returns an ['ab' vector][as.ab()] with all possible antimicrobials that the function would be able to select or filter.
 #' @export
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.

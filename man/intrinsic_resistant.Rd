@@ -3,31 +3,38 @@
 \docType{data}
 \name{intrinsic_resistant}
 \alias{intrinsic_resistant}
-\title{Data Set with Bacterial Intrinsic Resistance}
+\title{Data Set Denoting Bacterial Intrinsic Resistance}
 \format{
-A \link[tibble:tibble]{tibble} with 196 665 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 271 905 observations and 2 variables:
 \itemize{
-\item \code{mo}\cr Microorganism ID
-\item \code{ab}\cr Antimicrobial ID
+\item \code{mo}\cr Microorganism ID which occurs in \code{\link[=microorganisms]{microorganisms$mo}}. Names can be retrieved using \code{\link[=mo_name]{mo_name()}}.
+\item \code{ab}\cr Antimicrobial ID which occurs in \code{\link[=antimicrobials]{antimicrobials$ab}}. Names can be retrieved using \code{\link[=ab_name]{ab_name()}}.
 }
 }
 \usage{
 intrinsic_resistant
 }
 \description{
-Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
+Data set containing 'EUCAST Expected Resistant Phenotypes' of \emph{all} bug-drug combinations between the \link{microorganisms} and \link{antimicrobials} data sets.
 }
 \details{
-This data set is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023).
+This data set is currently based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023).
 
-This data set is internally used by \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} (an \link[=antimicrobial_selectors]{antimicrobial selector}) and \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}
-\subsection{Direct download}{
-
-Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
-
-They \strong{allow for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
+This data set is internally used by:
+\itemize{
+\item \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} (an \link[=antimicrobial_selectors]{antimicrobial selector})
+\item \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}
 }
 }
+\section{Download Our Reference Data}{
+
+All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
+
+Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+}
+
 \examples{
 intrinsic_resistant
 }

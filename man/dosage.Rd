@@ -24,9 +24,15 @@ dosage
 \description{
 EUCAST breakpoints used in this package are based on the dosages in this data set. They can be retrieved with \code{\link[=eucast_dosage]{eucast_dosage()}}.
 }
-\details{
-Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+\section{Download Our Reference Data}{
+
+All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
+
+Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
+
 \examples{
 dosage
 }

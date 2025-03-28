@@ -55,7 +55,7 @@ microorganisms
 \description{
 A data set containing the full microbial taxonomy (\strong{last updated: June 24th, 2024}) of six kingdoms. This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}} and microorganism properties can be looked up using any of the \code{\link[=mo_property]{mo_*}} functions.
 
-This data set is carefully crafted, yet made 100\% reproducible from public and authoritative taxonomic sources (using \href{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}{this script}), namely: \emph{List of Prokaryotic names with Standing in Nomenclature (LPSN)} for bacteria, \emph{MycoBank} for fungi, and \emph{Global Biodiversity Information Facility (GBIF)} for all others taxons.
+This data set is carefully crafted, yet made 100\% reproducible from public and authoritative taxonomic sources (using \link{this script}(https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R)), namely: \emph{List of Prokaryotic names with Standing in Nomenclature (LPSN)} for bacteria, \emph{MycoBank} for fungi, and \emph{Global Biodiversity Information Facility (GBIF)} for all others taxons.
 }
 \details{
 Please note that entries are only based on LPSN, MycoBank, and GBIF (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
@@ -86,13 +86,17 @@ For convenience, some entries were added manually:
 \item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 }
 
-The syntax used to transform the original data to a cleansed \R format, can be \href{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}{found here}.
+The syntax used to transform the original data to a cleansed \R format, can be \link{found here}(https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R).
+}
 }
 
-\subsection{Direct download}{
+\section{Download Our Reference Data}{
 
-Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
-}
+All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
+
+Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{

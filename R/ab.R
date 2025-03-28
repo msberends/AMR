@@ -60,7 +60,7 @@
 #' @seealso
 #' * [antimicrobials] for the [data.frame] that is being used to determine ATCs
 #' * [ab_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @export
 #' @examples
 #' # these examples all return "ERY", the ID of erythromycin:

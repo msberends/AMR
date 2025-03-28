@@ -66,7 +66,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expected_phenotypes the version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
-#' @param ampc_cephalosporin_resistance a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these version of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
+#' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... column name of an antimicrobial, see section *Antimicrobials* below
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
@@ -121,7 +121,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 12.0, 2022. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' \donttest{
 #' a <- data.frame(
@@ -187,6 +187,11 @@ eucast_rules <- function(x,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
   meet_criteria(overwrite, allow_class = "logical", has_length = 1)
+
+  stop_if(
+    !is.na(ampc_cephalosporin_resistance) && !any(c("expert", "all") %in% rules),
+    "For the `ampc_cephalosporin_resistance` argument to work, the `rules` argument must contain `\"expert\"` or `\"all\"`."
+  )
 
   add_MO_lookup_to_AMR_env()
 

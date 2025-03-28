@@ -39,32 +39,39 @@ These breakpoints are currently implemented:
 Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.
 }
 \details{
-\subsection{Different types of breakpoints}{
+\subsection{Different Types of Breakpoints}{
 
 Supported types of breakpoints are ECOFF, animal, and human. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 
 The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. Use \code{\link[=as.sir]{as.sir(..., breakpoint_type = ...)}} to interpret raw data using a specific breakpoint type, e.g. \code{as.sir(..., breakpoint_type = "ECOFF")} to use ECOFFs.
 }
 
-\subsection{Imported from WHONET}{
+\subsection{Imported From WHONET}{
 
 Clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}. The developers of WHONET and this \code{AMR} package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
 
-Our import and reproduction script can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_clinical_breakpoints.R}.
+Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_clinical_breakpoints.R>.
 }
 
-\subsection{Response from CLSI and EUCAST}{
+\subsection{Response From CLSI and EUCAST}{
 
 The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this \code{AMR} package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this \code{AMR} package.
 }
 
-\subsection{Download}{
+\subsection{Download Note}{
 
-Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}. They allow for machine reading EUCAST and CLSI guidelines, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI, though initiatives have started to overcome these burdens.
-
-\strong{NOTE:} this \code{AMR} package (and the WHONET software as well) contains rather complex internal methods to apply the guidelines. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the \link{microorganisms.groups} data set). It is important that this is considered when using the breakpoints for own use.
+This \code{AMR} package (and the WHONET software as well) contains rather complex internal methods to apply the guidelines. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the \link{microorganisms.groups} data set). It is important that this is considered when implementing the breakpoints for own use.
 }
 }
+\section{Download Our Reference Data}{
+
+All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
+
+Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+}
+
 \examples{
 clinical_breakpoints
 }

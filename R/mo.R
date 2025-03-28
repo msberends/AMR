@@ -135,7 +135,7 @@
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
 #'
 #' The [`mo_*`][mo_property()] functions (such as [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' \donttest{
 #' # These examples all return "B_STPHY_AURS", the ID of S. aureus:

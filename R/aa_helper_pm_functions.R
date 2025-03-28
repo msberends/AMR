@@ -29,7 +29,7 @@
 
 # ------------------------------------------------
 # THIS FILE WAS CREATED AUTOMATICALLY!
-# Source file: data-raw/reproduction_of_poorman.R
+# Source file: data-raw/reproduction scripts/reproduction_of_poorman.R
 # ------------------------------------------------
 
 # poorman: a package to replace all dplyr functions with base R so we can lose dependency on dplyr.

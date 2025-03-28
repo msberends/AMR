@@ -77,7 +77,7 @@
 #' - A [character] in all other cases
 #' @export
 #' @seealso Data set [microorganisms]
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' # taxonomic tree -----------------------------------------------------------
 #'

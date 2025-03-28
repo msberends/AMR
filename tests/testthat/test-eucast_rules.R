@@ -178,6 +178,7 @@ test_that("test-eucast_rules.R", {
         cefotax = as.sir(c("S", "S"))
       ),
       ampc_cephalosporin_resistance = TRUE,
+      rules = "expert",
       overwrite = TRUE,
       info = FALSE
     )$cefotax,
@@ -191,6 +192,7 @@ test_that("test-eucast_rules.R", {
         cefotax = as.sir(c("S", "S"))
       ),
       ampc_cephalosporin_resistance = NA,
+      rules = "expert",
       overwrite = TRUE,
       info = FALSE
     )$cefotax,
@@ -203,6 +205,7 @@ test_that("test-eucast_rules.R", {
         mo = c("Escherichia coli", "Enterobacter cloacae"),
         cefotax = as.sir(c("S", "S"))
       ),
+      rules = "expert",
       ampc_cephalosporin_resistance = NULL,
       overwrite = TRUE,
       info = FALSE

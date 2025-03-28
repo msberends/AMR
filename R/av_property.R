@@ -50,7 +50,7 @@
 #' - A [character] in all other cases
 #' @export
 #' @seealso [antivirals]
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' # all properties:
 #' av_name("ACI")

@@ -179,7 +179,7 @@
 #' - **EUCAST Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
 #' - **WHONET** as a source for machine-reading the clinical breakpoints ([read more here](https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet)), 1989-`r max(as.integer(gsub("[^0-9]", "", AMR::clinical_breakpoints$guideline)))`, *WHO Collaborating Centre for Surveillance of Antimicrobial Resistance*. <https://whonet.org/>.
 #'
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' example_isolates
 #' summary(example_isolates) # see all SIR results at a glance

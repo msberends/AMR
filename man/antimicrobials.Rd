@@ -62,11 +62,16 @@ Two data sets containing all antimicrobials and antivirals. Use \code{\link[=as.
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
 
 Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column \code{cid}) and consequently only available where a CID is available.
-\subsection{Direct download}{
+}
+\section{Download Our Reference Data}{
 
-Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
+
+Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
-}
+
 \section{WHOCC}{
 
 This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://atcddd.fhi.no}) and the Pharmaceuticals Community Register of the European Commission (\url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}).

@@ -56,7 +56,7 @@
 #' - A [character] in all other cases
 #' @export
 #' @seealso [antimicrobials]
-#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' # all properties:
 #' ab_name("AMX")

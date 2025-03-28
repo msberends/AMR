@@ -819,11 +819,13 @@ genus_species	is	Ochrobactrum anthropi			AMP, AMX, AMC, SAM, TIC, TCC, CTX, CRO,
 genus_species	is	Pseudomonas aeruginosa			AMP, AMX, AMC, SAM, CTX, CRO, ETP, CHL, TMP, KAN, NEO, tetracyclines, TGC	R	Table 2: Expected resistant phenotype in non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus_species	is	Stenotrophomonas maltophilia			AMP, AMX, AMC, SAM, TIC, PIP, TZP, CTX, CRO, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 2: Expected resistant phenotype in non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
 genus	is	Chryseobacterium			AMP, AMX, AMC, SAM, TIC, TCC, CTX, CRO, CAZ, ATM, ETP, IPM, MEM, aminoglycosides, PLB, COL	R	Table 2: Expected resistant phenotype in non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
-genus_species	is	Haemophilus influenzae			FUS, streptogramins	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
-genus_species	is	Moraxella catarrhalis			TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
-genus	is	Neisseria			TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
-genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
-genus_species	one_of	Campylobacter jejuni, Campylobacter coli 			FUS, streptogramins, TMP	R	Table 3: Expected resistant phenotype in gram-negative bacteria other than Enterobacterales and non-fermentative gram-negative bacteria	Expected phenotypes	1.2	
+genus	one_of	Haemophilus, Moraxella, Neisseria, Campylobacter			glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Expected resistant phenotype in other gram-negative bacteria	Expected phenotypes	1.2	
+genus_species	is	Haemophilus influenzae			FUS, streptogramins	R	Table 3: Expected resistant phenotype in other gram-negative bacteria	Expected phenotypes	1.2	
+genus_species	is	Moraxella catarrhalis			TMP	R	Table 3: Expected resistant phenotype in other gram-negative bacteria	Expected phenotypes	1.2	
+genus	is	Neisseria			TMP	R	Table 3: Expected resistant phenotype in other gram-negative bacteria	Expected phenotypes	1.2	
+genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL	R	Table 3: Expected resistant phenotype in other gram-negative bacteria	Expected phenotypes	1.2	
+genus_species	one_of	Campylobacter jejuni, Campylobacter coli 			FUS, streptogramins, TMP	R	Table 3: Expected resistant phenotype in other gram-negative bacteria	Expected phenotypes	1.2	
+gramstain	is	Gram-positive			ATM, TEM, PLB, COL, NAL	R	Table 4: Expected resistant phenotype in gram-positive bacteria	Expected phenotypes	1.2	
 genus_species	is	Staphylococcus saprophyticus			FUS, CAZ, FOS, NOV	R	Table 4: Expected resistant phenotype in gram-positive bacteria	Expected phenotypes	1.2	
 genus_species	is	Staphylococcus cohnii			CAZ, NOV	R	Table 4: Expected resistant phenotype in gram-positive bacteria	Expected phenotypes	1.2	
 genus_species	is	Staphylococcus xylosus			CAZ, NOV	R	Table 4: Expected resistant phenotype in gram-positive bacteria	Expected phenotypes	1.2	

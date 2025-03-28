@@ -62,9 +62,7 @@
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
 #' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and consequently only available where a CID is available.
-#'
-#' ### Direct download
-#' Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @source
 #'
 #' * World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://atcddd.fhi.no/atc_ddd_index/>
@@ -87,7 +85,7 @@
 #' @description
 #' A data set containing the full microbial taxonomy (**last updated: `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date, TAXONOMY_VERSION$MycoBank$accessed_date))`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms. This data set is the backbone of this `AMR` package. MO codes can be looked up using [as.mo()] and microorganism properties can be looked up using any of the [`mo_*`][mo_property()] functions.
 #'
-#' This data set is carefully crafted, yet made 100% reproducible from public and authoritative taxonomic sources (using [this script](https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R)), namely: *`r TAXONOMY_VERSION$LPSN$name`* for bacteria, *`r TAXONOMY_VERSION$MycoBank$name`* for fungi, and *`r TAXONOMY_VERSION$GBIF$name`* for all others taxons.
+#' This data set is carefully crafted, yet made 100% reproducible from public and authoritative taxonomic sources (using [this script](https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R)), namely: *`r TAXONOMY_VERSION$LPSN$name`* for bacteria, *`r TAXONOMY_VERSION$MycoBank$name`* for fungi, and *`r TAXONOMY_VERSION$GBIF$name`* for all others taxons.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms), big.mark = " ")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package. ***This is a unique identifier.***
 #' - `fullname`\cr Full name, like `"Escherichia coli"`. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. ***This is a unique identifier.***
@@ -133,10 +131,8 @@
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 #' - 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 #'
-#' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R).
-#'
-#' ### Direct download
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R).
+#' @inheritSection AMR Download Our Reference Data
 #' @source
 #' Taxonomic entries were imported in this order of importance:
 #' 1. `r TAXONOMY_VERSION$LPSN$name`:\cr\cr
@@ -170,8 +166,7 @@
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = " ")` observations and `r ncol(microorganisms.codes)` variables:
 #' - `code`\cr Commonly used code of a microorganism. ***This is a unique identifier.***
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
-#' @details
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @seealso [as.mo()] [microorganisms]
 #' @examples
 #' microorganisms.codes
@@ -194,8 +189,7 @@
 #' - `mo`\cr ID of the microorganism belonging in the species group / microbiological complex
 #' - `mo_group_name`\cr Name of the species group / microbiological complex, as retrieved with [mo_name()]
 #' - `mo_name`\cr Name of the microorganism belonging in the species group / microbiological complex, as retrieved with [mo_name()]
-#' @details
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @seealso [as.mo()] [microorganisms]
 #' @examples
 #' microorganisms.groups
@@ -215,8 +209,7 @@
 #' - `ward`\cr Ward type where the patient was admitted, either `r vector_or(example_isolates$ward)`
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also the [microorganisms] data set
 #' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.sir))` different antimicrobials with class [`sir`] (see [as.sir()]); these column names occur in the [antimicrobials] data set and can be translated with [set_ab_names()] or [ab_name()]
-#' @details
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' example_isolates
 "example_isolates"
@@ -230,8 +223,7 @@
 #' - `hospital`\cr ID of the hospital, from A to C
 #' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
 #' - `AMX:GEN`\cr 4 different antimicrobials that have to be transformed with [as.sir()]
-#' @details
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' example_isolates_unclean
 "example_isolates_unclean"
@@ -266,8 +258,7 @@
 #' - `Comment`\cr Other comments
 #' - `Date of data entry`\cr [Date] this data was entered in WHONET
 #' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.sir))` different antimicrobials. You can lookup the abbreviations in the [antimicrobials] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antimicrobial class, using [as.sir()].
-#' @details
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' WHONET
 "WHONET"
@@ -298,43 +289,40 @@
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' - `is_SDD`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to `r sum(clinical_breakpoints$is_SDD)` breakpoints.
 #' @details
-#' ### Different types of breakpoints
+#' ### Different Types of Breakpoints
 #' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quote = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 #'
 #' The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. Use [`as.sir(..., breakpoint_type = ...)`][as.sir()] to interpret raw data using a specific breakpoint type, e.g. `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
 #'
-#' ### Imported from WHONET
+#' ### Imported From WHONET
 #' Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
 #'
-#' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_clinical_breakpoints.R>.
+#' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_clinical_breakpoints.R>.
 #'
-#' ### Response from CLSI and EUCAST
+#' ### Response From CLSI and EUCAST
 #' The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this `AMR` package.
 #'
-#' ### Download
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw). They allow for machine reading EUCAST and CLSI guidelines, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI, though initiatives have started to overcome these burdens.
-#'
-#' **NOTE:** this `AMR` package (and the WHONET software as well) contains rather complex internal methods to apply the guidelines. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the [microorganisms.groups] data set). It is important that this is considered when using the breakpoints for own use.
+#' ### Download Note
+#' This `AMR` package (and the WHONET software as well) contains rather complex internal methods to apply the guidelines. For example, some breakpoints must be applied on certain species groups (which are in case of this package available through the [microorganisms.groups] data set). It is important that this is considered when implementing the breakpoints for own use.
+#' @inheritSection AMR Download Our Reference Data
 #' @seealso [intrinsic_resistant]
 #' @examples
 #' clinical_breakpoints
 "clinical_breakpoints"
 
-#' Data Set with Bacterial Intrinsic Resistance
+#' Data Set Denoting Bacterial Intrinsic Resistance
 #'
-#' Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
+#' Data set containing `r EUCAST_VERSION_EXPECTED_PHENOTYPES[[1]]$title` of *all* bug-drug combinations between the [microorganisms] and [antimicrobials] data sets.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(intrinsic_resistant), big.mark = " ")` observations and `r ncol(intrinsic_resistant)` variables:
-#' - `mo`\cr Microorganism ID
-#' - `ab`\cr Antimicrobial ID
+#' - `mo`\cr Microorganism ID which occurs in [`microorganisms$mo`][microorganisms]. Names can be retrieved using [mo_name()].
+#' - `ab`\cr Antimicrobial ID which occurs in [`antimicrobials$ab`][antimicrobials]. Names can be retrieved using [ab_name()].
 #' @details
-#' This data set is based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`.
+#' This data set is currently based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`.
 #'
-#' This data set is internally used by [not_intrinsic_resistant()] (an [antimicrobial selector][antimicrobial_selectors]) and [mo_is_intrinsic_resistant()]
-#'
-#' ### Direct download
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
-#'
-#' They **allow for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
+#' This data set is internally used by:
+#' * [not_intrinsic_resistant()] (an [antimicrobial selector][antimicrobial_selectors])
+#' * [mo_is_intrinsic_resistant()]
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' intrinsic_resistant
 "intrinsic_resistant"
@@ -352,8 +340,7 @@
 #' - `notes`\cr Additional dosage notes
 #' - `original_txt`\cr Original text in the PDF file of EUCAST
 #' - `eucast_version`\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply, either `r vector_or(dosage$eucast_version, quotes = FALSE, sort = TRUE, reverse = TRUE)`
-#' @details
-#' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' dosage
 "dosage"
