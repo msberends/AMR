@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9228. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9229. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -9972,7 +9972,7 @@ download_txt <- function(filename) {
     trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")),
     ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
   )
-  github_base <- "https://github.com/msberends/AMR/raw/main/"
+  github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/datasets/"
   local_filename <- paste0("../data-raw/datasets/", filename)
   rds <- paste0(local_filename, ".rds")
   txt <- paste0(local_filename, ".txt")
@@ -9984,7 +9984,7 @@ download_txt <- function(filename) {
   create_txt <- function(filename, type, software, exists) {
     if (isTRUE(exists)) {
       paste0(
-        "* Download as [", software, "](", github_base, filename, ") (",
+        "* Download as [", software, "](", github_base, basename(filename), ") (",
         AMR:::formatted_filesize(filename), ")  \n"
       )
     } else {

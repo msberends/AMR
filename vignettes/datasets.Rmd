@@ -42,7 +42,7 @@ download_txt <- function(filename) {
     trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")),
     ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
   )
-  github_base <- "https://github.com/msberends/AMR/raw/main/"
+  github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/datasets/"
   local_filename <- paste0("../data-raw/datasets/", filename)
   rds <- paste0(local_filename, ".rds")
   txt <- paste0(local_filename, ".txt")
@@ -54,7 +54,7 @@ download_txt <- function(filename) {
   create_txt <- function(filename, type, software, exists) {
     if (isTRUE(exists)) {
       paste0(
-        "* Download as [", software, "](", github_base, filename, ") (",
+        "* Download as [", software, "](", github_base, basename(filename), ") (",
         AMR:::formatted_filesize(filename), ")  \n"
       )
     } else {

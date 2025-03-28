@@ -117,7 +117,7 @@ test_that("test-eucast_rules.R", {
             TIC = as.sir("R"),
             PIP = as.sir("S")
           ) %>%
-          eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE, overwrite = TRUE) %>%
+          eucast_rules(col_mo = "mo", version_expertrules = 3.1, rules = "expert", info = FALSE, overwrite = TRUE) %>%
           pull(PIP) %>%
           unique() %>%
           as.character()
@@ -136,6 +136,7 @@ test_that("test-eucast_rules.R", {
       stringsAsFactors = FALSE
     ),
     version_expertrules = 3.1,
+    rules = "expert",
     overwrite = TRUE,
     only_sir_columns = FALSE
   )$CLR))
