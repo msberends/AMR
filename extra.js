@@ -130,7 +130,7 @@ $(document).ready(function() {
       x = x.replace("Javier", "Prof. Javier");
       x = x.replace("Jonas", "Dr. Jonas");
       x = x.replace("Judith", "Dr. Judith");
-      x = x.replace("Katryn", "Prof. Katryn");
+      x = x.replace("Kathryn", "Prof. Kathryn");
       x = x.replace("Larisse", "Dr. Larisse");
       x = x.replace("Matthijs", "Dr. Matthijs");
       x = x.replace("Natacha", "Dr. Natacha");

@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9227</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9228</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">27 March 2025</h4>
+            <h4 data-toc-skip class="date">28 March 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -97,8 +97,11 @@ data sets to formats for use in R, MS Excel, Apache Feather, Apache
 Parquet, SPSS, and Stata. We also provide tab-separated text files that
 are machine-readable and suitable for input in any software program,
 such as laboratory information systems.</p>
-<p>On this page, we explain how to download them and how the structure
-of the data sets look like.</p>
+<blockquote>
+<p>If you are working in Python, be sure to use our <a href="https://msberends.github.io/AMR/articles/AMR_for_Python.html">AMR
+for Python</a> package. It allows all relevant AMR data sets to be
+natively available in Python.</p>
+</blockquote>
 <div class="section level2">
 <h2 id="microorganisms-full-microbial-taxonomy">
 <code>microorganisms</code>: Full Microbial Taxonomy<a class="anchor" aria-label="anchor" href="#microorganisms-full-microbial-taxonomy"></a>
@@ -115,28 +118,29 @@ column names:<br><em>mo</em>, <em>fullname</em>, <em>status</em>, <em>kingdom</e
 <p>This data set is in R available as <code>microorganisms</code>, after
 you load the <code>AMR</code> package.</p>
 <p>It was last updated on 26 March 2025 16:19:17 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.html">here</a>.</p>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/microorganisms.html">data
+set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.rds" class="external-link">original
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.rds" class="external-link">original
 R Data Structure (RDS) file</a> (1.8 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.txt" class="external-link">tab-separated
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.txt" class="external-link">tab-separated
 text file</a> (17.7 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.xlsx" class="external-link">Microsoft
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.xlsx" class="external-link">Microsoft
 Excel workbook</a> (8.7 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.feather" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.feather" class="external-link">Apache
 Feather file</a> (8.3 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.parquet" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.parquet" class="external-link">Apache
 Parquet file</a> (3.8 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.sav" class="external-link">IBM
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.sav" class="external-link">IBM
 SPSS Statistics data file</a> (28.4 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.dta" class="external-link">Stata
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.dta" class="external-link">Stata
 DTA file</a> (89.5 MB)</li>
 </ul>
 <p><strong>NOTE: The exported files for SPSS and Stata contain only the
@@ -146,35 +150,7 @@ structures and compression techniques are very inefficient. Advice? Use
 R instead. It’s free and much better in many ways.</p>
 <p>The tab-separated text file and Microsoft Excel workbook both contain
 all SNOMED codes as comma separated values.</p>
-<div class="section level3">
-<h3 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a>
-</h3>
-<p>This data set contains the full microbial taxonomy of six kingdoms
-from the List of Prokaryotic names with Standing in Nomenclature (LPSN),
-MycoBank, and the Global Biodiversity Information Facility (GBIF):</p>
-<ul>
-<li>Parte, AC <em>et al.</em> (2020). <strong>List of Prokaryotic names
-with Standing in Nomenclature (LPSN) moves to the DSMZ.</strong>
-International Journal of Systematic and Evolutionary Microbiology, 70,
-5607-5612; . Accessed from <a href="https://lpsn.dsmz.de" class="external-link uri">https://lpsn.dsmz.de</a> on June 24th, 2024.</li>
-<li>Vincent, R <em>et al</em> (2013). <strong>MycoBank gearing up for
-new horizons.</strong> IMA Fungus, 4(2), 371-9; . Accessed from <a href="https://www.mycobank.org" class="external-link uri">https://www.mycobank.org</a>
-on June 24th, 2024.</li>
-<li>GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset .
-Accessed from <a href="https://www.gbif.org" class="external-link uri">https://www.gbif.org</a> on June 24th, 2024.</li>
-<li>Reimer, LC <em>et al.</em> (2022). <strong><em>BacDive</em> in 2022:
-the knowledge base for standardized bacterial and archaeal
-data.</strong> Nucleic Acids Res., 50(D1):D741-D74; . Accessed from <a href="https://bacdive.dsmz.de" class="external-link uri">https://bacdive.dsmz.de</a>
-on July 16th, 2024.</li>
-<li>Public Health Information Network Vocabulary Access and Distribution
-System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value
-Set Name ‘Microorganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href="https://www.cdc.gov/phin/php/phinvads/" class="external-link uri">https://www.cdc.gov/phin/php/phinvads/</a>
-</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="example-content">Example content<a class="anchor" aria-label="anchor" href="#example-content"></a>
-</h3>
+<p><strong>Example content</strong></p>
 <p>Included (sub)species per taxonomic kingdom:</p>
 <table class="table">
 <thead><tr class="header">
@@ -208,7 +184,7 @@ Set Name ‘Microorganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a hre
 </tr>
 </tbody>
 </table>
-<p>Example rows when filtering on genus <em>Escherichia</em>:</p>
+<p>First 6 rows when filtering on genus <em>Escherichia</em>:</p>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="4%">
@@ -438,7 +414,6 @@ Set Name ‘Microorganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a hre
 </tbody>
 </table>
 </div>
-</div>
 <div class="section level2">
 <h2 id="antimicrobials-antibiotic-and-antifungal-drugs">
 <code>antimicrobials</code>: Antibiotic and Antifungal Drugs<a class="anchor" aria-label="anchor" href="#antimicrobials-antibiotic-and-antifungal-drugs"></a>
@@ -451,56 +426,35 @@ column names:<br><em>ab</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>a
 <p>This data set is in R available as <code>antimicrobials</code>, after
 you load the <code>AMR</code> package.</p>
 <p>It was last updated on 19 March 2025 15:05:24 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antimicrobials.html">here</a>.</p>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/antimicrobials.html">data
+set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.rds" class="external-link">original
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.rds" class="external-link">original
 R Data Structure (RDS) file</a> (44 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.txt" class="external-link">tab-separated
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.txt" class="external-link">tab-separated
 text file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.xlsx" class="external-link">Microsoft
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.xlsx" class="external-link">Microsoft
 Excel workbook</a> (75 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.feather" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.feather" class="external-link">Apache
 Feather file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.parquet" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.parquet" class="external-link">Apache
 Parquet file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.sav" class="external-link">IBM
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.sav" class="external-link">IBM
 SPSS Statistics data file</a> (0.3 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antimicrobials.dta" class="external-link">Stata
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antimicrobials.dta" class="external-link">Stata
 DTA file</a> (10 kB)</li>
 </ul>
 <p>The tab-separated text, Microsoft Excel, SPSS, and Stata files all
 contain the ATC codes, common abbreviations, trade names and LOINC codes
 as comma separated values.</p>
-<div class="section level3">
-<h3 id="source-1">Source<a class="anchor" aria-label="anchor" href="#source-1"></a>
-</h3>
-<p>This data set contains all EARS-Net and ATC codes gathered from WHO
-and WHONET, and all compound IDs from PubChem. It also contains all
-brand names (synonyms) as found on PubChem and Defined Daily Doses
-(DDDs) for oral and parenteral administration.</p>
-<ul>
-<li>
-<a href="https://atcddd.fhi.no/atc_ddd_index/" class="external-link">ATC/DDD index from
-WHO Collaborating Centre for Drug Statistics Methodology</a> (note: this
-may not be used for commercial purposes, but is freely available from
-the WHO CC website for personal use)</li>
-<li><a href="https://pubchem.ncbi.nlm.nih.gov" class="external-link">PubChem by the US
-National Library of Medicine</a></li>
-<li><a href="https://whonet.org" class="external-link">WHONET software 2019</a></li>
-<li><a href="https://loinc.org" class="external-link">LOINC (Logical Observation Identifiers
-Names and Codes)</a></li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="example-content-1">Example content<a class="anchor" aria-label="anchor" href="#example-content-1"></a>
-</h3>
+<p><strong>Example content</strong></p>
 <table class="table">
 <colgroup>
 <col width="1%">
@@ -636,181 +590,6 @@ inhibitors</td>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section level2">
-<h2 id="antivirals-antiviral-drugs">
-<code>antivirals</code>: Antiviral Drugs<a class="anchor" aria-label="anchor" href="#antivirals-antiviral-drugs"></a>
-</h2>
-<p>A data set with 120 rows and 11 columns, containing the following
-column names:<br><em>av</em>, <em>name</em>, <em>atc</em>, <em>cid</em>,
-<em>atc_group</em>, <em>synonyms</em>, <em>oral_ddd</em>,
-<em>oral_units</em>, <em>iv_ddd</em>, <em>iv_units</em>, and
-<em>loinc</em>.</p>
-<p>This data set is in R available as <code>antivirals</code>, after you
-load the <code>AMR</code> package.</p>
-<p>It was last updated on 20 October 2023 12:51:48 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antimicrobials.html">here</a>.</p>
-<p><strong>Direct download links:</strong></p>
-<ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.rds" class="external-link">original
-R Data Structure (RDS) file</a> (6 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.txt" class="external-link">tab-separated
-text file</a> (17 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.xlsx" class="external-link">Microsoft
-Excel workbook</a> (16 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.feather" class="external-link">Apache
-Feather file</a> (16 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.parquet" class="external-link">Apache
-Parquet file</a> (13 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.sav" class="external-link">IBM
-SPSS Statistics data file</a> (32 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.dta" class="external-link">Stata
-DTA file</a> (78 kB)</li>
-</ul>
-<p>The tab-separated text, Microsoft Excel, SPSS, and Stata files all
-contain the trade names and LOINC codes as comma separated values.</p>
-<div class="section level3">
-<h3 id="source-2">Source<a class="anchor" aria-label="anchor" href="#source-2"></a>
-</h3>
-<p>This data set contains all ATC codes gathered from WHO and all
-compound IDs from PubChem. It also contains all brand names (synonyms)
-as found on PubChem and Defined Daily Doses (DDDs) for oral and
-parenteral administration.</p>
-<ul>
-<li>
-<a href="https://atcddd.fhi.no/atc_ddd_index/" class="external-link">ATC/DDD index from
-WHO Collaborating Centre for Drug Statistics Methodology</a> (note: this
-may not be used for commercial purposes, but is freely available from
-the WHO CC website for personal use)</li>
-<li><a href="https://pubchem.ncbi.nlm.nih.gov" class="external-link">PubChem by the US
-National Library of Medicine</a></li>
-<li><a href="https://loinc.org" class="external-link">LOINC (Logical Observation Identifiers
-Names and Codes)</a></li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="example-content-2">Example content<a class="anchor" aria-label="anchor" href="#example-content-2"></a>
-</h3>
-<table class="table">
-<colgroup>
-<col width="2%">
-<col width="8%">
-<col width="3%">
-<col width="4%">
-<col width="28%">
-<col width="23%">
-<col width="4%">
-<col width="4%">
-<col width="3%">
-<col width="4%">
-<col width="13%">
-</colgroup>
-<thead><tr class="header">
-<th align="center">av</th>
-<th align="center">name</th>
-<th align="center">atc</th>
-<th align="center">cid</th>
-<th align="center">atc_group</th>
-<th align="center">synonyms</th>
-<th align="center">oral_ddd</th>
-<th align="center">oral_units</th>
-<th align="center">iv_ddd</th>
-<th align="center">iv_units</th>
-<th align="center">loinc</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="center">ABA</td>
-<td align="center">Abacavir</td>
-<td align="center">J05AF06</td>
-<td align="center">441300</td>
-<td align="center">Nucleoside and nucleotide reverse transcriptase
-inhibitors</td>
-<td align="center">abacavir sulfate, avacavir, ziagen</td>
-<td align="center">0.6</td>
-<td align="center">g</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">29113-8, 30273-7, 30287-7, …</td>
-</tr>
-<tr class="even">
-<td align="center">ACI</td>
-<td align="center">Aciclovir</td>
-<td align="center">J05AB01</td>
-<td align="center">135398513</td>
-<td align="center">Nucleosides and nucleotides excl. reverse
-transcriptase inhibitors</td>
-<td align="center">acicloftal, aciclovier, aciclovirum, …</td>
-<td align="center">4.0</td>
-<td align="center">g</td>
-<td align="center">4</td>
-<td align="center">g</td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center">ADD</td>
-<td align="center">Adefovir dipivoxil</td>
-<td align="center">J05AF08</td>
-<td align="center">60871</td>
-<td align="center">Nucleoside and nucleotide reverse transcriptase
-inhibitors</td>
-<td align="center">adefovir di, adefovir di ester, adefovir dipivoxyl,
-…</td>
-<td align="center">10.0</td>
-<td align="center">mg</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center">AME</td>
-<td align="center">Amenamevir</td>
-<td align="center">J05AX26</td>
-<td align="center">11397521</td>
-<td align="center">Other antivirals</td>
-<td align="center">amenalief</td>
-<td align="center">0.4</td>
-<td align="center">g</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center">AMP</td>
-<td align="center">Amprenavir</td>
-<td align="center">J05AE05</td>
-<td align="center">65016</td>
-<td align="center">Protease inhibitors</td>
-<td align="center">agenerase, carbamate, prozei</td>
-<td align="center">1.2</td>
-<td align="center">g</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">29114-6, 30296-8, 30297-6, …</td>
-</tr>
-<tr class="even">
-<td align="center">ASU</td>
-<td align="center">Asunaprevir</td>
-<td align="center">J05AP06</td>
-<td align="center">16076883</td>
-<td align="center">Antivirals for treatment of HCV infections</td>
-<td align="center">sunvepra, sunvepratrade</td>
-<td align="center">0.2</td>
-<td align="center">g</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div class="section level2">
 <h2 id="clinical_breakpoints-interpretation-from-mic-values-disk-diameters-to-sir">
 <code>clinical_breakpoints</code>: Interpretation from MIC values
@@ -824,60 +603,32 @@ column names:<br><em>guideline</em>, <em>type</em>, <em>host</em>, <em>method</e
 <p>This data set is in R available as <code>clinical_breakpoints</code>,
 after you load the <code>AMR</code> package.</p>
 <p>It was last updated on 13 March 2025 14:38:39 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/clinical_breakpoints.html">here</a>.</p>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/clinical_breakpoints.html">data
+set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.rds" class="external-link">original
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.rds" class="external-link">original
 R Data Structure (RDS) file</a> (76 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.txt" class="external-link">tab-separated
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.txt" class="external-link">tab-separated
 text file</a> (3.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.xlsx" class="external-link">Microsoft
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.xlsx" class="external-link">Microsoft
 Excel workbook</a> (2 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.feather" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.feather" class="external-link">Apache
 Feather file</a> (1.5 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.parquet" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.parquet" class="external-link">Apache
 Parquet file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.sav" class="external-link">IBM
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.sav" class="external-link">IBM
 SPSS Statistics data file</a> (5.6 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/clinical_breakpoints.dta" class="external-link">Stata
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/clinical_breakpoints.dta" class="external-link">Stata
 DTA file</a> (9.6 MB)</li>
 </ul>
-<div class="section level3">
-<h3 id="source-3">Source<a class="anchor" aria-label="anchor" href="#source-3"></a>
-</h3>
-<p>This data set contains interpretation rules for MIC values and disk
-diffusion diameters. Included guidelines are CLSI (2011-2024) and EUCAST
-(2011-2024).</p>
-<p>Clinical breakpoints in this package were validated through and
-imported from <a href="https://whonet.org" class="external-link">WHONET</a>, a free desktop
-Windows application developed and supported by the WHO Collaborating
-Centre for Surveillance of Antimicrobial Resistance. More can be read on
-<a href="https://whonet.org" class="external-link">their website</a>. The developers of WHONET
-and this <code>AMR</code> package have been in contact about sharing
-their work. We highly appreciate their development on the WHONET
-software.</p>
-<p>The CEO of CLSI and the chairman of EUCAST have endorsed the work and
-public use of this <code>AMR</code> package (and consequently the use of
-their breakpoints) in June 2023, when future development of distributing
-clinical breakpoints was discussed in a meeting between CLSI, EUCAST,
-the WHO, and developers of WHONET and the <code>AMR</code> package.</p>
-<p><strong>NOTE:</strong> this <code>AMR</code> package (and the WHONET
-software as well) contains internal methods to apply the guidelines,
-which is rather complex. For example, some breakpoints must be applied
-on certain species groups (which are in case of this package available
-through the <code>microorganisms.groups</code> data set). It is
-important that this is considered when using the breakpoints for own
-use.</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-3">Example content<a class="anchor" aria-label="anchor" href="#example-content-3"></a>
-</h3>
+<p><strong>Example content</strong></p>
 <table class="table">
 <colgroup>
 <col width="6%">
@@ -1027,52 +778,133 @@ use.</p>
 </tbody>
 </table>
 </div>
+<div class="section level2">
+<h2 id="microorganisms-groups-species-groups-and-microbiological-complexes">
+<code>microorganisms.groups</code>: Species Groups and
+Microbiological Complexes<a class="anchor" aria-label="anchor" href="#microorganisms-groups-species-groups-and-microbiological-complexes"></a>
+</h2>
+<p>A data set with 534 rows and 4 columns, containing the following
+column names:<br><em>mo_group</em>, <em>mo</em>, <em>mo_group_name</em>, and
+<em>mo_name</em>.</p>
+<p>This data set is in R available as
+<code>microorganisms.groups</code>, after you load the <code>AMR</code>
+package.</p>
+<p>It was last updated on 26 March 2025 16:19:17 UTC. Find more info
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/microorganisms.groups.html">data
+set here</a>.</p>
+<p><strong>Direct download links:</strong></p>
+<ul>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.rds" class="external-link">original
+R Data Structure (RDS) file</a> (6 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.txt" class="external-link">tab-separated
+text file</a> (50 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.xlsx" class="external-link">Microsoft
+Excel workbook</a> (20 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.feather" class="external-link">Apache
+Feather file</a> (19 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.parquet" class="external-link">Apache
+Parquet file</a> (13 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.sav" class="external-link">IBM
+SPSS Statistics data file</a> (65 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.groups.dta" class="external-link">Stata
+DTA file</a> (83 kB)</li>
+</ul>
+<p><strong>Example content</strong></p>
+<table class="table">
+<colgroup>
+<col width="17%">
+<col width="15%">
+<col width="35%">
+<col width="31%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">mo_group</th>
+<th align="center">mo</th>
+<th align="center">mo_group_name</th>
+<th align="center">mo_name</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">B_ACNTB_BMNN-C</td>
+<td align="center">B_ACNTB_BMNN</td>
+<td align="center">Acinetobacter baumannii complex</td>
+<td align="center">Acinetobacter baumannii</td>
+</tr>
+<tr class="even">
+<td align="center">B_ACNTB_BMNN-C</td>
+<td align="center">B_ACNTB_CLCC</td>
+<td align="center">Acinetobacter baumannii complex</td>
+<td align="center">Acinetobacter calcoaceticus</td>
+</tr>
+<tr class="odd">
+<td align="center">B_ACNTB_BMNN-C</td>
+<td align="center">B_ACNTB_LCTC</td>
+<td align="center">Acinetobacter baumannii complex</td>
+<td align="center">Acinetobacter dijkshoorniae</td>
+</tr>
+<tr class="even">
+<td align="center">B_ACNTB_BMNN-C</td>
+<td align="center">B_ACNTB_NSCM</td>
+<td align="center">Acinetobacter baumannii complex</td>
+<td align="center">Acinetobacter nosocomialis</td>
+</tr>
+<tr class="odd">
+<td align="center">B_ACNTB_BMNN-C</td>
+<td align="center">B_ACNTB_PITT</td>
+<td align="center">Acinetobacter baumannii complex</td>
+<td align="center">Acinetobacter pittii</td>
+</tr>
+<tr class="even">
+<td align="center">B_ACNTB_BMNN-C</td>
+<td align="center">B_ACNTB_SFRT</td>
+<td align="center">Acinetobacter baumannii complex</td>
+<td align="center">Acinetobacter seifertii</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="intrinsic_resistant-intrinsic-bacterial-resistance">
 <code>intrinsic_resistant</code>: Intrinsic Bacterial
 Resistance<a class="anchor" aria-label="anchor" href="#intrinsic_resistant-intrinsic-bacterial-resistance"></a>
 </h2>
-<p>A data set with 196 665 rows and 2 columns, containing the following
+<p>A data set with 271 905 rows and 2 columns, containing the following
 column names:<br><em>mo</em> and <em>ab</em>.</p>
 <p>This data set is in R available as <code>intrinsic_resistant</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 27 March 2025 14:20:22 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/intrinsic_resistant.html">here</a>.</p>
+<p>It was last updated on 28 March 2025 10:17:49 UTC. Find more info
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/intrinsic_resistant.html">data
+set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.rds" class="external-link">original
-R Data Structure (RDS) file</a> (33 kB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.rds" class="external-link">original
+R Data Structure (RDS) file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.txt" class="external-link">tab-separated
-text file</a> (7.3 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.txt" class="external-link">tab-separated
+text file</a> (10.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.xlsx" class="external-link">Microsoft
-Excel workbook</a> (2.1 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.xlsx" class="external-link">Microsoft
+Excel workbook</a> (2.9 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.feather" class="external-link">Apache
-Feather file</a> (1.6 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.feather" class="external-link">Apache
+Feather file</a> (2.3 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.parquet" class="external-link">Apache
-Parquet file</a> (66 kB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.parquet" class="external-link">Apache
+Parquet file</a> (0.3 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.sav" class="external-link">IBM
-SPSS Statistics data file</a> (10.7 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.sav" class="external-link">IBM
+SPSS Statistics data file</a> (14.8 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.dta" class="external-link">Stata
-DTA file</a> (15.6 MB)</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/intrinsic_resistant.dta" class="external-link">Stata
+DTA file</a> (22.6 MB)</li>
 </ul>
-<div class="section level3">
-<h3 id="source-4">Source<a class="anchor" aria-label="anchor" href="#source-4"></a>
-</h3>
-<p>This data set contains all defined intrinsic resistance by EUCAST of
-all bug-drug combinations, and is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">‘EUCAST
-Expert Rules’ and ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’
-v3.3</a> (2021).</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-4">Example content<a class="anchor" aria-label="anchor" href="#example-content-4"></a>
-</h3>
+<p><strong>Example content</strong></p>
 <p>Example rows when filtering on <em>Enterobacter cloacae</em>:</p>
 <table class="table">
 <thead><tr class="header">
@@ -1311,7 +1143,6 @@ v3.3</a> (2021).</p>
 </tbody>
 </table>
 </div>
-</div>
 <div class="section level2">
 <h2 id="dosage-dosage-guidelines-from-eucast">
 <code>dosage</code>: Dosage Guidelines from EUCAST<a class="anchor" aria-label="anchor" href="#dosage-dosage-guidelines-from-eucast"></a>
@@ -1323,42 +1154,32 @@ column names:<br><em>ab</em>, <em>name</em>, <em>type</em>, <em>dose</em>,
 <p>This data set is in R available as <code>dosage</code>, after you
 load the <code>AMR</code> package.</p>
 <p>It was last updated on 22 June 2023 13:10:59 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/dosage.html">here</a>.</p>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/dosage.html">data set
+here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.rds" class="external-link">original
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.rds" class="external-link">original
 R Data Structure (RDS) file</a> (3 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.txt" class="external-link">tab-separated
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.txt" class="external-link">tab-separated
 text file</a> (43 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.xlsx" class="external-link">Microsoft
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.xlsx" class="external-link">Microsoft
 Excel workbook</a> (25 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.feather" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.feather" class="external-link">Apache
 Feather file</a> (21 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.parquet" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.parquet" class="external-link">Apache
 Parquet file</a> (9 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.sav" class="external-link">IBM
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.sav" class="external-link">IBM
 SPSS Statistics data file</a> (64 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/dosage.dta" class="external-link">Stata
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/dosage.dta" class="external-link">Stata
 DTA file</a> (0.1 MB)</li>
 </ul>
-<div class="section level3">
-<h3 id="source-5">Source<a class="anchor" aria-label="anchor" href="#source-5"></a>
-</h3>
-<p>EUCAST breakpoints used in this package are based on the dosages in
-this data set.</p>
-<p>Currently included dosages in the data set are meant for: <a href=""></a> (), <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">‘EUCAST Clinical
-Breakpoint Tables’ v11.0</a> (2021), and <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">‘EUCAST Clinical
-Breakpoint Tables’ v12.0</a> (2022).</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-5">Example content<a class="anchor" aria-label="anchor" href="#example-content-5"></a>
-</h3>
+<p><strong>Example content</strong></p>
 <table class="table">
 <colgroup>
 <col width="4%">
@@ -1452,7 +1273,6 @@ Breakpoint Tables’ v12.0</a> (2022).</p>
 </tbody>
 </table>
 </div>
-</div>
 <div class="section level2">
 <h2 id="example_isolates-example-data-for-practice">
 <code>example_isolates</code>: Example Data for Practice<a class="anchor" aria-label="anchor" href="#example_isolates-example-data-for-practice"></a>
@@ -1471,16 +1291,9 @@ column names:<br><em>date</em>, <em>patient</em>, <em>age</em>, <em>gender</em>,
 <p>This data set is in R available as <code>example_isolates</code>,
 after you load the <code>AMR</code> package.</p>
 <p>It was last updated on 15 June 2024 13:33:49 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/example_isolates.html">here</a>.</p>
-<div class="section level3">
-<h3 id="source-6">Source<a class="anchor" aria-label="anchor" href="#source-6"></a>
-</h3>
-<p>This data set contains randomised fictitious data, but reflects
-reality and can be used to practise AMR data analysis.</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-6">Example content<a class="anchor" aria-label="anchor" href="#example-content-6"></a>
-</h3>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/example_isolates.html">data
+set here</a>.</p>
+<p><strong>Example content</strong></p>
 <table class="table">
 <colgroup>
 <col width="4%">
@@ -1870,7 +1683,6 @@ reality and can be used to practise AMR data analysis.</p>
 </tbody>
 </table>
 </div>
-</div>
 <div class="section level2">
 <h2 id="example_isolates_unclean-example-data-for-practice">
 <code>example_isolates_unclean</code>: Example Data for
@@ -1884,16 +1696,9 @@ column names:<br><em>patient_id</em>, <em>hospital</em>, <em>date</em>,
 <code>example_isolates_unclean</code>, after you load the
 <code>AMR</code> package.</p>
 <p>It was last updated on 27 August 2022 18:49:37 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/example_isolates_unclean.html">here</a>.</p>
-<div class="section level3">
-<h3 id="source-7">Source<a class="anchor" aria-label="anchor" href="#source-7"></a>
-</h3>
-<p>This data set contains randomised fictitious data, but reflects
-reality and can be used to practise AMR data analysis.</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-7">Example content<a class="anchor" aria-label="anchor" href="#example-content-7"></a>
-</h3>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/example_isolates_unclean.html">data
+set here</a>.</p>
+<p><strong>Example content</strong></p>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="17%">
@@ -1979,106 +1784,6 @@ reality and can be used to practise AMR data analysis.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section level2">
-<h2 id="microorganisms-groups-species-groups-and-microbiological-complexes">
-<code>microorganisms.groups</code>: Species Groups and
-Microbiological Complexes<a class="anchor" aria-label="anchor" href="#microorganisms-groups-species-groups-and-microbiological-complexes"></a>
-</h2>
-<p>A data set with 534 rows and 4 columns, containing the following
-column names:<br><em>mo_group</em>, <em>mo</em>, <em>mo_group_name</em>, and
-<em>mo_name</em>.</p>
-<p>This data set is in R available as
-<code>microorganisms.groups</code>, after you load the <code>AMR</code>
-package.</p>
-<p>It was last updated on 26 March 2025 16:19:17 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.groups.html">here</a>.</p>
-<p><strong>Direct download links:</strong></p>
-<ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.rds" class="external-link">original
-R Data Structure (RDS) file</a> (6 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.txt" class="external-link">tab-separated
-text file</a> (50 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.xlsx" class="external-link">Microsoft
-Excel workbook</a> (20 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.feather" class="external-link">Apache
-Feather file</a> (19 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.parquet" class="external-link">Apache
-Parquet file</a> (13 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.sav" class="external-link">IBM
-SPSS Statistics data file</a> (65 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.groups.dta" class="external-link">Stata
-DTA file</a> (83 kB)</li>
-</ul>
-<div class="section level3">
-<h3 id="source-8">Source<a class="anchor" aria-label="anchor" href="#source-8"></a>
-</h3>
-<p>This data set contains species groups and microbiological complexes,
-which are used in the <code>clinical_breakpoints</code> data set.</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-8">Example content<a class="anchor" aria-label="anchor" href="#example-content-8"></a>
-</h3>
-<table class="table">
-<colgroup>
-<col width="17%">
-<col width="15%">
-<col width="35%">
-<col width="31%">
-</colgroup>
-<thead><tr class="header">
-<th align="center">mo_group</th>
-<th align="center">mo</th>
-<th align="center">mo_group_name</th>
-<th align="center">mo_name</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="center">B_ACNTB_BMNN-C</td>
-<td align="center">B_ACNTB_BMNN</td>
-<td align="center">Acinetobacter baumannii complex</td>
-<td align="center">Acinetobacter baumannii</td>
-</tr>
-<tr class="even">
-<td align="center">B_ACNTB_BMNN-C</td>
-<td align="center">B_ACNTB_CLCC</td>
-<td align="center">Acinetobacter baumannii complex</td>
-<td align="center">Acinetobacter calcoaceticus</td>
-</tr>
-<tr class="odd">
-<td align="center">B_ACNTB_BMNN-C</td>
-<td align="center">B_ACNTB_LCTC</td>
-<td align="center">Acinetobacter baumannii complex</td>
-<td align="center">Acinetobacter dijkshoorniae</td>
-</tr>
-<tr class="even">
-<td align="center">B_ACNTB_BMNN-C</td>
-<td align="center">B_ACNTB_NSCM</td>
-<td align="center">Acinetobacter baumannii complex</td>
-<td align="center">Acinetobacter nosocomialis</td>
-</tr>
-<tr class="odd">
-<td align="center">B_ACNTB_BMNN-C</td>
-<td align="center">B_ACNTB_PITT</td>
-<td align="center">Acinetobacter baumannii complex</td>
-<td align="center">Acinetobacter pittii</td>
-</tr>
-<tr class="even">
-<td align="center">B_ACNTB_BMNN-C</td>
-<td align="center">B_ACNTB_SFRT</td>
-<td align="center">Acinetobacter baumannii complex</td>
-<td align="center">Acinetobacter seifertii</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div class="section level2">
 <h2 id="microorganisms-codes-common-laboratory-codes">
 <code>microorganisms.codes</code>: Common Laboratory Codes<a class="anchor" aria-label="anchor" href="#microorganisms-codes-common-laboratory-codes"></a>
@@ -2088,39 +1793,32 @@ column names:<br><em>code</em> and <em>mo</em>.</p>
 <p>This data set is in R available as <code>microorganisms.codes</code>,
 after you load the <code>AMR</code> package.</p>
 <p>It was last updated on 29 September 2024 20:17:56 UTC. Find more info
-about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.codes.html">here</a>.</p>
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/microorganisms.codes.html">data
+set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.rds" class="external-link">original
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.rds" class="external-link">original
 R Data Structure (RDS) file</a> (22 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.txt" class="external-link">tab-separated
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.txt" class="external-link">tab-separated
 text file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.xlsx" class="external-link">Microsoft
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.xlsx" class="external-link">Microsoft
 Excel workbook</a> (82 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.feather" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.feather" class="external-link">Apache
 Feather file</a> (85 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.parquet" class="external-link">Apache
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.parquet" class="external-link">Apache
 Parquet file</a> (56 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.sav" class="external-link">IBM
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.sav" class="external-link">IBM
 SPSS Statistics data file</a> (0.1 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/microorganisms.codes.dta" class="external-link">Stata
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/microorganisms.codes.dta" class="external-link">Stata
 DTA file</a> (0.1 MB)</li>
 </ul>
-<div class="section level3">
-<h3 id="source-9">Source<a class="anchor" aria-label="anchor" href="#source-9"></a>
-</h3>
-<p>This data set contains commonly used codes for microorganisms, from
-laboratory systems and <a href="https://whonet.org" class="external-link">WHONET</a>.</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-9">Example content<a class="anchor" aria-label="anchor" href="#example-content-9"></a>
-</h3>
+<p><strong>Example content</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="center">code</th>
@@ -2154,6 +1852,158 @@ laboratory systems and <a href="https://whonet.org" class="external-link">WHONET
 </tbody>
 </table>
 </div>
+<div class="section level2">
+<h2 id="antivirals-antiviral-drugs">
+<code>antivirals</code>: Antiviral Drugs<a class="anchor" aria-label="anchor" href="#antivirals-antiviral-drugs"></a>
+</h2>
+<p>A data set with 120 rows and 11 columns, containing the following
+column names:<br><em>av</em>, <em>name</em>, <em>atc</em>, <em>cid</em>,
+<em>atc_group</em>, <em>synonyms</em>, <em>oral_ddd</em>,
+<em>oral_units</em>, <em>iv_ddd</em>, <em>iv_units</em>, and
+<em>loinc</em>.</p>
+<p>This data set is in R available as <code>antivirals</code>, after you
+load the <code>AMR</code> package.</p>
+<p>It was last updated on 20 October 2023 12:51:48 UTC. Find more info
+about the contents, (scientific) source, and structure of this <a href="https://msberends.github.io/AMR/reference/antimicrobials.html">data
+set here</a>.</p>
+<p><strong>Direct download links:</strong></p>
+<ul>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.rds" class="external-link">original
+R Data Structure (RDS) file</a> (6 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.txt" class="external-link">tab-separated
+text file</a> (17 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.xlsx" class="external-link">Microsoft
+Excel workbook</a> (16 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.feather" class="external-link">Apache
+Feather file</a> (16 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.parquet" class="external-link">Apache
+Parquet file</a> (13 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.sav" class="external-link">IBM
+SPSS Statistics data file</a> (32 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/../data-raw/datasets/antivirals.dta" class="external-link">Stata
+DTA file</a> (78 kB)</li>
+</ul>
+<p>The tab-separated text, Microsoft Excel, SPSS, and Stata files all
+contain the trade names and LOINC codes as comma separated values.</p>
+<p><strong>Example content</strong></p>
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="8%">
+<col width="3%">
+<col width="4%">
+<col width="28%">
+<col width="23%">
+<col width="4%">
+<col width="4%">
+<col width="3%">
+<col width="4%">
+<col width="13%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">av</th>
+<th align="center">name</th>
+<th align="center">atc</th>
+<th align="center">cid</th>
+<th align="center">atc_group</th>
+<th align="center">synonyms</th>
+<th align="center">oral_ddd</th>
+<th align="center">oral_units</th>
+<th align="center">iv_ddd</th>
+<th align="center">iv_units</th>
+<th align="center">loinc</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">ABA</td>
+<td align="center">Abacavir</td>
+<td align="center">J05AF06</td>
+<td align="center">441300</td>
+<td align="center">Nucleoside and nucleotide reverse transcriptase
+inhibitors</td>
+<td align="center">abacavir sulfate, avacavir, ziagen</td>
+<td align="center">0.6</td>
+<td align="center">g</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">29113-8, 30273-7, 30287-7, …</td>
+</tr>
+<tr class="even">
+<td align="center">ACI</td>
+<td align="center">Aciclovir</td>
+<td align="center">J05AB01</td>
+<td align="center">135398513</td>
+<td align="center">Nucleosides and nucleotides excl. reverse
+transcriptase inhibitors</td>
+<td align="center">acicloftal, aciclovier, aciclovirum, …</td>
+<td align="center">4.0</td>
+<td align="center">g</td>
+<td align="center">4</td>
+<td align="center">g</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">ADD</td>
+<td align="center">Adefovir dipivoxil</td>
+<td align="center">J05AF08</td>
+<td align="center">60871</td>
+<td align="center">Nucleoside and nucleotide reverse transcriptase
+inhibitors</td>
+<td align="center">adefovir di, adefovir di ester, adefovir dipivoxyl,
+…</td>
+<td align="center">10.0</td>
+<td align="center">mg</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">AME</td>
+<td align="center">Amenamevir</td>
+<td align="center">J05AX26</td>
+<td align="center">11397521</td>
+<td align="center">Other antivirals</td>
+<td align="center">amenalief</td>
+<td align="center">0.4</td>
+<td align="center">g</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">AMP</td>
+<td align="center">Amprenavir</td>
+<td align="center">J05AE05</td>
+<td align="center">65016</td>
+<td align="center">Protease inhibitors</td>
+<td align="center">agenerase, carbamate, prozei</td>
+<td align="center">1.2</td>
+<td align="center">g</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">29114-6, 30296-8, 30297-6, …</td>
+</tr>
+<tr class="even">
+<td align="center">ASU</td>
+<td align="center">Asunaprevir</td>
+<td align="center">J05AP06</td>
+<td align="center">16076883</td>
+<td align="center">Antivirals for treatment of HCV infections</td>
+<td align="center">sunvepra, sunvepratrade</td>
+<td align="center">0.2</td>
+<td align="center">g</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
