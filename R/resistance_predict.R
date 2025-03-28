@@ -131,6 +131,11 @@ resistance_predict <- function(x,
   meet_criteria(preserve_measurements, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
+  deprecation_warning(
+    old = "resistance_predict", is_function = TRUE,
+    extra_msg = paste0("Use the tidymodels framework instead, for which we have written a basic and short introduction on our website: ", font_url("https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html", txt = font_bold("AMR with tidymodels")))
+  )
+
   stop_if(is.null(model), 'choose a regression model with the `model` argument, e.g. resistance_predict(..., model = "binomial")')
 
   x.bak <- x

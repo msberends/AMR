@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9229. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9230. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -637,7 +637,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
-  * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
+  * Apply AMR function in predictive modelling ([tutorial](./articles/AMR_with_tidymodels.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
   * Getting properties for any antimicrobial (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
@@ -4291,7 +4291,7 @@ The default is \code{"human"}, which can also be set with the package option \co
 
 Clinical breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}. The developers of WHONET and this \code{AMR} package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
 
-Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_clinical_breakpoints.R>.
+Our import and reproduction script can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R}.
 }
 
 \subsection{Response From CLSI and EUCAST}{
@@ -6760,7 +6760,7 @@ microorganisms
 \description{
 A data set containing the full microbial taxonomy (\strong{last updated: June 24th, 2024}) of six kingdoms. This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}} and microorganism properties can be looked up using any of the \code{\link[=mo_property]{mo_*}} functions.
 
-This data set is carefully crafted, yet made 100\% reproducible from public and authoritative taxonomic sources (using \link{this script}(https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R)), namely: \emph{List of Prokaryotic names with Standing in Nomenclature (LPSN)} for bacteria, \emph{MycoBank} for fungi, and \emph{Global Biodiversity Information Facility (GBIF)} for all others taxons.
+This data set is carefully crafted, yet made 100\% reproducible from public and authoritative taxonomic sources (using \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R}{this script}), namely: \emph{List of Prokaryotic names with Standing in Nomenclature (LPSN)} for bacteria, \emph{MycoBank} for fungi, and \emph{Global Biodiversity Information Facility (GBIF)} for all others taxons.
 }
 \details{
 Please note that entries are only based on LPSN, MycoBank, and GBIF (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
@@ -6791,7 +6791,7 @@ For convenience, some entries were added manually:
 \item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 }
 
-The syntax used to transform the original data to a cleansed \R format, can be \link{found here}(https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R).
+The syntax used to transform the original data to a cleansed \R format, can be \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R}{found here}.
 }
 }
 
@@ -9277,7 +9277,11 @@ knitr::opts_chunk$set(
 
 > This page was entirely written by our [AMR for R Assistant](https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant), a ChatGPT manually-trained model able to answer any question about the AMR package.
 
-Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antibiotic selector functions like `aminoglycosides()` and `betalactams()`. In this post, we will explore how to use the `tidymodels` framework to predict resistance patterns in the `example_isolates` dataset. 
+---
+
+## Example 1: Using Antimicrobial Selectors
+
+Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. In this post, we will explore how to use the `tidymodels` framework to predict resistance patterns in the `example_isolates` dataset. 
 
 By leveraging the power of `tidymodels` and the `AMR` package, we’ll build a reproducible machine learning workflow to predict the Gramstain of the microorganism to two important antibiotic classes: aminoglycosides and beta-lactams.
 
@@ -9297,6 +9301,9 @@ We begin by loading the required libraries and preparing the `example_isolates` 
 # Load required libraries
 library(AMR)          # For AMR data analysis
 library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
+
+# Your data could look like this:
+example_isolates
 
 # Select relevant columns for prediction
 data <- example_isolates %>%
@@ -9345,7 +9352,7 @@ prep(resistance_recipe)
 - `recipe(mo ~ ., data = data)` will take the `mo` column as outcome and all other columns as predictors.
 - `step_corr()` removes predictors (i.e., antibiotic columns) that have a higher correlation than 90%.
 
-Notice how the recipe contains just the antibiotic selector functions - no need to define the columns specifically. In the preparation (retrieved with `prep()`) we can see that the columns or variables `r paste0("'", suppressMessages(prep(resistance_recipe))$steps[[1]]$removals, "'", collapse = " and ")` were removed as they correlate too much with existing, other variables.
+Notice how the recipe contains just the antimicrobial selector functions - no need to define the columns specifically. In the preparation (retrieved with `prep()`) we can see that the columns or variables `r paste0("'", suppressMessages(prep(resistance_recipe))$steps[[1]]$removals, "'", collapse = " and ")` were removed as they correlate too much with existing, other variables.
 
 #### 2. Specifying the Model
 
@@ -9354,7 +9361,7 @@ We define a logistic regression model since resistance prediction is a binary cl
 ```{r}
 # Specify a logistic regression model
 logistic_model <- logistic_reg() %>%
-  set_engine("glm") # Use the Generalized Linear Model engine
+  set_engine("glm") # Use the Generalised Linear Model engine
 logistic_model
 ```
 
@@ -9365,7 +9372,7 @@ logistic_model
 
 #### 3. Building the Workflow
 
-We bundle the recipe and model together into a `workflow`, which organizes the entire modeling process.
+We bundle the recipe and model together into a `workflow`, which organises the entire modeling process.
 
 ```{r}
 # Combine the recipe and model into a workflow
@@ -9396,7 +9403,7 @@ fitted_workflow <- resistance_workflow %>%
 - `initial_split()` splits the data into training and testing sets.
 - `fit()` trains the workflow on the training set.
 
-Notice how in `fit()`, the antibiotic selector functions are internally called again. For training, these functions are called since they are stored in the recipe.
+Notice how in `fit()`, the antimicrobial selector functions are internally called again. For training, these functions are called since they are stored in the recipe.
 
 Next, we evaluate the model on the testing data.
 
@@ -9418,6 +9425,14 @@ metrics <- predictions %>%
   metrics(truth = mo, estimate = .pred_class) # Calculate performance metrics
 
 metrics
+
+
+# To assess some other model properties, you can make our own `metrics()` function
+our_metrics <- metric_set(accuracy, kap, ppv, npv) # add Positive Predictive Value and Negative Predictive Value
+metrics2 <- predictions %>%
+  our_metrics(truth = mo, estimate = .pred_class) # run again on our `our_metrics()` function
+
+metrics2
 ```
 
 **Explanation:**
@@ -9425,7 +9440,7 @@ metrics
 - `predict()` generates predictions on the testing set.
 - `metrics()` computes evaluation metrics like accuracy and kappa.
 
-It appears we can predict the Gram based on AMR results with a `r round(metrics$.estimate[1], 3) * 100`% accuracy based on AMR results of aminoglycosides and beta-lactam antibiotics. The ROC curve looks like this:
+It appears we can predict the Gram stain with a `r round(metrics$.estimate[1], 3) * 100`% accuracy based on AMR results of only aminoglycosides and beta-lactam antibiotics. The ROC curve looks like this:
 
 ```{r}
 predictions %>%
@@ -9437,7 +9452,173 @@ predictions %>%
 
 In this post, we demonstrated how to build a machine learning pipeline with the `tidymodels` framework and the `AMR` package. By combining selector functions like `aminoglycosides()` and `betalactams()` with `tidymodels`, we efficiently prepared data, trained a model, and evaluated its performance.
 
-This workflow is extensible to other antibiotic classes and resistance patterns, empowering users to analyse AMR data systematically and reproducibly.
+This workflow is extensible to other antimicrobial classes and resistance patterns, empowering users to analyse AMR data systematically and reproducibly.
+
+
+---
+
+
+## Example 2: Predicting AMR Over Time
+
+In this second example, we aim to predict antimicrobial resistance (AMR) trends over time using `tidymodels`. We will model resistance to three antibiotics (amoxicillin `AMX`, amoxicillin-clavulanic acid `AMC`, and ciprofloxacin `CIP`), based on historical data grouped by year and hospital ward.
+
+### **Objective**
+
+Our goal is to:
+
+1. Prepare the dataset by aggregating resistance data over time.
+2. Define a regression model to predict AMR trends.
+3. Use `tidymodels` to preprocess, train, and evaluate the model.
+
+### **Data Preparation**
+
+We start by transforming the `example_isolates` dataset into a structured time-series format.
+
+```{r}
+# Load required libraries
+library(AMR)
+library(tidymodels)
+
+# Transform dataset
+data_time <- example_isolates %>%
+  top_n_microorganisms(n = 10) %>% # Filter on the top #10 species
+  mutate(year = as.integer(format(date, "%Y")),  # Extract year from date
+         gramstain = mo_gramstain(mo)) %>% # Get taxonomic names
+  group_by(year, gramstain) %>%
+  summarise(across(c(AMX, AMC, CIP), 
+                   function(x) resistance(x, minimum = 0),
+                   .names = "res_{.col}"), 
+            .groups = "drop") %>% 
+  filter(!is.na(res_AMX) & !is.na(res_AMC) & !is.na(res_CIP)) # Drop missing values
+
+data_time
+```
+
+**Explanation:**
+- `mo_name(mo)`: Converts microbial codes into proper species names.
+- `resistance()`: Converts AMR results into numeric values (proportion of resistant isolates).
+- `group_by(year, ward, species)`: Aggregates resistance rates by year and ward.
+
+### **Defining the Workflow**
+
+We now define the modeling workflow, which consists of a preprocessing step, a model specification, and the fitting process.
+
+#### 1. Preprocessing with a Recipe
+
+```{r}
+# Define the recipe
+resistance_recipe_time <- recipe(res_AMX ~ year + gramstain, data = data_time) %>%
+  step_dummy(gramstain, one_hot = TRUE) %>%  # Convert categorical to numerical
+  step_normalize(year) %>%  # Normalise year for better model performance
+  step_nzv(all_predictors())  # Remove near-zero variance predictors
+
+resistance_recipe_time
+```
+
+**Explanation:**
+- `step_dummy()`: Encodes categorical variables (`ward`, `species`) as numerical indicators.
+- `step_normalize()`: Normalises the `year` variable.
+- `step_nzv()`: Removes near-zero variance predictors.
+
+#### 2. Specifying the Model
+
+We use a linear regression model to predict resistance trends.
+
+```{r}
+# Define the linear regression model
+lm_model <- linear_reg() %>%
+  set_engine("lm") # Use linear regression
+
+lm_model
+```
+
+**Explanation:**
+- `linear_reg()`: Defines a linear regression model.
+- `set_engine("lm")`: Uses R’s built-in linear regression engine.
+
+#### 3. Building the Workflow
+
+We combine the preprocessing recipe and model into a workflow.
+
+```{r}
+# Create workflow
+resistance_workflow_time <- workflow() %>%
+  add_recipe(resistance_recipe_time) %>%
+  add_model(lm_model)
+
+resistance_workflow_time
+```
+
+### **Training and Evaluating the Model**
+
+We split the data into training and testing sets, fit the model, and evaluate performance.
+
+```{r}
+# Split the data
+set.seed(123)
+data_split_time <- initial_split(data_time, prop = 0.8)
+train_time <- training(data_split_time)
+test_time <- testing(data_split_time)
+
+# Train the model
+fitted_workflow_time <- resistance_workflow_time %>%
+  fit(train_time)
+
+# Make predictions
+predictions_time <- fitted_workflow_time %>%
+  predict(test_time) %>%
+  bind_cols(test_time) 
+
+# Evaluate model
+metrics_time <- predictions_time %>%
+  metrics(truth = res_AMX, estimate = .pred)
+
+metrics_time
+```
+
+**Explanation:**
+- `initial_split()`: Splits data into training and testing sets.
+- `fit()`: Trains the workflow.
+- `predict()`: Generates resistance predictions.
+- `metrics()`: Evaluates model performance.
+
+### **Visualizing Predictions**
+
+We plot resistance trends over time for Amoxicillin.
+
+```{r}
+library(ggplot2)
+
+# Plot actual vs predicted resistance over time
+ggplot(predictions_time, aes(x = year)) +
+  geom_point(aes(y = res_AMX, color = "Actual")) +
+  geom_line(aes(y = .pred, color = "Predicted")) +
+  labs(title = "Predicted vs Actual AMX Resistance Over Time",
+       x = "Year",
+       y = "Resistance Proportion") +
+  theme_minimal()
+```
+
+Additionally, we can visualise resistance trends in `ggplot2` and directly adding linear models there:
+
+```{r}
+ggplot(data_time, aes(x = year, y = res_AMX, color = gramstain)) +
+  geom_line() +
+  labs(title = "AMX Resistance Trends",
+       x = "Year",
+       y = "Resistance Proportion") +
+  # add a linear model directly in ggplot2:
+  geom_smooth(method = "lm",
+              formula = y ~ x,
+              alpha = 0.25) +
+  theme_minimal()
+```
+
+### **Conclusion**
+
+In this example, we demonstrated how to analyze AMR trends over time using `tidymodels`. By aggregating resistance rates by year and hospital ward, we built a predictive model to track changes in resistance to amoxicillin (`AMX`), amoxicillin-clavulanic acid (`AMC`), and ciprofloxacin (`CIP`). 
+
+This method can be extended to other antibiotics and resistance patterns, providing valuable insights into AMR dynamics in healthcare settings.
 
 
 
@@ -10230,144 +10411,6 @@ The tab-separated text, Microsoft Excel, SPSS, and Stata files all contain the t
 ```{r, echo = FALSE}
 antivirals %>%
   print_df()
-```
-
-
-
-----------------------------------------------------------------------------------------------------
-THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'vignettes/resistance_predict.Rmd':
-
-
----
-title: "How to predict antimicrobial resistance"
-output: 
-  rmarkdown::html_vignette:
-    toc: true
-vignette: >
-  %\VignetteIndexEntry{How to predict antimicrobial resistance}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include = FALSE, results = 'markup'}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7.5,
-  fig.height = 4.75
-)
-```
-
-## Needed R packages
-As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org). The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
-
-Our `AMR` package depends on these packages and even extends their use and functions.
-
-```{r lib packages, message = FALSE}
-library(dplyr)
-library(ggplot2)
-library(AMR)
-
-# (if not yet installed, install with:)
-# install.packages(c("tidyverse", "AMR"))
-```
-
-## Prediction analysis
-Our package contains a function `resistance_predict()`, which takes the same input as functions for [other AMR data analysis](./AMR.html). Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.
-
-It is basically as easy as:
-```{r, eval = FALSE}
-# resistance prediction of piperacillin/tazobactam (TZP):
-resistance_predict(tbl = example_isolates, col_date = "date", col_ab = "TZP", model = "binomial")
-
-# or:
-example_isolates %>%
-  resistance_predict(
-    col_ab = "TZP",
-    model = "binomial"
-  )
-
-# to bind it to object 'predict_TZP' for example:
-predict_TZP <- example_isolates %>%
-  resistance_predict(
-    col_ab = "TZP",
-    model = "binomial"
-  )
-```
-
-The function will look for a date column itself if `col_date` is not set.
-
-When running any of these commands, a summary of the regression model will be printed unless using `resistance_predict(..., info = FALSE)`.
-
-```{r, echo = FALSE, message = FALSE}
-predict_TZP <- example_isolates %>%
-  resistance_predict(col_ab = "TZP", model = "binomial")
-```
-
-This text is only a printed summary - the actual result (output) of the function is a `data.frame` containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:
-
-```{r}
-predict_TZP
-```
-
-The function `plot` is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:
-
-```{r, fig.height = 5.5}
-plot(predict_TZP)
-```
-
-This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.
-
-We also support the `ggplot2` package with our custom function `ggplot_sir_predict()` to create more appealing plots:
-
-```{r}
-ggplot_sir_predict(predict_TZP)
-
-# choose for error bars instead of a ribbon
-ggplot_sir_predict(predict_TZP, ribbon = FALSE)
-```
-
-### Choosing the right model
-
-Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:
-
-```{r}
-example_isolates %>%
-  filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
-  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "binomial") %>%
-  ggplot_sir_predict()
-```
-
-Vancomycin resistance could be 100% in ten years, but might remain very low. 
-
-You can define the model with the `model` parameter. The model chosen above is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.
-
-Valid values are:
-
-| Input values                           | Function used by R            | Type of model                                       |
-|----------------------------------------|-------------------------------|-----------------------------------------------------|
-| `"binomial"` or `"binom"` or `"logit"` | `glm(..., family = binomial)` | Generalised linear model with binomial distribution |
-| `"loglin"` or `"poisson"`              | `glm(..., family = poisson)`  | Generalised linear model with poisson distribution  |
-| `"lin"` or `"linear"`                  | `lm()`                        | Linear model                                        |
-
-For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate:
-
-```{r}
-example_isolates %>%
-  filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
-  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>%
-  ggplot_sir_predict()
-```
-
-The model itself is also available from the object, as an `attribute`:
-```{r}
-model <- attributes(predict_TZP)$model
-
-summary(model)$family
-
-summary(model)$coefficients
 ```
 
 

@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # This script runs in 20-30 minutes and renews all guidelines of CLSI and EUCAST!
-# Run it with source("data-raw/reproduction scripts/reproduction_of_clinical_breakpoints.R")
+# Run it with source("data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R")
 
 library(dplyr)
 library(readr)
@@ -39,7 +39,7 @@ devtools::load_all()
 # and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
 # (for ASIARS-Net update, also copy C:\WHONET\Codes to the data-raw/WHONET/ folder)
 
-# BE SURE TO RUN data-raw/reproduction scripts/reproduction_of_microorganisms.groups.R FIRST TO GET THE GROUPS!
+# BE SURE TO RUN data-raw/_reproduction_scripts/reproduction_of_microorganisms.groups.R FIRST TO GET THE GROUPS!
 
 # READ DATA ----
 

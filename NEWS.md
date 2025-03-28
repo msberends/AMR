@@ -1,4 +1,4 @@
-# AMR 2.1.1.9229
+# AMR 2.1.1.9230
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -8,6 +8,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 ## Breaking
 * Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over two years ago.
+* Function `resistance_predict()` is now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html).
 
 ## New
 * **One Health implementation**

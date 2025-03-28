@@ -134,7 +134,7 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
   s3_register("knitr::knit_print", "antibiogram")
   s3_register("knitr::knit_print", "formatted_bug_drug_combinations")
   # Support vctrs package for use in e.g. dplyr verbs
-  # NOTE 2024-02-22 this is the right way - it should be 2 S3 classes in the second argument
+  # (NOTE 2024-02-22 this is the right way - it should be 2 '.'-separated S3 classes in the second argument)
   # S3: amr_selector
   s3_register("vctrs::vec_ptype2", "character.amr_selector")
   s3_register("vctrs::vec_ptype2", "amr_selector.character")

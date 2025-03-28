@@ -240,7 +240,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
-  * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
+  * Apply AMR function in predictive modelling ([tutorial](./articles/AMR_with_tidymodels.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
   * Getting properties for any antimicrobial (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))

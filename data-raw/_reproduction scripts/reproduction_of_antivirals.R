@@ -79,7 +79,7 @@ antivirals <- antivirals %>%
   as.data.frame(stringsAsFactors = FALSE)
 
 # add PubChem Compound ID (cid) and their trade names
-# see `data-raw/reproduction scripts/reproduction_of_antimicrobials.R` for get_CID() and get_synonyms()
+# see `data-raw/_reproduction_scripts/reproduction_of_antimicrobials.R` for get_CID() and get_synonyms()
 CIDs <- get_CID(antivirals$name)
 # these could not be found:
 antivirals[is.na(CIDs), ] %>% View()

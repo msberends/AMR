@@ -85,7 +85,7 @@
 #' @description
 #' A data set containing the full microbial taxonomy (**last updated: `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date, TAXONOMY_VERSION$MycoBank$accessed_date))`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms. This data set is the backbone of this `AMR` package. MO codes can be looked up using [as.mo()] and microorganism properties can be looked up using any of the [`mo_*`][mo_property()] functions.
 #'
-#' This data set is carefully crafted, yet made 100% reproducible from public and authoritative taxonomic sources (using [this script](https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R)), namely: *`r TAXONOMY_VERSION$LPSN$name`* for bacteria, *`r TAXONOMY_VERSION$MycoBank$name`* for fungi, and *`r TAXONOMY_VERSION$GBIF$name`* for all others taxons.
+#' This data set is carefully crafted, yet made 100% reproducible from public and authoritative taxonomic sources (using [this script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R)), namely: *`r TAXONOMY_VERSION$LPSN$name`* for bacteria, *`r TAXONOMY_VERSION$MycoBank$name`* for fungi, and *`r TAXONOMY_VERSION$GBIF$name`* for all others taxons.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms), big.mark = " ")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package. ***This is a unique identifier.***
 #' - `fullname`\cr Full name, like `"Escherichia coli"`. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. ***This is a unique identifier.***
@@ -131,7 +131,7 @@
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 #' - 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 #'
-#' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_microorganisms.R).
+#' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R).
 #' @inheritSection AMR Download Our Reference Data
 #' @source
 #' Taxonomic entries were imported in this order of importance:
@@ -297,7 +297,7 @@
 #' ### Imported From WHONET
 #' Clinical breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
 #'
-#' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction scripts/reproduction_of_clinical_breakpoints.R>.
+#' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R>.
 #'
 #' ### Response From CLSI and EUCAST
 #' The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this `AMR` package.

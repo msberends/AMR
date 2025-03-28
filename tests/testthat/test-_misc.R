@@ -63,7 +63,7 @@ test_that("test-misc.R", {
     is_right <<- FALSE
     for (env in sys.frames()) {
       if (!is.null(env[[check_element]]) && is.data.frame(env[[check_element]])) {
-        is_right <<- TRUE
+        is_right <<- all(colnames(example_isolates) %in% colnames(env[[check_element]]))
       }
     }
     return_val

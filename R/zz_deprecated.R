@@ -68,7 +68,9 @@ deprecation_warning <- function(old = NULL, new = NULL, fn = NULL, extra_msg = N
       AMR_env[[paste0("deprecated_", old)]] <- 1
       if (isTRUE(is_function)) {
         old <- paste0(old, "()")
-        new <- paste0(new, "()")
+        if (!is.null(new)) {
+          new <- paste0(new, "()")
+        }
         type <- "function"
       } else if (isTRUE(is_dataset)) {
         type <- "dataset"
@@ -82,7 +84,7 @@ deprecation_warning <- function(old = NULL, new = NULL, fn = NULL, extra_msg = N
       }
       warning_(
         ifelse(is.null(new),
-          paste0("The `", old, "` ", type, " is no longer in use"),
+          paste0("The `", old, "` ", type, " is deprecated"),
           ifelse(type == "dataset",
             paste0("The `", old, "` ", type, " has been renamed to `", new, "`"),
             ifelse(type == "argument",
