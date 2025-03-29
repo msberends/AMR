@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9230</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@
     <li><a class="dropdown-item" href="../articles/PCA.html"><span class="fa fa-compress"></span> Conduct Principal Component Analysis for AMR</a></li>
     <li><a class="dropdown-item" href="../articles/MDR.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
     <li><a class="dropdown-item" href="../articles/WHONET.html"><span class="fa fa-globe-americas"></span> Work with WHONET Data</a></li>
-    <li><a class="dropdown-item" href="../articles/EUCAST.html"><span class="fa fa-exchange-alt"></span> Apply Eucast Rules</a></li>
+    <li><a class="dropdown-item" href="../articles/EUCAST.html"><span class="fa fa-exchange-alt"></span> Apply EUCAST Rules</a></li>
     <li><a class="dropdown-item" href="../reference/mo_property.html"><span class="fa fa-bug"></span> Get Taxonomy of a Microorganism</a></li>
     <li><a class="dropdown-item" href="../reference/ab_property.html"><span class="fa fa-capsules"></span> Get Properties of an Antibiotic Drug</a></li>
     <li><a class="dropdown-item" href="../reference/av_property.html"><span class="fa fa-capsules"></span> Get Properties of an Antiviral Drug</a></li>
@@ -92,78 +92,79 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>What are EUCAST rules? The European Committee on Antimicrobial
-Susceptibility Testing (EUCAST) states <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">on
+Susceptibility Testing (EUCAST) states <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">on
 their website</a>:</p>
 <blockquote>
-<p><em>EUCAST expert rules are a tabulated collection of expert
-knowledge on intrinsic resistances, exceptional resistance phenotypes
-and interpretive rules that may be applied to antimicrobial
-susceptibility testing in order to reduce errors and make appropriate
-recommendations for reporting particular resistances.</em></p>
+<p><em>EUCAST expert rules (see below) are a tabulated collection of
+expert knowledge on interpretive rules, expected resistant phenotypes
+and expected susceptible phenotypes which should be applied to
+antimicrobial susceptibility testing in order to reduce testing, reduce
+errors and make appropriate recommendations for reporting particular
+resistances.</em></p>
 </blockquote>
 <p>In Europe, a lot of medical microbiological laboratories already
 apply these rules (<a href="https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008" class="external-link">Brown
 <em>et al.</em>, 2015</a>). Our package features their latest insights
-on intrinsic resistance and unusual phenotypes (v3.1, 2016).</p>
-<p>Moreover, the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function we use for this
-purpose can also apply additional rules, like forcing
-<help title="ATC: J01CA01">ampicillin</help> = R in isolates when
-<help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.</p>
+on expected resistant phenotypes (v1.2, 2023).</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>These rules can be used to discard impossible bug-drug combinations
+<p>These rules can be used to discard improbable bug-drug combinations
 in your data. For example, <em>Klebsiella</em> produces beta-lactamase
 that prevents ampicillin (or amoxicillin) from working against it. In
 other words, practically every strain of <em>Klebsiella</em> is
 resistant to ampicillin.</p>
 <p>Sometimes, laboratory data can still contain such strains with
-ampicillin being susceptible to ampicillin. This could be because an
-antibiogram is available before an identification is available, and the
-antibiogram is then not re-interpreted based on the identification
-(namely, <em>Klebsiella</em>). EUCAST expert rules solve this, that can
-be applied using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:</p>
+<em>Klebsiella</em> being susceptible to ampicillin. This could be
+because an antibiogram is available before an identification is
+available, and the antibiogram is then not re-interpreted based on the
+identification. The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function resolves this,
+by applying the latest ‘EUCAST Expected Resistant Phenotypes’
+guideline:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">oops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">oops</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Klebsiella"</span>,</span>
-<span>    <span class="st">"Escherichia"</span></span>
+<span>    <span class="st">"Klebsiella pneumoniae"</span>,</span>
+<span>    <span class="st">"Escherichia coli"</span></span>
 <span>  <span class="op">)</span>,</span>
-<span>  ampicillin <span class="op">=</span> <span class="st">"S"</span></span>
+<span>  ampicillin <span class="op">=</span> <span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="st">"S"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">oops</span></span>
-<span><span class="co">#&gt;            mo ampicillin</span></span>
-<span><span class="co">#&gt; 1  Klebsiella          S</span></span>
-<span><span class="co">#&gt; 2 Escherichia          S</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">#&gt;   mo                    ampicillin</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Klebsiella pneumoniae <span style="color: #080808; background-color: #5FD7AF;">  S  </span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Escherichia coli      <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">oops</span>, info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            mo ampicillin</span></span>
-<span><span class="co">#&gt; 1  Klebsiella          S</span></span>
-<span><span class="co">#&gt; 2 Escherichia          S</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">oops</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">#&gt;   mo                    ampicillin</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Klebsiella pneumoniae <span style="color: #080808; background-color: #FFAFAF;">  R  </span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Escherichia coli      <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span></code></pre></div>
 <p>A more convenient function is
 <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> that uses the same guideline,
 but allows to check for one or more specific microorganisms or
 antimicrobials:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>, <span class="st">"Escherichia"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span>, <span class="st">"Escherichia coli"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"ampicillin"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] FALSE FALSE</span></span>
+<span><span class="co">#&gt; [1]  TRUE FALSE</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Klebsiella"</span>,</span>
+<span>  <span class="st">"Klebsiella pneumoniae"</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"kanamycin"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] FALSE FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt; [1]  TRUE FALSE</span></span></code></pre></div>
 <p>EUCAST rules can not only be used for correction, they can also be
 used for filling in known resistance and susceptibility based on results
 of other antimicrobials drugs. This process is called <em>interpretive
-reading</em>, is basically a form of imputation, and is part of the
-<code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function as well:</p>
+reading</em>, and is basically a form of imputation:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Staphylococcus aureus"</span>,</span>
 <span>    <span class="st">"Enterococcus faecalis"</span>,</span>
@@ -177,8 +178,7 @@ reading</em>, is basically a form of imputation, and is part of the
 <span>  CAZ <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Ceftazidime</span></span>
 <span>  CXM <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Cefuroxime</span></span>
 <span>  PEN <span class="op">=</span> <span class="st">"S"</span>, <span class="co"># Benzylenicillin</span></span>
-<span>  FOX <span class="op">=</span> <span class="st">"S"</span>, <span class="co"># Cefoxitin</span></span>
-<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  FOX <span class="op">=</span> <span class="st">"S"</span>  <span class="co"># Cefoxitin</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span></span></code></pre></div>
@@ -247,7 +247,7 @@ reading</em>, is basically a form of imputation, and is part of the
 </tbody>
 </table>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">data</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">mo</th>
@@ -278,7 +278,7 @@ reading</em>, is basically a form of imputation, and is part of the
 <td align="center">R</td>
 <td align="center">R</td>
 <td align="center">S</td>
-<td align="center">S</td>
+<td align="center">R</td>
 </tr>
 <tr class="odd">
 <td align="left">Escherichia coli</td>
@@ -287,7 +287,7 @@ reading</em>, is basically a form of imputation, and is part of the
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">-</td>
-<td align="center">S</td>
+<td align="center">R</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
@@ -297,7 +297,7 @@ reading</em>, is basically a form of imputation, and is part of the
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">-</td>
-<td align="center">S</td>
+<td align="center">R</td>
 <td align="center">S</td>
 </tr>
 <tr class="odd">
@@ -307,8 +307,8 @@ reading</em>, is basically a form of imputation, and is part of the
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">R</td>
 </tr>
 </tbody>
 </table>
