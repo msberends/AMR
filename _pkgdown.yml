@@ -94,7 +94,7 @@ navbar:
       - text: "Work with WHONET Data"
         icon: "fa-globe-americas"
         href: "articles/WHONET.html"
-      - text: "Apply Eucast Rules"
+      - text: "Apply EUCAST Rules"
         icon: "fa-exchange-alt"
         href: "articles/EUCAST.html"
       - text: "Get Taxonomy of a Microorganism"

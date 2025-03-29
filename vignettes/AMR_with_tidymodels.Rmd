@@ -24,11 +24,11 @@ knitr::opts_chunk$set(
 
 > This page was entirely written by our [AMR for R Assistant](https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant), a ChatGPT manually-trained model able to answer any question about the AMR package.
 
----
+Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. 
+
+In this post, we will explore how to use the `tidymodels` framework to predict resistance patterns in the `example_isolates` dataset in two examples. 
 
 ## Example 1: Using Antimicrobial Selectors
-
-Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. In this post, we will explore how to use the `tidymodels` framework to predict resistance patterns in the `example_isolates` dataset. 
 
 By leveraging the power of `tidymodels` and the `AMR` package, we’ll build a reproducible machine learning workflow to predict the Gramstain of the microorganism to two important antibiotic classes: aminoglycosides and beta-lactams.
 
@@ -329,9 +329,9 @@ metrics_time
 - `predict()`: Generates resistance predictions.
 - `metrics()`: Evaluates model performance.
 
-### **Visualizing Predictions**
+### **Visualising Predictions**
 
-We plot resistance trends over time for Amoxicillin.
+We plot resistance trends over time for amoxicillin.
 
 ```{r}
 library(ggplot2)
@@ -346,7 +346,7 @@ ggplot(predictions_time, aes(x = year)) +
   theme_minimal()
 ```
 
-Additionally, we can visualise resistance trends in `ggplot2` and directly adding linear models there:
+Additionally, we can visualise resistance trends in `ggplot2` and directly add linear models there:
 
 ```{r}
 ggplot(data_time, aes(x = year, y = res_AMX, color = gramstain)) +

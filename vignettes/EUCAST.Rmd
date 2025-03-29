@@ -24,51 +24,49 @@ library(AMR)
 
 ## Introduction
 
-What are EUCAST rules? The European Committee on Antimicrobial Susceptibility Testing (EUCAST) states [on their website](https://www.eucast.org/expert_rules_and_intrinsic_resistance/):
+What are EUCAST rules? The European Committee on Antimicrobial Susceptibility Testing (EUCAST) states [on their website](https://www.eucast.org/expert_rules_and_expected_phenotypes):
 
-> *EUCAST expert rules are a tabulated collection of expert knowledge on intrinsic resistances, exceptional resistance phenotypes and interpretive rules that may be applied to antimicrobial susceptibility testing in order to reduce errors and make appropriate recommendations for reporting particular resistances.*
+> *EUCAST expert rules (see below) are a tabulated collection of expert knowledge on interpretive rules, expected resistant phenotypes and expected susceptible phenotypes which should be applied to antimicrobial susceptibility testing in order to reduce testing, reduce errors and make appropriate recommendations for reporting particular resistances.*
 
-In Europe, a lot of medical microbiological laboratories already apply these rules ([Brown *et al.*, 2015](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008)). Our package features their latest insights on intrinsic resistance and unusual phenotypes (`r AMR:::EUCAST_VERSION_EXPERT_RULES[[length(AMR:::EUCAST_VERSION_EXPERT_RULES)]]$version_txt`, `r AMR:::EUCAST_VERSION_EXPERT_RULES[[length(AMR:::EUCAST_VERSION_EXPERT_RULES)]]$year`).
-
-Moreover, the `eucast_rules()` function we use for this purpose can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R in isolates when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
+In Europe, a lot of medical microbiological laboratories already apply these rules ([Brown *et al.*, 2015](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008)). Our package features their latest insights on expected resistant phenotypes (`r AMR:::EUCAST_VERSION_EXPECTED_PHENOTYPES[[1]]$version_txt`, `r AMR:::EUCAST_VERSION_EXPECTED_PHENOTYPES[[1]]$year`).
 
 ## Examples
 
-These rules can be used to discard impossible bug-drug combinations in your data. For example, *Klebsiella* produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, practically every strain of *Klebsiella* is resistant to ampicillin.
+These rules can be used to discard improbable bug-drug combinations in your data. For example, *Klebsiella* produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, practically every strain of *Klebsiella* is resistant to ampicillin.
 
-Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, *Klebsiella*). EUCAST expert rules solve this, that can be applied using `eucast_rules()`:
+Sometimes, laboratory data can still contain such strains with *Klebsiella* being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification. The `eucast_rules()` function resolves this, by applying the latest `r AMR:::EUCAST_VERSION_EXPECTED_PHENOTYPES[[1]]$title` guideline:
 
 ```{r, warning = FALSE, message = FALSE}
-oops <- data.frame(
+oops <- tibble::tibble(
   mo = c(
-    "Klebsiella",
-    "Escherichia"
+    "Klebsiella pneumoniae",
+    "Escherichia coli"
   ),
-  ampicillin = "S"
+  ampicillin = as.sir("S")
 )
 oops
 
-eucast_rules(oops, info = FALSE)
+eucast_rules(oops, info = FALSE, overwrite = TRUE)
 ```
 
 A more convenient function is `mo_is_intrinsic_resistant()` that uses the same guideline, but allows to check for one or more specific microorganisms or antimicrobials:
 
 ```{r, warning = FALSE, message = FALSE}
 mo_is_intrinsic_resistant(
-  c("Klebsiella", "Escherichia"),
+  c("Klebsiella pneumoniae", "Escherichia coli"),
   "ampicillin"
 )
 
 mo_is_intrinsic_resistant(
-  "Klebsiella",
+  "Klebsiella pneumoniae",
   c("ampicillin", "kanamycin")
 )
 ```
 
-EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called *interpretive reading*, is basically a form of imputation, and is part of the `eucast_rules()` function as well:
+EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called *interpretive reading*, and is basically a form of imputation:
 
 ```{r, warning = FALSE, message = FALSE}
-data <- data.frame(
+data <- tibble::tibble(
   mo = c(
     "Staphylococcus aureus",
     "Enterococcus faecalis",
@@ -82,8 +80,7 @@ data <- data.frame(
   CAZ = "-", # Ceftazidime
   CXM = "-", # Cefuroxime
   PEN = "S", # Benzylenicillin
-  FOX = "S", # Cefoxitin
-  stringsAsFactors = FALSE
+  FOX = "S"  # Cefoxitin
 )
 ```
 ```{r, eval = FALSE}
@@ -93,8 +90,8 @@ data
 knitr::kable(data, align = "lccccccc")
 ```
 ```{r, warning = FALSE, eval = FALSE}
-eucast_rules(data)
+eucast_rules(data, overwrite = TRUE)
 ```
 ```{r, warning = FALSE, echo = FALSE, message = FALSE}
-knitr::kable(eucast_rules(data), align = "lccccccc")
+knitr::kable(eucast_rules(data, overwrite = TRUE), align = "lccccccc")
 ```
