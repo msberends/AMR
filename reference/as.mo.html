@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,53 +82,53 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector or a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with one or two columns</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector or a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with one or two columns</p></dd>
 
 
 <dt id="arg-becker">Becker<a class="anchor" aria-label="anchor" href="#arg-becker"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> (see <em>Source</em>). Please see <em>Details</em> for a full list of staphylococcal species that will be converted.</p>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> (see <em>Source</em>). Please see <em>Details</em> for a full list of staphylococcal species that will be converted.</p>
 <p>This excludes <em>Staphylococcus aureus</em> at default, use <code>Becker = "all"</code> to also categorise <em>S. aureus</em> as "CoPS".</p></dd>
 
 
 <dt id="arg-lancefield">Lancefield<a class="anchor" aria-label="anchor" href="#arg-lancefield"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a beta-haemolytic <em>Streptococcus</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see <em>Source</em>). These streptococci will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L. . Please see <em>Details</em> for a full list of streptococcal species that will be converted.</p>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a beta-haemolytic <em>Streptococcus</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see <em>Source</em>). These streptococci will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L. . Please see <em>Details</em> for a full list of streptococcal species that will be converted.</p>
 <p>This excludes enterococci at default (who are in group D), use <code>Lancefield = "all"</code> to also categorise all enterococci as group D.</p></dd>
 
 
 <dt id="arg-minimum-matching-score">minimum_matching_score<a class="anchor" aria-label="anchor" href="#arg-minimum-matching-score"></a></dt>
-<dd><p>a numeric value to set as the lower limit for the <a href="mo_matching_score.html">MO matching score</a>. When left blank, this will be determined automatically based on the character length of <code>x</code>, its <a href="microorganisms.html">taxonomic kingdom</a> and <a href="mo_matching_score.html">human pathogenicity</a>.</p></dd>
+<dd><p>A numeric value to set as the lower limit for the <a href="mo_matching_score.html">MO matching score</a>. When left blank, this will be determined automatically based on the character length of <code>x</code>, its <a href="microorganisms.html">taxonomic kingdom</a> and <a href="mo_matching_score.html">human pathogenicity</a>.</p></dd>
 
 
 <dt id="arg-keep-synonyms">keep_synonyms<a class="anchor" aria-label="anchor" href="#arg-keep-synonyms"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
 
 
 <dt id="arg-reference-df">reference_df<a class="anchor" aria-label="anchor" href="#arg-reference-df"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for extra reference when translating <code>x</code> to a valid <code>mo</code>. See <code><a href="mo_source.html">set_mo_source()</a></code> and <code><a href="mo_source.html">get_mo_source()</a></code> to automate the usage of your own codes (e.g. used in your analysis or organisation).</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for extra reference when translating <code>x</code> to a valid <code>mo</code>. See <code><a href="mo_source.html">set_mo_source()</a></code> and <code><a href="mo_source.html">get_mo_source()</a></code> to automate the usage of your own codes (e.g. used in your analysis or organisation).</p></dd>
 
 
 <dt id="arg-ignore-pattern">ignore_pattern<a class="anchor" aria-label="anchor" href="#arg-ignore-pattern"></a></dt>
-<dd><p>a Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) of which all matches in <code>x</code> must return <code>NA</code>. This can be convenient to exclude known non-relevant input and can also be set with the package option <code><a href="AMR-options.html">AMR_ignore_pattern</a></code>, e.g. <code>options(AMR_ignore_pattern = "(not reported|contaminated flora)")</code>.</p></dd>
+<dd><p>A Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) of which all matches in <code>x</code> must return <code>NA</code>. This can be convenient to exclude known non-relevant input and can also be set with the package option <code><a href="AMR-options.html">AMR_ignore_pattern</a></code>, e.g. <code>options(AMR_ignore_pattern = "(not reported|contaminated flora)")</code>.</p></dd>
 
 
 <dt id="arg-cleaning-regex">cleaning_regex<a class="anchor" aria-label="anchor" href="#arg-cleaning-regex"></a></dt>
-<dd><p>a Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) to clean the input of <code>x</code>. Every matched part in <code>x</code> will be removed. At default, this is the outcome of <code>mo_cleaning_regex()</code>, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option <code><a href="AMR-options.html">AMR_cleaning_regex</a></code>.</p></dd>
+<dd><p>A Perl-compatible <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) to clean the input of <code>x</code>. Every matched part in <code>x</code> will be removed. At default, this is the outcome of <code>mo_cleaning_regex()</code>, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option <code><a href="AMR-options.html">AMR_cleaning_regex</a></code>.</p></dd>
 
 
 <dt id="arg-only-fungi">only_fungi<a class="anchor" aria-label="anchor" href="#arg-only-fungi"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for <a href="mo_property.html">all microorganism functions</a> with the package option <code><a href="AMR-options.html">AMR_only_fungi</a></code>, i.e. <code>options(AMR_only_fungi = TRUE)</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for <a href="mo_property.html">all microorganism functions</a> with the package option <code><a href="AMR-options.html">AMR_only_fungi</a></code>, i.e. <code>options(AMR_only_fungi = TRUE)</code>.</p></dd>
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>language to translate text like "no growth", which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>)</p></dd>
+<dd><p>Language to translate text like "no growth", which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>)</p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is <code>TRUE</code> only in interactive mode.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is <code>TRUE</code> only in interactive mode.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>other arguments passed on to functions</p></dd>
+<dd><p>Other arguments passed on to functions</p></dd>
 
 </dl></div>
     <div class="section level2">

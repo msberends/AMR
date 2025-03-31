@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,47 +74,47 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with column(s) of class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with column(s) of class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
 
 
 <dt id="arg-position">position<a class="anchor" aria-label="anchor" href="#arg-position"></a></dt>
-<dd><p>position adjustment of bars, either <code>"fill"</code>, <code>"stack"</code> or <code>"dodge"</code></p></dd>
+<dd><p>Position adjustment of bars, either <code>"fill"</code>, <code>"stack"</code> or <code>"dodge"</code></p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>variable to show on x axis, either <code>"antibiotic"</code> (default) or <code>"interpretation"</code> or a grouping variable</p></dd>
+<dd><p>Variable to show on x axis, either <code>"antibiotic"</code> (default) or <code>"interpretation"</code> or a grouping variable</p></dd>
 
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
-<dd><p>variable to categorise using the plots legend, either <code>"antibiotic"</code> (default) or <code>"interpretation"</code> or a grouping variable</p></dd>
+<dd><p>Variable to categorise using the plots legend, either <code>"antibiotic"</code> (default) or <code>"interpretation"</code> or a grouping variable</p></dd>
 
 
 <dt id="arg-facet">facet<a class="anchor" aria-label="anchor" href="#arg-facet"></a></dt>
-<dd><p>variable to split plots by, either <code>"interpretation"</code> (default) or <code>"antibiotic"</code> or a grouping variable</p></dd>
+<dd><p>Variable to split plots by, either <code>"interpretation"</code> (default) or <code>"antibiotic"</code> or a grouping variable</p></dd>
 
 
 <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of positions</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of positions</p></dd>
 
 
 <dt id="arg-limits">limits<a class="anchor" aria-label="anchor" href="#arg-limits"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of length two providing limits of the scale, use <code>NA</code> to refer to the existing minimum or maximum</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of length two providing limits of the scale, use <code>NA</code> to refer to the existing minimum or maximum</p></dd>
 
 
 <dt id="arg-translate-ab">translate_ab<a class="anchor" aria-label="anchor" href="#arg-translate-ab"></a></dt>
-<dd><p>a column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
+<dd><p>A column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
-<dd><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
+<dd><p>The minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>language of the returned text - the default is the current system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the package option <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>Language of the returned text - the default is the current system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the package option <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 
 
 <dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>
@@ -122,43 +122,43 @@
 
 
 <dt id="arg-colours">colours<a class="anchor" aria-label="anchor" href="#arg-colours"></a></dt>
-<dd><p>a named vactor with colour to be used for filling. The default colours are colour-blind friendly.</p></dd>
+<dd><p>A named vactor with colour to be used for filling. The default colours are colour-blind friendly.</p></dd>
 
 
 <dt id="arg-datalabels">datalabels<a class="anchor" aria-label="anchor" href="#arg-datalabels"></a></dt>
-<dd><p>show datalabels using <code><a href="plot.html">labels_sir_count()</a></code></p></dd>
+<dd><p>Show datalabels using <code><a href="plot.html">labels_sir_count()</a></code></p></dd>
 
 
 <dt id="arg-datalabels-size">datalabels.size<a class="anchor" aria-label="anchor" href="#arg-datalabels-size"></a></dt>
-<dd><p>size of the datalabels</p></dd>
+<dd><p>Size of the datalabels</p></dd>
 
 
 <dt id="arg-datalabels-colour">datalabels.colour<a class="anchor" aria-label="anchor" href="#arg-datalabels-colour"></a></dt>
-<dd><p>colour of the datalabels</p></dd>
+<dd><p>Colour of the datalabels</p></dd>
 
 
 <dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
-<dd><p>text to show as title of the plot</p></dd>
+<dd><p>Text to show as title of the plot</p></dd>
 
 
 <dt id="arg-subtitle">subtitle<a class="anchor" aria-label="anchor" href="#arg-subtitle"></a></dt>
-<dd><p>text to show as subtitle of the plot</p></dd>
+<dd><p>Text to show as subtitle of the plot</p></dd>
 
 
 <dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
-<dd><p>text to show as caption of the plot</p></dd>
+<dd><p>Text to show as caption of the plot</p></dd>
 
 
 <dt id="arg-x-title">x.title<a class="anchor" aria-label="anchor" href="#arg-x-title"></a></dt>
-<dd><p>text to show as x axis description</p></dd>
+<dd><p>Text to show as x axis description</p></dd>
 
 
 <dt id="arg-y-title">y.title<a class="anchor" aria-label="anchor" href="#arg-y-title"></a></dt>
-<dd><p>text to show as y axis description</p></dd>
+<dd><p>Text to show as y axis description</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>other arguments passed on to <code>geom_sir()</code> or, in case of <code><a href="plot.html">scale_sir_colours()</a></code>, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See <em>Examples</em>.</p></dd>
+<dd><p>Other arguments passed on to <code>geom_sir()</code> or, in case of <code><a href="plot.html">scale_sir_colours()</a></code>, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See <em>Examples</em>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -168,7 +168,7 @@
 <p>Additional functions include:</p><ul><li><p><code><a href="plot.html">facet_sir()</a></code> creates 2d plots (at default based on S/I/R) using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code>.</p></li>
 <li><p><code><a href="plot.html">scale_y_percent()</a></code> transforms the y axis to a 0 to 100% range using <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code>.</p></li>
 <li><p><code><a href="plot.html">scale_sir_colours()</a></code> sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.</p></li>
-<li><p><code><a href="plot.html">theme_sir()</a></code> is a [ggplot2 theme][<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> with minimal distraction.</p></li>
+<li><p><code><a href="plot.html">theme_sir()</a></code> is a <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2 theme</a> with minimal distraction.</p></li>
 <li><p><code><a href="plot.html">labels_sir_count()</a></code> print datalabels on the bars with percentage and amount of isolates using <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></li>
 </ul><p><code>ggplot_sir()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See <em>Examples</em>.</p>
     </div>

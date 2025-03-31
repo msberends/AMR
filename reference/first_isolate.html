@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,31 +82,31 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing isolates. Can be left blank for automatic determination, see <em>Examples</em>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing isolates. Can be left blank for automatic determination, see <em>Examples</em>.</p></dd>
 
 
 <dt id="arg-col-date">col_date<a class="anchor" aria-label="anchor" href="#arg-col-date"></a></dt>
-<dd><p>column name of the result date (or date that is was received on the lab) - the default is the first column with a date class</p></dd>
+<dd><p>Column name of the result date (or date that is was received on the lab) - the default is the first column with a date class</p></dd>
 
 
 <dt id="arg-col-patient-id">col_patient_id<a class="anchor" aria-label="anchor" href="#arg-col-patient-id"></a></dt>
-<dd><p>column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive)</p></dd>
+<dd><p>Column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive)</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt id="arg-col-testcode">col_testcode<a class="anchor" aria-label="anchor" href="#arg-col-testcode"></a></dt>
-<dd><p>column name of the test codes. Use <code>col_testcode = NULL</code> to <strong>not</strong> exclude certain test codes (such as test codes for screening). In that case <code>testcodes_exclude</code> will be ignored.</p></dd>
+<dd><p>Column name of the test codes. Use <code>col_testcode = NULL</code> to <strong>not</strong> exclude certain test codes (such as test codes for screening). In that case <code>testcodes_exclude</code> will be ignored.</p></dd>
 
 
 <dt id="arg-col-specimen">col_specimen<a class="anchor" aria-label="anchor" href="#arg-col-specimen"></a></dt>
-<dd><p>column name of the specimen type or group</p></dd>
+<dd><p>Column name of the specimen type or group</p></dd>
 
 
 <dt id="arg-col-icu">col_icu<a class="anchor" aria-label="anchor" href="#arg-col-icu"></a></dt>
-<dd><p>column name of the logicals (<code>TRUE</code>/<code>FALSE</code>) whether a ward or department is an Intensive Care Unit (ICU). This can also be a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector with the same length as rows in <code>x</code>.</p></dd>
+<dd><p>Column name of the logicals (<code>TRUE</code>/<code>FALSE</code>) whether a ward or department is an Intensive Care Unit (ICU). This can also be a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector with the same length as rows in <code>x</code>.</p></dd>
 
 
 <dt id="arg-col-keyantimicrobials">col_keyantimicrobials<a class="anchor" aria-label="anchor" href="#arg-col-keyantimicrobials"></a></dt>
@@ -114,27 +114,27 @@
 
 
 <dt id="arg-episode-days">episode_days<a class="anchor" aria-label="anchor" href="#arg-episode-days"></a></dt>
-<dd><p>episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see <em>Source</em>.</p></dd>
+<dd><p>Episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see <em>Source</em>.</p></dd>
 
 
 <dt id="arg-testcodes-exclude">testcodes_exclude<a class="anchor" aria-label="anchor" href="#arg-testcodes-exclude"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with test codes that should be excluded (case-insensitive)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with test codes that should be excluded (case-insensitive)</p></dd>
 
 
 <dt id="arg-icu-exclude">icu_exclude<a class="anchor" aria-label="anchor" href="#arg-icu-exclude"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>)</p></dd>
 
 
 <dt id="arg-specimen-group">specimen_group<a class="anchor" aria-label="anchor" href="#arg-specimen-group"></a></dt>
-<dd><p>value in the column set with <code>col_specimen</code> to filter on</p></dd>
+<dd><p>Value in the column set with <code>col_specimen</code> to filter on</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>type to determine weighed isolates; can be <code>"keyantimicrobials"</code> or <code>"points"</code>, see <em>Details</em></p></dd>
+<dd><p>Type to determine weighed isolates; can be <code>"keyantimicrobials"</code> or <code>"points"</code>, see <em>Details</em></p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>the method to apply, either <code>"phenotype-based"</code>, <code>"episode-based"</code>, <code>"patient-based"</code> or <code>"isolate-based"</code> (can be abbreviated), see <em>Details</em>. The default is <code>"phenotype-based"</code> if antimicrobial test results are present in the data, and <code>"episode-based"</code> otherwise.</p></dd>
+<dd><p>The method to apply, either <code>"phenotype-based"</code>, <code>"episode-based"</code>, <code>"patient-based"</code> or <code>"isolate-based"</code> (can be abbreviated), see <em>Details</em>. The default is <code>"phenotype-based"</code> if antimicrobial test results are present in the data, and <code>"episode-based"</code> otherwise.</p></dd>
 
 
 <dt id="arg-ignore-i">ignore_I<a class="anchor" aria-label="anchor" href="#arg-ignore-i"></a></dt>
@@ -142,23 +142,23 @@
 
 
 <dt id="arg-points-threshold">points_threshold<a class="anchor" aria-label="anchor" href="#arg-points-threshold"></a></dt>
-<dd><p>minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em></p></dd>
+<dd><p>Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em></p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
 
 
 <dt id="arg-include-unknown">include_unknown<a class="anchor" aria-label="anchor" href="#arg-include-unknown"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code <code>"UNKNOWN"</code>, which defaults to <code>FALSE</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default. Isolates with a microbial ID of <code>NA</code> will always be excluded as first isolate.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code <code>"UNKNOWN"</code>, which defaults to <code>FALSE</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default. Isolates with a microbial ID of <code>NA</code> will always be excluded as first isolate.</p></dd>
 
 
 <dt id="arg-include-untested-sir">include_untested_sir<a class="anchor" aria-label="anchor" href="#arg-include-untested-sir"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use <code>include_untested_sir = FALSE</code> to always return <code>FALSE</code> for such rows. This checks the data set for columns of class <code>sir</code> and consequently requires transforming columns with antibiotic results using <code><a href="as.sir.html">as.sir()</a></code> first.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use <code>include_untested_sir = FALSE</code> to always return <code>FALSE</code> for such rows. This checks the data set for columns of class <code>sir</code> and consequently requires transforming columns with antibiotic results using <code><a href="as.sir.html">as.sir()</a></code> first.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, otherwise arguments passed on to <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> (such as <code>universal</code>, <code>gram_negative</code>, <code>gram_positive</code>)</p></dd>
+<dd><p>Arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, otherwise arguments passed on to <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> (such as <code>universal</code>, <code>gram_negative</code>, <code>gram_positive</code>)</p></dd>
 
 </dl></div>
     <div class="section level2">

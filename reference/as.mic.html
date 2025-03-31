@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,27 +76,27 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> or <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> or <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector</p></dd>
 
 
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> indicating whether missing values should be removed</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> indicating whether missing values should be removed</p></dd>
 
 
 <dt id="arg-keep-operators">keep_operators<a class="anchor" aria-label="anchor" href="#arg-keep-operators"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> specifying how to handle operators (such as <code>&gt;</code> and <code>&lt;=</code>) in the input. Accepts one of three values: <code>"all"</code> (or <code>TRUE</code>) to keep all operators, <code>"none"</code> (or <code>FALSE</code>) to remove all operators, or <code>"edges"</code> to keep operators only at both ends of the range.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> specifying how to handle operators (such as <code>&gt;</code> and <code>&lt;=</code>) in the input. Accepts one of three values: <code>"all"</code> (or <code>TRUE</code>) to keep all operators, <code>"none"</code> (or <code>FALSE</code>) to remove all operators, or <code>"edges"</code> to keep operators only at both ends of the range.</p></dd>
 
 
 <dt id="arg-mic-range">mic_range<a class="anchor" aria-label="anchor" href="#arg-mic-range"></a></dt>
-<dd><p>a manual range to rescale the MIC values, e.g., <code>mic_range = c(0.001, 32)</code>. Use <code>NA</code> to prevent rescaling on one side, e.g., <code>mic_range = c(NA, 32)</code>.</p></dd>
+<dd><p>A manual range to rescale the MIC values, e.g., <code>mic_range = c(0.001, 32)</code>. Use <code>NA</code> to prevent rescaling on one side, e.g., <code>mic_range = c(NA, 32)</code>.</p></dd>
 
 
 <dt id="arg-as-mic">as.mic<a class="anchor" aria-label="anchor" href="#arg-as-mic"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>mic</code> class should be kept - the default is <code>TRUE</code> for <code>rescale_mic()</code> and <code>FALSE</code> for <code><a href="https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html" class="external-link">droplevels()</a></code>. When setting this to <code>FALSE</code> in <code>rescale_mic()</code>, the output will have factor levels that acknowledge <code>mic_range</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>mic</code> class should be kept - the default is <code>TRUE</code> for <code>rescale_mic()</code> and <code>FALSE</code> for <code><a href="https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html" class="external-link">droplevels()</a></code>. When setting this to <code>FALSE</code> in <code>rescale_mic()</code>, the output will have factor levels that acknowledge <code>mic_range</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>arguments passed on to methods</p></dd>
+<dd><p>Arguments passed on to methods</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -134,8 +134,9 @@
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 8     32        A</span></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 9     32        A</span></span>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 10    16        A</span></span></code></pre><p></p></div>
-<p>All so-called <a href="https://rdrr.io/r/base/groupGeneric.html" class="external-link">group generic functions</a> are implemented for the MIC class (such as <code>!</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;=</code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2()</a></code>). Some functions of the <code>stats</code> package are also implemented (such as <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code>, <code><a href="https://rdrr.io/r/stats/fivenum.html" class="external-link">fivenum()</a></code>). Since <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var()</a></code> are non-generic functions, these could not be extended. Use <code><a href="https://rdrr.io/r/stats/mad.html" class="external-link">mad()</a></code> as an alternative, or use e.g. <code>sd(as.numeric(x))</code> where <code>x</code> is your vector of MIC values.</p>
+<p>All so-called <a href="https://rdrr.io/r/base/groupGeneric.html" class="external-link">group generic functions</a> are implemented for the MIC class (such as <code>!</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;=</code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2()</a></code>). Some mathematical functions are also implemented (such as <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code>, <code><a href="https://rdrr.io/r/stats/fivenum.html" class="external-link">fivenum()</a></code>). Since <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var()</a></code> are non-generic functions, these could not be extended. Use <code><a href="https://rdrr.io/r/stats/mad.html" class="external-link">mad()</a></code> as an alternative, or use e.g. <code>sd(as.numeric(x))</code> where <code>x</code> is your vector of MIC values.</p>
 <p>Using <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> or <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> on MIC values will remove the operators and return a numeric vector. Do <strong>not</strong> use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on MIC values as by the <span style="R">R</span> convention on <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>s, it will return the index of the factor levels (which is often useless for regular users).</p>
+<p>The function <code>is.mic()</code> detects if the input contains class <code>mic</code>. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> or <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>, it iterates over all columns/items and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 <p>Use <code><a href="https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html" class="external-link">droplevels()</a></code> to drop unused levels. At default, it will return a plain factor. Use <code>droplevels(..., as.mic = TRUE)</code> to maintain the <code>mic</code> class.</p>
 <p>With <code>rescale_mic()</code>, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.</p>
 <p>For <code>ggplot2</code>, use one of the <code><a href="plot.html">scale_*_mic()</a></code> functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.</p>

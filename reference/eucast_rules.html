@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,35 +86,35 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a data set with antimicrobials columns, such as <code>amox</code>, <code>AMX</code> and <code>AMC</code></p></dd>
+<dd><p>A data set with antimicrobials columns, such as <code>amox</code>, <code>AMX</code> and <code>AMC</code></p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console - the default is only print while in interactive sessions</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console - the default is only print while in interactive sessions</p></dd>
 
 
 <dt id="arg-rules">rules<a class="anchor" aria-label="anchor" href="#arg-rules"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expected_phenotypes"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expected_phenotypes")</code>. The default value can be set to another value using the package option <code><a href="AMR-options.html">AMR_eucastrules</a></code>: <code>options(AMR_eucastrules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expected_phenotypes"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expected_phenotypes")</code>. The default value can be set to another value using the package option <code><a href="AMR-options.html">AMR_eucastrules</a></code>: <code>options(AMR_eucastrules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.</p></dd>
 
 
 <dt id="arg-version-breakpoints">version_breakpoints<a class="anchor" aria-label="anchor" href="#arg-version-breakpoints"></a></dt>
-<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be "14.0", "13.1", "12.0", "11.0", or "10.0".</p></dd>
+<dd><p>The version number to use for the EUCAST Clinical Breakpoints guideline. Can be "14.0", "13.1", "12.0", "11.0", or "10.0".</p></dd>
 
 
 <dt id="arg-version-expected-phenotypes">version_expected_phenotypes<a class="anchor" aria-label="anchor" href="#arg-version-expected-phenotypes"></a></dt>
-<dd><p>the version number to use for the EUCAST Expected Phenotypes. Can be "1.2".</p></dd>
+<dd><p>The version number to use for the EUCAST Expected Phenotypes. Can be "1.2".</p></dd>
 
 
 <dt id="arg-version-expertrules">version_expertrules<a class="anchor" aria-label="anchor" href="#arg-version-expertrules"></a></dt>
-<dd><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".</p></dd>
+<dd><p>The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".</p></dd>
 
 
 <dt id="arg-ampc-cephalosporin-resistance">ampc_cephalosporin_resistance<a class="anchor" aria-label="anchor" href="#arg-ampc-cephalosporin-resistance"></a></dt>
@@ -122,11 +122,11 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antimicrobial columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (default is <code>FALSE</code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antimicrobial columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (default is <code>FALSE</code>)</p></dd>
 
 
 <dt id="arg-custom-rules">custom_rules<a class="anchor" aria-label="anchor" href="#arg-custom-rules"></a></dt>
-<dd><p>custom rules to apply, created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code></p></dd>
+<dd><p>Custom rules to apply, created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code></p></dd>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
@@ -134,15 +134,15 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>column name of an antimicrobial, see section <em>Antimicrobials</em> below</p></dd>
+<dd><p>Column name of an antimicrobial, see section <em>Antimicrobials</em> below</p></dd>
 
 
 <dt id="arg-ab">ab<a class="anchor" aria-label="anchor" href="#arg-ab"></a></dt>
-<dd><p>any (vector of) text that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
+<dd><p>Any (vector of) text that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 
 
 <dt id="arg-administration">administration<a class="anchor" aria-label="anchor" href="#arg-administration"></a></dt>
-<dd><p>route of administration, either "im", "iv", or "oral"</p></dd>
+<dd><p>Route of administration, either "im", "iv", or "oral"</p></dd>
 
 </dl></div>
     <div class="section level2">

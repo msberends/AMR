@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dl><dt id="arg-keep-operators">keep_operators<a class="anchor" aria-label="anchor" href="#arg-keep-operators"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> specifying how to handle operators (such as <code>&gt;</code> and <code>&lt;=</code>) in the input. Accepts one of three values: <code>"all"</code> (or <code>TRUE</code>) to keep all operators, <code>"none"</code> (or <code>FALSE</code>) to remove all operators, or <code>"edges"</code> to keep operators only at both ends of the range.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> specifying how to handle operators (such as <code>&gt;</code> and <code>&lt;=</code>) in the input. Accepts one of three values: <code>"all"</code> (or <code>TRUE</code>) to keep all operators, <code>"none"</code> (or <code>FALSE</code>) to remove all operators, or <code>"edges"</code> to keep operators only at both ends of the range.</p></dd>
 
 
 <dt id="arg-mic-range">mic_range<a class="anchor" aria-label="anchor" href="#arg-mic-range"></a></dt>
@@ -161,59 +161,59 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>arguments passed on to methods</p></dd>
+<dd><p>Arguments passed on to methods</p></dd>
 
 
 <dt id="arg-colours-sir">colours_SIR<a class="anchor" aria-label="anchor" href="#arg-colours-sir"></a></dt>
-<dd><p>colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.</p></dd>
+<dd><p>Colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.</p></dd>
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the package option <code><a href="AMR-options.html">AMR_locale</a></code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> to prevent translation.</p></dd>
+<dd><p>Language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the package option <code><a href="AMR-options.html">AMR_locale</a></code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> to prevent translation.</p></dd>
 
 
 <dt id="arg-eucast-i">eucast_I<a class="anchor" aria-label="anchor" href="#arg-eucast-i"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be <code>TRUE</code> if the default <a href="as.sir.html">AMR interpretation guideline</a> is set to EUCAST (which is the default). With <code>FALSE</code>, it will be interpreted as "Intermediate".</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be <code>TRUE</code> if the default <a href="as.sir.html">AMR interpretation guideline</a> is set to EUCAST (which is the default). With <code>FALSE</code>, it will be interpreted as "Intermediate".</p></dd>
 
 
 <dt id="arg-x-object">x, object<a class="anchor" aria-label="anchor" href="#arg-x-object"></a></dt>
-<dd><p>values created with <code><a href="as.mic.html">as.mic()</a></code>, <code><a href="as.disk.html">as.disk()</a></code> or <code><a href="as.sir.html">as.sir()</a></code> (or their <code>random_*</code> variants, such as <code><a href="random.html">random_mic()</a></code>)</p></dd>
+<dd><p>Values created with <code><a href="as.mic.html">as.mic()</a></code>, <code><a href="as.disk.html">as.disk()</a></code> or <code><a href="as.sir.html">as.sir()</a></code> (or their <code>random_*</code> variants, such as <code><a href="random.html">random_mic()</a></code>)</p></dd>
 
 
 <dt id="arg-mo">mo<a class="anchor" aria-label="anchor" href="#arg-mo"></a></dt>
-<dd><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href="as.mo.html">as.mo()</a></code></p></dd>
+<dd><p>Any (vector of) text that can be coerced to a valid microorganism code with <code><a href="as.mo.html">as.mo()</a></code></p></dd>
 
 
 <dt id="arg-ab">ab<a class="anchor" aria-label="anchor" href="#arg-ab"></a></dt>
-<dd><p>any (vector of) text that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
+<dd><p>Any (vector of) text that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>interpretation guideline to use - the default is the latest included EUCAST guideline, see <em>Details</em></p></dd>
+<dd><p>Interpretation guideline to use - the default is the latest included EUCAST guideline, see <em>Details</em></p></dd>
 
 
 <dt id="arg-main-title">main, title<a class="anchor" aria-label="anchor" href="#arg-main-title"></a></dt>
-<dd><p>title of the plot</p></dd>
+<dd><p>Title of the plot</p></dd>
 
 
 <dt id="arg-xlab-ylab">xlab, ylab<a class="anchor" aria-label="anchor" href="#arg-xlab-ylab"></a></dt>
-<dd><p>axis title</p></dd>
+<dd><p>Axis title</p></dd>
 
 
 <dt id="arg-expand">expand<a class="anchor" aria-label="anchor" href="#arg-expand"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.</p></dd>
 
 
 <dt id="arg-include-pkpd">include_PKPD<a class="anchor" aria-label="anchor" href="#arg-include-pkpd"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
 
 
 <dt id="arg-breakpoint-type">breakpoint_type<a class="anchor" aria-label="anchor" href="#arg-breakpoint-type"></a></dt>
-<dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
+<dd><p>The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
 
 
 <dt id="arg-facet">facet<a class="anchor" aria-label="anchor" href="#arg-facet"></a></dt>
-<dd><p>variable to split plots by, either <code>"interpretation"</code> (default) or <code>"antibiotic"</code> or a grouping variable</p></dd>
+<dd><p>Variable to split plots by, either <code>"interpretation"</code> (default) or <code>"antibiotic"</code> or a grouping variable</p></dd>
 
 
 <dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>
@@ -221,39 +221,39 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of positions</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of positions</p></dd>
 
 
 <dt id="arg-limits">limits<a class="anchor" aria-label="anchor" href="#arg-limits"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of length two providing limits of the scale, use <code>NA</code> to refer to the existing minimum or maximum</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector of length two providing limits of the scale, use <code>NA</code> to refer to the existing minimum or maximum</p></dd>
 
 
 <dt id="arg-aesthetics">aesthetics<a class="anchor" aria-label="anchor" href="#arg-aesthetics"></a></dt>
-<dd><p>aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"</p></dd>
+<dd><p>Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"</p></dd>
 
 
 <dt id="arg-position">position<a class="anchor" aria-label="anchor" href="#arg-position"></a></dt>
-<dd><p>position adjustment of bars, either <code>"fill"</code>, <code>"stack"</code> or <code>"dodge"</code></p></dd>
+<dd><p>Position adjustment of bars, either <code>"fill"</code>, <code>"stack"</code> or <code>"dodge"</code></p></dd>
 
 
 <dt id="arg-translate-ab">translate_ab<a class="anchor" aria-label="anchor" href="#arg-translate-ab"></a></dt>
-<dd><p>a column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
+<dd><p>A column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
-<dd><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
+<dd><p>The minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
 
 
 <dt id="arg-datalabels-size">datalabels.size<a class="anchor" aria-label="anchor" href="#arg-datalabels-size"></a></dt>
-<dd><p>size of the datalabels</p></dd>
+<dd><p>Size of the datalabels</p></dd>
 
 
 <dt id="arg-datalabels-colour">datalabels.colour<a class="anchor" aria-label="anchor" href="#arg-datalabels-colour"></a></dt>
-<dd><p>colour of the datalabels</p></dd>
+<dd><p>Colour of the datalabels</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -284,7 +284,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <p>This package contains more functions that extend the <code>ggplot2</code> package, to help in visualising AMR data results. All these functions are internally used by <code><a href="ggplot_sir.html">ggplot_sir()</a></code> too.</p><ul><li><p><code>facet_sir()</code> creates 2d plots (at default based on S/I/R) using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code>.</p></li>
 <li><p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code>.</p></li>
 <li><p><code>scale_sir_colours()</code> allows to set colours to any aesthetic, even for <code>shape</code> or <code>linetype</code>.</p></li>
-<li><p><code>theme_sir()</code> is a [ggplot2 theme][<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> with minimal distraction.</p></li>
+<li><p><code>theme_sir()</code> is a <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2 theme</a> with minimal distraction.</p></li>
 <li><p><code>labels_sir_count()</code> print datalabels on the bars with percentage and number of isolates, using <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></li>
 </ul><p>The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.</p>
 <p>For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2024, unless the package option <code><a href="AMR-options.html">AMR_guideline</a></code> is set. See <code><a href="as.sir.html">as.sir()</a></code> for more information.</p>

@@ -9,7 +9,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,15 +101,15 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href="as.sir.html">as.sir()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See <em>Examples</em>.</p></dd>
+<dd><p>One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href="as.sir.html">as.sir()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See <em>Examples</em>.</p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
-<dd><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
+<dd><p>The minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
 
 
 <dt id="arg-as-percent">as_percent<a class="anchor" aria-label="anchor" href="#arg-as-percent"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of <code>0.123456</code> will then be returned as <code>"12.3%"</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of <code>0.123456</code> will then be returned as <code>"12.3%"</code>.</p></dd>
 
 
 <dt id="arg-only-all-tested">only_all_tested<a class="anchor" aria-label="anchor" href="#arg-only-all-tested"></a></dt>
@@ -117,35 +117,35 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
 
 <dt id="arg-ab-result">ab_result<a class="anchor" aria-label="anchor" href="#arg-ab-result"></a></dt>
-<dd><p>antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"</p></dd>
+<dd><p>Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"</p></dd>
 
 
 <dt id="arg-confidence-level">confidence_level<a class="anchor" aria-label="anchor" href="#arg-confidence-level"></a></dt>
-<dd><p>the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using <code><a href="https://rdrr.io/r/stats/binom.test.html" class="external-link">binom.test()</a></code>, i.e., the Clopper-Pearson method.</p></dd>
+<dd><p>The confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using <code><a href="https://rdrr.io/r/stats/binom.test.html" class="external-link">binom.test()</a></code>, i.e., the Clopper-Pearson method.</p></dd>
 
 
 <dt id="arg-side">side<a class="anchor" aria-label="anchor" href="#arg-side"></a></dt>
-<dd><p>the side of the confidence interval to return. The default is <code>"both"</code> for a length 2 vector, but can also be (abbreviated as) <code>"min"</code>/<code>"left"</code>/<code>"lower"</code>/<code>"less"</code> or <code>"max"</code>/<code>"right"</code>/<code>"higher"</code>/<code>"greater"</code>.</p></dd>
+<dd><p>The side of the confidence interval to return. The default is <code>"both"</code> for a length 2 vector, but can also be (abbreviated as) <code>"min"</code>/<code>"left"</code>/<code>"lower"</code>/<code>"less"</code> or <code>"max"</code>/<code>"right"</code>/<code>"higher"</code>/<code>"greater"</code>.</p></dd>
 
 
 <dt id="arg-collapse">collapse<a class="anchor" aria-label="anchor" href="#arg-collapse"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
 
 
 <dt id="arg-translate-ab">translate_ab<a class="anchor" aria-label="anchor" href="#arg-translate-ab"></a></dt>
-<dd><p>a column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
+<dd><p>A column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>language of the returned text - the default is the current system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the package option <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>Language of the returned text - the default is the current system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the package option <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code></p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,35 +136,35 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>vector of values (for class <code><a href="as.mic.html">mic</a></code>: MIC values in mg/L, for class <code><a href="as.disk.html">disk</a></code>: a disk diffusion radius in millimetres)</p></dd>
+<dd><p>Vector of values (for class <code><a href="as.mic.html">mic</a></code>: MIC values in mg/L, for class <code><a href="as.disk.html">disk</a></code>: a disk diffusion radius in millimetres)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>for using on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>: names of columns to apply <code>as.sir()</code> on (supports tidy selection such as <code>column1:column4</code>). Otherwise: arguments passed on to methods.</p></dd>
+<dd><p>For using on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>: names of columns to apply <code>as.sir()</code> on (supports tidy selection such as <code>column1:column4</code>). Otherwise: arguments passed on to methods.</p></dd>
 
 
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
-<dd><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see <em>Examples</em></p></dd>
+<dd><p>Maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see <em>Examples</em></p></dd>
 
 
 <dt id="arg-s-i-r-ni-sdd">S, I, R, NI, SDD<a class="anchor" aria-label="anchor" href="#arg-s-i-r-ni-sdd"></a></dt>
-<dd><p>a case-independent <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> to translate input to this result. This regular expression will be run <em>after</em> all non-letters and whitespaces are removed from the input.</p></dd>
+<dd><p>A case-independent <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> to translate input to this result. This regular expression will be run <em>after</em> all non-letters and whitespaces are removed from the input.</p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to print information about the process</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to print information about the process</p></dd>
 
 
 <dt id="arg-mo">mo<a class="anchor" aria-label="anchor" href="#arg-mo"></a></dt>
-<dd><p>a vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s that can be coerced to valid microorganism codes with <code><a href="as.mo.html">as.mo()</a></code>, can be left empty to determine it automatically</p></dd>
+<dd><p>A vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s that can be coerced to valid microorganism codes with <code><a href="as.mo.html">as.mo()</a></code>, can be left empty to determine it automatically</p></dd>
 
 
 <dt id="arg-ab">ab<a class="anchor" aria-label="anchor" href="#arg-ab"></a></dt>
-<dd><p>a vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
+<dd><p>A vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s that can be coerced to a valid antimicrobial drug code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set), but can be set with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see <em>Details</em>.</p></dd>
+<dd><p>Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set), but can be set with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see <em>Details</em>.</p></dd>
 
 
 <dt id="arg-uti">uti<a class="anchor" aria-label="anchor" href="#arg-uti"></a></dt>
@@ -189,43 +189,43 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <dt id="arg-reference-data">reference_data<a class="anchor" aria-label="anchor" href="#arg-reference-data"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for interpretation, which defaults to the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set (same column names and column types). Please note that the <code>guideline</code> argument will be ignored when <code>reference_data</code> is manually set.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for interpretation, which defaults to the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set (same column names and column types). Please note that the <code>guideline</code> argument will be ignored when <code>reference_data</code> is manually set.</p></dd>
 
 
 <dt id="arg-substitute-missing-r-breakpoint">substitute_missing_r_breakpoint<a class="anchor" aria-label="anchor" href="#arg-substitute-missing-r-breakpoint"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is <code>FALSE</code>. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be <code>"S"</code> or <code>NA</code>. Setting this to <code>TRUE</code> will convert the <code>NA</code>s to <code>"R"</code> only if the R breakpoint is missing. Can also be set with the package option <code><a href="AMR-options.html">AMR_substitute_missing_r_breakpoint</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is <code>FALSE</code>. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be <code>"S"</code> or <code>NA</code>. Setting this to <code>TRUE</code> will convert the <code>NA</code>s to <code>"R"</code> only if the R breakpoint is missing. Can also be set with the package option <code><a href="AMR-options.html">AMR_substitute_missing_r_breakpoint</a></code>.</p></dd>
 
 
 <dt id="arg-include-screening">include_screening<a class="anchor" aria-label="anchor" href="#arg-include-screening"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that clinical breakpoints for screening are allowed - the default is <code>FALSE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_screening</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that clinical breakpoints for screening are allowed - the default is <code>FALSE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_screening</a></code>.</p></dd>
 
 
 <dt id="arg-include-pkpd">include_PKPD<a class="anchor" aria-label="anchor" href="#arg-include-pkpd"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is <code>TRUE</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_include_PKPD</a></code>.</p></dd>
 
 
 <dt id="arg-breakpoint-type">breakpoint_type<a class="anchor" aria-label="anchor" href="#arg-breakpoint-type"></a></dt>
-<dd><p>the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
+<dd><p>The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
 
 
 <dt id="arg-host">host<a class="anchor" aria-label="anchor" href="#arg-host"></a></dt>
-<dd><p>a vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s to indicate the host. Only useful for veterinary breakpoints, as it requires <code>breakpoint_type = "animal"</code>. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with <code><a href="translate.html">set_AMR_locale()</a></code> (though it will be automatically guessed based on the system language).</p></dd>
+<dd><p>A vector (or column name) with <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>s to indicate the host. Only useful for veterinary breakpoints, as it requires <code>breakpoint_type = "animal"</code>. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with <code><a href="translate.html">set_AMR_locale()</a></code> (though it will be automatically guessed based on the system language).</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.</p></dd>
 
 
 <dt id="arg-conserve-capped-values">conserve_capped_values<a class="anchor" aria-label="anchor" href="#arg-conserve-capped-values"></a></dt>
-<dd><p>deprecated, use <code>capped_mic_handling</code> instead</p></dd>
+<dd><p>Deprecated, use <code>capped_mic_handling</code> instead</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt id="arg-clean">clean<a class="anchor" aria-label="anchor" href="#arg-clean"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether previously stored results should be forgotten after returning the 'logbook' with results</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether previously stored results should be forgotten after returning the 'logbook' with results</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -298,7 +298,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <h3 id="other">Other<a class="anchor" aria-label="anchor" href="#other"></a></h3>
 
 
-<p>The function <code>is.sir()</code> detects if the input contains class <code>sir</code>. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
+<p>The function <code>is.sir()</code> detects if the input contains class <code>sir</code>. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> or <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>, it iterates over all columns/items and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 <p>The base R function <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> can be used to retrieve quantitative values from a <code>sir</code> object: <code>"S"</code> = 1, <code>"I"</code>/<code>"SDD"</code> = 2, <code>"R"</code> = 3. All other values are rendered <code>NA</code> . <strong>Note:</strong> Do not use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code>, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.</p>
 <p>The function <code>is_sir_eligible()</code> returns <code>TRUE</code> when a column contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or NI and/or SDD), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 </div>
@@ -820,16 +820,16 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 65 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given   mo_given host_given ab   mo             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-29 <span style="color: #949494;">17:08:54</span>     1 ampicillin Strep p… human      AMP  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-29 <span style="color: #949494;">17:08:54</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-29 <span style="color: #949494;">17:08:54</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-31 <span style="color: #949494;">08:58:25</span>     1 ampicillin Strep p… human      AMP  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-31 <span style="color: #949494;">08:58:25</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-31 <span style="color: #949494;">08:58:25</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">  NA</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-29 <span style="color: #949494;">17:08:55</span>     1 GEN        Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-29 <span style="color: #949494;">17:08:55</span>     1 TOB        Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-29 <span style="color: #949494;">17:08:56</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-29 <span style="color: #949494;">17:08:56</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-29 <span style="color: #949494;">17:08:56</span>     2 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-29 <span style="color: #949494;">17:08:56</span>     3 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-31 <span style="color: #949494;">08:58:26</span>     1 GEN        Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-31 <span style="color: #949494;">08:58:26</span>     1 TOB        Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-31 <span style="color: #949494;">08:58:27</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-31 <span style="color: #949494;">08:58:27</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-31 <span style="color: #949494;">08:58:27</span>     2 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-31 <span style="color: #949494;">08:58:27</span>     3 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 55 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;chr&gt;, outcome &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>

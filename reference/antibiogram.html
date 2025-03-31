@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,11 +101,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
 
 
 <dt id="arg-antimicrobials">antimicrobials<a class="anchor" aria-label="anchor" href="#arg-antimicrobials"></a></dt>
-<dd><p>a vector specifying the antimicrobials to include in the antibiogram (see <em>Examples</em>). Will be evaluated using <code><a href="guess_ab_col.html">guess_ab_col()</a></code>. This can be:</p><ul><li><p>Any antimicrobial name or code</p></li>
+<dd><p>A vector specifying the antimicrobials to include in the antibiogram (see <em>Examples</em>). Will be evaluated using <code><a href="guess_ab_col.html">guess_ab_col()</a></code>. This can be:</p><ul><li><p>Any antimicrobial name or code</p></li>
 <li><p>A column name in <code>x</code> that contains SIR values</p></li>
 <li><p>Any <a href="antimicrobial_selectors.html">antimicrobial selector</a>, such as <code><a href="antimicrobial_selectors.html">aminoglycosides()</a></code> or <code><a href="antimicrobial_selectors.html">carbapenems()</a></code></p></li>
 <li><p>A combination of the above, using <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, e.g.:</p><ul><li><p><code>c(aminoglycosides(), "AMP", "AMC")</code></p></li>
@@ -122,19 +122,19 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-mo-transform">mo_transform<a class="anchor" aria-label="anchor" href="#arg-mo-transform"></a></dt>
-<dd><p>a character to transform microorganism input - must be <code>"name"</code>, <code>"shortname"</code> (default), <code>"gramstain"</code>, or one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be <code>NULL</code> to not transform the input or <code>NA</code> to consider all microorganisms 'unknown'.</p></dd>
+<dd><p>A character to transform microorganism input - must be <code>"name"</code>, <code>"shortname"</code> (default), <code>"gramstain"</code>, or one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". Can also be <code>NULL</code> to not transform the input or <code>NA</code> to consider all microorganisms 'unknown'.</p></dd>
 
 
 <dt id="arg-ab-transform">ab_transform<a class="anchor" aria-label="anchor" href="#arg-ab-transform"></a></dt>
-<dd><p>a character to transform antimicrobial input - must be one of the column names of the <a href="antimicrobials.html">antimicrobials</a> data set (defaults to <code>"name"</code>): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be <code>NULL</code> to not transform the input.</p></dd>
+<dd><p>A character to transform antimicrobial input - must be one of the column names of the <a href="antimicrobials.html">antimicrobials</a> data set (defaults to <code>"name"</code>): "ab", "cid", "name", "group", "atc", "atc_group1", "atc_group2", "abbreviations", "synonyms", "oral_ddd", "oral_units", "iv_ddd", "iv_units", or "loinc". Can also be <code>NULL</code> to not transform the input.</p></dd>
 
 
 <dt id="arg-syndromic-group">syndromic_group<a class="anchor" aria-label="anchor" href="#arg-syndromic-group"></a></dt>
-<dd><p>a column name of <code>x</code>, or values calculated to split rows of <code>x</code>, e.g. by using <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code>. See <em>Examples</em>.</p></dd>
+<dd><p>A column name of <code>x</code>, or values calculated to split rows of <code>x</code>, e.g. by using <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code>. See <em>Examples</em>.</p></dd>
 
 
 <dt id="arg-add-total-n">add_total_n<a class="anchor" aria-label="anchor" href="#arg-add-total-n"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether <code>n_tested</code> available numbers per pathogen should be added to the table (default is <code>TRUE</code>). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for <em>E. coli</em> 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when <code>wisca = TRUE</code>; in that case, use <code>retrieve_wisca_parameters()</code> to get the parameters used for WISCA.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether <code>n_tested</code> available numbers per pathogen should be added to the table (default is <code>TRUE</code>). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for <em>E. coli</em> 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when <code>wisca = TRUE</code>; in that case, use <code>retrieve_wisca_parameters()</code> to get the parameters used for WISCA.</p></dd>
 
 
 <dt id="arg-only-all-tested">only_all_tested<a class="anchor" aria-label="anchor" href="#arg-only-all-tested"></a></dt>
@@ -142,35 +142,35 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
-<dd><p>number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise</p></dd>
+<dd><p>Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise</p></dd>
 
 
 <dt id="arg-formatting-type">formatting_type<a class="anchor" aria-label="anchor" href="#arg-formatting-type"></a></dt>
-<dd><p>numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See <em>Details</em> &gt; <em>Formatting Type</em> for a list of options.</p></dd>
+<dd><p>Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See <em>Details</em> &gt; <em>Formatting Type</em> for a list of options.</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>language to translate text, which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>)</p></dd>
+<dd><p>Language to translate text, which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>)</p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
-<dd><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
+<dd><p>The minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is <code>TRUE</code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is <code>TRUE</code>)</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>a separating character for antimicrobial columns in combination antibiograms</p></dd>
+<dd><p>A separating character for antimicrobial columns in combination antibiograms</p></dd>
 
 
 <dt id="arg-wisca">wisca<a class="anchor" aria-label="anchor" href="#arg-wisca"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is <code>FALSE</code>). This will use a Bayesian decision model to estimate regimen coverage probabilities using <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" class="external-link">Monte Carlo simulations</a>. Set <code>simulations</code>, <code>conf_interval</code>, and <code>interval_side</code> to adjust.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is <code>FALSE</code>). This will use a Bayesian decision model to estimate regimen coverage probabilities using <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" class="external-link">Monte Carlo simulations</a>. Set <code>simulations</code>, <code>conf_interval</code>, and <code>interval_side</code> to adjust.</p></dd>
 
 
 <dt id="arg-simulations">simulations<a class="anchor" aria-label="anchor" href="#arg-simulations"></a></dt>
@@ -178,35 +178,35 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-conf-interval">conf_interval<a class="anchor" aria-label="anchor" href="#arg-conf-interval"></a></dt>
-<dd><p>a numerical value to set confidence interval (default is <code>0.95</code>)</p></dd>
+<dd><p>A numerical value to set confidence interval (default is <code>0.95</code>)</p></dd>
 
 
 <dt id="arg-interval-side">interval_side<a class="anchor" aria-label="anchor" href="#arg-interval-side"></a></dt>
-<dd><p>the side of the confidence interval, either <code>"two-tailed"</code> (default), <code>"left"</code> or <code>"right"</code></p></dd>
+<dd><p>The side of the confidence interval, either <code>"two-tailed"</code> (default), <code>"left"</code> or <code>"right"</code></p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>when used in <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">R Markdown or Quarto</a>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use)</p></dd>
+<dd><p>When used in <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">R Markdown or Quarto</a>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use)</p></dd>
 
 
 <dt id="arg-wisca-model">wisca_model<a class="anchor" aria-label="anchor" href="#arg-wisca-model"></a></dt>
-<dd><p>the outcome of <code>wisca()</code> or <code>antibiogram(..., wisca = TRUE)</code></p></dd>
+<dd><p>The outcome of <code>wisca()</code> or <code>antibiogram(..., wisca = TRUE)</code></p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>an <code>antibiogram()</code> object</p></dd>
+<dd><p>An <code>antibiogram()</code> object</p></dd>
 
 
 <dt id="arg-italicise">italicise<a class="anchor" aria-label="anchor" href="#arg-italicise"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the microorganism names in the <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr</a> table should be made italic, using <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the microorganism names in the <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr</a> table should be made italic, using <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code>.</p></dd>
 
 
 <dt id="arg-na">na<a class="anchor" aria-label="anchor" href="#arg-na"></a></dt>
-<dd><p>character to use for showing <code>NA</code> values</p></dd>
+<dd><p>Character to use for showing <code>NA</code> values</p></dd>
 
 </dl></div>
     <div class="section level2">

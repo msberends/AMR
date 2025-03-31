@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9231</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,15 +83,15 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with antimicrobials columns, like <code>AMX</code> or <code>amox</code>. Can be left blank for automatic determination.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with antimicrobials columns, like <code>AMX</code> or <code>amox</code>. Can be left blank for automatic determination.</p></dd>
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>a specific guideline to follow, see sections <em>Supported international / national guidelines</em> and <em>Using Custom Guidelines</em> below. When left empty, the publication by Magiorakos <em>et al.</em> (see below) will be followed.</p></dd>
+<dd><p>A specific guideline to follow, see sections <em>Supported international / national guidelines</em> and <em>Using Custom Guidelines</em> below. When left empty, the publication by Magiorakos <em>et al.</em> (see below) will be followed.</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
-<dd><p>column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
 <dt id="arg-esbl">esbl<a class="anchor" aria-label="anchor" href="#arg-esbl"></a></dt>
@@ -119,31 +119,31 @@
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console - the default is only print while in interactive sessions</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console - the default is only print while in interactive sessions</p></dd>
 
 
 <dt id="arg-pct-required-classes">pct_required_classes<a class="anchor" aria-label="anchor" href="#arg-pct-required-classes"></a></dt>
-<dd><p>minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for <em>S. aureus</em>. Setting this <code>pct_required_classes</code> argument to <code>0.5</code> (default) means that for every <em>S. aureus</em> isolate at least 8 different classes must be available. Any lower number of available classes will return <code>NA</code> for that isolate.</p></dd>
+<dd><p>Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for <em>S. aureus</em>. Setting this <code>pct_required_classes</code> argument to <code>0.5</code> (default) means that for every <em>S. aureus</em> isolate at least 8 different classes must be available. Any lower number of available classes will return <code>NA</code> for that isolate.</p></dd>
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the <code>mdro()</code> function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using <code>combine_SI = FALSE</code>, resistance is considered when isolates are R or I.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the <code>mdro()</code> function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using <code>combine_SI = FALSE</code>, resistance is considered when isolates are R or I.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.</p></dd>
 
 
 <dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antimicrobial columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (default is <code>FALSE</code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antimicrobial columns must be detected that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (default is <code>FALSE</code>)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>in case of <code>custom_mdro_guideline()</code>: a set of rules, see section <em>Using Custom Guidelines</em> below. Otherwise: column name of an antibiotic, see section <em>Antimicrobials</em> below.</p></dd>
+<dd><p>In case of <code>custom_mdro_guideline()</code>: a set of rules, see section <em>Using Custom Guidelines</em> below. Otherwise: column name of an antibiotic, see section <em>Antimicrobials</em> below.</p></dd>
 
 
 <dt id="arg-as-factor">as_factor<a class="anchor" aria-label="anchor" href="#arg-as-factor"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the returned value should be an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> (<code>TRUE</code>, default), or otherwise a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the returned value should be an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> (<code>TRUE</code>, default), or otherwise a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector</p></dd>
 
 </dl></div>
     <div class="section level2">
