@@ -9,11 +9,11 @@ export_ncbi_biosample(x, filename = paste0("biosample_", format(Sys.time(),
   columns = where(is.mic), save_as_xlsx = TRUE)
 }
 \arguments{
-\item{x}{a data set}
+\item{x}{A data set}
 
-\item{filename}{a character string specifying the file name}
+\item{filename}{A character string specifying the file name}
 
-\item{type}{a character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see \url{https://www.ncbi.nlm.nih.gov/biosample/docs/}}
+\item{type}{A character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see \url{https://www.ncbi.nlm.nih.gov/biosample/docs/}}
 }
 \description{
 Export Data Set as NCBI BioSample Antibiogram

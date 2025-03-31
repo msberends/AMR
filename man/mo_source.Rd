@@ -12,9 +12,9 @@ set_mo_source(path, destination = getOption("AMR_mo_source",
 get_mo_source(destination = getOption("AMR_mo_source", "~/mo_source.rds"))
 }
 \arguments{
-\item{path}{location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see \emph{Details}). Can also be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
+\item{path}{Location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see \emph{Details}). Can also be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
 
-\item{destination}{destination of the compressed data file - the default is the user's home directory.}
+\item{destination}{Destination of the compressed data file - the default is the user's home directory.}
 }
 \description{
 These functions can be used to predefine your own reference to be used in \code{\link[=as.mo]{as.mo()}} and consequently all \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}).

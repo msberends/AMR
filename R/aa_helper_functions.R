@@ -1164,9 +1164,9 @@ unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
 }
 
 #' @noRd
-#' @param fn name of the function as a character
-#' @param ... character elements to be pasted together as a 'salt'
-#' @param entire_session show message once per session
+#' @param fn Name of the function as a character
+#' @param ... Character elements to be pasted together as a 'salt'
+#' @param entire_session Show message once per session
 message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group or more than once per session
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(ward) %>% filter(mo_is_gram_negative())

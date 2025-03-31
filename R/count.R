@@ -32,7 +32,7 @@
 #' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
-#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed.
+#' @param ... One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed.
 #' @inheritParams proportion
 #' @inheritSection as.sir Interpretation of SIR
 #' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.

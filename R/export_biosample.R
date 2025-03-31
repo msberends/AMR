@@ -30,9 +30,9 @@
 #' Export Data Set as NCBI BioSample Antibiogram
 #'
 #'
-#' @param x a data set
-#' @param filename a character string specifying the file name
-#' @param type a character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see <https://www.ncbi.nlm.nih.gov/biosample/docs/>
+#' @param x A data set
+#' @param filename A character string specifying the file name
+#' @param type A character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see <https://www.ncbi.nlm.nih.gov/biosample/docs/>
 #' @keywords internal
 export_ncbi_biosample <- function(x,
                                   filename = paste0("biosample_", format(Sys.time(), "%Y-%m-%d-%H%M%S"), ".xlsx"),

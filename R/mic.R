@@ -60,10 +60,10 @@ COMMON_MIC_VALUES <- c(
 #'
 #' This transforms vectors to a new class [`mic`], which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 #' @rdname as.mic
-#' @param x a [character] or [numeric] vector
-#' @param na.rm a [logical] indicating whether missing values should be removed
-#' @param keep_operators a [character] specifying how to handle operators (such as `>` and `<=`) in the input. Accepts one of three values: `"all"` (or `TRUE`) to keep all operators, `"none"` (or `FALSE`) to remove all operators, or `"edges"` to keep operators only at both ends of the range.
-#' @param ... arguments passed on to methods
+#' @param x A [character] or [numeric] vector
+#' @param na.rm A [logical] indicating whether missing values should be removed
+#' @param keep_operators A [character] specifying how to handle operators (such as `>` and `<=`) in the input. Accepts one of three values: `"all"` (or `TRUE`) to keep all operators, `"none"` (or `FALSE`) to remove all operators, or `"edges"` to keep operators only at both ends of the range.
+#' @param ... Arguments passed on to methods
 #' @details To interpret MIC values as SIR values, use [as.sir()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
 #' This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
@@ -102,9 +102,11 @@ COMMON_MIC_VALUES <- c(
 #' #> 10    16        A
 #' ```
 #'
-#' All so-called [group generic functions][groupGeneric()] are implemented for the MIC class (such as `!`, `!=`, `<`, `>=`, [exp()], [log2()]). Some functions of the `stats` package are also implemented (such as [quantile()], [median()], [fivenum()]). Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
+#' All so-called [group generic functions][groupGeneric()] are implemented for the MIC class (such as `!`, `!=`, `<`, `>=`, [exp()], [log2()]). Some mathematical functions are also implemented (such as [quantile()], [median()], [fivenum()]). Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
 #'
 #' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
+#'
+#' The function [is.mic()] detects if the input contains class `mic`. If the input is a [data.frame] or [list], it iterates over all columns/items and returns a [logical] vector.
 #'
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 #'
@@ -285,7 +287,11 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
 #' @rdname as.mic
 #' @export
 is.mic <- function(x) {
-  inherits(x, "mic")
+  if (identical(typeof(x), "list")) {
+    unname(vapply(FUN.VALUE = logical(1), x, is.mic))
+  } else {
+    isTRUE(inherits(x, "mic"))
+  }
 }
 
 #' @rdname as.mic
@@ -297,7 +303,7 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 )
 
 #' @rdname as.mic
-#' @param mic_range a manual range to rescale the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent rescaling on one side, e.g., `mic_range = c(NA, 32)`.
+#' @param mic_range A manual range to rescale the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent rescaling on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
 rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
   meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
@@ -395,7 +401,7 @@ as.numeric.mic <- function(x, ...) {
 
 #' @rdname as.mic
 #' @method droplevels mic
-#' @param as.mic a [logical] to indicate whether the `mic` class should be kept - the default is `TRUE` for [rescale_mic()] and `FALSE` for [droplevels()]. When setting this to `FALSE` in [rescale_mic()], the output will have factor levels that acknowledge `mic_range`.
+#' @param as.mic A [logical] to indicate whether the `mic` class should be kept - the default is `TRUE` for [rescale_mic()] and `FALSE` for [droplevels()]. When setting this to `FALSE` in [rescale_mic()], the output will have factor levels that acknowledge `mic_range`.
 #' @export
 droplevels.mic <- function(x, as.mic = FALSE, ...) {
   x <- as.mic(x) # make sure that currently implemented MIC levels are used

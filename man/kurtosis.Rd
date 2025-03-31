@@ -16,11 +16,11 @@ kurtosis(x, na.rm = FALSE, excess = FALSE)
 \method{kurtosis}{data.frame}(x, na.rm = FALSE, excess = FALSE)
 }
 \arguments{
-\item{x}{a vector of values, a \link{matrix} or a \link{data.frame}}
+\item{x}{A vector of values, a \link{matrix} or a \link{data.frame}}
 
-\item{na.rm}{a \link{logical} to indicate whether \code{NA} values should be stripped before the computation proceeds}
+\item{na.rm}{A \link{logical} to indicate whether \code{NA} values should be stripped before the computation proceeds}
 
-\item{excess}{a \link{logical} to indicate whether the \emph{excess kurtosis} should be returned, defined as the kurtosis minus 3.}
+\item{excess}{A \link{logical} to indicate whether the \emph{excess kurtosis} should be returned, defined as the kurtosis minus 3.}
 }
 \description{
 Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable. A normal distribution has a kurtosis of 3 and a excess kurtosis of 0.

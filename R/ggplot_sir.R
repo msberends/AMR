@@ -30,25 +30,25 @@
 #' AMR Plots with `ggplot2`
 #'
 #' Use these functions to create bar plots for AMR data analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
-#' @param data a [data.frame] with column(s) of class [`sir`] (see [as.sir()])
-#' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
-#' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
-#' @param fill variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
-#' @param breaks a [numeric] vector of positions
-#' @param limits a [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum
-#' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
+#' @param data A [data.frame] with column(s) of class [`sir`] (see [as.sir()])
+#' @param position Position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
+#' @param x Variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
+#' @param fill Variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
+#' @param breaks A [numeric] vector of positions
+#' @param limits A [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum
+#' @param facet Variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
-#' @param colours a named vactor with colour to be used for filling. The default colours are colour-blind friendly.
-#' @param datalabels show datalabels using [labels_sir_count()]
-#' @param datalabels.size size of the datalabels
-#' @param datalabels.colour colour of the datalabels
-#' @param title text to show as title of the plot
-#' @param subtitle text to show as subtitle of the plot
-#' @param caption text to show as caption of the plot
-#' @param x.title text to show as x axis description
-#' @param y.title text to show as y axis description
-#' @param ... other arguments passed on to [geom_sir()] or, in case of [scale_sir_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
+#' @param colours A named vactor with colour to be used for filling. The default colours are colour-blind friendly.
+#' @param datalabels Show datalabels using [labels_sir_count()]
+#' @param datalabels.size Size of the datalabels
+#' @param datalabels.colour Colour of the datalabels
+#' @param title Text to show as title of the plot
+#' @param subtitle Text to show as subtitle of the plot
+#' @param caption Text to show as caption of the plot
+#' @param x.title Text to show as x axis description
+#' @param y.title Text to show as y axis description
+#' @param ... Other arguments passed on to [geom_sir()] or, in case of [scale_sir_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
 #' @details At default, the names of antimicrobials will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
 #' [geom_sir()] will take any variable from the data that has an [`sir`] class (created with [as.sir()]) using [sir_df()] and will plot bars with the percentage S, I, and R. The default behaviour is to have the bars stacked and to have the different antimicrobials on the x axis.
@@ -58,7 +58,7 @@
 #' * [facet_sir()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
 #' * [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_y_continuous()].
 #' * [scale_sir_colours()] sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
-#' * [theme_sir()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
+#' * [theme_sir()] is a [ggplot2 theme][ggplot2::theme()] with minimal distraction.
 #' * [labels_sir_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()].
 #'
 #' [ggplot_sir()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See *Examples*.

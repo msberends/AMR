@@ -8,9 +8,9 @@ pca(x, ..., retx = TRUE, center = TRUE, scale. = TRUE, tol = NULL,
   rank. = NULL)
 }
 \arguments{
-\item{x}{a \link{data.frame} containing \link{numeric} columns}
+\item{x}{A \link{data.frame} containing \link{numeric} columns}
 
-\item{...}{columns of \code{x} to be selected for PCA, can be unquoted since it supports quasiquotation.}
+\item{...}{Columns of \code{x} to be selected for PCA, can be unquoted since it supports quasiquotation.}
 
 \item{retx}{a logical value indicating whether the rotated variables
     should be returned.}

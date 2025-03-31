@@ -8,13 +8,13 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE,
   only_sir_columns = FALSE)
 }
 \arguments{
-\item{x}{a \link{data.frame}}
+\item{x}{A \link{data.frame}}
 
-\item{search_string}{a text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}}
+\item{search_string}{A text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}}
 
-\item{verbose}{a \link{logical} to indicate whether additional info should be printed}
+\item{verbose}{A \link{logical} to indicate whether additional info should be printed}
 
-\item{only_sir_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.

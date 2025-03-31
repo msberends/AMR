@@ -30,10 +30,10 @@
 #' Transform Input to an Antiviral Drug ID
 #'
 #' Use this function to determine the antiviral drug code of one or more antiviral drugs. The data set [antivirals] will be searched for abbreviations, official names and synonyms (brand names).
-#' @param x a [character] vector to determine to antiviral drug ID
-#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.
-#' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
-#' @param ... arguments passed on to internal functions
+#' @param x A [character] vector to determine to antiviral drug ID
+#' @param flag_multiple_results A [logical] to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.
+#' @param info A [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
+#' @param ... Arguments passed on to internal functions
 #' @rdname as.av
 #' @inheritSection WHOCC WHOCC
 #' @details All entries in the [antivirals] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.

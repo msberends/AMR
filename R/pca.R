@@ -30,8 +30,8 @@
 #' Principal Component Analysis (for AMR)
 #'
 #' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.
-#' @param x a [data.frame] containing [numeric] columns
-#' @param ... columns of `x` to be selected for PCA, can be unquoted since it supports quasiquotation.
+#' @param x A [data.frame] containing [numeric] columns
+#' @param ... Columns of `x` to be selected for PCA, can be unquoted since it supports quasiquotation.
 #' @inheritParams stats::prcomp
 #' @details The [pca()] function takes a [data.frame] as input and performs the actual PCA with the \R function [prcomp()].
 #'

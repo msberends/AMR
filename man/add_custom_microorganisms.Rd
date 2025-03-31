@@ -10,7 +10,7 @@ add_custom_microorganisms(x)
 clear_custom_microorganisms()
 }
 \arguments{
-\item{x}{a \link{data.frame} resembling the \link{microorganisms} data set, at least containing column "genus" (case-insensitive)}
+\item{x}{A \link{data.frame} resembling the \link{microorganisms} data set, at least containing column "genus" (case-insensitive)}
 }
 \description{
 With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom microorganisms, such the non-taxonomic outcome of laboratory analysis.

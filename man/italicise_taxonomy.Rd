@@ -10,9 +10,9 @@ italicise_taxonomy(string, type = c("markdown", "ansi", "html"))
 italicize_taxonomy(string, type = c("markdown", "ansi", "html"))
 }
 \arguments{
-\item{string}{a \link{character} (vector)}
+\item{string}{A \link{character} (vector)}
 
-\item{type}{type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see \emph{Details}}
+\item{type}{Type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see \emph{Details}}
 }
 \description{
 According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.

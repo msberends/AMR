@@ -30,13 +30,13 @@
 #' Retrieve Antiviral Drug Names and Doses from Clinical Text
 #'
 #' Use this function on e.g. clinical texts from health care records. It returns a [list] with all antiviral drugs, doses and forms of administration found in the texts.
-#' @param text text to analyse
-#' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
-#' @param collapse a [character] to pass on to `paste(, collapse = ...)` to only return one [character] per element of `text`, see *Examples*
-#' @param translate_av if `type = "drug"`: a column name of the [antivirals] data set to translate the antibiotic abbreviations to, using [av_property()]. The default is `FALSE`. Using `TRUE` is equal to using "name".
-#' @param thorough_search a [logical] to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
-#' @param info a [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
-#' @param ... arguments passed on to [as.av()]
+#' @param text Text to analyse
+#' @param type Type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
+#' @param collapse A [character] to pass on to `paste(, collapse = ...)` to only return one [character] per element of `text`, see *Examples*
+#' @param translate_av If `type = "drug"`: a column name of the [antivirals] data set to translate the antibiotic abbreviations to, using [av_property()]. The default is `FALSE`. Using `TRUE` is equal to using "name".
+#' @param thorough_search A [logical] to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
+#' @param info A [logical] to indicate whether a progress bar should be printed - the default is `TRUE` only in interactive mode
+#' @param ... Arguments passed on to [as.av()]
 #' @details This function is also internally used by [as.av()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the [as.av()] function may use very long regular expression to match brand names of antiviral drugs. This may fail on some systems.
 #'
 #' ### Argument `type`

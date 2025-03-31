@@ -7,7 +7,7 @@
 custom_eucast_rules(...)
 }
 \arguments{
-\item{...}{rules in \link[base:tilde]{formula} notation, see below for instructions, and in \emph{Examples}}
+\item{...}{Rules in \link[base:tilde]{formula} notation, see below for instructions, and in \emph{Examples}}
 }
 \value{
 A \link{list} containing the custom rules

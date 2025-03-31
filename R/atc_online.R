@@ -30,12 +30,12 @@
 #' Get ATC Properties from WHOCC Website
 #'
 #' Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antimicrobial), such as the name, defined daily dose (DDD) or standard unit.
-#' @param atc_code a [character] (vector) with ATC code(s) of antimicrobials, will be coerced with [as.ab()] and [ab_atc()] internally if not a valid ATC code
-#' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see *Examples*.
-#' @param administration type of administration when using `property = "Adm.R"`, see *Details*
-#' @param url url of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.
-#' @param url_vet url of website of the WHOCC for veterinary medicine. The sign `%s` can be used as a placeholder for ATC_vet codes (that all start with "Q").
-#' @param ... arguments to pass on to `atc_property`
+#' @param atc_code A [character] (vector) with ATC code(s) of antimicrobials, will be coerced with [as.ab()] and [ab_atc()] internally if not a valid ATC code
+#' @param property Property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see *Examples*.
+#' @param administration Type of administration when using `property = "Adm.R"`, see *Details*
+#' @param url URL of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.
+#' @param url_vet URL of website of the WHOCC for veterinary medicine. The sign `%s` can be used as a placeholder for ATC_vet codes (that all start with "Q").
+#' @param ... Arguments to pass on to `atc_property`
 #' @details
 #' Options for argument `administration`:
 #'

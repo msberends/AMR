@@ -70,21 +70,21 @@ is_sir_eligible(x, threshold = 0.05)
 sir_interpretation_history(clean = FALSE)
 }
 \arguments{
-\item{x}{vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
+\item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
 
-\item{...}{for using on a \link{data.frame}: names of columns to apply \code{\link[=as.sir]{as.sir()}} on (supports tidy selection such as \code{column1:column4}). Otherwise: arguments passed on to methods.}
+\item{...}{For using on a \link{data.frame}: names of columns to apply \code{\link[=as.sir]{as.sir()}} on (supports tidy selection such as \code{column1:column4}). Otherwise: arguments passed on to methods.}
 
-\item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
+\item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
 
-\item{S, I, R, NI, SDD}{a case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
+\item{S, I, R, NI, SDD}{A case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
 
-\item{info}{a \link{logical} to print information about the process}
+\item{info}{A \link{logical} to print information about the process}
 
-\item{mo}{a vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
+\item{mo}{A vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 
-\item{ab}{a vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}.}
+\item{guideline}{Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -118,25 +118,25 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 
-\item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
+\item{reference_data}{A \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
 
-\item{substitute_missing_r_breakpoint}{a \link{logical} to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is \code{FALSE}. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be \code{"S"} or \code{NA}. Setting this to \code{TRUE} will convert the \code{NA}s to \code{"R"} only if the R breakpoint is missing. Can also be set with the package option \code{\link[=AMR-options]{AMR_substitute_missing_r_breakpoint}}.}
+\item{substitute_missing_r_breakpoint}{A \link{logical} to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is \code{FALSE}. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be \code{"S"} or \code{NA}. Setting this to \code{TRUE} will convert the \code{NA}s to \code{"R"} only if the R breakpoint is missing. Can also be set with the package option \code{\link[=AMR-options]{AMR_substitute_missing_r_breakpoint}}.}
 
-\item{include_screening}{a \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_screening}}.}
+\item{include_screening}{A \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_screening}}.}
 
-\item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
+\item{include_PKPD}{A \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
+\item{breakpoint_type}{The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
-\item{host}{a vector (or column name) with \link{character}s to indicate the host. Only useful for veterinary breakpoints, as it requires \code{breakpoint_type = "animal"}. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with \code{\link[=set_AMR_locale]{set_AMR_locale()}} (though it will be automatically guessed based on the system language).}
+\item{host}{A vector (or column name) with \link{character}s to indicate the host. Only useful for veterinary breakpoints, as it requires \code{breakpoint_type = "animal"}. The values can be any text resembling the animal species, even in any of the 20 supported languages of this package. For foreign languages, be sure to set the language with \code{\link[=set_AMR_locale]{set_AMR_locale()}} (though it will be automatically guessed based on the system language).}
 
-\item{verbose}{a \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
+\item{verbose}{A \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
 
-\item{conserve_capped_values}{deprecated, use \code{capped_mic_handling} instead}
+\item{conserve_capped_values}{Deprecated, use \code{capped_mic_handling} instead}
 
-\item{col_mo}{column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+\item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{clean}{a \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
+\item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
 }
 \value{
 Ordered \link{factor} with new class \code{sir}
@@ -229,7 +229,7 @@ The repository of this package \href{https://github.com/msberends/AMR/blob/main/
 
 \subsection{Other}{
 
-The function \code{\link[=is.sir]{is.sir()}} detects if the input contains class \code{sir}. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
+The function \code{\link[=is.sir]{is.sir()}} detects if the input contains class \code{sir}. If the input is a \link{data.frame} or \link{list}, it iterates over all columns/items and returns a \link{logical} vector.
 
 The base R function \code{\link[=as.double]{as.double()}} can be used to retrieve quantitative values from a \code{sir} object: \code{"S"} = 1, \code{"I"}/\code{"SDD"} = 2, \code{"R"} = 3. All other values are rendered \code{NA} . \strong{Note:} Do not use \code{as.integer()}, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
 

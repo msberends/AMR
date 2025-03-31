@@ -15,15 +15,15 @@ is.ab(x)
 ab_reset_session()
 }
 \arguments{
-\item{x}{a \link{character} vector to determine to antibiotic ID}
+\item{x}{A \link{character} vector to determine to antibiotic ID}
 
-\item{flag_multiple_results}{a \link{logical} to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.}
+\item{flag_multiple_results}{A \link{logical} to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.}
 
-\item{language}{language to coerce input values from any of the 20 supported languages - default to the system language if supported (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to coerce input values from any of the 20 supported languages - default to the system language if supported (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
-\item{info}{a \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{...}{arguments passed on to internal functions}
+\item{...}{Arguments passed on to internal functions}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{ab}}

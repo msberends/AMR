@@ -51,25 +51,25 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
   snake_case = NULL)
 }
 \arguments{
-\item{x}{any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{x}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{language}{language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
+\item{tolower}{A \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
-\item{...}{in case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: columns to select (supports tidy selection such as \code{column1:column4}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{In case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: columns to select (supports tidy selection such as \code{column1:column4}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 
-\item{only_first}{a \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
+\item{only_first}{A \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
 
-\item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
+\item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}}
 
-\item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+\item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 
-\item{property}{one of the column names of one of the \link{antimicrobials} data set: \code{vector_or(colnames(antimicrobials), sort = FALSE)}.}
+\item{property}{One of the column names of one of the \link{antimicrobials} data set: \code{vector_or(colnames(antimicrobials), sort = FALSE)}.}
 
-\item{data}{a \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names}
+\item{data}{A \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names}
 
-\item{snake_case}{a \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
+\item{snake_case}{A \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
 }
 \value{
 \itemize{

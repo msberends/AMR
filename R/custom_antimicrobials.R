@@ -30,7 +30,7 @@
 #' Add Custom Antimicrobials
 #'
 #' With [add_custom_antimicrobials()] you can add your own custom antimicrobial drug names and codes.
-#' @param x a [data.frame] resembling the [antimicrobials] data set, at least containing columns "ab" and "name"
+#' @param x A [data.frame] resembling the [antimicrobials] data set, at least containing columns "ab" and "name"
 #' @details **Important:** Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited.
 #'
 #' There are two ways to circumvent this and automate the process of adding antimicrobials:

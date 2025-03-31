@@ -33,33 +33,33 @@ mo_reset_session()
 mo_cleaning_regex()
 }
 \arguments{
-\item{x}{a \link{character} vector or a \link{data.frame} with one or two columns}
+\item{x}{A \link{character} vector or a \link{data.frame} with one or two columns}
 
-\item{Becker}{a \link{logical} to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (see \emph{Source}). Please see \emph{Details} for a full list of staphylococcal species that will be converted.
+\item{Becker}{A \link{logical} to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (see \emph{Source}). Please see \emph{Details} for a full list of staphylococcal species that will be converted.
 
 This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
-\item{Lancefield}{a \link{logical} to indicate whether a beta-haemolytic \emph{Streptococcus} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see \emph{Source}). These streptococci will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. . Please see \emph{Details} for a full list of streptococcal species that will be converted.
+\item{Lancefield}{A \link{logical} to indicate whether a beta-haemolytic \emph{Streptococcus} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see \emph{Source}). These streptococci will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. . Please see \emph{Details} for a full list of streptococcal species that will be converted.
 
 This excludes enterococci at default (who are in group D), use \code{Lancefield = "all"} to also categorise all enterococci as group D.}
 
-\item{minimum_matching_score}{a numeric value to set as the lower limit for the \link[=mo_matching_score]{MO matching score}. When left blank, this will be determined automatically based on the character length of \code{x}, its \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity}.}
+\item{minimum_matching_score}{A numeric value to set as the lower limit for the \link[=mo_matching_score]{MO matching score}. When left blank, this will be determined automatically based on the character length of \code{x}, its \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity}.}
 
-\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the package option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
+\item{keep_synonyms}{A \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the package option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
-\item{reference_df}{a \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
+\item{reference_df}{A \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
-\item{ignore_pattern}{a Perl-compatible \link[base:regex]{regular expression} (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the package option \code{\link[=AMR-options]{AMR_ignore_pattern}}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
+\item{ignore_pattern}{A Perl-compatible \link[base:regex]{regular expression} (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the package option \code{\link[=AMR-options]{AMR_ignore_pattern}}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
 
-\item{cleaning_regex}{a Perl-compatible \link[base:regex]{regular expression} (case-insensitive) to clean the input of \code{x}. Every matched part in \code{x} will be removed. At default, this is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option \code{\link[=AMR-options]{AMR_cleaning_regex}}.}
+\item{cleaning_regex}{A Perl-compatible \link[base:regex]{regular expression} (case-insensitive) to clean the input of \code{x}. Every matched part in \code{x} will be removed. At default, this is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option \code{\link[=AMR-options]{AMR_cleaning_regex}}.}
 
-\item{only_fungi}{a \link{logical} to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for \link[=mo_property]{all microorganism functions} with the package option \code{\link[=AMR-options]{AMR_only_fungi}}, i.e. \code{options(AMR_only_fungi = TRUE)}.}
+\item{only_fungi}{A \link{logical} to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for \link[=mo_property]{all microorganism functions} with the package option \code{\link[=AMR-options]{AMR_only_fungi}}, i.e. \code{options(AMR_only_fungi = TRUE)}.}
 
-\item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
-\item{info}{a \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is \code{TRUE} only in interactive mode.}
+\item{info}{A \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is \code{TRUE} only in interactive mode.}
 
-\item{...}{other arguments passed on to functions}
+\item{...}{Other arguments passed on to functions}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{mo}}

@@ -22,11 +22,11 @@ x \%like_case\% pattern
 x \%unlike_case\% pattern
 }
 \arguments{
-\item{x}{a \link{character} vector where matches are sought, or an object which can be coerced by \code{\link[=as.character]{as.character()}} to a \link{character} vector.}
+\item{x}{A \link{character} vector where matches are sought, or an object which can be coerced by \code{\link[=as.character]{as.character()}} to a \link{character} vector.}
 
-\item{pattern}{a \link{character} vector containing regular expressions (or a \link{character} string for \code{fixed = TRUE}) to be matched in the given \link{character} vector. Coerced by \code{\link[=as.character]{as.character()}} to a \link{character} string if possible.}
+\item{pattern}{A \link{character} vector containing regular expressions (or a \link{character} string for \code{fixed = TRUE}) to be matched in the given \link{character} vector. Coerced by \code{\link[=as.character]{as.character()}} to a \link{character} string if possible.}
 
-\item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
+\item{ignore.case}{If \code{FALSE}, the pattern matching is \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 }
 \value{
 A \link{logical} vector

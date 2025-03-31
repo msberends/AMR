@@ -30,20 +30,20 @@
 #' Predict Antimicrobial Resistance
 #'
 #' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
-#' @param object model data to be plotted
-#' @param col_ab column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`)
-#' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already - the default is the first column of with a date class
-#' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in `col_date`
-#' @param year_max highest year to use in the prediction model - the default is 10 years after today
-#' @param year_every unit of sequence between lowest year found in the data and `year_max`
-#' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
-#' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)`, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See *Details* for all valid options.
-#' @param I_as_S a [logical] to indicate whether values `"I"` should be treated as `"S"` (will otherwise be treated as `"R"`). The default, `TRUE`, follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section *Interpretation of S, I and R* below.
-#' @param preserve_measurements a [logical] to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be `NA`.
-#' @param info a [logical] to indicate whether textual analysis should be printed with the name and [summary()] of the statistical model.
-#' @param main title of the plot
-#' @param ribbon a [logical] to indicate whether a ribbon should be shown (default) or error bars
-#' @param ... arguments passed on to functions
+#' @param object Model data to be plotted
+#' @param col_ab Column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`)
+#' @param col_date Column name of the date, will be used to calculate years if this column doesn't consist of years already - the default is the first column of with a date class
+#' @param year_min Lowest year to use in the prediction model, dafaults to the lowest year in `col_date`
+#' @param year_max Highest year to use in the prediction model - the default is 10 years after today
+#' @param year_every Unit of sequence between lowest year found in the data and `year_max`
+#' @param minimum Minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
+#' @param model The statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)`, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See *Details* for all valid options.
+#' @param I_as_S A [logical] to indicate whether values `"I"` should be treated as `"S"` (will otherwise be treated as `"R"`). The default, `TRUE`, follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section *Interpretation of S, I and R* below.
+#' @param preserve_measurements A [logical] to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be `NA`.
+#' @param info A [logical] to indicate whether textual analysis should be printed with the name and [summary()] of the statistical model.
+#' @param main Title of the plot
+#' @param ribbon A [logical] to indicate whether a ribbon should be shown (default) or error bars
+#' @param ... Arguments passed on to functions
 #' @inheritSection as.sir Interpretation of SIR
 #' @inheritParams first_isolate
 #' @inheritParams graphics::plot

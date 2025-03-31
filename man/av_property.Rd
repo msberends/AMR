@@ -40,19 +40,19 @@ av_url(x, open = FALSE, ...)
 av_property(x, property = "name", language = get_AMR_locale(), ...)
 }
 \arguments{
-\item{x}{any (vector of) text that can be coerced to a valid antiviral drug code with \code{\link[=as.av]{as.av()}}}
+\item{x}{Any (vector of) text that can be coerced to a valid antiviral drug code with \code{\link[=as.av]{as.av()}}}
 
-\item{language}{language of the returned text - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{Language of the returned text - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}.}
+\item{tolower}{A \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}.}
 
-\item{...}{other arguments passed on to \code{\link[=as.av]{as.av()}}}
+\item{...}{Other arguments passed on to \code{\link[=as.av]{as.av()}}}
 
-\item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
+\item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}}
 
-\item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+\item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 
-\item{property}{one of the column names of one of the \link{antivirals} data set: \code{vector_or(colnames(antivirals), sort = FALSE)}.}
+\item{property}{One of the column names of one of the \link{antivirals} data set: \code{vector_or(colnames(antivirals), sort = FALSE)}.}
 }
 \value{
 \itemize{

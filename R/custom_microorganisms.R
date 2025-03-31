@@ -30,7 +30,7 @@
 #' Add Custom Microorganisms
 #'
 #' With [add_custom_microorganisms()] you can add your own custom microorganisms, such the non-taxonomic outcome of laboratory analysis.
-#' @param x a [data.frame] resembling the [microorganisms] data set, at least containing column "genus" (case-insensitive)
+#' @param x A [data.frame] resembling the [microorganisms] data set, at least containing column "genus" (case-insensitive)
 #' @details This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see *Examples*.
 #'
 #' **Important:** Due to how \R works, the [add_custom_microorganisms()] function has to be run in every \R session - added microorganisms are not stored between sessions and are thus lost when \R is exited.

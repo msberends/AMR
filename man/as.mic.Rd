@@ -27,17 +27,17 @@ mic_p90(x, na.rm = FALSE, ...)
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
 \arguments{
-\item{x}{a \link{character} or \link{numeric} vector}
+\item{x}{A \link{character} or \link{numeric} vector}
 
-\item{na.rm}{a \link{logical} indicating whether missing values should be removed}
+\item{na.rm}{A \link{logical} indicating whether missing values should be removed}
 
-\item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
+\item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
-\item{mic_range}{a manual range to rescale the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}.}
+\item{mic_range}{A manual range to rescale the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
-\item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{TRUE} for \code{\link[=rescale_mic]{rescale_mic()}} and \code{FALSE} for \code{\link[=droplevels]{droplevels()}}. When setting this to \code{FALSE} in \code{\link[=rescale_mic]{rescale_mic()}}, the output will have factor levels that acknowledge \code{mic_range}.}
+\item{as.mic}{A \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{TRUE} for \code{\link[=rescale_mic]{rescale_mic()}} and \code{FALSE} for \code{\link[=droplevels]{droplevels()}}. When setting this to \code{FALSE} in \code{\link[=rescale_mic]{rescale_mic()}}, the output will have factor levels that acknowledge \code{mic_range}.}
 
-\item{...}{arguments passed on to methods}
+\item{...}{Arguments passed on to methods}
 }
 \value{
 Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as a \link{numeric} vector. Bear in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
@@ -82,9 +82,11 @@ subset(df, x > 4) # or with dplyr: df \%>\% filter(x > 4)
 #> 10    16        A
 }\if{html}{\out{</div>}}
 
-All so-called \link[=groupGeneric]{group generic functions} are implemented for the MIC class (such as \code{!}, \code{!=}, \code{<}, \code{>=}, \code{\link[=exp]{exp()}}, \code{\link[=log2]{log2()}}). Some functions of the \code{stats} package are also implemented (such as \code{\link[=quantile]{quantile()}}, \code{\link[=median]{median()}}, \code{\link[=fivenum]{fivenum()}}). Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
+All so-called \link[=groupGeneric]{group generic functions} are implemented for the MIC class (such as \code{!}, \code{!=}, \code{<}, \code{>=}, \code{\link[=exp]{exp()}}, \code{\link[=log2]{log2()}}). Some mathematical functions are also implemented (such as \code{\link[=quantile]{quantile()}}, \code{\link[=median]{median()}}, \code{\link[=fivenum]{fivenum()}}). Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
 
 Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numeric()}} on MIC values will remove the operators and return a numeric vector. Do \strong{not} use \code{\link[=as.integer]{as.integer()}} on MIC values as by the \R convention on \link{factor}s, it will return the index of the factor levels (which is often useless for regular users).
+
+The function \code{\link[=is.mic]{is.mic()}} detects if the input contains class \code{mic}. If the input is a \link{data.frame} or \link{list}, it iterates over all columns/items and returns a \link{logical} vector.
 
 Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \code{mic} class.
 

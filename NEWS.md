@@ -1,4 +1,4 @@
-# AMR 2.1.1.9231
+# AMR 2.1.1.9232
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://msberends.github.io/AMR/#latest-development-version).)*
 
@@ -80,6 +80,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Comparisons of MIC values are now more strict. For example, `>32` is higher than (and never equal to) `32`. Thus, `as.mic(">32") == as.mic(32)` now returns `FALSE`, and `as.mic(">32") > as.mic(32)` now returns `TRUE`.
   * Sorting of MIC values (using `sort()`) was fixed in the same manner; `<0.001` now gets sorted before `0.001`, and `>0.001` gets sorted after `0.001`.
   * Intermediate log2 levels used for MIC plotting are now more common values instead of following a strict dilution range
+  * `is.mic()` now returns a vector of `TRUE`/`FALSE` if the input is a `data.frame`, just like `as.sir()`
 * `eucast_rules()` now has an argument `overwrite` (default: `FALSE`) to indicate whether non-`NA` values should be overwritten
 * Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (`as.disk()`) is now between 0 and 50 mm
 * Updated `italicise_taxonomy()` to support HTML output

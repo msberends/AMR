@@ -30,12 +30,12 @@
 #' Get Properties of a Microorganism
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. See *Examples*.
-#' @param x any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
-#' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
+#' @param x Any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
+#' @param property One of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
 #' @inheritParams as.mo
-#' @param ... other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
-#' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
-#' @param open browse the URL using [`browseURL()`][utils::browseURL()]
+#' @param ... Other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
+#' @param ab Any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
+#' @param open Browse the URL using [`browseURL()`][utils::browseURL()]
 #' @details All functions will, at default, **not** keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example *Enterobacter aerogenes*, which was initially named in 1960 but renamed to *Klebsiella aerogenes* in 2017:
 #' - `mo_genus("Enterobacter aerogenes")` will return `"Klebsiella"` (with a note about the renaming)
 #' - `mo_genus("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Enterobacter"` (with a once-per-session warning that the name is outdated)

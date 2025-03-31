@@ -109,57 +109,57 @@ labels_sir_count(position = NULL, x = "antibiotic",
   combine_SI = TRUE, datalabels.size = 3, datalabels.colour = "grey15")
 }
 \arguments{
-\item{keep_operators}{a \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
+\item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
 \item{mic_range}{A manual range to rescale the MIC values (using \code{\link[=rescale_mic]{rescale_mic()}}), e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}. \strong{Note:} This rescales values but does not filter them - use the ggplot2 \code{limits} argument separately to exclude values from the plot.}
 
-\item{...}{arguments passed on to methods}
+\item{...}{Arguments passed on to methods}
 
-\item{colours_SIR}{colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.}
+\item{colours_SIR}{Colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.}
 
-\item{language}{language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the package option \code{\link[=AMR-options]{AMR_locale}}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} to prevent translation.}
+\item{language}{Language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the package option \code{\link[=AMR-options]{AMR_locale}}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} to prevent translation.}
 
-\item{eucast_I}{a \link{logical} to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be \code{TRUE} if the default \link[=as.sir]{AMR interpretation guideline} is set to EUCAST (which is the default). With \code{FALSE}, it will be interpreted as "Intermediate".}
+\item{eucast_I}{A \link{logical} to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be \code{TRUE} if the default \link[=as.sir]{AMR interpretation guideline} is set to EUCAST (which is the default). With \code{FALSE}, it will be interpreted as "Intermediate".}
 
-\item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
+\item{x, object}{Values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
 
-\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{Any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{interpretation guideline to use - the default is the latest included EUCAST guideline, see \emph{Details}}
+\item{guideline}{Interpretation guideline to use - the default is the latest included EUCAST guideline, see \emph{Details}}
 
-\item{main, title}{title of the plot}
+\item{main, title}{Title of the plot}
 
-\item{xlab, ylab}{axis title}
+\item{xlab, ylab}{Axis title}
 
-\item{expand}{a \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
+\item{expand}{A \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
 
-\item{include_PKPD}{a \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
+\item{include_PKPD}{A \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{breakpoint_type}{the type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
+\item{breakpoint_type}{The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
-\item{facet}{variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
+\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
 
 \item{nrow}{(when using \code{facet}) number of rows}
 
-\item{breaks}{a \link{numeric} vector of positions}
+\item{breaks}{A \link{numeric} vector of positions}
 
-\item{limits}{a \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
+\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
 
-\item{aesthetics}{aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"}
+\item{aesthetics}{Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"}
 
-\item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
+\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
 
-\item{translate_ab}{a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
-\item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
+\item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{a \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
 
-\item{datalabels.size}{size of the datalabels}
+\item{datalabels.size}{Size of the datalabels}
 
-\item{datalabels.colour}{colour of the datalabels}
+\item{datalabels.colour}{Colour of the datalabels}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
@@ -187,7 +187,7 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 \item \code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
 \item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
 \item \code{\link[=scale_sir_colours]{scale_sir_colours()}} allows to set colours to any aesthetic, even for \code{shape} or \code{linetype}.
-\item \code{\link[=theme_sir]{theme_sir()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
+\item \code{\link[=theme_sir]{theme_sir()}} is a \link[ggplot2:theme]{ggplot2 theme} with minimal distraction.
 \item \code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and number of isolates, using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
 }
 

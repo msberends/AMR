@@ -30,10 +30,10 @@
 #' Filter Top *n* Microorganisms
 #'
 #' This function filters a data set to include only the top *n* microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, or to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
-#' @param x a data frame containing microbial data
-#' @param n an integer specifying the maximum number of unique values of the `property` to include in the output
-#' @param property a character string indicating the microorganism property to use for filtering. Must be one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. If `NULL`, the raw values from `col_mo` will be used without transformation.
-#' @param n_for_each an optional integer specifying the maximum number of rows to retain for each value of the selected property. If `NULL`, all rows within the top *n* groups will be included.
+#' @param x A data frame containing microbial data
+#' @param n An integer specifying the maximum number of unique values of the `property` to include in the output
+#' @param property A character string indicating the microorganism property to use for filtering. Must be one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. If `NULL`, the raw values from `col_mo` will be used without transformation.
+#' @param n_for_each An optional integer specifying the maximum number of rows to retain for each value of the selected property. If `NULL`, all rows within the top *n* groups will be included.
 #' @param col_mo A character string indicating the column in `x` that contains microorganism names or codes. Defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param ... Additional arguments passed on to [mo_property()] when `property` is not `NULL`.
 #' @details This function is useful for preprocessing data before creating [antibiograms][antibiogram()] or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.

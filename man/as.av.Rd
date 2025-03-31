@@ -11,13 +11,13 @@ as.av(x, flag_multiple_results = TRUE, info = interactive(), ...)
 is.av(x)
 }
 \arguments{
-\item{x}{a \link{character} vector to determine to antiviral drug ID}
+\item{x}{A \link{character} vector to determine to antiviral drug ID}
 
-\item{flag_multiple_results}{a \link{logical} to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.}
+\item{flag_multiple_results}{A \link{logical} to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.}
 
-\item{info}{a \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
 
-\item{...}{arguments passed on to internal functions}
+\item{...}{Arguments passed on to internal functions}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{ab}}

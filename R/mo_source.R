@@ -32,8 +32,8 @@
 #' @description These functions can be used to predefine your own reference to be used in [as.mo()] and consequently all [`mo_*`][mo_property()] functions (such as [mo_genus()] and [mo_gramstain()]).
 #'
 #' This is **the fastest way** to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once.
-#' @param path location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see *Details*). Can also be `""`, `NULL` or `FALSE` to delete the reference file.
-#' @param destination destination of the compressed data file - the default is the user's home directory.
+#' @param path Location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see *Details*). Can also be `""`, `NULL` or `FALSE` to delete the reference file.
+#' @param destination Destination of the compressed data file - the default is the user's home directory.
 #' @rdname mo_source
 #' @name mo_source
 #' @aliases set_mo_source get_mo_source

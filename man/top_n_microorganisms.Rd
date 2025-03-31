@@ -8,13 +8,13 @@ top_n_microorganisms(x, n, property = "fullname", n_for_each = NULL,
   col_mo = NULL, ...)
 }
 \arguments{
-\item{x}{a data frame containing microbial data}
+\item{x}{A data frame containing microbial data}
 
-\item{n}{an integer specifying the maximum number of unique values of the \code{property} to include in the output}
+\item{n}{An integer specifying the maximum number of unique values of the \code{property} to include in the output}
 
-\item{property}{a character string indicating the microorganism property to use for filtering. Must be one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". If \code{NULL}, the raw values from \code{col_mo} will be used without transformation.}
+\item{property}{A character string indicating the microorganism property to use for filtering. Must be one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". If \code{NULL}, the raw values from \code{col_mo} will be used without transformation.}
 
-\item{n_for_each}{an optional integer specifying the maximum number of rows to retain for each value of the selected property. If \code{NULL}, all rows within the top \emph{n} groups will be included.}
+\item{n_for_each}{An optional integer specifying the maximum number of rows to retain for each value of the selected property. If \code{NULL}, all rows within the top \emph{n} groups will be included.}
 
 \item{col_mo}{A character string indicating the column in \code{x} that contains microorganism names or codes. Defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 

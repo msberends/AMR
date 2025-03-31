@@ -32,18 +32,18 @@
 #' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
 #' [resistance()] should be used to calculate resistance, [susceptibility()] should be used to calculate susceptibility.\cr
-#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
-#' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-#' @param as_percent a [logical] to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
+#' @param ... One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
+#' @param minimum The minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
+#' @param as_percent A [logical] to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
 #' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antimicrobials, see section *Combination Therapy* below
-#' @param data a [data.frame] containing columns with class [`sir`] (see [as.sir()])
-#' @param translate_ab a column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()]
+#' @param data A [data.frame] containing columns with class [`sir`] (see [as.sir()])
+#' @param translate_ab A column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
-#' @param combine_SI a [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is `TRUE`
-#' @param ab_result antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"
-#' @param confidence_level the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
-#' @param side the side of the confidence interval to return. The default is `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
-#' @param collapse a [logical] to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing
+#' @param combine_SI A [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is `TRUE`
+#' @param ab_result Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"
+#' @param confidence_level The confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
+#' @param side The side of the confidence interval to return. The default is `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
+#' @param collapse A [logical] to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing
 #' @inheritSection as.sir Interpretation of SIR
 #' @details
 #' For a more automated and comprehensive analysis, consider using [antibiogram()] or [wisca()], which streamline many aspects of susceptibility reporting and, importantly, also support WISCA. The functions described here offer a more hands-on, manual approach for greater customisation.

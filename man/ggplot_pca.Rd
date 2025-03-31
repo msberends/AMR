@@ -26,7 +26,7 @@ ggplot_pca(x, choices = 1:2, scale = 1, pc.biplot = TRUE,
   arrows_alpha = 0.75, base_textsize = 10, ...)
 }
 \arguments{
-\item{x}{an object returned by \code{\link[=pca]{pca()}}, \code{\link[=prcomp]{prcomp()}} or \code{\link[=princomp]{princomp()}}}
+\item{x}{An object returned by \code{\link[=pca]{pca()}}, \code{\link[=prcomp]{prcomp()}} or \code{\link[=princomp]{princomp()}}}
 
 \item{choices}{
     length 2 vector specifying the components to plot. Only the default
@@ -49,41 +49,41 @@ ggplot_pca(x, choices = 1:2, scale = 1, pc.biplot = TRUE,
     approximate Mahalanobis distance.
   }
 
-\item{labels}{an optional vector of labels for the observations. If set, the labels will be placed below their respective points. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
+\item{labels}{An optional vector of labels for the observations. If set, the labels will be placed below their respective points. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
 
-\item{labels_textsize}{the size of the text used for the labels}
+\item{labels_textsize}{The size of the text used for the labels}
 
-\item{labels_text_placement}{adjustment factor the placement of the variable names (\verb{>=1} means further away from the arrow head)}
+\item{labels_text_placement}{Adjustment factor the placement of the variable names (\verb{>=1} means further away from the arrow head)}
 
-\item{groups}{an optional vector of groups for the labels, with the same length as \code{labels}. If set, the points and labels will be coloured according to these groups. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
+\item{groups}{An optional vector of groups for the labels, with the same length as \code{labels}. If set, the points and labels will be coloured according to these groups. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
 
-\item{ellipse}{a \link{logical} to indicate whether a normal data ellipse should be drawn for each group (set with \code{groups})}
+\item{ellipse}{A \link{logical} to indicate whether a normal data ellipse should be drawn for each group (set with \code{groups})}
 
-\item{ellipse_prob}{statistical size of the ellipse in normal probability}
+\item{ellipse_prob}{Statistical size of the ellipse in normal probability}
 
-\item{ellipse_size}{the size of the ellipse line}
+\item{ellipse_size}{The size of the ellipse line}
 
-\item{ellipse_alpha}{the alpha (transparency) of the ellipse line}
+\item{ellipse_alpha}{The alpha (transparency) of the ellipse line}
 
-\item{points_size}{the size of the points}
+\item{points_size}{The size of the points}
 
-\item{points_alpha}{the alpha (transparency) of the points}
+\item{points_alpha}{The alpha (transparency) of the points}
 
-\item{arrows}{a \link{logical} to indicate whether arrows should be drawn}
+\item{arrows}{A \link{logical} to indicate whether arrows should be drawn}
 
-\item{arrows_colour}{the colour of the arrow and their text}
+\item{arrows_colour}{The colour of the arrow and their text}
 
-\item{arrows_size}{the size (thickness) of the arrow lines}
+\item{arrows_size}{The size (thickness) of the arrow lines}
 
-\item{arrows_textsize}{the size of the text at the end of the arrows}
+\item{arrows_textsize}{The size of the text at the end of the arrows}
 
-\item{arrows_textangled}{a \link{logical} whether the text at the end of the arrows should be angled}
+\item{arrows_textangled}{A \link{logical} whether the text at the end of the arrows should be angled}
 
-\item{arrows_alpha}{the alpha (transparency) of the arrows and their text}
+\item{arrows_alpha}{The alpha (transparency) of the arrows and their text}
 
-\item{base_textsize}{the text size for all plot elements except the labels and arrows}
+\item{base_textsize}{The text size for all plot elements except the labels and arrows}
 
-\item{...}{arguments passed on to functions}
+\item{...}{Arguments passed on to functions}
 }
 \description{
 Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/wiki/Biplot}{biplot} for PCA (principal component analysis), but is more flexible and more appealing than the base \R \code{\link[=biplot]{biplot()}} function.
