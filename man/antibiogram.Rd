@@ -44,9 +44,9 @@ retrieve_wisca_parameters(wisca_model, ...)
   na = getOption("knitr.kable.NA", default = ""), ...)
 }
 \arguments{
-\item{x}{A \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
+\item{x}{A \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{antimicrobials}{A vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:
+\item{antimicrobials}{A vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:.
 \itemize{
 \item Any antimicrobial name or code
 \item A column name in \code{x} that contains SIR values
@@ -75,41 +75,41 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{add_total_n}{A \link{logical} to indicate whether \code{n_tested} available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when \code{wisca = TRUE}; in that case, use \code{\link[=retrieve_wisca_parameters]{retrieve_wisca_parameters()}} to get the parameters used for WISCA.}
 
-\item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}}
+\item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}.}
 
-\item{digits}{Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise}
+\item{digits}{Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.}
 
 \item{formatting_type}{Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See \emph{Details} > \emph{Formatting Type} for a list of options.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{language}{Language to translate text, which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text, which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE})}
+\item{combine_SI}{A \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE}).}
 
-\item{sep}{A separating character for antimicrobial columns in combination antibiograms}
+\item{sep}{A separating character for antimicrobial columns in combination antibiograms.}
 
 \item{wisca}{A \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 
-\item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations}
+\item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations.}
 
-\item{conf_interval}{A numerical value to set confidence interval (default is \code{0.95})}
+\item{conf_interval}{A numerical value to set confidence interval (default is \code{0.95}).}
 
-\item{interval_side}{The side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}}
+\item{interval_side}{The side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}.}
 
-\item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{When used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
+\item{...}{When used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use).}
 
-\item{wisca_model}{The outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}}
+\item{wisca_model}{The outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}.}
 
-\item{object}{An \code{\link[=antibiogram]{antibiogram()}} object}
+\item{object}{An \code{\link[=antibiogram]{antibiogram()}} object.}
 
 \item{italicise}{A \link{logical} to indicate whether the microorganism names in the \link[knitr:kable]{knitr} table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}.}
 
-\item{na}{Character to use for showing \code{NA} values}
+\item{na}{Character to use for showing \code{NA} values.}
 }
 \description{
 Create detailed antibiograms with options for traditional, combination, syndromic, and Bayesian WISCA methods.

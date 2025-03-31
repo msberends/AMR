@@ -16,15 +16,15 @@ mean_amr_distance(x, ...)
 amr_distance_from_row(amr_distance, row)
 }
 \arguments{
-\item{x}{A vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
+\item{x}{A vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes.}
 
-\item{...}{Variables to select. Supports \link[tidyselect:language]{tidyselect language} (such as \code{column1:column4} and \code{where(is.mic)}), and can thus also be \link[=amr_selector]{antimicrobial selectors}}
+\item{...}{Variables to select. Supports \link[tidyselect:language]{tidyselect language} (such as \code{column1:column4} and \code{where(is.mic)}), and can thus also be \link[=amr_selector]{antimicrobial selectors}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 
-\item{amr_distance}{The outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}}
+\item{amr_distance}{The outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}.}
 
-\item{row}{An index, such as a row number}
+\item{row}{An index, such as a row number.}
 }
 \description{
 Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.

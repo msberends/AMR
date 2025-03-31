@@ -33,16 +33,16 @@
 #' Functions to plot classes `sir`, `mic` and `disk`, with support for base \R and `ggplot2`.
 #'
 #' Especially the `scale_*_mic()` functions are relevant wrappers to plot MIC values for `ggplot2`. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
-#' @param x,object Values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()])
-#' @param mo Any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
-#' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
-#' @param guideline Interpretation guideline to use - the default is the latest included EUCAST guideline, see *Details*
-#' @param main,title Title of the plot
-#' @param xlab,ylab Axis title
+#' @param x,object Values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()]).
+#' @param mo Any (vector of) text that can be coerced to a valid microorganism code with [as.mo()].
+#' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
+#' @param guideline Interpretation guideline to use - the default is the latest included EUCAST guideline, see *Details*.
+#' @param main,title Title of the plot.
+#' @param xlab,ylab Axis title.
 #' @param colours_SIR Colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.
 #' @param language Language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see [get_AMR_locale()]) and can be overwritten by setting the package option [`AMR_locale`][AMR-options], e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` to prevent translation.
 #' @param expand A [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
-#' @param aesthetics Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
+#' @param aesthetics Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size".
 #' @param eucast_I A [logical] to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be `TRUE` if the default [AMR interpretation guideline][as.sir()] is set to EUCAST (which is the default). With `FALSE`, it will be interpreted as "Intermediate".
 #' @inheritParams as.sir
 #' @param mic_range A manual range to rescale the MIC values (using [rescale_mic()]), e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent rescaling on one side, e.g., `mic_range = c(NA, 32)`. **Note:** This rescales values but does not filter them - use the ggplot2 `limits` argument separately to exclude values from the plot.
@@ -74,7 +74,7 @@
 #' @name plot
 #' @rdname plot
 #' @return The `autoplot()` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
-#' @param ... Arguments passed on to methods
+#' @param ... Arguments passed on to methods.
 #' @examples
 #' some_mic_values <- random_mic(size = 100)
 #' some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")

@@ -44,19 +44,19 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE,
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{esbl}{\link{logical} values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins)}
+\item{esbl}{\link{logical} values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins).}
 
-\item{carbapenemase}{\link{logical} values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins)}
+\item{carbapenemase}{\link{logical} values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins).}
 
-\item{mecA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecA} gene (or production of its proteins)}
+\item{mecA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecA} gene (or production of its proteins).}
 
-\item{mecC}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecC} gene (or production of its proteins)}
+\item{mecC}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecC} gene (or production of its proteins).}
 
-\item{vanA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanA} gene (or production of its proteins)}
+\item{vanA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanA} gene (or production of its proteins).}
 
-\item{vanB}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanB} gene (or production of its proteins)}
+\item{vanB}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanB} gene (or production of its proteins).}
 
-\item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions}
+\item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.}
 
 \item{pct_required_classes}{Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.}
 
@@ -64,11 +64,11 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE,
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
 
 \item{...}{In case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antimicrobials} below.}
 
-\item{as_factor}{A \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector}
+\item{as_factor}{A \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector.}
 }
 \value{
 \itemize{

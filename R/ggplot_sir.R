@@ -30,24 +30,24 @@
 #' AMR Plots with `ggplot2`
 #'
 #' Use these functions to create bar plots for AMR data analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
-#' @param data A [data.frame] with column(s) of class [`sir`] (see [as.sir()])
-#' @param position Position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
-#' @param x Variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
-#' @param fill Variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
-#' @param breaks A [numeric] vector of positions
-#' @param limits A [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum
-#' @param facet Variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
+#' @param data A [data.frame] with column(s) of class [`sir`] (see [as.sir()]).
+#' @param position Position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`.
+#' @param x Variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable.
+#' @param fill Variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable.
+#' @param breaks A [numeric] vector of positions.
+#' @param limits A [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum.
+#' @param facet Variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable.
 #' @inheritParams proportion
-#' @param nrow (when using `facet`) number of rows
+#' @param nrow (when using `facet`) number of rows.
 #' @param colours A named vactor with colour to be used for filling. The default colours are colour-blind friendly.
-#' @param datalabels Show datalabels using [labels_sir_count()]
-#' @param datalabels.size Size of the datalabels
-#' @param datalabels.colour Colour of the datalabels
-#' @param title Text to show as title of the plot
-#' @param subtitle Text to show as subtitle of the plot
-#' @param caption Text to show as caption of the plot
-#' @param x.title Text to show as x axis description
-#' @param y.title Text to show as y axis description
+#' @param datalabels Show datalabels using [labels_sir_count()].
+#' @param datalabels.size Size of the datalabels.
+#' @param datalabels.colour Colour of the datalabels.
+#' @param title Text to show as title of the plot.
+#' @param subtitle Text to show as subtitle of the plot.
+#' @param caption Text to show as caption of the plot.
+#' @param x.title Text to show as x axis description.
+#' @param y.title Text to show as y axis description.
 #' @param ... Other arguments passed on to [geom_sir()] or, in case of [scale_sir_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
 #' @details At default, the names of antimicrobials will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'

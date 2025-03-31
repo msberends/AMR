@@ -26,11 +26,11 @@ anti_join_microorganisms(x, by = NULL, ...)
 \arguments{
 \item{x}{Existing data set to join, or \link{character} vector. In case of a \link{character} vector, the resulting \link{data.frame} will contain a column 'x' with these values.}
 
-\item{by}{A variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (such as \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("bacteria_id" = "fullname")})}
+\item{by}{A variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (such as \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("bacteria_id" = "fullname")}).}
 
 \item{suffix}{If there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a \link{character} vector of length 2.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 }
 \value{
 a \link{data.frame}

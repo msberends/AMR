@@ -7,11 +7,11 @@
 age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 }
 \arguments{
-\item{x}{Age, e.g. calculated with \code{\link[=age]{age()}}}
+\item{x}{Age, e.g. calculated with \code{\link[=age]{age()}}.}
 
 \item{split_at}{Values to split \code{x} at - the default is age groups 0-11, 12-24, 25-54, 55-74 and 75+. See \emph{Details}.}
 
-\item{na.rm}{A \link{logical} to indicate whether missing values should be removed}
+\item{na.rm}{A \link{logical} to indicate whether missing values should be removed.}
 }
 \value{
 Ordered \link{factor}

@@ -27,9 +27,9 @@ mic_p90(x, na.rm = FALSE, ...)
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
 \arguments{
-\item{x}{A \link{character} or \link{numeric} vector}
+\item{x}{A \link{character} or \link{numeric} vector.}
 
-\item{na.rm}{A \link{logical} indicating whether missing values should be removed}
+\item{na.rm}{A \link{logical} indicating whether missing values should be removed.}
 
 \item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
@@ -37,7 +37,7 @@ mic_p90(x, na.rm = FALSE, ...)
 
 \item{as.mic}{A \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{TRUE} for \code{\link[=rescale_mic]{rescale_mic()}} and \code{FALSE} for \code{\link[=droplevels]{droplevels()}}. When setting this to \code{FALSE} in \code{\link[=rescale_mic]{rescale_mic()}}, the output will have factor levels that acknowledge \code{mic_range}.}
 
-\item{...}{Arguments passed on to methods}
+\item{...}{Arguments passed on to methods.}
 }
 \value{
 Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as a \link{numeric} vector. Bear in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.

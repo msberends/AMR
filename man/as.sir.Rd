@@ -70,25 +70,25 @@ is_sir_eligible(x, threshold = 0.05)
 sir_interpretation_history(clean = FALSE)
 }
 \arguments{
-\item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
+\item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres).}
 
 \item{...}{For using on a \link{data.frame}: names of columns to apply \code{\link[=as.sir]{as.sir()}} on (supports tidy selection such as \code{column1:column4}). Otherwise: arguments passed on to methods.}
 
-\item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
+\item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}.}
 
 \item{S, I, R, NI, SDD}{A case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
 
-\item{info}{A \link{logical} to print information about the process}
+\item{info}{A \link{logical} to print information about the process.}
 
-\item{mo}{A vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
+\item{mo}{A vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically.}
 
-\item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
 \item{guideline}{Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
-\item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:
+\item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:.
 
 \code{"none"}
 \itemize{
@@ -132,11 +132,11 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{verbose}{A \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
 
-\item{conserve_capped_values}{Deprecated, use \code{capped_mic_handling} instead}
+\item{conserve_capped_values}{Deprecated, use \code{capped_mic_handling} instead.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
+\item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
 \value{
 Ordered \link{factor} with new class \code{sir}

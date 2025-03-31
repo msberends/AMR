@@ -16,13 +16,13 @@ random_sir(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...)
 \arguments{
 \item{size}{Desired size of the returned vector. If used in a \link{data.frame} call or \code{dplyr} verb, will get the current (group) size if left blank.}
 
-\item{mo}{Any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{Any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}.}
 
-\item{ab}{Any \link{character} that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any \link{character} that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 
-\item{prob_SIR}{A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value)}
+\item{prob_SIR}{A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value).}
 }
 \value{
 class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \code{disk} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})

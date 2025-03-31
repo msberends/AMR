@@ -9,19 +9,19 @@ av_from_text(text, type = c("drug", "dose", "administration"),
   info = interactive(), ...)
 }
 \arguments{
-\item{text}{Text to analyse}
+\item{text}{Text to analyse.}
 
-\item{type}{Type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}}
+\item{type}{Type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}.}
 
-\item{collapse}{A \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}}
+\item{collapse}{A \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}.}
 
 \item{translate_av}{If \code{type = "drug"}: a column name of the \link{antivirals} data set to translate the antibiotic abbreviations to, using \code{\link[=av_property]{av_property()}}. The default is \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
 \item{thorough_search}{A \link{logical} to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
 
-\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Arguments passed on to \code{\link[=as.av]{as.av()}}}
+\item{...}{Arguments passed on to \code{\link[=as.av]{as.av()}}.}
 }
 \value{
 A \link{list}, or a  \link{character} if \code{collapse} is not \code{NULL}

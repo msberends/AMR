@@ -10,7 +10,7 @@ add_custom_antimicrobials(x)
 clear_custom_antimicrobials()
 }
 \arguments{
-\item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name"}
+\item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name".}
 }
 \description{
 With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug names and codes.

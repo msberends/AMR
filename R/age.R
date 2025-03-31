@@ -30,11 +30,11 @@
 #' Age in Years of Individuals
 #'
 #' Calculates age in years based on a reference date, which is the system date at default.
-#' @param x Date(s), [character] (vectors) will be coerced with [as.POSIXlt()]
-#' @param reference Reference date(s) (default is today), [character] (vectors) will be coerced with [as.POSIXlt()]
+#' @param x Date(s), [character] (vectors) will be coerced with [as.POSIXlt()].
+#' @param reference Reference date(s) (default is today), [character] (vectors) will be coerced with [as.POSIXlt()].
 #' @param exact A [logical] to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
-#' @param na.rm A [logical] to indicate whether missing values should be removed
-#' @param ... Arguments passed on to [as.POSIXlt()], such as `origin`
+#' @param na.rm A [logical] to indicate whether missing values should be removed.
+#' @param ... Arguments passed on to [as.POSIXlt()], such as `origin`.
 #' @details Ages below 0 will be returned as `NA` with a warning. Ages above 120 will only give a warning.
 #'
 #' This function vectorises over both `x` and `reference`, meaning that either can have a length of 1 while the other argument has a larger length.
@@ -129,9 +129,9 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' Split Ages into Age Groups
 #'
 #' Split ages into age groups defined by the `split` argument. This allows for easier demographic (antimicrobial resistance) analysis.
-#' @param x Age, e.g. calculated with [age()]
+#' @param x Age, e.g. calculated with [age()].
 #' @param split_at Values to split `x` at - the default is age groups 0-11, 12-24, 25-54, 55-74 and 75+. See *Details*.
-#' @param na.rm A [logical] to indicate whether missing values should be removed
+#' @param na.rm A [logical] to indicate whether missing values should be removed.
 #' @details To split ages, the input for the `split_at` argument can be:
 #'
 #' * A [numeric] vector. A value of e.g. `c(10, 20)` will split `x` on 0-9, 10-19 and 20+. A value of only `50` will split `x` on 0-49 and 50+.

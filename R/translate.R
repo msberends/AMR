@@ -30,7 +30,7 @@
 #' Translate Strings from the AMR Package
 #'
 #' For language-dependent output of `AMR` functions, such as [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
-#' @param x Text to translate
+#' @param x Text to translate.
 #' @param language Language to choose. Use one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_and(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 #'

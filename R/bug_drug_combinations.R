@@ -31,13 +31,13 @@
 #'
 #' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publishable/printable format, see *Examples*.
 #' @inheritParams eucast_rules
-#' @param combine_SI A [logical] to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is `TRUE`
-#' @param add_ab_group A [logical] to indicate where the group of the antimicrobials must be included as a first column
-#' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
-#' @param FUN The function to call on the `mo` column to transform the microorganism codes - the default is [mo_shortname()]
-#' @param translate_ab A [character] of length 1 containing column names of the [antimicrobials] data set
-#' @param include_n_rows A [logical] to indicate if the total number of rows must be included in the output
-#' @param ... Arguments passed on to `FUN`
+#' @param combine_SI A [logical] to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is `TRUE`.
+#' @param add_ab_group A [logical] to indicate where the group of the antimicrobials must be included as a first column.
+#' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table.
+#' @param FUN The function to call on the `mo` column to transform the microorganism codes - the default is [mo_shortname()].
+#' @param translate_ab A [character] of length 1 containing column names of the [antimicrobials] data set.
+#' @param include_n_rows A [logical] to indicate if the total number of rows must be included in the output.
+#' @param ... Arguments passed on to `FUN`.
 #' @inheritParams sir_df
 #' @inheritParams base::formatC
 #' @details The function [format()] calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S. This table can also directly be used in R Markdown / Quarto without the need for e.g. [knitr::kable()].

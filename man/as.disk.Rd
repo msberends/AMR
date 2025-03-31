@@ -18,9 +18,9 @@ NA_disk_
 is.disk(x)
 }
 \arguments{
-\item{x}{Vector}
+\item{x}{Vector.}
 
-\item{na.rm}{A \link{logical} indicating whether missing values should be removed}
+\item{na.rm}{A \link{logical} indicating whether missing values should be removed.}
 }
 \value{
 An \link{integer} with additional class \code{\link{disk}}

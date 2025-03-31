@@ -25,25 +25,25 @@ antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{universal}{Names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs}
+\item{universal}{Names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs.}
 
-\item{gram_negative}{Names of antibiotic drugs for \strong{Gram-positives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs}
+\item{gram_negative}{Names of antibiotic drugs for \strong{Gram-positives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs.}
 
-\item{gram_positive}{Names of antibiotic drugs for \strong{Gram-negatives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs}
+\item{gram_positive}{Names of antibiotic drugs for \strong{Gram-negatives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs.}
 
-\item{antifungal}{Names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs}
+\item{antifungal}{Names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 
-\item{y, z}{\link{character} vectors to compare}
+\item{y, z}{\link{character} vectors to compare.}
 
-\item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}}
+\item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}.}
 
-\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
+\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}.}
 
-\item{points_threshold}{Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
+\item{points_threshold}{Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}.}
 }
 \description{
 These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see \code{\link[=first_isolate]{first_isolate()}}). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.

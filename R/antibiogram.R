@@ -33,8 +33,8 @@
 #' Create detailed antibiograms with options for traditional, combination, syndromic, and Bayesian WISCA methods.
 #'
 #' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
-#' @param x A [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()])
-#' @param antimicrobials A vector specifying the antimicrobials to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:
+#' @param x A [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()]).
+#' @param antimicrobials A vector specifying the antimicrobials to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:.
 #'   - Any antimicrobial name or code
 #'   - A column name in `x` that contains SIR values
 #'   - Any [antimicrobial selector][antimicrobial_selectors], such as [aminoglycosides()] or [carbapenems()]
@@ -52,21 +52,21 @@
 #' @param ab_transform A character to transform antimicrobial input - must be one of the column names of the [antimicrobials] data set (defaults to `"name"`): `r vector_or(colnames(antimicrobials), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group A column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
 #' @param add_total_n A [logical] to indicate whether `n_tested` available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when `wisca = TRUE`; in that case, use [retrieve_wisca_parameters()] to get the parameters used for WISCA.
-#' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antimicrobials, see *Details*
-#' @param digits Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise
+#' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antimicrobials, see *Details*.
+#' @param digits Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.
 #' @param formatting_type Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See *Details* > *Formatting Type* for a list of options.
 #' @param col_mo Column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
-#' @param language Language to translate text, which defaults to the system language (see [get_AMR_locale()])
+#' @param language Language to translate text, which defaults to the system language (see [get_AMR_locale()]).
 #' @param minimum The minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-#' @param combine_SI A [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`)
-#' @param sep A separating character for antimicrobial columns in combination antibiograms
+#' @param combine_SI A [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`).
+#' @param sep A separating character for antimicrobial columns in combination antibiograms.
 #' @param wisca A [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Set `simulations`, `conf_interval`, and `interval_side` to adjust.
-#' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations
-#' @param conf_interval A numerical value to set confidence interval (default is `0.95`)
-#' @param interval_side The side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`
-#' @param info A [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode
-#' @param object An [antibiogram()] object
-#' @param ... When used in [R Markdown or Quarto][knitr::kable()]: arguments passed on to [knitr::kable()] (otherwise, has no use)
+#' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations.
+#' @param conf_interval A numerical value to set confidence interval (default is `0.95`).
+#' @param interval_side The side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`.
+#' @param info A [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode.
+#' @param object An [antibiogram()] object.
+#' @param ... When used in [R Markdown or Quarto][knitr::kable()]: arguments passed on to [knitr::kable()] (otherwise, has no use).
 #' @details These functions return a table with values between 0 and 100 for *susceptibility*, not resistance.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them with one of the four available algorithms: isolate-based, patient-based, episode-based, or phenotype-based.
@@ -1183,7 +1183,7 @@ wisca <- function(x,
 }
 
 #' @export
-#' @param wisca_model The outcome of [wisca()] or [`antibiogram(..., wisca = TRUE)`][antibiogram()]
+#' @param wisca_model The outcome of [wisca()] or [`antibiogram(..., wisca = TRUE)`][antibiogram()].
 #' @rdname antibiogram
 retrieve_wisca_parameters <- function(wisca_model, ...) {
   stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use `wisca()` or `antibiogram(..., wisca = TRUE)` to create a WISCA model.")
@@ -1321,7 +1321,7 @@ autoplot.antibiogram <- function(object, ...) {
 # will be exported in zzz.R
 #' @method knit_print antibiogram
 #' @param italicise A [logical] to indicate whether the microorganism names in the [knitr][knitr::kable()] table should be made italic, using [italicise_taxonomy()].
-#' @param na Character to use for showing `NA` values
+#' @param na Character to use for showing `NA` values.
 #' @rdname antibiogram
 knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.kable.NA", default = ""), ...) {
   stop_ifnot_installed("knitr")

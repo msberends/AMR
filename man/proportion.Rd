@@ -58,23 +58,23 @@ sir_df(data, translate_ab = "name", language = get_AMR_locale(),
 
 \item{as_percent}{A \link{logical} to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below.}
 
-\item{ab_result}{Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"}
+\item{ab_result}{Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R".}
 
 \item{confidence_level}{The confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method.}
 
 \item{side}{The side of the confidence interval to return. The default is \code{"both"} for a length 2 vector, but can also be (abbreviated as) \code{"min"}/\code{"left"}/\code{"lower"}/\code{"less"} or \code{"max"}/\code{"right"}/\code{"higher"}/\code{"greater"}.}
 
-\item{collapse}{A \link{logical} to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing}
+\item{collapse}{A \link{logical} to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing.}
 
-\item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
+\item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 }
 \value{
 A \link{double} or, when \code{as_percent = TRUE}, a \link{character}.

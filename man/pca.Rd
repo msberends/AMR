@@ -8,7 +8,7 @@ pca(x, ..., retx = TRUE, center = TRUE, scale. = TRUE, tol = NULL,
   rank. = NULL)
 }
 \arguments{
-\item{x}{A \link{data.frame} containing \link{numeric} columns}
+\item{x}{A \link{data.frame} containing \link{numeric} columns.}
 
 \item{...}{Columns of \code{x} to be selected for PCA, can be unquoted since it supports quasiquotation.}
 
@@ -73,17 +73,18 @@ if (require("dplyr")) {
 
   pca_result
   summary(pca_result)
-
   # old base R plotting method:
   biplot(pca_result)
-  # new ggplot2 plotting method using this package:
-  if (require("ggplot2")) {
-    ggplot_pca(pca_result)
+}
 
+# new ggplot2 plotting method using this package:
+if (require("dplyr") && require("ggplot2")) {
+    ggplot_pca(pca_result)
+}
+if (require("dplyr") && require("ggplot2")) {
     ggplot_pca(pca_result) +
       scale_colour_viridis_d() +
       labs(title = "Title here")
-  }
 }
 }
 }

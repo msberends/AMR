@@ -19,47 +19,47 @@ geom_sir(position = NULL, x = c("antibiotic", "interpretation"),
   language = get_AMR_locale(), combine_SI = TRUE, ...)
 }
 \arguments{
-\item{data}{A \link{data.frame} with column(s) of class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
+\item{data}{A \link{data.frame} with column(s) of class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
+\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}.}
 
-\item{x}{Variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
+\item{x}{Variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
 
-\item{fill}{Variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
+\item{fill}{Variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
 
-\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
+\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
 
-\item{breaks}{A \link{numeric} vector of positions}
+\item{breaks}{A \link{numeric} vector of positions.}
 
-\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
+\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum.}
 
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{nrow}{(when using \code{facet}) number of rows}
+\item{nrow}{(when using \code{facet}) number of rows.}
 
 \item{colours}{A named vactor with colour to be used for filling. The default colours are colour-blind friendly.}
 
-\item{datalabels}{Show datalabels using \code{\link[=labels_sir_count]{labels_sir_count()}}}
+\item{datalabels}{Show datalabels using \code{\link[=labels_sir_count]{labels_sir_count()}}.}
 
-\item{datalabels.size}{Size of the datalabels}
+\item{datalabels.size}{Size of the datalabels.}
 
-\item{datalabels.colour}{Colour of the datalabels}
+\item{datalabels.colour}{Colour of the datalabels.}
 
-\item{title}{Text to show as title of the plot}
+\item{title}{Text to show as title of the plot.}
 
-\item{subtitle}{Text to show as subtitle of the plot}
+\item{subtitle}{Text to show as subtitle of the plot.}
 
-\item{caption}{Text to show as caption of the plot}
+\item{caption}{Text to show as caption of the plot.}
 
-\item{x.title}{Text to show as x axis description}
+\item{x.title}{Text to show as x axis description.}
 
-\item{y.title}{Text to show as y axis description}
+\item{y.title}{Text to show as y axis description.}
 
 \item{...}{Other arguments passed on to \code{\link[=geom_sir]{geom_sir()}} or, in case of \code{\link[=scale_sir_colours]{scale_sir_colours()}}, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See \emph{Examples}.}
 }

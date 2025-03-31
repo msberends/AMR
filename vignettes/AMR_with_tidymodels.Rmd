@@ -44,11 +44,15 @@ Our goal is to build a predictive model using the `tidymodels` framework to dete
 
 We begin by loading the required libraries and preparing the `example_isolates` dataset from the `AMR` package.
 
-```{r}
+```{r lib packages, message = FALSE, warning = FALSE, results = 'asis'}
 # Load required libraries
 library(AMR)          # For AMR data analysis
 library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
+```
 
+Prepare the data:
+
+```{r}
 # Your data could look like this:
 example_isolates
 
@@ -242,6 +246,7 @@ data_time
 ```
 
 **Explanation:**
+
 - `mo_name(mo)`: Converts microbial codes into proper species names.
 - `resistance()`: Converts AMR results into numeric values (proportion of resistant isolates).
 - `group_by(year, ward, species)`: Aggregates resistance rates by year and ward.
@@ -263,6 +268,7 @@ resistance_recipe_time
 ```
 
 **Explanation:**
+
 - `step_dummy()`: Encodes categorical variables (`ward`, `species`) as numerical indicators.
 - `step_normalize()`: Normalises the `year` variable.
 - `step_nzv()`: Removes near-zero variance predictors.
@@ -280,6 +286,7 @@ lm_model
 ```
 
 **Explanation:**
+
 - `linear_reg()`: Defines a linear regression model.
 - `set_engine("lm")`: Uses R’s built-in linear regression engine.
 
@@ -324,6 +331,7 @@ metrics_time
 ```
 
 **Explanation:**
+
 - `initial_split()`: Splits data into training and testing sets.
 - `fit()`: Trains the workflow.
 - `predict()`: Generates resistance predictions.

@@ -131,17 +131,17 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
   version_expected_phenotypes = 1.2, ...)
 }
 \arguments{
-\item{only_sir_columns}{A \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}}
+\item{only_sir_columns}{A \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}.}
 
-\item{only_treatable}{A \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
+\item{only_treatable}{A \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE}).}
 
 \item{return_all}{A \link{logical} to indicate whether all matched columns must be returned (default is \code{TRUE}). With \code{FALSE}, only the first of each unique antimicrobial will be returned, e.g. if both columns \code{"genta"} and \code{"gentamicin"} exist in the data, only the first hit for gentamicin will be returned.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 
 \item{amr_class}{An antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antimicrobials} data set will be searched (case-insensitive) for this value.}
 
-\item{filter}{An \link{expression} to be evaluated in the \link{antimicrobials} data set, such as \code{name \%like\% "trim"}}
+\item{filter}{An \link{expression} to be evaluated in the \link{antimicrobials} data set, such as \code{name \%like\% "trim"}.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 

@@ -32,14 +32,14 @@
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national, or custom guidelines.
 #' @param x A [data.frame] with antimicrobials columns, like `AMX` or `amox`. Can be left blank for automatic determination.
 #' @param guideline A specific guideline to follow, see sections *Supported international / national guidelines* and *Using Custom Guidelines* below. When left empty, the publication by Magiorakos *et al.* (see below) will be followed.
-#' @param esbl [logical] values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins)
-#' @param carbapenemase [logical] values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins)
-#' @param mecA [logical] values, or a column name containing logical values, indicating the presence of a *mecA* gene (or production of its proteins)
-#' @param mecC [logical] values, or a column name containing logical values, indicating the presence of a *mecC* gene (or production of its proteins)
-#' @param vanA [logical] values, or a column name containing logical values, indicating the presence of a *vanA* gene (or production of its proteins)
-#' @param vanB [logical] values, or a column name containing logical values, indicating the presence of a *vanB* gene (or production of its proteins)
+#' @param esbl [logical] values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins).
+#' @param carbapenemase [logical] values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins).
+#' @param mecA [logical] values, or a column name containing logical values, indicating the presence of a *mecA* gene (or production of its proteins).
+#' @param mecC [logical] values, or a column name containing logical values, indicating the presence of a *mecC* gene (or production of its proteins).
+#' @param vanA [logical] values, or a column name containing logical values, indicating the presence of a *vanA* gene (or production of its proteins).
+#' @param vanB [logical] values, or a column name containing logical values, indicating the presence of a *vanB* gene (or production of its proteins).
 #' @param ... In case of [custom_mdro_guideline()]: a set of rules, see section *Using Custom Guidelines* below. Otherwise: column name of an antibiotic, see section *Antimicrobials* below.
-#' @param as_factor A [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector
+#' @param as_factor A [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector.
 #' @inheritParams eucast_rules
 #' @param pct_required_classes Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI A [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.

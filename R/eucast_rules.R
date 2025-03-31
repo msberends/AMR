@@ -59,20 +59,20 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #'
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
-#' @param x A data set with antimicrobials columns, such as `amox`, `AMX` and `AMC`
-#' @param info A [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions
+#' @param x A data set with antimicrobials columns, such as `amox`, `AMX` and `AMC`.
+#' @param info A [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.
 #' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_eucastrules`][AMR-options]: `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints The version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
 #' @param version_expertrules The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
-#' @param ... Column name of an antimicrobial, see section *Antimicrobials* below
-#' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
-#' @param administration Route of administration, either `r vector_or(dosage$administration)`
-#' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`)
-#' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()]
-#' @param overwrite A [logical] indicating whether to overwrite non-`NA` values (default: `FALSE`). When `FALSE`, only `NA` values are modified. To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant."
+#' @param ... Column name of an antimicrobial, see section *Antimicrobials* below.
+#' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
+#' @param administration Route of administration, either `r vector_or(dosage$administration)`.
+#' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
+#' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
+#' @param overwrite A [logical] indicating whether to overwrite non-`NA` values (default: `FALSE`). When `FALSE`, only `NA` values are modified. To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant.".
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr

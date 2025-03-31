@@ -38,13 +38,13 @@
 #'
 #' All breakpoints used for interpretation are available in our [clinical_breakpoints] data set.
 #' @rdname as.sir
-#' @param x Vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
-#' @param mo A vector (or column name) with [character]s that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
-#' @param ab A vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()]
+#' @param x Vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres).
+#' @param mo A vector (or column name) with [character]s that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically.
+#' @param ab A vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()].
 #' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline Defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
-#' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
+#' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:.
 #'
 #' `"none"`
 #'   * `<=` and `>=` are treated as-is.
@@ -71,8 +71,8 @@
 #' @param host A vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
 #' @param verbose A [logical] to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.
 #' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
-#' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
-#' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead
+#' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
+#' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
 #' @param ... For using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details
 #' *Note: The clinical breakpoints in this package were validated through, and imported from, [WHONET](https://whonet.org). The public use of this `AMR` package has been endorsed by both CLSI and EUCAST. See [clinical_breakpoints] for more information.*
@@ -464,7 +464,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 #' @rdname as.sir
 #' @export
 #' @param S,I,R,NI,SDD A case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
-#' @param info A [logical] to print information about the process
+#' @param info A [logical] to print information about the process.
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x,
                            S = "^(S|U)+$",
@@ -1677,7 +1677,7 @@ as_sir_method <- function(method_short,
 }
 
 #' @rdname as.sir
-#' @param clean A [logical] to indicate whether previously stored results should be forgotten after returning the 'logbook' with results
+#' @param clean A [logical] to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.
 #' @export
 sir_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)

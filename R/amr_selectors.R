@@ -39,11 +39,11 @@
 #'   select(cephalosporins())
 #' ```
 #' @param amr_class An antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antimicrobials] data set will be searched (case-insensitive) for this value.
-#' @param filter An [expression] to be evaluated in the [antimicrobials] data set, such as `name %like% "trim"`
-#' @param only_sir_columns A [logical] to indicate whether only columns of class `sir` must be selected (default is `FALSE`), see [as.sir()]
-#' @param only_treatable A [logical] to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
+#' @param filter An [expression] to be evaluated in the [antimicrobials] data set, such as `name %like% "trim"`.
+#' @param only_sir_columns A [logical] to indicate whether only columns of class `sir` must be selected (default is `FALSE`), see [as.sir()].
+#' @param only_treatable A [logical] to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`).
 #' @param return_all A [logical] to indicate whether all matched columns must be returned (default is `TRUE`). With `FALSE`, only the first of each unique antimicrobial will be returned, e.g. if both columns `"genta"` and `"gentamicin"` exist in the data, only the first hit for gentamicin will be returned.
-#' @param ... Ignored, only in place to allow future extensions
+#' @param ... Ignored, only in place to allow future extensions.
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and `data.table`. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but are not limited to `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #'

@@ -10,13 +10,13 @@ get_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 is_new_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 }
 \arguments{
-\item{x}{Vector of dates (class \code{Date} or \code{POSIXt}), will be sorted internally to determine episodes}
+\item{x}{Vector of dates (class \code{Date} or \code{POSIXt}), will be sorted internally to determine episodes.}
 
-\item{episode_days}{Episode length in days to specify the time period after which a new episode begins, can also be less than a day or \code{Inf}, see \emph{Details}}
+\item{episode_days}{Episode length in days to specify the time period after which a new episode begins, can also be less than a day or \code{Inf}, see \emph{Details}.}
 
-\item{case_free_days}{(inter-epidemic) interval length in days after which a new episode will start, can also be less than a day or \code{Inf}, see \emph{Details}}
+\item{case_free_days}{(inter-epidemic) interval length in days after which a new episode will start, can also be less than a day or \code{Inf}, see \emph{Details}.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 }
 \value{
 \itemize{

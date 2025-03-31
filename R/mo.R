@@ -30,7 +30,7 @@
 #' Transform Arbitrary Input to Valid Microbial Taxonomy
 #'
 #' Use this function to get a valid microorganism code ([`mo`]) based on arbitrary user input. Determination is done using intelligent rules and the complete taxonomic tree of the kingdoms `r vector_and(unique(microorganisms$kingdom[which(!grepl("(unknown|Fungi)", microorganisms$kingdom))]), quotes = FALSE)`, and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
-#' @param x A [character] vector or a [data.frame] with one or two columns
+#' @param x A [character] vector or a [data.frame] with one or two columns.
 #' @param Becker A [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (see *Source*). Please see *Details* for a full list of staphylococcal species that will be converted.
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
@@ -43,9 +43,9 @@
 #' @param ignore_pattern A Perl-compatible [regular expression][base::regex] (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the package option [`AMR_ignore_pattern`][AMR-options], e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param cleaning_regex A Perl-compatible [regular expression][base::regex] (case-insensitive) to clean the input of `x`. Every matched part in `x` will be removed. At default, this is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option [`AMR_cleaning_regex`][AMR-options].
 #' @param only_fungi A [logical] to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for [all microorganism functions][mo_property()] with the package option [`AMR_only_fungi`][AMR-options], i.e. `options(AMR_only_fungi = TRUE)`.
-#' @param language Language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()])
+#' @param language Language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()]).
 #' @param info A [logical] to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is `TRUE` only in interactive mode.
-#' @param ... Other arguments passed on to functions
+#' @param ... Other arguments passed on to functions.
 #' @rdname as.mo
 #' @aliases mo
 #' @details

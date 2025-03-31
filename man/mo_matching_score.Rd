@@ -7,9 +7,9 @@
 mo_matching_score(x, n)
 }
 \arguments{
-\item{x}{Any user input value(s)}
+\item{x}{Any user input value(s).}
 
-\item{n}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}}
+\item{n}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}.}
 }
 \description{
 This algorithm is used by \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions to determine the most probable match of taxonomic records based on user input.

@@ -31,14 +31,14 @@
 #'
 #' These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see [first_isolate()]). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.
 #' @param x A [data.frame] with antimicrobials columns, like `AMX` or `amox`. Can be left blank to determine automatically.
-#' @param y,z [character] vectors to compare
+#' @param y,z [character] vectors to compare.
 #' @inheritParams first_isolate
-#' @param universal Names of **broad-spectrum** antimicrobial drugs, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antimicrobial drugs
-#' @param gram_negative Names of antibiotic drugs for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs
-#' @param gram_positive Names of antibiotic drugs for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs
-#' @param antifungal Names of antifungal drugs for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antifungal drugs
-#' @param only_sir_columns A [logical] to indicate whether only columns must be included that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`)
-#' @param ... Ignored, only in place to allow future extensions
+#' @param universal Names of **broad-spectrum** antimicrobial drugs, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antimicrobial drugs.
+#' @param gram_negative Names of antibiotic drugs for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs.
+#' @param gram_positive Names of antibiotic drugs for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs.
+#' @param antifungal Names of antifungal drugs for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antifungal drugs.
+#' @param only_sir_columns A [logical] to indicate whether only columns must be included that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
+#' @param ... Ignored, only in place to allow future extensions.
 #' @details
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
 #'

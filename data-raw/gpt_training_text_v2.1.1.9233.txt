@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9232. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9233. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -1032,19 +1032,19 @@ ab_from_text(text, type = c("drug", "dose", "administration"),
   info = interactive(), ...)
 }
 \arguments{
-\item{text}{Text to analyse}
+\item{text}{Text to analyse.}
 
-\item{type}{Type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}}
+\item{type}{Type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}.}
 
-\item{collapse}{A \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}}
+\item{collapse}{A \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}.}
 
 \item{translate_ab}{If \code{type = "drug"}: a column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. The default is \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
 \item{thorough_search}{A \link{logical} to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
 
-\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Arguments passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{Arguments passed on to \code{\link[=as.ab]{as.ab()}}.}
 }
 \value{
 A \link{list}, or a  \link{character} if \code{collapse} is not \code{NULL}
@@ -1175,25 +1175,25 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
   snake_case = NULL)
 }
 \arguments{
-\item{x}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{x}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{tolower}{A \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
-\item{...}{In case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: columns to select (supports tidy selection such as \code{column1:column4}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{In case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: columns to select (supports tidy selection such as \code{column1:column4}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}.}
 
-\item{only_first}{A \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
+\item{only_first}{A \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group).}
 
-\item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}}
+\item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}.}
 
-\item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+\item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}.}
 
 \item{property}{One of the column names of one of the \link{antimicrobials} data set: \code{vector_or(colnames(antimicrobials), sort = FALSE)}.}
 
-\item{data}{A \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names}
+\item{data}{A \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names.}
 
-\item{snake_case}{A \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
+\item{snake_case}{A \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_}).}
 }
 \value{
 \itemize{
@@ -1317,7 +1317,7 @@ add_custom_antimicrobials(x)
 clear_custom_antimicrobials()
 }
 \arguments{
-\item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name"}
+\item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name".}
 }
 \description{
 With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug names and codes.
@@ -1426,7 +1426,7 @@ add_custom_microorganisms(x)
 clear_custom_microorganisms()
 }
 \arguments{
-\item{x}{A \link{data.frame} resembling the \link{microorganisms} data set, at least containing column "genus" (case-insensitive)}
+\item{x}{A \link{data.frame} resembling the \link{microorganisms} data set, at least containing column "genus" (case-insensitive).}
 }
 \description{
 With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom microorganisms, such the non-taxonomic outcome of laboratory analysis.
@@ -1543,15 +1543,15 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/age.Rd':
 age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...)
 }
 \arguments{
-\item{x}{Date(s), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
+\item{x}{Date(s), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}.}
 
-\item{reference}{Reference date(s) (default is today), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
+\item{reference}{Reference date(s) (default is today), \link{character} (vectors) will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}.}
 
 \item{exact}{A \link{logical} to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of \href{https://en.wikipedia.org/wiki/Year-to-date}{year-to-date} (YTD) of \code{x} by the number of days in the year of \code{reference} (either 365 or 366).}
 
-\item{na.rm}{A \link{logical} to indicate whether missing values should be removed}
+\item{na.rm}{A \link{logical} to indicate whether missing values should be removed.}
 
-\item{...}{Arguments passed on to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, such as \code{origin}}
+\item{...}{Arguments passed on to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, such as \code{origin}.}
 }
 \value{
 An \link{integer} (no decimals) if \code{exact = FALSE}, a \link{double} (with decimals) otherwise
@@ -1598,11 +1598,11 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/age_groups.Rd':
 age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 }
 \arguments{
-\item{x}{Age, e.g. calculated with \code{\link[=age]{age()}}}
+\item{x}{Age, e.g. calculated with \code{\link[=age]{age()}}.}
 
 \item{split_at}{Values to split \code{x} at - the default is age groups 0-11, 12-24, 25-54, 55-74 and 75+. See \emph{Details}.}
 
-\item{na.rm}{A \link{logical} to indicate whether missing values should be removed}
+\item{na.rm}{A \link{logical} to indicate whether missing values should be removed.}
 }
 \value{
 Ordered \link{factor}
@@ -1718,9 +1718,9 @@ retrieve_wisca_parameters(wisca_model, ...)
   na = getOption("knitr.kable.NA", default = ""), ...)
 }
 \arguments{
-\item{x}{A \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}})}
+\item{x}{A \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{antimicrobials}{A vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:
+\item{antimicrobials}{A vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:.
 \itemize{
 \item Any antimicrobial name or code
 \item A column name in \code{x} that contains SIR values
@@ -1749,41 +1749,41 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{add_total_n}{A \link{logical} to indicate whether \code{n_tested} available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when \code{wisca = TRUE}; in that case, use \code{\link[=retrieve_wisca_parameters]{retrieve_wisca_parameters()}} to get the parameters used for WISCA.}
 
-\item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}}
+\item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}.}
 
-\item{digits}{Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise}
+\item{digits}{Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.}
 
 \item{formatting_type}{Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See \emph{Details} > \emph{Formatting Type} for a list of options.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{language}{Language to translate text, which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text, which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE})}
+\item{combine_SI}{A \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE}).}
 
-\item{sep}{A separating character for antimicrobial columns in combination antibiograms}
+\item{sep}{A separating character for antimicrobial columns in combination antibiograms.}
 
 \item{wisca}{A \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 
-\item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations}
+\item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations.}
 
-\item{conf_interval}{A numerical value to set confidence interval (default is \code{0.95})}
+\item{conf_interval}{A numerical value to set confidence interval (default is \code{0.95}).}
 
-\item{interval_side}{The side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}}
+\item{interval_side}{The side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}.}
 
-\item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{When used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use)}
+\item{...}{When used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use).}
 
-\item{wisca_model}{The outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}}
+\item{wisca_model}{The outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}.}
 
-\item{object}{An \code{\link[=antibiogram]{antibiogram()}} object}
+\item{object}{An \code{\link[=antibiogram]{antibiogram()}} object.}
 
 \item{italicise}{A \link{logical} to indicate whether the microorganism names in the \link[knitr:kable]{knitr} table should be made italic, using \code{\link[=italicise_taxonomy]{italicise_taxonomy()}}.}
 
-\item{na}{Character to use for showing \code{NA} values}
+\item{na}{Character to use for showing \code{NA} values.}
 }
 \description{
 Create detailed antibiograms with options for traditional, combination, syndromic, and Bayesian WISCA methods.
@@ -2281,17 +2281,17 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
   version_expected_phenotypes = 1.2, ...)
 }
 \arguments{
-\item{only_sir_columns}{A \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}}
+\item{only_sir_columns}{A \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}.}
 
-\item{only_treatable}{A \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
+\item{only_treatable}{A \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE}).}
 
 \item{return_all}{A \link{logical} to indicate whether all matched columns must be returned (default is \code{TRUE}). With \code{FALSE}, only the first of each unique antimicrobial will be returned, e.g. if both columns \code{"genta"} and \code{"gentamicin"} exist in the data, only the first hit for gentamicin will be returned.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 
 \item{amr_class}{An antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antimicrobials} data set will be searched (case-insensitive) for this value.}
 
-\item{filter}{An \link{expression} to be evaluated in the \link{antimicrobials} data set, such as \code{name \%like\% "trim"}}
+\item{filter}{An \link{expression} to be evaluated in the \link{antimicrobials} data set, such as \code{name \%like\% "trim"}.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -2668,15 +2668,15 @@ is.ab(x)
 ab_reset_session()
 }
 \arguments{
-\item{x}{A \link{character} vector to determine to antibiotic ID}
+\item{x}{A \link{character} vector to determine to antibiotic ID.}
 
 \item{flag_multiple_results}{A \link{logical} to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.}
 
-\item{language}{Language to coerce input values from any of the 20 supported languages - default to the system language if supported (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to coerce input values from any of the 20 supported languages - default to the system language if supported (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
-\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Arguments passed on to internal functions}
+\item{...}{Arguments passed on to internal functions.}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{ab}}
@@ -2785,13 +2785,13 @@ as.av(x, flag_multiple_results = TRUE, info = interactive(), ...)
 is.av(x)
 }
 \arguments{
-\item{x}{A \link{character} vector to determine to antiviral drug ID}
+\item{x}{A \link{character} vector to determine to antiviral drug ID.}
 
 \item{flag_multiple_results}{A \link{logical} to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.}
 
-\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Arguments passed on to internal functions}
+\item{...}{Arguments passed on to internal functions.}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{ab}}
@@ -2893,9 +2893,9 @@ NA_disk_
 is.disk(x)
 }
 \arguments{
-\item{x}{Vector}
+\item{x}{Vector.}
 
-\item{na.rm}{A \link{logical} indicating whether missing values should be removed}
+\item{na.rm}{A \link{logical} indicating whether missing values should be removed.}
 }
 \value{
 An \link{integer} with additional class \code{\link{disk}}
@@ -2980,9 +2980,9 @@ mic_p90(x, na.rm = FALSE, ...)
 \method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
 \arguments{
-\item{x}{A \link{character} or \link{numeric} vector}
+\item{x}{A \link{character} or \link{numeric} vector.}
 
-\item{na.rm}{A \link{logical} indicating whether missing values should be removed}
+\item{na.rm}{A \link{logical} indicating whether missing values should be removed.}
 
 \item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
 
@@ -2990,7 +2990,7 @@ mic_p90(x, na.rm = FALSE, ...)
 
 \item{as.mic}{A \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{TRUE} for \code{\link[=rescale_mic]{rescale_mic()}} and \code{FALSE} for \code{\link[=droplevels]{droplevels()}}. When setting this to \code{FALSE} in \code{\link[=rescale_mic]{rescale_mic()}}, the output will have factor levels that acknowledge \code{mic_range}.}
 
-\item{...}{Arguments passed on to methods}
+\item{...}{Arguments passed on to methods.}
 }
 \value{
 Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as a \link{numeric} vector. Bear in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
@@ -3138,7 +3138,7 @@ mo_reset_session()
 mo_cleaning_regex()
 }
 \arguments{
-\item{x}{A \link{character} vector or a \link{data.frame} with one or two columns}
+\item{x}{A \link{character} vector or a \link{data.frame} with one or two columns.}
 
 \item{Becker}{A \link{logical} to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (see \emph{Source}). Please see \emph{Details} for a full list of staphylococcal species that will be converted.
 
@@ -3160,11 +3160,11 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{only_fungi}{A \link{logical} to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for \link[=mo_property]{all microorganism functions} with the package option \code{\link[=AMR-options]{AMR_only_fungi}}, i.e. \code{options(AMR_only_fungi = TRUE)}.}
 
-\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
 \item{info}{A \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Other arguments passed on to functions}
+\item{...}{Other arguments passed on to functions.}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{mo}}
@@ -3444,25 +3444,25 @@ is_sir_eligible(x, threshold = 0.05)
 sir_interpretation_history(clean = FALSE)
 }
 \arguments{
-\item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
+\item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres).}
 
 \item{...}{For using on a \link{data.frame}: names of columns to apply \code{\link[=as.sir]{as.sir()}} on (supports tidy selection such as \code{column1:column4}). Otherwise: arguments passed on to methods.}
 
-\item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
+\item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}.}
 
 \item{S, I, R, NI, SDD}{A case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
 
-\item{info}{A \link{logical} to print information about the process}
+\item{info}{A \link{logical} to print information about the process.}
 
-\item{mo}{A vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
+\item{mo}{A vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically.}
 
-\item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
 \item{guideline}{Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
-\item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:
+\item{capped_mic_handling}{A \link{character} string that controls how MIC values with a cap (i.e., starting with \code{<}, \code{<=}, \code{>}, or \code{>=}) are interpreted. Supports the following options:.
 
 \code{"none"}
 \itemize{
@@ -3506,11 +3506,11 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{verbose}{A \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
 
-\item{conserve_capped_values}{Deprecated, use \code{capped_mic_handling} instead}
+\item{conserve_capped_values}{Deprecated, use \code{capped_mic_handling} instead.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
+\item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
 \value{
 Ordered \link{factor} with new class \code{sir}
@@ -3857,17 +3857,17 @@ atc_online_ddd(atc_code, ...)
 atc_online_ddd_units(atc_code, ...)
 }
 \arguments{
-\item{atc_code}{A \link{character} (vector) with ATC code(s) of antimicrobials, will be coerced with \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_atc]{ab_atc()}} internally if not a valid ATC code}
+\item{atc_code}{A \link{character} (vector) with ATC code(s) of antimicrobials, will be coerced with \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_atc]{ab_atc()}} internally if not a valid ATC code.}
 
 \item{property}{Property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see \emph{Examples}.}
 
-\item{administration}{Type of administration when using \code{property = "Adm.R"}, see \emph{Details}}
+\item{administration}{Type of administration when using \code{property = "Adm.R"}, see \emph{Details}.}
 
 \item{url}{URL of website of the WHOCC. The sign \verb{\%s} can be used as a placeholder for ATC codes.}
 
 \item{url_vet}{URL of website of the WHOCC for veterinary medicine. The sign \verb{\%s} can be used as a placeholder for ATC_vet codes (that all start with "Q").}
 
-\item{...}{Arguments to pass on to \code{atc_property}}
+\item{...}{Arguments to pass on to \code{atc_property}.}
 }
 \description{
 Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antimicrobial), such as the name, defined daily dose (DDD) or standard unit.
@@ -3933,19 +3933,19 @@ av_from_text(text, type = c("drug", "dose", "administration"),
   info = interactive(), ...)
 }
 \arguments{
-\item{text}{Text to analyse}
+\item{text}{Text to analyse.}
 
-\item{type}{Type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}}
+\item{type}{Type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}.}
 
-\item{collapse}{A \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}}
+\item{collapse}{A \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}.}
 
 \item{translate_av}{If \code{type = "drug"}: a column name of the \link{antivirals} data set to translate the antibiotic abbreviations to, using \code{\link[=av_property]{av_property()}}. The default is \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
 \item{thorough_search}{A \link{logical} to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
 
-\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate whether a progress bar should be printed - the default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Arguments passed on to \code{\link[=as.av]{as.av()}}}
+\item{...}{Arguments passed on to \code{\link[=as.av]{as.av()}}.}
 }
 \value{
 A \link{list}, or a  \link{character} if \code{collapse} is not \code{NULL}
@@ -4028,17 +4028,17 @@ av_url(x, open = FALSE, ...)
 av_property(x, property = "name", language = get_AMR_locale(), ...)
 }
 \arguments{
-\item{x}{Any (vector of) text that can be coerced to a valid antiviral drug code with \code{\link[=as.av]{as.av()}}}
+\item{x}{Any (vector of) text that can be coerced to a valid antiviral drug code with \code{\link[=as.av]{as.av()}}.}
 
 \item{language}{Language of the returned text - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{tolower}{A \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}.}
 
-\item{...}{Other arguments passed on to \code{\link[=as.av]{as.av()}}}
+\item{...}{Other arguments passed on to \code{\link[=as.av]{as.av()}}.}
 
-\item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}}
+\item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}.}
 
-\item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+\item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}.}
 
 \item{property}{One of the column names of one of the \link{antivirals} data set: \code{vector_or(colnames(antivirals), sort = FALSE)}.}
 }
@@ -4123,9 +4123,9 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/availability.Rd':
 availability(tbl, width = NULL)
 }
 \arguments{
-\item{tbl}{A \link{data.frame} or \link{list}}
+\item{tbl}{A \link{data.frame} or \link{list}.}
 
-\item{width}{Number of characters to present the visual availability - the default is filling the width of the console}
+\item{width}{Number of characters to present the visual availability - the default is filling the width of the console.}
 }
 \value{
 \link{data.frame} with column names of \code{tbl} as row names
@@ -4171,27 +4171,27 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname,
   ",", ".", ","), ...)
 }
 \arguments{
-\item{x}{A data set with antimicrobials columns, such as \code{amox}, \code{AMX} and \code{AMC}}
+\item{x}{A data set with antimicrobials columns, such as \code{amox}, \code{AMX} and \code{AMC}.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{FUN}{The function to call on the \code{mo} column to transform the microorganism codes - the default is \code{\link[=mo_shortname]{mo_shortname()}}}
+\item{FUN}{The function to call on the \code{mo} column to transform the microorganism codes - the default is \code{\link[=mo_shortname]{mo_shortname()}}.}
 
-\item{include_n_rows}{A \link{logical} to indicate if the total number of rows must be included in the output}
+\item{include_n_rows}{A \link{logical} to indicate if the total number of rows must be included in the output.}
 
-\item{...}{Arguments passed on to \code{FUN}}
+\item{...}{Arguments passed on to \code{FUN}.}
 
-\item{translate_ab}{A \link{character} of length 1 containing column names of the \link{antimicrobials} data set}
+\item{translate_ab}{A \link{character} of length 1 containing column names of the \link{antimicrobials} data set.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is \code{TRUE}.}
 
-\item{add_ab_group}{A \link{logical} to indicate where the group of the antimicrobials must be included as a first column}
+\item{add_ab_group}{A \link{logical} to indicate where the group of the antimicrobials must be included as a first column.}
 
-\item{remove_intrinsic_resistant}{\link{logical} to indicate that rows and columns with 100\% resistance for all tested antimicrobials must be removed from the table}
+\item{remove_intrinsic_resistant}{\link{logical} to indicate that rows and columns with 100\% resistance for all tested antimicrobials must be removed from the table.}
 
 \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}
@@ -4369,15 +4369,15 @@ count_df(data, translate_ab = "name", language = get_AMR_locale(),
 \arguments{
 \item{...}{One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.sir]{as.sir()}} if needed.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below.}
 
-\item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
+\item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 }
 \value{
 An \link{integer}
@@ -4542,7 +4542,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/custom_eucast_rules.Rd':
 custom_eucast_rules(...)
 }
 \arguments{
-\item{...}{Rules in \link[base:tilde]{formula} notation, see below for instructions, and in \emph{Examples}}
+\item{...}{Rules in \link[base:tilde]{formula} notation, see below for instructions, and in \emph{Examples}.}
 }
 \value{
 A \link{list} containing the custom rules
@@ -4769,11 +4769,11 @@ eucast_rules(x, col_mo = NULL, info = interactive(),
 eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 }
 \arguments{
-\item{x}{A data set with antimicrobials columns, such as \code{amox}, \code{AMX} and \code{AMC}}
+\item{x}{A data set with antimicrobials columns, such as \code{amox}, \code{AMX} and \code{AMC}.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions}
+\item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.}
 
 \item{rules}{A \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expected_phenotypes"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expected_phenotypes")}. The default value can be set to another value using the package option \code{\link[=AMR-options]{AMR_eucastrules}}: \code{options(AMR_eucastrules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
@@ -4787,17 +4787,17 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{ampc_cephalosporin_resistance}{(only applies when \code{rules} contains \code{"expert"} or \code{"all"}) a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2} and higher; these versions of '\emph{EUCAST Expert Rules on Enterobacterales}' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of \code{NA} (the default) for this argument will remove results for these three drugs, while e.g. a value of \code{"R"} will make the results for these drugs resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia}, and \emph{Serratia}.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
 
-\item{custom_rules}{Custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}}
+\item{custom_rules}{Custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
-\item{overwrite}{A \link{logical} indicating whether to overwrite non-\code{NA} values (default: \code{FALSE}). When \code{FALSE}, only \code{NA} values are modified. To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant."}
+\item{overwrite}{A \link{logical} indicating whether to overwrite non-\code{NA} values (default: \code{FALSE}). When \code{FALSE}, only \code{NA} values are modified. To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant.".}
 
-\item{...}{Column name of an antimicrobial, see section \emph{Antimicrobials} below}
+\item{...}{Column name of an antimicrobial, see section \emph{Antimicrobials} below.}
 
-\item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{administration}{Route of administration, either "im", "iv", or "oral"}
+\item{administration}{Route of administration, either "im", "iv", or "oral".}
 }
 \value{
 The input of \code{x}, possibly with edited values of antimicrobials. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.
@@ -4999,11 +4999,11 @@ export_ncbi_biosample(x, filename = paste0("biosample_", format(Sys.time(),
   columns = where(is.mic), save_as_xlsx = TRUE)
 }
 \arguments{
-\item{x}{A data set}
+\item{x}{A data set.}
 
-\item{filename}{A character string specifying the file name}
+\item{filename}{A character string specifying the file name.}
 
-\item{type}{A character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see \url{https://www.ncbi.nlm.nih.gov/biosample/docs/}}
+\item{type}{A character string specifying the type of data set, either "pathogen MIC" or "beta-lactamase MIC", see \url{https://www.ncbi.nlm.nih.gov/biosample/docs/}.}
 }
 \description{
 Export Data Set as NCBI BioSample Antibiogram
@@ -5046,15 +5046,15 @@ filter_first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
 \arguments{
 \item{x}{A \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}
 
-\item{col_date}{Column name of the result date (or date that is was received on the lab) - the default is the first column with a date class}
+\item{col_date}{Column name of the result date (or date that is was received on the lab) - the default is the first column with a date class.}
 
-\item{col_patient_id}{Column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive)}
+\item{col_patient_id}{Column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive).}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{col_testcode}{Column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (such as test codes for screening). In that case \code{testcodes_exclude} will be ignored.}
 
-\item{col_specimen}{Column name of the specimen type or group}
+\item{col_specimen}{Column name of the specimen type or group.}
 
 \item{col_icu}{Column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU). This can also be a \link{logical} vector with the same length as rows in \code{x}.}
 
@@ -5062,27 +5062,27 @@ filter_first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
 
 \item{episode_days}{Episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 
-\item{testcodes_exclude}{A \link{character} vector with test codes that should be excluded (case-insensitive)}
+\item{testcodes_exclude}{A \link{character} vector with test codes that should be excluded (case-insensitive).}
 
-\item{icu_exclude}{A \link{logical} to indicate whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu})}
+\item{icu_exclude}{A \link{logical} to indicate whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu}).}
 
-\item{specimen_group}{Value in the column set with \code{col_specimen} to filter on}
+\item{specimen_group}{Value in the column set with \code{col_specimen} to filter on.}
 
-\item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}}
+\item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}.}
 
 \item{method}{The method to apply, either \code{"phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}. The default is \code{"phenotype-based"} if antimicrobial test results are present in the data, and \code{"episode-based"} otherwise.}
 
-\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
+\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}.}
 
-\item{points_threshold}{Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
+\item{points_threshold}{Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}.}
 
-\item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode}
+\item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode.}
 
 \item{include_unknown}{A \link{logical} to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 
 \item{include_untested_sir}{A \link{logical} to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_sir = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \code{sir} and consequently requires transforming columns with antibiotic results using \code{\link[=as.sir]{as.sir()}} first.}
 
-\item{...}{Arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, otherwise arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
+\item{...}{Arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, otherwise arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} (such as \code{universal}, \code{gram_negative}, \code{gram_positive}).}
 }
 \value{
 A \link{logical} vector
@@ -5362,13 +5362,13 @@ get_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 is_new_episode(x, episode_days = NULL, case_free_days = NULL, ...)
 }
 \arguments{
-\item{x}{Vector of dates (class \code{Date} or \code{POSIXt}), will be sorted internally to determine episodes}
+\item{x}{Vector of dates (class \code{Date} or \code{POSIXt}), will be sorted internally to determine episodes.}
 
-\item{episode_days}{Episode length in days to specify the time period after which a new episode begins, can also be less than a day or \code{Inf}, see \emph{Details}}
+\item{episode_days}{Episode length in days to specify the time period after which a new episode begins, can also be less than a day or \code{Inf}, see \emph{Details}.}
 
-\item{case_free_days}{(inter-epidemic) interval length in days after which a new episode will start, can also be less than a day or \code{Inf}, see \emph{Details}}
+\item{case_free_days}{(inter-epidemic) interval length in days after which a new episode will start, can also be less than a day or \code{Inf}, see \emph{Details}.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 }
 \value{
 \itemize{
@@ -5578,7 +5578,7 @@ ggplot_pca(x, choices = 1:2, scale = 1, pc.biplot = TRUE,
   arrows_alpha = 0.75, base_textsize = 10, ...)
 }
 \arguments{
-\item{x}{An object returned by \code{\link[=pca]{pca()}}, \code{\link[=prcomp]{prcomp()}} or \code{\link[=princomp]{princomp()}}}
+\item{x}{An object returned by \code{\link[=pca]{pca()}}, \code{\link[=prcomp]{prcomp()}} or \code{\link[=princomp]{princomp()}}.}
 
 \item{choices}{
     length 2 vector specifying the components to plot. Only the default
@@ -5603,39 +5603,39 @@ ggplot_pca(x, choices = 1:2, scale = 1, pc.biplot = TRUE,
 
 \item{labels}{An optional vector of labels for the observations. If set, the labels will be placed below their respective points. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
 
-\item{labels_textsize}{The size of the text used for the labels}
+\item{labels_textsize}{The size of the text used for the labels.}
 
-\item{labels_text_placement}{Adjustment factor the placement of the variable names (\verb{>=1} means further away from the arrow head)}
+\item{labels_text_placement}{Adjustment factor the placement of the variable names (\verb{>=1} means further away from the arrow head).}
 
 \item{groups}{An optional vector of groups for the labels, with the same length as \code{labels}. If set, the points and labels will be coloured according to these groups. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
 
-\item{ellipse}{A \link{logical} to indicate whether a normal data ellipse should be drawn for each group (set with \code{groups})}
+\item{ellipse}{A \link{logical} to indicate whether a normal data ellipse should be drawn for each group (set with \code{groups}).}
 
-\item{ellipse_prob}{Statistical size of the ellipse in normal probability}
+\item{ellipse_prob}{Statistical size of the ellipse in normal probability.}
 
-\item{ellipse_size}{The size of the ellipse line}
+\item{ellipse_size}{The size of the ellipse line.}
 
-\item{ellipse_alpha}{The alpha (transparency) of the ellipse line}
+\item{ellipse_alpha}{The alpha (transparency) of the ellipse line.}
 
-\item{points_size}{The size of the points}
+\item{points_size}{The size of the points.}
 
-\item{points_alpha}{The alpha (transparency) of the points}
+\item{points_alpha}{The alpha (transparency) of the points.}
 
-\item{arrows}{A \link{logical} to indicate whether arrows should be drawn}
+\item{arrows}{A \link{logical} to indicate whether arrows should be drawn.}
 
-\item{arrows_colour}{The colour of the arrow and their text}
+\item{arrows_colour}{The colour of the arrow and their text.}
 
-\item{arrows_size}{The size (thickness) of the arrow lines}
+\item{arrows_size}{The size (thickness) of the arrow lines.}
 
-\item{arrows_textsize}{The size of the text at the end of the arrows}
+\item{arrows_textsize}{The size of the text at the end of the arrows.}
 
-\item{arrows_textangled}{A \link{logical} whether the text at the end of the arrows should be angled}
+\item{arrows_textangled}{A \link{logical} whether the text at the end of the arrows should be angled.}
 
-\item{arrows_alpha}{The alpha (transparency) of the arrows and their text}
+\item{arrows_alpha}{The alpha (transparency) of the arrows and their text.}
 
-\item{base_textsize}{The text size for all plot elements except the labels and arrows}
+\item{base_textsize}{The text size for all plot elements except the labels and arrows.}
 
-\item{...}{Arguments passed on to functions}
+\item{...}{Arguments passed on to functions.}
 }
 \description{
 Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/wiki/Biplot}{biplot} for PCA (principal component analysis), but is more flexible and more appealing than the base \R \code{\link[=biplot]{biplot()}} function.
@@ -5709,47 +5709,47 @@ geom_sir(position = NULL, x = c("antibiotic", "interpretation"),
   language = get_AMR_locale(), combine_SI = TRUE, ...)
 }
 \arguments{
-\item{data}{A \link{data.frame} with column(s) of class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
+\item{data}{A \link{data.frame} with column(s) of class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
+\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}.}
 
-\item{x}{Variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
+\item{x}{Variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
 
-\item{fill}{Variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
+\item{fill}{Variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
 
-\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
+\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
 
-\item{breaks}{A \link{numeric} vector of positions}
+\item{breaks}{A \link{numeric} vector of positions.}
 
-\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
+\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum.}
 
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{nrow}{(when using \code{facet}) number of rows}
+\item{nrow}{(when using \code{facet}) number of rows.}
 
 \item{colours}{A named vactor with colour to be used for filling. The default colours are colour-blind friendly.}
 
-\item{datalabels}{Show datalabels using \code{\link[=labels_sir_count]{labels_sir_count()}}}
+\item{datalabels}{Show datalabels using \code{\link[=labels_sir_count]{labels_sir_count()}}.}
 
-\item{datalabels.size}{Size of the datalabels}
+\item{datalabels.size}{Size of the datalabels.}
 
-\item{datalabels.colour}{Colour of the datalabels}
+\item{datalabels.colour}{Colour of the datalabels.}
 
-\item{title}{Text to show as title of the plot}
+\item{title}{Text to show as title of the plot.}
 
-\item{subtitle}{Text to show as subtitle of the plot}
+\item{subtitle}{Text to show as subtitle of the plot.}
 
-\item{caption}{Text to show as caption of the plot}
+\item{caption}{Text to show as caption of the plot.}
 
-\item{x.title}{Text to show as x axis description}
+\item{x.title}{Text to show as x axis description.}
 
-\item{y.title}{Text to show as y axis description}
+\item{y.title}{Text to show as y axis description.}
 
 \item{...}{Other arguments passed on to \code{\link[=geom_sir]{geom_sir()}} or, in case of \code{\link[=scale_sir_colours]{scale_sir_colours()}}, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See \emph{Examples}.}
 }
@@ -5888,13 +5888,13 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE,
   only_sir_columns = FALSE)
 }
 \arguments{
-\item{x}{A \link{data.frame}}
+\item{x}{A \link{data.frame}.}
 
-\item{search_string}{A text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}}
+\item{search_string}{A text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}.}
 
-\item{verbose}{A \link{logical} to indicate whether additional info should be printed}
+\item{verbose}{A \link{logical} to indicate whether additional info should be printed.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.
@@ -5993,9 +5993,9 @@ italicise_taxonomy(string, type = c("markdown", "ansi", "html"))
 italicize_taxonomy(string, type = c("markdown", "ansi", "html"))
 }
 \arguments{
-\item{string}{A \link{character} (vector)}
+\item{string}{A \link{character} (vector).}
 
-\item{type}{Type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see \emph{Details}}
+\item{type}{Type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see \emph{Details}.}
 }
 \description{
 According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.
@@ -6048,11 +6048,11 @@ anti_join_microorganisms(x, by = NULL, ...)
 \arguments{
 \item{x}{Existing data set to join, or \link{character} vector. In case of a \link{character} vector, the resulting \link{data.frame} will contain a column 'x' with these values.}
 
-\item{by}{A variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (such as \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("bacteria_id" = "fullname")})}
+\item{by}{A variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (such as \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("bacteria_id" = "fullname")}).}
 
 \item{suffix}{If there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a \link{character} vector of length 2.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 }
 \value{
 a \link{data.frame}
@@ -6128,25 +6128,25 @@ antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{universal}{Names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs}
+\item{universal}{Names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs.}
 
-\item{gram_negative}{Names of antibiotic drugs for \strong{Gram-positives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs}
+\item{gram_negative}{Names of antibiotic drugs for \strong{Gram-positives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs.}
 
-\item{gram_positive}{Names of antibiotic drugs for \strong{Gram-negatives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs}
+\item{gram_positive}{Names of antibiotic drugs for \strong{Gram-negatives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs.}
 
-\item{antifungal}{Names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs}
+\item{antifungal}{Names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 
-\item{y, z}{\link{character} vectors to compare}
+\item{y, z}{\link{character} vectors to compare.}
 
-\item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}}
+\item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}.}
 
-\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
+\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}.}
 
-\item{points_threshold}{Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
+\item{points_threshold}{Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}.}
 }
 \description{
 These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see \code{\link[=first_isolate]{first_isolate()}}). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.
@@ -6259,9 +6259,9 @@ kurtosis(x, na.rm = FALSE, excess = FALSE)
 \method{kurtosis}{data.frame}(x, na.rm = FALSE, excess = FALSE)
 }
 \arguments{
-\item{x}{A vector of values, a \link{matrix} or a \link{data.frame}}
+\item{x}{A vector of values, a \link{matrix} or a \link{data.frame}.}
 
-\item{na.rm}{A \link{logical} to indicate whether \code{NA} values should be stripped before the computation proceeds}
+\item{na.rm}{A \link{logical} to indicate whether \code{NA} values should be stripped before the computation proceeds.}
 
 \item{excess}{A \link{logical} to indicate whether the \emph{excess kurtosis} should be returned, defined as the kurtosis minus 3.}
 }
@@ -6413,19 +6413,19 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE,
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{esbl}{\link{logical} values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins)}
+\item{esbl}{\link{logical} values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins).}
 
-\item{carbapenemase}{\link{logical} values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins)}
+\item{carbapenemase}{\link{logical} values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins).}
 
-\item{mecA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecA} gene (or production of its proteins)}
+\item{mecA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecA} gene (or production of its proteins).}
 
-\item{mecC}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecC} gene (or production of its proteins)}
+\item{mecC}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{mecC} gene (or production of its proteins).}
 
-\item{vanA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanA} gene (or production of its proteins)}
+\item{vanA}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanA} gene (or production of its proteins).}
 
-\item{vanB}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanB} gene (or production of its proteins)}
+\item{vanB}{\link{logical} values, or a column name containing logical values, indicating the presence of a \emph{vanB} gene (or production of its proteins).}
 
-\item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions}
+\item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.}
 
 \item{pct_required_classes}{Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.}
 
@@ -6433,11 +6433,11 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE,
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE})}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
 
 \item{...}{In case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antimicrobials} below.}
 
-\item{as_factor}{A \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector}
+\item{as_factor}{A \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector.}
 }
 \value{
 \itemize{
@@ -6624,15 +6624,15 @@ mean_amr_distance(x, ...)
 amr_distance_from_row(amr_distance, row)
 }
 \arguments{
-\item{x}{A vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
+\item{x}{A vector of class \link[=as.sir]{sir}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes.}
 
-\item{...}{Variables to select. Supports \link[tidyselect:language]{tidyselect language} (such as \code{column1:column4} and \code{where(is.mic)}), and can thus also be \link[=amr_selector]{antimicrobial selectors}}
+\item{...}{Variables to select. Supports \link[tidyselect:language]{tidyselect language} (such as \code{column1:column4} and \code{where(is.mic)}), and can thus also be \link[=amr_selector]{antimicrobial selectors}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 
-\item{amr_distance}{The outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}}
+\item{amr_distance}{The outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}.}
 
-\item{row}{An index, such as a row number}
+\item{row}{An index, such as a row number.}
 }
 \description{
 Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
@@ -6927,9 +6927,9 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/mo_matching_score.Rd':
 mo_matching_score(x, n)
 }
 \arguments{
-\item{x}{Any user input value(s)}
+\item{x}{Any user input value(s).}
 
-\item{n}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}}
+\item{n}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}.}
 }
 \description{
 This algorithm is used by \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions to determine the most probable match of taxonomic records based on user input.
@@ -7158,17 +7158,17 @@ mo_property(x, property = "fullname", language = get_AMR_locale(),
 \arguments{
 \item{x}{Any \link{character} (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
 
-\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
 \item{keep_synonyms}{A \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the package option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
-\item{...}{Other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'}
+\item{...}{Other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'.}
 
-\item{ab}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
+\item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}.}
 
-\item{property}{One of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}}
+\item{property}{One of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}.}
 }
 \value{
 \itemize{
@@ -7500,7 +7500,7 @@ pca(x, ..., retx = TRUE, center = TRUE, scale. = TRUE, tol = NULL,
   rank. = NULL)
 }
 \arguments{
-\item{x}{A \link{data.frame} containing \link{numeric} columns}
+\item{x}{A \link{data.frame} containing \link{numeric} columns.}
 
 \item{...}{Columns of \code{x} to be selected for PCA, can be unquoted since it supports quasiquotation.}
 
@@ -7565,17 +7565,18 @@ if (require("dplyr")) {
 
   pca_result
   summary(pca_result)
-
   # old base R plotting method:
   biplot(pca_result)
-  # new ggplot2 plotting method using this package:
-  if (require("ggplot2")) {
-    ggplot_pca(pca_result)
+}
 
+# new ggplot2 plotting method using this package:
+if (require("dplyr") && require("ggplot2")) {
+    ggplot_pca(pca_result)
+}
+if (require("dplyr") && require("ggplot2")) {
     ggplot_pca(pca_result) +
       scale_colour_viridis_d() +
       labs(title = "Title here")
-  }
 }
 }
 }
@@ -7701,7 +7702,7 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 \item{mic_range}{A manual range to rescale the MIC values (using \code{\link[=rescale_mic]{rescale_mic()}}), e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}. \strong{Note:} This rescales values but does not filter them - use the ggplot2 \code{limits} argument separately to exclude values from the plot.}
 
-\item{...}{Arguments passed on to methods}
+\item{...}{Arguments passed on to methods.}
 
 \item{colours_SIR}{Colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.}
 
@@ -7709,17 +7710,17 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 \item{eucast_I}{A \link{logical} to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be \code{TRUE} if the default \link[=as.sir]{AMR interpretation guideline} is set to EUCAST (which is the default). With \code{FALSE}, it will be interpreted as "Intermediate".}
 
-\item{x, object}{Values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
+\item{x, object}{Values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}}).}
 
-\item{mo}{Any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{Any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}.}
 
-\item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{guideline}{Interpretation guideline to use - the default is the latest included EUCAST guideline, see \emph{Details}}
+\item{guideline}{Interpretation guideline to use - the default is the latest included EUCAST guideline, see \emph{Details}.}
 
-\item{main, title}{Title of the plot}
+\item{main, title}{Title of the plot.}
 
-\item{xlab, ylab}{Axis title}
+\item{xlab, ylab}{Axis title.}
 
 \item{expand}{A \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
 
@@ -7727,27 +7728,27 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 \item{breakpoint_type}{The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
-\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
+\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
 
-\item{nrow}{(when using \code{facet}) number of rows}
+\item{nrow}{(when using \code{facet}) number of rows.}
 
-\item{breaks}{A \link{numeric} vector of positions}
+\item{breaks}{A \link{numeric} vector of positions.}
 
-\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
+\item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum.}
 
-\item{aesthetics}{Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"}
+\item{aesthetics}{Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size".}
 
-\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
+\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}.}
 
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 
-\item{datalabels.size}{Size of the datalabels}
+\item{datalabels.size}{Size of the datalabels.}
 
-\item{datalabels.colour}{Colour of the datalabels}
+\item{datalabels.colour}{Colour of the datalabels.}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
@@ -8000,23 +8001,23 @@ sir_df(data, translate_ab = "name", language = get_AMR_locale(),
 
 \item{as_percent}{A \link{logical} to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below.}
 
-\item{ab_result}{Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R"}
+\item{ab_result}{Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R".}
 
 \item{confidence_level}{The confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method.}
 
 \item{side}{The side of the confidence interval to return. The default is \code{"both"} for a length 2 vector, but can also be (abbreviated as) \code{"min"}/\code{"left"}/\code{"lower"}/\code{"less"} or \code{"max"}/\code{"right"}/\code{"higher"}/\code{"greater"}.}
 
-\item{collapse}{A \link{logical} to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing}
+\item{collapse}{A \link{logical} to indicate whether the output values should be 'collapsed', i.e. be merged together into one value, or a character value to use for collapsing.}
 
-\item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
+\item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
+\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}}
+\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
 }
 \value{
 A \link{double} or, when \code{as_percent = TRUE}, a \link{character}.
@@ -8246,13 +8247,13 @@ random_sir(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...)
 \arguments{
 \item{size}{Desired size of the returned vector. If used in a \link{data.frame} call or \code{dplyr} verb, will get the current (group) size if left blank.}
 
-\item{mo}{Any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{Any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}.}
 
-\item{ab}{Any \link{character} that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any \link{character} that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{...}{Ignored, only in place to allow future extensions}
+\item{...}{Ignored, only in place to allow future extensions.}
 
-\item{prob_SIR}{A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value)}
+\item{prob_SIR}{A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value).}
 }
 \value{
 class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \code{disk} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})
@@ -8318,15 +8319,15 @@ ggplot_sir_predict(x, main = paste("Resistance Prediction of", x_name),
 \arguments{
 \item{x}{A \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}
 
-\item{col_ab}{Column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"})}
+\item{col_ab}{Column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"}).}
 
-\item{col_date}{Column name of the date, will be used to calculate years if this column doesn't consist of years already - the default is the first column of with a date class}
+\item{col_date}{Column name of the date, will be used to calculate years if this column doesn't consist of years already - the default is the first column of with a date class.}
 
-\item{year_min}{Lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}}
+\item{year_min}{Lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}.}
 
-\item{year_max}{Highest year to use in the prediction model - the default is 10 years after today}
+\item{year_max}{Highest year to use in the prediction model - the default is 10 years after today.}
 
-\item{year_every}{Unit of sequence between lowest year found in the data and \code{year_max}}
+\item{year_every}{Unit of sequence between lowest year found in the data and \code{year_max}.}
 
 \item{minimum}{Minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
@@ -8338,13 +8339,13 @@ ggplot_sir_predict(x, main = paste("Resistance Prediction of", x_name),
 
 \item{info}{A \link{logical} to indicate whether textual analysis should be printed with the name and \code{\link[=summary]{summary()}} of the statistical model.}
 
-\item{...}{Arguments passed on to functions}
+\item{...}{Arguments passed on to functions.}
 
-\item{main}{Title of the plot}
+\item{main}{Title of the plot.}
 
-\item{ribbon}{A \link{logical} to indicate whether a ribbon should be shown (default) or error bars}
+\item{ribbon}{A \link{logical} to indicate whether a ribbon should be shown (default) or error bars.}
 
-\item{object}{Model data to be plotted}
+\item{object}{Model data to be plotted.}
 }
 \value{
 A \link{data.frame} with extra class \code{\link{resistance_predict}} with columns:
@@ -8460,9 +8461,9 @@ skewness(x, na.rm = FALSE)
 \method{skewness}{data.frame}(x, na.rm = FALSE)
 }
 \arguments{
-\item{x}{A vector of values, a \link{matrix} or a \link{data.frame}}
+\item{x}{A vector of values, a \link{matrix} or a \link{data.frame}.}
 
-\item{na.rm}{A \link{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds}
+\item{na.rm}{A \link{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.}
 }
 \description{
 Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable about its mean.
@@ -8492,9 +8493,9 @@ top_n_microorganisms(x, n, property = "fullname", n_for_each = NULL,
   col_mo = NULL, ...)
 }
 \arguments{
-\item{x}{A data frame containing microbial data}
+\item{x}{A data frame containing microbial data.}
 
-\item{n}{An integer specifying the maximum number of unique values of the \code{property} to include in the output}
+\item{n}{An integer specifying the maximum number of unique values of the \code{property} to include in the output.}
 
 \item{property}{A character string indicating the microorganism property to use for filtering. Must be one of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed". If \code{NULL}, the raw values from \code{col_mo} will be used without transformation.}
 
@@ -8557,7 +8558,7 @@ translate_AMR(x, language = get_AMR_locale())
 \arguments{
 \item{language}{Language to choose. Use one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr), or Ukrainian (uk).}
 
-\item{x}{Text to translate}
+\item{x}{Text to translate.}
 }
 \description{
 For language-dependent output of \code{AMR} functions, such as \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
@@ -9299,11 +9300,15 @@ Our goal is to build a predictive model using the `tidymodels` framework to dete
 
 We begin by loading the required libraries and preparing the `example_isolates` dataset from the `AMR` package.
 
-```{r}
+```{r lib packages, message = FALSE, warning = FALSE, results = 'asis'}
 # Load required libraries
 library(AMR)          # For AMR data analysis
 library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
+```
 
+Prepare the data:
+
+```{r}
 # Your data could look like this:
 example_isolates
 
@@ -9497,6 +9502,7 @@ data_time
 ```
 
 **Explanation:**
+
 - `mo_name(mo)`: Converts microbial codes into proper species names.
 - `resistance()`: Converts AMR results into numeric values (proportion of resistant isolates).
 - `group_by(year, ward, species)`: Aggregates resistance rates by year and ward.
@@ -9518,6 +9524,7 @@ resistance_recipe_time
 ```
 
 **Explanation:**
+
 - `step_dummy()`: Encodes categorical variables (`ward`, `species`) as numerical indicators.
 - `step_normalize()`: Normalises the `year` variable.
 - `step_nzv()`: Removes near-zero variance predictors.
@@ -9535,6 +9542,7 @@ lm_model
 ```
 
 **Explanation:**
+
 - `linear_reg()`: Defines a linear regression model.
 - `set_engine("lm")`: Uses R’s built-in linear regression engine.
 
@@ -9579,6 +9587,7 @@ metrics_time
 ```
 
 **Explanation:**
+
 - `initial_split()`: Splits data into training and testing sets.
 - `fit()`: Trains the workflow.
 - `predict()`: Generates resistance predictions.

@@ -60,10 +60,10 @@ COMMON_MIC_VALUES <- c(
 #'
 #' This transforms vectors to a new class [`mic`], which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 #' @rdname as.mic
-#' @param x A [character] or [numeric] vector
-#' @param na.rm A [logical] indicating whether missing values should be removed
+#' @param x A [character] or [numeric] vector.
+#' @param na.rm A [logical] indicating whether missing values should be removed.
 #' @param keep_operators A [character] specifying how to handle operators (such as `>` and `<=`) in the input. Accepts one of three values: `"all"` (or `TRUE`) to keep all operators, `"none"` (or `FALSE`) to remove all operators, or `"edges"` to keep operators only at both ends of the range.
-#' @param ... Arguments passed on to methods
+#' @param ... Arguments passed on to methods.
 #' @details To interpret MIC values as SIR values, use [as.sir()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
 #' This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:

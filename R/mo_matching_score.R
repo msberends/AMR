@@ -30,8 +30,8 @@
 #' Calculate the Matching Score for Microorganisms
 #'
 #' This algorithm is used by [as.mo()] and all the [`mo_*`][mo_property()] functions to determine the most probable match of taxonomic records based on user input.
-#' @param x Any user input value(s)
-#' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
+#' @param x Any user input value(s).
+#' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms].
 #' @note This algorithm was originally developed in 2018 and subsequently described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
 #'
 #' Later, the work of Bartlett A *et al.* about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated, and optimalisations to the algorithm were made.

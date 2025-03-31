@@ -31,10 +31,10 @@
 #'
 #' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial drug, the generated results will reflect reality as much as possible.
 #' @param size Desired size of the returned vector. If used in a [data.frame] call or `dplyr` verb, will get the current (group) size if left blank.
-#' @param mo Any [character] that can be coerced to a valid microorganism code with [as.mo()]
-#' @param ab Any [character] that can be coerced to a valid antimicrobial drug code with [as.ab()]
-#' @param prob_SIR A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value)
-#' @param ... Ignored, only in place to allow future extensions
+#' @param mo Any [character] that can be coerced to a valid microorganism code with [as.mo()].
+#' @param ab Any [character] that can be coerced to a valid antimicrobial drug code with [as.ab()].
+#' @param prob_SIR A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value).
+#' @param ... Ignored, only in place to allow future extensions.
 #' @details The base \R function [sample()] is used for generating values.
 #'
 #' Generated values are based on the EUCAST `r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` guideline as implemented in the [clinical_breakpoints] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.

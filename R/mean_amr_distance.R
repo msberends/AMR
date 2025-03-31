@@ -30,9 +30,9 @@
 #' Calculate the Mean AMR Distance
 #'
 #' Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
-#' @param x A vector of class [sir][as.sir()], [mic][as.mic()] or [disk][as.disk()], or a [data.frame] containing columns of any of these classes
-#' @param ... Variables to select. Supports [tidyselect language][tidyselect::language] (such as `column1:column4` and `where(is.mic)`), and can thus also be [antimicrobial selectors][amr_selector()]
-#' @param combine_SI A [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is `TRUE`
+#' @param x A vector of class [sir][as.sir()], [mic][as.mic()] or [disk][as.disk()], or a [data.frame] containing columns of any of these classes.
+#' @param ... Variables to select. Supports [tidyselect language][tidyselect::language] (such as `column1:column4` and `where(is.mic)`), and can thus also be [antimicrobial selectors][amr_selector()].
+#' @param combine_SI A [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant) - the default is `TRUE`.
 #' @details The mean AMR distance is effectively [the Z-score](https://en.wikipedia.org/wiki/Standard_score); a normalised numeric value to compare AMR test results which can help to identify similar isolates, without comparing antibiograms by hand.
 #'
 #' MIC values (see [as.mic()]) are transformed with [log2()] first; their distance is thus calculated as `(log2(x) - mean(log2(x))) / sd(log2(x))`.
@@ -171,8 +171,8 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
 }
 
 #' @rdname mean_amr_distance
-#' @param amr_distance The outcome of [mean_amr_distance()]
-#' @param row An index, such as a row number
+#' @param amr_distance The outcome of [mean_amr_distance()].
+#' @param row An index, such as a row number.
 #' @export
 amr_distance_from_row <- function(amr_distance, row) {
   meet_criteria(amr_distance, allow_class = "numeric", is_finite = TRUE)

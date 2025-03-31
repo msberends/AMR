@@ -33,7 +33,7 @@ mo_reset_session()
 mo_cleaning_regex()
 }
 \arguments{
-\item{x}{A \link{character} vector or a \link{data.frame} with one or two columns}
+\item{x}{A \link{character} vector or a \link{data.frame} with one or two columns.}
 
 \item{Becker}{A \link{logical} to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (see \emph{Source}). Please see \emph{Details} for a full list of staphylococcal species that will be converted.
 
@@ -55,11 +55,11 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{only_fungi}{A \link{logical} to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for \link[=mo_property]{all microorganism functions} with the package option \code{\link[=AMR-options]{AMR_only_fungi}}, i.e. \code{options(AMR_only_fungi = TRUE)}.}
 
-\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
 \item{info}{A \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is \code{TRUE} only in interactive mode.}
 
-\item{...}{Other arguments passed on to functions}
+\item{...}{Other arguments passed on to functions.}
 }
 \value{
 A \link{character} \link{vector} with additional class \code{\link{mo}}

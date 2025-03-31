@@ -30,10 +30,10 @@
 #' Determine Clinical or Epidemic Episodes
 #'
 #' These functions determine which items in a vector can be considered (the start of) a new episode. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns `TRUE` for every new [get_episode()] index. Both absolute and relative episode determination are supported.
-#' @param x Vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
-#' @param episode_days Episode length in days to specify the time period after which a new episode begins, can also be less than a day or `Inf`, see *Details*
-#' @param case_free_days (inter-epidemic) interval length in days after which a new episode will start, can also be less than a day or `Inf`, see *Details*
-#' @param ... Ignored, only in place to allow future extensions
+#' @param x Vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes.
+#' @param episode_days Episode length in days to specify the time period after which a new episode begins, can also be less than a day or `Inf`, see *Details*.
+#' @param case_free_days (inter-epidemic) interval length in days after which a new episode will start, can also be less than a day or `Inf`, see *Details*.
+#' @param ... Ignored, only in place to allow future extensions.
 #' @details Episodes can be determined in two ways: absolute and relative.
 #'
 #' 1. Absolute

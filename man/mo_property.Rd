@@ -153,17 +153,17 @@ mo_property(x, property = "fullname", language = get_AMR_locale(),
 \arguments{
 \item{x}{Any \link{character} (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
 
-\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+\item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
 \item{keep_synonyms}{A \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the package option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
-\item{...}{Other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'}
+\item{...}{Other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'.}
 
-\item{ab}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
+\item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}.}
 
-\item{property}{One of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}}
+\item{property}{One of the column names of the \link{microorganisms} data set: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", or "snomed", or must be \code{"shortname"}.}
 }
 \value{
 \itemize{
