@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9233</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,11 +101,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see <code><a href="as.sir.html">as.sir()</a></code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see <code><a href="as.sir.html">as.sir()</a></code>).</p></dd>
 
 
 <dt id="arg-antimicrobials">antimicrobials<a class="anchor" aria-label="anchor" href="#arg-antimicrobials"></a></dt>
-<dd><p>A vector specifying the antimicrobials to include in the antibiogram (see <em>Examples</em>). Will be evaluated using <code><a href="guess_ab_col.html">guess_ab_col()</a></code>. This can be:</p><ul><li><p>Any antimicrobial name or code</p></li>
+<dd><p>A vector specifying the antimicrobials to include in the antibiogram (see <em>Examples</em>). Will be evaluated using <code><a href="guess_ab_col.html">guess_ab_col()</a></code>. This can be:.</p><ul><li><p>Any antimicrobial name or code</p></li>
 <li><p>A column name in <code>x</code> that contains SIR values</p></li>
 <li><p>Any <a href="antimicrobial_selectors.html">antimicrobial selector</a>, such as <code><a href="antimicrobial_selectors.html">aminoglycosides()</a></code> or <code><a href="antimicrobial_selectors.html">carbapenems()</a></code></p></li>
 <li><p>A combination of the above, using <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, e.g.:</p><ul><li><p><code>c(aminoglycosides(), "AMP", "AMC")</code></p></li>
@@ -138,11 +138,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-only-all-tested">only_all_tested<a class="anchor" aria-label="anchor" href="#arg-only-all-tested"></a></dt>
-<dd><p>(for combination antibiograms): a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that isolates must be tested for all antimicrobials, see <em>Details</em></p></dd>
+<dd><p>(for combination antibiograms): a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that isolates must be tested for all antimicrobials, see <em>Details</em>.</p></dd>
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
-<dd><p>Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise</p></dd>
+<dd><p>Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.</p></dd>
 
 
 <dt id="arg-formatting-type">formatting_type<a class="anchor" aria-label="anchor" href="#arg-formatting-type"></a></dt>
@@ -154,7 +154,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>Language to translate text, which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>)</p></dd>
+<dd><p>Language to translate text, which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>).</p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
@@ -162,11 +162,11 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is <code>TRUE</code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is <code>TRUE</code>).</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>A separating character for antimicrobial columns in combination antibiograms</p></dd>
+<dd><p>A separating character for antimicrobial columns in combination antibiograms.</p></dd>
 
 
 <dt id="arg-wisca">wisca<a class="anchor" aria-label="anchor" href="#arg-wisca"></a></dt>
@@ -174,31 +174,31 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-simulations">simulations<a class="anchor" aria-label="anchor" href="#arg-simulations"></a></dt>
-<dd><p>(for WISCA) a numerical value to set the number of Monte Carlo simulations</p></dd>
+<dd><p>(for WISCA) a numerical value to set the number of Monte Carlo simulations.</p></dd>
 
 
 <dt id="arg-conf-interval">conf_interval<a class="anchor" aria-label="anchor" href="#arg-conf-interval"></a></dt>
-<dd><p>A numerical value to set confidence interval (default is <code>0.95</code>)</p></dd>
+<dd><p>A numerical value to set confidence interval (default is <code>0.95</code>).</p></dd>
 
 
 <dt id="arg-interval-side">interval_side<a class="anchor" aria-label="anchor" href="#arg-interval-side"></a></dt>
-<dd><p>The side of the confidence interval, either <code>"two-tailed"</code> (default), <code>"left"</code> or <code>"right"</code></p></dd>
+<dd><p>The side of the confidence interval, either <code>"two-tailed"</code> (default), <code>"left"</code> or <code>"right"</code>.</p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>When used in <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">R Markdown or Quarto</a>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use)</p></dd>
+<dd><p>When used in <a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">R Markdown or Quarto</a>: arguments passed on to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> (otherwise, has no use).</p></dd>
 
 
 <dt id="arg-wisca-model">wisca_model<a class="anchor" aria-label="anchor" href="#arg-wisca-model"></a></dt>
-<dd><p>The outcome of <code>wisca()</code> or <code>antibiogram(..., wisca = TRUE)</code></p></dd>
+<dd><p>The outcome of <code>wisca()</code> or <code>antibiogram(..., wisca = TRUE)</code>.</p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An <code>antibiogram()</code> object</p></dd>
+<dd><p>An <code>antibiogram()</code> object.</p></dd>
 
 
 <dt id="arg-italicise">italicise<a class="anchor" aria-label="anchor" href="#arg-italicise"></a></dt>
@@ -206,7 +206,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-na">na<a class="anchor" aria-label="anchor" href="#arg-na"></a></dt>
-<dd><p>Character to use for showing <code>NA</code> values</p></dd>
+<dd><p>Character to use for showing <code>NA</code> values.</p></dd>
 
 </dl></div>
     <div class="section level2">

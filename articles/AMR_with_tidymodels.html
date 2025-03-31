@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9233</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,23 +134,10 @@ package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load required libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>          <span class="co"># For AMR data analysis</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>   <span class="co"># For machine learning workflows, and data manipulation (dplyr, tidyr, ...)</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching packages</span> ────────────────────────────────────── tidymodels 1.3.0 ──</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">broom       </span> 1.0.8     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">recipes     </span> 1.2.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dials       </span> 1.4.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">rsample     </span> 1.2.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr       </span> 1.1.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble      </span> 3.2.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2     </span> 3.5.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr       </span> 1.3.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">infer       </span> 1.0.7     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tune        </span> 1.3.0</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">modeldata   </span> 1.4.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">workflows   </span> 1.2.0</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">parsnip     </span> 1.3.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">workflowsets</span> 1.1.0</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr       </span> 1.0.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">yardstick   </span> 1.3.2</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ───────────────────────────────────────── tidymodels_conflicts() ──</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">purrr</span>::<span style="color: #00BB00;">discard()</span> masks <span style="color: #0000BB;">scales</span>::discard()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span>  masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>     masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">recipes</span>::<span style="color: #00BB00;">step()</span>  masks <span style="color: #0000BB;">stats</span>::step()</span></span>
-<span></span>
-<span><span class="co"># Your data could look like this:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>   <span class="co"># For machine learning workflows, and data manipulation (dplyr, tidyr, ...)</span></span></code></pre></div>
+<p>Prepare the data:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Your data could look like this:</span></span>
 <span><span class="va">example_isolates</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,000 × 46</span></span></span>
 <span><span class="co">#&gt;    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span></span>
@@ -215,7 +202,7 @@ three steps: preprocessing, model specification, and fitting.</p>
 <h4 id="preprocessing-with-a-recipe">1. Preprocessing with a Recipe<a class="anchor" aria-label="anchor" href="#preprocessing-with-a-recipe"></a>
 </h4>
 <p>We create a recipe to preprocess the data for modelling.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define the recipe for data preprocessing</span></span>
 <span><span class="va">resistance_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">mo</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">step_corr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, threshold <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
@@ -233,7 +220,7 @@ three steps: preprocessing, model specification, and fitting.</p>
 <p>For a recipe that includes at least one preprocessing operation, like
 we have with <code>step_corr()</code>, the necessary parameters can be
 estimated from a training set using <code>prep()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">prep</span><span class="op">(</span><span class="va">resistance_recipe</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span></span>
 <span><span class="co"><span style="color: #0000BB;">#&gt;   (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span></span>
@@ -277,7 +264,7 @@ much with existing, other variables.</p>
 </h4>
 <p>We define a logistic regression model since resistance prediction is
 a binary classification task.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Specify a logistic regression model</span></span>
 <span><span class="va">logistic_model</span> <span class="op">&lt;-</span> <span class="fu">logistic_reg</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glm"</span><span class="op">)</span> <span class="co"># Use the Generalised Linear Model engine</span></span>
@@ -300,7 +287,7 @@ engine.</li>
 </h4>
 <p>We bundle the recipe and model together into a <code>workflow</code>,
 which organises the entire modeling process.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Combine the recipe and model into a workflow</span></span>
 <span><span class="va">resistance_workflow</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">add_recipe</span><span class="op">(</span><span class="va">resistance_recipe</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Add the preprocessing recipe</span></span>
@@ -328,7 +315,7 @@ which organises the entire modeling process.</p>
 <p>To train the model, we split the data into training and testing sets.
 Then, we fit the workflow on the training set and evaluate its
 performance.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Split data into training and testing sets</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># For reproducibility</span></span>
 <span><span class="va">data_split</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">data</span>, prop <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="co"># 80% training, 20% testing</span></span>
@@ -350,7 +337,7 @@ testing sets.</li>
 functions are internally called again. For training, these functions are
 called since they are stored in the recipe.</p>
 <p>Next, we evaluate the model on the testing data.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make predictions on the testing set</span></span>
 <span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">fitted_workflow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">testing_data</span><span class="op">)</span>                <span class="co"># Generate predictions</span></span>
@@ -417,7 +404,7 @@ kappa.</li>
 <p>It appears we can predict the Gram stain with a 99.5% accuracy based
 on AMR results of only aminoglycosides and beta-lactam antibiotics. The
 ROC curve looks like this:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predictions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">roc_curve</span><span class="op">(</span><span class="va">mo</span>, <span class="va">`.pred_Gram-negative`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -466,7 +453,7 @@ model.</li>
 </h3>
 <p>We start by transforming the <code>example_isolates</code> dataset
 into a structured time-series format.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load required libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span></span>
@@ -499,11 +486,18 @@ into a structured time-series format.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>006 Gram-negative   0.379  0       0.1   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>006 Gram-positive   0.778  0.333   0.353 </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 22 more rows</span></span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>mo_name(mo)</code>: Converts
-microbial codes into proper species names. - <code><a href="../reference/proportion.html">resistance()</a></code>:
-Converts AMR results into numeric values (proportion of resistant
-isolates). - <code>group_by(year, ward, species)</code>: Aggregates
-resistance rates by year and ward.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>mo_name(mo)</code>: Converts microbial codes into proper
+species names.</li>
+<li>
+<code><a href="../reference/proportion.html">resistance()</a></code>: Converts AMR results into numeric values
+(proportion of resistant isolates).</li>
+<li>
+<code>group_by(year, ward, species)</code>: Aggregates resistance
+rates by year and ward.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="defining-the-workflow-1">
@@ -514,7 +508,7 @@ preprocessing step, a model specification, and the fitting process.</p>
 <div class="section level4">
 <h4 id="preprocessing-with-a-recipe-1">1. Preprocessing with a Recipe<a class="anchor" aria-label="anchor" href="#preprocessing-with-a-recipe-1"></a>
 </h4>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define the recipe</span></span>
 <span><span class="va">resistance_recipe_time</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">res_AMX</span> <span class="op">~</span> <span class="va">year</span> <span class="op">+</span> <span class="va">gramstain</span>, data <span class="op">=</span> <span class="va">data_time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">step_dummy</span><span class="op">(</span><span class="va">gramstain</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># Convert categorical to numerical</span></span>
@@ -534,17 +528,23 @@ preprocessing step, a model specification, and the fitting process.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Dummy variables from: <span style="color: #0000BB;">gramstain</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Centering and scaling for: <span style="color: #0000BB;">year</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Sparse, unbalanced variable filter on: <span style="color: #0000BB;">all_predictors()</span></span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>step_dummy()</code>: Encodes
-categorical variables (<code>ward</code>, <code>species</code>) as
-numerical indicators. - <code>step_normalize()</code>: Normalises the
-<code>year</code> variable. - <code>step_nzv()</code>: Removes near-zero
-variance predictors.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>step_dummy()</code>: Encodes categorical variables
+(<code>ward</code>, <code>species</code>) as numerical indicators.</li>
+<li>
+<code>step_normalize()</code>: Normalises the <code>year</code>
+variable.</li>
+<li>
+<code>step_nzv()</code>: Removes near-zero variance predictors.</li>
+</ul>
 </div>
 <div class="section level4">
 <h4 id="specifying-the-model-1">2. Specifying the Model<a class="anchor" aria-label="anchor" href="#specifying-the-model-1"></a>
 </h4>
 <p>We use a linear regression model to predict resistance trends.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define the linear regression model</span></span>
 <span><span class="va">lm_model</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"lm"</span><span class="op">)</span> <span class="co"># Use linear regression</span></span>
@@ -553,15 +553,20 @@ variance predictors.</p>
 <span><span class="co">#&gt; Linear Regression Model Specification (regression)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Computational engine: lm</span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>linear_reg()</code>: Defines a
-linear regression model. - <code>set_engine("lm")</code>: Uses R’s
-built-in linear regression engine.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>linear_reg()</code>: Defines a linear regression model.</li>
+<li>
+<code>set_engine("lm")</code>: Uses R’s built-in linear regression
+engine.</li>
+</ul>
 </div>
 <div class="section level4">
 <h4 id="building-the-workflow-1">3. Building the Workflow<a class="anchor" aria-label="anchor" href="#building-the-workflow-1"></a>
 </h4>
 <p>We combine the preprocessing recipe and model into a workflow.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create workflow</span></span>
 <span><span class="va">resistance_workflow_time</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">add_recipe</span><span class="op">(</span><span class="va">resistance_recipe_time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -591,7 +596,7 @@ built-in linear regression engine.</p>
 </h3>
 <p>We split the data into training and testing sets, fit the model, and
 evaluate performance.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Split the data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">data_split_time</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">data_time</span>, prop <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
@@ -618,17 +623,25 @@ evaluate performance.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> rmse    standard      0.077<span style="text-decoration: underline;">4</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> rsq     standard      0.711 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> mae     standard      0.070<span style="text-decoration: underline;">4</span></span></span></code></pre></div>
-<p><strong>Explanation:</strong> - <code>initial_split()</code>: Splits
-data into training and testing sets. - <code>fit()</code>: Trains the
-workflow. - <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>: Generates resistance predictions. -
-<code>metrics()</code>: Evaluates model performance.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<code>initial_split()</code>: Splits data into training and testing
+sets.</li>
+<li>
+<code>fit()</code>: Trains the workflow.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>: Generates resistance predictions.</li>
+<li>
+<code>metrics()</code>: Evaluates model performance.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="visualising-predictions">
 <strong>Visualising Predictions</strong><a class="anchor" aria-label="anchor" href="#visualising-predictions"></a>
 </h3>
 <p>We plot resistance trends over time for amoxicillin.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot actual vs predicted resistance over time</span></span>
@@ -642,7 +655,7 @@ workflow. - <code><a href="https://rdrr.io/r/stats/predict.html" class="external
 <p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-14-1.png" width="720"></p>
 <p>Additionally, we can visualise resistance trends in
 <code>ggplot2</code> and directly add linear models there:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data_time</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">res_AMX</span>, color <span class="op">=</span> <span class="va">gramstain</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"AMX Resistance Trends"</span>,</span>

@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9232</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9233</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,11 +86,11 @@
 
 
 <dt id="arg-col-date">col_date<a class="anchor" aria-label="anchor" href="#arg-col-date"></a></dt>
-<dd><p>Column name of the result date (or date that is was received on the lab) - the default is the first column with a date class</p></dd>
+<dd><p>Column name of the result date (or date that is was received on the lab) - the default is the first column with a date class.</p></dd>
 
 
 <dt id="arg-col-patient-id">col_patient_id<a class="anchor" aria-label="anchor" href="#arg-col-patient-id"></a></dt>
-<dd><p>Column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive)</p></dd>
+<dd><p>Column name of the unique IDs of the patients - the default is the first column that starts with 'patient' or 'patid' (case insensitive).</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
@@ -102,7 +102,7 @@
 
 
 <dt id="arg-col-specimen">col_specimen<a class="anchor" aria-label="anchor" href="#arg-col-specimen"></a></dt>
-<dd><p>Column name of the specimen type or group</p></dd>
+<dd><p>Column name of the specimen type or group.</p></dd>
 
 
 <dt id="arg-col-icu">col_icu<a class="anchor" aria-label="anchor" href="#arg-col-icu"></a></dt>
@@ -118,19 +118,19 @@
 
 
 <dt id="arg-testcodes-exclude">testcodes_exclude<a class="anchor" aria-label="anchor" href="#arg-testcodes-exclude"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with test codes that should be excluded (case-insensitive)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with test codes that should be excluded (case-insensitive).</p></dd>
 
 
 <dt id="arg-icu-exclude">icu_exclude<a class="anchor" aria-label="anchor" href="#arg-icu-exclude"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>).</p></dd>
 
 
 <dt id="arg-specimen-group">specimen_group<a class="anchor" aria-label="anchor" href="#arg-specimen-group"></a></dt>
-<dd><p>Value in the column set with <code>col_specimen</code> to filter on</p></dd>
+<dd><p>Value in the column set with <code>col_specimen</code> to filter on.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Type to determine weighed isolates; can be <code>"keyantimicrobials"</code> or <code>"points"</code>, see <em>Details</em></p></dd>
+<dd><p>Type to determine weighed isolates; can be <code>"keyantimicrobials"</code> or <code>"points"</code>, see <em>Details</em>.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
@@ -138,15 +138,15 @@
 
 
 <dt id="arg-ignore-i">ignore_I<a class="anchor" aria-label="anchor" href="#arg-ignore-i"></a></dt>
-<dd><p><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantimicrobials"</code>, see <em>Details</em></p></dd>
+<dd><p><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantimicrobials"</code>, see <em>Details</em>.</p></dd>
 
 
 <dt id="arg-points-threshold">points_threshold<a class="anchor" aria-label="anchor" href="#arg-points-threshold"></a></dt>
-<dd><p>Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em></p></dd>
+<dd><p>Minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em>.</p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode.</p></dd>
 
 
 <dt id="arg-include-unknown">include_unknown<a class="anchor" aria-label="anchor" href="#arg-include-unknown"></a></dt>
@@ -158,7 +158,7 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, otherwise arguments passed on to <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> (such as <code>universal</code>, <code>gram_negative</code>, <code>gram_positive</code>)</p></dd>
+<dd><p>Arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, otherwise arguments passed on to <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> (such as <code>universal</code>, <code>gram_negative</code>, <code>gram_positive</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
