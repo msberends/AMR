@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9233</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9234</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -239,7 +239,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <p>The <code>as.sir()</code> function can work in four ways:</p><ol><li><p>For <strong>cleaning raw / untransformed data</strong>. The data will be cleaned to only contain valid values, namely: <strong>S</strong> for susceptible, <strong>I</strong> for intermediate or 'susceptible, increased exposure', <strong>R</strong> for resistant, <strong>NI</strong> for non-interpretable, and <strong>SDD</strong> for susceptible dose-dependent. Each of these can be set using a <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a>. Furthermore, <code>as.sir()</code> will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as <code>"&lt;0.25; S"</code> will be coerced to <code>"S"</code>. Combined interpretations for multiple test methods (as seen in laboratory records) such as <code>"S; S"</code> will be coerced to <code>"S"</code>, but a value like <code>"S; I"</code> will return <code>NA</code> with a warning that the input is invalid.</p></li>
-<li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href="as.mic.html">as.mic()</a></code>, that also gives your columns the new data class <code><a href="as.mic.html">mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Using <code>dplyr</code>, SIR interpretation can be done very easily with either:</p>
+<li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href="as.mic.html">as.mic()</a></code>, that also gives your columns the new data class <code><a href="as.mic.html">mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Example to apply using <code>dplyr</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span><span class="op">)</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, ab <span class="op">=</span> <span class="st">"column_with_antibiotics"</span>, mo <span class="op">=</span> <span class="st">"column_with_microorganisms"</span><span class="op">)</span></span>
@@ -248,8 +248,9 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
 <li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>capped_mic_handling = "conservative"</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>capped_mic_handling = "standard"</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
+<li><p><strong>Note:</strong> When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.</p></li>
 </ul></li>
-<li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href="as.disk.html">as.disk()</a></code>, that also gives your columns the new data class <code><a href="as.disk.html">disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Using <code>dplyr</code>, SIR interpretation can be done very easily with either:</p>
+<li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href="as.disk.html">as.disk()</a></code>, that also gives your columns the new data class <code><a href="as.disk.html">disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Example to apply using <code>dplyr</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span><span class="op">)</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.disk</span><span class="op">)</span>, <span class="va">as.sir</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, ab <span class="op">=</span> <span class="st">"column_with_antibiotics"</span>, mo <span class="op">=</span> <span class="st">"column_with_microorganisms"</span><span class="op">)</span></span>
@@ -288,13 +289,6 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 </div>
 
 <div class="section">
-<h3 id="machine-readable-clinical-breakpoints">Machine-Readable Clinical Breakpoints<a class="anchor" aria-label="anchor" href="#machine-readable-clinical-breakpoints"></a></h3>
-
-
-<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 34 376 rows and 14 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
-</div>
-
-<div class="section">
 <h3 id="other">Other<a class="anchor" aria-label="anchor" href="#other"></a></h3>
 
 
@@ -309,14 +303,8 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
     <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
 
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<a href="https://www.eucast.org/newsiandr" class="external-link">https://www.eucast.org/newsiandr</a>):</p><ul><li><p><strong>S - Susceptible, standard dosing regimen</strong><br>
-A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
-<li><p><strong>I - Susceptible, increased exposure</strong> <em><br>
-A microorganism is categorised as "Susceptible, Increased exposure</em>" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
-<li><p><strong>R = Resistant</strong><br>
-A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p><ul><li><p><em>Exposure</em> is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p></li>
-</ul></li>
-</ul><p>This AMR package honours this insight. Use <code><a href="proportion.html">susceptibility()</a></code> (equal to <code><a href="proportion.html">proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href="count.html">count_susceptible()</a></code> (equal to <code><a href="count.html">count_SI()</a></code>) to count susceptible isolates.</p>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/newsiandr" class="external-link">https://www.eucast.org/newsiandr</a>).</p>
+<p>This AMR package follows insight; use <code><a href="proportion.html">susceptibility()</a></code> (equal to <code><a href="proportion.html">proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href="count.html">count_susceptible()</a></code> (equal to <code><a href="count.html">count_SI()</a></code>) to count susceptible isolates.</p>
     </div>
     <div class="section level2">
     <h2 id="download-our-reference-data">Download Our Reference Data<a class="anchor" aria-label="anchor" href="#download-our-reference-data"></a></h2>
@@ -668,6 +656,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `mics = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -676,6 +669,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -686,6 +684,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `cipro = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -696,6 +699,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -706,6 +714,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `mics = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -716,6 +729,11 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -734,10 +752,12 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFAFAF;"> WARNING </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • No CLSI 2024 DISK breakpoints available for acetylspiramycin (ASP).</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 warnings in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `cipro = (function (x, ...) ...`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -751,10 +771,12 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 warnings in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -817,22 +839,22 @@ A microorganism is categorised as "Resistant" when there is a high likelihood of
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 65 × 16</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_given   mo_given host_given ab   mo             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-03-31 <span style="color: #949494;">13:01:25</span>     1 ampicillin Strep p… human      AMP  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-03-31 <span style="color: #949494;">13:01:25</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-03-31 <span style="color: #949494;">13:01:25</span>     1 AMP        Escheri… human      AMP  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">  NA</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-03-31 <span style="color: #949494;">13:01:25</span>     1 GEN        Escheri… human      GEN  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-03-31 <span style="color: #949494;">13:01:26</span>     1 TOB        Escheri… human      TOB  <span style="color: #949494;">B_</span>[ORD]<span style="color: #949494;">_</span>ENTRBC…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-03-31 <span style="color: #949494;">13:01:26</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-03-31 <span style="color: #949494;">13:01:26</span>     1 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-03-31 <span style="color: #949494;">13:01:26</span>     2 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-03-31 <span style="color: #949494;">13:01:26</span>     3 AMX        B_STRPT… human      AMX  <span style="color: #949494;">B_</span>STRPT<span style="color: #949494;">_</span>PNMN   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 65 × 17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given   mo_given   host_given input_given</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-07 <span style="color: #949494;">16:46:11</span>     1 DISK   ampicillin Strep pneu human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-07 <span style="color: #949494;">16:46:12</span>     1 DISK   AMP        Escherich… human      20         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-04-07 <span style="color: #949494;">16:46:12</span>     1 DISK   AMP        Escherich… human      20         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-07 <span style="color: #949494;">16:46:12</span>     1 DISK   GEN        Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-07 <span style="color: #949494;">16:46:12</span>     1 DISK   TOB        Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-07 <span style="color: #949494;">16:46:13</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-07 <span style="color: #949494;">16:46:13</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-07 <span style="color: #949494;">16:46:13</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-07 <span style="color: #949494;">16:46:13</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 55 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: host &lt;chr&gt;, method &lt;chr&gt;, input &lt;chr&gt;, outcome &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for single values</span></span></span>
