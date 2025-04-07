@@ -308,7 +308,7 @@ format.bug_drug_combinations <- function(x,
 
   # replace tidyr::pivot_wider() from here
   for (i in unique(y$mo)) {
-    mo_group <- y[which(y$mo == i), c("ab", "txt"), drop = FALSE]
+    mo_group <- y[which(as.character(y$mo) == i), c("ab", "txt"), drop = FALSE]
     colnames(mo_group) <- c("ab", i)
     rownames(mo_group) <- NULL
     y <- y %pm>%

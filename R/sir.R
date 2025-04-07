@@ -84,7 +84,7 @@
 #' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain valid values, namely: **S** for susceptible, **I** for intermediate or 'susceptible, increased exposure', **R** for resistant, **NI** for non-interpretable, and **SDD** for susceptible dose-dependent. Each of these can be set using a [regular expression][base::regex]. Furthermore, [as.sir()] will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is invalid.
 #'
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
-#'    * Using `dplyr`, SIR interpretation can be done very easily with either:
+#'    * Example to apply using `dplyr`:
 #'      ```r
 #'      your_data %>% mutate_if(is.mic, as.sir)
 #'      your_data %>% mutate(across(where(is.mic), as.sir))
@@ -95,8 +95,10 @@
 #'      your_data %>% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `capped_mic_handling = "conservative"`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`capped_mic_handling = "standard"`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+#'    * **Note:** When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
+#'
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
-#'    * Using `dplyr`, SIR interpretation can be done very easily with either:
+#'    * Example to apply using `dplyr`:
 #'      ```r
 #'      your_data %>% mutate_if(is.disk, as.sir)
 #'      your_data %>% mutate(across(where(is.disk), as.sir))
@@ -106,6 +108,7 @@
 #'      # for veterinary breakpoints, also set `host`:
 #'      your_data %>% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 #'      ```
+#'
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.sir(your_data)`.
 #'
 #' **For points 2, 3 and 4: Use [sir_interpretation_history()]** to retrieve a [data.frame] (or [tibble][tibble::tibble()] if the `tibble` package is installed) with all results of the last [as.sir()] call.
@@ -141,10 +144,6 @@
 #'
 #' To determine which isolates are multi-drug resistant, be sure to run [mdro()] (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about [interpreting multidrug-resistant organisms here][mdro()].
 #'
-#' ### Machine-Readable Clinical Breakpoints
-#'
-#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::clinical_breakpoints), big.mark = " ")` rows and `r ncol(AMR::clinical_breakpoints)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
-#'
 #' ### Other
 #'
 #' The function [is.sir()] detects if the input contains class `sir`. If the input is a [data.frame] or [list], it iterates over all columns/items and returns a [logical] vector.
@@ -153,18 +152,9 @@
 #'
 #' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or NI and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:
-#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr>):
+#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<https://www.eucast.org/newsiandr>).
 #'
-#' - **S - Susceptible, standard dosing regimen**\cr
-#'   A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
-#' - **I - Susceptible, increased exposure** *\cr
-#'   A microorganism is categorised as "Susceptible, Increased exposure*" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
-#' - **R = Resistant**\cr
-#'   A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
-#'
-#'   * *Exposure* is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
-#'
-#' This AMR package honours this insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
+#' This AMR package follows insight; use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
 #' @return Ordered [factor] with new class `sir`
 #' @aliases sir
 #' @export
@@ -379,12 +369,13 @@ as_sir_structure <- function(x,
       levels = c("S", "SDD", "I", "R", "NI"),
       ordered = TRUE
     ),
-    guideline = guideline,
-    mo = mo,
-    ab = ab,
-    method = method,
-    ref_tbl = ref_tbl,
-    ref_breakpoints = ref_breakpoints,
+    # TODO for #170
+    # guideline = guideline,
+    # mo = mo,
+    # ab = ab,
+    # method = method,
+    # ref_tbl = ref_tbl,
+    # ref_breakpoints = ref_breakpoints,
     class = c("sir", "ordered", "factor")
   )
 }
@@ -1253,9 +1244,11 @@ as_sir_method <- function(method_short,
       subset(method == method_coerced & ab %in% ab_coerced)
   }
 
+
   # create the unique data frame to be filled to save time
   df <- data.frame(
     values = x,
+    values_bak = x,
     mo = mo,
     ab = ab,
     result = NA_sir_,
@@ -1264,7 +1257,30 @@ as_sir_method <- function(method_short,
     stringsAsFactors = FALSE
   )
   if (method == "mic") {
-    # when as.sir.mic is called directly
+    if (guideline %like% "CLSI") {
+      # CLSI says: if MIC is not a log2 value it must be rounded up to the nearest log2 value
+      log2_levels <- 2^c(-9:12)
+      df$values <- vapply(
+        FUN.VALUE = double(1),
+        as.double(df$values),
+        function(mic_val) {
+          if (is.na(mic_val)) {
+            return(NA_real_)
+          } else {
+            # find the smallest log2 level that is >= mic_val
+            log2_val <- log2_levels[which(log2_levels >= mic_val)][1]
+            if (is.na(log2_val)) {
+              return(mic_val)
+            } else {
+              if (mic_val != log2_val && message_not_thrown_before("as.sir", "CLSI", "MICupscaling")) {
+                warning_("Some MICs were converted to the nearest higher log2 level, following the CLSI interpretation guideline.")
+              }
+              return(log2_val)
+            }
+          }
+        }
+      )
+    }
     df$values <- as.mic(df$values)
   } else if (method == "disk") {
     # when as.sir.disk is called directly
@@ -1272,6 +1288,7 @@ as_sir_method <- function(method_short,
   }
 
   df_unique <- unique(df[, c("mo", "ab", "uti", "host"), drop = FALSE])
+  mo_grams <- suppressWarnings(suppressMessages(mo_gramstain(df_unique$mo, language = NULL, keep_synonyms = FALSE)))
 
   # get all breakpoints, use humans as backup for animals
   breakpoint_type_lookup <- breakpoint_type
@@ -1332,8 +1349,6 @@ as_sir_method <- function(method_short,
     }
   }
 
-  mo_grams <- suppressWarnings(suppressMessages(mo_gramstain(df_unique$mo, language = NULL, keep_synonyms = FALSE)))
-
   # run the rules (df_unique is a row combination per mo/ab/uti/host) ----
   for (i in seq_len(nrow(df_unique))) {
     p$tick()
@@ -1345,15 +1360,16 @@ as_sir_method <- function(method_short,
     notes_current <- character(0)
     if (is.na(uti_current)) {
       # no preference, so no filter on UTIs
-      rows <- which(df$mo == mo_current & df$ab == ab_current & df$host == host_current)
+      rows <- which(as.character(df$mo) == mo_current & df$ab == ab_current & df$host == host_current)
     } else {
-      rows <- which(df$mo == mo_current & df$ab == ab_current & df$host == host_current & df$uti == uti_current)
+      rows <- which(as.character(df$mo) == mo_current & df$ab == ab_current & df$host == host_current & df$uti == uti_current)
     }
     if (length(rows) == 0) {
       # this can happen if a host is unavailable, just continue with the next one, since a note about hosts having NA are already given at this point
       next
     }
     values <- df[rows, "values", drop = TRUE]
+    values_bak <- df[rows, "values_bak", drop = TRUE]
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties, as fast as possible
@@ -1488,13 +1504,14 @@ as_sir_method <- function(method_short,
         data.frame(
           datetime = vectorise_log_entry(Sys.time(), length(rows)),
           index = rows,
+          method = vectorise_log_entry(method_coerced, length(rows)),
           ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
           mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
           host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
+          input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
           ab = vectorise_log_entry(ab_current, length(rows)),
           mo = vectorise_log_entry(mo_current, length(rows)),
           host = vectorise_log_entry(host_current, length(rows)),
-          method = vectorise_log_entry(method_coerced, length(rows)),
           input = vectorise_log_entry(as.character(values), length(rows)),
           outcome = vectorise_log_entry(NA_sir_, length(rows)),
           notes = vectorise_log_entry("NO BREAKPOINT AVAILABLE", length(rows)),
@@ -1616,13 +1633,14 @@ as_sir_method <- function(method_short,
         data.frame(
           datetime = vectorise_log_entry(Sys.time(), length(rows)),
           index = rows,
+          method = vectorise_log_entry(method_coerced, length(rows)),
           ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
           mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
           host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
+          input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
           ab = vectorise_log_entry(breakpoints_current[, "ab", drop = TRUE], length(rows)),
           mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
           host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
-          method = vectorise_log_entry(method_coerced, length(rows)),
           input = vectorise_log_entry(as.character(values), length(rows)),
           outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
           notes = vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),

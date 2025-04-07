@@ -357,9 +357,6 @@ proportion_IR <- function(...,
                           minimum = 30,
                           as_percent = FALSE,
                           only_all_tested = FALSE) {
-  if (message_not_thrown_before("proportion_IR", entire_session = TRUE)) {
-    message_("Note that `proportion_IR()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
-  }
   tryCatch(
     sir_calc(...,
       ab_result = c("I", "SDD", "R"),
@@ -378,9 +375,6 @@ proportion_I <- function(...,
                          minimum = 30,
                          as_percent = FALSE,
                          only_all_tested = FALSE) {
-  if (message_not_thrown_before("proportion_I", entire_session = TRUE)) {
-    message_("Note that `proportion_I()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
-  }
   tryCatch(
     sir_calc(...,
       ab_result = c("I", "SDD"),
@@ -399,9 +393,6 @@ proportion_SI <- function(...,
                           minimum = 30,
                           as_percent = FALSE,
                           only_all_tested = FALSE) {
-  if (message_not_thrown_before("proportion_SI", entire_session = TRUE)) {
-    message_("Note that `proportion_SI()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
-  }
   tryCatch(
     sir_calc(...,
       ab_result = c("S", "I", "SDD"),

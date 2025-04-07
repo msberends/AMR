@@ -609,7 +609,6 @@ antibiogram.default <- function(x,
       pm_select(.mo, antimicrobials)
   }
 
-
   # get numbers of S, I, R (per group)
   out <- out %pm>%
     bug_drug_combinations(
@@ -706,6 +705,7 @@ antibiogram.default <- function(x,
     }
 
     out_wisca$p_susceptible <- out_wisca$n_susceptible / out_wisca$n_tested
+    out_wisca$p_susceptible[is.nan(out_wisca$p_susceptible)] <- 0
 
     if (isTRUE(has_syndromic_group)) {
       out$group <- paste(out$syndromic_group, out$ab)
@@ -721,10 +721,6 @@ antibiogram.default <- function(x,
     out$beta_posterior_2 <- NA_real_
 
     for (i in seq_len(NROW(out))) {
-      if (out$n_tested[i] == 0) {
-        next
-      }
-
       out_current <- out[i, , drop = FALSE]
 
       ## calculate priors ----
@@ -767,18 +763,19 @@ antibiogram.default <- function(x,
 
         # simulate pathogen incidence
         # = Dirichlet (Gamma) parameters
-        random_incidence <- stats::runif(1, min = 0, max = 1)
+        random_incidence <- stats::runif(n = 1, min = 0, max = 1)
         simulated_incidence <- stats::qgamma(
           p = random_incidence,
           shape = params_current$gamma_posterior,
           scale = 1
         )
+
         # normalise
         simulated_incidence <- simulated_incidence / sum(simulated_incidence, na.rm = TRUE)
 
         # simulate susceptibility
         # = Beta parameters
-        random_susceptibity <- stats::runif(1, min = 0, max = 1)
+        random_susceptibity <- stats::runif(n = 1, min = 0, max = 1)
         simulated_susceptibility <- stats::qbeta(
           p = random_susceptibity,
           shape1 = params_current$beta_posterior_1,
@@ -804,7 +801,6 @@ antibiogram.default <- function(x,
     }
     # remove progress bar from console
     close(progress)
-
     # prepare for definitive output
     out <- out_wisca
     wisca_parameters <- wisca_parameters[, colnames(wisca_parameters)[!colnames(wisca_parameters) %in% c(levels(NA_sir_), "lower_ci", "upper_ci", "group")], drop = FALSE]
@@ -836,7 +832,6 @@ antibiogram.default <- function(x,
     }
   }
 
-  out$digits <- digits # since pm_sumarise() cannot work with an object outside the current frame
   if (isFALSE(wisca)) {
     out$coverage <- out$p_susceptible
   }
@@ -867,6 +862,7 @@ antibiogram.default <- function(x,
   if (wisca == TRUE && !formatting_type %in% c(1, 2, 13, 14) && info == TRUE && message_not_thrown_before("antibiogram", wisca, formatting_type)) {
     message_("Using WISCA with a `formatting_type` that includes the denominator is not useful")
   }
+  out$digits <- digits # since pm_sumarise() cannot work with an object outside the current frame
   if (formatting_type == 1) out <- out %pm>% pm_summarise(out_value = round(coverage * 100, digits = digits))
   if (formatting_type == 2) out <- out %pm>% pm_summarise(out_value = n_susceptible)
   if (formatting_type == 3) out <- out %pm>% pm_summarise(out_value = n_tested)
@@ -1148,6 +1144,7 @@ wisca <- function(x,
                   antimicrobials = where(is.sir),
                   ab_transform = "name",
                   syndromic_group = NULL,
+                  only_all_tested = FALSE,
                   digits = 1,
                   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
                   col_mo = NULL,
@@ -1166,7 +1163,7 @@ wisca <- function(x,
     mo_transform = NULL,
     syndromic_group = syndromic_group,
     add_total_n = FALSE,
-    only_all_tested = FALSE,
+    only_all_tested = only_all_tested,
     digits = digits,
     formatting_type = formatting_type,
     col_mo = col_mo,
@@ -1236,7 +1233,7 @@ plot.antibiogram <- function(x, ...) {
 
   for (i in seq_along(mo_levels)) {
     mo <- mo_levels[i]
-    df_sub <- df[df$mo == mo, , drop = FALSE]
+    df_sub <- df[as.character(df$mo) == mo, , drop = FALSE]
 
     bp <- barplot(
       height = df_sub$coverage * 100,
@@ -1311,7 +1308,7 @@ autoplot.antibiogram <- function(object, ...) {
         NULL
       }
     )
-  if (!all(df$mo == "", na.rm = TRUE)) {
+  if (!all(as.character(df$mo) == "", na.rm = TRUE)) {
     out <- out +
       ggplot2::facet_wrap("mo")
   }

@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # set up package environment, used by numerous AMR functions
-AMR_env <- new.env(hash = FALSE)
+AMR_env <- new.env(hash = TRUE, parent = emptyenv())
 AMR_env$mo_uncertainties <- data.frame(
   original_input = character(0),
   input = character(0),
@@ -58,13 +58,14 @@ AMR_env$av_previously_coerced <- data.frame(
 AMR_env$sir_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
+  method = character(0),
   ab_given = character(0),
   mo_given = character(0),
   host_given = character(0),
+  input_given = character(0),
   ab = set_clean_class(character(0), c("ab", "character")),
   mo = set_clean_class(character(0), c("mo", "character")),
   host = character(0),
-  method = character(0),
   input = character(0),
   outcome = NA_sir_[0],
   notes = character(0),
@@ -75,9 +76,11 @@ AMR_env$sir_interpretation_history <- data.frame(
   stringsAsFactors = FALSE
 )
 
+
 AMR_env$custom_ab_codes <- character(0)
 AMR_env$custom_mo_codes <- character(0)
 AMR_env$is_dark_theme <- NULL
+AMR_env$supports_colour <- NULL
 AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
 AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
 
@@ -86,9 +89,7 @@ AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet 
 AMR_env$ellipsis_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %or% "..."
 AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %or% "i"
 AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %or% "*"
-
 AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
-
 AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
 .onLoad <- function(libname, pkgname) {

@@ -162,7 +162,7 @@ The \code{\link[=as.sir]{as.sir()}} function can work in four ways:
 \item For \strong{cleaning raw / untransformed data}. The data will be cleaned to only contain valid values, namely: \strong{S} for susceptible, \strong{I} for intermediate or 'susceptible, increased exposure', \strong{R} for resistant, \strong{NI} for non-interpretable, and \strong{SDD} for susceptible dose-dependent. Each of these can be set using a \link[base:regex]{regular expression}. Furthermore, \code{\link[=as.sir]{as.sir()}} will try its best to clean with some intelligence. For example, mixed values with SIR interpretations and MIC values such as \code{"<0.25; S"} will be coerced to \code{"S"}. Combined interpretations for multiple test methods (as seen in laboratory records) such as \code{"S; S"} will be coerced to \code{"S"}, but a value like \code{"S; I"} will return \code{NA} with a warning that the input is invalid.
 \item For \strong{interpreting minimum inhibitory concentration (MIC) values} according to EUCAST or CLSI. You must clean your MIC values first using \code{\link[=as.mic]{as.mic()}}, that also gives your columns the new data class \code{\link{mic}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{
-\item Using \code{dplyr}, SIR interpretation can be done very easily with either:
+\item Example to apply using \code{dplyr}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{your_data \%>\% mutate_if(is.mic, as.sir)
 your_data \%>\% mutate(across(where(is.mic), as.sir))
@@ -173,10 +173,11 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 }\if{html}{\out{</div>}}
 \item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "conservative"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+\item \strong{Note:} When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{
-\item Using \code{dplyr}, SIR interpretation can be done very easily with either:
+\item Example to apply using \code{dplyr}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{your_data \%>\% mutate_if(is.disk, as.sir)
 your_data \%>\% mutate(across(where(is.disk), as.sir))
@@ -222,11 +223,6 @@ After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast
 To determine which isolates are multi-drug resistant, be sure to run \code{\link[=mdro]{mdro()}} (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about \link[=mdro]{interpreting multidrug-resistant organisms here}.
 }
 
-\subsection{Machine-Readable Clinical Breakpoints}{
-
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/clinical_breakpoints.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 34 376 rows and 14 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
-}
-
 \subsection{Other}{
 
 The function \code{\link[=is.sir]{is.sir()}} detects if the input contains class \code{sir}. If the input is a \link{data.frame} or \link{list}, it iterates over all columns/items and returns a \link{logical} vector.
@@ -240,20 +236,9 @@ The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRU
 }
 \section{Interpretation of SIR}{
 
-In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (\url{https://www.eucast.org/newsiandr}):
-\itemize{
-\item \strong{S - Susceptible, standard dosing regimen}\cr
-A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
-\item \strong{I - Susceptible, increased exposure} \emph{\cr
-A microorganism is categorised as "Susceptible, Increased exposure}" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
-\item \strong{R = Resistant}\cr
-A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
-\itemize{
-\item \emph{Exposure} is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
-}
-}
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (\url{https://www.eucast.org/newsiandr}).
 
-This AMR package honours this insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
+This AMR package follows insight; use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
 \section{Download Our Reference Data}{

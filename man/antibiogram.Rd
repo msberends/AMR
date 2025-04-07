@@ -28,7 +28,7 @@ antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   info = interactive(), ...)
 
 wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
-  syndromic_group = NULL, digits = 1,
+  syndromic_group = NULL, only_all_tested = FALSE, digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
   col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
   sep = " + ", simulations = 1000, conf_interval = 0.95,

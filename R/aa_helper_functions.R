@@ -1191,12 +1191,16 @@ message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
 }
 
 has_colour <- function() {
-  if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {
-    # disable on emacs, which only supports 8 colours
-    return(FALSE)
+  if (is.null(AMR_env$supports_colour)) {
+    if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {
+      # disable on emacs, which only supports 8 colours
+      AMR_env$supports_colour <- FALSE
+    } else {
+      has_color <- import_fn("has_color", "crayon", error_on_fail = FALSE)
+      AMR_env$supports_colour <- !is.null(has_color) && isTRUE(has_color())
+    }
   }
-  has_color <- import_fn("has_color", "crayon", error_on_fail = FALSE)
-  !is.null(has_color) && isTRUE(has_color())
+  isTRUE(AMR_env$supports_colour)
 }
 
 # set colours if console has_colour()
@@ -1216,13 +1220,7 @@ try_colour <- function(..., before, after, collapse = " ") {
   }
 }
 is_dark <- function() {
-  if (is.null(AMR_env$is_dark_theme) ||
-    is.null(AMR_env$current_theme) ||
-    (
-      !is.null(AMR_env$current_theme) &&
-        AMR_env$current_theme != tryCatch(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$editor, error = function(e) "")
-    )) {
-    AMR_env$current_theme <- tryCatch(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$editor, error = function(e) NULL)
+  if (is.null(AMR_env$is_dark_theme)) {
     AMR_env$is_dark_theme <- !has_colour() || tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
   }
   isTRUE(AMR_env$is_dark_theme)
@@ -1545,7 +1543,7 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup <- AMR::microorganisms
 
     MO_lookup$kingdom_index <- NA_real_
-    MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
+    MO_lookup[which(MO_lookup$kingdom == "Bacteria" | as.character(MO_lookup$mo) == "UNKNOWN"), "kingdom_index"] <- 1
     MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 1.25
     MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 1.5
     MO_lookup[which(MO_lookup$kingdom == "Chromista"), "kingdom_index"] <- 1.75
