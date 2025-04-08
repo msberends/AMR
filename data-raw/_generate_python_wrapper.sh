@@ -26,7 +26,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# how to conduct AMR data analysis: https://amr-for-r.org/             #
 # ==================================================================== #
 
 # Clean up
@@ -71,7 +71,7 @@ base._libPaths(r_lib_path)
 # Check if the AMR package is installed in R
 if not isinstalled('AMR', lib_loc=r_lib_path):
     print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
-    utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
+    utils.install_packages('AMR', repos='beta.amr-for-r.org', quiet=True)
 
 # # Retrieve Python AMR version
 # try:
@@ -87,7 +87,7 @@ if not isinstalled('AMR', lib_loc=r_lib_path):
 # if r_amr_version != python_amr_version:
 #     try:
 #         print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
-#         utils.install_packages('AMR', repos='https://msberends.r-universe.dev', quiet=True)
+#         utils.install_packages('AMR', repos='beta.amr-for-r.org', quiet=True)
 #     except Exception as e:
 #         print(f"AMR: Could not update: {e}", flush=True)
 
@@ -248,7 +248,7 @@ for rd_file in "$rd_dir"/*.Rd; do
 
         # Write the Python function definition to the output file
         print "def " func_name_py "(" func_args "):" >> "'"$functions_file"'"
-        print "    \"\"\"See our website of the R package for the manual: https://msberends.github.io/AMR/index.html\"\"\"" >> "'"$functions_file"'"
+        print "    \"\"\"See our website of the R package for the manual: https://amr-for-r.org/index.html\"\"\"" >> "'"$functions_file"'"
         print "    return convert_to_python(amr_r." func_name_py "(" func_args "))" >> "'"$functions_file"'"
         
         print "from .functions import " func_name_py >> "'"$init_file"'"

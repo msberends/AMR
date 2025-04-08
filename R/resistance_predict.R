@@ -24,7 +24,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# how to conduct AMR data analysis: https://amr-for-r.org/             #
 # ==================================================================== #
 
 #' Predict Antimicrobial Resistance
@@ -133,7 +133,7 @@ resistance_predict <- function(x,
 
   deprecation_warning(
     old = "resistance_predict", is_function = TRUE,
-    extra_msg = paste0("Use the tidymodels framework instead, for which we have written a basic and short introduction on our website: ", font_url("https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html", txt = font_bold("AMR with tidymodels")))
+    extra_msg = paste0("Use the tidymodels framework instead, for which we have written a basic and short introduction on our website: ", font_url("https://amr-for-r.org/articles/AMR_with_tidymodels.html", txt = font_bold("AMR with tidymodels")))
   )
 
   stop_if(is.null(model), 'choose a regression model with the `model` argument, e.g. resistance_predict(..., model = "binomial")')

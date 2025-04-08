@@ -40,7 +40,7 @@ download_txt <- function(filename) {
   msg <- paste0(
     "It was last updated on ",
     trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")),
-    ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
+    ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://amr-for-r.org/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
   )
   github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/datasets/"
   local_filename <- paste0("../data-raw/datasets/", filename)
@@ -110,7 +110,7 @@ print_df <- function(x, rows = 6) {
 
 All reference data (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
-> If you are working in Python, be sure to use our [AMR for Python](https://msberends.github.io/AMR/articles/AMR_for_Python.html) package. It allows all relevant AMR data sets to be natively available in Python.
+> If you are working in Python, be sure to use our [AMR for Python](https://amr-for-r.org/articles/AMR_for_Python.html) package. It allows all relevant AMR data sets to be natively available in Python.
 
 ## `microorganisms`: Full Microbial Taxonomy
 

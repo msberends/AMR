@@ -12,7 +12,7 @@
 \alias{as.sir.disk}
 \alias{as.sir.data.frame}
 \alias{sir_interpretation_history}
-\title{Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data}
+\title{Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data}
 \source{
 For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 \itemize{
@@ -20,7 +20,7 @@ For interpretations of minimum inhibitory concentration (MIC) values and disk di
 \item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
 \item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01/}.
 \item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2024, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
-\item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2024, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
+\item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2024, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
 }
 }
 \usage{
@@ -247,7 +247,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{

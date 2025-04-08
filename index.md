@@ -1,4 +1,4 @@
-# The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
+# The `AMR` Package for R <a href="https://amr-for-r.org/"><img src="./logo.svg" align="right" height="139" /></a>
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
 * Used in over 175 countries, available in 20 languages
@@ -12,7 +12,7 @@
 > Now available for Python too! [Click here](./articles/AMR_for_Python.html) to read more.
 
 <div style="display: flex; font-size: 0.8em;">
-  <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
+  <p style="text-align:left; width: 50%;"><small><a href="https://amr-for-r.org/">https://amr-for-r.org</a></small></p>
   <p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small></p>
 </div>
 
@@ -40,7 +40,7 @@ With the help of contributors from all corners of the world, the `AMR` package i
 
 #### Filtering and selecting data
 
-One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial selectors](https://msberends.github.io/AMR/reference/antimicrobial_selectors.html), which work in base R, `dplyr` and `data.table`.
+One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial selectors](https://amr-for-r.org/reference/antimicrobial_selectors.html), which work in base R, `dplyr` and `data.table`.
 
 ```r
 # AMR works great with dplyr, but it's not required or neccesary
@@ -186,7 +186,7 @@ example_isolates %>%
 |ICU        |  0.2902655  |  0.253-0.33  |  0.4004739  | 0.353-0.449  |
 |Outpatient |  0.2000000  | 0.131-0.285  |  0.3676471  | 0.254-0.493  |
 
-Or use [antimicrobial selectors](https://msberends.github.io/AMR/reference/antimicrobial_selectors.html) to select a series of antibiotic columns:
+Or use [antimicrobial selectors](https://amr-for-r.org/reference/antimicrobial_selectors.html) to select a series of antibiotic columns:
 
 ```r
 library(AMR)
@@ -276,15 +276,15 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 Please read our [Developer Guideline here](https://github.com/msberends/AMR/wiki/Developer-Guideline).
 
-The latest and unpublished development version can be installed from the [rOpenSci R-universe platform](https://msberends.r-universe.dev/AMR):
+To install the latest and unpublished development version:
 
 ```r
-install.packages("AMR", repos = "https://msberends.r-universe.dev")
+install.packages("AMR", repos = "beta.amr-for-r.org")
 ```
 
 ### Get started
 
-To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://msberends.github.io/AMR/articles/).
+To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://amr-for-r.org/articles/).
 
 ### Partners
 

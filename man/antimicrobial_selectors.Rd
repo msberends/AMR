@@ -163,7 +163,7 @@ my_data_with_all_these_columns \%>\%
 \details{
 These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and \code{data.table}. They are heavily inspired by the \link[tidyselect:language]{Tidyverse selection helpers} such as \code{\link[tidyselect:everything]{everything()}}, but are not limited to \code{dplyr} verbs. Nonetheless, they are very convenient to use with \code{dplyr} functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}, see \emph{Examples}.
 
-All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html}{our tutorial} on using antimicrobial selectors for predictive modelling.
+All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://amr-for-r.org/articles/AMR_with_tidymodels.html}{our tutorial} on using antimicrobial selectors for predictive modelling.
 
 All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antimicrobials} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
@@ -219,7 +219,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{

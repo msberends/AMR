@@ -1,6 +1,6 @@
 Package: AMR
-Version: 2.1.1.9234
-Date: 2025-04-07
+Version: 2.1.1.9235
+Date: 2025-04-08
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -62,7 +62,7 @@ Suggests:
   vctrs,
   xml2
 VignetteBuilder: knitr,rmarkdown
-URL: https://msberends.github.io/AMR/, https://github.com/msberends/AMR
+URL: https://www.amr-for-r.org/, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8

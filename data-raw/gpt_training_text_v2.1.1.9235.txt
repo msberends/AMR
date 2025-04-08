@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9234. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9235. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -395,7 +395,7 @@ importFrom(stats,var)
 THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'index.md':
 
 
-# The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
+# The `AMR` Package for R <a href="https://amr-for-r.org/"><img src="./logo.svg" align="right" height="139" /></a>
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
 * Used in over 175 countries, available in 20 languages
@@ -409,7 +409,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'index.md':
 > Now available for Python too! [Click here](./articles/AMR_for_Python.html) to read more.
 
 <div style="display: flex; font-size: 0.8em;">
-  <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
+  <p style="text-align:left; width: 50%;"><small><a href="https://amr-for-r.org/">https://amr-for-r.org</a></small></p>
   <p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small></p>
 </div>
 
@@ -437,7 +437,7 @@ With the help of contributors from all corners of the world, the `AMR` package i
 
 #### Filtering and selecting data
 
-One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial selectors](https://msberends.github.io/AMR/reference/antimicrobial_selectors.html), which work in base R, `dplyr` and `data.table`.
+One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial selectors](https://amr-for-r.org/reference/antimicrobial_selectors.html), which work in base R, `dplyr` and `data.table`.
 
 ```r
 # AMR works great with dplyr, but it's not required or neccesary
@@ -583,7 +583,7 @@ example_isolates %>%
 |ICU        |  0.2902655  |  0.253-0.33  |  0.4004739  | 0.353-0.449  |
 |Outpatient |  0.2000000  | 0.131-0.285  |  0.3676471  | 0.254-0.493  |
 
-Or use [antimicrobial selectors](https://msberends.github.io/AMR/reference/antimicrobial_selectors.html) to select a series of antibiotic columns:
+Or use [antimicrobial selectors](https://amr-for-r.org/reference/antimicrobial_selectors.html) to select a series of antibiotic columns:
 
 ```r
 library(AMR)
@@ -673,15 +673,15 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 Please read our [Developer Guideline here](https://github.com/msberends/AMR/wiki/Developer-Guideline).
 
-The latest and unpublished development version can be installed from the [rOpenSci R-universe platform](https://msberends.r-universe.dev/AMR):
+To install the latest and unpublished development version:
 
 ```r
-install.packages("AMR", repos = "https://msberends.r-universe.dev")
+install.packages("AMR", repos = "beta.amr-for-r.org")
 ```
 
 ### Get started
 
-To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://msberends.github.io/AMR/articles/).
+To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://amr-for-r.org/articles/).
 
 ### Partners
 
@@ -851,11 +851,11 @@ A BibTeX entry for LaTeX users is:
 \description{
 Welcome to the \code{AMR} package.
 
-The \code{AMR} package is a \href{https://msberends.github.io/AMR/#copyright}{free and open-source} R package with \href{https://en.wikipedia.org/wiki/Dependency_hell}{zero dependencies} to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. \strong{Our aim is to provide a standard} for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. \href{https://msberends.github.io/AMR/authors.html}{Many different researchers} from around the globe are continually helping us to make this a successful and durable project!
+The \code{AMR} package is a \href{https://amr-for-r.org/#copyright}{free and open-source} R package with \href{https://en.wikipedia.org/wiki/Dependency_hell}{zero dependencies} to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. \strong{Our aim is to provide a standard} for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. \href{https://amr-for-r.org/authors.html}{Many different researchers} from around the globe are continually helping us to make this a successful and durable project!
 
 This work was published in the Journal of Statistical Software (Volume 104(3); \doi{10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\doi{10.33612/diss.177417131} and \doi{10.33612/diss.192486375}).
 
-After installing this package, R knows \href{https://msberends.github.io/AMR/reference/microorganisms.html}{\strong{~79 000 microorganisms}} (updated June 2024) and all \href{https://msberends.github.io/AMR/reference/antimicrobials.html}{\strong{~620 antibiotic, antimycotic and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the public \href{https://www.rug.nl}{University of Groningen}, in collaboration with non-profit organisations \href{https://www.certe.nl}{Certe Medical Diagnostics and Advice Foundation} and \href{https://www.umcg.nl}{University Medical Center Groningen}.
+After installing this package, R knows \href{https://amr-for-r.org/reference/microorganisms.html}{\strong{~79 000 microorganisms}} (updated June 2024) and all \href{https://amr-for-r.org/reference/antimicrobials.html}{\strong{~620 antibiotic, antimycotic and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the public \href{https://www.rug.nl}{University of Groningen}, in collaboration with non-profit organisations \href{https://www.certe.nl}{Certe Medical Diagnostics and Advice Foundation} and \href{https://www.umcg.nl}{University Medical Center Groningen}.
 
 The \code{AMR} package is available in English, Chinese, Czech, Danish, Dutch, Finnish, French, German, Greek, Italian, Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Turkish, and Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 }
@@ -865,13 +865,13 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://msberends.github.io/AMR/}
+  \item \url{https://www.amr-for-r.org/}
   \item \url{https://github.com/msberends/AMR}
   \item Report bugs at \url{https://github.com/msberends/AMR/issues}
 }
@@ -1007,7 +1007,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -1227,7 +1227,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -2313,7 +2313,7 @@ my_data_with_all_these_columns \%>\%
 \details{
 These functions can be used in data set calls for selecting columns and filtering rows. They work with base \R, the Tidyverse, and \code{data.table}. They are heavily inspired by the \link[tidyselect:language]{Tidyverse selection helpers} such as \code{\link[tidyselect:everything]{everything()}}, but are not limited to \code{dplyr} verbs. Nonetheless, they are very convenient to use with \code{dplyr} functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}, see \emph{Examples}.
 
-All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://msberends.github.io/AMR/articles/AMR_with_tidymodels.html}{our tutorial} on using antimicrobial selectors for predictive modelling.
+All selectors can also be used in \code{tidymodels} packages such as \code{recipe} and \code{parsnip}. See for more info \href{https://amr-for-r.org/articles/AMR_with_tidymodels.html}{our tutorial} on using antimicrobial selectors for predictive modelling.
 
 All columns in the data in which these functions are called will be searched for known antimicrobial names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antimicrobials} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
@@ -2369,7 +2369,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -2622,7 +2622,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \section{WHOCC}{
@@ -2725,7 +2725,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -2838,7 +2838,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -3313,7 +3313,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -3386,7 +3386,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/as.sir.Rd':
 \alias{as.sir.disk}
 \alias{as.sir.data.frame}
 \alias{sir_interpretation_history}
-\title{Translate MIC and Disk Diffusion to SIR, or Clean Existing SIR Data}
+\title{Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data}
 \source{
 For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 \itemize{
@@ -3394,7 +3394,7 @@ For interpretations of minimum inhibitory concentration (MIC) values and disk di
 \item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
 \item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2024, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01/}.
 \item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2024, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/clinical_breakpoints}.
-\item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://msberends.github.io/AMR/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2024, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
+\item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2024, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
 }
 }
 \usage{
@@ -3621,7 +3621,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -4056,7 +4056,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -4297,7 +4297,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -4698,7 +4698,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -4825,7 +4825,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -4898,7 +4898,7 @@ A \link[tibble:tibble]{tibble} with 2 000 observations and 46 variables:
 example_isolates
 }
 \description{
-A data set containing 2 000 microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read \href{https://msberends.github.io/AMR/articles/AMR.html}{the tutorial on our website}.
+A data set containing 2 000 microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read \href{https://amr-for-r.org/articles/AMR.html}{the tutorial on our website}.
 }
 \section{Download Our Reference Data}{
 
@@ -4906,7 +4906,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -4948,7 +4948,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -5941,7 +5941,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -6766,7 +6766,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -6808,7 +6808,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -6861,7 +6861,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -6945,7 +6945,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -7201,7 +7201,7 @@ All reference data sets in the AMR package - including information on microorgan
 
 For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 
-Visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -9986,7 +9986,7 @@ library(readxl)
 data <- read_excel(path = "path/to/your/file.xlsx")
 ```
 
-This package comes with an [example data set `WHONET`](https://msberends.github.io/AMR/reference/WHONET.html). We will use it for this analysis.
+This package comes with an [example data set `WHONET`](https://amr-for-r.org/reference/WHONET.html). We will use it for this analysis.
 
 ### Preparation
 
@@ -10001,7 +10001,7 @@ library(cleaner) # to create frequency tables
 
 We will have to transform some variables to simplify and automate the analysis:
 
-* Microorganisms should be transformed to our own microorganism codes (called an `mo`) using [our Catalogue of Life reference data set](https://msberends.github.io/AMR/reference/catalogue_of_life), which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`. This function also recognises almost all WHONET abbreviations of microorganisms.
+* Microorganisms should be transformed to our own microorganism codes (called an `mo`) using [our Catalogue of Life reference data set](https://amr-for-r.org/reference/catalogue_of_life), which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`. This function also recognises almost all WHONET abbreviations of microorganisms.
 * Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values `"S"`, `"I"` or `"R"`. That is exactly where the `as.sir()` function is for.
 
 ```{r}
@@ -10100,7 +10100,7 @@ download_txt <- function(filename) {
   msg <- paste0(
     "It was last updated on ",
     trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")),
-    ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
+    ". Find more info about the contents, (scientific) source, and structure of this [data set here](https://amr-for-r.org/reference/", ifelse(filename == "antivirals", "antimicrobials", filename), ".html).\n"
   )
   github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/datasets/"
   local_filename <- paste0("../data-raw/datasets/", filename)
@@ -10170,7 +10170,7 @@ print_df <- function(x, rows = 6) {
 
 All reference data (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
-> If you are working in Python, be sure to use our [AMR for Python](https://msberends.github.io/AMR/articles/AMR_for_Python.html) package. It allows all relevant AMR data sets to be natively available in Python.
+> If you are working in Python, be sure to use our [AMR for Python](https://amr-for-r.org/articles/AMR_for_Python.html) package. It allows all relevant AMR data sets to be natively available in Python.
 
 ## `microorganisms`: Full Microbial Taxonomy
 
@@ -10392,11 +10392,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Note: to keep the package size as small as possible, we only include this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST and CLSI breakpoints, and much more: <https://msberends.github.io/AMR/articles/>.
+Note: to keep the package size as small as possible, we only include this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST and CLSI breakpoints, and much more: <https://www.amr-for-r.org/articles/>.
 
 ----
 
-The `AMR` package is a [free and open-source](https://msberends.github.io/AMR/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://msberends.github.io/AMR/authors.html) from around the globe are continually helping us to make this a successful and durable project!
+The `AMR` package is a [free and open-source](https://www.amr-for-r.org/) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://www.amr-for-r.org/authors.html) from around the globe are continually helping us to make this a successful and durable project!
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
@@ -10425,14 +10425,14 @@ This package can be used for:
   * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to SIR
   * Principal component analysis for AMR
   
-All reference data sets (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
+All reference data sets (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://www.amr-for-r.org/articles/datasets.html), which is automatically updated with every code change.
 
-This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl), and is being [actively and durably maintained](https://msberends.github.io/AMR/news/) by two public healthcare organisations in the Netherlands.
+This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl), and is being [actively and durably maintained](https://www.amr-for-r.org/news/) by two public healthcare organisations in the Netherlands.
 
 ----
 
 <small>
-This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://msberends.github.io/AMR/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
+This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://www.amr-for-r.org/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
 </small>
 
 

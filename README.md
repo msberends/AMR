@@ -17,7 +17,7 @@ Overview:
 
 ----
 
-Please visit our extensive website [https://msberends.github.io/AMR/](https://msberends.github.io/AMR/) to read more about this package, including many examples and tutorials.
+Please visit our extensive website <https://www.amr-for-r.org/> to read more about this package, including many examples and tutorials.
 
 ### How to get this package
 
@@ -27,14 +27,14 @@ To install the latest 'release' version from CRAN:
 install.packages("AMR")
 ```
 
-To install the latest 'beta' version from GitHub:
+To install the latest 'beta' version:
 
 ```r
-remotes::install_github("msberends/AMR")
+install.packages("AMR", repos = "beta.amr-for-r.org")
 ```
 
 ----
 
 <small>
-This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://msberends.github.io/AMR/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
+This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://www.amr-for-r.org//LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
 </small>

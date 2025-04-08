@@ -24,7 +24,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# how to conduct AMR data analysis: https://amr-for-r.org/             #
 # ==================================================================== #
 
 #' Data Sets with `r format(nrow(antimicrobials) + nrow(antivirals), big.mark = " ")` Antimicrobial Drugs
@@ -200,7 +200,7 @@
 
 #' Data Set with `r format(nrow(example_isolates), big.mark = " ")` Example Isolates
 #'
-#' A data set containing `r format(nrow(example_isolates), big.mark = " ")` microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read [the tutorial on our website](https://msberends.github.io/AMR/articles/AMR.html).
+#' A data set containing `r format(nrow(example_isolates), big.mark = " ")` microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read [the tutorial on our website](https://amr-for-r.org/articles/AMR.html).
 #' @format A [tibble][tibble::tibble] with `r format(nrow(example_isolates), big.mark = " ")` observations and `r ncol(example_isolates)` variables:
 #' - `date`\cr Date of receipt at the laboratory
 #' - `patient`\cr ID of the patient

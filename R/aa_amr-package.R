@@ -24,7 +24,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# how to conduct AMR data analysis: https://amr-for-r.org/             #
 # ==================================================================== #
 
 #' The `AMR` Package
@@ -32,11 +32,11 @@
 #' @description
 #' Welcome to the `AMR` package.
 #'
-#' The `AMR` package is a [free and open-source](https://msberends.github.io/AMR/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://msberends.github.io/AMR/authors.html) from around the globe are continually helping us to make this a successful and durable project!
+#' The `AMR` package is a [free and open-source](https://amr-for-r.org/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://amr-for-r.org/authors.html) from around the globe are continually helping us to make this a successful and durable project!
 #'
 #' This work was published in the Journal of Statistical Software (Volume 104(3); \doi{10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\doi{10.33612/diss.177417131} and \doi{10.33612/diss.192486375}).
 #'
-#' After installing this package, R knows [**`r format_included_data_number(AMR::microorganisms)` microorganisms**](https://msberends.github.io/AMR/reference/microorganisms.html) (updated `r format(TAXONOMY_VERSION$GBIF$accessed_date, "%B %Y")`) and all [**`r format_included_data_number(nrow(AMR::antimicrobials) + nrow(AMR::antivirals))` antibiotic, antimycotic and antiviral drugs**](https://msberends.github.io/AMR/reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the public [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl).
+#' After installing this package, R knows [**`r format_included_data_number(AMR::microorganisms)` microorganisms**](https://amr-for-r.org/reference/microorganisms.html) (updated `r format(TAXONOMY_VERSION$GBIF$accessed_date, "%B %Y")`) and all [**`r format_included_data_number(nrow(AMR::antimicrobials) + nrow(AMR::antivirals))` antibiotic, antimycotic and antiviral drugs**](https://amr-for-r.org/reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the public [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl).
 #'
 #' The `AMR` package is available in `r vector_and(vapply(FUN.VALUE = character(1), LANGUAGES_SUPPORTED_NAMES, function(x) x$exonym), quotes = FALSE, sort = FALSE)`. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 #' @section Download Our Reference Data:
@@ -44,7 +44,7 @@
 #'
 #' For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 #'
-#' Visit [our website for direct download links](https://msberends.github.io/AMR/articles/datasets.html), or explore the actual files in [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
+#' Visit [our website for direct download links](https://amr-for-r.org/articles/datasets.html), or explore the actual files in [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @source
 #' To cite AMR in publications use:
 #'
