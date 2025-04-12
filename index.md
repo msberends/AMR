@@ -162,7 +162,7 @@ ggplot(data.frame(mic = some_mic_values,
 ```
 
 <a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis">
-  <img src="./plot_readme.png" style="max-width: 600px;">
+  <img src="./plot_readme.png" style="width: 600px; max-width: 100%;">
 </a>
 
 #### Calculating resistance per group
@@ -265,9 +265,9 @@ install.packages("AMR")
 
 It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
-**Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
+**Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest beta version.
 
-#### Latest development version
+#### Latest beta version
 
 [![check-old](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml)
 [![check-recent](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml)
@@ -276,15 +276,18 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 Please read our [Developer Guideline here](https://github.com/msberends/AMR/wiki/Developer-Guideline).
 
-To install the latest and unpublished development version:
+To install the latest and unpublished beta version:
 
 ```r
 install.packages("AMR", repos = "beta.amr-for-r.org")
+
+# if this does not work, try to install directly from GitHub using the 'remotes' package:
+remotes::install_github("msberends/AMR")
 ```
 
 ### Get started
 
-To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://amr-for-r.org/articles/).
+To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](./articles/).
 
 ### Partners
 

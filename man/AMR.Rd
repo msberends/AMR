@@ -48,7 +48,7 @@ Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://www.amr-for-r.org/}
+  \item \url{https://amr-for-r.org}
   \item \url{https://github.com/msberends/AMR}
   \item Report bugs at \url{https://github.com/msberends/AMR/issues}
 }

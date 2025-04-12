@@ -24,7 +24,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://amr-for-r.org/             #
+# how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
 # ====================================================== #
@@ -219,7 +219,7 @@ eucast_rules <- function(x,
 
   if (interactive() && isTRUE(verbose) && isTRUE(info)) {
     txt <- paste0(
-      "WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.",
+      "WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with comprehensive info about which rows and columns would be effected and in which way.",
       "\n\nThis may overwrite your existing data if you use e.g.:",
       "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?"
     )

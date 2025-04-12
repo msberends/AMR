@@ -24,7 +24,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://amr-for-r.org/             #
+# how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
 dots2vars <- function(...) {
@@ -217,7 +217,7 @@ sir_calc <- function(...,
   }
 
   if (as_percent == TRUE) {
-    percentage(fraction, digits = 1)
+    trimws(percentage(fraction, digits = 1))
   } else {
     fraction
   }

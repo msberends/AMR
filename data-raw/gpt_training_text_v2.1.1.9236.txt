@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9235. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9236. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -559,7 +559,7 @@ ggplot(data.frame(mic = some_mic_values,
 ```
 
 <a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis">
-  <img src="./plot_readme.png" style="max-width: 600px;">
+  <img src="./plot_readme.png" style="width: 600px; max-width: 100%;">
 </a>
 
 #### Calculating resistance per group
@@ -662,9 +662,9 @@ install.packages("AMR")
 
 It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
-**Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
+**Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest beta version.
 
-#### Latest development version
+#### Latest beta version
 
 [![check-old](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml)
 [![check-recent](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml)
@@ -673,15 +673,18 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 Please read our [Developer Guideline here](https://github.com/msberends/AMR/wiki/Developer-Guideline).
 
-To install the latest and unpublished development version:
+To install the latest and unpublished beta version:
 
 ```r
 install.packages("AMR", repos = "beta.amr-for-r.org")
+
+# if this does not work, try to install directly from GitHub using the 'remotes' package:
+remotes::install_github("msberends/AMR")
 ```
 
 ### Get started
 
-To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://amr-for-r.org/articles/).
+To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](./articles/).
 
 ### Partners
 
@@ -871,7 +874,7 @@ Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://www.amr-for-r.org/}
+  \item \url{https://amr-for-r.org}
   \item \url{https://github.com/msberends/AMR}
   \item Report bugs at \url{https://github.com/msberends/AMR/issues}
 }
@@ -10392,11 +10395,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Note: to keep the package size as small as possible, we only include this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST and CLSI breakpoints, and much more: <https://www.amr-for-r.org/articles/>.
+Note: to keep the package size as small as possible, we only include this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST and CLSI breakpoints, and much more: <https://amr-for-r.org/articles/>.
 
 ----
 
-The `AMR` package is a [free and open-source](https://www.amr-for-r.org/) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://www.amr-for-r.org/authors.html) from around the globe are continually helping us to make this a successful and durable project!
+The `AMR` package is a [free and open-source](https://amr-for-r.org/) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://amr-for-r.org/authors.html) from around the globe are continually helping us to make this a successful and durable project!
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
@@ -10425,14 +10428,14 @@ This package can be used for:
   * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to SIR
   * Principal component analysis for AMR
   
-All reference data sets (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://www.amr-for-r.org/articles/datasets.html), which is automatically updated with every code change.
+All reference data sets (about microorganisms, antimicrobials, SIR interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://amr-for-r.org/articles/datasets.html), which is automatically updated with every code change.
 
-This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl), and is being [actively and durably maintained](https://www.amr-for-r.org/news/) by two public healthcare organisations in the Netherlands.
+This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl), and is being [actively and durably maintained](https://amr-for-r.org/news/) by two public healthcare organisations in the Netherlands.
 
 ----
 
 <small>
-This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://www.amr-for-r.org/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
+This AMR package for R is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](https://amr-for-r.org/LICENSE-text.html). These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package.
 </small>
 
 

@@ -25,7 +25,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR data analysis: https://amr-for-r.org/             #
+# how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 */
 
@@ -110,9 +110,9 @@ $(document).ready(function() {
   // add doctoral titles to authors
   function doct_tit(x) {
     if (typeof(x) != "undefined") {
-      x = x.replace(/Author, maintainer/g, "Principal developer");
+      x = x.replace(/Author, maintainer/g, "Project founder and lead developer");
       x = x.replace(/Author, contributor/g, "Package maintainer");
-      x = x.replace(/Thesis advisor/g, "(former) Doctoral advisor");
+      x = x.replace(/Thesis advisor/g, "Former doctoral advisor");
       // contributors
       x = x.replace("Alex", "Prof. Alex");
       x = x.replace("Andrew", "Dr. Andrew");
