@@ -31,7 +31,7 @@
 
 $(document).ready(function() {
   // add GPT assistant info
-  $('aside').prepend('<div class="amr-gpt-assistant"><a target="_blank" href="https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg"></a></div>');
+  $('aside').prepend('<div class="amr-gpt-assistant"><a target="_blank" href="https://chat.amr-for-r.org"><img src="https://amr-for-r.org/AMRforRGPT.svg"></a></div>');
 
   // replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");
@@ -62,7 +62,7 @@ $(document).ready(function() {
   if (window.location.href.includes('AMR_for_Python')) {
     $('body').addClass('amr-for-python'); /* to set colours in CSS */
     $('img[src="../logo.svg"]').attr('src', '../logo_python.svg'); /* replace base logo */
-    $('img[src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT.svg"]').attr('src', 'https://github.com/msberends/AMR/raw/main/pkgdown/assets/AMRforRGPT_python.svg'); /* replace GPT logo */
+    $('img[src="https://amr-for-r.org/AMRforRGPT.svg"]').attr('src', 'https://amr-for-r.org/AMRforRGPT_python.svg'); /* replace GPT logo */
   }
   
   // add country flags
