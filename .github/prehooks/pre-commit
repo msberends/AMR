@@ -111,7 +111,7 @@ echo ""
 # Save the version number for use in the commit-msg hook
 echo "${currentversion}" > .git/commit_version.tmp
 
-# Generate GPT knowledge info for our Assistant (https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant)
+# Generate GPT knowledge info for our Assistant (https://chat.amr-for-r.org)
 bash data-raw/_generate_GPT_knowledge_input.sh "${currentversion}"
 git add data-raw/*
 git add -u

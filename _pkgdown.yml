@@ -38,12 +38,11 @@ template:
       <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
       <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
   bootswatch: "flatly"
-  assets: "pkgdown/logos" # use logos in this folder
   bslib:
     base_font: {google: "Lato"}
     heading_font: {google: "Lato"}
     code_font: {google: "Fira Code"}
-    # body-text-align: "justify"
+    # body-text-align: "justify" # this is now only in `p {}` in extra.css
     line-height-base: 1.75
     # make top bar a bit wider
     navbar-padding-y: "0.5rem"
@@ -58,7 +57,7 @@ footer:
     right: [logo]
   components:
     devtext: '<code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE">GNU General Public License version 2.0 (GPL-2)</a>.<br>Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a> in The Netherlands.'
-    logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/logo_rug.svg" style="max-width: 150px;"></a><a target="_blank" href="https://www.umcg.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/assets/logo_umcg.svg" style="max-width: 150px;"></a>'
+    logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://amr-for-r.org/logo_rug.svg" style="max-width: 150px;"></a><a target="_blank" href="https://www.umcg.nl"><img src="https://amr-for-r.org/logo_umcg.svg" style="max-width: 150px;"></a>'
 
 home:
   sidebar:
@@ -268,9 +267,9 @@ reference:
     - "`kurtosis`"
     - "`skewness`"
 
-  - title: "Other: deprecated functions"
+  - title: "Other: deprecated functions/arguments/datasets"
     desc: >
-      These functions are deprecated, meaning that they will still
+      These objects are deprecated, meaning that they will still
       work but show a warning that they will be removed
       in a future version.
     contents:

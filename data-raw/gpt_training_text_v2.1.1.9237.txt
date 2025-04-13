@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9236. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9237. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -559,7 +559,7 @@ ggplot(data.frame(mic = some_mic_values,
 ```
 
 <a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis">
-  <img src="./plot_readme.png" style="width: 600px; max-width: 100%;">
+  <img src="./plot_readme.png" style="width: 1400px; max-width: 100%;">
 </a>
 
 #### Calculating resistance per group
@@ -736,7 +736,7 @@ THE PART HEREAFTER CONTAINS CONTENTS FROM FILE 'man/AMR-deprecated.Rd':
 \alias{antibiotics}
 \alias{ab_class}
 \alias{ab_selector}
-\title{Deprecated Functions}
+\title{Deprecated Functions, Arguments, or Datasets}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 496 rows and 14 columns.
 }
@@ -8317,7 +8317,9 @@ A \link{data.frame} with extra class \code{\link{resistance_predict}} with colum
 Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see \emph{Examples}.
 }
 \description{
-Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
+Create a prediction model to predict antimicrobial resistance for the next years. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
+
+\strong{NOTE:} These functions are \link[=AMR-deprecated]{deprecated} and will be removed in a future version. Use the AMR package combined with the tidymodels framework instead, for which we have written a \href{https://amr-for-r.org/articles/AMR_with_tidymodels.html}{basic and short introduction on our website}.
 }
 \details{
 Valid options for the statistical model (argument \code{model}) are:
@@ -9222,7 +9224,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-> This page was entirely written by our [AMR for R Assistant](https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant), a ChatGPT manually-trained model able to answer any question about the AMR package.
+> This page was entirely written by our [AMR for R Assistant](https://chat.amr-for-r.org), a ChatGPT manually-trained model able to answer any question about the AMR package.
 
 Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. 
 

@@ -29,7 +29,9 @@
 
 #' Predict Antimicrobial Resistance
 #'
-#' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
+#' @description Create a prediction model to predict antimicrobial resistance for the next years. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
+#'
+#' **NOTE:** These functions are [deprecated][AMR-deprecated] and will be removed in a future version. Use the AMR package combined with the tidymodels framework instead, for which we have written a [basic and short introduction on our website](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 #' @param object Model data to be plotted.
 #' @param col_ab Column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`).
 #' @param col_date Column name of the date, will be used to calculate years if this column doesn't consist of years already - the default is the first column of with a date class.

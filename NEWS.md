@@ -1,4 +1,4 @@
-# AMR 2.1.1.9236
+# AMR 2.1.1.9237
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -8,7 +8,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 ## Breaking
 * Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over two years ago.
-* Function `resistance_predict()` is now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
+* Functions `resistance_predict()` and `sir_predict()` is now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 
 ## New
 * **One Health implementation**
@@ -49,6 +49,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * It is now possible to use column names for argument `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
   * Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
+  * Following CLSI interpretation rules, values outside the log2-dilution range will be rounded upwards to the nearest log2-level before interpretation. Only if using a CLSI guideline.
   * Combined MIC values (e.g., from CLSI) are now supported
   * The argument `conserve_capped_values` in `as.sir()` has been replaced with `capped_mic_handling`, which allows greater flexibility in handling capped MIC values (`<`, `<=`, `>`, `>=`). The four available options (`"standard"`, `"strict"`, `"relaxed"`, `"inverse"`) provide full control over whether these values should be interpreted conservatively or ignored. Using `conserve_capped_values` is now deprecated and returns a warning.
   * Added argument `info` so silence all console messages
@@ -105,6 +106,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Added console colours support of `sir` class for Positron
 
 ## Other
+* New website domain: <https://amr-for-r.org>! The old links (all based on <http://amr-for-r.org>) will remain to work.
 * Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
 * Added Prof. Kat Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes

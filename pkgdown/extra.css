@@ -131,8 +131,12 @@ input[type="search"] {
   width: 150px;
 }
 blockquote {
+  font-style: italic;
   padding: 1.25rem 1.25rem;
   border-left: 1rem solid var(--amr-green-dark);
+}
+p {
+  text-align: justify;
 }
 
 /* 

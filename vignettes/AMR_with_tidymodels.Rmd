@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-> This page was entirely written by our [AMR for R Assistant](https://chatgpt.com/g/g-M4UNLwFi5-amr-for-r-assistant), a ChatGPT manually-trained model able to answer any question about the AMR package.
+> This page was entirely written by our [AMR for R Assistant](https://chat.amr-for-r.org), a ChatGPT manually-trained model able to answer any question about the AMR package.
 
 Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. 
 

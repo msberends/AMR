@@ -162,7 +162,7 @@ ggplot(data.frame(mic = some_mic_values,
 ```
 
 <a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis">
-  <img src="./plot_readme.png" style="width: 600px; max-width: 100%;">
+  <img src="./plot_readme.png" style="width: 1400px; max-width: 100%;">
 </a>
 
 #### Calculating resistance per group

@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-#' Deprecated Functions
+#' Deprecated Functions, Arguments, or Datasets
 #'
 #' These objects are so-called '[Deprecated]'. **They will be removed in a future version of this package.** Using these will give a warning with the name of the alternative object it has been replaced by (if there is one).
 #' @keywords internal
@@ -40,8 +40,10 @@ NULL
 #' @export
 "antibiotics"
 
-# REMEMBER to also remove the deprecated `antibiotics` argument in `antibiogram()`
-# REMEMBER to also remove the deprecated `converse_capped_values` argument in `as.sir()`
+# REMEMBER to search for `deprecation_warning` in the package code to find all instances.
+# currently deprecated arguments at least:
+# - `antibiotics` in `antibiogram()`
+# - `converse_capped_values` in `as.sir()`
 
 #' @rdname AMR-deprecated
 #' @export

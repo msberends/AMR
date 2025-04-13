@@ -71,7 +71,9 @@ A \link{data.frame} with extra class \code{\link{resistance_predict}} with colum
 Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see \emph{Examples}.
 }
 \description{
-Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
+Create a prediction model to predict antimicrobial resistance for the next years. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
+
+\strong{NOTE:} These functions are \link[=AMR-deprecated]{deprecated} and will be removed in a future version. Use the AMR package combined with the tidymodels framework instead, for which we have written a \href{https://amr-for-r.org/articles/AMR_with_tidymodels.html}{basic and short introduction on our website}.
 }
 \details{
 Valid options for the statistical model (argument \code{model}) are:
