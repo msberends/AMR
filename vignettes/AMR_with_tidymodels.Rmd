@@ -123,7 +123,7 @@ logistic_model
 
 #### 3. Building the Workflow
 
-We bundle the recipe and model together into a `workflow`, which organises the entire modeling process.
+We bundle the recipe and model together into a `workflow`, which organises the entire modelling process.
 
 ```{r}
 # Combine the recipe and model into a workflow
@@ -253,7 +253,7 @@ data_time
 
 ### **Defining the Workflow**
 
-We now define the modeling workflow, which consists of a preprocessing step, a model specification, and the fitting process.
+We now define the modelling workflow, which consists of a preprocessing step, a model specification, and the fitting process.
 
 #### 1. Preprocessing with a Recipe
 

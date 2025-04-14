@@ -1,6 +1,6 @@
 This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse.
 
-First and foremost, you are trained on version 2.1.1.9237. Remember this whenever someone asks which AMR package version you’re at.
+First and foremost, you are trained on version 2.1.1.9239. Remember this whenever someone asks which AMR package version you’re at.
 
 Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens.
 ----------------------------------------------------------------------------------------------------
@@ -9325,7 +9325,7 @@ logistic_model
 
 #### 3. Building the Workflow
 
-We bundle the recipe and model together into a `workflow`, which organises the entire modeling process.
+We bundle the recipe and model together into a `workflow`, which organises the entire modelling process.
 
 ```{r}
 # Combine the recipe and model into a workflow
@@ -9455,7 +9455,7 @@ data_time
 
 ### **Defining the Workflow**
 
-We now define the modeling workflow, which consists of a preprocessing step, a model specification, and the fitting process.
+We now define the modelling workflow, which consists of a preprocessing step, a model specification, and the fitting process.
 
 #### 1. Preprocessing with a Recipe
 
@@ -10209,6 +10209,7 @@ microorganisms %>%
   print_df()
 ```
 
+----
 
 ## `antimicrobials`: Antibiotic and Antifungal Drugs
 
@@ -10228,6 +10229,7 @@ antimicrobials %>%
   print_df()
 ```
 
+----
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
@@ -10246,6 +10248,7 @@ clinical_breakpoints %>%
   print_df()
 ```
 
+----
 
 ## `microorganisms.groups`: Species Groups and Microbiological Complexes
 
@@ -10262,6 +10265,7 @@ microorganisms.groups %>%
   print_df()
 ```
 
+----
 
 ## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
@@ -10286,6 +10290,7 @@ intrinsic_resistant %>%
   print_df(rows = Inf)
 ```
 
+----
 
 ## `dosage`: Dosage Guidelines from EUCAST
 
@@ -10302,6 +10307,7 @@ dosage %>%
   print_df()
 ```
 
+----
 
 ## `example_isolates`: Example Data for Practice
 
@@ -10318,6 +10324,8 @@ example_isolates %>%
   print_df()
 ```
 
+----
+
 ## `example_isolates_unclean`: Example Data for Practice
 
 `r structure_txt(example_isolates_unclean)`
@@ -10333,6 +10341,7 @@ example_isolates_unclean %>%
   print_df()
 ```
 
+----
 
 ## `microorganisms.codes`: Common Laboratory Codes
 
@@ -10349,6 +10358,7 @@ microorganisms.codes %>%
   print_df()
 ```
 
+----
 
 ## `antivirals`: Antiviral Drugs
 

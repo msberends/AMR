@@ -1,4 +1,4 @@
-# AMR 2.1.1.9237
+# AMR 2.1.1.9239
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -106,10 +106,10 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Added console colours support of `sir` class for Positron
 
 ## Other
-* New website domain: <https://amr-for-r.org>! The old links (all based on <http://amr-for-r.org>) will remain to work.
+* New website domain: <https://amr-for-r.org>! The old domain (<https://msberends.github.io/AMR>) will remain to work.
 * Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
-* Added Prof. Kat Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes
+* Added Prof. Kathryn Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes
 * Greatly improved `vctrs` integration, a Tidyverse package working in the background for many Tidyverse functions. For users, this means that functions such as `dplyr`'s `bind_rows()`, `rowwise()` and `c_across()` are now supported for e.g. columns of class `mic`. Despite this, this `AMR` package is still zero-dependent on any other package, including `dplyr` and `vctrs`.
 * Greatly updated and expanded documentation
 * Stopped support for SAS (`.xpt`) files, since their file structure and extremely inefficient and requires more disk space than GitHub allows in a single commit.

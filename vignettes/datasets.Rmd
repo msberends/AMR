@@ -144,6 +144,7 @@ microorganisms %>%
   print_df()
 ```
 
+----
 
 ## `antimicrobials`: Antibiotic and Antifungal Drugs
 
@@ -163,6 +164,7 @@ antimicrobials %>%
   print_df()
 ```
 
+----
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
@@ -181,6 +183,7 @@ clinical_breakpoints %>%
   print_df()
 ```
 
+----
 
 ## `microorganisms.groups`: Species Groups and Microbiological Complexes
 
@@ -197,6 +200,7 @@ microorganisms.groups %>%
   print_df()
 ```
 
+----
 
 ## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
@@ -221,6 +225,7 @@ intrinsic_resistant %>%
   print_df(rows = Inf)
 ```
 
+----
 
 ## `dosage`: Dosage Guidelines from EUCAST
 
@@ -237,6 +242,7 @@ dosage %>%
   print_df()
 ```
 
+----
 
 ## `example_isolates`: Example Data for Practice
 
@@ -253,6 +259,8 @@ example_isolates %>%
   print_df()
 ```
 
+----
+
 ## `example_isolates_unclean`: Example Data for Practice
 
 `r structure_txt(example_isolates_unclean)`
@@ -268,6 +276,7 @@ example_isolates_unclean %>%
   print_df()
 ```
 
+----
 
 ## `microorganisms.codes`: Common Laboratory Codes
 
@@ -284,6 +293,7 @@ microorganisms.codes %>%
   print_df()
 ```
 
+----
 
 ## `antivirals`: Antiviral Drugs
 
