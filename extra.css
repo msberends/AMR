@@ -129,6 +129,8 @@ input[type="search"] {
 }
 .template-home .endorse_img {
   width: 150px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 blockquote {
   font-style: italic;
