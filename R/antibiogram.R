@@ -34,8 +34,8 @@
 #'
 #' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
 #' @param x A [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()]).
-#' @param antimicrobials A vector specifying the antimicrobials to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:.
-#'   - Any antimicrobial name or code
+#' @param antimicrobials A vector specifying the antimicrobials to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:
+#'   - Any antimicrobial name or code that matches to a column name in `x`
 #'   - A column name in `x` that contains SIR values
 #'   - Any [antimicrobial selector][antimicrobial_selectors], such as [aminoglycosides()] or [carbapenems()]
 #'   - A combination of the above, using `c()`, e.g.:
@@ -51,7 +51,7 @@
 #' @param mo_transform A character to transform microorganism input - must be `"name"`, `"shortname"` (default), `"gramstain"`, or one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input or `NA` to consider all microorganisms 'unknown'.
 #' @param ab_transform A character to transform antimicrobial input - must be one of the column names of the [antimicrobials] data set (defaults to `"name"`): `r vector_or(colnames(antimicrobials), sort = FALSE, quotes = TRUE)`. Can also be `NULL` to not transform the input.
 #' @param syndromic_group A column name of `x`, or values calculated to split rows of `x`, e.g. by using [ifelse()] or [`case_when()`][dplyr::case_when()]. See *Examples*.
-#' @param add_total_n A [logical] to indicate whether `n_tested` available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when `wisca = TRUE`; in that case, use [retrieve_wisca_parameters()] to get the parameters used for WISCA.
+#' @param add_total_n *(deprecated in favour of `formatting_type`)* A [logical] to indicate whether `n_tested` available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when `wisca = TRUE`; in that case, use [retrieve_wisca_parameters()] to get the parameters used for WISCA.
 #' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antimicrobials, see *Details*.
 #' @param digits Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.
 #' @param formatting_type Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See *Details* > *Formatting Type* for a list of options.
@@ -489,6 +489,9 @@ antibiogram.default <- function(x,
   }
   meet_criteria(syndromic_group, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(add_total_n, allow_class = "logical", has_length = 1)
+  if (isTRUE(add_total_n) || !missing(add_total_n)) {
+    deprecation_warning("add_total_n", "formatting_type", fn = "antibiogram", is_argument = TRUE)
+  }
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
   meet_criteria(digits, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   meet_criteria(formatting_type, allow_class = c("numeric", "integer"), has_length = 1, is_in = c(1:22))
