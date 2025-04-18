@@ -21,7 +21,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9242</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9243</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -164,7 +164,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set), but can be set with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see <em>Details</em>. Using a column name for <code>as.sir()</code> allows for easy interpretation on historical data which needs to be interpreted according to e.g., various years.</p></dd>
+<dd><p>A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set), but can be set with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see <em>Details</em>. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.</p></dd>
 
 
 <dt id="arg-uti">uti<a class="anchor" aria-label="anchor" href="#arg-uti"></a></dt>
@@ -268,8 +268,9 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 
 
 <p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are for <strong>clinical microbiology</strong>: EUCAST 2011-2024 and CLSI 2011-2024, and for <strong>veterinary microbiology</strong>: EUCAST 2021-2024 and CLSI 2019-2024.</p>
-<p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2024"</code> or <code>"CLSI 2024"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
-<p>You can set the default guideline with the package option <code><a href="AMR-options.html">AMR_guideline</a></code> (e.g. in your <code>.Rprofile</code> file), such as:</p>
+<p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2024"</code> or <code>"CLSI 2024"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. Importantly, using a column name of your data instead, allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.</p>
+<p>You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
+<p>It is also possible to set the default guideline with the package option <code><a href="AMR-options.html">AMR_guideline</a></code> (e.g. in your <code>.Rprofile</code> file), such as:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI 2018"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"EUCAST 2020"</span>)</span>
@@ -484,7 +485,7 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>,</span></span>
 <span class="r-in"><span>      mo <span class="op">=</span> <span class="st">"bacteria"</span>,</span></span>
 <span class="r-in"><span>      ab <span class="op">=</span> <span class="st">"antibiotic"</span>,</span></span>
-<span class="r-in"><span>      guideline <span class="op">=</span> <span class="va">guideline</span></span></span>
+<span class="r-in"><span>      guideline <span class="op">=</span> <span class="st">"guideline"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span></span></span>
@@ -649,7 +650,162 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">column '</span><span style="color: #0000BB; font-weight: bold;">microorganism</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFFF87;"> NOTE </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • Breakpoints for UTI </span><span style="color: #080808; font-weight: bold;">and</span><span style="color: #080808;"> non-UTI available for tobramycin (TOB) in </span><span style="color: #080808; font-style: italic;">Escherichia coli</span><span style="color: #080808;"> - assuming an unspecified body site. Use argument </span><span style="color: #080808; background-color: #EEEEEE;">uti</span><span style="color: #080808;"> to set which isolates are from urine. See </span><span style="color: #080808; background-color: #EEEEEE;">?as.sir</span><span style="color: #080808;">.</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'guideline' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2021</span><span style="color: #0000BB;">, </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2022</span><span style="color: #0000BB;">, </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2023</span><span style="color: #0000BB;">, and </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFFF87;"> NOTE </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • There were multiple notes. Print or View </span><span style="color: #080808; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #080808;"> to examine them, or use </span><span style="color: #080808; background-color: #EEEEEE;">as.sir(..., verbose = TRUE)</span><span style="color: #080808;"> next time to directly print them here.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `cipro = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `mics = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">amoxicillin</span><span style="color: #0000BB;">' (AMX), '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), and '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin) based on column</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">'</span><span style="color: #0000BB; font-weight: bold;">bacteria</span><span style="color: #0000BB;">', </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Some MICs were converted to the nearest higher log2 level, following the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> CLSI interpretation guideline.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">antibiotic</span><span style="color: #0000BB;">' (ASP, acetylspiramycin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFAFAF;"> WARNING </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • No MIC breakpoints available for acetylspiramycin (ASP).</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">antibiotic</span><span style="color: #0000BB;">' (ASP, acetylspiramycin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFAFAF;"> WARNING </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • No DISK breakpoints available for acetylspiramycin (ASP).</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">antibiotic</span><span style="color: #0000BB;">' (ASP, acetylspiramycin),</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFAFAF;"> WARNING </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • No DISK breakpoints available for acetylspiramycin (ASP).</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 warnings in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `cipro = (function (x, ...) ...`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming </span><span style="color: #0000BB; background-color: #EEEEEE;">breakpoint_type = "animal"</span><span style="color: #0000BB;">, since </span><span style="color: #0000BB; background-color: #EEEEEE;">host</span><span style="color: #0000BB;"> is set.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">CLSI 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 warnings in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: column '</span><span style="color: #0000BB; font-weight: bold;">nitrofuratoin</span><span style="color: #0000BB;">' (NIT,</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">nitrofurantoin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Assuming value "urine" in column '</span><span style="color: #0000BB; font-weight: bold;">specimen</span><span style="color: #0000BB;">' reflects a urinary tract</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  infection.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  Use </span><span style="color: #0000BB; background-color: #EEEEEE;">as.sir(uti = FALSE)</span><span style="color: #0000BB;"> to prevent this.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: column '</span><span style="color: #0000BB; font-weight: bold;">nitrofuratoin</span><span style="color: #0000BB;">' (NIT,</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">nitrofurantoin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">tobra</span><span style="color: #0000BB;">' (TOB, tobramycin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting disk diffusion zones: '</span><span style="color: #0000BB; font-weight: bold;">genta</span><span style="color: #0000BB;">' (GEN, gentamicin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">2024</span><span style="color: #0000BB;">...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> OK </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism amoxicillin cipro tobra genta ERY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           8  &lt;NA&gt;     S     S   R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Using base R ------------------------------------------------</span></span></span>
@@ -681,20 +837,20 @@ All breakpoints used for interpretation are available in our clinical_breakpoint
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29 × 17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 65 × 17</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given   mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-18 <span style="color: #949494;">14:09:31</span>     1 DISK   ampicillin Strep pneu human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-18 <span style="color: #949494;">14:09:31</span>     1 DISK   AMP        Escherich… human      20         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-04-18 <span style="color: #949494;">14:09:31</span>     1 DISK   AMP        Escherich… human      20         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-18 <span style="color: #949494;">15:20:04</span>     1 DISK   ampicillin Strep pneu human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-18 <span style="color: #949494;">15:20:05</span>     1 DISK   AMP        Escherich… human      20         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-04-18 <span style="color: #949494;">15:20:05</span>     1 DISK   AMP        Escherich… human      20         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-18 <span style="color: #949494;">14:09:31</span>     1 DISK   GEN        Escherich… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-18 <span style="color: #949494;">14:09:32</span>     1 DISK   TOB        Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-18 <span style="color: #949494;">14:09:32</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-18 <span style="color: #949494;">14:09:33</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-18 <span style="color: #949494;">14:09:33</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-18 <span style="color: #949494;">14:09:33</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-18 <span style="color: #949494;">15:20:05</span>     1 DISK   GEN        Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-18 <span style="color: #949494;">15:20:05</span>     1 DISK   TOB        Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-18 <span style="color: #949494;">15:20:06</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-18 <span style="color: #949494;">15:20:06</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-18 <span style="color: #949494;">15:20:06</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-18 <span style="color: #949494;">15:20:06</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 55 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;</span></span>
