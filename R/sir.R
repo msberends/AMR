@@ -111,7 +111,7 @@
 #'
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.sir(your_data)`.
 #'
-#' **For points 2, 3 and 4: Use [sir_interpretation_history()]** to retrieve a [data.frame] (or [tibble][tibble::tibble()] if the `tibble` package is installed) with all results of the last [as.sir()] call.
+#' **For points 2, 3 and 4: Use [sir_interpretation_history()]** to retrieve a [data.frame] with all results of all previous [as.sir()] calls. It also contains notes about interpretation, and the exact input and output values.
 #'
 #' ### Supported Guidelines
 #'
@@ -1506,30 +1506,29 @@ as_sir_method <- function(method_short,
     }
 
     if (NROW(breakpoints_current) == 0) {
-      AMR_env$sir_interpretation_history <- rbind_AMR(
-        AMR_env$sir_interpretation_history,
+      out <- data.frame(
         # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added
-        data.frame(
-          datetime = vectorise_log_entry(Sys.time(), length(rows)),
-          index = rows,
-          method = vectorise_log_entry(method_coerced, length(rows)),
-          ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
-          mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
-          input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
-          ab = vectorise_log_entry(ab_current, length(rows)),
-          mo = vectorise_log_entry(mo_current, length(rows)),
-          host = vectorise_log_entry(host_current, length(rows)),
-          input = vectorise_log_entry(as.character(values), length(rows)),
-          outcome = vectorise_log_entry(NA_sir_, length(rows)),
-          notes = vectorise_log_entry("No breakpoint available", length(rows)),
-          guideline = vectorise_log_entry(guideline_current, length(rows)),
-          ref_table = vectorise_log_entry(NA_character_, length(rows)),
-          uti = vectorise_log_entry(uti_current, length(rows)),
-          breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
-          stringsAsFactors = FALSE
-        )
+        datetime = vectorise_log_entry(Sys.time(), length(rows)),
+        index = rows,
+        method = vectorise_log_entry(method_coerced, length(rows)),
+        ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
+        mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
+        host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
+        input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
+        ab = vectorise_log_entry(ab_current, length(rows)),
+        mo = vectorise_log_entry(mo_current, length(rows)),
+        host = vectorise_log_entry(host_current, length(rows)),
+        input = vectorise_log_entry(as.character(values), length(rows)),
+        outcome = vectorise_log_entry(NA_sir_, length(rows)),
+        notes = vectorise_log_entry("No breakpoint available", length(rows)),
+        guideline = vectorise_log_entry(guideline_current, length(rows)),
+        ref_table = vectorise_log_entry(NA_character_, length(rows)),
+        uti = vectorise_log_entry(uti_current, length(rows)),
+        breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
+        stringsAsFactors = FALSE
       )
+      out <- subset(out, !is.na(input_given))
+      AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
       notes <- c(notes, notes_current)
       next
     }
@@ -1636,6 +1635,7 @@ as_sir_method <- function(method_short,
         )
       }
 
+      ## actual interpretation ----
       if (method == "mic") {
         new_sir <- case_when_AMR(
           is.na(values) ~ NA_sir_,
@@ -1668,30 +1668,29 @@ as_sir_method <- function(method_short,
       # write to verbose output
       notes_current <- trimws2(notes_current)
       notes_current[notes_current == ""] <- NA_character_
-      AMR_env$sir_interpretation_history <- rbind_AMR(
-        AMR_env$sir_interpretation_history,
+      out <- data.frame(
         # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added
-        data.frame(
-          datetime = vectorise_log_entry(Sys.time(), length(rows)),
-          index = rows,
-          method = vectorise_log_entry(method_coerced, length(rows)),
-          ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
-          mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
-          host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
-          input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
-          ab = vectorise_log_entry(breakpoints_current[, "ab", drop = TRUE], length(rows)),
-          mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
-          host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
-          input = vectorise_log_entry(as.character(values), length(rows)),
-          outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
-          notes = font_stripstyle(notes_current), # vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
-          guideline = vectorise_log_entry(guideline_current, length(rows)),
-          ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
-          uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
-          breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
-          stringsAsFactors = FALSE
-        )
+        datetime = vectorise_log_entry(Sys.time(), length(rows)),
+        index = rows,
+        method = vectorise_log_entry(method_coerced, length(rows)),
+        ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
+        mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
+        host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
+        input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
+        ab = vectorise_log_entry(breakpoints_current[, "ab", drop = TRUE], length(rows)),
+        mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
+        host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
+        input = vectorise_log_entry(as.character(values), length(rows)),
+        outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
+        notes = font_stripstyle(notes_current), # vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
+        guideline = vectorise_log_entry(guideline_current, length(rows)),
+        ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
+        uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
+        breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
+        stringsAsFactors = FALSE
       )
+      out <- subset(out, !is.na(input_given))
+      AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
     }
 
     notes <- c(notes, notes_current)
