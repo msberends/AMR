@@ -7,7 +7,7 @@ body:
       value: |
         Thanks for taking the time to make a suggestion!
 
-        We'll be happy to implement on a short notice if this improves the AMR package. Do note that BY FAR most of the content of the current version is because of collaborators like you! So, many thanks in advance.
+        We'll be happy to implement on a short notice if this improves the AMR package. Do note that **BY FAR** most of the content of the current version is because of collaborators like you! So, many thanks in advance.
   - type: textarea
     id: description
     attributes:

@@ -84,7 +84,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{guideline}{A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}. Using a column name for \code{\link[=as.sir]{as.sir()}} allows for easy interpretation on historical data which needs to be interpreted according to e.g., various years.}
+\item{guideline}{A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.}
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -198,9 +198,11 @@ your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_species", 
 
 For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are for \strong{clinical microbiology}: EUCAST 2011-2024 and CLSI 2011-2024, and for \strong{veterinary microbiology}: EUCAST 2021-2024 and CLSI 2019-2024.
 
-Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2024"} or \code{"CLSI 2024"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
+Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2024"} or \code{"CLSI 2024"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. Importantly, using a column name of your data instead, allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.
 
-You can set the default guideline with the package option \code{\link[=AMR-options]{AMR_guideline}} (e.g. in your \code{.Rprofile} file), such as:
+You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
+
+It is also possible to set the default guideline with the package option \code{\link[=AMR-options]{AMR_guideline}} (e.g. in your \code{.Rprofile} file), such as:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
   options(AMR_guideline = "CLSI 2018")
@@ -289,7 +291,7 @@ if (require("dplyr")) {
     mutate_if(is.mic, as.sir,
       mo = "bacteria",
       ab = "antibiotic",
-      guideline = guideline
+      guideline = "guideline"
     )
   df_long \%>\%
     mutate(across(

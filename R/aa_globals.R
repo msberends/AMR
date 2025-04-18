@@ -170,6 +170,7 @@ globalVariables(c(
   "host_index",
   "host_match",
   "input",
+  "input_given",
   "intrinsic_resistant",
   "isolates",
   "lang",

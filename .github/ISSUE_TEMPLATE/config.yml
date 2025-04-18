@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: I Have a Question - Ask Our AMR for R Assistant
+  - name: I Have a Question - Ask the AMR for R Assistant
     url: https://chat.amr-for-r.org
-    about: Ask questions or code suggestions to our AMR for R Assistant, a ChatGPT manually-trained model able to answer any question about the AMR package.
-  - name: I Have a Question - AMR Community Support
+    about: |
+      Ask questions or code suggestions to our AMR for R Assistant.
+      
+      This is a ChatGPT manually-trained model able to answer any question about the AMR package.
+  - name: I Have a Question - Ask the AMR Community
     url: https://github.com/msberends/AMR/discussions
     about: You can also ask (and answer) questions here to share with others.
