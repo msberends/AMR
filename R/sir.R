@@ -43,7 +43,7 @@
 #' @param ab A vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()].
 #' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
-#' @param guideline Defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*.
+#' @param guideline A guideline name (or column name) to use for SIR interpretation. Defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*. Using a column name for [as.sir()] allows for easy interpretation on historical data which needs to be interpreted according to e.g., various years.
 #' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
 #'
 #' `"none"`
@@ -189,7 +189,8 @@
 #'   bacteria = rep("Escherichia coli", 4),
 #'   antibiotic = c("amoxicillin", "cipro", "tobra", "genta"),
 #'   mics = as.mic(c(0.01, 1, 4, 8)),
-#'   disks = as.disk(c(6, 10, 14, 18))
+#'   disks = as.disk(c(6, 10, 14, 18)),
+#'   guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
 #' )
 #'
 #' \donttest{
@@ -208,7 +209,7 @@
 #'     mutate_if(is.mic, as.sir,
 #'       mo = "bacteria",
 #'       ab = "antibiotic",
-#'       guideline = "CLSI"
+#'       guideline = guideline
 #'     )
 #'   df_long %>%
 #'     mutate(across(
@@ -675,7 +676,7 @@ as.sir.data.frame <- function(x,
                               conserve_capped_values = NULL) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  meet_criteria(guideline, allow_class = "character")
   meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "conservative", "none", "inverse"))
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
@@ -908,14 +909,13 @@ get_guideline <- function(guideline, reference_data) {
   if (!identical(reference_data, AMR::clinical_breakpoints)) {
     return(guideline)
   }
-  guideline_param <- toupper(guideline)
-  if (guideline_param %in% c("CLSI", "EUCAST")) {
-    guideline_param <- rev(sort(subset(reference_data, guideline %like% guideline_param)$guideline))[1L]
-  }
-  if (guideline_param %unlike% " ") {
-    # like 'EUCAST2020', should be 'EUCAST 2020'
-    guideline_param <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param, ignore.case = TRUE)
-  }
+  guideline_param <- trimws2(toupper(guideline))
+  latest_clsi <- rev(sort(subset(reference_data, guideline %like% "CLSI")$guideline))[1L]
+  latest_eucast <- rev(sort(subset(reference_data, guideline %like% "EUCAST")$guideline))[1L]
+  guideline_param[guideline_param == "CLSI"] <- latest_clsi
+  guideline_param[guideline_param == "EUCAST"] <- latest_eucast
+  # like 'EUCAST2020', should be 'EUCAST 2020'
+  guideline_param[guideline_param %unlike% " "] <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param[guideline_param %unlike% " "], ignore.case = TRUE)
 
   stop_ifnot(guideline_param %in% reference_data$guideline,
     "invalid guideline: '", guideline,
@@ -988,7 +988,7 @@ as_sir_method <- function(method_short,
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, .call_depth = -2)
   meet_criteria(ab, allow_class = c("ab", "character"), has_length = c(1, length(x)), .call_depth = -2)
-  meet_criteria(guideline, allow_class = "character", has_length = 1, .call_depth = -2)
+  meet_criteria(guideline, allow_class = "character", has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(uti, allow_class = c("logical", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "conservative", "none", "inverse"), .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
@@ -1011,14 +1011,18 @@ as_sir_method <- function(method_short,
 
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
 
-  guideline_coerced <- get_guideline(guideline, reference_data)
-
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
     message()
     message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations.\n\n", add_fn = font_green)
   }
 
   current_df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
+
+  # get guideline
+  if (!is.null(current_df) && length(guideline) == 1 && guideline %in% colnames(current_df) && any(current_df[[guideline]] %like% "CLSI|EUCAST", na.rm = TRUE)) {
+    guideline <- current_df[[guideline]]
+  }
+  guideline_coerced <- get_guideline(guideline, reference_data)
 
   # get host
   if (breakpoint_type == "animal") {
@@ -1215,7 +1219,7 @@ as_sir_method <- function(method_short,
     ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0(vector_and(agent_formatted, quotes = FALSE, sort = FALSE))),
     mo_var_found,
     ifelse(identical(reference_data, AMR::clinical_breakpoints),
-      paste0(", ", font_bold(guideline_coerced)),
+      paste0(", ", vector_and(font_bold(guideline_coerced, collapse = NULL), quotes = FALSE)),
       ""
     ),
     "... "
@@ -1233,11 +1237,11 @@ as_sir_method <- function(method_short,
 
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
-      subset(guideline == guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+      subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
     if (any(ab_coerced == "AMX") && nrow(breakpoints[breakpoints$ab == "AMX", , drop = FALSE]) == 0) {
       ab_coerced[ab_coerced == "AMX"] <- "AMP"
       breakpoints <- reference_data %pm>%
-        subset(guideline == guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+        subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
     }
   } else {
     breakpoints <- reference_data %pm>%
@@ -1249,6 +1253,7 @@ as_sir_method <- function(method_short,
   df <- data.frame(
     values = x,
     values_bak = x,
+    guideline = guideline_coerced,
     mo = mo,
     ab = ab,
     result = NA_sir_,
@@ -1257,12 +1262,12 @@ as_sir_method <- function(method_short,
     stringsAsFactors = FALSE
   )
   if (method == "mic") {
-    if (guideline %like% "CLSI") {
+    if (any(guideline_coerced %like% "CLSI")) {
       # CLSI says: if MIC is not a log2 value it must be rounded up to the nearest log2 value
       log2_levels <- 2^c(-9:12)
-      df$values <- vapply(
+      df$values[which(df$guideline %like% "CLSI")] <- vapply(
         FUN.VALUE = character(1),
-        df$values,
+        df$values[which(df$guideline %like% "CLSI")],
         function(mic_val) {
           if (is.na(mic_val)) {
             return(NA_character_)
@@ -1282,13 +1287,12 @@ as_sir_method <- function(method_short,
       )
     }
     df$values <- as.mic(df$values)
-    print(df)
   } else if (method == "disk") {
     # when as.sir.disk is called directly
     df$values <- as.disk(df$values)
   }
 
-  df_unique <- unique(df[, c("mo", "ab", "uti", "host"), drop = FALSE])
+  df_unique <- unique(df[, c("guideline", "mo", "ab", "uti", "host"), drop = FALSE])
   mo_grams <- suppressWarnings(suppressMessages(mo_gramstain(df_unique$mo, language = NULL, keep_synonyms = FALSE)))
 
   # get all breakpoints, use humans as backup for animals
@@ -1312,7 +1316,7 @@ as_sir_method <- function(method_short,
 
   notes <- character(0)
 
-  if (guideline_coerced %like% "EUCAST") {
+  if (any(guideline_coerced %like% "EUCAST")) {
     any_is_intrinsic_resistant <- FALSE
     add_intrinsic_resistance_to_AMR_env()
   }
@@ -1331,7 +1335,7 @@ as_sir_method <- function(method_short,
       message(
         paste0(font_rose_bg(" WARNING "), "\n"),
         font_black(paste0(
-          "  ", AMR_env$bullet_icon, " No ", guideline_coerced, " ", method_coerced, " breakpoints available for ",
+          "  ", AMR_env$bullet_icon, " No ", method_coerced, " breakpoints available for ",
           suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE))),
           " (", unique(ab_coerced), ")."
         ), collapse = "\n")
@@ -1353,24 +1357,26 @@ as_sir_method <- function(method_short,
   # run the rules (df_unique is a row combination per mo/ab/uti/host) ----
   for (i in seq_len(nrow(df_unique))) {
     p$tick()
+    guideline_current <- df_unique[i, "guideline", drop = TRUE]
     mo_current <- df_unique[i, "mo", drop = TRUE]
     mo_gram_current <- mo_grams[i]
     ab_current <- df_unique[i, "ab", drop = TRUE]
     host_current <- df_unique[i, "host", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
     notes_current <- character(0)
-    if (is.na(uti_current)) {
-      # no preference, so no filter on UTIs
-      rows <- which(as.character(df$mo) == mo_current & df$ab == ab_current & df$host == host_current)
-    } else {
-      rows <- which(as.character(df$mo) == mo_current & df$ab == ab_current & df$host == host_current & df$uti == uti_current)
+    rows <- which(as.character(df$mo) == mo_current & df$ab == ab_current & df$host == host_current & df$guideline == guideline_current)
+    if (!is.na(uti_current)) {
+      # also filter on UTIs
+      rows <- rows[df$uti[rows] == uti_current]
     }
+
     if (length(rows) == 0) {
       # this can happen if a host is unavailable, just continue with the next one, since a note about hosts having NA are already given at this point
       next
     }
     values <- df[rows, "values", drop = TRUE]
     values_bak <- df[rows, "values_bak", drop = TRUE]
+    notes_current <- rep("", length(rows))
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties, as fast as possible
@@ -1415,7 +1421,7 @@ as_sir_method <- function(method_short,
     # gather all available breakpoints for current MO
     # TODO for VET09 do not filter out E. coli and such
     breakpoints_current <- breakpoints %pm>%
-      subset(ab == ab_current) %pm>%
+      subset(ab == ab_current & guideline == guideline_current) %pm>%
       subset(mo %in% c(
         mo_current, mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
@@ -1423,6 +1429,7 @@ as_sir_method <- function(method_short,
         mo_current_gram,
         mo_current_other
       ))
+
 
     # TODO are operators considered??
     # This seems to not work well: as.sir(as.mic(c(4, ">4", ">=4", 8, ">8", ">=8")), ab = "AMC", mo = "E. coli", breakpoint_type = "animal", host = "dogs", guideline = "CLSI 2024")
@@ -1515,8 +1522,8 @@ as_sir_method <- function(method_short,
           host = vectorise_log_entry(host_current, length(rows)),
           input = vectorise_log_entry(as.character(values), length(rows)),
           outcome = vectorise_log_entry(NA_sir_, length(rows)),
-          notes = vectorise_log_entry("NO BREAKPOINT AVAILABLE", length(rows)),
-          guideline = vectorise_log_entry(guideline_coerced, length(rows)),
+          notes = vectorise_log_entry("No breakpoint available", length(rows)),
+          guideline = vectorise_log_entry(guideline_current, length(rows)),
           ref_table = vectorise_log_entry(NA_character_, length(rows)),
           uti = vectorise_log_entry(uti_current, length(rows)),
           breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
@@ -1556,21 +1563,33 @@ as_sir_method <- function(method_short,
     }
     if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && is.na(uti_current) && message_not_thrown_before("as.sir", "uti", ab_current)) {
       # only UTI breakpoints available
-      notes_current <- c(notes_current, paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI); assuming `uti = TRUE`."))
+      notes_current <- paste0(
+        notes_current, "\n",
+        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI); assuming `uti = TRUE`.")
+      )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
       # both UTI and Non-UTI breakpoints available
-      notes_current <- c(notes_current, paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`."))
       breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
+      notes_current <- paste0(
+        notes_current, "\n",
+        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`.")
+      )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
-      notes_current <- c(notes_current, paste0("Multiple breakpoints available for ", font_bold(ab_formatted), " in ", mo_formatted, " - assuming ", site, "."))
+      notes_current <- paste0(
+        notes_current, "\n",
+        paste0("Multiple breakpoints available for ", font_bold(ab_formatted), " in ", mo_formatted, " - assuming ", site, ".")
+      )
     }
 
     # first check if mo is intrinsic resistant
-    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_current, ab_current) %in% AMR_env$intrinsic_resistant) {
-      notes_current <- c(notes_current, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
+    if (isTRUE(add_intrinsic_resistance) && guideline_current %like% "EUCAST" && paste(mo_current, ab_current) %in% AMR_env$intrinsic_resistant) {
       new_sir <- rep(as.sir("R"), length(rows))
+      notes_current <- paste0(
+        notes_current, "\n",
+        paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, "")
+      )
     } else if (nrow(breakpoints_current) == 0) {
       # no rules available
       new_sir <- rep(NA_sir_, length(rows))
@@ -1578,24 +1597,43 @@ as_sir_method <- function(method_short,
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
 
-      if (any(breakpoints_current$mo == "UNKNOWN", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "PK.*PD", na.rm = TRUE)) {
-        notes_current <- c(notes_current, "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this")
-      }
-      if (any(breakpoints_current$site %like% "screen", na.rm = TRUE) | any(breakpoints_current$ref_tbl %like% "screen", na.rm = TRUE)) {
-        notes_current <- c(notes_current, "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this")
-      }
-      if (method == "mic" && capped_mic_handling %in% c("conservative", "inverse") && any(as.character(values_bak) %like% "^[<][0-9]")) {
-        notes_current <- c(notes_current, paste0("MIC values with the sign '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""))
-      }
-      if (method == "mic" && capped_mic_handling %in% c("conservative", "inverse") && any(as.character(values_bak) %like% "^[>][0-9]")) {
-        notes_current <- c(notes_current, paste0("MIC values with the sign '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""))
-      }
-      if (method == "mic" && capped_mic_handling %in% c("conservative", "standard") && any(as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R, na.rm = TRUE)) {
-        notes_current <- c(notes_current, paste0("MIC values within the breakpoint guideline range with the sign '<=' or '>=' are considered 'NI' since capped_mic_handling = \"", capped_mic_handling, "\""))
-      }
+      notes_current <- paste0(
+        notes_current, "\n",
+        ifelse(breakpoints_current$mo == "UNKNOWN" | breakpoints_current$ref_tbl %like% "PK.*PD",
+          "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this",
+          ""
+        ),
+        "\n",
+        ifelse(breakpoints_current$site %like% "screen" | breakpoints_current$ref_tbl %like% "screen",
+          "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this",
+          ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]",
+          paste0("MIC values with the sign '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]",
+          paste0("MIC values with the sign '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R,
+          paste0("MIC values within the breakpoint guideline range with the sign '<=' or '>=' are considered 'NI' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          ""
+        )
+      )
       if (isTRUE(substitute_missing_r_breakpoint) && !is.na(breakpoints_current$breakpoint_S) && is.na(breakpoints_current$breakpoint_R)) {
-        breakpoints_current$breakpoint_R <- breakpoints_current$breakpoint_S # breakpoints_current only has 1 row at this moment
-        notes_current <- c(notes_current, "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE")
+        # breakpoints_current only has 1 row at this moment
+        breakpoints_current$breakpoint_R <- breakpoints_current$breakpoint_S
+        notes_current <- paste0(
+          notes_current, "\n",
+          ifelse(!is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R),
+            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE",
+            ""
+          )
+        )
       }
 
       if (method == "mic") {
@@ -1605,8 +1643,8 @@ as_sir_method <- function(method_short,
           capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]" ~ as.sir("R"),
           capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R ~ as.sir("NI"),
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
-          guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
-          guideline_coerced %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+          guideline_current %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
+          guideline_current %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
@@ -1617,8 +1655,8 @@ as_sir_method <- function(method_short,
         new_sir <- case_when_AMR(
           is.na(values) ~ NA_sir_,
           as.double(values) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
-          guideline_coerced %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
-          guideline_coerced %like% "CLSI" & as.double(values) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          guideline_current %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          guideline_current %like% "CLSI" & as.double(values) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
@@ -1628,6 +1666,8 @@ as_sir_method <- function(method_short,
       }
 
       # write to verbose output
+      notes_current <- trimws2(notes_current)
+      notes_current[notes_current == ""] <- NA_character_
       AMR_env$sir_interpretation_history <- rbind_AMR(
         AMR_env$sir_interpretation_history,
         # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added
@@ -1644,8 +1684,8 @@ as_sir_method <- function(method_short,
           host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
           input = vectorise_log_entry(as.character(values), length(rows)),
           outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
-          notes = vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
-          guideline = vectorise_log_entry(guideline_coerced, length(rows)),
+          notes = font_stripstyle(notes_current), # vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
+          guideline = vectorise_log_entry(guideline_current, length(rows)),
           ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
           uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
           breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
@@ -1665,6 +1705,7 @@ as_sir_method <- function(method_short,
       # the progress bar has overwritten the intro text, so:
       message_(intro_txt, appendLF = FALSE, as_note = FALSE)
     }
+    notes <- notes[!trimws2(notes) %in% c("", NA_character_)]
     if (length(notes) > 0) {
       if (isTRUE(rise_warning)) {
         message(font_rose_bg(" WARNING "))

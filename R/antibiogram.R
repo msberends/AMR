@@ -34,9 +34,8 @@
 #'
 #' Adhering to previously described approaches (see *Source*) and especially the Bayesian WISCA model (Weighted-Incidence Syndromic Combination Antibiogram) by Bielicki *et al.*, these functions provide flexible output formats including plots and tables, ideal for integration with R Markdown and Quarto reports.
 #' @param x A [data.frame] containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see [as.sir()]).
-#' @param antimicrobials A vector specifying the antimicrobials to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:
-#'   - Any antimicrobial name or code that matches to a column name in `x`
-#'   - A column name in `x` that contains SIR values
+#' @param antimicrobials A vector specifying the antimicrobials containing SIR values to include in the antibiogram (see *Examples*). Will be evaluated using [guess_ab_col()]. This can be:
+#'   - Any antimicrobial name or code that could match (see [guess_ab_col()]) to any column in `x`
 #'   - Any [antimicrobial selector][antimicrobial_selectors], such as [aminoglycosides()] or [carbapenems()]
 #'   - A combination of the above, using `c()`, e.g.:
 #'     - `c(aminoglycosides(), "AMP", "AMC")`
@@ -489,7 +488,7 @@ antibiogram.default <- function(x,
   }
   meet_criteria(syndromic_group, allow_class = "character", allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(add_total_n, allow_class = "logical", has_length = 1)
-  if (isTRUE(add_total_n) || !missing(add_total_n)) {
+  if (isTRUE(add_total_n)) {
     deprecation_warning("add_total_n", "formatting_type", fn = "antibiogram", is_argument = TRUE)
   }
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)

@@ -46,10 +46,9 @@ retrieve_wisca_parameters(wisca_model, ...)
 \arguments{
 \item{x}{A \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}}).}
 
-\item{antimicrobials}{A vector specifying the antimicrobials to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:
+\item{antimicrobials}{A vector specifying the antimicrobials containing SIR values to include in the antibiogram (see \emph{Examples}). Will be evaluated using \code{\link[=guess_ab_col]{guess_ab_col()}}. This can be:
 \itemize{
-\item Any antimicrobial name or code that matches to a column name in \code{x}
-\item A column name in \code{x} that contains SIR values
+\item Any antimicrobial name or code that could match (see \code{\link[=guess_ab_col]{guess_ab_col()}}) to any column in \code{x}
 \item Any \link[=antimicrobial_selectors]{antimicrobial selector}, such as \code{\link[=aminoglycosides]{aminoglycosides()}} or \code{\link[=carbapenems]{carbapenems()}}
 \item A combination of the above, using \code{c()}, e.g.:
 \itemize{

@@ -244,11 +244,13 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
   }
   scale$transform_df <- function(self, df) {
     if (!aest %in% colnames(df)) {
-      # support for geom_hline() and geom_vline()
-      if ("yintercept" %in% colnames(df)) {
-        aest_val <- "yintercept"
-      } else if ("xintercept" %in% colnames(df)) {
-        aest_val <- "xintercept"
+      # support for geom_hline(), geom_vline(), etc
+      other_x <- c("xintercept", "xmin", "xmax", "xend", "width")
+      other_y <- c("yintercept", "ymin", "ymax", "yend", "height")
+      if (any(other_y %in% colnames(df))) {
+        aest_val <- intersect(other_y, colnames(df))[1]
+      } else if (any(other_x %in% colnames(df))) {
+        aest_val <- intersect(other_x, colnames(df))[1]
       } else {
         stop_("No support for plotting df with `scale_", aest, "_mic()` with columns ", vector_and(colnames(df), sort = FALSE))
       }

@@ -126,6 +126,12 @@ test_that("test-sir.R", {
 
   # Human -------------------------------------------------------------------
 
+  # allow for guideline length > 1
+  expect_equal(
+    get_guideline(c("CLSI", "CLSI", "CLSI2023", "EUCAST", "EUCAST2020"), AMR::clinical_breakpoints),
+    c("CLSI 2024", "CLSI 2024", "CLSI 2023", "EUCAST 2024", "EUCAST 2020")
+  )
+
   # these are used in the script
   expect_true(all(c("B_GRAMN", "B_GRAMP", "B_ANAER-NEG", "B_ANAER-POS", "B_ANAER") %in% AMR::microorganisms$mo))
 
@@ -341,6 +347,12 @@ test_that("test-sir.R", {
 
   # Veterinary --------------------------------------------------------------
 
+  # multiple guidelines
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  x <- as.sir(as.mic(c(16, 16)), mo = "B_STRPT_CANS", ab = "AMK", host = "dog", guideline = c("CLSI 2024", "CLSI 2014"))
+  expect_equal(x, as.sir(c("R", NA)))
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_equal(sir_history$guideline, c("CLSI 2024", "CLSI 2014"))
   sir_history <- sir_interpretation_history(clean = TRUE)
 
   mics <- as.mic(2^c(-4:6)) # 0.0625 to 64 in factors of 2

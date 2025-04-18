@@ -1,4 +1,4 @@
-# AMR 2.1.1.9240
+# AMR 2.1.1.9241
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -46,17 +46,17 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## Changed
 * SIR interpretation
-  * It is now possible to use column names for argument `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
+  * It is now possible to use column names for arguments `guideline`, `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
   * Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.
   * Following CLSI interpretation rules, values outside the log2-dilution range will be rounded upwards to the nearest log2-level before interpretation. Only if using a CLSI guideline.
   * Combined MIC values (e.g., from CLSI) are now supported
   * The argument `conserve_capped_values` in `as.sir()` has been replaced with `capped_mic_handling`, which allows greater flexibility in handling capped MIC values (`<`, `<=`, `>`, `>=`). The four available options (`"standard"`, `"strict"`, `"relaxed"`, `"inverse"`) provide full control over whether these values should be interpreted conservatively or ignored. Using `conserve_capped_values` is now deprecated and returns a warning.
-  * Added argument `info` so silence all console messages
+  * Added argument `info` to silence all console messages
 * `antibiogram()` function
   * Argument `antibiotics` has been renamed to `antimicrobials`. Using `antibiotics` will still work, but now returns a warning.
   * Added argument `formatting_type` to set any of the 22 options for the formatting of all 'cells'. This defaults to `18` for non-WISCA and `14` for WISCA, changing the output of antibiograms to cells with more info.
-  * For this reason, `add_total_n` is now `FALSE` at default since the denominators are added to the cells for non-WISCA. For WISCA, the denominator is not useful anyway.
+  * For this reason, `add_total_n` is now deprecated and `FALSE` at default since the denominators are added to the cells dependent on the `formatting_type` setting
   * The `ab_transform` argument now defaults to `"name"`, displaying antibiotic column names instead of codes
 * Antimicrobial selectors (previously: *antibiotic selectors*)
   * 'Antibiotic selectors' are now called 'antimicrobial selectors' since their scope is broader than just antibiotics. All documentation have been updated, and `ab_class()` and `ab_selector()` have been replaced with `amr_class()` and `amr_selector()`. The old functions are now deprecated and will be removed in a future version.

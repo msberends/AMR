@@ -84,7 +84,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{guideline}{Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}.}
+\item{guideline}{A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2024 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2024) and CLSI (2011-2024), see \emph{Details}. Using a column name for \code{\link[=as.sir]{as.sir()}} allows for easy interpretation on historical data which needs to be interpreted according to e.g., various years.}
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -269,7 +269,8 @@ df_long <- data.frame(
   bacteria = rep("Escherichia coli", 4),
   antibiotic = c("amoxicillin", "cipro", "tobra", "genta"),
   mics = as.mic(c(0.01, 1, 4, 8)),
-  disks = as.disk(c(6, 10, 14, 18))
+  disks = as.disk(c(6, 10, 14, 18)),
+  guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
 )
 
 \donttest{
@@ -288,7 +289,7 @@ if (require("dplyr")) {
     mutate_if(is.mic, as.sir,
       mo = "bacteria",
       ab = "antibiotic",
-      guideline = "CLSI"
+      guideline = guideline
     )
   df_long \%>\%
     mutate(across(
