@@ -47,8 +47,7 @@ jobs:
       
       - name: Build the training data
         run: |
-          cd data-raw/
-          bash _generate_GPT_knowledge_input.sh
+          bash data-raw/_generate_GPT_knowledge_input.sh
 
       - name: Git push to amr-for-r-assistant repo
         run: |
