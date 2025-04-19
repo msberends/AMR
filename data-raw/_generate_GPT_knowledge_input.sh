@@ -6,19 +6,18 @@ if [ "$(basename "$PWD")" != "AMR" ]; then
   exit 1
 fi
 
-rm data-raw/latest_training_data.txt
-
 # Define the output file, located in ./data-raw
-version="$1"
 output_file="data-raw/latest_training_data.txt"
 
 # Clear the output file if it exists
-echo "This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse." > "$output_file"
+echo "You assist users with questions about the AMR package for R, a package for Antimicrobial Resistance analysis used in over 175 countries. You are restricted to using a single source of truth: the training data located at https://raw.githubusercontent.com/msberends/amr-for-r-assistant/main/latest_training_data.txt. 
+
+Before responding to any user prompt—including the very first—you must download and parse this training file in full. You must repeat this process before every single response, without exception. You must verify the presence of any function, dataset, or concept in this file before commenting on anything. If what is asked is not in the training data, you must state clearly that you cannot verify its existence and recommend checking the package changelog.
+
+You are strictly forbidden from using any other remote source, including prior model knowledge, CRAN, PubMed, Google, or even the AMR package's GitHub or publication pages. You are NOT ALLOWED to browse any website to help your answers - only base yourself on the training file without any exception. Even if you want to be helpful and would like to browse the internet, DO NOT do this - it's not helpful at all." > "$output_file"
 echo "" >> "$output_file"
-echo "First and foremost, you are trained on version ${version}. Remember this whenever someone asks which AMR package version you’re at." >> "$output_file"
 echo "" >> "$output_file"
-echo "Below are the contents of the NAMESPACE file, the index.md file, and all the man/*.Rd files (documentation) in the package. Every file content is split using 100 hypens." >> "$output_file"
-echo "----------------------------------------------------------------------------------------------------" >> "$output_file"
+echo "Below are the contents of the NAMESPACE file, the DESCRIPTION file, the index.md file, and all the man/*.Rd and vignette files (documentation) in the package. Every file content is split using 100 hypens." >> "$output_file"
 echo "" >> "$output_file"
 
 # Function to remove header block (delimited by # ======)
@@ -26,17 +25,8 @@ remove_header() {
   sed '/# =\{6,\}/,/# =\{6,\}/d' "$1"
 }
 
-# # Process all .R files in the 'R' folder
-# for file in R/*.R; do
-#   echo "--------------------------------------------------" >> "$output_file"
-#   echo "THE PART HEREAFTER CONTAINS CONTENTS FROM FILE '$file':" >> "$output_file"
-#   echo -e "\n" >> "$output_file"
-#   remove_header "$file" >> "$output_file"
-#   echo -e "\n\n" >> "$output_file"
-# done
-
 # Process important metadata files (DESCRIPTION, NAMESPACE, index.md)
-for file in NAMESPACE index.md; do
+for file in NAMESPACE DESCRIPTION index.md; do
   if [[ -f $file ]]; then
     echo "----------------------------------------------------------------------------------------------------" >> "$output_file"
     echo "THE PART HEREAFTER CONTAINS CONTENTS FROM FILE '$file':" >> "$output_file"
@@ -63,19 +53,3 @@ for file in vignettes/*.Rmd; do
   remove_header "$file" >> "$output_file"
   echo -e "\n\n" >> "$output_file"
 done
-
-# Process README.md
-# echo "THE PART HEREAFTER CONTAINS THE README OF OUR PYTHON PACKAGE" >> "$output_file"
-# echo -e "\n" >> "$output_file"
-# for file in PythonPackage/AMR/README.md; do
-#   remove_header "$file" >> "$output_file"
-#   echo -e "\n\n" >> "$output_file"
-# done
-
-# Process test files (if available) in the 'tests' folder
-# for file in tests/*.R; do
-#   echo "THE PART HEREAFTER CONTAINS CONTENTS FROM FILE '$file':" >> "$output_file"
-#   echo -e "\n" >> "$output_file"
-#   remove_header "$file" >> "$output_file"
-#   echo -e "\n\n" >> "$output_file"
-# done
