@@ -75,7 +75,7 @@ test_that("test-sir.R", {
   )
   expect_error(as.sir.mic(as.mic(16)))
   expect_error(as.sir.disk(as.disk(16)))
-  expect_error(get_guideline("this one does not exist"))
+  expect_error(AMR:::get_guideline("this one does not exist"))
 
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     # 40 sir columns
@@ -128,7 +128,7 @@ test_that("test-sir.R", {
 
   # allow for guideline length > 1
   expect_equal(
-    get_guideline(c("CLSI", "CLSI", "CLSI2023", "EUCAST", "EUCAST2020"), AMR::clinical_breakpoints),
+    AMR:::get_guideline(c("CLSI", "CLSI", "CLSI2023", "EUCAST", "EUCAST2020"), AMR::clinical_breakpoints),
     c("CLSI 2024", "CLSI 2024", "CLSI 2023", "EUCAST 2024", "EUCAST 2020")
   )
 

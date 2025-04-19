@@ -6,11 +6,11 @@ if [ "$(basename "$PWD")" != "AMR" ]; then
   exit 1
 fi
 
-rm -rf data-raw/gpt_training_text_v*
+rm data-raw/latest_training_data.txt
 
 # Define the output file, located in ./data-raw
 version="$1"
-output_file="data-raw/gpt_training_text_v${version}.txt"
+output_file="data-raw/latest_training_data.txt"
 
 # Clear the output file if it exists
 echo "This knowledge base contains all context you must know about the AMR package for R. You are a GPT trained to be an assistant for the AMR package in R. You are an incredible R specialist, especially trained in this package and in the tidyverse." > "$output_file"
