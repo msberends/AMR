@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9246</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9247</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,12 +60,12 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">eucast_rules</span><span class="op">(</span><span class="va">x</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_eucastrules"</span>, default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>,</span>
-<span>  <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, version_breakpoints <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>  <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, version_breakpoints <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  version_expected_phenotypes <span class="op">=</span> <span class="fl">1.2</span>, version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,</span>
 <span>  ampc_cephalosporin_resistance <span class="op">=</span> <span class="cn">NA</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  custom_rules <span class="op">=</span> <span class="cn">NULL</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="va">ab</span>, administration <span class="op">=</span> <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="va">ab</span>, administration <span class="op">=</span> <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -106,7 +106,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-version-breakpoints">version_breakpoints<a class="anchor" aria-label="anchor" href="#arg-version-breakpoints"></a></dt>
-<dd><p>The version number to use for the EUCAST Clinical Breakpoints guideline. Can be "14.0", "13.1", "12.0", "11.0", or "10.0".</p></dd>
+<dd><p>The version number to use for the EUCAST Clinical Breakpoints guideline. Can be "15.0", "14.0", "13.1", "12.0", "11.0", or "10.0".</p></dd>
 
 
 <dt id="arg-version-expected-phenotypes">version_expected_phenotypes<a class="anchor" aria-label="anchor" href="#arg-version-expected-phenotypes"></a></dt>
@@ -142,7 +142,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-administration">administration<a class="anchor" aria-label="anchor" href="#arg-administration"></a></dt>
-<dd><p>Route of administration, either "im", "iv", or "oral".</p></dd>
+<dd><p>Route of administration, either "", "im", "iv", or "oral".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -262,8 +262,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 Table 4: Expected resistant phenotype in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 Table 4: Expected resistant phenotype in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                         rule_source</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   'EUCAST Clinical Breakpoint Tables' v14.0, 2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   'EUCAST Clinical Breakpoint Tables' v14.0, 2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   'EUCAST Clinical Breakpoint Tables' v15.0, 2025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   'EUCAST Clinical Breakpoint Tables' v15.0, 2025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 'EUCAST Expected Resistant Phenotypes' v1.2, 2023</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 'EUCAST Expected Resistant Phenotypes' v1.2, 2023</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 'EUCAST Expected Resistant Phenotypes' v1.2, 2023</span>
@@ -274,7 +274,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tobra"</span>, <span class="st">"genta"</span>, <span class="st">"cipro"</span><span class="op">)</span>, <span class="st">"iv"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Dosages for antimicrobial drugs, as meant for 'EUCAST Clinical Breakpoint</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  Tables' v12.0 (2022). </span><span style="color: #BB0000;">This note will be shown once per session.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  Tables' v15.0 (2025). </span><span style="color: #BB0000;">This note will be shown once per session.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ab   name          standard_dosage  high_dosage </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
