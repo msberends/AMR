@@ -53,7 +53,7 @@ jobs:
       matrix:
         config:
           # current development version, check all major OSes:
-          - {os: macOS-latest,   r: 'devel', allowfail: true}
+          # - {os: macOS-latest,   r: 'devel', allowfail: true}
           - {os: windows-latest, r: 'devel', allowfail: false}
           - {os: ubuntu-latest,  r: 'devel', allowfail: false, http-user-agent: 'release'}
 

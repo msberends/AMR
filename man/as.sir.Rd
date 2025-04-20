@@ -144,14 +144,7 @@ Ordered \link{factor} with new class \code{sir}
 \description{
 Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} containing the levels \code{S}, \code{SDD}, \code{I}, \code{R}, \code{NI}.
 
-These breakpoints are currently implemented:
-\itemize{
-\item For \strong{clinical microbiology}: EUCAST 2011-2025 and CLSI 2011-2025;
-\item For \strong{veterinary microbiology}: EUCAST 2021-2025 and CLSI 2019-2025;
-\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2025 and CLSI 2022-2025.
-}
-
-All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
+Breakpoints are currently implemented from EUCAST (2011-2025) and CLSI (2011-2025), see \emph{Details}. All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
 }
 \details{
 \emph{Note: The clinical breakpoints in this package were validated through, and imported from, \href{https://whonet.org}{WHONET}. The public use of this \code{AMR} package has been endorsed by both CLSI and EUCAST. See \link{clinical_breakpoints} for more information.}
