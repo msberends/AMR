@@ -129,7 +129,7 @@ test_that("test-sir.R", {
   # allow for guideline length > 1
   expect_equal(
     AMR:::get_guideline(c("CLSI", "CLSI", "CLSI2023", "EUCAST", "EUCAST2020"), AMR::clinical_breakpoints),
-    c("CLSI 2024", "CLSI 2024", "CLSI 2023", "EUCAST 2024", "EUCAST 2020")
+    c("CLSI 2025", "CLSI 2025", "CLSI 2023", "EUCAST 2025", "EUCAST 2020")
   )
 
   # these are used in the script
