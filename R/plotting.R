@@ -52,7 +52,7 @@
 #' @details
 #' ### The `scale_*_mic()` Functions
 #'
-#' The functions [scale_x_mic()], [scale_y_mic()], [scale_colour_mic()], and [scale_fill_mic()] functions allow to plot the [mic][as.mic()] class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
+#' The functions [scale_x_mic()], [scale_y_mic()], [scale_colour_mic()], and [scale_fill_mic()] functions allow to plot the [mic][as.mic()] class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the operators in MIC values (such as `>=`) if desired. Missing intermediate log2 levels will be plotted too.
 #'
 #' ### The `scale_*_sir()` Functions
 #'

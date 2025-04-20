@@ -31,12 +31,13 @@ library(dplyr)
 library(readxl)
 library(cleaner)
 
-# URL:
-# https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/Dosages_v_13.0_Breakpoint_Tables.pdf
-# download the PDF file, open in Adobe Acrobat and export as Excel workbook
-breakpoints_version <- 13
+breakpoint_file <- "data-raw/v_15.0_Breakpoint_Tables.xlsx"
+if (!file.exists(breakpoint_file)) {
+  stop("Breakpoint file not found")
+}
+breakpoints_version <- as.double(gsub("[^0-9.]", "", gsub(".xlsx", "", breakpoint_file, fixed = TRUE)))
 
-dosage_source <- read_excel("data-raw/Dosages_v_12.0_Breakpoint_Tables.xlsx", skip = 4, na = "None") %>%
+dosage_source <- read_excel(breakpoint_file, skip = 6, sheet = "Dosages", na = "None") %>%
   format_names(snake_case = TRUE, penicillins = "drug") %>%
   filter(!tolower(standard_dosage) %in% c("standard dosage", "standard dosage_source", "under review")) %>%
   filter(!is.na(standard_dosage)) %>%
@@ -173,6 +174,12 @@ dosage_new <- bind_rows(
   # this makes it a tibble as well:
   dataset_UTF8_to_ASCII()
 
-dosage <- bind_rows(dosage_new, AMR::dosage)
+dosage <- AMR::dosage |>
+  bind_rows(dosage_new) |>
+  arrange(desc(eucast_version), name) |>
+  distinct()
 
+dosage <- dosage |> dataset_UTF8_to_ASCII()
 usethis::use_data(dosage, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")
+rm(dosage)
+devtools::load_all(".")

@@ -115,9 +115,12 @@
 #'
 #' ### Supported Guidelines
 #'
-#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are for **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`, and for **veterinary microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`.
+#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are:
+#' - For **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
+#' - For **veterinary microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "animal")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`;
+#' - For **ECOFFs** (Epidemiological Cut-off Values): EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "ECOFF")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "ECOFF")$guideline)))`.
 #'
-#' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. Importantly, using a column name of your data instead, allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.
+#' The `guideline` argument must be set to e.g., ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. Importantly, using a column name of your data instead, allows for straightforward interpretation of historical data that must be analysed in the context of, for example, different years.
 #'
 #' You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #'
@@ -1611,17 +1614,17 @@ as_sir_method <- function(method_short,
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]",
-          paste0("MIC values with the sign '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values with the operator '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]",
-          paste0("MIC values with the sign '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values with the operator '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R,
-          paste0("MIC values within the breakpoint guideline range with the sign '<=' or '>=' are considered 'NI' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' since capped_mic_handling = \"", capped_mic_handling, "\""),
           ""
         )
       )

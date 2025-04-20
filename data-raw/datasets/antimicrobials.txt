@@ -72,6 +72,7 @@
 "FEP"	5479537	"Cefepime"	"Cephalosporins (4th gen.)"	"J01DE01"	"Other beta-lactam antibacterials"	"Fourth-generation cephalosporins"	"cfep,cfpi,cpe,cpm,fep,pm,xpm"	"anticefepime,axepim,cefepima,cefepimum,maxipime,pyrrolidinium,renapime"			4	"g"	"101502-3,18879-7,31142-3,31143-1,35763-2,38363-8,42350-9,42351-7,42353-3,50631-1,58412-8,6643-1,6644-9,6645-7,6646-5,6987-2,8272-7,8273-5"
 "CFA"		"Cefepime/amikacin"	"Cephalosporins (4th gen.)"	"J01RA06"	"Combinations of antibacterials"	"Combinations of antibacterials"	"NA"	"NA"					"NA"
 "CPC"	9567559	"Cefepime/clavulanic acid"	"Cephalosporins (4th gen.)"	"NA"			"cicl,xpml"	"NA"					"NA"
+"FPE"	23653540	"Cefepime/enmetazobactam"	"Cephalosporins (4th gen.)"	"NA"			"NA"	"NA"					"NA"
 "FNC"		"Cefepime/nacubactam"	"Cephalosporins (4th gen.)"	"NA"			"NA"	"NA"					"NA"
 "FPT"	9567558	"Cefepime/tazobactam"	"Cephalosporins (4th gen.)"	"NA"			"NA"	"NA"					"NA"
 "FPZ"		"Cefepime/zidebactam"	"Cephalosporins (4th gen.)"	"NA"			"NA"	"NA"					"NA"

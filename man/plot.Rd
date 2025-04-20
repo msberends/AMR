@@ -172,7 +172,7 @@ Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC 
 \details{
 \subsection{The \verb{scale_*_mic()} Functions}{
 
-The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the signs in MIC values if desired. Missing intermediate log2 levels will be plotted too.
+The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the operators in MIC values (such as \code{>=}) if desired. Missing intermediate log2 levels will be plotted too.
 }
 
 \subsection{The \verb{scale_*_sir()} Functions}{
@@ -193,7 +193,7 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
-For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2024, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
+For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2025, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
 \examples{

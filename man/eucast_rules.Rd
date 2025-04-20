@@ -21,12 +21,12 @@ Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility test
 \usage{
 eucast_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_eucastrules", default = c("breakpoints",
-  "expected_phenotypes")), verbose = FALSE, version_breakpoints = 14,
+  "expected_phenotypes")), verbose = FALSE, version_breakpoints = 15,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = FALSE,
   custom_rules = NULL, overwrite = FALSE, ...)
 
-eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
+eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 }
 \arguments{
 \item{x}{A data set with antimicrobials columns, such as \code{amox}, \code{AMX} and \code{AMC}.}
@@ -39,7 +39,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be "14.0", "13.1", "12.0", "11.0", or "10.0".}
+\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be "15.0", "14.0", "13.1", "12.0", "11.0", or "10.0".}
 
 \item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be "1.2".}
 
@@ -57,7 +57,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 
 \item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{administration}{Route of administration, either "im", "iv", or "oral".}
+\item{administration}{Route of administration, either "", "im", "iv", or "oral".}
 }
 \value{
 The input of \code{x}, possibly with edited values of antimicrobials. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.

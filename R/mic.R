@@ -214,8 +214,8 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   x <- gsub("=>", ">=", x, fixed = TRUE)
   # Remove leading == and =
   x <- gsub("^=+", "", x)
-  # retrieve signs and remove them from input
-  x_signs <- trimws(gsub("[^>=<]", "", x))
+  # retrieve operators and remove them from input
+  x_operators <- trimws(gsub("[^>=<]", "", x))
   x <- trimws(gsub("[>=<]", "", x))
   # dots without a leading zero must start with 0
   x <- gsub("([^0-9]|^)[.]", "\\10.", x, perl = TRUE)
@@ -238,8 +238,8 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   x <- gsub("[.]$", "", x, perl = TRUE)
   # remove scientific notation
   x[x %like% "[0-9]e[-]?[0-9]"] <- trimws(format(suppressWarnings(as.double(x[x %like% "[0-9]e[-]?[0-9]"])), scientific = FALSE))
-  # add signs again
-  x <- paste0(x_signs, x)
+  # add operators again
+  x <- paste0(x_operators, x)
   # remove NAs introduced by format()
   x <- gsub("(NA)+", "", x)
   # trim it

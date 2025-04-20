@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 34 376 observations and 14 variables:
+A \link[tibble:tibble]{tibble} with 40 217 observations and 14 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either "ECOFF", "animal", or "human"
@@ -20,7 +20,7 @@ A \link[tibble:tibble]{tibble} with 34 376 observations and 14 variables:
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R", can be \code{NA}
 \item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
-\item \code{is_SDD}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 24 breakpoints.
+\item \code{is_SDD}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 48 breakpoints.
 }
 }
 \usage{
@@ -31,9 +31,9 @@ Data set containing clinical breakpoints to interpret MIC and disk diffusion to 
 
 These breakpoints are currently implemented:
 \itemize{
-\item For \strong{clinical microbiology}: EUCAST 2011-2024 and CLSI 2011-2024;
-\item For \strong{veterinary microbiology}: EUCAST 2021-2024 and CLSI 2019-2024;
-\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2012-2024 and CLSI 2022-2024.
+\item For \strong{clinical microbiology}: EUCAST 2011-2025 and CLSI 2011-2025;
+\item For \strong{veterinary microbiology}: EUCAST 2021-2025 and CLSI 2019-2025;
+\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2025 and CLSI 2022-2025.
 }
 
 Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.

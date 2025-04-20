@@ -1,4 +1,4 @@
-# AMR 2.1.1.9246
+# AMR 2.1.1.9247
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -26,11 +26,12 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * The `as.mo()` function and all `mo_*()` functions now include an `only_fungi` argument, allowing users to restrict results solely to fungal species. This ensures fungi are prioritised over bacteria during microorganism identification. This can also be set globally with the new `AMR_only_fungi` option.
   * Also updated other kingdoms, welcoming a total of 2,149 new records from 2023 and 927 from 2024.
 * **Updated clinical breakpoints**
-  * EUCAST 2024 and CLSI 2024 are now supported, by adding all of their over 4,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2024 is now the new default guideline for all MIC and disk diffusion interpretations.
+  * Breakpoint of 2024 and 2025 of both CLSI and EUCAST are now supported, by adding all of their over 10,000 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2025 is now the new default guideline for all MIC and disk diffusion interpretations.
   * Added all Expected Resistant Phenotypes from EUCAST (v1.2). The default `rules` for `eucast_rules()` are now: `c("breakpoints", "expected_phenotypes")`.
   * Updated the `intrinsic_resistant` data set, which is now based on EUCAST Expected Resistant Phenotypes v1.2
   * `as.sir()` now brings additional factor levels: "NI" for non-interpretable and "SDD" for susceptible dose-dependent. Currently, the `clinical_breakpoints` data set contains 24 breakpoints that can return the value "SDD" instead of "I".
-  * EUCAST interpretive rules (using `eucast_rules()`) are now available for EUCAST 12 (2022), 13 (2023), and 14 (2024).
+  * EUCAST interpretive rules (using `eucast_rules()`) are now available for EUCAST 12 (2022), 13 (2023), 14 (2024), and 15 (2025).
+  * EUCAST dosage tables (`dosage` data set) are now available for EUCAST 13 (2023), 14 (2024), and 15 (2025).
 * **New advanced ggplot2 extensions for MIC and SIR plotting and transforming**
   * New function group `scale_*_mic()`, namely: `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()` and `scale_fill_mic()`. They allow easy plotting of MIC values. They allow for manual range definition and plotting missing intermediate log2 levels.
   * New function group `scale_*_sir()`, namely: `scale_x_sir()`, `scale_colour_sir()` and `scale_fill_sir()`. They allow to plot the `sir` class, and translates into the system language at default. They also set colourblind-safe colours to the plots.
@@ -69,10 +70,11 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * `antimicrobials` data set
   * Added agents used for screening, with an ID all ending with `-S`: benzylpenicillin screening test (`PEN-S`), beta-lactamase screening test (`BLA-S`), cefotaxime screening test (`CTX-S`), clindamycin inducible screening test (`CLI-S`), nalidixic acid screening test (`NAL-S`), norfloxacin screening test (`NOR-S`), oxacillin screening test (`OXA-S`), pefloxacin screening test (`PEF-S`), and tetracycline screening test (`TCY-S`). The ID of cefoxitin screening was renamed from `FOX1` to `FOX-S`, while the old code remains to work.
   * For this reason, the antimicrobial selectors `cephalosporins()`, `cephalosporins_3rd()`, `lincosamides()`, `isoxazolylpenicillins()`, `quinolones()`, `fluoroquinolones()`, and `tetracyclines()` now contain the argument `only_treatable = TRUE` (similar to other antimicrobial selectors that contain non-treatable drugs)
-  * Added amorolfine (`AMO`, D01AE16), which is now also part of the `antifungals()` selector
-  * Added efflux (`EFF`), to allow mapping to AMRFinderPlus
+  * Added amorolfine (`AMO`, D01AE16), an antimycotic, which is now also part of the `antifungals()` selector
+  * Added cefepime/enmetazobactam (`FPE`), a 4th gen cephalosporin
   * Added tigemonam (`TNM`), a monobactam
   * Added bleomycin (`BLM`), a glycopeptide
+  * Added efflux (`EFF`), to allow mapping to AMRFinderPlus
   * Updated all ATC codes, trade names, and DDDs
 * MICs
   * Added as valid levels: 4096, 6 powers of 0.0625, and 5 powers of 192 (192, 384, 576, 768, 960)

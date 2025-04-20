@@ -9,7 +9,7 @@ The `AMR` package is a free and open-source R package with zero dependencies to 
 Overview:
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
-* Used in over 175 countries, available in 20 languages
+* Peer-reviewed, used in over 175 countries, available in 20 languages
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** and extensive info on **all antimicrobial drugs**
 * Applies all recent **CLSI** and **EUCAST** clinical and veterinary breakpoints for MICs, disk zones and ECOFFs
