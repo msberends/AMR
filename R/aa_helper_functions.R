@@ -1200,7 +1200,8 @@ has_colour <- function() {
       AMR_env$supports_colour <- !is.null(has_color) && isTRUE(has_color())
     }
   }
-  isTRUE(AMR_env$supports_colour)
+  # always FALSE for GitHub documents (`index.Rmd` and `README.Rmd`)
+  isTRUE(AMR_env$supports_colour) && !identical(getOption("rmarkdown.output.format"), "github_document")
 }
 
 # set colours if console has_colour()

@@ -152,24 +152,25 @@ example_isolates %>%
   select(bacteria,
          aminoglycosides(),
          carbapenems())
-#> [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_fullname()[49m[39m
-#> [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_is_gram_negative()[49m[39m
-#> [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_is_intrinsic_resistant()[49m[39m
-#> [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m
-#> [34mℹ For [48;5;255mcarbapenems()[49m using columns '[1mIPM[22m' (imipenem) and '[1mMEM[22m' (meropenem)[39m
+#> ℹ Using column 'mo' as input for mo_fullname()
+#> ℹ Using column 'mo' as input for mo_is_gram_negative()
+#> ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per session.
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
 #>    <chr>                        <sir> <sir> <sir> <sir> <sir> <sir>
-#>  1 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m 
-#>  2 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m 
-#>  3 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m 
-#>  4 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m
-#>  5 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m
-#>  6 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m
-#>  7 Stenotrophomonas maltophilia [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m
-#>  8 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m
-#>  9 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m
-#> 10 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m
+#>  1 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
+#>  2 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
+#>  3 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
+#>  4 Pseudomonas aeruginosa       S     S     S     R     NA    S    
+#>  5 Pseudomonas aeruginosa       S     S     S     R     S     S    
+#>  6 Pseudomonas aeruginosa       S     S     S     R     S     S    
+#>  7 Stenotrophomonas maltophilia R     R     R     R     R     R    
+#>  8 Pseudomonas aeruginosa       S     S     S     R     NA    S    
+#>  9 Pseudomonas aeruginosa       S     S     S     R     NA    S    
+#> 10 Pseudomonas aeruginosa       S     S     S     R     S     S    
 #> # ℹ 25 more rows
 ```
 
@@ -193,9 +194,9 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 ``` r
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m
-#> [34mℹ For [48;5;255mcarbapenems()[49m using columns '[1mIPM[22m' (imipenem) and '[1mMEM[22m' (meropenem)[39m
-#> [31mℹ 502 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ 502 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
@@ -218,7 +219,7 @@ yield higher empiric coverage:
 antibiogram(example_isolates,
             antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
             mo_transform = "gramstain")
-#> [31mℹ 3 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m
+#> ℹ 3 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -236,7 +237,7 @@ antibiogram(example_isolates,
             mo_transform = "gramstain",
             ab_transform = "name",
             language = "uk") # Ukrainian
-#> [31mℹ 3 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m
+#> ℹ 3 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Збудник       | Гентаміцин          | Тобраміцин         | Ципрофлоксацин     |
@@ -320,13 +321,13 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m
-#> [34mℹ For [48;5;255mpolymyxins()[49m using column '[1mCOL[22m' (colistin)[39m
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For polymyxins() using column 'COL' (colistin)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" ([48;5;255mminimum[49m = 30).
+#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (minimum = 30).
 out
 #> # A tibble: 3 × 6
 #>   ward             GEN       TOB       AMK   KAN       COL

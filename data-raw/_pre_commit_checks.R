@@ -658,9 +658,11 @@ if (files_changed()) {
 
 # Update index.md and README.md -------------------------------------------
 if (files_changed("man/microorganisms.Rd") | files_changed("man/antimicrobials.Rd") | files_changed("man/clinical_breakpoints.Rd") | files_changed("man/antibiogram.Rd")) {
-  usethis::ui_info("Update index.md")
+  usethis::ui_info("Rendering {usethis::ui_field('index.md')} and {usethis::ui_field('README.md')}")
   suppressWarnings(rmarkdown::render("index.Rmd", quiet = TRUE))
   suppressWarnings(rmarkdown::render("README.Rmd", quiet = TRUE))
+  unlink("index.html") # remove previews from folder
+  unlink("README.html")
 }
 
 # Finished ----------------------------------------------------------------
