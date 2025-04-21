@@ -656,6 +656,13 @@ if (files_changed()) {
   suppressMessages(devtools::document(quiet = TRUE))
 }
 
+# Update index.md and README.md -------------------------------------------
+if (files_changed("man/microorganisms.Rd") | files_changed("man/antimicrobials.Rd") | files_changed("man/clinical_breakpoints.Rd") | files_changed("man/antibiogram.Rd")) {
+  usethis::ui_info("Update index.md")
+  suppressWarnings(rmarkdown::render("index.Rmd", quiet = TRUE))
+  suppressWarnings(rmarkdown::render("README.Rmd", quiet = TRUE))
+}
+
 # Finished ----------------------------------------------------------------
 usethis::ui_done("All done")
 suppressMessages(reset_AMR_locale())

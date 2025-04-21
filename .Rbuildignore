@@ -16,6 +16,7 @@
 ^docs$
 ^git_.*\.sh$
 ^index\.md$
+^index\.Rmd$
 ^installed_deps$
 ^Meta$
 ^pkgdown$
@@ -37,3 +38,4 @@
 ^logo.svg$
 ^CRAN-SUBMISSION$
 ^PythonPackage$
+^README\.Rmd$

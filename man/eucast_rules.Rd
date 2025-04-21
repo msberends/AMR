@@ -51,7 +51,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{custom_rules}{Custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
-\item{overwrite}{A \link{logical} indicating whether to overwrite non-\code{NA} values (default: \code{FALSE}). When \code{FALSE}, only \code{NA} values are modified. To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant.".}
+\item{overwrite}{A \link{logical} indicating whether to overwrite non-\code{NA} values (default: \code{FALSE}). When \code{FALSE}, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".}
 
 \item{...}{Column name of an antimicrobial, see section \emph{Antimicrobials} below.}
 

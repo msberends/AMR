@@ -12,6 +12,8 @@ inst/doc
 /src/*.d
 /src/*.so
 _noinclude
+index.html
+README.html
 *.dll
 vignettes/*.R
 .DS_Store

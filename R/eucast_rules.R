@@ -72,7 +72,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param administration Route of administration, either `r vector_or(dosage$administration)`.
 #' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
 #' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
-#' @param overwrite A [logical] indicating whether to overwrite non-`NA` values (default: `FALSE`). When `FALSE`, only `NA` values are modified. To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant.".
+#' @param overwrite A [logical] indicating whether to overwrite non-`NA` values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr
@@ -1248,7 +1248,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 15) {
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
 
   # show used version_breakpoints number once per session (AMR_env will reload every session)
-  if (message_not_thrown_before("eucast_dosage", "v", gsub("[^0-9]", "", version_breakpoints), entire_session = TRUE)) {
+  if (missing(version_breakpoints) && message_not_thrown_before("eucast_dosage", "v", gsub("[^0-9]", "", version_breakpoints), entire_session = TRUE)) {
     message_(
       "Dosages for antimicrobial drugs, as meant for ",
       format_eucast_version_nr(version_breakpoints, markdown = FALSE), ". ",
@@ -1259,18 +1259,19 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 15) {
   ab <- as.ab(ab)
   lst <- vector("list", length = length(ab))
   for (i in seq_len(length(ab))) {
-    df <- AMR::dosage[which(AMR::dosage$ab == ab[i] & AMR::dosage$administration == administration), , drop = FALSE]
+    df <- AMR::dosage[which(AMR::dosage$eucast_version == version_breakpoints & AMR::dosage$ab == ab[i] & AMR::dosage$administration == administration), , drop = FALSE]
     lst[[i]] <- list(
       ab = "",
       name = "",
       standard_dosage = ifelse("standard_dosage" %in% df$type,
-        df[which(df$type == "standard_dosage"), "original_txt", drop = TRUE],
+        trimws2(df[which(df$type == "standard_dosage"), "original_txt", drop = TRUE]),
         NA_character_
       ),
       high_dosage = ifelse("high_dosage" %in% df$type,
-        df[which(df$type == "high_dosage"), "original_txt", drop = TRUE],
+        trimws2(df[which(df$type == "high_dosage"), "original_txt", drop = TRUE]),
         NA_character_
-      )
+      ),
+      eucast_version = df$eucast_version[1]
     )
   }
   out <- do.call(rbind_AMR, lapply(lst, as.data.frame, stringsAsFactors = FALSE))
