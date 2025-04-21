@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9250</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9251</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,24 +143,25 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,</span>
 <span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_fullname()[49m[39m</span></span>
-<span><span class="co">#&gt; [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_is_gram_negative()[49m[39m</span></span>
-<span><span class="co">#&gt; [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_is_intrinsic_resistant()[49m[39m</span></span>
-<span><span class="co">#&gt; [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m</span></span>
-<span><span class="co">#&gt; [34mℹ For [48;5;255mcarbapenems()[49m using columns '[1mIPM[22m' (imipenem) and '[1mMEM[22m' (meropenem)[39m</span></span>
+<span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_fullname()</span></span>
+<span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_is_gram_negative()</span></span>
+<span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()</span></span>
+<span><span class="co">#&gt; ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per session.</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span>
 <span><span class="co">#&gt; # A tibble: 35 × 7</span></span>
 <span><span class="co">#&gt;    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  </span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;                        &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt;</span></span>
-<span><span class="co">#&gt;  1 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m </span></span>
-<span><span class="co">#&gt;  2 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m </span></span>
-<span><span class="co">#&gt;  3 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m </span></span>
-<span><span class="co">#&gt;  4 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m</span></span>
-<span><span class="co">#&gt;  5 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m</span></span>
-<span><span class="co">#&gt;  6 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m</span></span>
-<span><span class="co">#&gt;  7 Stenotrophomonas maltophilia [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m</span></span>
-<span><span class="co">#&gt;  8 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m</span></span>
-<span><span class="co">#&gt;  9 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m</span></span>
-<span><span class="co">#&gt; 10 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt;  1 Pseudomonas aeruginosa       I     S     NA    R     S     NA   </span></span>
+<span><span class="co">#&gt;  2 Pseudomonas aeruginosa       I     S     NA    R     S     NA   </span></span>
+<span><span class="co">#&gt;  3 Pseudomonas aeruginosa       I     S     NA    R     S     NA   </span></span>
+<span><span class="co">#&gt;  4 Pseudomonas aeruginosa       S     S     S     R     NA    S    </span></span>
+<span><span class="co">#&gt;  5 Pseudomonas aeruginosa       S     S     S     R     S     S    </span></span>
+<span><span class="co">#&gt;  6 Pseudomonas aeruginosa       S     S     S     R     S     S    </span></span>
+<span><span class="co">#&gt;  7 Stenotrophomonas maltophilia R     R     R     R     R     R    </span></span>
+<span><span class="co">#&gt;  8 Pseudomonas aeruginosa       S     S     S     R     NA    S    </span></span>
+<span><span class="co">#&gt;  9 Pseudomonas aeruginosa       S     S     S     R     NA    S    </span></span>
+<span><span class="co">#&gt; 10 Pseudomonas aeruginosa       S     S     S     R     S     S    </span></span>
 <span><span class="co">#&gt; # ℹ 25 more rows</span></span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antimicrobials.html">all antimicrobials</a> in the <code>AMR</code> package make sure you get what you meant.</p>
 </div>
@@ -172,9 +173,9 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m</span></span>
-<span><span class="co">#&gt; [34mℹ For [48;5;255mcarbapenems()[49m using columns '[1mIPM[22m' (imipenem) and '[1mMEM[22m' (meropenem)[39m</span></span>
-<span><span class="co">#&gt; [31mℹ 502 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span>
+<span><span class="co">#&gt; ℹ 502 combinations had less than minimum = 30 results and were ignored</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="14%">
@@ -292,7 +293,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [31mℹ 3 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ 3 combinations had less than minimum = 30 results and were ignored</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -328,7 +329,7 @@
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
 <span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>            language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span>
-<span><span class="co">#&gt; [31mℹ 3 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ 3 combinations had less than minimum = 30 results and were ignored</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -421,13 +422,13 @@
 <span>  <span class="co"># calculate AMR using resistance(), over all aminoglycosides and polymyxins:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            <span class="va">resistance</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m</span></span>
-<span><span class="co">#&gt; [34mℹ For [48;5;255mpolymyxins()[49m using column '[1mCOL[22m' (colistin)[39m</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For polymyxins() using column 'COL' (colistin)</span></span>
 <span><span class="co">#&gt; Warning: There was 1 warning in `summarise()`.</span></span>
 <span><span class="co">#&gt; ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.</span></span>
 <span><span class="co">#&gt; ℹ In group 3: `ward = "Outpatient"`.</span></span>
 <span><span class="co">#&gt; Caused by warning:</span></span>
-<span><span class="co">#&gt; ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" ([48;5;255mminimum[49m = 30).</span></span>
+<span><span class="co">#&gt; ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (minimum = 30).</span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   ward             GEN       TOB       AMK   KAN       COL</span></span>
