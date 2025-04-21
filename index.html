@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9249</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9250</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,9 +87,8 @@
 <li>Provides an <strong>all-in-one solution</strong> for antimicrobial resistance (AMR) data analysis in a One Health approach</li>
 <li>Peer-reviewed, used in over 175 countries, available in 20 languages</li>
 <li>Generates <strong>antibiograms</strong> - traditional, combined, syndromic, and even WISCA</li>
-<li>Provides the <strong>full microbiological taxonomy</strong> and extensive info on <strong>all antimicrobial drugs</strong>
-</li>
-<li>Applies all recent <strong>CLSI</strong> and <strong>EUCAST</strong> clinical and veterinary breakpoints for MICs, disk zones and ECOFFs</li>
+<li>Provides the <strong>full microbiological taxonomy</strong> of ~79 000 distinct species and extensive info of ~620 antimicrobial drugs</li>
+<li>Applies <strong>CLSI 2011-2025</strong> and <strong>EUCAST 2011-2025</strong> clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation</li>
 <li>Corrects for duplicate isolates, <strong>calculates</strong> and <strong>predicts</strong> AMR per antimicrobial class</li>
 <li>Integrates with <strong>WHONET</strong>, ATC, <strong>EARS-Net</strong>, PubChem, <strong>LOINC</strong>, <strong>SNOMED CT</strong>, and <strong>NCBI</strong>
 </li>
@@ -114,7 +113,7 @@
 </h3>
 <p>The <code>AMR</code> package is a peer-reviewed, <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of <a href="./authors.html">many different researchers</a> from around the globe to make this a successful and durable project!</p>
 <p>This work was published in the Journal of Statistical Software (Volume 104(3); <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">DOI 10.18637/jss.v104.i03</a>) and formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>).</p>
-<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~79,000 distinct microbial species</strong></a> (updated June 2024) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI and EUCAST are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
+<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~79 000 distinct microbial species</strong></a> (updated June 2024) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2025 and EUCAST 2011-2025 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
 <div class="section level5">
 <h5 id="used-in-over-175-countries-available-in-20-languages">Used in over 175 countries, available in 20 languages<a class="anchor" aria-label="anchor" href="#used-in-over-175-countries-available-in-20-languages"></a>
 </h5>
@@ -133,7 +132,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://amr-for-r.org">AMR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -143,111 +142,27 @@
 <span>  <span class="co"># antimicrobial selectors:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,</span>
 <span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antimicrobials.html">all antimicrobials</a> in the <code>AMR</code> package make sure you get what you meant:</p>
-<table class="table">
-<thead><tr class="header">
-<th align="left">bacteria</th>
-<th align="center">GEN</th>
-<th align="center">TOB</th>
-<th align="center">AMK</th>
-<th align="center">KAN</th>
-<th align="center">IPM</th>
-<th align="center">MEM</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center"></td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center"></td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center"></td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center"></td>
-<td align="center">S</td>
-</tr>
-<tr class="odd">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-</tr>
-<tr class="even">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-</tr>
-<tr class="odd">
-<td align="left"><em>Stenotrophomonas maltophilia</em></td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">R</td>
-</tr>
-<tr class="even">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center"></td>
-<td align="center">S</td>
-</tr>
-<tr class="odd">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center"></td>
-<td align="center">S</td>
-</tr>
-<tr class="even">
-<td align="left"><em>Pseudomonas aeruginosa</em></td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-</tr>
-</tbody>
-</table>
+<span>         <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_fullname()[49m[39m</span></span>
+<span><span class="co">#&gt; [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_is_gram_negative()[49m[39m</span></span>
+<span><span class="co">#&gt; [34mℹ Using column '[1mmo[22m' as input for [48;5;255mmo_is_intrinsic_resistant()[49m[39m</span></span>
+<span><span class="co">#&gt; [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m</span></span>
+<span><span class="co">#&gt; [34mℹ For [48;5;255mcarbapenems()[49m using columns '[1mIPM[22m' (imipenem) and '[1mMEM[22m' (meropenem)[39m</span></span>
+<span><span class="co">#&gt; # A tibble: 35 × 7</span></span>
+<span><span class="co">#&gt;    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                        &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt; &lt;sir&gt;</span></span>
+<span><span class="co">#&gt;  1 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m </span></span>
+<span><span class="co">#&gt;  2 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m </span></span>
+<span><span class="co">#&gt;  3 Pseudomonas aeruginosa       [48;5;222m[38;5;232m  I  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m  [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [38;5;249m  NA[39m </span></span>
+<span><span class="co">#&gt;  4 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt;  5 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt;  6 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt;  7 Stenotrophomonas maltophilia [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m</span></span>
+<span><span class="co">#&gt;  8 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt;  9 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [38;5;249m  NA[39m  [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt; 10 Pseudomonas aeruginosa       [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;217m[38;5;232m  R  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m [48;5;79m[38;5;232m  S  [39m[49m</span></span>
+<span><span class="co">#&gt; # ℹ 25 more rows</span></span></code></pre></div>
+<p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antimicrobials.html">all antimicrobials</a> in the <code>AMR</code> package make sure you get what you meant.</p>
 </div>
 <div class="section level4">
 <h4 id="generating-antibiograms">Generating antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
@@ -256,117 +171,119 @@
 <p>If used inside <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> or <a href="https://quarto.org" class="external-link">Quarto</a>, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>            formatting_type <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m</span></span>
+<span><span class="co">#&gt; [34mℹ For [48;5;255mcarbapenems()[49m using columns '[1mIPM[22m' (imipenem) and '[1mMEM[22m' (meropenem)[39m</span></span>
+<span><span class="co">#&gt; [31mℹ 502 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="16%">
 <col width="14%">
 <col width="14%">
 <col width="14%">
-<col width="10%">
+<col width="14%">
+<col width="14%">
 <col width="14%">
 <col width="14%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Pathogen</th>
-<th align="center">Amikacin</th>
-<th align="center">Gentamicin</th>
-<th align="center">Imipenem</th>
-<th align="center">Kanamycin</th>
-<th align="center">Meropenem</th>
-<th align="center">Tobramycin</th>
+<th align="left">Amikacin</th>
+<th align="left">Gentamicin</th>
+<th align="left">Imipenem</th>
+<th align="left">Kanamycin</th>
+<th align="left">Meropenem</th>
+<th align="left">Tobramycin</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">CoNS</td>
-<td align="center">0% (0-8%)</td>
-<td align="center">86% (82-90%)</td>
-<td align="center">52% (37-67%)</td>
-<td align="center">0% (0-8%)</td>
-<td align="center">52% (37-67%)</td>
-<td align="center">22% (12-35%)</td>
+<td align="left">0% (0-8%,N=43)</td>
+<td align="left">86% (82-90%,N=309)</td>
+<td align="left">52% (37-67%,N=48)</td>
+<td align="left">0% (0-8%,N=43)</td>
+<td align="left">52% (37-67%,N=48)</td>
+<td align="left">22% (12-35%,N=55)</td>
 </tr>
 <tr class="even">
-<td align="left"><em>E. coli</em></td>
-<td align="center">100% (98-100%)</td>
-<td align="center">98% (96-99%)</td>
-<td align="center">100% (99-100%)</td>
-<td align="center"></td>
-<td align="center">100% (99-100%)</td>
-<td align="center">97% (96-99%)</td>
+<td align="left">E. coli</td>
+<td align="left">100% (98-100%,N=171)</td>
+<td align="left">98% (96-99%,N=460)</td>
+<td align="left">100% (99-100%,N=422)</td>
+<td align="left"></td>
+<td align="left">100% (99-100%,N=418)</td>
+<td align="left">97% (96-99%,N=462)</td>
 </tr>
 <tr class="odd">
-<td align="left"><em>E. faecalis</em></td>
-<td align="center">0% (0-9%)</td>
-<td align="center">0% (0-9%)</td>
-<td align="center">100% (91-100%)</td>
-<td align="center">0% (0-9%)</td>
-<td align="center"></td>
-<td align="center">0% (0-9%)</td>
+<td align="left">E. faecalis</td>
+<td align="left">0% (0-9%,N=39)</td>
+<td align="left">0% (0-9%,N=39)</td>
+<td align="left">100% (91-100%,N=38)</td>
+<td align="left">0% (0-9%,N=39)</td>
+<td align="left"></td>
+<td align="left">0% (0-9%,N=39)</td>
 </tr>
 <tr class="even">
-<td align="left"><em>K. pneumoniae</em></td>
-<td align="center"></td>
-<td align="center">90% (79-96%)</td>
-<td align="center">100% (93-100%)</td>
-<td align="center"></td>
-<td align="center">100% (93-100%)</td>
-<td align="center">90% (79-96%)</td>
+<td align="left">K. pneumoniae</td>
+<td align="left"></td>
+<td align="left">90% (79-96%,N=58)</td>
+<td align="left">100% (93-100%,N=51)</td>
+<td align="left"></td>
+<td align="left">100% (93-100%,N=53)</td>
+<td align="left">90% (79-96%,N=58)</td>
 </tr>
 <tr class="odd">
-<td align="left"><em>P. aeruginosa</em></td>
-<td align="center"></td>
-<td align="center">100% (88-100%)</td>
-<td align="center"></td>
-<td align="center">0% (0-12%)</td>
-<td align="center"></td>
-<td align="center">100% (88-100%)</td>
+<td align="left">P. aeruginosa</td>
+<td align="left"></td>
+<td align="left">100% (88-100%,N=30)</td>
+<td align="left"></td>
+<td align="left">0% (0-12%,N=30)</td>
+<td align="left"></td>
+<td align="left">100% (88-100%,N=30)</td>
 </tr>
 <tr class="even">
-<td align="left"><em>P. mirabilis</em></td>
-<td align="center"></td>
-<td align="center">94% (80-99%)</td>
-<td align="center">94% (79-99%)</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">94% (80-99%)</td>
+<td align="left">P. mirabilis</td>
+<td align="left"></td>
+<td align="left">94% (80-99%,N=34)</td>
+<td align="left">94% (79-99%,N=32)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">94% (80-99%,N=34)</td>
 </tr>
 <tr class="odd">
-<td align="left"><em>S. aureus</em></td>
-<td align="center"></td>
-<td align="center">99% (97-100%)</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">98% (92-100%)</td>
+<td align="left">S. aureus</td>
+<td align="left"></td>
+<td align="left">99% (97-100%,N=233)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">98% (92-100%,N=86)</td>
 </tr>
 <tr class="even">
-<td align="left"><em>S. epidermidis</em></td>
-<td align="center">0% (0-8%)</td>
-<td align="center">79% (71-85%)</td>
-<td align="center"></td>
-<td align="center">0% (0-8%)</td>
-<td align="center"></td>
-<td align="center">51% (40-61%)</td>
+<td align="left">S. epidermidis</td>
+<td align="left">0% (0-8%,N=44)</td>
+<td align="left">79% (71-85%,N=163)</td>
+<td align="left"></td>
+<td align="left">0% (0-8%,N=44)</td>
+<td align="left"></td>
+<td align="left">51% (40-61%,N=89)</td>
 </tr>
 <tr class="odd">
-<td align="left"><em>S. hominis</em></td>
-<td align="center"></td>
-<td align="center">92% (84-97%)</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">85% (74-93%)</td>
+<td align="left">S. hominis</td>
+<td align="left"></td>
+<td align="left">92% (84-97%,N=80)</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">85% (74-93%,N=62)</td>
 </tr>
 <tr class="even">
-<td align="left"><em>S. pneumoniae</em></td>
-<td align="center">0% (0-3%)</td>
-<td align="center">0% (0-3%)</td>
-<td align="center"></td>
-<td align="center">0% (0-3%)</td>
-<td align="center"></td>
-<td align="center">0% (0-3%)</td>
+<td align="left">S. pneumoniae</td>
+<td align="left">0% (0-3%,N=117)</td>
+<td align="left">0% (0-3%,N=117)</td>
+<td align="left"></td>
+<td align="left">0% (0-3%,N=117)</td>
+<td align="left"></td>
+<td align="left">0% (0-3%,N=117)</td>
 </tr>
 </tbody>
 </table>
@@ -374,33 +291,33 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
-<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
-<span>            formatting_type <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [31mℹ 3 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m</span></span></code></pre></div>
+<table class="table">
 <colgroup>
-<col width="12%">
-<col width="21%">
-<col width="33%">
-<col width="33%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Pathogen</th>
-<th align="center">Piperacillin/tazobactam</th>
-<th align="center">Piperacillin/tazobactam + Gentamicin</th>
-<th align="center">Piperacillin/tazobactam + Tobramycin</th>
+<th align="left">Piperacillin/tazobactam</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
+<th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Gram-negative</td>
-<td align="center">88% (85-91%)</td>
-<td align="center">99% (97-99%)</td>
-<td align="center">98% (97-99%)</td>
+<td align="left">88% (85-91%,N=641)</td>
+<td align="left">99% (97-99%,N=691)</td>
+<td align="left">98% (97-99%,N=693)</td>
 </tr>
 <tr class="even">
 <td align="left">Gram-positive</td>
-<td align="center">86% (82-89%)</td>
-<td align="center">98% (96-98%)</td>
-<td align="center">95% (93-97%)</td>
+<td align="left">86% (82-89%,N=345)</td>
+<td align="left">98% (96-98%,N=1044)</td>
+<td align="left">95% (93-97%,N=550)</td>
 </tr>
 </tbody>
 </table>
@@ -410,27 +327,33 @@
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"tobra"</span>, <span class="st">"genta"</span><span class="op">)</span>, <span class="co"># any arbitrary name or code will work</span></span>
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
 <span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>            formatting_type <span class="op">=</span> <span class="fl">14</span>,</span>
-<span>            language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span></code></pre></div>
+<span>            language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span>
+<span><span class="co">#&gt; [31mℹ 3 combinations had less than [48;5;255mminimum = 30[49m results and were ignored[39m</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="19%">
+<col width="27%">
+<col width="26%">
+<col width="26%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Збудник</th>
-<th align="center">Гентаміцин</th>
-<th align="center">Тобраміцин</th>
-<th align="center">Ципрофлоксацин</th>
+<th align="left">Гентаміцин</th>
+<th align="left">Тобраміцин</th>
+<th align="left">Ципрофлоксацин</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Грамнегативні</td>
-<td align="center">96% (95-98%)</td>
-<td align="center">96% (94-97%)</td>
-<td align="center">91% (88-93%)</td>
+<td align="left">96% (95-98%,N=684)</td>
+<td align="left">96% (94-97%,N=686)</td>
+<td align="left">91% (88-93%,N=684)</td>
 </tr>
 <tr class="even">
 <td align="left">Грампозитивні</td>
-<td align="center">63% (60-66%)</td>
-<td align="center">34% (31-38%)</td>
-<td align="center">77% (74-80%)</td>
+<td align="left">63% (60-66%,N=1170)</td>
+<td align="left">34% (31-38%,N=665)</td>
+<td align="left">77% (74-80%,N=724)</td>
 </tr>
 </tbody>
 </table>
@@ -480,39 +403,13 @@
 <span>  <span class="co"># and get their 95% confidence intervals using sir_confidence_interval():</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">GEN</span>, <span class="va">TOB</span><span class="op">)</span>,</span>
 <span>                   <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>total_R <span class="op">=</span> <span class="va">resistance</span>,</span>
-<span>                        conf_int <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/proportion.html">sir_confidence_interval</a></span><span class="op">(</span><span class="va">x</span>, collapse <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">ward</th>
-<th align="center">GEN_total_R</th>
-<th align="center">GEN_conf_int</th>
-<th align="center">TOB_total_R</th>
-<th align="center">TOB_conf_int</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Clinical</td>
-<td align="center">0.2289362</td>
-<td align="center">0.205-0.254</td>
-<td align="center">0.3147503</td>
-<td align="center">0.284-0.347</td>
-</tr>
-<tr class="even">
-<td align="left">ICU</td>
-<td align="center">0.2902655</td>
-<td align="center">0.253-0.33</td>
-<td align="center">0.4004739</td>
-<td align="center">0.353-0.449</td>
-</tr>
-<tr class="odd">
-<td align="left">Outpatient</td>
-<td align="center">0.2000000</td>
-<td align="center">0.131-0.285</td>
-<td align="center">0.3676471</td>
-<td align="center">0.254-0.493</td>
-</tr>
-</tbody>
-</table>
+<span>                        conf_int <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/proportion.html">sir_confidence_interval</a></span><span class="op">(</span><span class="va">x</span>, collapse <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 5</span></span>
+<span><span class="co">#&gt;   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;       </span></span>
+<span><span class="co">#&gt; 1 Clinical     0.2289362 0.205-0.254    0.3147503 0.284-0.347 </span></span>
+<span><span class="co">#&gt; 2 ICU          0.2902655 0.253-0.33     0.4004739 0.353-0.449 </span></span>
+<span><span class="co">#&gt; 3 Outpatient   0.2       0.131-0.285    0.3676471 0.254-0.493</span></span></code></pre></div>
 <p>Or use <a href="https://amr-for-r.org/reference/antimicrobial_selectors.html">antimicrobial selectors</a> to select a series of antibiotic columns:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://amr-for-r.org">AMR</a></span><span class="op">)</span></span>
@@ -524,137 +421,38 @@
 <span>  <span class="co"># calculate AMR using resistance(), over all aminoglycosides and polymyxins:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            <span class="va">resistance</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">out</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">ward</th>
-<th align="right">GEN</th>
-<th align="right">TOB</th>
-<th align="right">AMK</th>
-<th align="right">KAN</th>
-<th align="right">COL</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Clinical</td>
-<td align="right">0.229</td>
-<td align="right">0.315</td>
-<td align="right">0.626</td>
-<td align="right">1</td>
-<td align="right">0.780</td>
-</tr>
-<tr class="even">
-<td align="left">ICU</td>
-<td align="right">0.290</td>
-<td align="right">0.400</td>
-<td align="right">0.662</td>
-<td align="right">1</td>
-<td align="right">0.857</td>
-</tr>
-<tr class="odd">
-<td align="left">Outpatient</td>
-<td align="right">0.200</td>
-<td align="right">0.368</td>
-<td align="right">0.605</td>
-<td align="right"></td>
-<td align="right">0.889</td>
-</tr>
-</tbody>
-</table>
+<span><span class="co">#&gt; [34mℹ For [48;5;255maminoglycosides()[49m using columns '[1mGEN[22m' (gentamicin), '[1mTOB[22m' (tobramycin), '[1mAMK[22m' (amikacin), and '[1mKAN[22m' (kanamycin)[39m</span></span>
+<span><span class="co">#&gt; [34mℹ For [48;5;255mpolymyxins()[49m using column '[1mCOL[22m' (colistin)[39m</span></span>
+<span><span class="co">#&gt; Warning: There was 1 warning in `summarise()`.</span></span>
+<span><span class="co">#&gt; ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.</span></span>
+<span><span class="co">#&gt; ℹ In group 3: `ward = "Outpatient"`.</span></span>
+<span><span class="co">#&gt; Caused by warning:</span></span>
+<span><span class="co">#&gt; ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" ([48;5;255mminimum[49m = 30).</span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
+<span><span class="co">#&gt;   ward             GEN       TOB       AMK   KAN       COL</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Clinical   0.2289362 0.3147503 0.6258993     1 0.7802956</span></span>
+<span><span class="co">#&gt; 2 ICU        0.2902655 0.4004739 0.6624473     1 0.8574144</span></span>
+<span><span class="co">#&gt; 3 Outpatient 0.2       0.3676471 0.6052632    NA 0.8888889</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic columns to names:</span></span>
-<span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="17%">
-<col width="17%">
-<col width="17%">
-<col width="14%">
-<col width="16%">
-<col width="16%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">ward</th>
-<th align="right">gentamicin</th>
-<th align="right">tobramycin</th>
-<th>amikacin</th>
-<th align="right">kanamycin</th>
-<th align="right">colistin</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Clinical</td>
-<td align="right">0.229</td>
-<td align="right">0.315</td>
-<td>0.626</td>
-<td align="right">1</td>
-<td align="right">0.780</td>
-</tr>
-<tr class="even">
-<td align="left">ICU</td>
-<td align="right">0.290</td>
-<td align="right">0.400</td>
-<td>0.662</td>
-<td align="right">1</td>
-<td align="right">0.857</td>
-</tr>
-<tr class="odd">
-<td align="left">Outpatient</td>
-<td align="right">0.200</td>
-<td align="right">0.368</td>
-<td>0.605</td>
-<td align="right"></td>
-<td align="right">0.889</td>
-</tr>
-</tbody>
-</table>
+<span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
+<span><span class="co">#&gt;   ward       gentamicin tobramycin  amikacin kanamycin  colistin</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Clinical    0.2289362  0.3147503 0.6258993         1 0.7802956</span></span>
+<span><span class="co">#&gt; 2 ICU         0.2902655  0.4004739 0.6624473         1 0.8574144</span></span>
+<span><span class="co">#&gt; 3 Outpatient  0.2        0.3676471 0.6052632        NA 0.8888889</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic column to ATC codes:</span></span>
-<span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="17%">
-<col width="17%">
-<col width="17%">
-<col width="14%">
-<col width="16%">
-<col width="16%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">ward</th>
-<th align="right">J01GB03</th>
-<th align="right">J01GB01</th>
-<th>J01GB06</th>
-<th align="right">J01GB04</th>
-<th align="right">J01XB01</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Clinical</td>
-<td align="right">0.229</td>
-<td align="right">0.315</td>
-<td>0.626</td>
-<td align="right">1</td>
-<td align="right">0.780</td>
-</tr>
-<tr class="even">
-<td align="left">ICU</td>
-<td align="right">0.290</td>
-<td align="right">0.400</td>
-<td>0.662</td>
-<td align="right">1</td>
-<td align="right">0.857</td>
-</tr>
-<tr class="odd">
-<td align="left">Outpatient</td>
-<td align="right">0.200</td>
-<td align="right">0.368</td>
-<td>0.605</td>
-<td align="right"></td>
-<td align="right">0.889</td>
-</tr>
-</tbody>
-</table>
+<span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
+<span><span class="co">#&gt;   ward         J01GB03   J01GB01   J01GB06 J01GB04   J01XB01</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Clinical   0.2289362 0.3147503 0.6258993       1 0.7802956</span></span>
+<span><span class="co">#&gt; 2 ICU        0.2902655 0.4004739 0.6624473       1 0.8574144</span></span>
+<span><span class="co">#&gt; 3 Outpatient 0.2       0.3676471 0.6052632      NA 0.8888889</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -714,7 +512,7 @@
 <div class="section level3">
 <h3 id="partners">Partners<a class="anchor" aria-label="anchor" href="#partners"></a>
 </h3>
-<p>The development of this package is part of, related to, or made possible by the following non-profit organisations and initiatives:</p>
+<p>The initial development of this package was part of, related to, or made possible by the following non-profit organisations and initiatives:</p>
 <div align="center">
 <p><a href="https://www.rug.nl" title="University of Groningen" class="external-link"><img src="./logo_rug.svg" style="max-width: 200px;"></a> <a href="https://www.umcg.nl" title="University Medical Center Groningen" class="external-link"><img src="./logo_umcg.svg" style="max-width: 200px;"></a> <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation" class="external-link"><img src="./logo_certe.svg" style="max-width: 200px;"></a> <a href="https://www.deutschland-nederland.eu" title="EurHealth-1-Health" class="external-link"><img src="./logo_eh1h.png" style="max-width: 200px;"></a> <a href="https://www.deutschland-nederland.eu" title="INTERREG" class="external-link"><img src="./logo_interreg.png" style="max-width: 200px;"></a></p>
 </div>
