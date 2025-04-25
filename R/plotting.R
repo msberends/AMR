@@ -412,7 +412,7 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
         x[x == "I"] <- "(I) Intermediate"
       }
       x[x == "R"] <- "(R) Resistant"
-      x[x == "NI"] <- "(NI) Not interpretable"
+      x[x == "NI"] <- "(NI) Non-interpretable"
       x <- translate_AMR(x, language = language)
     }
     x
@@ -685,7 +685,8 @@ autoplot.mic <- function(object,
       "(SDD) Susceptible dose-dependent" = colours_SIR[2],
       "(I) Susceptible, incr. exp." = colours_SIR[2],
       "(I) Intermediate" = colours_SIR[2],
-      "(R) Resistant" = colours_SIR[3]
+      "(R) Resistant" = colours_SIR[3],
+      "(NI) Non-interpretable" = "grey"
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
@@ -918,7 +919,8 @@ autoplot.disk <- function(object,
       "(SDD) Susceptible dose-dependent" = colours_SIR[2],
       "(I) Susceptible, incr. exp." = colours_SIR[2],
       "(I) Intermediate" = colours_SIR[2],
-      "(R) Resistant" = colours_SIR[3]
+      "(R) Resistant" = colours_SIR[3],
+      "(NI) Non-interpretable" = "grey"
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +

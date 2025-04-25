@@ -323,7 +323,7 @@
 #' )
 #'
 #'
-#' # For CLEANING existing SIR values ------------------------------------
+#' # For CLEANING existing SIR values -------------------------------------
 #'
 #' as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 #' as.sir("<= 0.002; S") # will return "S"
@@ -1263,11 +1263,16 @@ as_sir_method <- function(method_short,
   )
   if (method == "mic") {
     if (any(guideline_coerced %like% "CLSI")) {
+      # CLSI in log 2 ----
       # CLSI says: if MIC is not a log2 value it must be rounded up to the nearest log2 value
-      log2_levels <- 2^c(-9:12)
-      df$values[which(df$guideline %like% "CLSI")] <- vapply(
-        FUN.VALUE = character(1),
-        df$values[which(df$guideline %like% "CLSI")],
+      log2_levels <- as.double(VALID_MIC_LEVELS[which(VALID_MIC_LEVELS %in% 2^c(-20:20))])
+      test_values <- df$values[which(df$guideline %like% "CLSI")]
+      test_values_dbl <- as.double(test_values)
+      test_values_dbl[test_values %like% "^>[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] + 0.0000001
+      test_values_dbl[test_values %like% "^<[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] - 0.0000001
+      test_outcome <- vapply(
+        FUN.VALUE = double(1),
+        test_values_dbl,
         function(mic_val) {
           if (is.na(mic_val)) {
             return(NA_character_)
@@ -1278,13 +1283,14 @@ as_sir_method <- function(method_short,
               if (message_not_thrown_before("as.sir", "CLSI", "MICupscaling")) {
                 warning_("Some MICs were converted to the nearest higher log2 level, following the CLSI interpretation guideline.")
               }
-              return(as.character(log2_val)) # will be MIC later
+              return(as.double(log2_val)) # will be MIC later
             } else {
-              return(as.character(mic_val))
+              return(as.double(mic_val))
             }
           }
         }
       )
+      df$values[which(df$guideline %like% "CLSI" & test_values != test_outcome)] <- test_outcome[which(test_values != test_outcome)]
     }
     df$values <- as.mic(df$values)
   } else if (method == "disk") {
@@ -1429,10 +1435,6 @@ as_sir_method <- function(method_short,
         mo_current_gram,
         mo_current_other
       ))
-
-
-    # TODO are operators considered??
-    # This seems to not work well: as.sir(as.mic(c(4, ">4", ">=4", 8, ">8", ">=8")), ab = "AMC", mo = "E. coli", breakpoint_type = "animal", host = "dogs", guideline = "CLSI 2024")
 
     if (breakpoint_type == "animal") {
       # 2025-03-13 for now, only strictly follow guideline for current host, no extrapolation
@@ -1619,7 +1621,17 @@ as_sir_method <- function(method_short,
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R,
-          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^<=[0-9]" & as.double(values) == breakpoints_current$breakpoint_R,
+          paste0("MIC values at the R breakpoint with the operator '<=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^>=[0-9]" & as.double(values) == breakpoints_current$breakpoint_S,
+          paste0("MIC values at the S breakpoint with the operator '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
           ""
         )
       )
@@ -1642,6 +1654,8 @@ as_sir_method <- function(method_short,
           capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]" ~ as.sir("S"),
           capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]" ~ as.sir("R"),
           capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R ~ as.sir("NI"),
+          capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^<=[0-9]" & as.double(values) == breakpoints_current$breakpoint_R ~ as.sir("NI"),
+          capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^>=[0-9]" & as.double(values) == breakpoints_current$breakpoint_S ~ as.sir("NI"),
           values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
           guideline_current %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
           guideline_current %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),

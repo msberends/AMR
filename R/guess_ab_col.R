@@ -47,7 +47,6 @@
 #' guess_ab_col(df, "J01AA07") # ATC code of tetracycline
 #'
 #' guess_ab_col(df, "J01AA07", verbose = TRUE)
-#' # NOTE: Using column 'tetr' as input for J01AA07 (tetracycline).
 #'
 #' # WHONET codes
 #' df <- data.frame(
@@ -56,7 +55,7 @@
 #' )
 #' guess_ab_col(df, "ampicillin")
 #' guess_ab_col(df, "J01CR02")
-#' guess_ab_col(df, as.ab("augmentin"))
+#' guess_ab_col(df, "augmentin")
 guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_sir_columns = FALSE) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = TRUE)

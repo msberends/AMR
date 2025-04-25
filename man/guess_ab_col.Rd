@@ -35,7 +35,6 @@ guess_ab_col(df, "amoxicillin")
 guess_ab_col(df, "J01AA07") # ATC code of tetracycline
 
 guess_ab_col(df, "J01AA07", verbose = TRUE)
-# NOTE: Using column 'tetr' as input for J01AA07 (tetracycline).
 
 # WHONET codes
 df <- data.frame(
@@ -44,5 +43,5 @@ df <- data.frame(
 )
 guess_ab_col(df, "ampicillin")
 guess_ab_col(df, "J01CR02")
-guess_ab_col(df, as.ab("augmentin"))
+guess_ab_col(df, "augmentin")
 }

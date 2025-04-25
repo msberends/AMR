@@ -403,7 +403,7 @@ as.sir(
 )
 
 
-# For CLEANING existing SIR values ------------------------------------
+# For CLEANING existing SIR values -------------------------------------
 
 as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 as.sir("<= 0.002; S") # will return "S"

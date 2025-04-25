@@ -32,7 +32,7 @@
 #' @description
 #' Welcome to the `AMR` package.
 #'
-#' The `AMR` package is a [free and open-source](https://amr-for-r.org/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://amr-for-r.org/authors.html) from around the globe are continually helping us to make this a successful and durable project!
+#' The `AMR` package is a peer-reviewed, [free and open-source](https://amr-for-r.org/#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. [Many different researchers](https://amr-for-r.org/authors.html) from around the globe are continually helping us to make this a successful and durable project!
 #'
 #' This work was published in the Journal of Statistical Software (Volume 104(3); \doi{10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\doi{10.33612/diss.177417131} and \doi{10.33612/diss.192486375}).
 #'
