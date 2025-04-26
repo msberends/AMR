@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9253</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9255</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1308,12 +1308,6 @@ values for <em>Klebsiella pneumoniae</em> and ciprofloxacin:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">sir_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span></span>
-<span><span class="co"><span style="color: #00BB00;">#&gt;   all the details of the breakpoint interpretations.</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">cipro</span><span style="color: #0000BB;">' (CIP, ciprofloxacin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2024</span><span style="color: #0000BB;">...</span><span style="color: #080808; background-color: #FFFF87;"> NOTE </span></span></span>
-<span><span class="co">#&gt; <span style="color: #080808;">  • Multiple breakpoints available for </span><span style="color: #080808; font-weight: bold;">ciprofloxacin (CIP)</span><span style="color: #080808;"> in </span><span style="color: #080808; font-style: italic;">Klebsiella pneumoniae</span><span style="color: #080808;"> - assuming body site 'Non-meningitis'.</span></span></span>
 <span></span>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>MIC <span class="op">=</span> <span class="va">mic_values</span>, SIR <span class="op">=</span> <span class="va">sir_values</span><span class="op">)</span></span>
 <span><span class="va">my_data</span></span>
