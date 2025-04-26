@@ -72,7 +72,6 @@
 #' as.ab("ERY")
 #' as.ab("eritromicine") # spelled wrong, yet works
 #' as.ab("Erythrocin") # trade name
-#' as.ab("Romycin") # trade name
 #'
 #' # spelling from different languages and dyslexia are no problem
 #' ab_atc("ceftriaxon")

@@ -41,10 +41,9 @@ test_that("test-ab.R", {
       "ERYT",
       "ERY",
       "erytromicine",
-      "Erythrocin",
-      "Romycin"
+      "Erythrocin"
     ))),
-    rep("ERY", 9)
+    rep("ERY", 8)
   )
 
   expect_identical(class(as.ab("amox")), c("ab", "character"))

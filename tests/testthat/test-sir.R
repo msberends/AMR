@@ -325,12 +325,14 @@ test_that("test-sir.R", {
   expect_message(as.sir(data.frame(
     mo = "E. coli",
     NIT = c("<= 2", 32),
-    uti = TRUE
+    uti = TRUE,
+    info = TRUE
   )))
   expect_message(as.sir(data.frame(
     mo = "E. coli",
     NIT = c("<= 2", 32),
-    specimen = c("urine", "blood")
+    specimen = c("urine", "blood"),
+    info = TRUE
   )))
 
   # SDD vs I in CLSI 2024

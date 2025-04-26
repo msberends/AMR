@@ -680,8 +680,8 @@ as.sir.disk <- function(x,
 }
 
 #' @rdname as.sir
-#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`.
-#' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that 6 cores will be used. Defaults to `-1`. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
+#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. This requires no additional packages, as the used `parallel` package is part of base \R.
+#' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that at most 6 cores will be used. Defaults to `-1`. There will never be used more cores than variables to analyse. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
 #' @export
 as.sir.data.frame <- function(x,
                               ...,
@@ -853,6 +853,7 @@ as.sir.data.frame <- function(x,
 
   # set up parallel computing
   n_cores <- get_n_cores(max_cores = max_cores)
+  n_cores <- min(n_cores, length(ab_cols)) # never more cores than variables required
 
   run_as_sir_column <- function(i) {
     ab_col <- ab_cols[i]
@@ -952,7 +953,7 @@ as.sir.data.frame <- function(x,
   if (isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1) {
     if (isTRUE(info)) {
       message()
-      message_("Running SIR interpretation in parallel mode on ", nr2char(length(ab_cols)), " columns, using ", n_cores, " out of ", get_n_cores(Inf), " cores...", as_note = FALSE, appendLF = FALSE, add_fn = font_red)
+      message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE, add_fn = font_red)
     }
     if (.Platform$OS.type == "windows") {
       cl <- parallel::makeCluster(n_cores, type = "PSOCK")
@@ -976,10 +977,10 @@ as.sir.data.frame <- function(x,
     }
   } else {
     # sequential mode (non-parallel)
-    if (n_cores > 1 && isTRUE(info) && (NROW(x) > 2500 || length(ab_cols) >= 5)) {
+    if (isTRUE(info) && n_cores > 1 && NROW(x) * NCOL(x) > 10000) {
       # give a note that parallel mode might be better
       message()
-      message_("Running SIR interpretation in sequential mode. Consider setting `parallel = TRUE` to speed up processing on multiple cores.\n", add_fn = font_red)
+      message_("Running in sequential mode. Consider setting `parallel = TRUE` to speed up processing on multiple cores.\n", add_fn = font_red)
     }
     # this will contain a progress bar already
     result_list <- lapply(seq_along(ab_cols), run_as_sir_column)

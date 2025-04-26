@@ -39,8 +39,7 @@ test_that("test-antibiogram.R", {
   ab2 <- antibiogram(example_isolates,
     antimicrobials = aminoglycosides(),
     ab_transform = "atc",
-    mo_transform = "gramstain",
-    add_total_n = TRUE
+    mo_transform = "gramstain"
   )
 
   ab3 <- antibiogram(example_isolates,

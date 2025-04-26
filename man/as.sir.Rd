@@ -138,9 +138,9 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}.}
+\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. This requires no additional packages, as the used \code{parallel} package is part of base \R.}
 
-\item{max_cores}{Maximum number of cores to use if \code{parallel = TRUE}. Use a negative value to subtract that number from the available number of cores, e.g. a value of \code{-2} on an 8-core machine means that 6 cores will be used. Defaults to \code{-1}. The available number of cores are detected using \code{\link[parallelly:availableCores]{parallelly::availableCores()}} if that package is installed, and base \R's \code{\link[parallel:detectCores]{parallel::detectCores()}} otherwise.}
+\item{max_cores}{Maximum number of cores to use if \code{parallel = TRUE}. Use a negative value to subtract that number from the available number of cores, e.g. a value of \code{-2} on an 8-core machine means that at most 6 cores will be used. Defaults to \code{-1}. There will never be used more cores than variables to analyse. The available number of cores are detected using \code{\link[parallelly:availableCores]{parallelly::availableCores()}} if that package is installed, and base \R's \code{\link[parallel:detectCores]{parallel::detectCores()}} otherwise.}
 
 \item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
