@@ -65,7 +65,8 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = TRUE, conserve_capped_values = NULL)
+  verbose = FALSE, info = TRUE, parallel = FALSE, max_cores = -1,
+  conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 }
@@ -136,6 +137,10 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
+\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}.}
+
+\item{max_cores}{Maximum number of cores to use if \code{parallel = TRUE}. Use a negative value to subtract that number from the available number of cores, e.g. a value of \code{-2} on an 8-core machine means that 6 cores will be used. Defaults to \code{-1}. The available number of cores are detected using \code{\link[parallelly:availableCores]{parallelly::availableCores()}} if that package is installed, and base \R's \code{\link[parallel:detectCores]{parallel::detectCores()}} otherwise.}
+
 \item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
 \value{
@@ -164,6 +169,9 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo
 
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
+
+# fast processing with parallel computing:
+as.sir(your_data, ..., parallel = TRUE)
 }\if{html}{\out{</div>}}
 \item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "conservative"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 \item \strong{Note:} When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
@@ -179,6 +187,9 @@ your_data \%>\% mutate_if(is.disk, as.sir, ab = c("cipro", "ampicillin", ...), m
 
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
+
+# fast processing with parallel computing:
+as.sir(your_data, ..., parallel = TRUE)
 }\if{html}{\out{</div>}}
 }
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.sir(your_data)}.
@@ -208,12 +219,20 @@ It is also possible to set the default guideline with the package option \code{\
   # or to reset:
   options(AMR_guideline = NULL)
 }\if{html}{\out{</div>}}
+}
 
-For veterinary guidelines, these might be the best options:
+\subsection{Working with Veterinary Breakpoints}{
+
+When using veterinary breakpoints (i.e., setting \code{breakpoint_type = "animal"}), a column with animal species must be available or set manually using the \code{host} argument. The column must contain names like "dogs", "cats", "cattle", "swine", "horses", "poultry", or "aquatic". Other animal names like "goats", "rabbits", or "monkeys" are also recognised but may not be available in all guidelines. Matching is case-insensitive and accepts Latin-based synonyms (e.g., "bovine" for cattle and "canine" for dogs).
+
+Regarding choice of veterinary guidelines, these might be the best options to set before analysis:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
   options(AMR_breakpoint_type = "animal")
 }\if{html}{\out{</div>}}
+\subsection{TODO #187 When applying veterinary breakpoints (by setting \code{host} or by setting \code{breakpoint_type = "animal"}), the \href{https://clsi.org/standards/products/veterinary-medicine/documents/vet09/}{CLSI VET09 guideline} will be applied to cope with missing animal species-specific breakpoints.}{
+}
+
 }
 
 \subsection{After Interpretation}{

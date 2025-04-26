@@ -1,4 +1,4 @@
-# AMR 2.1.1.9252
+# AMR 2.1.1.9253
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -47,6 +47,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## Changed
 * SIR interpretation
+  * Support for parallel computing using the `parallel` package (part of base R). Use `as.sir(your_data, parallel = TRUE)` to run SIR interpretation using multiple cores.
   * It is now possible to use column names for arguments `guideline`, `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
   * Users can now set their own criteria (using regular expressions) as to what should be considered S, I, R, SDD, and NI.
   * To get quantitative values, `as.double()` on a `sir` object will return 1 for S, 2 for SDD/I, and 3 for R (NI will become `NA`). Other functions using `sir` classes (e.g., `summary()`) are updated to reflect the change to contain NI and SDD.

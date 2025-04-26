@@ -68,6 +68,8 @@
 #' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
+#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `TRUE`.
+#' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that 6 cores will be used. Defaults to `-1`. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
 #' @param ... For using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details
 #' *Note: The clinical breakpoints in this package were validated through, and imported from, [WHONET](https://whonet.org). The public use of this `AMR` package has been endorsed by both CLSI and EUCAST. See [clinical_breakpoints] for more information.*
@@ -88,9 +90,6 @@
 #'
 #'      # for veterinary breakpoints, also set `host`:
 #'      your_data %>% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
-#'
-#'      # fast processing with parallel computing:
-#'      as.sir(your_data, ..., parallel = TRUE)
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `capped_mic_handling = "conservative"`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`capped_mic_handling = "standard"`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #'    * **Note:** When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
@@ -105,9 +104,6 @@
 #'
 #'      # for veterinary breakpoints, also set `host`:
 #'      your_data %>% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
-#'
-#'      # fast processing with parallel computing:
-#'      as.sir(your_data, ..., parallel = TRUE)
 #'      ```
 #'
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.sir(your_data)`.
@@ -135,18 +131,14 @@
 #'   options(AMR_guideline = NULL)
 #' ```
 #'
-#' ### Working with Veterinary Breakpoints
-#'
-#' When using veterinary breakpoints (i.e., setting `breakpoint_type = "animal"`), a column with animal species must be available or set manually using the `host` argument. The column must contain names like "dogs", "cats", "cattle", "swine", "horses", "poultry", or "aquatic". Other animal names like "goats", "rabbits", or "monkeys" are also recognised but may not be available in all guidelines. Matching is case-insensitive and accepts Latin-based synonyms (e.g., "bovine" for cattle and "canine" for dogs).
-#'
-#' Regarding choice of veterinary guidelines, these might be the best options to set before analysis:
+#' For veterinary guidelines, these might be the best options:
 #'
 #' ```
 #'   options(AMR_guideline = "CLSI")
 #'   options(AMR_breakpoint_type = "animal")
 #' ```
 #'
-#' ###### TODO #187 When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
+###### TODO #187 When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
 #'
 #' ### After Interpretation
 #'
@@ -602,6 +594,8 @@ as.sir.mic <- function(x,
                        host = NULL,
                        verbose = FALSE,
                        info = TRUE,
+                       parallel = TRUE,
+                       max_cores = -1,
                        conserve_capped_values = NULL,
                        ...) {
   as_sir_method(
@@ -622,6 +616,8 @@ as.sir.mic <- function(x,
     host = host,
     verbose = verbose,
     info = info,
+    parallel = parallel,
+    max_cores = max_cores,
     conserve_capped_values = conserve_capped_values,
     ...
   )
@@ -643,6 +639,8 @@ as.sir.disk <- function(x,
                         host = NULL,
                         verbose = FALSE,
                         info = TRUE,
+                        parallel = TRUE,
+                        max_cores = -1,
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -661,14 +659,14 @@ as.sir.disk <- function(x,
     breakpoint_type = breakpoint_type,
     host = host,
     verbose = verbose,
+    parallel = parallel,
+    max_cores = max_cores,
     info = info,
     ...
   )
 }
 
 #' @rdname as.sir
-#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`.
-#' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that 6 cores will be used. Defaults to `-1`. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
 #' @export
 as.sir.data.frame <- function(x,
                               ...,
@@ -685,7 +683,7 @@ as.sir.data.frame <- function(x,
                               host = NULL,
                               verbose = FALSE,
                               info = TRUE,
-                              parallel = FALSE,
+                              parallel = TRUE,
                               max_cores = -1,
                               conserve_capped_values = NULL) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
@@ -704,7 +702,6 @@ as.sir.data.frame <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
   meet_criteria(max_cores, allow_class = c("numeric", "integer"), has_length = 1)
-
   x.bak <- x
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
@@ -805,7 +802,7 @@ as.sir.data.frame <- function(x,
       return(FALSE)
     }
     if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
-      ab_coerced <- suppressWarnings(as.ab(ab, info = info))
+      ab_coerced <- suppressWarnings(as.ab(ab))
       if (is.na(ab_coerced) || (length(sel) > 0 & !ab %in% sel)) {
         # not even a valid AB code
         return(FALSE)
@@ -835,25 +832,19 @@ as.sir.data.frame <- function(x,
     if (is.null(col_mo.bak)) {
       col_mo <- search_type_in_df(x = x, type = "mo")
     }
-    x_mo <- as.mo(x[, col_mo, drop = TRUE], info = info)
+    x_mo <- as.mo(x[, col_mo, drop = TRUE])
   }
 
-  # set up parallel computing
-  n_cores <- get_n_cores(max_cores = max_cores)
-
-  run_as_sir_column <- function(i) {
-    ab_col <- ab_cols[i]
-    out <- list(result = NULL, log = NULL)
-
+  for (i in seq_along(ab_cols)) {
     if (types[i] == "mic") {
-      result <- x %pm>%
-        pm_pull(ab_col) %pm>%
+      x[, ab_cols[i]] <- x %pm>%
+        pm_pull(ab_cols[i]) %pm>%
         as.character() %pm>%
         as.mic() %pm>%
         as.sir(
           mo = x_mo,
           mo.bak = x[, col_mo, drop = TRUE],
-          ab = ab_col,
+          ab = ab_cols[i],
           guideline = guideline,
           uti = uti,
           capped_mic_handling = capped_mic_handling,
@@ -866,22 +857,20 @@ as.sir.data.frame <- function(x,
           host = host,
           verbose = verbose,
           info = info,
+          parallel = parallel,
+          max_cores = max_cores,
           conserve_capped_values = conserve_capped_values,
           is_data.frame = TRUE
         )
-      out$result <- result
-      out$log <- AMR_env$sir_interpretation_history
-      AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE] # reset log
-      return(out)
     } else if (types[i] == "disk") {
-      result <- x %pm>%
-        pm_pull(ab_col) %pm>%
+      x[, ab_cols[i]] <- x %pm>%
+        pm_pull(ab_cols[i]) %pm>%
         as.character() %pm>%
         as.disk() %pm>%
         as.sir(
           mo = x_mo,
           mo.bak = x[, col_mo, drop = TRUE],
-          ab = ab_col,
+          ab = ab_cols[i],
           guideline = guideline,
           uti = uti,
           add_intrinsic_resistance = add_intrinsic_resistance,
@@ -893,101 +882,42 @@ as.sir.data.frame <- function(x,
           host = host,
           verbose = verbose,
           info = info,
+          parallel = parallel,
+          max_cores = max_cores,
           is_data.frame = TRUE
         )
-      out$result <- result
-      out$log <- AMR_env$sir_interpretation_history
-      AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
-      return(out)
     } else if (types[i] == "sir") {
-      ab <- ab_col
-      ab_coerced <- suppressWarnings(as.ab(ab, info = info))
       show_message <- FALSE
-      if (!all(x[, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
+      ab <- ab_cols[i]
+      ab_coerced <- suppressWarnings(as.ab(ab))
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
+        # only print message if values are not already clean
         if (isTRUE(info)) {
           message_("Cleaning values in column '", font_bold(ab), "' (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-            ab_name(ab_coerced, tolower = TRUE, info = info), ")... ",
+            ab_name(ab_coerced, tolower = TRUE), ")... ",
             appendLF = FALSE,
             as_note = FALSE
           )
         }
-      } else if (!is.sir(x.bak[, ab, drop = TRUE])) {
+      } else if (!is.sir(x.bak[, ab_cols[i], drop = TRUE])) {
         show_message <- TRUE
+        # only print message if class not already set
         if (isTRUE(info)) {
           message_("Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-            ab_name(ab_coerced, tolower = TRUE, language = NULL, info = info), ")... ",
+            ab_name(ab_coerced, tolower = TRUE, language = NULL), ")... ",
             appendLF = FALSE,
             as_note = FALSE
           )
         }
       }
-      result <- as.sir.default(x = as.character(x[, ab, drop = TRUE]))
+      x[, ab_cols[i]] <- as.sir.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
       if (show_message == TRUE && isTRUE(info)) {
         message(font_green_bg(" OK "))
       }
-      out$result <- result
-      out$log <- NULL
-      return(out)
     }
-
-    return(out)
-  }
-
-  if (isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1) {
-    if (isTRUE(info)) {
-      message()
-      message_("Running SIR interpretation in parallel mode on ", nr2char(length(ab_cols)), " columns, using ", n_cores, " out of ", get_n_cores(Inf), " cores...", as_note = FALSE, appendLF = FALSE, add_fn = font_red)
-    }
-    if (.Platform$OS.type == "windows") {
-      cl <- parallel::makeCluster(n_cores, type = "PSOCK")
-      on.exit(parallel::stopCluster(cl), add = TRUE)
-      parallel::clusterExport(cl, varlist = c(
-        "x", "x.bak", "x_mo", "ab_cols", "types",
-        "capped_mic_handling", "add_intrinsic_resistance",
-        "reference_data", "substitute_missing_r_breakpoint", "include_screening", "include_PKPD",
-        "breakpoint_type", "guideline", "host", "uti", "info", "verbose",
-        "col_mo", "AMR_env", "conserve_capped_values",
-        "run_as_sir_column"
-      ), envir = environment())
-      result_list <- parallel::parLapply(cl, seq_along(ab_cols), run_as_sir_column)
-    } else {
-      result_list <- parallel::mclapply(seq_along(ab_cols), run_as_sir_column, mc.cores = n_cores)
-    }
-    if (isTRUE(info)) {
-      message_(" Done.", appendLF = TRUE, as_note = FALSE, add_fn = font_red)
-      message()
-      message_("Run `sir_interpretation_history()` to retrieve a logbook with all the details of the breakpoint interpretations.", add_fn = font_green)
-    }
-  } else {
-    # sequential mode (non-parallel)
-    if (n_cores > 1 && isTRUE(info) && (NROW(x) > 2500 || length(ab_cols) >= 5)) {
-      # give a note that parallel mode might be better
-      message()
-      message_("Running SIR interpretation in sequential mode. Consider setting `parallel = TRUE` to speed up processing on multiple cores.\n", add_fn = font_red)
-    }
-    # this will contain a progress bar already
-    result_list <- lapply(seq_along(ab_cols), run_as_sir_column)
-  }
-
-  # bind results back to x
-  for (i in seq_along(ab_cols)) {
-    x[, ab_cols[i]] <- result_list[[i]]$result
-  }
-
-  # combine all sir_interpretation_history
-  sir_logs_all <- lapply(result_list, function(x) x$log)
-  sir_logs_all <- Filter(Negate(is.null), sir_logs_all) # remove NULLs early
-  if (length(sir_logs_all) > 0) {
-    rbindlist <- import_fn("rbindlist", "data.table", error_on_fail = FALSE)
-    if (!is.null(rbindlist)) {
-      sir_logs_all <- rbindlist(sir_logs_all, fill = TRUE, ignore.attr = TRUE)
-    } else {
-      sir_logs_all <- do.call(rbind, sir_logs_all)
-    }
-    AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, sir_logs_all)
   }
 
   x
@@ -1023,9 +953,9 @@ convert_host <- function(x, lang = get_AMR_locale()) {
   x_out[is.na(x_out) & (x %like% "dog|canine|Canis lupus" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
   x_out[is.na(x_out) & (x %like% "cattle|bovine|Bos taurus" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
   x_out[is.na(x_out) & (x %like% "swine|suida(e)?|Sus scrofa" | x %like% translate_AMR("swine|swines", lang))] <- "swine"
+  x_out[is.na(x_out) & (x %like% "aqua|fish|Pisces" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
   x_out[is.na(x_out) & (x %like% "cat|feline|Felis catus" | x %like% translate_AMR("cat|cats|feline", lang))] <- "cats"
   x_out[is.na(x_out) & (x %like% "horse|equine|Equus ferus" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
-  x_out[is.na(x_out) & (x %like% "aqua|fish|Pisces" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
   x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia|Gallus gallus" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
 
   # additional animals, not necessarily currently in breakpoint guidelines:
@@ -1067,6 +997,8 @@ as_sir_method <- function(method_short,
                           host,
                           verbose,
                           info,
+                          parallel,
+                          max_cores,
                           conserve_capped_values = NULL,
                           ...) {
   if (isTRUE(conserve_capped_values)) {
@@ -1089,6 +1021,8 @@ as_sir_method <- function(method_short,
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(verbose, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(info, allow_class = "logical", has_length = 1, .call_depth = -2)
+  meet_criteria(parallel, allow_class = "logical", has_length = 1, .call_depth = -2)
+  meet_criteria(max_cores, allow_class = c("numeric", "integer"), has_length = 1, .call_depth = -2)
 
   # backward compatibilty
   dots <- list(...)
@@ -1243,7 +1177,7 @@ as_sir_method <- function(method_short,
   }
 
   ab.bak <- trimws2(ab)
-  ab <- suppressWarnings(as.ab(ab, info = info))
+  ab <- suppressWarnings(as.ab(ab))
   if (!is.null(list(...)$mo.bak)) {
     mo.bak <- list(...)$mo.bak
   } else {
@@ -1288,7 +1222,7 @@ as_sir_method <- function(method_short,
 
   # format agents ----
   agent_formatted <- paste0("'", font_bold(ab.bak, collapse = NULL), "'")
-  agent_name <- ab_name(ab, tolower = TRUE, language = NULL, info = info)
+  agent_name <- ab_name(ab, tolower = TRUE, language = NULL)
   same_ab <- generalise_antibiotic_name(ab) == generalise_antibiotic_name(agent_name)
   same_ab.bak <- generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)
   agent_formatted[same_ab.bak] <- paste0(agent_formatted[same_ab.bak], " (", ab[same_ab.bak], ")")
@@ -1321,7 +1255,7 @@ as_sir_method <- function(method_short,
   rise_warning <- FALSE
   rise_notes <- FALSE
   method_coerced <- toupper(method)
-  ab_coerced <- as.ab(ab, info = info)
+  ab_coerced <- as.ab(ab)
 
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
@@ -1354,7 +1288,7 @@ as_sir_method <- function(method_short,
       # CLSI in log 2 ----
       # CLSI says: if MIC is not a log2 value it must be rounded up to the nearest log2 value
       log2_levels <- as.double(VALID_MIC_LEVELS[which(VALID_MIC_LEVELS %in% 2^c(-20:20))])
-      test_values <- df$values
+      test_values <- df$values[which(df$guideline %like% "CLSI")]
       test_values_dbl <- as.double(test_values)
       test_values_dbl[test_values %like% "^>[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] + 0.0000001
       test_values_dbl[test_values %like% "^<[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] - 0.0000001
@@ -1378,7 +1312,7 @@ as_sir_method <- function(method_short,
           }
         }
       )
-      df$values[which(df$guideline %like% "CLSI" & test_values != test_outcome)] <- test_outcome[which(df$guideline %like% "CLSI" & test_values != test_outcome)]
+      df$values[which(df$guideline %like% "CLSI" & test_values != test_outcome)] <- test_outcome[which(test_values != test_outcome)]
     }
     df$values <- as.mic(df$values)
   } else if (method == "disk") {
@@ -1430,7 +1364,7 @@ as_sir_method <- function(method_short,
         paste0(font_rose_bg(" WARNING "), "\n"),
         font_black(paste0(
           "  ", AMR_env$bullet_icon, " No ", method_coerced, " breakpoints available for ",
-          suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE, info = info))),
+          suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE))),
           " (", unique(ab_coerced), ")."
         ), collapse = "\n")
       )
@@ -1447,10 +1381,15 @@ as_sir_method <- function(method_short,
       x
     }
   }
+  
+  # set up parallel computing
+  n_cores <- get_n_cores(max_cores = max_cores)
+  
 
   # run the rules (df_unique is a row combination per mo/ab/uti/host) ----
-  for (i in seq_len(nrow(df_unique))) {
-    p$tick()
+  # for (i in seq_len(nrow(df_unique))) {
+  #   p$tick()
+  run_sir_interpretation <- function(i) {
     guideline_current <- df_unique[i, "guideline", drop = TRUE]
     mo_current <- df_unique[i, "mo", drop = TRUE]
     mo_gram_current <- mo_grams[i]
@@ -1466,7 +1405,13 @@ as_sir_method <- function(method_short,
 
     if (length(rows) == 0) {
       # this can happen if a host is unavailable, just continue with the next one, since a note about hosts having NA are already given at this point
-      next
+      # next
+      return(list(
+        rows = rows,
+        new_sir = NA_sir_[0],
+        sir_log = data.frame(),
+        notes_current = c(notes, notes_current)
+      ))
     }
     values <- df[rows, "values", drop = TRUE]
     values_bak <- df[rows, "values_bak", drop = TRUE]
@@ -1508,7 +1453,7 @@ as_sir_method <- function(method_short,
       mo_formatted <- font_italic(mo_formatted, collapse = NULL)
     }
     ab_formatted <- paste0(
-      suppressMessages(suppressWarnings(ab_name(ab_current, language = NULL, tolower = TRUE, info = info))),
+      suppressMessages(suppressWarnings(ab_name(ab_current, language = NULL, tolower = TRUE))),
       " (", ab_current, ")"
     )
 
@@ -1615,12 +1560,19 @@ as_sir_method <- function(method_short,
         ref_table = vectorise_log_entry(NA_character_, length(rows)),
         uti = vectorise_log_entry(uti_current, length(rows)),
         breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
+        site = vectorise_log_entry(NA_character_, length(rows)),
         stringsAsFactors = FALSE
       )
       out <- subset(out, !is.na(input_given))
-      AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
-      notes <- c(notes, notes_current)
-      next
+      # AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
+      # notes <- c(notes, notes_current)
+      # next
+      return(list(
+        rows = rows,
+        new_sir = new_sir,
+        sir_log = out,
+        notes_current = notes_current
+      ))
     }
 
     # sort on host and taxonomic rank
@@ -1679,9 +1631,22 @@ as_sir_method <- function(method_short,
         notes_current, "\n",
         paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, "")
       )
+      out <- data.frame()
+      return(list(
+        rows = rows,
+        new_sir = new_sir,
+        sir_log = out,
+        notes_current = notes_current
+      ))
     } else if (nrow(breakpoints_current) == 0) {
       # no rules available
       new_sir <- rep(NA_sir_, length(rows))
+      return(list(
+        rows = rows,
+        new_sir = new_sir,
+        sir_log = data.frame(),
+        notes_current = notes_current
+      ))
     } else {
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
@@ -1789,17 +1754,65 @@ as_sir_method <- function(method_short,
         ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
         uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
         breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
+        site = vectorise_log_entry(breakpoints_current[, "site", drop = TRUE], length(rows)),
         stringsAsFactors = FALSE
       )
       out <- subset(out, !is.na(input_given))
       AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
     }
+    
+    return(list(
+      rows = rows,
+      new_sir = new_sir,
+      sir_log = out,
+      notes_current = c(notes, notes_current)
+    ))
 
-    notes <- c(notes, notes_current)
-    df[rows, "result"] <- new_sir
+    # notes <- c(notes, notes_current)
+    # df[rows, "result"] <- new_sir
   }
 
   close(p)
+  
+  if (isTRUE(parallel)) {
+    # message_("Running in parallel mode using ", font_bold(n_cores), " core", ifelse(n_cores == 1, "", "s"), ".\n\n")
+    if (.Platform$OS.type == "windows") {
+      cl <- parallel::makeCluster(n_cores, type = "PSOCK")
+      on.exit(parallel::stopCluster(cl), add = TRUE)
+      parallel::clusterExport(cl, varlist = c(
+        "df", "df_unique", "mo_grams",
+        "ab.bak", "mo.bak", "host.bak",
+        "breakpoints", "breakpoint_type", "guideline_coerced",
+        "metadata_mo", "AMR_env",
+        "method", "method_coerced", "intro_txt",
+        "capped_mic_handling", "add_intrinsic_resistance",
+        "substitute_missing_r_breakpoint", "include_screening", "include_PKPD",
+        "verbose", "info", "current_df",
+        "reference_data", "conserve_capped_values"
+      ), envir = environment())
+      results <- parallel::parLapply(cl, seq_len(nrow(df_unique)), run_sir_interpretation)
+    } else {
+      results <- parallel::mclapply(seq_len(nrow(df_unique)), run_sir_interpretation, mc.cores = n_cores)
+    }
+  } else {
+    results <- lapply(seq_len(nrow(df_unique)), run_sir_interpretation)
+  }
+  
+  # clean results
+  results <- Filter(Negate(is.null), results)
+  rr <<- results
+  
+  # bind results back
+  if (length(results) > 0) {
+    for (res in results) {
+      df[res$rows, "result"] <- res$new_sir
+    }
+    sir_logs_all <- do.call(rbind, lapply(results, function(x) x$sir_log))
+    AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, sir_logs_all)
+    notes <- unlist(lapply(results, function(x) x$notes_current))
+  }
+  
+  
   # printing messages
   if (isTRUE(info)) {
     if (has_progress_bar == TRUE) {
@@ -1901,7 +1914,7 @@ freq.sir <- function(x, ...) {
       }
     ))[1L]
   }
-  ab <- suppressMessages(suppressWarnings(as.ab(x_name, info = FALSE)))
+  ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
   digits <- list(...)$digits
   if (is.null(digits)) {
     digits <- 2
@@ -1910,7 +1923,7 @@ freq.sir <- function(x, ...) {
     cleaner::freq.default(
       x = x, ...,
       .add_header = list(
-        Drug = paste0(ab_name(ab, language = NULL, info = info), " (", ab, ", ", paste(ab_atc(ab, info = info), collapse = "/"), ")"),
+        Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", paste(ab_atc(ab), collapse = "/"), ")"),
         `Drug group` = ab_group(ab, language = NULL),
         `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
           digits = digits
@@ -1942,7 +1955,7 @@ get_skimmers.sir <- function(column) {
       vars <- tryCatch(eval(parse(text = ".data$skim_variable$sir"), envir = frms[[ind]]),
         error = function(e) NULL
       )
-      tryCatch(ab_name(as.character(calls[[length(calls)]][[2]]), language = NULL, info = FALSE),
+      tryCatch(ab_name(as.character(calls[[length(calls)]][[2]]), language = NULL),
         error = function(e) NA_character_
       )
     } else {

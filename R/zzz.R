@@ -73,6 +73,7 @@ AMR_env$sir_interpretation_history <- data.frame(
   ref_table = character(0),
   uti = logical(0),
   breakpoint_S_R = character(0),
+  site = character(0),
   stringsAsFactors = FALSE
 )
 

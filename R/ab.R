@@ -139,7 +139,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
         if (toupper(paste(abnames, collapse = " ")) %in% AMR_env$AB_lookup$generalised_name) {
           # if the found values combined is a valid AB, return that
           found <- AMR_env$AB_lookup$ab[match(toupper(paste(abnames, collapse = " ")), AMR_env$AB_lookup$generalised_name)][1]
-        } else {
+        } else if (isTRUE(info)) {
           message_(
             "More than one result was found for item ", index, ": ",
             vector_and(abnames, quotes = FALSE)

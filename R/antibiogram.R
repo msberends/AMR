@@ -573,6 +573,8 @@ antibiogram.default <- function(x,
       for (ab in abx) {
         # make sure they are SIR columns
         x[, ab] <- as.sir(x[, ab, drop = TRUE])
+        # set NI as NA
+        x[[ab]][x[[ab]] == "NI"] <- NA_sir_
       }
       new_colname <- paste0(trimws(abx), collapse = sep)
       if (length(abx) == 1) {
@@ -584,7 +586,7 @@ antibiogram.default <- function(x,
         } else {
           S_values <- "S"
         }
-        other_values <- setdiff(c("S", "SDD", "I", "R", "NI"), S_values)
+        other_values <- setdiff(c("S", "SDD", "I", "R"), S_values)
         x_transposed <- as.list(as.data.frame(t(x[, abx, drop = FALSE]), stringsAsFactors = FALSE))
         if (isTRUE(only_all_tested)) {
           x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(anyNA(x), NA_character_, ifelse(any(x %in% S_values), "S", "R")), USE.NAMES = FALSE))

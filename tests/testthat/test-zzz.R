@@ -118,6 +118,8 @@ test_that("test-zzz.R", {
     "kable" = "knitr",
     "knit_print" = "knitr",
     "opts_chunk" = "knitr",
+    # parallelly
+    "availableCores" = "parallelly",
     # pillar
     "pillar_shaft" = "pillar",
     "tbl_format_footer" = "pillar",

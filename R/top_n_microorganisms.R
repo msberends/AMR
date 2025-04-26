@@ -32,7 +32,7 @@
 #' This function filters a data set to include only the top *n* microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, or to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
 #' @param x A data frame containing microbial data.
 #' @param n An integer specifying the maximum number of unique values of the `property` to include in the output.
-#' @param property A character string indicating the microorganism property to use for filtering. Must be one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. If `NULL`, the raw values from `col_mo` will be used without transformation.
+#' @param property A character string indicating the microorganism property to use for filtering. Must be one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`. If `NULL`, the raw values from `col_mo` will be used without transformation. When using `"species"` (default) or `"subpecies"`, the genus will be added to make sure each (sub)species still belongs to the right genus.
 #' @param n_for_each An optional integer specifying the maximum number of rows to retain for each value of the selected property. If `NULL`, all rows within the top *n* groups will be included.
 #' @param col_mo A character string indicating the column in `x` that contains microorganism names or codes. Defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param ... Additional arguments passed on to [mo_property()] when `property` is not `NULL`.
@@ -54,7 +54,7 @@
 #' top_n_microorganisms(example_isolates,
 #'   n = 5, property = "genus", n_for_each = 3
 #' )
-top_n_microorganisms <- function(x, n, property = "fullname", n_for_each = NULL, col_mo = NULL, ...) {
+top_n_microorganisms <- function(x, n, property = "species", n_for_each = NULL, col_mo = NULL, ...) {
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(n, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE)
   meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms))
@@ -71,6 +71,10 @@ top_n_microorganisms <- function(x, n, property = "fullname", n_for_each = NULL,
 
   if (is.null(property)) {
     x$prop_val <- x[[col_mo]]
+  } else if (property == "species") {
+    x$prop_val <- paste(mo_genus(x[[col_mo]], ...), mo_species(x[[col_mo]], ...))
+  } else if (property == "subspecies") {
+    x$prop_val <- paste(mo_genus(x[[col_mo]], ...), mo_species(x[[col_mo]], ...), mo_subspecies(x[[col_mo]], ...))
   } else {
     x$prop_val <- mo_property(x[[col_mo]], property = property, ...)
   }
