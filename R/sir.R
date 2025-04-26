@@ -146,7 +146,7 @@
 #'   options(AMR_breakpoint_type = "animal")
 #' ```
 #'
-#' ###### TODO #187 When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
+###### TODO #187 When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
 #'
 #' ### After Interpretation
 #'
@@ -994,12 +994,7 @@ as.sir.data.frame <- function(x,
   sir_logs_all <- lapply(result_list, function(x) x$log)
   sir_logs_all <- Filter(Negate(is.null), sir_logs_all) # remove NULLs early
   if (length(sir_logs_all) > 0) {
-    rbindlist <- import_fn("rbindlist", "data.table", error_on_fail = FALSE)
-    if (!is.null(rbindlist)) {
-      sir_logs_all <- rbindlist(sir_logs_all, fill = TRUE, ignore.attr = TRUE)
-    } else {
-      sir_logs_all <- do.call(rbind, sir_logs_all)
-    }
+    sir_logs_all <- do.call(rbind_AMR, sir_logs_all)
     AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, sir_logs_all)
   }
 
@@ -1857,6 +1852,7 @@ sir_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)
   out <- AMR_env$sir_interpretation_history
   out$outcome <- as.sir(out$outcome)
+  out$site <- as.character(out$site)
   if (isTRUE(clean)) {
     AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
   }

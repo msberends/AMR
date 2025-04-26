@@ -35,7 +35,7 @@ on:
 name: Publish GPT Training Data to GitHub
 
 jobs:
-  update-pypi:
+  update-amr-assistant:
     runs-on: ubuntu-latest
     
     env:

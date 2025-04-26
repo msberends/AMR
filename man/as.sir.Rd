@@ -231,9 +231,6 @@ Regarding choice of veterinary guidelines, these might be the best options to se
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
   options(AMR_breakpoint_type = "animal")
 }\if{html}{\out{</div>}}
-\subsection{TODO #187 When applying veterinary breakpoints (by setting \code{host} or by setting \code{breakpoint_type = "animal"}), the \href{https://clsi.org/standards/products/veterinary-medicine/documents/vet09/}{CLSI VET09 guideline} will be applied to cope with missing animal species-specific breakpoints.}{
-}
-
 }
 
 \subsection{After Interpretation}{
