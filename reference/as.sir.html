@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9252</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9253</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,8 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span>  <span class="cn">FALSE</span><span class="op">)</span>, include_screening <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_screening"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  breakpoint_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_breakpoint_type"</span>, <span class="st">"human"</span><span class="op">)</span>, host <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, info <span class="op">=</span> <span class="cn">TRUE</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, info <span class="op">=</span> <span class="cn">TRUE</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span>, max_cores <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
+<span>  conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">sir_interpretation_history</span><span class="op">(</span>clean <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -209,6 +210,14 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
+<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-max-cores">max_cores<a class="anchor" aria-label="anchor" href="#arg-max-cores"></a></dt>
+<dd><p>Maximum number of cores to use if <code>parallel = TRUE</code>. Use a negative value to subtract that number from the available number of cores, e.g. a value of <code>-2</code> on an 8-core machine means that 6 cores will be used. Defaults to <code>-1</code>. The available number of cores are detected using <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> if that package is installed, and base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code> otherwise.</p></dd>
+
+
 <dt id="arg-clean">clean<a class="anchor" aria-label="anchor" href="#arg-clean"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.</p></dd>
 
@@ -231,7 +240,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"ampicillin"</span>, <span class="va">...</span><span class="op">)</span>, mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="st">"K. pneumoniae"</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
-<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
+<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># fast processing with parallel computing:</span></span>
+<span><span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">your_data</span>, <span class="va">...</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div></li>
 <li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>capped_mic_handling = "conservative"</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>capped_mic_handling = "standard"</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
 <li><p><strong>Note:</strong> When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.</p></li>
 </ul></li>
@@ -242,7 +254,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"ampicillin"</span>, <span class="va">...</span><span class="op">)</span>, mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="st">"K. pneumoniae"</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
-<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre><p></p></div></li>
+<span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># fast processing with parallel computing:</span></span>
+<span><span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">your_data</span>, <span class="va">...</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div></li>
 </ul></li>
 <li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.sir(your_data)</code>.</p></li>
 </ol><p><strong>For points 2, 3 and 4: Use <code>sir_interpretation_history()</code></strong> to retrieve a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with all results of all previous <code>as.sir()</code> calls. It also contains notes about interpretation, and the exact input and output values.</p>
@@ -263,9 +278,22 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"EUCAST 2020"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="co"># or to reset:</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="cn">NULL</span>)</span></code></pre><p></p></div>
-<p>For veterinary guidelines, these might be the best options:</p>
+</div>
+
+<div class="section">
+<h3 id="working-with-veterinary-breakpoints">Working with Veterinary Breakpoints<a class="anchor" aria-label="anchor" href="#working-with-veterinary-breakpoints"></a></h3>
+
+
+<p>When using veterinary breakpoints (i.e., setting <code>breakpoint_type = "animal"</code>), a column with animal species must be available or set manually using the <code>host</code> argument. The column must contain names like "dogs", "cats", "cattle", "swine", "horses", "poultry", or "aquatic". Other animal names like "goats", "rabbits", or "monkeys" are also recognised but may not be available in all guidelines. Matching is case-insensitive and accepts Latin-based synonyms (e.g., "bovine" for cattle and "canine" for dogs).</p>
+<p>Regarding choice of veterinary guidelines, these might be the best options to set before analysis:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_guideline =</span> <span class="st">"CLSI"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_breakpoint_type =</span> <span class="st">"animal"</span>)</span></code></pre><p></p></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">AMR_breakpoint_type =</span> <span class="st">"animal"</span>)</span></code></pre><p></p></div><div class="section">
+<h4 id="todo-when-applying-veterinary-breakpoints-by-setting-host-or-by-setting-breakpoint-type-animal-the-clsi-vet-guideline-will-be-applied-to-cope-with-missing-animal-species-specific-breakpoints-">TODO #187 When applying veterinary breakpoints (by setting <code>host</code> or by setting <code>breakpoint_type = "animal"</code>), the <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet09/" class="external-link">CLSI VET09 guideline</a> will be applied to cope with missing animal species-specific breakpoints.<a class="anchor" aria-label="anchor" href="#todo-when-applying-veterinary-breakpoints-by-setting-host-or-by-setting-breakpoint-type-animal-the-clsi-vet-guideline-will-be-applied-to-cope-with-missing-animal-species-specific-breakpoints-"></a></h4>
+
+
+</div>
+
+
 </div>
 
 <div class="section">
@@ -762,6 +790,9 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The following animal host(s) could not be coerced: "animal_species"</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Returning previously coerced values for "E. coli". Run</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  </span><span style="color: #0000BB; background-color: #EEEEEE;">mo_reset_session()</span><span style="color: #0000BB;"> to reset this. This note will be shown once per</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  session for this input.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
@@ -799,6 +830,9 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">ℹ Running SIR interpretation in sequential mode. Consider setting </span><span style="color: #BB0000; background-color: #EEEEEE;">parallel</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; background-color: #EEEEEE;">  = TRUE</span><span style="color: #BB0000;"> to speed up processing on multiple cores.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> afterwards to retrieve a logbook with</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -824,23 +858,23 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 65 × 17</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given   mo_given   host_given input_given</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-25 <span style="color: #949494;">09:23:57</span>     1 DISK   ampicillin Strep pneu human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-25 <span style="color: #949494;">09:23:58</span>     1 DISK   AMP        Escherich… human      20         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-04-25 <span style="color: #949494;">09:23:58</span>     1 DISK   AMP        Escherich… human      20         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-25 <span style="color: #949494;">09:23:58</span>     1 DISK   GEN        Escherich… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-25 <span style="color: #949494;">09:23:58</span>     1 DISK   TOB        Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-25 <span style="color: #949494;">09:23:59</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-25 <span style="color: #949494;">09:23:59</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-25 <span style="color: #949494;">09:23:59</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-25 <span style="color: #949494;">09:23:59</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 55 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 54 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given    mo_given  host_given input_given</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-26 <span style="color: #949494;">13:53:13</span>     1 MIC    amoxicillin Escheric… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-26 <span style="color: #949494;">13:53:14</span>     1 MIC    cipro       Escheric… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2025-04-26 <span style="color: #949494;">13:53:14</span>     1 MIC    amoxicillin Escheric… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-26 <span style="color: #949494;">13:53:14</span>     1 MIC    cipro       Escheric… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-26 <span style="color: #949494;">13:53:14</span>     1 DISK   tobra       Escheric… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-26 <span style="color: #949494;">13:53:15</span>     1 DISK   genta       Escheric… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-26 <span style="color: #949494;">13:53:15</span>     1 MIC    amoxicillin Escheric… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-26 <span style="color: #949494;">13:53:15</span>     1 MIC    cipro       Escheric… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-26 <span style="color: #949494;">13:53:15</span>     1 MIC    amoxicillin Escheric… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-26 <span style="color: #949494;">13:53:16</span>     1 MIC    cipro       Escheric… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 44 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;lgl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for single values</span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span></span></span>
@@ -854,10 +888,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">  all the details of the breakpoint interpretations.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Interpreting MIC values: '</span><span style="color: #0000BB; font-weight: bold;">AMP</span><span style="color: #0000BB;">' (ampicillin), </span><span style="color: #0000BB; font-weight: bold;">EUCAST 2025</span><span style="color: #0000BB;">...</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #FFFF87;"> NOTE </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808;">  • Multiple breakpoints available for </span><span style="color: #080808; font-weight: bold;">ampicillin (AMP)</span><span style="color: #080808;"> in </span><span style="color: #080808; font-style: italic;">Streptococcus pneumoniae</span><span style="color: #080808;"> - assuming body site 'Non-meningitis, Non-endocarditis'.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rbindlist(l, use.names, fill, idcol, ignore.attr):</span> Class attribute on column 5 of item 2 does not match with column 5 of item 1. You can deactivate this safety-check by using ignore.attr=TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
@@ -912,6 +943,9 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span>  <span class="co"># example_isolates %&gt;%</span></span></span>
 <span class="r-in"><span>  <span class="co">#   mutate(across(where(is_sir_eligible), as.sir))</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">ℹ Running SIR interpretation in sequential mode. Consider setting </span><span style="color: #BB0000; background-color: #EEEEEE;">parallel</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000; background-color: #EEEEEE;">  = TRUE</span><span style="color: #BB0000;"> to speed up processing on multiple cores.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
