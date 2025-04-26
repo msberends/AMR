@@ -203,7 +203,17 @@
 #'   guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
 #' )
 #'
+#' # most basic application:
+#' as.sir(df_wide)
+#'
+#' # return a 'logbook' about the results:
+#' sir_interpretation_history()
+#'
 #' \donttest{
+#' # using parallel computing, which is available in base R:
+#' as.sir(df_wide, parallel = TRUE, info = TRUE)
+#'
+#'
 #' ## Using dplyr -------------------------------------------------
 #' if (require("dplyr")) {
 #'   # approaches that all work without additional arguments:
@@ -316,6 +326,9 @@
 #'
 #' # return a 'logbook' about the results:
 #' sir_interpretation_history()
+#'
+#' # using parallel computing, which is available in base R
+#' as.sir(df_wide, parallel = TRUE)
 #'
 #' # for single values
 #' as.sir(
@@ -466,7 +479,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 #' @rdname as.sir
 #' @export
 #' @param S,I,R,NI,SDD A case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
-#' @param info A [logical] to print information about the process.
+#' @param info A [logical] to print information about the process, defaults to `TRUE` only in [interactive sessions][base::interactive()].
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x,
                            S = "^(S|U)+$",
@@ -474,7 +487,7 @@ as.sir.default <- function(x,
                            R = "^(R)+$",
                            NI = "^(N|NI|V)+$",
                            SDD = "^(SDD|D|H)+$",
-                           info = TRUE,
+                           info = interactive(),
                            ...) {
   meet_criteria(S, allow_class = "character", has_length = 1)
   meet_criteria(I, allow_class = "character", has_length = 1)
@@ -601,7 +614,7 @@ as.sir.mic <- function(x,
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        host = NULL,
                        verbose = FALSE,
-                       info = TRUE,
+                       info = interactive(),
                        conserve_capped_values = NULL,
                        ...) {
   as_sir_method(
@@ -642,7 +655,7 @@ as.sir.disk <- function(x,
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                         host = NULL,
                         verbose = FALSE,
-                        info = TRUE,
+                        info = interactive(),
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -684,7 +697,7 @@ as.sir.data.frame <- function(x,
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                               host = NULL,
                               verbose = FALSE,
-                              info = TRUE,
+                              info = interactive(),
                               parallel = FALSE,
                               max_cores = -1,
                               conserve_capped_values = NULL) {
@@ -1910,7 +1923,7 @@ freq.sir <- function(x, ...) {
     cleaner::freq.default(
       x = x, ...,
       .add_header = list(
-        Drug = paste0(ab_name(ab, language = NULL, info = info), " (", ab, ", ", paste(ab_atc(ab, info = info), collapse = "/"), ")"),
+        Drug = paste0(ab_name(ab, language = NULL, info = FALSE), " (", ab, ", ", paste(ab_atc(ab, info = FALSE), collapse = "/"), ")"),
         `Drug group` = ab_group(ab, language = NULL),
         `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
           digits = digits

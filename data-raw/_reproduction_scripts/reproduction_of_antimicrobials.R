@@ -1028,6 +1028,17 @@ antimicrobials <- dplyr::arrange(antimicrobials, name)
 # REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
 
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
+transform_syn <- function(x) {
+  x <- gsub("ph", "(ph|f)", x)
+  x <- gsub("th", "(th|t)", x)
+  x <- gsub("ae", "(ae|e)", x)
+  x <- gsub("oe", "(oe|e)", x)
+  x <- gsub("ck", "(ck|k)", x)
+  x <- gsub("c", "(c|k|s)", x)
+  x <- gsub("y", "(y|i)", x)
+  x <- gsub("z", "(z|s)", x)
+  x
+}
 for (i in 1:nrow(antimicrobials)) {
   atc <- as.character(sort(unique(toupper(antimicrobials[i, "atc", drop = TRUE][[1]]))))
   atc <- atc[atc != "" & atc %unlike% ":"]
@@ -1043,6 +1054,8 @@ for (i in 1:nrow(antimicrobials)) {
   syn <- gsub(" [a-z]{1,3}$", "", syn, perl = TRUE)
   syn <- trimws(syn)
   syn <- syn[syn != "" & syn %unlike% ":" & !syn %in% tolower(antimicrobials$name)]
+  # remove synonyms that are names in the data set
+  syn <- syn[!sapply(syn, function(s) any(grepl(transform_syn(s), antimicrobials$name)))]
   syn <- unique(syn)
   # special cases
   if (antimicrobials$ab[i] == "VAN") syn <- syn[syn %unlike% "^tei?ch?o"]

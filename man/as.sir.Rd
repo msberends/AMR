@@ -33,7 +33,7 @@ is.sir(x)
 is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{default}(x, S = "^(S|U)+$", I = "^(I)+$", R = "^(R)+$",
-  NI = "^(N|NI|V)+$", SDD = "^(SDD|D|H)+$", info = TRUE, ...)
+  NI = "^(N|NI|V)+$", SDD = "^(SDD|D|H)+$", info = interactive(), ...)
 
 \method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -44,7 +44,8 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = TRUE, conserve_capped_values = NULL, ...)
+  verbose = FALSE, info = interactive(), conserve_capped_values = NULL,
+  ...)
 
 \method{as.sir}{disk}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -54,7 +55,7 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = TRUE, ...)
+  verbose = FALSE, info = interactive(), ...)
 
 \method{as.sir}{data.frame}(x, ..., col_mo = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -65,8 +66,8 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = TRUE, parallel = FALSE, max_cores = -1,
-  conserve_capped_values = NULL)
+  verbose = FALSE, info = interactive(), parallel = FALSE,
+  max_cores = -1, conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 }
@@ -79,7 +80,7 @@ sir_interpretation_history(clean = FALSE)
 
 \item{S, I, R, NI, SDD}{A case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
 
-\item{info}{A \link{logical} to print information about the process.}
+\item{info}{A \link{logical} to print information about the process, defaults to \code{TRUE} only in \link[base:interactive]{interactive sessions}.}
 
 \item{mo}{A vector (or column name) with \link{character}s that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically.}
 
@@ -292,7 +293,17 @@ df_long <- data.frame(
   guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
 )
 
+# most basic application:
+as.sir(df_wide)
+
+# return a 'logbook' about the results:
+sir_interpretation_history()
+
 \donttest{
+# using parallel computing, which is available in base R:
+as.sir(df_wide, parallel = TRUE, info = TRUE)
+
+
 ## Using dplyr -------------------------------------------------
 if (require("dplyr")) {
   # approaches that all work without additional arguments:
@@ -405,6 +416,9 @@ as.sir(df_wide)
 
 # return a 'logbook' about the results:
 sir_interpretation_history()
+
+# using parallel computing, which is available in base R
+as.sir(df_wide, parallel = TRUE)
 
 # for single values
 as.sir(
