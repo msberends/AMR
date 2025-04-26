@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9255</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9256</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -212,11 +212,11 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>. This requires no additional packages, as the used <code>parallel</code> package is part of base <span style="R">R</span>.</p></dd>
 
 
 <dt id="arg-max-cores">max_cores<a class="anchor" aria-label="anchor" href="#arg-max-cores"></a></dt>
-<dd><p>Maximum number of cores to use if <code>parallel = TRUE</code>. Use a negative value to subtract that number from the available number of cores, e.g. a value of <code>-2</code> on an 8-core machine means that 6 cores will be used. Defaults to <code>-1</code>. The available number of cores are detected using <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> if that package is installed, and base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code> otherwise.</p></dd>
+<dd><p>Maximum number of cores to use if <code>parallel = TRUE</code>. Use a negative value to subtract that number from the available number of cores, e.g. a value of <code>-2</code> on an 8-core machine means that at most 6 cores will be used. Defaults to <code>-1</code>. There will never be used more cores than variables to analyse. The available number of cores are detected using <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> if that package is installed, and base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code> otherwise.</p></dd>
 
 
 <dt id="arg-clean">clean<a class="anchor" aria-label="anchor" href="#arg-clean"></a></dt>
@@ -489,20 +489,20 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given    mo_given  host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-26 <span style="color: #949494;">14:39:45</span>     1 DISK   ampicillin  Strep pn… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-26 <span style="color: #949494;">14:39:45</span>     1 DISK   AMP         Escheric… human      20         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-26 <span style="color: #949494;">19:34:22</span>     1 DISK   ampicillin  Strep pn… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-26 <span style="color: #949494;">19:34:22</span>     1 DISK   AMP         Escheric… human      20         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-26 <span style="color: #949494;">14:39:46</span>     1 DISK   GEN         Escheric… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-26 <span style="color: #949494;">14:39:46</span>     1 DISK   TOB         Escheric… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     1 MIC    AMX         B_STRPT_… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     1 MIC    AMX         B_STRPT_… human      0.01       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     2 MIC    AMX         B_STRPT_… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     3 MIC    AMX         B_STRPT_… human      4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     4 MIC    AMX         B_STRPT_… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2025-04-26 <span style="color: #949494;">14:39:53</span>     1 MIC    amoxicillin Escheric… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2025-04-26 <span style="color: #949494;">14:39:53</span>     1 MIC    cipro       Escheric… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2025-04-26 <span style="color: #949494;">14:39:53</span>     1 DISK   tobra       Escheric… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2025-04-26 <span style="color: #949494;">14:39:54</span>     1 DISK   genta       Escheric… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-26 <span style="color: #949494;">19:34:23</span>     1 DISK   GEN         Escheric… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-26 <span style="color: #949494;">19:34:23</span>     1 DISK   TOB         Escheric… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     1 MIC    AMX         B_STRPT_… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     1 MIC    AMX         B_STRPT_… human      0.01       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     2 MIC    AMX         B_STRPT_… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     3 MIC    AMX         B_STRPT_… human      4          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     4 MIC    AMX         B_STRPT_… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2025-04-26 <span style="color: #949494;">19:34:30</span>     1 MIC    amoxicillin Escheric… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2025-04-26 <span style="color: #949494;">19:34:30</span>     1 MIC    cipro       Escheric… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2025-04-26 <span style="color: #949494;">19:34:30</span>     1 DISK   tobra       Escheric… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2025-04-26 <span style="color: #949494;">19:34:31</span>     1 DISK   genta       Escheric… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
@@ -514,8 +514,8 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  </span><span style="color: #0000BB; background-color: #EEEEEE;">ab_reset_session()</span><span style="color: #0000BB;"> to reset this. This note will be shown once per</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  session.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Running SIR interpretation in parallel mode on five columns, using 3 out of</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">4 cores...</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Running in parallel mode using 3 out of 4 cores, on columns '</span><span style="color: #BB0000; font-weight: bold;">amoxicillin</span><span style="color: #BB0000;">',</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">'</span><span style="color: #BB0000; font-weight: bold;">cipro</span><span style="color: #BB0000;">', '</span><span style="color: #BB0000; font-weight: bold;">tobra</span><span style="color: #BB0000;">', '</span><span style="color: #BB0000; font-weight: bold;">genta</span><span style="color: #BB0000;">', and '</span><span style="color: #BB0000; font-weight: bold;">ERY</span><span style="color: #BB0000;">'...</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;"> Done.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">ℹ Run </span><span style="color: #00BB00; background-color: #EEEEEE;">sir_interpretation_history()</span><span style="color: #00BB00;"> to retrieve a logbook with all the</span></span>
@@ -683,16 +683,16 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 114 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given   mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-26 <span style="color: #949494;">14:39:45</span>     1 DISK   ampicillin Strep pneu human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-26 <span style="color: #949494;">14:39:45</span>     1 DISK   AMP        Escherich… human      20         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-26 <span style="color: #949494;">19:34:22</span>     1 DISK   ampicillin Strep pneu human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-26 <span style="color: #949494;">19:34:22</span>     1 DISK   AMP        Escherich… human      20         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-26 <span style="color: #949494;">14:39:46</span>     1 DISK   GEN        Escherich… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-26 <span style="color: #949494;">14:39:46</span>     1 DISK   TOB        Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-26 <span style="color: #949494;">14:39:47</span>     4 MIC    AMX        B_STRPT_P… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-26 <span style="color: #949494;">19:34:23</span>     1 DISK   GEN        Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-26 <span style="color: #949494;">19:34:23</span>     1 DISK   TOB        Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-26 <span style="color: #949494;">19:34:24</span>     4 MIC    AMX        B_STRPT_P… human      8          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 104 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
