@@ -680,7 +680,7 @@ as.sir.disk <- function(x,
 }
 
 #' @rdname as.sir
-#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. This requires no additional packages, as the used `parallel` package is part of base \R. On Windows and on \R < 4.0.0 [parallel::parLapply()] will be used; in all other cases the most efficient [parallel::mclapply()] will be used.
+#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. This requires no additional packages, as the used `parallel` package is part of base \R. On Windows and on \R < 4.0.0 [parallel::parLapply()] will be used, in all other cases the most efficient [parallel::mclapply()] will be used.
 #' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that at most 6 cores will be used. Defaults to `-1`. There will never be used more cores than variables to analyse. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
 #' @export
 as.sir.data.frame <- function(x,
@@ -854,6 +854,12 @@ as.sir.data.frame <- function(x,
   # set up parallel computing
   n_cores <- get_n_cores(max_cores = max_cores)
   n_cores <- min(n_cores, length(ab_cols)) # never more cores than variables required
+  if (isTRUE(parallel) && .Platform$OS.type != "windows" && getRversion() < "4.0.0") {
+    n_cores <- 1
+    if (isTRUE(info)) {
+      warning("Parallel computing is not available on unix in R < 4.0", call. = FALSE)
+    }
+  }
 
   run_as_sir_column <- function(i) {
     ab_col <- ab_cols[i]
