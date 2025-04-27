@@ -53,7 +53,7 @@ test_that("test-antibiogram.R", {
   expect_inherits(ab2, "antibiogram")
   expect_inherits(ab3, "antibiogram")
   expect_equal(colnames(ab1), c("Pathogen", "Amikacin", "Gentamicin", "Imipenem", "Kanamycin", "Meropenem", "Tobramycin"))
-  expect_equal(colnames(ab2), c("Pathogen (N min-max)", "J01GB01", "J01GB03", "J01GB04", "J01GB06"))
+  expect_equal(colnames(ab2), c("Pathogen", "J01GB01", "J01GB03", "J01GB04", "J01GB06"))
   expect_equal(colnames(ab3), c("Pathogen", "IPM", "MEM"))
   expect_equal(ab3$MEM, c(52, NA, 100, 100, NA))
 
@@ -96,14 +96,13 @@ test_that("test-antibiogram.R", {
     syndromic_group = ifelse(ex1$ward == "ICU",
       "IC", "Geen IC"
     ),
-    language = "nl",
-    add_total_n = TRUE
+    language = "nl"
   )
 
   expect_inherits(ab6, "antibiogram")
   expect_inherits(ab7, "antibiogram")
   expect_equal(colnames(ab6), c("Syndromic Group", "Pathogen", "AMK", "GEN", "IPM", "KAN", "MEM", "TOB"))
-  expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen (N min-max)", "Amikacine", "Gentamicine", "Tobramycine"))
+  expect_equal(colnames(ab7), c("Syndroomgroep", "Pathogeen", "Amikacine", "Gentamicine", "Tobramycine"))
 
   # Weighted-incidence syndromic combination antibiogram (WISCA) ---------
 
