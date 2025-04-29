@@ -1380,7 +1380,7 @@ as_sir_method <- function(method_short,
       test_values <- df$values
       test_values_dbl <- as.double(test_values)
       test_values_dbl[test_values %like% "^>[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] + 0.0000001
-      test_values_dbl[test_values %like% "^<[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] - 0.0000001
+      test_values_dbl[test_values %like% "^<[0-9]"] <- test_values_dbl[test_values %like% "^<[0-9]"] - 0.0000001
       test_outcome <- vapply(
         FUN.VALUE = double(1),
         test_values_dbl,
