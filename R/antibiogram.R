@@ -1143,6 +1143,59 @@ wisca <- function(x,
   )
 }
 
+create_wisca_priors <- function(data) {
+  pathogens <- unique(data$mo)
+  n_pathogens <- length(pathogens)
+
+  # Dirichlet prior (gamma parameters)
+  gamma_prior <- rep(1, times = n_pathogens)
+  multinomial_obs <- data$n_total
+  gamma_posterior <- gamma_prior + multinomial_obs
+
+  # beta priors
+  beta_prior_alpha <- rep(1, times = n_pathogens)
+  beta_prior_beta <- rep(1, times = n_pathogens)
+
+  r <- data$n_susceptible
+  n <- data$n_tested
+  diff_nr <- n - r
+
+  beta_posterior_1 <- beta_prior_alpha + r
+  beta_posterior_2 <- beta_prior_beta + diff_nr
+
+  list(
+    gamma_posterior = gamma_posterior,
+    beta_posterior_1 = beta_posterior_1,
+    beta_posterior_2 = beta_posterior_2
+  )
+}
+
+simulate_coverage <- function(params) {
+  n_pathogens <- length(params$gamma_posterior)
+
+  # random draws per pathogen
+  random_incidence <- runif(n = n_pathogens)
+  random_susceptibility <- runif(n = n_pathogens)
+
+  simulated_incidence <- stats::qgamma(
+    p = random_incidence,
+    shape = params$gamma_posterior,
+    scale = 1
+  )
+
+  # normalise incidence
+  simulated_incidence <- simulated_incidence / sum(simulated_incidence, na.rm = TRUE)
+
+  simulated_susceptibility <- stats::qbeta(
+    p = random_susceptibility,
+    shape1 = params$beta_posterior_1,
+    shape2 = params$beta_posterior_2
+  )
+
+  # weighted coverage
+  sum(simulated_incidence * simulated_susceptibility, na.rm = TRUE)
+}
+
 #' @export
 #' @param wisca_model The outcome of [wisca()] or [`antibiogram(..., wisca = TRUE)`][antibiogram()].
 #' @rdname antibiogram
@@ -1291,12 +1344,9 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
 
   add_MO_lookup_to_AMR_env()
 
-  cols_with_mo_names <- vapply(FUN.VALUE = logical(1), x, function(x) any(x %in% AMR_env$MO_lookup$fullname, na.rm = TRUE))
-  if (any(cols_with_mo_names)) {
-    for (i in which(cols_with_mo_names)) {
-      # make all microorganism names italic, according to nomenclature
-      x[[i]] <- italicise_taxonomy(x[[i]], type = "markdown")
-    }
+  for (i in which(vapply(FUN.VALUE = logical(1), x, is.character))) {
+    # make all microorganism names italic, according to nomenclature
+    x[[i]] <- italicise_taxonomy(x[[i]], type = "markdown")
   }
 
   old_option <- getOption("knitr.kable.NA")
@@ -1305,57 +1355,4 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
 
   out <- paste(c("", "", knitr::kable(x, ..., output = FALSE)), collapse = "\n")
   knitr::asis_output(out)
-}
-
-create_wisca_priors <- function(data) {
-  pathogens <- unique(data$mo)
-  n_pathogens <- length(pathogens)
-
-  # Dirichlet prior (gamma parameters)
-  gamma_prior <- rep(1, times = n_pathogens)
-  multinomial_obs <- data$n_total
-  gamma_posterior <- gamma_prior + multinomial_obs
-
-  # beta priors
-  beta_prior_alpha <- rep(1, times = n_pathogens)
-  beta_prior_beta <- rep(1, times = n_pathogens)
-
-  r <- data$n_susceptible
-  n <- data$n_tested
-  diff_nr <- n - r
-
-  beta_posterior_1 <- beta_prior_alpha + r
-  beta_posterior_2 <- beta_prior_beta + diff_nr
-
-  list(
-    gamma_posterior = gamma_posterior,
-    beta_posterior_1 = beta_posterior_1,
-    beta_posterior_2 = beta_posterior_2
-  )
-}
-
-simulate_coverage <- function(params) {
-  n_pathogens <- length(params$gamma_posterior)
-
-  # random draws per pathogen
-  random_incidence <- runif(n = n_pathogens)
-  random_susceptibility <- runif(n = n_pathogens)
-
-  simulated_incidence <- stats::qgamma(
-    p = random_incidence,
-    shape = params$gamma_posterior,
-    scale = 1
-  )
-
-  # normalise incidence
-  simulated_incidence <- simulated_incidence / sum(simulated_incidence, na.rm = TRUE)
-
-  simulated_susceptibility <- stats::qbeta(
-    p = random_susceptibility,
-    shape1 = params$beta_posterior_1,
-    shape2 = params$beta_posterior_2
-  )
-
-  # weighted coverage
-  sum(simulated_incidence * simulated_susceptibility, na.rm = TRUE)
 }
