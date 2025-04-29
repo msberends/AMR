@@ -657,7 +657,7 @@ if (files_changed()) {
 }
 
 # Update index.md and README.md -------------------------------------------
-if (files_changed("man/microorganisms.Rd") | files_changed("man/antimicrobials.Rd") | files_changed("man/clinical_breakpoints.Rd") | files_changed("man/antibiogram.Rd")) {
+if (files_changed("man/microorganisms.Rd") | files_changed("man/antimicrobials.Rd") | files_changed("man/clinical_breakpoints.Rd") | files_changed("man/antibiogram.Rd") | files_changed("R/antibiogram.R")) {
   usethis::ui_info("Rendering {usethis::ui_field('index.md')} and {usethis::ui_field('README.md')}")
   suppressWarnings(rmarkdown::render("index.Rmd", quiet = TRUE))
   suppressWarnings(rmarkdown::render("README.Rmd", quiet = TRUE))

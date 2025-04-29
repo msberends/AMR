@@ -155,10 +155,9 @@ example_isolates %>%
 #> ℹ Using column 'mo' as input for mo_fullname()
 #> ℹ Using column 'mo' as input for mo_is_gram_negative()
 #> ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
-#>   Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per
+#>   session.
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
@@ -196,23 +195,23 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 ``` r
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ 502 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
 |:---|:---|:---|:---|:---|:---|:---|
 | CoNS | 0% (0-8%,N=43) | 86% (82-90%,N=309) | 52% (37-67%,N=48) | 0% (0-8%,N=43) | 52% (37-67%,N=48) | 22% (12-35%,N=55) |
-| E. coli | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) |  | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
-| E. faecalis | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) |  | 0% (0-9%,N=39) |
-| K. pneumoniae |  | 90% (79-96%,N=58) | 100% (93-100%,N=51) |  | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
-| P. aeruginosa |  | 100% (88-100%,N=30) |  | 0% (0-12%,N=30) |  | 100% (88-100%,N=30) |
-| P. mirabilis |  | 94% (80-99%,N=34) | 94% (79-99%,N=32) |  |  | 94% (80-99%,N=34) |
-| S. aureus |  | 99% (97-100%,N=233) |  |  |  | 98% (92-100%,N=86) |
-| S. epidermidis | 0% (0-8%,N=44) | 79% (71-85%,N=163) |  | 0% (0-8%,N=44) |  | 51% (40-61%,N=89) |
-| S. hominis |  | 92% (84-97%,N=80) |  |  |  | 85% (74-93%,N=62) |
-| S. pneumoniae | 0% (0-3%,N=117) | 0% (0-3%,N=117) |  | 0% (0-3%,N=117) |  | 0% (0-3%,N=117) |
+| *E. coli* | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) | NA | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
+| *E. faecalis* | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) | NA | 0% (0-9%,N=39) |
+| *K. pneumoniae* | NA | 90% (79-96%,N=58) | 100% (93-100%,N=51) | NA | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
+| *P. aeruginosa* | NA | 100% (88-100%,N=30) | NA | 0% (0-12%,N=30) | NA | 100% (88-100%,N=30) |
+| *P. mirabilis* | NA | 94% (80-99%,N=34) | 94% (79-99%,N=32) | NA | NA | 94% (80-99%,N=34) |
+| *S. aureus* | NA | 99% (97-100%,N=233) | NA | NA | NA | 98% (92-100%,N=86) |
+| *S. epidermidis* | 0% (0-8%,N=44) | 79% (71-85%,N=163) | NA | 0% (0-8%,N=44) | NA | 51% (40-61%,N=89) |
+| *S. hominis* | NA | 92% (84-97%,N=80) | NA | NA | NA | 85% (74-93%,N=62) |
+| *S. pneumoniae* | 0% (0-3%,N=117) | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) |
 
 In combination antibiograms, it is clear that combined antimicrobials
 yield higher empiric coverage:
@@ -221,6 +220,7 @@ yield higher empiric coverage:
 antibiogram(example_isolates,
             antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
             mo_transform = "gramstain")
+#> ℹ 3 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -238,6 +238,7 @@ antibiogram(example_isolates,
             mo_transform = "gramstain",
             ab_transform = "name",
             language = "uk") # Ukrainian
+#> ℹ 3 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Збудник       | Гентаміцин          | Тобраміцин         | Ципрофлоксацин     |
@@ -321,15 +322,13 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For polymyxins() using column 'COL' (colistin)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward =
-#> "Outpatient" (minimum = 30).
+#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (minimum = 30).
 out
 #> # A tibble: 3 × 6
 #>   ward             GEN       TOB       AMK   KAN       COL
