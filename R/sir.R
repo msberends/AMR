@@ -729,7 +729,7 @@ as.sir.data.frame <- function(x,
   # -- MO
   col_mo.bak <- col_mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
+    col_mo <- search_type_in_df(x = x, type = "mo", info = info)
   }
 
   # -- host
@@ -742,7 +742,7 @@ as.sir.data.frame <- function(x,
   }
   if (breakpoint_type == "animal") {
     if (is.null(host)) {
-      host <- search_type_in_df(x = x, type = "host", add_col_prefix = FALSE)
+      host <- search_type_in_df(x = x, type = "host", add_col_prefix = FALSE, info = info)
     } else if (length(host) == 1 && as.character(host) %in% colnames(x)) {
       host <- x[[as.character(host)]]
     }
@@ -753,7 +753,7 @@ as.sir.data.frame <- function(x,
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
-    col_uti <- search_type_in_df(x = x, type = "uti", add_col_prefix = FALSE)
+    col_uti <- search_type_in_df(x = x, type = "uti", add_col_prefix = FALSE, info = info)
   }
   if (!is.null(col_uti)) {
     if (is.logical(col_uti)) {
@@ -773,7 +773,7 @@ as.sir.data.frame <- function(x,
     }
   } else {
     # col_uti is still NULL - look for specimen column and make logicals of the urines
-    col_specimen <- suppressMessages(search_type_in_df(x = x, type = "specimen"))
+    col_specimen <- suppressMessages(search_type_in_df(x = x, type = "specimen", info = info))
     if (!is.null(col_specimen)) {
       uti <- x[, col_specimen, drop = TRUE] %like% "urin"
       values <- sort(unique(x[uti, col_specimen, drop = TRUE]))
@@ -846,7 +846,7 @@ as.sir.data.frame <- function(x,
     stop_if(is.null(col_mo), "`col_mo` must be set")
     # if not null, we already found it, now find again so a message will show
     if (is.null(col_mo.bak)) {
-      col_mo <- search_type_in_df(x = x, type = "mo")
+      col_mo <- search_type_in_df(x = x, type = "mo", info = info)
     }
     x_mo <- as.mo(x[, col_mo, drop = TRUE], info = info)
   }
@@ -854,10 +854,17 @@ as.sir.data.frame <- function(x,
   # set up parallel computing
   n_cores <- get_n_cores(max_cores = max_cores)
   n_cores <- min(n_cores, length(ab_cols)) # never more cores than variables required
-  if (isTRUE(parallel) && .Platform$OS.type != "windows" && getRversion() < "4.0.0") {
-    n_cores <- 1
-    if (isTRUE(info)) {
-      warning("Parallel computing is not available on unix in R < 4.0", call. = FALSE)
+  if (isTRUE(parallel) && (.Platform$OS.type == "windows" || getRversion() < "4.0.0")) {
+    cl <- tryCatch(parallel::makeCluster(n_cores, type = "PSOCK"),
+      error = function(e) {
+        if (isTRUE(info)) {
+          message_("Could not create parallel cluster, using single-core computation. Error message: ", e$message, add_fn = font_red)
+        }
+        return(NULL)
+      }
+    )
+    if (is.null(cl)) {
+      n_cores <- 1
     }
   }
 
@@ -959,10 +966,10 @@ as.sir.data.frame <- function(x,
   if (isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1) {
     if (isTRUE(info)) {
       message()
-      message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE, add_fn = font_red)
+      message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
     }
     if (.Platform$OS.type == "windows" || getRversion() < "4.0.0") {
-      cl <- parallel::makeCluster(n_cores, type = "PSOCK")
+      # `cl` has been created in the part above before the `run_as_sir_column` function
       on.exit(parallel::stopCluster(cl), add = TRUE)
       parallel::clusterExport(cl, varlist = c(
         "x", "x.bak", "x_mo", "ab_cols", "types",
@@ -974,12 +981,13 @@ as.sir.data.frame <- function(x,
       ), envir = environment())
       result_list <- parallel::parLapply(cl, seq_along(ab_cols), run_as_sir_column)
     } else {
+      # R>=4.0 on unix
       result_list <- parallel::mclapply(seq_along(ab_cols), run_as_sir_column, mc.cores = n_cores)
     }
     if (isTRUE(info)) {
-      message_(" Done.", appendLF = TRUE, as_note = FALSE, add_fn = font_red)
+      message_(font_green_bg(" DONE "), as_note = FALSE)
       message()
-      message_("Run `sir_interpretation_history()` to retrieve a logbook with all the details of the breakpoint interpretations.", add_fn = font_green)
+      message_("Run `sir_interpretation_history()` to retrieve a logbook with all details of the breakpoint interpretations.", add_fn = font_green)
     }
   } else {
     # sequential mode (non-parallel)
@@ -1116,7 +1124,7 @@ as_sir_method <- function(method_short,
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
     message()
-    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all the details of the breakpoint interpretations.\n\n", add_fn = font_green)
+    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n", add_fn = font_green)
   }
 
   current_df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
@@ -1200,7 +1208,7 @@ as_sir_method <- function(method_short,
           mo <- NULL
           try(
             {
-              mo <- suppressMessages(search_type_in_df(df, "mo", add_col_prefix = FALSE))
+              mo <- suppressMessages(search_type_in_df(df, "mo", add_col_prefix = FALSE, info = info))
             },
             silent = TRUE
           )
@@ -1236,7 +1244,7 @@ as_sir_method <- function(method_short,
           uti <- NULL
           try(
             {
-              uti <- suppressMessages(search_type_in_df(df, "uti", add_col_prefix = FALSE))
+              uti <- suppressMessages(search_type_in_df(df, "uti", add_col_prefix = FALSE, info = info))
             },
             silent = TRUE
           )
@@ -1441,14 +1449,7 @@ as_sir_method <- function(method_short,
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
     if (isTRUE(info)) {
-      message(
-        paste0(font_rose_bg(" WARNING "), "\n"),
-        font_black(paste0(
-          "  ", AMR_env$bullet_icon, " No ", method_coerced, " breakpoints available for ",
-          suppressMessages(suppressWarnings(ab_name(unique(ab_coerced), language = NULL, tolower = TRUE, info = info))),
-          " (", unique(ab_coerced), ")."
-        ), collapse = "\n")
-      )
+      message(font_grey_bg(font_black(" NO BREAKPOINTS ")))
     }
 
     load_mo_uncertainties(metadata_mo)
@@ -1829,12 +1830,13 @@ as_sir_method <- function(method_short,
         message(font_yellow_bg(" NOTE "))
       }
       notes <- unique(notes)
-      if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
+      # if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
+      if (isTRUE(verbose)) {
         for (i in seq_along(notes)) {
           message(word_wrap("  ", AMR_env$bullet_icon, " ", notes[i], add_fn = font_black))
         }
       } else {
-        message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
+        # message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
       }
     } else {
       message(font_green_bg(" OK "))

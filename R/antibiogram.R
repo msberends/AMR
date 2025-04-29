@@ -682,9 +682,8 @@ antibiogram.default <- function(x,
 
   wisca_parameters <- data.frame()
 
+  # WISCA START
   if (wisca == TRUE) {
-    # WISCA ----
-
     if (isTRUE(has_syndromic_group)) {
       colnames(out)[1] <- "syndromic_group"
       out_wisca <- out %pm>%
@@ -708,40 +707,12 @@ antibiogram.default <- function(x,
       warning_("Number of tested isolates should exceed ", minimum, " for each regimen (and group). WISCA coverage estimates might be inaccurate.", call = FALSE)
     }
 
-    out_wisca$p_susceptible <- out_wisca$n_susceptible / out_wisca$n_tested
-    out_wisca$p_susceptible[is.nan(out_wisca$p_susceptible)] <- 0
-
     if (isTRUE(has_syndromic_group)) {
       out$group <- paste(out$syndromic_group, out$ab)
       out_wisca$group <- paste(out_wisca$syndromic_group, out_wisca$ab)
     } else {
       out$group <- out$ab
       out_wisca$group <- out_wisca$ab
-    }
-
-    # create the WISCA parameters, including our priors/posteriors
-    out$gamma_posterior <- NA_real_
-    out$beta_posterior_1 <- NA_real_
-    out$beta_posterior_2 <- NA_real_
-
-    for (i in seq_len(NROW(out))) {
-      out_current <- out[i, , drop = FALSE]
-
-      ## calculate priors ----
-      # pathogen incidence (Dirichlet distribution)
-      gamma_prior <- rep(1, length(unique(out_current$mo))) # Dirichlet prior
-      gamma_posterior <- gamma_prior + out_current$n_total # Posterior parameters
-
-      # regimen susceptibility (Beta distribution)
-      beta_prior <- rep(1, length(unique(out_current$mo))) # Beta prior
-      r <- out_current$n_susceptible
-      n <- out_current$n_tested
-      beta_posterior_1 <- beta_prior + r # Posterior alpha
-      beta_posterior_2 <- beta_prior + (n - r) # Posterior beta
-
-      out$gamma_posterior[i] <- gamma_posterior
-      out$beta_posterior_1[i] <- beta_posterior_1
-      out$beta_posterior_2[i] <- beta_posterior_2
     }
 
     wisca_parameters <- out
@@ -754,42 +725,28 @@ antibiogram.default <- function(x,
     )
     on.exit(close(progress))
 
-    # run WISCA
+    # run WISCA per group
     for (group in unique(wisca_parameters$group)) {
-      params_current <- wisca_parameters[which(wisca_parameters$group == group), , drop = FALSE]
+      params_current <- wisca_parameters[wisca_parameters$group == group, , drop = FALSE]
       if (sum(params_current$n_tested, na.rm = TRUE) == 0) {
         next
       }
 
-      # Monte Carlo simulation
-      coverage_simulations <- replicate(simulations, {
-        progress$tick()
+      # prepare priors
+      priors_current <- create_wisca_priors(params_current)
 
-        # simulate pathogen incidence
-        # = Dirichlet (Gamma) parameters
-        random_incidence <- stats::runif(n = 1, min = 0, max = 1)
-        simulated_incidence <- stats::qgamma(
-          p = random_incidence,
-          shape = params_current$gamma_posterior,
-          scale = 1
-        )
+      # Monte Carlo simulations
+      coverage_simulations <- vapply(
+        FUN.VALUE = double(1),
+        seq_len(simulations), function(i) {
+          progress$tick()
+          simulate_coverage(priors_current)
+        }
+      )
 
-        # normalise
-        simulated_incidence <- simulated_incidence / sum(simulated_incidence, na.rm = TRUE)
-
-        # simulate susceptibility
-        # = Beta parameters
-        random_susceptibity <- stats::runif(n = 1, min = 0, max = 1)
-        simulated_susceptibility <- stats::qbeta(
-          p = random_susceptibity,
-          shape1 = params_current$beta_posterior_1,
-          shape2 = params_current$beta_posterior_2
-        )
-        sum(simulated_incidence * simulated_susceptibility, na.rm = TRUE)
-      })
-
-      # calculate coverage statistics
+      # summarise results
       coverage_mean <- mean(coverage_simulations)
+
       if (interval_side == "two-tailed") {
         probs <- c((1 - conf_interval) / 2, 1 - (1 - conf_interval) / 2)
       } else if (interval_side == "left") {
@@ -797,17 +754,20 @@ antibiogram.default <- function(x,
       } else if (interval_side == "right") {
         probs <- c(1 - conf_interval, 1)
       }
+
       coverage_ci <- unname(stats::quantile(coverage_simulations, probs = probs))
 
-      out_wisca$coverage[which(out_wisca$group == group)] <- coverage_mean
-      out_wisca$lower_ci[which(out_wisca$group == group)] <- coverage_ci[1]
-      out_wisca$upper_ci[which(out_wisca$group == group)] <- coverage_ci[2]
+      out_wisca$coverage[out_wisca$group == group] <- coverage_mean
+      out_wisca$lower_ci[out_wisca$group == group] <- coverage_ci[1]
+      out_wisca$upper_ci[out_wisca$group == group] <- coverage_ci[2]
     }
-    # remove progress bar from console
+
     close(progress)
-    # prepare for definitive output
+
+    # final output preparation
     out <- out_wisca
     wisca_parameters <- wisca_parameters[, colnames(wisca_parameters)[!colnames(wisca_parameters) %in% c(levels(NA_sir_), "lower_ci", "upper_ci", "group")], drop = FALSE]
+
     if (isTRUE(has_syndromic_group)) {
       long_numeric <- out_wisca %pm>%
         pm_ungroup() %pm>%
@@ -1345,4 +1305,57 @@ knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.ka
 
   out <- paste(c("", "", knitr::kable(x, ..., output = FALSE)), collapse = "\n")
   knitr::asis_output(out)
+}
+
+create_wisca_priors <- function(data) {
+  pathogens <- unique(data$mo)
+  n_pathogens <- length(pathogens)
+
+  # Dirichlet prior (gamma parameters)
+  gamma_prior <- rep(1, times = n_pathogens)
+  multinomial_obs <- data$n_total
+  gamma_posterior <- gamma_prior + multinomial_obs
+
+  # beta priors
+  beta_prior_alpha <- rep(1, times = n_pathogens)
+  beta_prior_beta <- rep(1, times = n_pathogens)
+
+  r <- data$n_susceptible
+  n <- data$n_tested
+  diff_nr <- n - r
+
+  beta_posterior_1 <- beta_prior_alpha + r
+  beta_posterior_2 <- beta_prior_beta + diff_nr
+
+  list(
+    gamma_posterior = gamma_posterior,
+    beta_posterior_1 = beta_posterior_1,
+    beta_posterior_2 = beta_posterior_2
+  )
+}
+
+simulate_coverage <- function(params) {
+  n_pathogens <- length(params$gamma_posterior)
+
+  # random draws per pathogen
+  random_incidence <- runif(n = n_pathogens)
+  random_susceptibility <- runif(n = n_pathogens)
+
+  simulated_incidence <- stats::qgamma(
+    p = random_incidence,
+    shape = params$gamma_posterior,
+    scale = 1
+  )
+
+  # normalise incidence
+  simulated_incidence <- simulated_incidence / sum(simulated_incidence, na.rm = TRUE)
+
+  simulated_susceptibility <- stats::qbeta(
+    p = random_susceptibility,
+    shape1 = params$beta_posterior_1,
+    shape2 = params$beta_posterior_2
+  )
+
+  # weighted coverage
+  sum(simulated_incidence * simulated_susceptibility, na.rm = TRUE)
 }

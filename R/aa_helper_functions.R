@@ -538,9 +538,9 @@ word_wrap <- function(...,
       txt = parts[parts %in% c("antimicrobials", "microorganisms", "microorganisms.codes", "microorganisms.groups")]
     )
     # text starting with `?` must also lead to the help page
-    parts[parts %like% "^[?]"] <- font_url(
-      url = paste0("ide:help:AMR::", gsub("?", "", parts[parts %like% "^[?]"], fixed = TRUE)),
-      txt = parts[parts %like% "^[?]"]
+    parts[parts %like% "^[?].+"] <- font_url(
+      url = paste0("ide:help:AMR::", gsub("?", "", parts[parts %like% "^[?].+"], fixed = TRUE)),
+      txt = parts[parts %like% "^[?].+"]
     )
     msg <- paste0(parts, collapse = "`")
   }
