@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Antimicrobial Resistance Data Analysis • AMR (for R)</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Lato-0.4.10/font.css" rel="stylesheet">
@@ -34,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9259</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9263</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,7 +145,8 @@
 <span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_fullname()</span></span>
 <span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_is_gram_negative()</span></span>
 <span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()</span></span>
-<span><span class="co">#&gt; ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per session.</span></span>
+<span><span class="co">#&gt; ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per</span></span>
+<span><span class="co">#&gt;   session.</span></span>
 <span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
 <span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span>
 <span><span class="co">#&gt; # A tibble: 35 × 7</span></span>
@@ -206,84 +206,84 @@
 <td align="left">22% (12-35%,N=55)</td>
 </tr>
 <tr class="even">
-<td align="left">E. coli</td>
+<td align="left"><em>E. coli</em></td>
 <td align="left">100% (98-100%,N=171)</td>
 <td align="left">98% (96-99%,N=460)</td>
 <td align="left">100% (99-100%,N=422)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (99-100%,N=418)</td>
 <td align="left">97% (96-99%,N=462)</td>
 </tr>
 <tr class="odd">
-<td align="left">E. faecalis</td>
+<td align="left"><em>E. faecalis</em></td>
 <td align="left">0% (0-9%,N=39)</td>
 <td align="left">0% (0-9%,N=39)</td>
 <td align="left">100% (91-100%,N=38)</td>
 <td align="left">0% (0-9%,N=39)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-9%,N=39)</td>
 </tr>
 <tr class="even">
-<td align="left">K. pneumoniae</td>
-<td align="left"></td>
+<td align="left"><em>K. pneumoniae</em></td>
+<td align="left">NA</td>
 <td align="left">90% (79-96%,N=58)</td>
 <td align="left">100% (93-100%,N=51)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (93-100%,N=53)</td>
 <td align="left">90% (79-96%,N=58)</td>
 </tr>
 <tr class="odd">
-<td align="left">P. aeruginosa</td>
-<td align="left"></td>
+<td align="left"><em>P. aeruginosa</em></td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-12%,N=30)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
 </tr>
 <tr class="even">
-<td align="left">P. mirabilis</td>
-<td align="left"></td>
+<td align="left"><em>P. mirabilis</em></td>
+<td align="left">NA</td>
 <td align="left">94% (80-99%,N=34)</td>
 <td align="left">94% (79-99%,N=32)</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">94% (80-99%,N=34)</td>
 </tr>
 <tr class="odd">
-<td align="left">S. aureus</td>
-<td align="left"></td>
+<td align="left"><em>S. aureus</em></td>
+<td align="left">NA</td>
 <td align="left">99% (97-100%,N=233)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">98% (92-100%,N=86)</td>
 </tr>
 <tr class="even">
-<td align="left">S. epidermidis</td>
+<td align="left"><em>S. epidermidis</em></td>
 <td align="left">0% (0-8%,N=44)</td>
 <td align="left">79% (71-85%,N=163)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-8%,N=44)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">51% (40-61%,N=89)</td>
 </tr>
 <tr class="odd">
-<td align="left">S. hominis</td>
-<td align="left"></td>
+<td align="left"><em>S. hominis</em></td>
+<td align="left">NA</td>
 <td align="left">92% (84-97%,N=80)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">85% (74-93%,N=62)</td>
 </tr>
 <tr class="even">
-<td align="left">S. pneumoniae</td>
+<td align="left"><em>S. pneumoniae</em></td>
 <td align="left">0% (0-3%,N=117)</td>
 <td align="left">0% (0-3%,N=117)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-3%,N=117)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-3%,N=117)</td>
 </tr>
 </tbody>
@@ -555,9 +555,9 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Matthijs S. Berends <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7620-1800" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Dennis Souverein <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-0455-0336" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Erwin E. A. Hassing <br><small class="roles"> Author, contributor </small>  </li>
+<li>Matthijs S. Berends <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7620-1800" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Dennis Souverein <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-0455-0336" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Erwin E. A. Hassing <br><small class="roles"> Author, contributor </small>   </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>

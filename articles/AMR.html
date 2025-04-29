@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>How to conduct AMR data analysis • AMR (for R)</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.10/font.css" rel="stylesheet">
@@ -31,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9259</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9263</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 27 April 2025.</p>
+generated on 29 April 2025.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -148,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2025-04-27</td>
+<td align="center">2025-04-29</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2025-04-27</td>
+<td align="center">2025-04-29</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2025-04-27</td>
+<td align="center">2025-04-29</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -703,7 +702,7 @@ previously mentioned antibiotic class selectors:</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem) and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="11%">
+<col width="12%">
 <col width="15%">
 <col width="14%">
 <col width="15%">
@@ -731,84 +730,84 @@ previously mentioned antibiotic class selectors:</p>
 <td align="left">22% (12-35%,N=55)</td>
 </tr>
 <tr class="even">
-<td align="left">E. coli</td>
+<td align="left"><em>E. coli</em></td>
 <td align="left">100% (98-100%,N=171)</td>
 <td align="left">98% (96-99%,N=460)</td>
 <td align="left">100% (99-100%,N=422)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (99-100%,N=418)</td>
 <td align="left">97% (96-99%,N=462)</td>
 </tr>
 <tr class="odd">
-<td align="left">E. faecalis</td>
+<td align="left"><em>E. faecalis</em></td>
 <td align="left">0% (0-9%,N=39)</td>
 <td align="left">0% (0-9%,N=39)</td>
 <td align="left">100% (91-100%,N=38)</td>
 <td align="left">0% (0-9%,N=39)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-9%,N=39)</td>
 </tr>
 <tr class="even">
-<td align="left">K. pneumoniae</td>
-<td align="left"></td>
+<td align="left"><em>K. pneumoniae</em></td>
+<td align="left">NA</td>
 <td align="left">90% (79-96%,N=58)</td>
 <td align="left">100% (93-100%,N=51)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (93-100%,N=53)</td>
 <td align="left">90% (79-96%,N=58)</td>
 </tr>
 <tr class="odd">
-<td align="left">P. aeruginosa</td>
-<td align="left"></td>
+<td align="left"><em>P. aeruginosa</em></td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-12%,N=30)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
 </tr>
 <tr class="even">
-<td align="left">P. mirabilis</td>
-<td align="left"></td>
+<td align="left"><em>P. mirabilis</em></td>
+<td align="left">NA</td>
 <td align="left">94% (80-99%,N=34)</td>
 <td align="left">94% (79-99%,N=32)</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">94% (80-99%,N=34)</td>
 </tr>
 <tr class="odd">
-<td align="left">S. aureus</td>
-<td align="left"></td>
+<td align="left"><em>S. aureus</em></td>
+<td align="left">NA</td>
 <td align="left">99% (97-100%,N=233)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">98% (92-100%,N=86)</td>
 </tr>
 <tr class="even">
-<td align="left">S. epidermidis</td>
+<td align="left"><em>S. epidermidis</em></td>
 <td align="left">0% (0-8%,N=44)</td>
 <td align="left">79% (71-85%,N=163)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-8%,N=44)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">51% (40-61%,N=89)</td>
 </tr>
 <tr class="odd">
-<td align="left">S. hominis</td>
-<td align="left"></td>
+<td align="left"><em>S. hominis</em></td>
+<td align="left">NA</td>
 <td align="left">92% (84-97%,N=80)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">85% (74-93%,N=62)</td>
 </tr>
 <tr class="even">
-<td align="left">S. pneumoniae</td>
+<td align="left"><em>S. pneumoniae</em></td>
 <td align="left">0% (0-3%,N=117)</td>
 <td align="left">0% (0-3%,N=117)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-3%,N=117)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-3%,N=117)</td>
 </tr>
 </tbody>
@@ -875,7 +874,7 @@ a plus <code>+</code> character like this:</p>
 <span><span class="va">combined_ab</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="19%">
+<col width="21%">
 <col width="26%">
 <col width="26%">
 <col width="26%">
@@ -891,52 +890,52 @@ a plus <code>+</code> character like this:</p>
 <td align="left">CoNS</td>
 <td align="left">30% (16-49%,N=33)</td>
 <td align="left">97% (95-99%,N=274)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">E. coli</td>
+<td align="left"><em>E. coli</em></td>
 <td align="left">94% (92-96%,N=416)</td>
 <td align="left">100% (98-100%,N=459)</td>
 <td align="left">99% (97-100%,N=461)</td>
 </tr>
 <tr class="odd">
-<td align="left">K. pneumoniae</td>
+<td align="left"><em>K. pneumoniae</em></td>
 <td align="left">89% (77-96%,N=53)</td>
 <td align="left">93% (83-98%,N=58)</td>
 <td align="left">93% (83-98%,N=58)</td>
 </tr>
 <tr class="even">
-<td align="left">P. aeruginosa</td>
-<td align="left"></td>
+<td align="left"><em>P. aeruginosa</em></td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
 <td align="left">100% (88-100%,N=30)</td>
 </tr>
 <tr class="odd">
-<td align="left">P. mirabilis</td>
-<td align="left"></td>
+<td align="left"><em>P. mirabilis</em></td>
+<td align="left">NA</td>
 <td align="left">100% (90-100%,N=34)</td>
 <td align="left">100% (90-100%,N=34)</td>
 </tr>
 <tr class="even">
-<td align="left">S. aureus</td>
-<td align="left"></td>
+<td align="left"><em>S. aureus</em></td>
+<td align="left">NA</td>
 <td align="left">100% (98-100%,N=231)</td>
 <td align="left">100% (96-100%,N=91)</td>
 </tr>
 <tr class="odd">
-<td align="left">S. epidermidis</td>
-<td align="left"></td>
+<td align="left"><em>S. epidermidis</em></td>
+<td align="left">NA</td>
 <td align="left">100% (97-100%,N=128)</td>
 <td align="left">100% (92-100%,N=46)</td>
 </tr>
 <tr class="even">
-<td align="left">S. hominis</td>
-<td align="left"></td>
+<td align="left"><em>S. hominis</em></td>
+<td align="left">NA</td>
 <td align="left">100% (95-100%,N=74)</td>
 <td align="left">100% (93-100%,N=53)</td>
 </tr>
 <tr class="odd">
-<td align="left">S. pneumoniae</td>
+<td align="left"><em>S. pneumoniae</em></td>
 <td align="left">100% (97-100%,N=112)</td>
 <td align="left">100% (97-100%,N=112)</td>
 <td align="left">100% (97-100%,N=112)</td>
@@ -960,12 +959,12 @@ argument must be used. This can be any column in the data, or e.g. an
 <table class="table">
 <colgroup>
 <col width="10%">
-<col width="10%">
-<col width="14%">
+<col width="11%">
 <col width="13%">
-<col width="14%">
+<col width="13%">
+<col width="13%">
 <col width="10%">
-<col width="14%">
+<col width="13%">
 <col width="13%">
 </colgroup>
 <thead><tr class="header">
@@ -982,141 +981,141 @@ argument must be used. This can be any column in the data, or e.g. an
 <tr class="odd">
 <td align="left">Clinical</td>
 <td align="left">CoNS</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">89% (84-93%,N=205)</td>
 <td align="left">57% (39-74%,N=35)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">57% (39-74%,N=35)</td>
 <td align="left">26% (12-45%,N=31)</td>
 </tr>
 <tr class="even">
 <td align="left">ICU</td>
 <td align="left">CoNS</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">79% (68-88%,N=73)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">Outpatient</td>
 <td align="left">CoNS</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">84% (66-95%,N=31)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">E. coli</td>
+<td align="left"><em>E. coli</em></td>
 <td align="left">100% (97-100%,N=104)</td>
 <td align="left">98% (96-99%,N=297)</td>
 <td align="left">100% (99-100%,N=266)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (99-100%,N=276)</td>
 <td align="left">98% (96-99%,N=299)</td>
 </tr>
 <tr class="odd">
 <td align="left">ICU</td>
-<td align="left">E. coli</td>
+<td align="left"><em>E. coli</em></td>
 <td align="left">100% (93-100%,N=52)</td>
 <td align="left">99% (95-100%,N=137)</td>
 <td align="left">100% (97-100%,N=133)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (97-100%,N=118)</td>
 <td align="left">96% (92-99%,N=137)</td>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">K. pneumoniae</td>
-<td align="left"></td>
+<td align="left"><em>K. pneumoniae</em></td>
+<td align="left">NA</td>
 <td align="left">92% (81-98%,N=51)</td>
 <td align="left">100% (92-100%,N=44)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">100% (92-100%,N=46)</td>
 <td align="left">92% (81-98%,N=51)</td>
 </tr>
 <tr class="odd">
 <td align="left">Clinical</td>
-<td align="left">P. mirabilis</td>
-<td align="left"></td>
+<td align="left"><em>P. mirabilis</em></td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">100% (88-100%,N=30)</td>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">S. aureus</td>
-<td align="left"></td>
+<td align="left"><em>S. aureus</em></td>
+<td align="left">NA</td>
 <td align="left">99% (95-100%,N=150)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">97% (89-100%,N=63)</td>
 </tr>
 <tr class="odd">
 <td align="left">ICU</td>
-<td align="left">S. aureus</td>
-<td align="left"></td>
+<td align="left"><em>S. aureus</em></td>
+<td align="left">NA</td>
 <td align="left">100% (95-100%,N=66)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">S. epidermidis</td>
-<td align="left"></td>
+<td align="left"><em>S. epidermidis</em></td>
+<td align="left">NA</td>
 <td align="left">82% (72-90%,N=79)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">55% (39-70%,N=44)</td>
 </tr>
 <tr class="odd">
 <td align="left">ICU</td>
-<td align="left">S. epidermidis</td>
-<td align="left"></td>
+<td align="left"><em>S. epidermidis</em></td>
+<td align="left">NA</td>
 <td align="left">72% (60-82%,N=75)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">41% (26-58%,N=41)</td>
 </tr>
 <tr class="even">
 <td align="left">Clinical</td>
-<td align="left">S. hominis</td>
-<td align="left"></td>
+<td align="left"><em>S. hominis</em></td>
+<td align="left">NA</td>
 <td align="left">96% (85-99%,N=45)</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">94% (79-99%,N=31)</td>
 </tr>
 <tr class="odd">
 <td align="left">Clinical</td>
-<td align="left">S. pneumoniae</td>
+<td align="left"><em>S. pneumoniae</em></td>
 <td align="left">0% (0-5%,N=78)</td>
 <td align="left">0% (0-5%,N=78)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-5%,N=78)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-5%,N=78)</td>
 </tr>
 <tr class="even">
 <td align="left">ICU</td>
-<td align="left">S. pneumoniae</td>
+<td align="left"><em>S. pneumoniae</em></td>
 <td align="left">0% (0-12%,N=30)</td>
 <td align="left">0% (0-12%,N=30)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-12%,N=30)</td>
-<td align="left"></td>
+<td align="left">NA</td>
 <td align="left">0% (0-12%,N=30)</td>
 </tr>
 </tbody>
@@ -1147,9 +1146,9 @@ incidence and antimicrobial susceptibility patterns.</p>
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">69.2% (51-85.2%)</td>
-<td align="left">92.9% (84-98.5%)</td>
-<td align="left">89% (76.4-96.9%)</td>
+<td align="left">69.4% (64.3-74.3%)</td>
+<td align="left">92.6% (91.2-93.8%)</td>
+<td align="left">88.7% (85.9-91.2%)</td>
 </tr></tbody>
 </table>
 <p>WISCA uses a <strong>Bayesian decision model</strong> to integrate
@@ -1190,58 +1189,58 @@ function on a grouped <code>tibble</code>, i.e., using
 <tr class="odd">
 <td align="left">0-24</td>
 <td align="left">F</td>
-<td align="left">57.5% (7-98.4%)</td>
-<td align="left">74.6% (30.6-98.9%)</td>
-<td align="left">69.7% (24.5-98.5%)</td>
+<td align="left">56.6% (25.2-83.9%)</td>
+<td align="left">74% (50.5-91.9%)</td>
+<td align="left">68% (39.7-88.9%)</td>
 </tr>
 <tr class="even">
 <td align="left">0-24</td>
 <td align="left">M</td>
-<td align="left">59% (14.8-97.9%)</td>
-<td align="left">80% (40.6-99.2%)</td>
-<td align="left">60.1% (15-98.2%)</td>
+<td align="left">60.3% (28.4-87.1%)</td>
+<td align="left">79.3% (59.5-94.2%)</td>
+<td align="left">60.1% (29.3-87.5%)</td>
 </tr>
 <tr class="odd">
 <td align="left">25-49</td>
 <td align="left">F</td>
-<td align="left">65.4% (30.2-97.9%)</td>
-<td align="left">91.6% (72.9-99.7%)</td>
-<td align="left">82.6% (49.7-99.3%)</td>
+<td align="left">66.6% (45.6-85.5%)</td>
+<td align="left">91.8% (85.1-96.5%)</td>
+<td align="left">82.6% (66.7-93.9%)</td>
 </tr>
 <tr class="even">
 <td align="left">25-49</td>
 <td align="left">M</td>
-<td align="left">54.4% (10.9-97.3%)</td>
-<td align="left">89.4% (66.7-99.7%)</td>
-<td align="left">70.7% (26.9-98.6%)</td>
+<td align="left">56.4% (29.1-81.7%)</td>
+<td align="left">89.5% (80-95.6%)</td>
+<td align="left">72.2% (47.1-90%)</td>
 </tr>
 <tr class="odd">
 <td align="left">50-74</td>
 <td align="left">F</td>
-<td align="left">68.2% (44.6-92.6%)</td>
-<td align="left">95.8% (87.6-99.5%)</td>
-<td align="left">88.3% (71-97.7%)</td>
+<td align="left">67.8% (55.8-80.1%)</td>
+<td align="left">95.6% (93.2-97.7%)</td>
+<td align="left">88% (80.2-94.2%)</td>
 </tr>
 <tr class="even">
 <td align="left">50-74</td>
 <td align="left">M</td>
-<td align="left">65.8% (43.7-86.2%)</td>
-<td align="left">95.3% (86-99.6%)</td>
-<td align="left">83.7% (62.9-97%)</td>
+<td align="left">66.2% (54.8-75.8%)</td>
+<td align="left">95.3% (92.5-97.4%)</td>
+<td align="left">84.2% (75.2-92.4%)</td>
 </tr>
 <tr class="odd">
 <td align="left">75+</td>
 <td align="left">F</td>
-<td align="left">71.8% (48-92%)</td>
-<td align="left">96.6% (90-99.7%)</td>
-<td align="left">90.8% (76.5-98.8%)</td>
+<td align="left">71.7% (61-81.7%)</td>
+<td align="left">96.5% (94.4-98.2%)</td>
+<td align="left">90.7% (84.4-95.7%)</td>
 </tr>
 <tr class="even">
 <td align="left">75+</td>
 <td align="left">M</td>
-<td align="left">72.9% (53.7-89.7%)</td>
-<td align="left">96.7% (89.9-99.7%)</td>
-<td align="left">92.5% (80.3-98.9%)</td>
+<td align="left">72.9% (63.8-82%)</td>
+<td align="left">96.6% (94.5-98.1%)</td>
+<td align="left">92.8% (87.6-96.3%)</td>
 </tr>
 </tbody>
 </table>
