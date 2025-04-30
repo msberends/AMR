@@ -9,9 +9,9 @@ articles:
   EUCAST: EUCAST.html
   MDR: MDR.html
   PCA: PCA.html
-  welcome_to_AMR: welcome_to_AMR.html
   WHONET: WHONET.html
-last_built: 2025-04-29T15:20Z
+  WISCA: WISCA.html
+last_built: 2025-04-30T15:37Z
 urls:
   reference: https://amr-for-r.org/reference
   article: https://amr-for-r.org/articles

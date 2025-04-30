@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9263</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9266</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -361,26 +361,9 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 
-<p>WISCA, as outlined by Bielicki <em>et al.</em> (<a href="https://doi.org/10.1093/jac/dkv397" class="external-link">doi:10.1093/jac/dkv397</a>
-), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian decision model with random effects for pathogen incidence and susceptibility, enabling robust estimates in the presence of sparse data.</p>
-<p>The Bayesian model assumes conjugate priors for parameter estimation. For example, the coverage probability \(\theta\) for a given antimicrobial regimen is modelled using a Beta distribution as a prior:</p>
-<p>$$\theta \sim \text{Beta}(\alpha_0, \beta_0)$$</p>
-<p>where \(\alpha_0\) and \(\beta_0\) represent prior successes and failures, respectively, informed by expert knowledge or weakly informative priors (e.g., \(\alpha_0 = 1, \beta_0 = 1\)). The likelihood function is constructed based on observed data, where the number of covered cases for a regimen follows a binomial distribution:</p>
-<p>$$y \sim \text{Binomial}(n, \theta)$$</p>
-<p>Posterior parameter estimates are obtained by combining the prior and likelihood using Bayes' theorem. The posterior distribution of \(\theta\) is also a Beta distribution:</p>
-<p>$$\theta | y \sim \text{Beta}(\alpha_0 + y, \beta_0 + n - y)$$</p>
-<p>Pathogen incidence, representing the proportion of infections caused by different pathogens, is modelled using a Dirichlet distribution, which is the natural conjugate prior for multinomial outcomes. The Dirichlet distribution is parameterised by a vector of concentration parameters \(\alpha\), where each \(\alpha_i\) corresponds to a specific pathogen. The prior is typically chosen to be uniform (\(\alpha_i = 1\)), reflecting an assumption of equal prior probability across pathogens.</p>
-<p>The posterior distribution of pathogen incidence is then given by:</p>
-<p>$$\text{Dirichlet}(\alpha_1 + n_1, \alpha_2 + n_2, \dots, \alpha_K + n_K)$$</p>
-<p>where \(n_i\) is the number of infections caused by pathogen \(i\) observed in the data. For practical implementation, pathogen incidences are sampled from their posterior using normalised Gamma-distributed random variables:</p>
-<p>$$x_i \sim \text{Gamma}(\alpha_i + n_i, 1)$$
-$$p_i = \frac{x_i}{\sum_{j=1}^K x_j}$$</p>
-<p>where \(x_i\) represents unnormalised pathogen counts, and \(p_i\) is the normalised proportion for pathogen \(i\).</p>
-<p>For hierarchical modelling, pathogen-level effects (e.g., differences in resistance patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. This hierarchical structure ensures partial pooling of estimates across groups, improving stability in strata with small sample sizes. The model is implemented using Hamiltonian Monte Carlo (HMC) sampling.</p>
-<p>Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using <code>dplyr</code>'s <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> as a pre-processing step before running <code>wisca()</code>. Posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:</p>
-<p>$$\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}$$</p>
-<p>By combining empirical data with prior knowledge, WISCA overcomes the limitations of traditional combination antibiograms, offering disease-specific, patient-stratified estimates with robust uncertainty quantification. This tool is invaluable for antimicrobial stewardship programs and empirical treatment guideline refinement.</p>
-<p><strong>Note:</strong> WISCA never gives an output on the pathogen/species level, as all incidences and susceptibilities are already weighted for all species.</p>
+<p>WISCA (Weighted-Incidence Syndromic Combination Antibiogram) estimates the probability of empirical coverage for combination regimens.</p>
+<p>It weights susceptibility by pathogen prevalence within a clinical syndrome and provides credible intervals around the expected coverage.</p>
+<p>For more background, interpretation, and examples, see <a href="https://amr-for-r.org/articles/WISCA.html">the WISCA vignette</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
