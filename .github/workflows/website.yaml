@@ -70,6 +70,10 @@ jobs:
             any::pkgdown
             any::tidymodels
 
+      - name: Remove Welcome to AMR vignette
+        run: |
+          rm vignettes/welcome_to_AMR.Rmd
+
       # Send updates to repo using GH Actions bot
       - name: Create website in separate branch
         run: |

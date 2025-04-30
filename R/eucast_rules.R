@@ -72,7 +72,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param administration Route of administration, either `r vector_or(dosage$administration)`.
 #' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
 #' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
-#' @param overwrite A [logical] indicating whether to overwrite non-`NA` values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
+#' @param overwrite A [logical] indicating whether to overwrite existing SIR values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr

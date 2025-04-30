@@ -2,15 +2,54 @@
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
-#### A New Milestone: AMR v3.0 with One Health Support (= Human + Veterinary + Environmental)
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
-## Breaking
+## tl;dr
+
+- **Scope Expansion**: One Health support (Human + Veterinary + Environmental microbiology).
+- **Data Updates**: 
+  - `antibiotics` renamed to `antimicrobials`.
+  - Veterinary antimicrobials and WHOCC codes added.
+  - MycoBank fungal taxonomy integrated (+20,000 fungi).
+- **Breakpoints & Interpretations**:
+  - CLSI/EUCAST 2024-2025 breakpoints added; EUCAST 2025 default.
+  - `as.sir()` supports NI/SDD levels; parallel computation enabled.
+  - Custom S/I/R/SDD/NI definitions allowed.
+  - Improved handling of capped MICs.
+- **New Tools & Functions**:
+  - WISCA antibiogram support (`antibiogram()`, `wisca()`).
+  - New ggplot2 extensions: `scale_*_mic()`, `scale_*_sir()`, `rescale_mic()`.
+  - New utility functions: `top_n_microorganisms()`, `mo_group_members()`, `mic_p50()`, `mic_p90()`.
+- **Predictive Modelling**:
+  - Full tidymodels compatibility for antimicrobial selectors.
+  - Deprecated `resistance_predict()` and `sir_predict()`.
+- **Python Compatibility**: AMR R package now runs in Python.
+- **Selector Improvements**:
+  * Added selectors (`isoxazolylpenicillins()`, `monobactams()`, `nitrofurans()`, `phenicols()`, `rifamycins()`, and `sulfonamides()`)
+  - Selectors renamed from `ab_*` to `amr_*`; old names deprecated.
+- **MIC/Disks Handling**:
+  - MIC strict comparisons, added levels.
+  - Disk diffusion range expanded (0–50 mm).
+- **EUCAST Rules and MDROs**:
+  - EUCAST v12–v15 rules implemented.
+  - Dutch MDRO 2024 guideline support in `mdro()`.
+- **Infrastructure**:
+  - New website: https://amr-for-r.org.
+  - Improved `vctrs` integration for tidyverse workflows.
+  - Dropped SAS `.xpt` file support.
+- **Other Fixes & Enhancements**:
+  - Faster microorganism identification.
+  - Improved antimicrobial and MIC handling.
+  - Extended documentation, additional contributors acknowledged.
+
+## Full Changelog
+
+### Breaking
 * Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over two years ago.
 * Functions `resistance_predict()` and `sir_predict()` is now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 
-## New
+### New
 * **One Health implementation**
   * Function `as.sir()` now has extensive support for veterinary breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
   * The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://amr-for-r.org/articles/datasets.html).
@@ -45,7 +84,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * New function `mo_group_members()` to retrieve the member microorganisms of a microorganism group. For example, `mo_group_members("Strep group C")` returns a vector of all microorganisms that belong to that group.
   * New functions `mic_p50()` and `mic_p90()` to retrieve the 50th and 90th percentile of MIC values.
 
-## Changed
+### Changed
 * SIR interpretation
   * Support for parallel computing to greatly improve speed using the `parallel` package (part of base R). Use `as.sir(your_data, parallel = TRUE)` to run SIR interpretation using multiple cores.
   * It is now possible to use column names for arguments `guideline`, `ab`, `mo`, and `uti`: `as.sir(..., ab = "column1", mo = "column2", uti = "column3")`. This greatly improves the flexibility for users.
@@ -108,8 +147,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * Added arguments `esbl`, `carbapenemase`, `mecA`, `mecC`, `vanA`, `vanB` to denote column names or logical values indicating presence of these genes (or production of their proteins)
 * Added console colours support of `sir` class for Positron
 
-## Other
-* New website domain: <https://amr-for-r.org>! The old domain (<http://amr-for-r.org>) will remain to work.
+### Other
+* New website domain: <https://amr-for-r.org>! The old domain (<https://msberends.github.io/AMR/>) will remain to work.
 * Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
 * Added Prof. Kathryn Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes

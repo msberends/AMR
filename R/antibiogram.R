@@ -257,43 +257,12 @@
 #' You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with `flextable::as_flextable()` or `gt::gt()`.
 #'
 #' @section Explaining WISCA:
-#'
-#' WISCA, as outlined by Bielicki *et al.* (\doi{10.1093/jac/dkv397}), stands for Weighted-Incidence Syndromic Combination Antibiogram, which estimates the probability of adequate empirical antimicrobial regimen coverage for specific infection syndromes. This method leverages a Bayesian decision model with random effects for pathogen incidence and susceptibility, enabling robust estimates in the presence of sparse data.
-#'
-#' The Bayesian model assumes conjugate priors for parameter estimation. For example, the coverage probability \eqn{\theta} for a given antimicrobial regimen is modelled using a Beta distribution as a prior:
-#'
-#' \deqn{\theta \sim \text{Beta}(\alpha_0, \beta_0)}
-#'
-#' where \eqn{\alpha_0} and \eqn{\beta_0} represent prior successes and failures, respectively, informed by expert knowledge or weakly informative priors (e.g., \eqn{\alpha_0 = 1, \beta_0 = 1}). The likelihood function is constructed based on observed data, where the number of covered cases for a regimen follows a binomial distribution:
-#'
-#' \deqn{y \sim \text{Binomial}(n, \theta)}
-#'
-#' Posterior parameter estimates are obtained by combining the prior and likelihood using Bayes' theorem. The posterior distribution of \eqn{\theta} is also a Beta distribution:
-#'
-#' \deqn{\theta | y \sim \text{Beta}(\alpha_0 + y, \beta_0 + n - y)}
-#'
-#' Pathogen incidence, representing the proportion of infections caused by different pathogens, is modelled using a Dirichlet distribution, which is the natural conjugate prior for multinomial outcomes. The Dirichlet distribution is parameterised by a vector of concentration parameters \eqn{\alpha}, where each \eqn{\alpha_i} corresponds to a specific pathogen. The prior is typically chosen to be uniform (\eqn{\alpha_i = 1}), reflecting an assumption of equal prior probability across pathogens.
-#'
-#' The posterior distribution of pathogen incidence is then given by:
-#'
-#' \deqn{\text{Dirichlet}(\alpha_1 + n_1, \alpha_2 + n_2, \dots, \alpha_K + n_K)}
-#'
-#' where \eqn{n_i} is the number of infections caused by pathogen \eqn{i} observed in the data. For practical implementation, pathogen incidences are sampled from their posterior using normalised Gamma-distributed random variables:
-#'
-#' \deqn{x_i \sim \text{Gamma}(\alpha_i + n_i, 1)}
-#' \deqn{p_i = \frac{x_i}{\sum_{j=1}^K x_j}}
-#'
-#' where \eqn{x_i} represents unnormalised pathogen counts, and \eqn{p_i} is the normalised proportion for pathogen \eqn{i}.
-#'
-#' For hierarchical modelling, pathogen-level effects (e.g., differences in resistance patterns) and regimen-level effects are modelled using Gaussian priors on log-odds. This hierarchical structure ensures partial pooling of estimates across groups, improving stability in strata with small sample sizes. The model is implemented using Hamiltonian Monte Carlo (HMC) sampling.
-#'
-#' Stratified results can be provided based on covariates such as age, sex, and clinical complexity (e.g., prior antimicrobial treatments or renal/urological comorbidities) using `dplyr`'s [`group_by()`][dplyr::group_by()] as a pre-processing step before running [wisca()]. Posterior odds ratios (ORs) are derived to quantify the effect of these covariates on coverage probabilities:
-#'
-#' \deqn{\text{OR}_{\text{covariate}} = \frac{\exp(\beta_{\text{covariate}})}{\exp(\beta_0)}}
-#'
-#' By combining empirical data with prior knowledge, WISCA overcomes the limitations of traditional combination antibiograms, offering disease-specific, patient-stratified estimates with robust uncertainty quantification. This tool is invaluable for antimicrobial stewardship programs and empirical treatment guideline refinement.
-#'
-#' **Note:** WISCA never gives an output on the pathogen/species level, as all incidences and susceptibilities are already weighted for all species.
+#' 
+#' WISCA (Weighted-Incidence Syndromic Combination Antibiogram) estimates the probability of empirical coverage for combination regimens.
+#' 
+#' It weights susceptibility by pathogen prevalence within a clinical syndrome and provides credible intervals around the expected coverage.
+#' 
+#' For more background, interpretation, and examples, see [the WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
 #' @source
 #' * Bielicki JA *et al.* (2016). **Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data** *Journal of Antimicrobial Chemotherapy* 71(3); \doi{10.1093/jac/dkv397}
 #' * Bielicki JA *et al.* (2020). **Evaluation of the coverage of 3 antibiotic regimens for neonatal sepsis in the hospital setting across Asian countries** *JAMA Netw Open.* 3(2):e1921124; \doi{10.1001.jamanetworkopen.2019.21124}

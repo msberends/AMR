@@ -35,6 +35,7 @@
 ^vignettes/PCA\.Rmd$
 ^vignettes/resistance_predict\.Rmd$
 ^vignettes/WHONET\.Rmd$
+^vignettes/WISCA\.Rmd$
 ^logo.svg$
 ^CRAN-SUBMISSION$
 ^PythonPackage$
