@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>How to conduct AMR data analysis • AMR (for R)</title>
+<title>Conduct AMR data analysis • AMR (for R)</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="How to conduct AMR data analysis">
+<script src="../extra.js"></script><meta property="og:title" content="Conduct AMR data analysis">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9267</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9268</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>How to conduct AMR data analysis</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Conduct AMR data analysis</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/AMR.Rmd" class="external-link"><code>vignettes/AMR.Rmd</code></a></small>
@@ -1147,8 +1147,8 @@ incidence and antimicrobial susceptibility patterns.</p>
 </tr></thead>
 <tbody><tr class="odd">
 <td align="left">69.4% (64.3-74.3%)</td>
-<td align="left">92.6% (91.2-93.8%)</td>
-<td align="left">88.7% (85.9-91.2%)</td>
+<td align="left">92.6% (91.1-93.9%)</td>
+<td align="left">88.7% (85.8-91.2%)</td>
 </tr></tbody>
 </table>
 <p>WISCA uses a <strong>Bayesian decision model</strong> to integrate
@@ -1190,57 +1190,57 @@ function on a grouped <code>tibble</code>, i.e., using
 <td align="left">0-24</td>
 <td align="left">F</td>
 <td align="left">56.6% (25.2-83.9%)</td>
-<td align="left">74% (50.5-91.9%)</td>
-<td align="left">68% (39.7-88.9%)</td>
+<td align="left">73.6% (48-91.6%)</td>
+<td align="left">68.6% (42.9-89.5%)</td>
 </tr>
 <tr class="even">
 <td align="left">0-24</td>
 <td align="left">M</td>
 <td align="left">60.3% (28.4-87.1%)</td>
-<td align="left">79.3% (59.5-94.2%)</td>
-<td align="left">60.1% (29.3-87.5%)</td>
+<td align="left">79.7% (57.6-94.2%)</td>
+<td align="left">60.1% (29.5-87.7%)</td>
 </tr>
 <tr class="odd">
 <td align="left">25-49</td>
 <td align="left">F</td>
 <td align="left">66.6% (45.6-85.5%)</td>
-<td align="left">91.8% (85.1-96.5%)</td>
-<td align="left">82.6% (66.7-93.9%)</td>
+<td align="left">91.7% (84.6-96.7%)</td>
+<td align="left">83% (67.9-94%)</td>
 </tr>
 <tr class="even">
 <td align="left">25-49</td>
 <td align="left">M</td>
 <td align="left">56.4% (29.1-81.7%)</td>
-<td align="left">89.5% (80-95.6%)</td>
-<td align="left">72.2% (47.1-90%)</td>
+<td align="left">89.2% (80.3-95.7%)</td>
+<td align="left">72.4% (49.7-90%)</td>
 </tr>
 <tr class="odd">
 <td align="left">50-74</td>
 <td align="left">F</td>
 <td align="left">67.8% (55.8-80.1%)</td>
-<td align="left">95.6% (93.2-97.7%)</td>
-<td align="left">88% (80.2-94.2%)</td>
+<td align="left">95.6% (93.2-97.5%)</td>
+<td align="left">88.1% (80.4-94.6%)</td>
 </tr>
 <tr class="even">
 <td align="left">50-74</td>
 <td align="left">M</td>
 <td align="left">66.2% (54.8-75.8%)</td>
-<td align="left">95.3% (92.5-97.4%)</td>
-<td align="left">84.2% (75.2-92.4%)</td>
+<td align="left">95.2% (92.4-97.4%)</td>
+<td align="left">84.4% (74.4-92.5%)</td>
 </tr>
 <tr class="odd">
 <td align="left">75+</td>
 <td align="left">F</td>
 <td align="left">71.7% (61-81.7%)</td>
-<td align="left">96.5% (94.4-98.2%)</td>
-<td align="left">90.7% (84.4-95.7%)</td>
+<td align="left">96.6% (94.4-98.2%)</td>
+<td align="left">90.6% (84.6-95.3%)</td>
 </tr>
 <tr class="even">
 <td align="left">75+</td>
 <td align="left">M</td>
 <td align="left">72.9% (63.8-82%)</td>
-<td align="left">96.6% (94.5-98.1%)</td>
-<td align="left">92.8% (87.6-96.3%)</td>
+<td align="left">96.6% (94.6-98.1%)</td>
+<td align="left">92.8% (87.8-96.5%)</td>
 </tr>
 </tbody>
 </table>
