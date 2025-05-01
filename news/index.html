@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9266</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9267</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +49,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9266" id="amr-2119266">AMR 2.1.1.9266<a class="anchor" aria-label="anchor" href="#amr-2119266"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9267" id="amr-2119267">AMR 2.1.1.9267<a class="anchor" aria-label="anchor" href="#amr-2119267"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using <a href="https://amr-for-r.org/#get-this-package">the instructions here</a>.)</em></p>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 <div class="section level3">
-<h3 id="tldr-2-1-1-9266">tl;dr<a class="anchor" aria-label="anchor" href="#tldr-2-1-1-9266"></a></h3>
+<h3 id="tldr-2-1-1-9267">tl;dr<a class="anchor" aria-label="anchor" href="#tldr-2-1-1-9267"></a></h3>
 <ul><li>
 <strong>Scope Expansion</strong>: One Health support (Human + Veterinary + Environmental microbiology).</li>
 <li>
@@ -113,22 +113,22 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="full-changelog-2-1-1-9266">Full Changelog<a class="anchor" aria-label="anchor" href="#full-changelog-2-1-1-9266"></a></h3>
+<h3 id="full-changelog-2-1-1-9267">Full Changelog<a class="anchor" aria-label="anchor" href="#full-changelog-2-1-1-9267"></a></h3>
 <div class="section level4">
-<h4 id="breaking-2-1-1-9266">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9266"></a></h4>
+<h4 id="breaking-2-1-1-9267">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9267"></a></h4>
 <ul><li>Dataset <code>antibiotics</code> has been renamed to <code>antimicrobials</code> as the data set contains more than just antibiotics. Using <code>antibiotics</code> will still work, but now returns a warning.</li>
 <li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over two years ago.</li>
-<li>Functions <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> and <code><a href="../reference/resistance_predict.html">sir_predict()</a></code> is now deprecated and will be removed in a future version. Use the <code>tidymodels</code> framework instead, for which we <a href="https://amr-for-r.org/articles/AMR_with_tidymodels.html">wrote a basic introduction</a>.</li>
+<li>Functions <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> and <code><a href="../reference/resistance_predict.html">sir_predict()</a></code> are now deprecated and will be removed in a future version. Use the <code>tidymodels</code> framework instead, for which we <a href="https://amr-for-r.org/articles/AMR_with_tidymodels.html">wrote a basic introduction</a>.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-2-1-1-9266">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9266"></a></h4>
+<h4 id="new-2-1-1-9267">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9267"></a></h4>
 <ul><li>
 <strong>One Health implementation</strong>
 <ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for veterinary breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
 <li>The <code>clinical_breakpoints</code> data set contains all these breakpoints, and can be downloaded on our <a href="https://amr-for-r.org/articles/datasets.html">download page</a>.</li>
-<li>The (new) <code>antimicrobials</code> data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.</li>
+<li>The (new) <code>antimicrobials</code> data set contains all veterinary antimicrobials, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.</li>
 <li>
-<code><a href="../reference/ab_property.html">ab_atc()</a></code> now supports ATC codes of veterinary antibiotics (that all start with “Q”)</li>
+<code><a href="../reference/ab_property.html">ab_atc()</a></code> now supports ATC codes of veterinary antimicrobials (that all start with “Q”)</li>
 <li>
 <code><a href="../reference/ab_property.html">ab_url()</a></code> now supports retrieving the WHOCC url of their ATCvet pages</li>
 </ul></li>
@@ -176,7 +176,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-2-1-1-9266">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9266"></a></h4>
+<h4 id="changed-2-1-1-9267">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9267"></a></h4>
 <ul><li>SIR interpretation
 <ul><li>Support for parallel computing to greatly improve speed using the <code>parallel</code> package (part of base R). Use <code>as.sir(your_data, parallel = TRUE)</code> to run SIR interpretation using multiple cores.</li>
 <li>It is now possible to use column names for arguments <code>guideline</code>, <code>ab</code>, <code>mo</code>, and <code>uti</code>: <code>as.sir(..., ab = "column1", mo = "column2", uti = "column3")</code>. This greatly improves the flexibility for users.</li>
@@ -232,15 +232,15 @@
 <li>Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (<code><a href="../reference/as.disk.html">as.disk()</a></code>) is now between 0 and 50 mm</li>
 <li>Updated <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> to support HTML output</li>
 <li>
-<code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> now supports multiple antibiotics and antibiotic groups to be affected by a single rule</li>
+<code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> now supports multiple antimicrobials and antimicrobial groups to be affected by a single rule</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_info()</a></code> now contains an extra element <code>rank</code> and <code>group_members</code> (with the contents of the new <code><a href="../reference/mo_property.html">mo_group_members()</a></code> function)</li>
 <li>Updated all ATC codes from WHOCC</li>
-<li>Updated all antibiotic DDDs from WHOCC</li>
+<li>Updated all antimicrobial DDDs from WHOCC</li>
 <li>Fix for using a manual value for <code>mo_transform</code> in <code><a href="../reference/antibiogram.html">antibiogram()</a></code>
 </li>
 <li>Fixed a bug for when <code><a href="../reference/antibiogram.html">antibiogram()</a></code> returns an empty data set</li>
-<li>Fix for mapping ‘high level’ antibiotics in <code><a href="../reference/as.ab.html">as.ab()</a></code> (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)</li>
+<li>Fix for mapping ‘high level’ antimicrobials in <code><a href="../reference/as.ab.html">as.ab()</a></code> (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)</li>
 <li>Improved overall algorithm of <code><a href="../reference/as.ab.html">as.ab()</a></code> for better performance and accuracy, including the new function <code>as_reset_session()</code> to remove earlier coercions.</li>
 <li>Improved overall algorithm of <code><a href="../reference/as.mo.html">as.mo()</a></code> for better performance and accuracy, specifically:
 <ul><li>More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species</li>
@@ -258,8 +258,8 @@
 <li>Added console colours support of <code>sir</code> class for Positron</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-2-1-1-9266">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9266"></a></h4>
-<ul><li>New website domain: <a href="https://amr-for-r.org" class="uri">https://amr-for-r.org</a>! The old domain (<a href="https://msberends.github.io/AMR/" class="external-link uri">https://msberends.github.io/AMR/</a>) will remain to work.</li>
+<h4 id="other-2-1-1-9267">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9267"></a></h4>
+<ul><li>New website domain: <a href="https://amr-for-r.org" class="uri">https://amr-for-r.org</a>! The old domain (<a href="http://amr-for-r.org/" class="external-link uri">http://amr-for-r.org/</a>) will remain to work.</li>
 <li>Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way</li>
 <li>Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations</li>
 <li>Added Prof. Kathryn Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes</li>
@@ -269,7 +269,7 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="older-versions-2-1-1-9266">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9266"></a></h3>
+<h3 id="older-versions-2-1-1-9267">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9267"></a></h3>
 <p>This changelog only contains changes from AMR v3.0 (March 2025) and later.</p>
 <ul><li>For prior v2 versions, please see <a href="https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md" class="external-link">our v2 archive</a>.</li>
 <li>For prior v1 versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our v1 archive</a>.</li>

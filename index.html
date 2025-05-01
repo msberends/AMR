@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9266</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9267</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,9 +145,10 @@
 <span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_fullname()</span></span>
 <span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_is_gram_negative()</span></span>
 <span><span class="co">#&gt; ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()</span></span>
-<span><span class="co">#&gt; ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per</span></span>
-<span><span class="co">#&gt;   session.</span></span>
-<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant</span></span>
+<span><span class="co">#&gt;   Phenotypes' v1.2 (2023). This note will be shown once per session.</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
 <span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span>
 <span><span class="co">#&gt; # A tibble: 35 × 7</span></span>
 <span><span class="co">#&gt;    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  </span></span>
@@ -173,9 +174,9 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
-<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span>
-<span><span class="co">#&gt; ℹ 502 combinations had less than minimum = 30 results and were ignored</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="14%">
@@ -292,8 +293,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
-<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ 3 combinations had less than minimum = 30 results and were ignored</span></span></code></pre></div>
+<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -328,8 +328,7 @@
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"tobra"</span>, <span class="st">"genta"</span><span class="op">)</span>, <span class="co"># any arbitrary name or code will work</span></span>
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
 <span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>            language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span>
-<span><span class="co">#&gt; ℹ 3 combinations had less than minimum = 30 results and were ignored</span></span></code></pre></div>
+<span>            language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="19%">
@@ -422,13 +421,15 @@
 <span>  <span class="co"># calculate AMR using resistance(), over all aminoglycosides and polymyxins:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">polymyxins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            <span class="va">resistance</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
+<span><span class="co">#&gt; ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'</span></span>
+<span><span class="co">#&gt;   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)</span></span>
 <span><span class="co">#&gt; ℹ For polymyxins() using column 'COL' (colistin)</span></span>
 <span><span class="co">#&gt; Warning: There was 1 warning in `summarise()`.</span></span>
 <span><span class="co">#&gt; ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.</span></span>
 <span><span class="co">#&gt; ℹ In group 3: `ward = "Outpatient"`.</span></span>
 <span><span class="co">#&gt; Caused by warning:</span></span>
-<span><span class="co">#&gt; ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (minimum = 30).</span></span>
+<span><span class="co">#&gt; ! Introducing NA: only 23 results available for KAN in group: ward =</span></span>
+<span><span class="co">#&gt; "Outpatient" (minimum = 30).</span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   ward             GEN       TOB       AMK   KAN       COL</span></span>

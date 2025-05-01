@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9266</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9267</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">30 April 2025</h4>
+            <h4 data-toc-skip class="date">01 May 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -424,19 +424,19 @@ column names:<br><em>ab</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>a
 <em>iv_ddd</em>, <em>iv_units</em>, and <em>loinc</em>.</p>
 <p>This data set is in R available as <code>antimicrobials</code>, after
 you load the <code>AMR</code> package.</p>
-<p>It was last updated on 26 April 2025 14:23:14 UTC. Find more info
-about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/antimicrobials.html">data set
+<p>It was last updated on 1 May 2025 09:48:49 UTC. Find more info about
+the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/antimicrobials.html">data set
 here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.rds" class="external-link">original
-R Data Structure (RDS) file</a> (43 kB)<br>
+R Data Structure (RDS) file</a> (44 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.txt" class="external-link">tab-separated
 text file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.xlsx" class="external-link">Microsoft
-Excel workbook</a> (75 kB)<br>
+Excel workbook</a> (77 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.feather" class="external-link">Apache
 Feather file</a> (0.1 MB)<br>
@@ -445,7 +445,7 @@ Feather file</a> (0.1 MB)<br>
 Parquet file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.sav" class="external-link">IBM
-SPSS Statistics data file</a> (0.3 MB)<br>
+SPSS Statistics data file</a> (0.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.dta" class="external-link">Stata
 DTA file</a> (10 kB)</li>
@@ -454,15 +454,15 @@ DTA file</a> (10 kB)</li>
 contain the ATC codes, common abbreviations, trade names and LOINC codes
 as comma separated values.</p>
 <p><strong>Example content</strong></p>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="1%">
 <col width="2%">
-<col width="8%">
 <col width="7%">
 <col width="7%">
+<col width="9%">
 <col width="12%">
-<col width="17%">
+<col width="16%">
 <col width="6%">
 <col width="16%">
 <col width="2%">
@@ -493,7 +493,7 @@ as comma separated values.</p>
 <td align="center">37768</td>
 <td align="center">Amikacin</td>
 <td align="center">Aminoglycosides</td>
-<td align="center">D06AX12, J01GB06, S01AA21</td>
+<td align="center">D06AX12, J01GB06, QD06AX12, …</td>
 <td align="center">Aminoglycoside antibacterials</td>
 <td align="center">Other aminoglycosides</td>
 <td align="center">ak, ami, amik, …</td>
@@ -509,7 +509,7 @@ as comma separated values.</p>
 <td align="center">33613</td>
 <td align="center">Amoxicillin</td>
 <td align="center">Beta-lactams/penicillins</td>
-<td align="center">J01CA04</td>
+<td align="center">J01CA04, QG51AA03, QJ01CA04</td>
 <td align="center">Beta-lactam antibacterials, penicillins</td>
 <td align="center">Penicillins with extended spectrum</td>
 <td align="center">ac, amox, amx</td>
@@ -525,7 +525,7 @@ as comma separated values.</p>
 <td align="center">23665637</td>
 <td align="center">Amoxicillin/clavulanic acid</td>
 <td align="center">Beta-lactams/penicillins</td>
-<td align="center">J01CR02</td>
+<td align="center">J01CR02, QJ01CR02</td>
 <td align="center">Beta-lactam antibacterials, penicillins</td>
 <td align="center">Combinations of penicillins, incl. beta-lactamase
 inhibitors</td>
@@ -542,7 +542,7 @@ inhibitors</td>
 <td align="center">6249</td>
 <td align="center">Ampicillin</td>
 <td align="center">Beta-lactams/penicillins</td>
-<td align="center">J01CA01, S01AA19</td>
+<td align="center">J01CA01, QJ01CA01, QJ51CA01, …</td>
 <td align="center">Beta-lactam antibacterials, penicillins</td>
 <td align="center">Penicillins with extended spectrum</td>
 <td align="center">am, amp, ampi</td>
@@ -558,7 +558,7 @@ inhibitors</td>
 <td align="center">447043</td>
 <td align="center">Azithromycin</td>
 <td align="center">Macrolides/lincosamides</td>
-<td align="center">J01FA10, S01AA26</td>
+<td align="center">J01FA10, QJ01FA10, QS01AA26, …</td>
 <td align="center">Macrolides, lincosamides and streptogramins</td>
 <td align="center">Macrolides</td>
 <td align="center">az, azi, azit, …</td>
@@ -574,7 +574,7 @@ inhibitors</td>
 <td align="center">5904</td>
 <td align="center">Benzylpenicillin</td>
 <td align="center">Beta-lactams/penicillins</td>
-<td align="center">J01CE01, S01AA14</td>
+<td align="center">J01CE01, QJ01CE01, QJ51CE01, …</td>
 <td align="center">Combinations of antibacterials</td>
 <td align="center">Combinations of antibacterials</td>
 <td align="center">bepe, pen, peni, …</td>

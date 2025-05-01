@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9266</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9267</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,7 +172,7 @@
 <span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Amoxicillin"</span>
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA04"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA04"  "QG51AA03" "QJ01CA04"</span>
 <span class="r-in"><span><span class="fu">ab_cid</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 33613</span>
 <span class="r-in"><span><span class="fu">ab_synonyms</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
@@ -265,7 +265,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $atc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA04"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA04"  "QG51AA03" "QJ01CA04"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $atc_group1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactam antibacterials, penicillins"</span>
@@ -326,7 +326,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># all ab_* functions use as.ab() internally, so you can go from 'any' to 'any':</span></span></span>
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMP"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA01" "S01AA19"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA01"  "QJ01CA01" "QJ51CA01" "QS01AA19" "S01AA19" </span>
 <span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"J01CA01"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
 <span class="r-in"><span><span class="fu">ab_loinc</span><span class="op">(</span><span class="st">"ampicillin"</span><span class="op">)</span></span></span>
@@ -343,13 +343,13 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># spelling from different languages and dyslexia are no problem</span></span></span>
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"ceftriaxon"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"  "QJ01DD04"</span>
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"cephtriaxone"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"  "QJ01DD04"</span>
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"cephthriaxone"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"  "QJ01DD04"</span>
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"seephthriaaksone"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"  "QJ01DD04"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use set_ab_names() for renaming columns</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span></span>
@@ -418,6 +418,7 @@
 <span class="r-in"><span>    <span class="fu">set_ab_names</span><span class="op">(</span><span class="va">NIT</span><span class="op">:</span><span class="va">VAN</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">set_ab_names()</span>: no atc found for column(s): "SXT" and "IPM"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"           "patient"        "age"            "gender"        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward"           "mo"             "PEN"            "OXA"           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "FLC"            "AMX"            "AMC"            "AMP"           </span>

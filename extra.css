@@ -174,10 +174,7 @@ this shows on top of every sidebar to the right
   }
 }
 @media (max-width: 575.98px) {
-  footer .pkgdown-footer-left {
-    text-align: center;
-  }
-    footer .pkgdown-footer-right {
+  footer * {
     text-align: center;
   }
 }

@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9266</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9267</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -180,7 +180,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
 
 <dt id="arg-substitute-missing-r-breakpoint">substitute_missing_r_breakpoint<a class="anchor" aria-label="anchor" href="#arg-substitute-missing-r-breakpoint"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is <code>FALSE</code>. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be <code>"S"</code> or <code>NA</code>. Setting this to <code>TRUE</code> will convert the <code>NA</code>s to <code>"R"</code> only if the R breakpoint is missing. Can also be set with the package option <code><a href="AMR-options.html">AMR_substitute_missing_r_breakpoint</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is <code>FALSE</code>. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be <code>"S"</code> or <code>NA</code>. Setting this to <code>TRUE</code> will convert the <code>NA</code>s in these cases to <code>"R"</code>. Can also be set with the package option <code><a href="AMR-options.html">AMR_substitute_missing_r_breakpoint</a></code>.</p></dd>
 
 
 <dt id="arg-include-screening">include_screening<a class="anchor" aria-label="anchor" href="#arg-include-screening"></a></dt>
@@ -212,7 +212,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>. This requires no additional packages, as the used <code>parallel</code> package is part of base <span style="R">R</span>. On Windows and on <span style="R">R</span> &lt; 4.0.0 <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parallel::parLapply()</a></code> will be used, in all other cases the most efficient <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code> will be used.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>. This requires no additional packages, as the used <code>parallel</code> package is part of base <span style="R">R</span>. On Windows and on <span style="R">R</span> &lt; 4.0.0 <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parallel::parLapply()</a></code> will be used, in all other cases the more efficient <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code> will be used.</p></dd>
 
 
 <dt id="arg-max-cores">max_cores<a class="anchor" aria-label="anchor" href="#arg-max-cores"></a></dt>
@@ -353,7 +353,8 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;sir&gt;, LNZ &lt;sir&gt;, CIP &lt;sir&gt;, MFX &lt;sir&gt;, VAN &lt;sir&gt;, TEC &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span> <span class="co"># see all SIR results at a glance</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span> <span class="co"># see all SIR results at a glance</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       date              patient               age           gender         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :2002-01-02   Length:2000        Min.   : 0.00   Length:2000       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:2005-07-31   Class :character   1st Qu.:63.00   Class :character  </span>
@@ -375,94 +376,8 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)     %I   : 0.0% (n=0)     %I   : 0.2% (n=3)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :31.2% (n=114)   %R   :29.5% (n=278)   %R   :59.6% (n=804)  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     AMC                    AMP                   TZP               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir              Class:sir             Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :71.4% (n=1342)   %S   :40.2% (n=543)   %S   :86.1% (n=862)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 4.8% (n=91)     %I   : 0.2% (n=3)     %I   : 1.3% (n=13)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :23.7% (n=446)    %R   :59.6% (n=804)   %R   :12.6% (n=126)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     CZO                   FEP                   CXM                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir             Class:sir             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :54.9% (n=245)   %S   :85.6% (n=620)   %S   :72.5% (n=1297)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.4% (n=2)     %I   : 0.1% (n=1)     %I   : 1.2% (n=22)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :44.6% (n=199)   %R   :14.2% (n=103)   %R   :26.3% (n=470)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     FOX                   CTX                   CAZ                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir             Class:sir             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :71.6% (n=586)   %S   :84.4% (n=796)   %S   :33.5% (n=607)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 1.0% (n=8)     %I   : 0.1% (n=1)     %I   : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :27.4% (n=224)   %R   :15.5% (n=146)   %R   :66.5% (n=1204)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     CRO                   GEN                    TOB               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir              Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :84.4% (n=796)   %S   :74.0% (n=1372)   %S   :65.1% (n=879)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.1% (n=1)     %I   : 1.5% (n=27)     %I   : 0.5% (n=7)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :15.5% (n=146)   %R   :24.6% (n=456)    %R   :34.4% (n=465)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     AMK                   KAN                    TMP               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir              Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :36.3% (n=251)   %S   : 0.0% (n=0)      %S   :61.2% (n=918)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)     %I   : 0.0% (n=0)      %I   : 0.7% (n=10)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :63.7% (n=441)   %R   :100.0% (n=471)   %R   :38.1% (n=571)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     SXT                    NIT                   FOS               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir              Class:sir             Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :79.1% (n=1392)   %S   :76.0% (n=565)   %S   :57.8% (n=203)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.3% (n=6)      %I   : 6.9% (n=51)    %I   : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :20.5% (n=361)    %R   :17.1% (n=127)   %R   :42.2% (n=148)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     LNZ                   CIP                    MFX               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir              Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :30.7% (n=314)   %S   :78.9% (n=1112)   %S   :64.5% (n=136)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)     %I   : 4.9% (n=69)     %I   : 1.9% (n=4)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :69.3% (n=709)   %R   :16.2% (n=228)    %R   :33.6% (n=71)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     VAN                    TEC                   TCY               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir              Class:sir             Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :61.7% (n=1149)   %S   :24.3% (n=237)   %S   :68.3% (n=820)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)      %I   : 0.0% (n=0)     %I   : 1.9% (n=23)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :38.3% (n=712)    %R   :75.7% (n=739)   %R   :29.8% (n=357)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     TGC                   DOX                   ERY                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir             Class:sir             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :87.3% (n=697)   %S   :71.7% (n=814)   %S   :42.3% (n=801)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)     %I   : 0.6% (n=7)     %I   : 0.5% (n=9)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :12.7% (n=101)   %R   :27.7% (n=315)   %R   :57.2% (n=1084)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     CLI                   AZM                    IPM               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir              Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :38.6% (n=586)   %S   :42.3% (n=801)    %S   :92.7% (n=824)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.3% (n=4)     %I   : 0.5% (n=9)      %I   : 1.1% (n=10)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :61.2% (n=930)   %R   :57.2% (n=1084)   %R   : 6.2% (n=55)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     MEM                   MTR                  CHL               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir            Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :94.1% (n=780)   %S   :85.3% (n=29)   %S   :78.6% (n=121)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)    %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)     %I   : 0.0% (n=0)    %I   : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   : 5.9% (n=49)    %R   :14.7% (n=5)    %R   :21.4% (n=33)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)    %NI  : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     COL                    MUP                   RIF               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir              Class:sir             Class:sir            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :18.8% (n=309)    %S   :93.0% (n=251)   %S   :30.2% (n=303)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     %SDD : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %I   : 0.0% (n=0)      %I   : 1.1% (n=3)     %I   : 0.2% (n=2)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :81.2% (n=1331)   %R   : 5.9% (n=16)    %R   :69.6% (n=698)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     %NI  : 0.0% (n=0)    </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># For INTERPRETING disk diffusion and MIC values -----------------------</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># example data sets, with combined MIC values and disk zones</span></span></span>
+<span class="r-in"><span><span class="co"># create some example data sets, with combined MIC values and disk zones</span></span></span>
 <span class="r-in"><span><span class="va">df_wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  microorganism <span class="op">=</span> <span class="st">"Escherichia coli"</span>,</span></span>
 <span class="r-in"><span>  amoxicillin <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
@@ -478,6 +393,11 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span>  disks <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">14</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"EUCAST 2021"</span>, <span class="st">"EUCAST 2022"</span>, <span class="st">"EUCAST 2023"</span>, <span class="st">"EUCAST 2024"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># and clean previous SIR interpretation logs</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">sir_interpretation_history</span><span class="op">(</span>clean <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># For INTERPRETING disk diffusion and MIC values -----------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># most basic application:</span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></span>
@@ -486,23 +406,13 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 18</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given    mo_given  host_given input_given</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-30 <span style="color: #949494;">15:38:32</span>     1 DISK   ampicillin  Strep pn… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-30 <span style="color: #949494;">15:38:33</span>     1 DISK   AMP         Escheric… human      20         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-30 <span style="color: #949494;">15:38:33</span>     1 DISK   GEN         Escheric… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-30 <span style="color: #949494;">15:38:33</span>     1 DISK   TOB         Escheric… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     1 MIC    AMX         B_STRPT_… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     1 MIC    AMX         B_STRPT_… human      0.01       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     2 MIC    AMX         B_STRPT_… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     3 MIC    AMX         B_STRPT_… human      4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     4 MIC    AMX         B_STRPT_… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2025-04-30 <span style="color: #949494;">15:38:40</span>     1 MIC    amoxicillin Escheric… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2025-04-30 <span style="color: #949494;">15:38:40</span>     1 MIC    cipro       Escheric… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2025-04-30 <span style="color: #949494;">15:38:41</span>     1 DISK   tobra       Escheric… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2025-04-30 <span style="color: #949494;">15:38:41</span>     1 DISK   genta       Escheric… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2025-05-01 <span style="color: #949494;">09:53:45</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2025-05-01 <span style="color: #949494;">09:53:45</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2025-05-01 <span style="color: #949494;">09:53:45</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2025-05-01 <span style="color: #949494;">09:53:45</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
@@ -675,34 +585,6 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Using base R ------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism amoxicillin cipro tobra genta ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           S     I     S     S   R</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
-<span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 114 × 18</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index method ab_given   mo_given   host_given input_given</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2025-04-30 <span style="color: #949494;">15:38:32</span>     1 DISK   ampicillin Strep pneu human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2025-04-30 <span style="color: #949494;">15:38:33</span>     1 DISK   AMP        Escherich… human      20         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2025-04-30 <span style="color: #949494;">15:38:33</span>     1 DISK   GEN        Escherich… human      18         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2025-04-30 <span style="color: #949494;">15:38:33</span>     1 DISK   TOB        Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     1 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     1 MIC    AMX        B_STRPT_P… human      0.01       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     2 MIC    AMX        B_STRPT_P… human      2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     3 MIC    AMX        B_STRPT_P… human      4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2025-04-30 <span style="color: #949494;">15:38:34</span>     4 MIC    AMX        B_STRPT_P… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 104 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># using parallel computing, which is available in base R</span></span></span>
-<span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism amoxicillin cipro tobra genta ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           S     I     S     S   R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for single values</span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span></span></span>
@@ -741,6 +623,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span><span class="co"># as common in R, you can use as.integer() to return factor indices:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"SDD"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"NI"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  1  2  3  4  5 NA</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"SDD"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"NI"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  1  2  2  3 NA NA</span>
@@ -757,7 +640,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is_sir_eligible</span>, <span class="va">as.sir</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># since dplyr 1.0.0, this can also be:</span></span></span>
+<span class="r-in"><span>  <span class="co"># since dplyr 1.0.0, this can also be the more impractical:</span></span></span>
 <span class="r-in"><span>  <span class="co"># example_isolates %&gt;%</span></span></span>
 <span class="r-in"><span>  <span class="co">#   mutate(across(where(is_sir_eligible), as.sir))</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
