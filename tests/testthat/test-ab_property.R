@@ -33,7 +33,7 @@ test_that("test-ab_property.R", {
   ab_reset_session()
 
   expect_identical(ab_name("AMX", language = NULL), "Amoxicillin")
-  expect_identical(ab_atc("AMX"), "J01CA04")
+  expect_identical(ab_atc("AMX"), c("J01CA04", "QG51AA03", "QJ01CA04"))
   expect_identical(ab_cid("AMX"), as.integer(33613))
 
   expect_inherits(ab_tradenames("AMX"), "character")

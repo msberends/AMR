@@ -1,11 +1,11 @@
 ---
-title: "How to conduct AMR data analysis"
+title: "Conduct AMR data analysis"
 output: 
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{How to conduct AMR data analysis}
+  %\VignetteIndexEntry{Conduct AMR data analysis}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

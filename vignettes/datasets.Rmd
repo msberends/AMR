@@ -1,12 +1,12 @@
 ---
-title: "Data sets for download / own use"
+title: "Download data sets for download / own use"
 date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 1
 vignette: >
-  %\VignetteIndexEntry{Data sets for download / own use}
+  %\VignetteIndexEntry{Download data sets for download / own use}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

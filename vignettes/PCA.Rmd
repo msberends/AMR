@@ -1,11 +1,11 @@
 ---
-title: "How to conduct principal component analysis (PCA) for AMR"
+title: "Conduct principal component analysis (PCA) for AMR"
 output: 
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{How to conduct principal component analysis (PCA) for AMR}
+  %\VignetteIndexEntry{Conduct principal component analysis (PCA) for AMR}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

@@ -23,16 +23,17 @@ antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
   formatting_type = getOption("AMR_antibiogram_formatting_type",
   ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
-  minimum = 30, combine_SI = TRUE, sep = " + ", wisca = FALSE,
-  simulations = 1000, conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), ...)
+  minimum = 30, combine_SI = TRUE, sep = " + ", sort_columns = TRUE,
+  wisca = FALSE, simulations = 1000, conf_interval = 0.95,
+  interval_side = "two-tailed", info = interactive(), ...)
 
 wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
   syndromic_group = NULL, only_all_tested = FALSE, digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
   col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
-  sep = " + ", simulations = 1000, conf_interval = 0.95,
-  interval_side = "two-tailed", info = interactive(), ...)
+  sep = " + ", sort_columns = TRUE, simulations = 1000,
+  conf_interval = 0.95, interval_side = "two-tailed",
+  info = interactive(), ...)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -89,6 +90,8 @@ retrieve_wisca_parameters(wisca_model, ...)
 \item{combine_SI}{A \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE}).}
 
 \item{sep}{A separating character for antimicrobial columns in combination antibiograms.}
+
+\item{sort_columns}{A \link{logical} to indicate whether the antimicrobial columns must be sorted on name.}
 
 \item{wisca}{A \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 

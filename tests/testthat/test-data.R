@@ -34,7 +34,6 @@ test_that("test-data.R", {
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
   expect_identical(class(microorganisms$mo), c("mo", "character"))
   expect_identical(nrow(antimicrobials), length(unique(AMR::antimicrobials$ab)))
-  expect_true(all(is.na(AMR::antimicrobials$atc[duplicated(AMR::antimicrobials$atc)])))
   expect_identical(class(AMR::antimicrobials$ab), c("ab", "character"))
 
 

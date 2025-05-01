@@ -1,11 +1,11 @@
 ---
-title: "How to apply EUCAST rules"
+title: "Apply EUCAST rules"
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{How to apply EUCAST rules}
+  %\VignetteIndexEntry{Apply EUCAST rules}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:

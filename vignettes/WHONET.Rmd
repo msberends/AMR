@@ -1,11 +1,11 @@
 ---
-title: "How to work with WHONET data"
+title: "Work with WHONET data"
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{How to work with WHONET data}
+  %\VignetteIndexEntry{Work with WHONET data}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:

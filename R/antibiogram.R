@@ -59,6 +59,7 @@
 #' @param minimum The minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param combine_SI A [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`).
 #' @param sep A separating character for antimicrobial columns in combination antibiograms.
+#' @param sort_columns A [logical] to indicate whether the antimicrobial columns must be sorted on name.
 #' @param wisca A [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Set `simulations`, `conf_interval`, and `interval_side` to adjust.
 #' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations.
 #' @param conf_interval A numerical value to set confidence interval (default is `0.95`).
@@ -405,6 +406,7 @@ antibiogram <- function(x,
                         minimum = 30,
                         combine_SI = TRUE,
                         sep = " + ",
+                        sort_columns = TRUE,
                         wisca = FALSE,
                         simulations = 1000,
                         conf_interval = 0.95,
@@ -430,6 +432,7 @@ antibiogram.default <- function(x,
                                 minimum = 30,
                                 combine_SI = TRUE,
                                 sep = " + ",
+                                sort_columns = TRUE,
                                 wisca = FALSE,
                                 simulations = 1000,
                                 conf_interval = 0.95,
@@ -449,6 +452,7 @@ antibiogram.default <- function(x,
     deprecation_warning("antibiotics", "antimicrobials", fn = "antibiogram", is_argument = TRUE)
     antimicrobials <- list(...)$antibiotics
   }
+  meet_criteria(antimicrobials, allow_class = "character", allow_NA = FALSE, allow_NULL = FALSE)
   if (!is.function(mo_transform)) {
     meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE, allow_NA = TRUE)
   }
@@ -468,6 +472,7 @@ antibiogram.default <- function(x,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(sep, allow_class = "character", has_length = 1)
+  meet_criteria(sort_columns, allow_class = "logical", has_length = 1)
   meet_criteria(simulations, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE)
   meet_criteria(conf_interval, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE)
   meet_criteria(interval_side, allow_class = "character", has_length = 1, is_in = c("two-tailed", "left", "right"))
@@ -591,6 +596,8 @@ antibiogram.default <- function(x,
     )
   colnames(out)[colnames(out) == "total"] <- "n_tested"
   colnames(out)[colnames(out) == "total_rows"] <- "n_total"
+  out$ab <- factor(out$ab, levels = antimicrobials, ordered = TRUE)
+  out <- out[order(out$mo, out$ab), , drop = FALSE]
 
   counts <- out
 
@@ -824,7 +831,7 @@ antibiogram.default <- function(x,
 
   # transform names of antimicrobials
   ab_naming_function <- function(x, t, l, s) {
-    x <- strsplit(x, s, fixed = TRUE)
+    x <- strsplit(as.character(x), s, fixed = TRUE)
     out <- character(length = length(x))
     for (i in seq_along(x)) {
       a <- x[[i]]
@@ -869,6 +876,12 @@ antibiogram.default <- function(x,
   attr(out, "groups") <- NULL
   class(out) <- class(out)[!class(out) %in% c("grouped_df", "grouped_data")]
 
+  if (isTRUE(sort_columns)) {
+    sort_fn <- base::sort
+  } else {
+    sort_fn <- function(x) x
+  }
+
   if (isTRUE(has_syndromic_group)) {
     grps <- unique(out$syndromic_group)
     for (i in seq_along(grps)) {
@@ -886,25 +899,25 @@ antibiogram.default <- function(x,
       # sort rows
       new_df <- new_df %pm>% pm_arrange(syndromic_group)
       # sort columns
-      new_df <- new_df[, c("syndromic_group", sort(colnames(new_df)[colnames(new_df) != "syndromic_group"])), drop = FALSE]
+      new_df <- new_df[, c("syndromic_group", sort_fn(colnames(new_df)[colnames(new_df) != "syndromic_group"])), drop = FALSE]
       colnames(new_df)[1] <- translate_AMR("Syndromic Group", language = language)
     } else {
       # sort rows
       new_df <- new_df %pm>% pm_arrange(mo, syndromic_group)
       # sort columns
-      new_df <- new_df[, c("syndromic_group", "mo", sort(colnames(new_df)[!colnames(new_df) %in% c("syndromic_group", "mo")])), drop = FALSE]
+      new_df <- new_df[, c("syndromic_group", "mo", sort_fn(colnames(new_df)[!colnames(new_df) %in% c("syndromic_group", "mo")])), drop = FALSE]
       colnames(new_df)[1:2] <- translate_AMR(c("Syndromic Group", "Pathogen"), language = language)
     }
   } else {
     new_df <- long_to_wide(out)
     if (wisca == TRUE) {
       # sort columns
-      new_df <- new_df[, c(sort(colnames(new_df))), drop = FALSE]
+      new_df <- new_df[, c(sort_fn(colnames(new_df))), drop = FALSE]
     } else {
       # sort rows
       new_df <- new_df %pm>% pm_arrange(mo)
       # sort columns
-      new_df <- new_df[, c("mo", sort(colnames(new_df)[colnames(new_df) != "mo"])), drop = FALSE]
+      new_df <- new_df[, c("mo", sort_fn(colnames(new_df)[colnames(new_df) != "mo"])), drop = FALSE]
       colnames(new_df)[1] <- translate_AMR("Pathogen", language = language)
     }
   }
@@ -966,6 +979,7 @@ antibiogram.grouped_df <- function(x,
                                    minimum = 30,
                                    combine_SI = TRUE,
                                    sep = " + ",
+                                   sort_columns = TRUE,
                                    wisca = FALSE,
                                    simulations = 1000,
                                    conf_interval = 0.95,
@@ -1008,6 +1022,7 @@ antibiogram.grouped_df <- function(x,
       minimum = minimum,
       combine_SI = combine_SI,
       sep = sep,
+      sort_columns = sort_columns,
       wisca = wisca,
       simulations = simulations,
       conf_interval = conf_interval,
@@ -1084,6 +1099,7 @@ wisca <- function(x,
                   language = get_AMR_locale(),
                   combine_SI = TRUE,
                   sep = " + ",
+                  sort_columns = TRUE,
                   simulations = 1000,
                   conf_interval = 0.95,
                   interval_side = "two-tailed",
@@ -1103,6 +1119,7 @@ wisca <- function(x,
     language = language,
     combine_SI = combine_SI,
     sep = sep,
+    sort_columns = sort_columns,
     wisca = TRUE,
     simulations = simulations,
     conf_interval = conf_interval,
@@ -1143,8 +1160,8 @@ simulate_coverage <- function(params) {
   n_pathogens <- length(params$gamma_posterior)
 
   # random draws per pathogen
-  random_incidence <- runif(n = n_pathogens)
-  random_susceptibility <- runif(n = n_pathogens)
+  random_incidence <- stats::runif(n = n_pathogens)
+  random_susceptibility <- stats::runif(n = n_pathogens)
 
   simulated_incidence <- stats::qgamma(
     p = random_incidence,

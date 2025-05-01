@@ -35,8 +35,8 @@ test_that("test-atc_online.R", {
     AMR:::pkg_is_available("xml2") &&
     tryCatch(curl::has_internet(), error = function(e) FALSE)) {
     expect_true(length(atc_online_groups(ab_atc("AMX"))) >= 1)
-    expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "O"), 1.5)
-    expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "P"), 3)
+    expect_equal(atc_online_ddd(ab_atc("AMX", only_first = TRUE), administration = "O"), 1.5)
+    expect_equal(atc_online_ddd(ab_atc("AMX", only_first = TRUE), administration = "P"), 3)
     expect_equal(atc_online_ddd_units("AMX", administration = "P"), "g")
   }
 })

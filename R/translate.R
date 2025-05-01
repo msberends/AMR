@@ -203,7 +203,25 @@ translate_into_language <- function(from,
   df_trans <- TRANSLATIONS # internal data file
   from.bak <- from
   from_unique <- unique(from)
-  from_unique_translated <- from_unique
+  from_split_combined <- function(vec) {
+    sapply(vec, function(x) {
+      if (grepl("/", x, fixed = TRUE)) {
+        parts <- strsplit(x, "/", fixed = TRUE)[[1]]
+        # Translate each part separately
+        translated_parts <- translate_into_language(
+          parts,
+          language = lang,
+          only_unknown = only_unknown,
+          only_affect_ab_names = only_affect_ab_names,
+          only_affect_mo_names = only_affect_mo_names
+        )
+        paste(translated_parts, collapse = "/")
+      } else {
+        x
+      }
+    }, USE.NAMES = FALSE)
+  }
+  from_unique_translated <- from_split_combined(from_unique)
 
   # only keep lines where translation is available for this language
   df_trans <- df_trans[which(!is.na(df_trans[, lang, drop = TRUE])), , drop = FALSE]

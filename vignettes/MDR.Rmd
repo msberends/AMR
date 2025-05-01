@@ -1,10 +1,10 @@
 ---
-title: "How to determine multi-drug resistance (MDR)"
+title: "Determine multi-drug resistance (MDR)"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{How to determine multi-drug resistance (MDR)}
+  %\VignetteIndexEntry{Determine multi-drug resistance (MDR)}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
