@@ -919,9 +919,7 @@ antimicrobials <- antimicrobials %>%
 # last time checked: 2024-02-22
 
 library(rvest)
-updated_atc <- as.list(antimicrobials$atc)
-
-get_atcs <- function(ab_name, type = "human") {
+get_atc_table <- function(ab_name, type = "human") {
   if (type == "human") {
     url <- "https://atcddd.fhi.no/atc_ddd_index/"
   } else if (type == "veterinary") {
@@ -929,13 +927,8 @@ get_atcs <- function(ab_name, type = "human") {
   } else {
     stop("invalid type")
   }
-  
-  ab_name <- gsub("/", " and ", tolower(ab_name), fixed = TRUE)
-
-  # we will do a search on their website, which means:
-
-  # go to the url
-  atc_tbl <- read_html(url) %>%
+  # we will do a search on their website, which involves:
+  read_html(url) %>%
     # get all forms
     html_form() %>%
     # get the second form (the first form is a global website form)
@@ -950,24 +943,44 @@ get_atcs <- function(ab_name, type = "human") {
     html_node("table") %>%
     # transform it to an R data set
     html_table(header = FALSE)
-  
-  # and get the ATCs (first column) of only exact hits
-  unique(as.character(atc_tbl[which(tolower(atc_tbl[, 2, drop = TRUE]) == ab_name), 1, drop = TRUE]))
 }
 
-# this takes around 4 minutes (some are skipped and go faster)
+get_atc_code <- function(ab_name) {
+  ab_name_full <- gsub("/", " and ", ab_name, fixed = TRUE)
+  if (ab_name %like% "/") {
+    ab_name <- strsplit(ab_name, "[/ ]")[[1]]
+  }
+  ab_name <- tolower(ab_name)
+  ab_name_bla <- paste(ab_name[1], "and beta-lactamase inhibitor")
+  atc_tbl_human <- get_atc_table(ab_name[1], type = "human")
+  atc_tbl_vet <- get_atc_table(ab_name[1], type = "veterinary")
+  atc_tbl <- dplyr::bind_rows(atc_tbl_human, atc_tbl_vet)
+  atc_tbl[, 2] <- tolower(atc_tbl[[2]])
+  if (length(ab_name) == 1 && ab_name %in% atc_tbl[[2]]) {
+    out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name)]
+  } else if (ab_name_full %in% atc_tbl[[2]]) {
+    out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_full)]
+  } else if (ab_name_full %like% " and " && ab_name_bla %in% atc_tbl[[2]]) {
+    out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_bla)]
+  } else {
+    out <- NA_character_
+  }
+  unique(out)
+}
+
+updated_atc <- lapply(seq_len(NROW(antimicrobials)),
+                      function(x) NA_character_)
+
+# this takes around 10 minutes (some are skipped and go faster)
 for (i in seq_len(nrow(antimicrobials))) {
   message(percentage(i / nrow(antimicrobials), digits = 1),
     " - Downloading ", antimicrobials$name[i],
     appendLF = FALSE
   )
-  atcs <- get_atcs(antimicrobials$name[i], type = "human")
-  if (all(is.na(atcs))) {
-    atcs <- get_atcs(antimicrobials$name[i], type = "veterinary")
-  }
-  if (length(atcs) > 0) {
+  atcs <- get_atc_code(antimicrobials$name[i])
+  if (length(atcs[!is.na(atcs)]) > 0) {
     updated_atc[[i]] <- atcs
-    message(" (", length(atcs), " results)")
+    message(" (", length(atcs[!is.na(atcs)]), " results: ", toString(atcs[!is.na(atcs)]), ")")
     # let the WHO server rest for a second - they might have a limitation on the queries per second
     Sys.sleep(1)
   } else {
@@ -975,6 +988,8 @@ for (i in seq_len(nrow(antimicrobials))) {
   }
 }
 
+updated_atc <- lapply(updated_atc, function(x) sort(x[!is.na(x)]))
+# duplicates
 antimicrobials$atc <- updated_atc
 
 # update DDDs from WHOCC website ------------------------------------------

@@ -122,7 +122,7 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{reference_data}{A \link{data.frame} to be used for interpretation, which defaults to the \link{clinical_breakpoints} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{clinical_breakpoints} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
 
-\item{substitute_missing_r_breakpoint}{A \link{logical} to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is \code{FALSE}. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be \code{"S"} or \code{NA}. Setting this to \code{TRUE} will convert the \code{NA}s to \code{"R"} only if the R breakpoint is missing. Can also be set with the package option \code{\link[=AMR-options]{AMR_substitute_missing_r_breakpoint}}.}
+\item{substitute_missing_r_breakpoint}{A \link{logical} to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is \code{FALSE}. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be \code{"S"} or \code{NA}. Setting this to \code{TRUE} will convert the \code{NA}s in these cases to \code{"R"}. Can also be set with the package option \code{\link[=AMR-options]{AMR_substitute_missing_r_breakpoint}}.}
 
 \item{include_screening}{A \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_screening}}.}
 
@@ -138,7 +138,7 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. This requires no additional packages, as the used \code{parallel} package is part of base \R. On Windows and on \R < 4.0.0 \code{\link[parallel:clusterApply]{parallel::parLapply()}} will be used, in all other cases the most efficient \code{\link[parallel:mclapply]{parallel::mclapply()}} will be used.}
+\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. This requires no additional packages, as the used \code{parallel} package is part of base \R. On Windows and on \R < 4.0.0 \code{\link[parallel:clusterApply]{parallel::parLapply()}} will be used, in all other cases the more efficient \code{\link[parallel:mclapply]{parallel::mclapply()}} will be used.}
 
 \item{max_cores}{Maximum number of cores to use if \code{parallel = TRUE}. Use a negative value to subtract that number from the available number of cores, e.g. a value of \code{-2} on an 8-core machine means that at most 6 cores will be used. Defaults to \code{-1}. There will never be used more cores than variables to analyse. The available number of cores are detected using \code{\link[parallelly:availableCores]{parallelly::availableCores()}} if that package is installed, and base \R's \code{\link[parallel:detectCores]{parallel::detectCores()}} otherwise.}
 
@@ -269,11 +269,10 @@ Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct
 
 \examples{
 example_isolates
-summary(example_isolates) # see all SIR results at a glance
 
-# For INTERPRETING disk diffusion and MIC values -----------------------
+summary(example_isolates[, 1:10]) # see all SIR results at a glance
 
-# example data sets, with combined MIC values and disk zones
+# create some example data sets, with combined MIC values and disk zones
 df_wide <- data.frame(
   microorganism = "Escherichia coli",
   amoxicillin = as.mic(8),
@@ -289,6 +288,11 @@ df_long <- data.frame(
   disks = as.disk(c(6, 10, 14, 18)),
   guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
 )
+# and clean previous SIR interpretation logs
+x <- sir_interpretation_history(clean = TRUE)
+
+
+# For INTERPRETING disk diffusion and MIC values -----------------------
 
 # most basic application:
 as.sir(df_wide)
@@ -409,13 +413,6 @@ if (require("dplyr")) {
 
 ## Using base R ------------------------------------------------
 
-as.sir(df_wide)
-
-# return a 'logbook' about the results:
-sir_interpretation_history()
-
-# using parallel computing, which is available in base R
-as.sir(df_wide, parallel = TRUE)
 
 # for single values
 as.sir(
@@ -444,6 +441,7 @@ barplot(sir_data) # for frequencies
 
 # as common in R, you can use as.integer() to return factor indices:
 as.integer(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
+
 # but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:
 as.double(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
 
@@ -459,7 +457,7 @@ if (require("dplyr")) {
   example_isolates \%>\%
     mutate_if(is_sir_eligible, as.sir)
 
-  # since dplyr 1.0.0, this can also be:
+  # since dplyr 1.0.0, this can also be the more impractical:
   # example_isolates \%>\%
   #   mutate(across(where(is_sir_eligible), as.sir))
 }

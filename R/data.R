@@ -50,7 +50,7 @@
 #' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
 #' - `av`\cr Antiviral ID as used in this package (such as `ACI`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.*** Combinations are codes that contain a `+` to indicate this, such as `ATA+COBI` for atazanavir/cobicistat.
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. ***This is a unique identifier.***
-#' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
+#' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, see *Details*
 #' - `cid`\cr Compound ID as found in PubChem. ***This is a unique identifier.***
 #' - `atc_group`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
 #' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
@@ -59,9 +59,14 @@
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
 #' - `iv_units`\cr Units of `iv_ddd`
 #' - `loinc`\cr All codes associated with the name of the antiviral drug from `r TAXONOMY_VERSION$LOINC$citation` Use [av_loinc()] to retrieve them quickly, see [av_property()].
-#' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
+#' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`. Do note that ATC codes are not unique. For example, J01CR02 is officially the ATC code for "amoxicillin and beta-lactamase inhibitor". Consequently, these two items from the [antimicrobials] data set both return `"J01CR02"`:
 #'
-#' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and consequently only available where a CID is available.
+#' ```r
+#' ab_atc("amoxicillin/clavulanic acid")
+#' ab_atc("amoxicillin/sulbactam")
+#' ```
+#'
+#' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and are consequently only available where a CID is available.
 #' @inheritSection AMR Download Our Reference Data
 #' @source
 #'

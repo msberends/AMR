@@ -30,7 +30,7 @@
 test_that("test-sir.R", {
   skip_on_cran()
 
-  # Existing SIR ------------------------------------------------------------
+  # Existing SIR ----------------------------------------------------------
 
   # we must only have EUCAST and CLSI, because otherwise the rules in as.sir() will fail
   expect_identical(
@@ -124,7 +124,7 @@ test_that("test-sir.R", {
   expect_equal(as.sir(c("", "-", NA, "NULL")), c(NA_sir_, NA_sir_, NA_sir_, NA_sir_))
 
 
-  # Human -------------------------------------------------------------------
+  # Human -----------------------------------------------------------------
 
   # allow for guideline length > 1
   expect_equal(
@@ -345,7 +345,7 @@ test_that("test-sir.R", {
   )
 
 
-  # Veterinary --------------------------------------------------------------
+  # Veterinary ------------------------------------------------------------
 
   # multiple guidelines
   sir_history <- sir_interpretation_history(clean = TRUE)
@@ -390,7 +390,7 @@ test_that("test-sir.R", {
     )
   )
 
-  # ECOFF -------------------------------------------------------------------
+  # ECOFF -----------------------------------------------------------------
 
   expect_equal(
     suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", breakpoint_type = "ECOFF")),
@@ -398,4 +398,42 @@ test_that("test-sir.R", {
   )
   # old method
   expect_warning(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE))
+
+
+  # Parallel computing ----------------------------------------------------
+
+  # MB 29 Apr 2025: I have run the code of AVC, PEI, Canada (dataset of 2854x65), and compared it like this:
+
+  # system.time({
+  #   data_2022_2023_SIR_parallel <- data_2022_2023_clean |>
+  #   as.sir(amikacin:tiamulin,
+  #          col_mo = "mo",
+  #          guideline = "CLSI 2024",
+  #          host = "Species",
+  #          uti = "isUTI",
+  #          parallel = TRUE)
+  # })
+  # #    user  system elapsed
+  # # 271.424   2.767  45.762
+  #
+  # history_parallel <- sir_interpretation_history(clean = TRUE)
+  #
+  # system.time({
+  #   data_2022_2023_SIR <- data_2022_2023_clean |>
+  #     as.sir(amikacin:tiamulin,
+  #            col_mo = "mo",
+  #            guideline = "CLSI 2024",
+  #            host = "Species",
+  #            uti = "isUTI")
+  # })
+  # #    user  system elapsed
+  # # 120.637   5.406 128.835
+  # history <- sir_interpretation_history()
+
+
+  # and then got this:
+  # identical(history[, -1], history_parallel[, -1])
+  #> [1] TRUE
+
+  # so parallel on Apple M2 is 2.8x faster, with identical history -> GREAT!
 })

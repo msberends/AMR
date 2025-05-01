@@ -59,7 +59,7 @@
 #'
 #' The default `"standard"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
-#' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s to `"R"` only if the R breakpoint is missing. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
+#' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these cases to `"R"`. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
 #' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
 #' @param include_PKPD A [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the package option [`AMR_include_PKPD`][AMR-options].
 #' @param breakpoint_type The type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
@@ -182,11 +182,10 @@
 #' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' example_isolates
-#' summary(example_isolates) # see all SIR results at a glance
 #'
-#' # For INTERPRETING disk diffusion and MIC values -----------------------
+#' summary(example_isolates[, 1:10]) # see all SIR results at a glance
 #'
-#' # example data sets, with combined MIC values and disk zones
+#' # create some example data sets, with combined MIC values and disk zones
 #' df_wide <- data.frame(
 #'   microorganism = "Escherichia coli",
 #'   amoxicillin = as.mic(8),
@@ -202,6 +201,11 @@
 #'   disks = as.disk(c(6, 10, 14, 18)),
 #'   guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
 #' )
+#' # and clean previous SIR interpretation logs
+#' x <- sir_interpretation_history(clean = TRUE)
+#'
+#'
+#' # For INTERPRETING disk diffusion and MIC values -----------------------
 #'
 #' # most basic application:
 #' as.sir(df_wide)
@@ -322,13 +326,6 @@
 #'
 #' ## Using base R ------------------------------------------------
 #'
-#' as.sir(df_wide)
-#'
-#' # return a 'logbook' about the results:
-#' sir_interpretation_history()
-#'
-#' # using parallel computing, which is available in base R
-#' as.sir(df_wide, parallel = TRUE)
 #'
 #' # for single values
 #' as.sir(
@@ -357,6 +354,7 @@
 #'
 #' # as common in R, you can use as.integer() to return factor indices:
 #' as.integer(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
+#'
 #' # but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:
 #' as.double(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
 #'
@@ -372,7 +370,7 @@
 #'   example_isolates %>%
 #'     mutate_if(is_sir_eligible, as.sir)
 #'
-#'   # since dplyr 1.0.0, this can also be:
+#'   # since dplyr 1.0.0, this can also be the more impractical:
 #'   # example_isolates %>%
 #'   #   mutate(across(where(is_sir_eligible), as.sir))
 #' }
@@ -680,7 +678,7 @@ as.sir.disk <- function(x,
 }
 
 #' @rdname as.sir
-#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. This requires no additional packages, as the used `parallel` package is part of base \R. On Windows and on \R < 4.0.0 [parallel::parLapply()] will be used, in all other cases the most efficient [parallel::mclapply()] will be used.
+#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. This requires no additional packages, as the used `parallel` package is part of base \R. On Windows and on \R < 4.0.0 [parallel::parLapply()] will be used, in all other cases the more efficient [parallel::mclapply()] will be used.
 #' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that at most 6 cores will be used. Defaults to `-1`. There will never be used more cores than variables to analyse. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
 #' @export
 as.sir.data.frame <- function(x,
@@ -1860,6 +1858,7 @@ as_sir_method <- function(method_short,
 sir_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)
   out <- AMR_env$sir_interpretation_history
+  out <- out[which(!is.na(out$datetime)), , drop = FALSE]
   out$outcome <- as.sir(out$outcome)
   out$site <- as.character(out$site)
   if (isTRUE(clean)) {
@@ -1876,7 +1875,7 @@ sir_interpretation_history <- function(clean = FALSE) {
 #' @noRd
 print.sir_log <- function(x, ...) {
   if (NROW(x) == 0) {
-    message_("No results to print. Run `as.sir()` on MIC values or disk diffusion zones first to print a 'logbook' data set here.")
+    message_("No results to print. First run `as.sir()` on MIC values or disk diffusion zones (or on a `data.frame` containing any of these) to print a 'logbook' data set here.")
     return(invisible(NULL))
   }
   class(x) <- class(x)[class(x) != "sir_log"]

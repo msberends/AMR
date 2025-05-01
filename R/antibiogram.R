@@ -257,11 +257,11 @@
 #' You can also use functions from specific 'table reporting' packages to transform the output of [antibiogram()] to your needs, e.g. with `flextable::as_flextable()` or `gt::gt()`.
 #'
 #' @section Explaining WISCA:
-#' 
+#'
 #' WISCA (Weighted-Incidence Syndromic Combination Antibiogram) estimates the probability of empirical coverage for combination regimens.
-#' 
+#'
 #' It weights susceptibility by pathogen prevalence within a clinical syndrome and provides credible intervals around the expected coverage.
-#' 
+#'
 #' For more background, interpretation, and examples, see [the WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
 #' @source
 #' * Bielicki JA *et al.* (2016). **Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data** *Journal of Antimicrobial Chemotherapy* 71(3); \doi{10.1093/jac/dkv397}

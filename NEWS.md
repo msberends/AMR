@@ -1,4 +1,4 @@
-# AMR 2.1.1.9266
+# AMR 2.1.1.9267
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -47,14 +47,14 @@ This package now supports not only tools for AMR data analysis in clinical setti
 ### Breaking
 * Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over two years ago.
-* Functions `resistance_predict()` and `sir_predict()` is now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
+* Functions `resistance_predict()` and `sir_predict()` are now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 
 ### New
 * **One Health implementation**
   * Function `as.sir()` now has extensive support for veterinary breakpoints from CLSI. Use `breakpoint_type = "animal"` and set the `host` argument to a variable that contains animal species names.
   * The `clinical_breakpoints` data set contains all these breakpoints, and can be downloaded on our [download page](https://amr-for-r.org/articles/datasets.html).
-  * The (new) `antimicrobials` data set contains all veterinary antibiotics, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
-  * `ab_atc()` now supports ATC codes of veterinary antibiotics (that all start with "Q")
+  * The (new) `antimicrobials` data set contains all veterinary antimicrobials, such as pradofloxacin and enrofloxacin. All WHOCC codes for veterinary use have been added as well.
+  * `ab_atc()` now supports ATC codes of veterinary antimicrobials (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 * **Support for WISCA antibiograms**  
   * The `antibiogram()` function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in datasets with sparse data. A dedicated `wisca()` function is also available for easy usage.
@@ -127,13 +127,13 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * `eucast_rules()` now has an argument `overwrite` (default: `FALSE`) to indicate whether non-`NA` values should be overwritten
 * Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (`as.disk()`) is now between 0 and 50 mm
 * Updated `italicise_taxonomy()` to support HTML output
-* `custom_eucast_rules()` now supports multiple antibiotics and antibiotic groups to be affected by a single rule
+* `custom_eucast_rules()` now supports multiple antimicrobials and antimicrobial groups to be affected by a single rule
 * `mo_info()` now contains an extra element `rank` and `group_members` (with the contents of the new `mo_group_members()` function)
 * Updated all ATC codes from WHOCC
-* Updated all antibiotic DDDs from WHOCC
+* Updated all antimicrobial DDDs from WHOCC
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fixed a bug for when `antibiogram()` returns an empty data set
-* Fix for mapping 'high level' antibiotics in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
+* Fix for mapping 'high level' antimicrobials in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy, including the new function `as_reset_session()` to remove earlier coercions.
 * Improved overall algorithm of `as.mo()` for better performance and accuracy, specifically:
   * More weight is given to genus and species combinations in cases where the subspecies is miswritten, so that the result will be the correct genus and species
@@ -148,7 +148,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Added console colours support of `sir` class for Positron
 
 ### Other
-* New website domain: <https://amr-for-r.org>! The old domain (<https://msberends.github.io/AMR/>) will remain to work.
+* New website domain: <https://amr-for-r.org>! The old domain (<http://amr-for-r.org/>) will remain to work.
 * Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
 * Added Prof. Kathryn Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes

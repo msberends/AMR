@@ -73,16 +73,21 @@ if not isinstalled('AMR', lib_loc=r_lib_path):
     print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
     utils.install_packages('AMR', repos='beta.amr-for-r.org', quiet=True)
 
-# # Retrieve Python AMR version
-# try:
-#     python_amr_version = metadata.version('AMR')
-# except metadata.PackageNotFoundError:
-#     python_amr_version = ''
-# 
-# # Retrieve R AMR version
-# r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
-# r_amr_version = str(r_amr_version[0])
-# 
+# Retrieve Python AMR version
+try:
+    python_amr_version = str(metadata.version('AMR'))
+except metadata.PackageNotFoundError:
+    python_amr_version = str('')
+
+# Retrieve R AMR version
+r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
+r_amr_version = str(r_amr_version[0])
+
+print(python_amr_version, flush=True)
+print(r_amr_version, flush=True)
+
+print(r_amr_version != python_amr_version, flush=True)
+
 # # Compare R and Python package versions
 # if r_amr_version != python_amr_version:
 #     try:
@@ -248,7 +253,7 @@ for rd_file in "$rd_dir"/*.Rd; do
 
         # Write the Python function definition to the output file
         print "def " func_name_py "(" func_args "):" >> "'"$functions_file"'"
-        print "    \"\"\"See our website of the R package for the manual: https://amr-for-r.org/index.html\"\"\"" >> "'"$functions_file"'"
+        print "    \"\"\"Please see our website of the R package for the full manual: https://amr-for-r.org\"\"\"" >> "'"$functions_file"'"
         print "    return convert_to_python(amr_r." func_name_py "(" func_args "))" >> "'"$functions_file"'"
         
         print "from .functions import " func_name_py >> "'"$init_file"'"
