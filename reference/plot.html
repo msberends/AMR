@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9268</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9269</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -274,7 +274,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <h3 id="the-scale-sir-functions">The <code>scale_*_sir()</code> Functions<a class="anchor" aria-label="anchor" href="#the-scale-sir-functions"></a></h3>
 
 
-<p>The functions <code>scale_x_sir()</code>, <code>scale_colour_sir()</code>, and <code>scale_fill_sir()</code> functions allow to plot the <a href="as.sir.html">sir</a> class in the right order (S &lt; SDD &lt; I &lt; R &lt; NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 20 supported languages (use <code>language = NULL</code> to keep S/I/R). Also, except for <code>scale_x_sir()</code>, they set colour-blind friendly colours to the <code>colour</code> and <code>fill</code> aesthetics.</p>
+<p>The functions <code>scale_x_sir()</code>, <code>scale_colour_sir()</code>, and <code>scale_fill_sir()</code> functions allow to plot the <a href="as.sir.html">sir</a> class in the right order (S &lt; SDD &lt; I &lt; R &lt; NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 27 supported languages (use <code>language = NULL</code> to keep S/I/R). Also, except for <code>scale_x_sir()</code>, they set colour-blind friendly colours to the <code>colour</code> and <code>fill</code> aesthetics.</p>
 </div>
 
 <div class="section">
@@ -310,7 +310,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="plot-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="co"># support for 20 languages, various guidelines, and many options</span></span></span>
+<span class="r-in"><span>  <span class="co"># support for 27 languages, various guidelines, and many options</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">some_disk_values</span>,</span></span>
 <span class="r-in"><span>    mo <span class="op">=</span> <span class="st">"Escherichia coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>,</span></span>
 <span class="r-in"><span>    guideline <span class="op">=</span> <span class="st">"CLSI 2024"</span>, language <span class="op">=</span> <span class="st">"no"</span>,</span></span>
@@ -438,7 +438,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span class="r-in"><span>    <span class="fu">scale_y_mic</span><span class="op">(</span>mic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.005</span>, <span class="fl">32</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Our MICs!"</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu">scale_colour_sir</span><span class="op">(</span></span></span>
 <span class="r-in"><span>      language <span class="op">=</span> <span class="st">"pt"</span>,</span></span>
-<span class="r-in"><span>      name <span class="op">=</span> <span class="st">"Support in 20 languages"</span></span></span>
+<span class="r-in"><span>      name <span class="op">=</span> <span class="st">"Support in 27 languages"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="plot-14.png" alt="" width="700" height="433"></span>
