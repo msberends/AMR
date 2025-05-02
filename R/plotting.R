@@ -90,7 +90,7 @@
 #'   autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
 #' }
 #' if (require("ggplot2")) {
-#'   # support for 20 languages, various guidelines, and many options
+#'   # support for 27 languages, various guidelines, and many options
 #'   autoplot(some_disk_values,
 #'     mo = "Escherichia coli", ab = "cipro",
 #'     guideline = "CLSI 2024", language = "no",
@@ -207,7 +207,7 @@
 #'     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
 #'     scale_colour_sir(
 #'       language = "pt",
-#'       name = "Support in 20 languages"
+#'       name = "Support in 27 languages"
 #'     )
 #' }
 #' }

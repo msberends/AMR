@@ -1190,6 +1190,13 @@ message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
   not_thrown_before
 }
 
+reset_all_thrown_messages <- function() {
+  rm(
+    list = grep("^thrown_msg", ls(envir = AMR_env), value = TRUE),
+    envir = AMR_env
+  )
+}
+
 has_colour <- function() {
   if (is.null(AMR_env$supports_colour)) {
     if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {

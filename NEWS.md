@@ -1,4 +1,4 @@
-# AMR 2.1.1.9268
+# AMR 2.1.1.9269
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -58,6 +58,8 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 * **Support for WISCA antibiograms**  
   * The `antibiogram()` function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in datasets with sparse data. A dedicated `wisca()` function is also available for easy usage.
+* **More global coverage of languages**
+  * Added full support for 7 new languages: Arabic, Bengali, Hindi, Indonesian, Swahili, Urdu, and Vietnamese. The `AMR` package is now available in 27 languages.
 * **Major update to fungal taxonomy and tools for mycologists**
   * MycoBank has now been integrated as the primary taxonomic source for fungi. The `microorganisms` data set has been enriched with new columns (`mycobank`, `mycobank_parent`, and `mycobank_renamed_to`) that provide detailed information for fungal species.
   * A remarkable addition of over 20,000 new fungal records

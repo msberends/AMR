@@ -153,7 +153,7 @@ When used inside selecting or filtering, this returns a \link{character} vector 
 \description{
 These functions allow for filtering rows and selecting columns based on antimicrobial test results that are of a specific antimicrobial class or group, without the need to define the columns or antimicrobial abbreviations. They can be used in base \R, tidyverse, tidymodels, and \code{data.table}.
 
-In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "kefzol", "CZO" and "J01DB04" will all be picked up using:
+Simply puy, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class, code or name: column names "cefazolin", "kefzol", "CZO" and "J01DB04" would all be included in the following selection:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
 my_data_with_all_these_columns \%>\%

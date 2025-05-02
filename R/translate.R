@@ -31,7 +31,7 @@
 #'
 #' For language-dependent output of `AMR` functions, such as [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @param x Text to translate.
-#' @param language Language to choose. Use one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
+#' @param language Language to choose. Use one of these supported language names or [ISO 639-1 codes](https://en.wikipedia.org/wiki/ISO_639-1): `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_and(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 #'
 #' To permanently silence the once-per-session language note on a non-English operating system, you can set the package option [`AMR_locale`][AMR-options] in your `.Rprofile` file like this:
@@ -75,7 +75,7 @@
 #' ab_name("Ciprofloxacin")
 #' mo_name("Coagulase-negative Staphylococcus (CoNS)")
 #'
-#' # set_AMR_locale() understands endonyms, English exonyms, and ISO-639-1:
+#' # set_AMR_locale() understands endonyms, English exonyms, and ISO 639-1:
 #' set_AMR_locale("Deutsch")
 #' set_AMR_locale("German")
 #' set_AMR_locale("de")
@@ -152,7 +152,7 @@ validate_language <- function(language, extra_txt = character(0)) {
   }
   lang <- find_language(language[1], fallback = FALSE)
   stop_ifnot(length(lang) > 0 && lang %in% LANGUAGES_SUPPORTED,
-    "unsupported language for AMR package", extra_txt, ": \"", language, "\". Use one of these language names or ISO-639-1 codes: ",
+    "unsupported language for AMR package", extra_txt, ": \"", language, "\". Use one of these language names or ISO 639-1 codes: ",
     paste0('"', vapply(FUN.VALUE = character(1), LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]),
       '" ("', LANGUAGES_SUPPORTED, '")',
       collapse = ", "
@@ -193,7 +193,7 @@ translate_into_language <- function(from,
                                     only_unknown = FALSE,
                                     only_affect_ab_names = FALSE,
                                     only_affect_mo_names = FALSE) {
-  # get ISO-639-1 of language
+  # get ISO 639-1 of language
   lang <- validate_language(language)
   if (lang == "en") {
     # don' translate

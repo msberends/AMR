@@ -11,12 +11,13 @@ knitr::opts_chunk$set(
   fig.path = "pkgdown/assets/",
   out.width = "100%"
 )
+AMR:::reset_all_thrown_messages()
 ```
 
 # The `AMR` Package for R <a href="https://amr-for-r.org/"><img src="./logo.svg" align="right" height="139" /></a>
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
-* Peer-reviewed, used in over 175 countries, available in 20 languages
+* Peer-reviewed, used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** of `r AMR:::format_included_data_number(AMR::microorganisms)` distinct species and extensive info of `r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial drugs
 * Applies **CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`** and **EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`** clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation
@@ -43,13 +44,19 @@ This work was published in the Journal of Statistical Software (Volume 104(3); [
 
 After installing this package, R knows [**`r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species**](./reference/microorganisms.html) (updated June 2024) and all [**`r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial and antiviral drugs**](./reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))` and EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))` are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the [University Medical Center Groningen](https://www.umcg.nl).
 
-##### Used in over 175 countries, available in 20 languages
+##### Used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;" /></a>
 
 Since its first public release in early 2018, this R package has been used in almost all countries in the world. Click the map to enlarge and to see the country names.
 
-With the help of contributors from all corners of the world, the `AMR` package is available in <img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> English, <img src="lang_cs.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Czech, <img src="lang_zh.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Chinese, <img src="lang_da.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Danish, <img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dutch, <img src="lang_fi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Finnish, <img src="lang_fr.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> French, <img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> German, <img src="lang_el.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Greek, <img src="lang_it.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Italian, <img src="lang_ja.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Japanese, <img src="lang_no.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Norwegian, <img src="lang_pl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Polish, <img src="lang_pt.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Portuguese, <img src="lang_ro.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Romanian, <img src="lang_ru.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Russian, <img src="lang_es.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Spanish, <img src="lang_sv.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Swedish, <img src="lang_tr.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Turkish, and <img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
+```{r, echo = FALSE}
+langs <- vapply(FUN.VALUE = character(1), AMR:::LANGUAGES_SUPPORTED_NAMES, function(x) x$exonym)
+img <- paste0('<img src="lang_', names(langs), '.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;">')
+lang_txt <- AMR:::vector_and(paste(img, langs), sort = FALSE, quotes = FALSE)
+```
+
+With the help of contributors from all corners of the world, the `AMR` package is available in `r lang_txt`. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 
 ### Practical examples
 
@@ -94,7 +101,7 @@ antibiogram(example_isolates,
             mo_transform = "gramstain")
 ```
 
-Like many other functions in this package, `antibiogram()` comes with support for 20 languages that are often detected automatically based on system language:
+Like many other functions in this package, `antibiogram()` comes with support for `r length(AMR:::LANGUAGES_SUPPORTED)` languages that are often detected automatically based on system language:
 
 ```{r}
 antibiogram(example_isolates,

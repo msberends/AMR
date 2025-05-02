@@ -83,11 +83,12 @@ pre_commit_lst$TRANSLATIONS <- utils::read.delim(
   allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
   quote = ""
 )
+pre_commit_lst$TRANSLATIONS <- pre_commit_lst$TRANSLATIONS[, which(colnames(pre_commit_lst$TRANSLATIONS) != "en"), drop = FALSE]
 
 pre_commit_lst$LANGUAGES_SUPPORTED_NAMES <- c(
   list(en = list(exonym = "English", endonym = "English")),
   lapply(
-    TRANSLATIONS[, which(nchar(colnames(pre_commit_lst$TRANSLATIONS)) == 2), drop = FALSE],
+    pre_commit_lst$TRANSLATIONS[, which(nchar(colnames(pre_commit_lst$TRANSLATIONS)) == 2), drop = FALSE],
     function(x) list(exonym = x[1], endonym = x[2])
   )
 )

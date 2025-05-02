@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   # fig.path = "man/figures/README-",
   out.width = "100%"
 )
+AMR:::reset_all_thrown_messages()
 ```
 
 # The `AMR` Package for R
@@ -20,7 +21,7 @@ Please visit our comprehensive package website <https://amr-for-r.org> to read m
 Overview:
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
-* Peer-reviewed, used in over 175 countries, available in 20 languages
+* Peer-reviewed, used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 * Generates **antibiograms** - traditional, combined, syndromic, and even WISCA
 * Provides the **full microbiological taxonomy** of `r AMR:::format_included_data_number(AMR::microorganisms)` distinct species and extensive info of `r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial drugs
 * Applies **CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`** and **EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`** clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation

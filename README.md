@@ -10,7 +10,7 @@ Overview:
 
 - Provides an **all-in-one solution** for antimicrobial resistance (AMR)
   data analysis in a One Health approach
-- Peer-reviewed, used in over 175 countries, available in 20 languages
+- Peer-reviewed, used in over 175 countries, available in 27 languages
 - Generates **antibiograms** - traditional, combined, syndromic, and
   even WISCA
 - Provides the **full microbiological taxonomy** of ~79 000 distinct

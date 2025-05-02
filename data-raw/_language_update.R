@@ -60,6 +60,7 @@ lang_env$TRANSLATIONS <- utils::read.delim(
   allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
   quote = ""
 )
+lang_env$TRANSLATIONS <- lang_env$TRANSLATIONS[, which(colnames(lang_env$TRANSLATIONS) != "en"), drop = FALSE]
 
 lang_env$LANGUAGES_SUPPORTED_NAMES <- c(
   list(en = list(exonym = "English", endonym = "English")),

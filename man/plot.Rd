@@ -177,7 +177,7 @@ The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mi
 
 \subsection{The \verb{scale_*_sir()} Functions}{
 
-The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 20 supported languages (use \code{language = NULL} to keep S/I/R). Also, except for \code{\link[=scale_x_sir]{scale_x_sir()}}, they set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
+The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 27 supported languages (use \code{language = NULL} to keep S/I/R). Also, except for \code{\link[=scale_x_sir]{scale_x_sir()}}, they set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
 }
 
 \subsection{Additional \code{ggplot2} Functions}{
@@ -211,7 +211,7 @@ if (require("ggplot2")) {
   autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
 }
 if (require("ggplot2")) {
-  # support for 20 languages, various guidelines, and many options
+  # support for 27 languages, various guidelines, and many options
   autoplot(some_disk_values,
     mo = "Escherichia coli", ab = "cipro",
     guideline = "CLSI 2024", language = "no",
@@ -328,7 +328,7 @@ if (require("ggplot2")) {
     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
     scale_colour_sir(
       language = "pt",
-      name = "Support in 20 languages"
+      name = "Support in 27 languages"
     )
 }
 }

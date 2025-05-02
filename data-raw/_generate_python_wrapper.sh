@@ -83,18 +83,13 @@ except metadata.PackageNotFoundError:
 r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
 r_amr_version = str(r_amr_version[0])
 
-print(python_amr_version, flush=True)
-print(r_amr_version, flush=True)
-
-print(r_amr_version != python_amr_version, flush=True)
-
-# # Compare R and Python package versions
-# if r_amr_version != python_amr_version:
-#     try:
-#         print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
-#         utils.install_packages('AMR', repos='beta.amr-for-r.org', quiet=True)
-#     except Exception as e:
-#         print(f"AMR: Could not update: {e}", flush=True)
+# Compare R and Python package versions
+if r_amr_version != python_amr_version:
+    try:
+        print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
+        utils.install_packages('AMR', repos='beta.amr-for-r.org', quiet=True)
+    except Exception as e:
+        print(f"AMR: Could not update: {e}", flush=True)
 
 print(f"AMR: Setting up R environment and AMR datasets...", flush=True)
 
