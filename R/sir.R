@@ -64,6 +64,7 @@
 #' @param include_PKPD A [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the package option [`AMR_include_PKPD`][AMR-options].
 #' @param breakpoint_type The type of breakpoints to use, either `r vector_or(clinical_breakpoints$type)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
 #' @param host A vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
+#' @param language Language to convert values set in `host` when using animal breakpoints. Use one of these supported language names or [ISO 639-1 codes](https://en.wikipedia.org/wiki/ISO_639-1): `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @param verbose A [logical] to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.
 #' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
@@ -611,6 +612,7 @@ as.sir.mic <- function(x,
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        host = NULL,
+                       language = get_AMR_locale(),
                        verbose = FALSE,
                        info = interactive(),
                        conserve_capped_values = NULL,
@@ -631,6 +633,7 @@ as.sir.mic <- function(x,
     include_PKPD = include_PKPD,
     breakpoint_type = breakpoint_type,
     host = host,
+    language = language,
     verbose = verbose,
     info = info,
     conserve_capped_values = conserve_capped_values,
@@ -652,6 +655,7 @@ as.sir.disk <- function(x,
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                         host = NULL,
+                        language = get_AMR_locale(),
                         verbose = FALSE,
                         info = interactive(),
                         ...) {
@@ -671,6 +675,7 @@ as.sir.disk <- function(x,
     include_PKPD = include_PKPD,
     breakpoint_type = breakpoint_type,
     host = host,
+    language = language,
     verbose = verbose,
     info = info,
     ...
@@ -694,6 +699,7 @@ as.sir.data.frame <- function(x,
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                               host = NULL,
+                              language = get_AMR_locale(),
                               verbose = FALSE,
                               info = interactive(),
                               parallel = FALSE,
@@ -711,6 +717,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
@@ -734,7 +741,7 @@ as.sir.data.frame <- function(x,
   if (missing(breakpoint_type) && any(host %in% clinical_breakpoints$host[!clinical_breakpoints$host %in% c("human", "ECOFF")], na.rm = TRUE)) {
     if (isTRUE(info)) message_("Assuming `breakpoint_type = \"animal\"` since `host` contains animal species.")
     breakpoint_type <- "animal"
-  } else if (any(!suppressMessages(convert_host(host)) %in% c("human", "ECOFF"), na.rm = TRUE)) {
+  } else if (any(!suppressMessages(convert_host(host, lang = language)) %in% c("human", "ECOFF"), na.rm = TRUE)) {
     if (isTRUE(info)) message_("Assuming `breakpoint_type = \"animal\"`.")
     breakpoint_type <- "animal"
   }
@@ -1035,38 +1042,43 @@ get_guideline <- function(guideline, reference_data) {
   guideline_param
 }
 
-convert_host <- function(x, lang = get_AMR_locale()) {
+convert_host <- function(x, lang = NULL) {
   x <- gsub("[^a-zA-Z ]", "", trimws2(tolower(as.character(x))), perl = TRUE)
   x_out <- rep(NA_character_, length(x))
   x_out[trimws2(tolower(x)) == "human"] <- "human"
   x_out[trimws2(tolower(x)) == "ecoff"] <- "ecoff"
-  # this order is based on: clinical_breakpoints |> filter(type == "animal") |> count(host, sort = TRUE)
-  x_out[is.na(x_out) & (x %like% "dog|canine|Canis lupus" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
-  x_out[is.na(x_out) & (x %like% "cattle|bovine|Bos taurus" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
-  x_out[is.na(x_out) & (x %like% "swine|suida(e)?|Sus scrofa" | x %like% translate_AMR("swine|swines", lang))] <- "swine"
-  x_out[is.na(x_out) & (x %like% "cat|feline|Felis catus" | x %like% translate_AMR("cat|cats|feline", lang))] <- "cats"
-  x_out[is.na(x_out) & (x %like% "horse|equine|Equus ferus" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
-  x_out[is.na(x_out) & (x %like% "aqua|fish|Pisces" | x %like% translate_AMR("aquatic|fish", lang))] <- "aquatic"
-  x_out[is.na(x_out) & (x %like% "bird|chicken|poultry|avia|Gallus gallus" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
 
-  # additional animals, not necessarily currently in breakpoint guidelines:
-  x_out[is.na(x_out) & (x %like% "camel|camelid|Camelus dromedarius" | x %like% translate_AMR("camel|camels|camelid", lang))] <- "camels"
-  x_out[is.na(x_out) & (x %like% "deer|cervine|Cervidae" | x %like% translate_AMR("deer|deers|cervine", lang))] <- "deer"
-  x_out[is.na(x_out) & (x %like% "donkey|asinine|Equus africanus" | x %like% translate_AMR("donkey|donkeys|asinine", lang))] <- "donkeys"
-  x_out[is.na(x_out) & (x %like% "ferret|musteline|Mustela putorius" | x %like% translate_AMR("ferret|ferrets|musteline", lang))] <- "ferrets"
-  x_out[is.na(x_out) & (x %like% "goat|caprine|Capra aegagrus" | x %like% translate_AMR("goat|goats|caprine", lang))] <- "goats"
-  x_out[is.na(x_out) & (x %like% "guinea pig|caviine|Cavia porcellus" | x %like% translate_AMR("guinea pig|guinea pigs|caviine", lang))] <- "guinea pigs"
-  x_out[is.na(x_out) & (x %like% "hamster|cricetine|Cricetinae" | x %like% translate_AMR("hamster|hamsters|cricetine", lang))] <- "hamsters"
-  x_out[is.na(x_out) & (x %like% "monkey|simian|Simia" | x %like% translate_AMR("monkey|monkeys|simian", lang))] <- "monkeys"
-  x_out[is.na(x_out) & (x %like% "mouse|murine|Mus musculus" | x %like% translate_AMR("mouse|mice|murine", lang))] <- "mice"
-  x_out[is.na(x_out) & (x %like% "pig|porcine|Sus scrofa" | x %like% translate_AMR("pig|pigs|porcine", lang))] <- "pigs"
-  x_out[is.na(x_out) & (x %like% "rabbit|leporine|Oryctolagus cuniculus" | x %like% translate_AMR("rabbit|rabbits|leporine", lang))] <- "rabbits"
-  x_out[is.na(x_out) & (x %like% "rat|ratine|Rattus" | x %like% translate_AMR("rat|rats|ratine", lang))] <- "rats"
-  x_out[is.na(x_out) & (x %like% "sheep|ovine|Ovis aries" | x %like% translate_AMR("sheep|sheeps|ovine", lang))] <- "sheep"
-  x_out[is.na(x_out) & (x %like% "snake|serpentine|Serpentes" | x %like% translate_AMR("snake|snakes|serpentine", lang))] <- "snakes"
-  x_out[is.na(x_out) & (x %like% "turkey|meleagrine|Meleagris gallopavo" | x %like% translate_AMR("turkey|turkeys|meleagrine", lang))] <- "turkey"
+  # Veterinary breakpoints - matching clinical_breakpoints$host (type == "animal")
+  x_out[is.na(x_out) & (x == "CAN" | x %like% "dog|canine|Canis lupus" | x %like% translate_AMR("dog|dogs|canine", lang))] <- "dogs"
+  x_out[is.na(x_out) & (x == "BOV" | x %like% "cattle|bovine|Bos taurus" | x %like% translate_AMR("cattle|bovine", lang))] <- "cattle"
+  x_out[is.na(x_out) & (x == "POR" | x %like% "swine|suida(e)?|Sus scrofa" | x %like% translate_AMR("swine|swines|porcine", lang))] <- "swine"
+  x_out[is.na(x_out) & (x == "FEL" | x %like% "cat|feline|Felis catus" | x %like% translate_AMR("cat|cats|feline", lang))] <- "cats"
+  x_out[is.na(x_out) & (x == "EQU" | x %like% "horse|equine|Equus ferus" | x %like% translate_AMR("horse|horses|equine", lang))] <- "horse"
+  x_out[is.na(x_out) & (x == "POUL" | x == "AVI" | x %like% "bird|chicken|poultry|avia|Gallus gallus" | x %like% translate_AMR("bird|birds|poultry", lang))] <- "poultry"
+  x_out[is.na(x_out) & (x == "AMP" | x %like% "amphibian|frog|toad" | x %like% translate_AMR("amphibian|frog|toad", lang))] <- "amphibian"
 
+  # Additional animals (not necessarily present in guidelines)
+  x_out[is.na(x_out) & (x == "CAM" | x %like% "camel|camelid|Camelus dromedarius" | x %like% translate_AMR("camel|camels|camelid", lang))] <- "camels"
+  x_out[is.na(x_out) & (x == "CER" | x %like% "deer|cervine|Cervidae" | x %like% translate_AMR("deer|deers|cervine", lang))] <- "deer"
+  x_out[is.na(x_out) & (x == "EQU" | x %like% "donkey|asinine|Equus africanus" | x %like% translate_AMR("donkey|donkeys|asinine", lang))] <- "donkeys"
+  x_out[is.na(x_out) & (x == "ROD" | x %like% "ferret|musteline|Mustela putorius" | x %like% translate_AMR("ferret|ferrets|musteline", lang))] <- "ferrets"
+  x_out[is.na(x_out) & (x == "CAP" | x %like% "goat|caprine|Capra aegagrus" | x %like% translate_AMR("goat|goats|caprine", lang))] <- "goats"
+  x_out[is.na(x_out) & (x == "LAG" | x %like% "rabbit|leporine|Oryctolagus cuniculus" | x %like% translate_AMR("rabbit|rabbits|leporine", lang))] <- "rabbits"
+  x_out[is.na(x_out) & (x == "ROD" | x %like% "guinea pig|caviine|Cavia porcellus" | x %like% translate_AMR("guinea pig|guinea pigs|caviine", lang))] <- "guinea pigs"
+  x_out[is.na(x_out) & (x == "ROD" | x %like% "hamster|cricetine|Cricetinae" | x %like% translate_AMR("hamster|hamsters|cricetine", lang))] <- "hamsters"
+  x_out[is.na(x_out) & (x == "PRI" | x %like% "monkey|simian|Simia" | x %like% translate_AMR("monkey|monkeys|simian", lang))] <- "monkeys"
+  x_out[is.na(x_out) & (x == "ROD" | x %like% "mouse|murine|Mus musculus" | x %like% translate_AMR("mouse|mice|murine", lang))] <- "mice"
+  x_out[is.na(x_out) & (x == "POR" | x %like% "pig|porcine|Sus scrofa" | x %like% translate_AMR("pig|pigs|porcine", lang))] <- "pigs"
+  x_out[is.na(x_out) & (x == "ROD" | x %like% "rat|ratine|Rattus" | x %like% translate_AMR("rat|rats|ratine", lang))] <- "rats"
+  x_out[is.na(x_out) & (x == "OVI" | x %like% "sheep|ovine|Ovis aries" | x %like% translate_AMR("sheep|sheeps|ovine", lang))] <- "sheep"
+  x_out[is.na(x_out) & (x == "REP" | x %like% "snake|serpentine|Serpentes" | x %like% translate_AMR("snake|snakes|serpentine", lang))] <- "snakes"
+  x_out[is.na(x_out) & (x == "AVI" | x %like% "turkey|meleagrine|Meleagris gallopavo" | x %like% translate_AMR("turkey|turkeys|meleagrine", lang))] <- "turkey"
+  x_out[is.na(x_out) & (x == "CET" | x %like% "cetacean|whale|dolphin|porpoise" | x %like% translate_AMR("cetacean|whale|dolphin|porpoise", lang))] <- "cetacean"
+  x_out[is.na(x_out) & (x == "PIN" | x %like% "pinniped|seal|sea lion|walrus" | x %like% translate_AMR("pinniped|seal|sea lion|walrus", lang))] <- "pinniped"
+  x_out[is.na(x_out) & (x == "PAC" | x %like% "pachyderm|elephant|hippopotamus|rhino" | x %like% translate_AMR("pachyderm|elephant|hippopotamus|rhino", lang))] <- "pachyderm"
+  x_out[is.na(x_out) & (x == "MAR" | x %like% "marsupial|kangaroo|koala" | x %like% translate_AMR("marsupial|kangaroo|koala", lang))] <- "marsupial"
 
+  # Standardise label for ECOFFs
   x_out[x_out == "ecoff"] <- "ECOFF"
   x_out
 }
@@ -1086,6 +1098,7 @@ as_sir_method <- function(method_short,
                           include_PKPD,
                           breakpoint_type,
                           host,
+                          language,
                           verbose,
                           info,
                           conserve_capped_values = NULL,
@@ -1108,6 +1121,7 @@ as_sir_method <- function(method_short,
   check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
+  language <- validate_language(language)
   meet_criteria(verbose, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(info, allow_class = "logical", has_length = 1, .call_depth = -2)
 
@@ -1167,7 +1181,7 @@ as_sir_method <- function(method_short,
     }
   }
   host.bak <- host
-  host <- convert_host(host)
+  host <- convert_host(host, lang = language)
   if (any(is.na(host) & !is.na(host.bak)) && isTRUE(info) && message_not_thrown_before("as.sir", "missing_hosts")) {
     warning_("The following animal host(s) could not be coerced: ", vector_and(host.bak[is.na(host) & !is.na(host.bak)]), immediate = TRUE)
     message() # new line

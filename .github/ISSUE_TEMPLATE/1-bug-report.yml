@@ -16,6 +16,24 @@ body:
       placeholder: Description
     validations:
       required: true
+  - type: textarea
+    id: reprex
+    attributes:
+      label: Minimal Reproducible Example (optional)
+      description: Please include a short R code snippet that reproduces the problem, if possible.
+      placeholder: 
+        e.g.
+        ```r
+        ab_name("amoxicillin/clavulanic acid", language = "es")
+        ```
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        > 💡 If you're not sure what's causing it, you can copy-paste your R session info using `sessionInfo()` or `devtools::session_info()` for us to help faster.
+        
+        Otherwise, please fill in the below AMR package version.
   - type: dropdown
     id: version
     attributes:
@@ -28,13 +46,3 @@ body:
         - One of the latest GitHub versions (2.1.1.9xxx)
     validations:
       required: true
-  - type: checkboxes
-    id: field-impact
-    attributes:
-      label: Impacted Field
-      description: Which field is probably impacted by this? You may select more than one, or choose none at all.
-      options:
-        - label: Medical (human) microbiology
-        - label: Veterinary microbiology
-        - label: Environmental microbiology
-

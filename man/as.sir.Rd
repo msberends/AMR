@@ -44,8 +44,8 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = interactive(), conserve_capped_values = NULL,
-  ...)
+  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
+  conserve_capped_values = NULL, ...)
 
 \method{as.sir}{disk}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -55,7 +55,8 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = interactive(), ...)
+  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
+  ...)
 
 \method{as.sir}{data.frame}(x, ..., col_mo = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -66,8 +67,8 @@ is_sir_eligible(x, threshold = 0.05)
   FALSE), include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  verbose = FALSE, info = interactive(), parallel = FALSE,
-  max_cores = -1, conserve_capped_values = NULL)
+  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
+  parallel = FALSE, max_cores = -1, conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 }
@@ -131,6 +132,8 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 \item{breakpoint_type}{The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
 \item{host}{A vector (or column name) with \link{character}s to indicate the host. Only useful for veterinary breakpoints, as it requires \code{breakpoint_type = "animal"}. The values can be any text resembling the animal species, even in any of the 28 supported languages of this package. For foreign languages, be sure to set the language with \code{\link[=set_AMR_locale]{set_AMR_locale()}} (though it will be automatically guessed based on the system language).}
+
+\item{language}{Language to convert values set in \code{host} when using animal breakpoints. Use one of these supported language names or \href{https://en.wikipedia.org/wiki/ISO_639-1}{ISO 639-1 codes}: English (en), Arabic (ar), Bengali (bn), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek (el), Hindi (hi), Indonesian (id), Italian (it), Japanese (ja), Korean (ko), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Spanish (es), Swahili (sw), Swedish (sv), Turkish (tr), Ukrainian (uk), Urdu (ur), or Vietnamese (vi).}
 
 \item{verbose}{A \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
 

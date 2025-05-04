@@ -36,7 +36,7 @@ AMR:::reset_all_thrown_messages()
 
 ----
 
-### Introduction
+## Introduction
 
 The `AMR` package is a peer-reviewed, [free and open-source](#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of [many different researchers](./authors.html) from around the globe to make this a successful and durable project!
 
@@ -44,7 +44,7 @@ This work was published in the Journal of Statistical Software (Volume 104(3); [
 
 After installing this package, R knows [**`r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species**](./reference/microorganisms.html) (updated June 2024) and all [**`r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial and antiviral drugs**](./reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))` and EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))` are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the [University Medical Center Groningen](https://www.umcg.nl).
 
-##### Used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
+### Used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;" /></a>
 
@@ -58,9 +58,9 @@ lang_txt <- AMR:::vector_and(paste(img, langs), sort = FALSE, quotes = FALSE)
 
 With the help of contributors from all corners of the world, the `AMR` package is available in `r lang_txt`. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
 
-### Practical examples
+## Practical examples
 
-#### Filtering and selecting data
+### Filtering and selecting data
 
 One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called [antimicrobial selectors](https://amr-for-r.org/reference/antimicrobial_selectors.html), which work in base R, `dplyr` and `data.table`.
 
@@ -82,7 +82,7 @@ example_isolates %>%
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antimicrobials](./reference/antimicrobials.html) in the `AMR` package make sure you get what you meant.
 
-#### Generating antibiograms
+### Generating antibiograms
 
 The `AMR` package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).
 
@@ -111,7 +111,7 @@ antibiogram(example_isolates,
             language = "uk") # Ukrainian
 ```
 
-#### Interpreting and plotting MIC and SIR values
+### Interpreting and plotting MIC and SIR values
 
 The `AMR` package allows interpretation of MIC and disk diffusion values based on CLSI and EUCAST. Moreover, the `ggplot2` package is extended with new scale functions, to allow plotting of log2-distributed MIC values and SIR values.
 
@@ -148,7 +148,7 @@ ggplot(data.frame(mic = some_mic_values,
   <img src="./plot_readme.png" style="width: 1400px; max-width: 100%;">
 </a>
 
-#### Calculating resistance per group
+### Calculating resistance per group
 
 For a manual approach, you can use the `resistance` or `susceptibility()` function:
 
@@ -188,7 +188,7 @@ out %>% set_ab_names()
 out %>% set_ab_names(property = "atc")
 ```
 
-### What else can you do with this package?
+## What else can you do with this package?
 
 This package was intended as a comprehensive toolbox for integrated AMR data analysis. This package can be used for:
 
@@ -199,7 +199,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
-  * Apply AMR function in predictive modelling ([tutorial](./articles/AMR_with_tidymodels.html))
+  * Apply AMR functions in predictive modelling ([tutorial](./articles/AMR_with_tidymodels.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
   * Getting properties for any antimicrobial (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
@@ -209,9 +209,9 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Machine reading the EUCAST and CLSI guidelines from 2011-2021 to translate MIC values and disk diffusion diameters to SIR ([link](./articles/datasets.html))
   * Principal component analysis for AMR ([tutorial](./articles/PCA.html))
 
-### Get this package
+## Get this package
 
-#### Latest official version
+### Latest official version
 
 [![CRAN](https://www.r-pkg.org/badges/version-ago/AMR)](https://cran.r-project.org/package=AMR)
 [![CRANlogs](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](https://cran.r-project.org/package=AMR)
@@ -226,7 +226,7 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 **Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest beta version.
 
-#### Latest beta version
+### Latest beta version
 
 [![check-old](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml)
 [![check-recent](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml)
@@ -244,11 +244,11 @@ install.packages("AMR", repos = "beta.amr-for-r.org")
 remotes::install_github("msberends/AMR")
 ```
 
-### Get started
+## Get started
 
 To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](./articles/).
 
-### Partners
+## Partners
 
 The initial development of this package was part of, related to, or made possible by the following non-profit organisations and initiatives:
 
@@ -260,7 +260,7 @@ The initial development of this package was part of, related to, or made possibl
   <a href="https://www.deutschland-nederland.eu" title="INTERREG"><img src="./logo_interreg.png" style="max-width: 200px;"></a>
 </div>
 
-### Copyright
+## Copyright
 
 This R package is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](./LICENSE-text.html). In a nutshell, this means that this package:
 

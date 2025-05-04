@@ -16,12 +16,11 @@ body:
       placeholder: Description
     validations:
       required: true
-  - type: checkboxes
-    id: field-impact
+  - type: textarea
+    id: use-case
     attributes:
-      label: Impacted Field
-      description: Which field is probably impacted by this? You may select more than one, or choose none at all.
-      options:
-        - label: Medical (human) microbiology
-        - label: Veterinary microbiology
-        - label: Environmental microbiology
+      label: Use Case (optional)
+      description: When or why would this be useful?
+      placeholder: Describe a situation where this would help you or others.
+    validations:
+      required: false

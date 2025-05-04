@@ -279,7 +279,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
 
     # length of input is quite long, and Levenshtein distance is only max 2
     if (nchar(x[i]) >= 10) {
-      levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name))
+      levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name,
+        ignore.case = FALSE,
+        fixed = TRUE,
+        costs = c(insertions = 1, deletions = 1, substitutions = 3),
+        counts = FALSE
+      ))
       if (any(levenshtein <= 2)) {
         found <- AMR_env$AB_lookup$ab[which(levenshtein <= 2)]
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -350,7 +355,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       ab_df$lev_name <- as.double(utils::adist(x[i], ab_df$generalised_name,
         ignore.case = FALSE,
         fixed = TRUE,
-        costs = c(insertions = 1, deletions = 1, substitutions = 2),
+        costs = c(insertions = 1, deletions = 1, substitutions = 3),
         counts = FALSE
       ))
       ab_df$lev_syn <- vapply(
@@ -362,7 +367,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
             min(as.double(utils::adist(x[i], y[nchar(y) >= 5],
               ignore.case = FALSE,
               fixed = TRUE,
-              costs = c(insertions = 1, deletions = 1, substitutions = 2),
+              costs = c(insertions = 1, deletions = 1, substitutions = 3),
               counts = FALSE
             )), na.rm = TRUE)
           )
@@ -374,7 +379,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
         ab_df$lev_trans <- as.double(utils::adist(x[i], ab_df$trans,
           ignore.case = FALSE,
           fixed = TRUE,
-          costs = c(insertions = 1, deletions = 1, substitutions = 2),
+          costs = c(insertions = 1, deletions = 1, substitutions = 3),
           counts = FALSE
         ))
       } else {
@@ -637,12 +642,17 @@ generalise_antibiotic_name <- function(x) {
   # spaces around non-characters must be removed: amox + clav -> amox clav
   x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
   x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
+  # rewrite ph to f, and th to t
+  x <- gsub("PH", "F", x, perl = TRUE)
+  x <- gsub("TH", "T", x, perl = TRUE)
   # remove hyphen after a starting "co"
   x <- gsub("^CO-", "CO", x, perl = TRUE)
   # replace operators with a space
   x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x, perl = TRUE)
   # replace more than 1 space
   x <- trimws(gsub(" +", " ", x, perl = TRUE))
+  # remove last couple of words if they are 1-3 characters
+  x <- gsub("( .{1,3})+$", "", x)
   # move HIGH to end
   x <- trimws(gsub("(.*) HIGH(.*)", "\\1\\2 HIGH", x, perl = TRUE))
   x
