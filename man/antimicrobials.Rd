@@ -12,15 +12,23 @@
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}
 \item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{\strong{This is a unique identifier.}}
 \item \code{group}\cr A short and concise group name, based on WHONET and WHOCC definitions
-\item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
+\item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02} (last updated May 4th, 2025):
 \item \code{atc_group1}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
 \item \code{abbr}\cr List of abbreviations as used in many countries, also for antimicrobial susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 179 drugs
+}
+
+ATC properties (last updated May 4th, 2025):
+\itemize{
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 180 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 153 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}
+}
+
+LOINC:
+\itemize{
 \item \code{loinc}\cr All codes associated with the name of the antimicrobial drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }
 }
@@ -45,7 +53,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 }
 \source{
 \itemize{
-\item World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://atcddd.fhi.no/atc_ddd_index/}
+\item WHO Collaborating Centre for Drug Statistics Methodology, Guidelines for ATC classification and DDD assignment, Oslo Accessed from \url{https://atcddd.fhi.no/atc_ddd_index/} on May 4th, 2025.
 \item Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Accessed from \url{https://loinc.org} on October 19th, 2023.
 \item European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
 }

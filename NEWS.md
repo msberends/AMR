@@ -1,4 +1,4 @@
-# AMR 2.1.1.9269
+# AMR 2.1.1.9270
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -6,38 +6,39 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## tl;dr
 
-- **Scope Expansion**: One Health support (Human + Veterinary + Environmental microbiology).
-- **Data Updates**: 
+- Scope Expansion: One Health support (Human + Veterinary + Environmental microbiology).
+- Data Updates: 
   - `antibiotics` renamed to `antimicrobials`.
   - Veterinary antimicrobials and WHOCC codes added.
   - MycoBank fungal taxonomy integrated (+20,000 fungi).
-- **Breakpoints & Interpretations**:
+- Breakpoints & Interpretations:
   - CLSI/EUCAST 2024-2025 breakpoints added; EUCAST 2025 default.
   - `as.sir()` supports NI/SDD levels; parallel computation enabled.
   - Custom S/I/R/SDD/NI definitions allowed.
   - Improved handling of capped MICs.
-- **New Tools & Functions**:
+- New Tools & Functions:
   - WISCA antibiogram support (`antibiogram()`, `wisca()`).
   - New ggplot2 extensions: `scale_*_mic()`, `scale_*_sir()`, `rescale_mic()`.
   - New utility functions: `top_n_microorganisms()`, `mo_group_members()`, `mic_p50()`, `mic_p90()`.
-- **Predictive Modelling**:
+- Predictive Modelling:
   - Full tidymodels compatibility for antimicrobial selectors.
   - Deprecated `resistance_predict()` and `sir_predict()`.
-- **Python Compatibility**: AMR R package now runs in Python.
-- **Selector Improvements**:
+- Python Compatibility: AMR R package now runs in Python.
+- Selector Improvements:
   * Added selectors (`isoxazolylpenicillins()`, `monobactams()`, `nitrofurans()`, `phenicols()`, `rifamycins()`, and `sulfonamides()`)
   - Selectors renamed from `ab_*` to `amr_*`; old names deprecated.
-- **MIC/Disks Handling**:
+- MIC/Disks Handling:
   - MIC strict comparisons, added levels.
   - Disk diffusion range expanded (0–50 mm).
-- **EUCAST Rules and MDROs**:
+- EUCAST Rules and MDROs:
   - EUCAST v12–v15 rules implemented.
   - Dutch MDRO 2024 guideline support in `mdro()`.
-- **Infrastructure**:
+- Infrastructure:
   - New website: https://amr-for-r.org.
   - Improved `vctrs` integration for tidyverse workflows.
   - Dropped SAS `.xpt` file support.
-- **Other Fixes & Enhancements**:
+- Other Fixes & Enhancements:
+  - Support for 8 new languages, adding to a total of 28 languages.
   - Faster microorganism identification.
   - Improved antimicrobial and MIC handling.
   - Extended documentation, additional contributors acknowledged.
@@ -59,7 +60,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * **Support for WISCA antibiograms**  
   * The `antibiogram()` function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in datasets with sparse data. A dedicated `wisca()` function is also available for easy usage.
 * **More global coverage of languages**
-  * Added full support for 7 new languages: Arabic, Bengali, Hindi, Indonesian, Swahili, Urdu, and Vietnamese. The `AMR` package is now available in 27 languages.
+  * Added full support for 8 new languages: Arabic, Bengali, Hindi, Indonesian, Korean, Swahili, Urdu, and Vietnamese. The `AMR` package is now available in 28 languages.
 * **Major update to fungal taxonomy and tools for mycologists**
   * MycoBank has now been integrated as the primary taxonomic source for fungi. The `microorganisms` data set has been enriched with new columns (`mycobank`, `mycobank_parent`, and `mycobank_renamed_to`) that provide detailed information for fungal species.
   * A remarkable addition of over 20,000 new fungal records
@@ -150,7 +151,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Added console colours support of `sir` class for Positron
 
 ### Other
-* New website domain: <https://amr-for-r.org>! The old domain (<http://amr-for-r.org/>) will remain to work.
+* New website domain: <https://amr-for-r.org>! The old domain will remain to work.
 * Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way
 * Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations
 * Added Prof. Kathryn Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes

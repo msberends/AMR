@@ -5,7 +5,7 @@
 
 - Provides an **all-in-one solution** for antimicrobial resistance (AMR)
   data analysis in a One Health approach
-- Peer-reviewed, used in over 175 countries, available in 27 languages
+- Peer-reviewed, used in over 175 countries, available in 28 languages
 - Generates **antibiograms** - traditional, combined, syndromic, and
   even WISCA
 - Provides the **full microbiological taxonomy** of ~79 000 distinct
@@ -75,7 +75,7 @@ research at the Faculty of Medical Sciences of the [University of
 Groningen](https://www.rug.nl) and the [University Medical Center
 Groningen](https://www.umcg.nl).
 
-##### Used in over 175 countries, available in 27 languages
+##### Used in over 175 countries, available in 28 languages
 
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;" /></a>
 
@@ -115,6 +115,8 @@ Indonesian,
 Italian,
 <img src="lang_ja.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;">
 Japanese,
+<img src="lang_ko.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;">
+Korean,
 <img src="lang_no.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;">
 Norwegian,
 <img src="lang_pl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;">
@@ -169,8 +171,10 @@ example_isolates %>%
 #> ℹ Using column 'mo' as input for mo_fullname()
 #> ℹ Using column 'mo' as input for mo_is_gram_negative()
 #> ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
+#>   Phenotypes' v1.2 (2023). This note will be shown once per session.
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
+#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
@@ -208,9 +212,9 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 ``` r
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
+#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
-#> ℹ 502 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
@@ -233,7 +237,6 @@ yield higher empiric coverage:
 antibiogram(example_isolates,
             antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
             mo_transform = "gramstain")
-#> ℹ 3 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -242,7 +245,7 @@ antibiogram(example_isolates,
 | Gram-positive | 86% (82-89%,N=345) | 98% (96-98%,N=1044) | 95% (93-97%,N=550) |
 
 Like many other functions in this package, `antibiogram()` comes with
-support for 27 languages that are often detected automatically based on
+support for 28 languages that are often detected automatically based on
 system language:
 
 ``` r
@@ -251,7 +254,6 @@ antibiogram(example_isolates,
             mo_transform = "gramstain",
             ab_transform = "name",
             language = "uk") # Ukrainian
-#> ℹ 3 combinations had less than minimum = 30 results and were ignored
 ```
 
 | Збудник       | Гентаміцин          | Тобраміцин         | Ципрофлоксацин     |
@@ -335,13 +337,15 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB' (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
+#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For polymyxins() using column 'COL' (colistin)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (minimum = 30).
+#> ! Introducing NA: only 23 results available for KAN in group: ward =
+#> "Outpatient" (minimum = 30).
 out
 #> # A tibble: 3 × 6
 #>   ward             GEN       TOB       AMK   KAN       COL

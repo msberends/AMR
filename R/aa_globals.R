@@ -132,6 +132,12 @@ TAXONOMY_VERSION <- list(
     accessed_date = as.Date("2023-10-19"),
     citation = "Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023).",
     url = "https://loinc.org"
+  ),
+  ATC_DDD = list(
+    name = "ATC/DDD Index",
+    accessed_date = as.Date("2025-05-04"),
+    citation = "WHO Collaborating Centre for Drug Statistics Methodology, Guidelines for ATC classification and DDD assignment, Oslo",
+    url = "https://atcddd.fhi.no/atc_ddd_index/"
   )
 )
 

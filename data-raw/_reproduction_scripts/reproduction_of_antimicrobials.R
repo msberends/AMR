@@ -916,8 +916,6 @@ antimicrobials <- antimicrobials %>%
 
 # update ATC codes from WHOCC website -------------------------------------
 
-# last time checked: 2024-02-22
-
 library(rvest)
 get_atc_table <- function(ab_name, type = "human") {
   if (type == "human") {
@@ -934,7 +932,7 @@ get_atc_table <- function(ab_name, type = "human") {
     # get the second form (the first form is a global website form)
     .[[2]] %>%
     # set the name input box to our search parameter
-    html_form_set(name = ab_name) %>%
+    html_form_set(name = ab_name, namesearchtype = "containing") %>%
     # hit Submit
     html_form_submit() %>%
     # read the resulting page
@@ -945,12 +943,18 @@ get_atc_table <- function(ab_name, type = "human") {
     html_table(header = FALSE)
 }
 
-get_atc_code <- function(ab_name) {
-  ab_name_full <- gsub("/", " and ", ab_name, fixed = TRUE)
+get_atc_code <- function(ab) {
+  ab_name <- ab_name(ab, language = NULL, tolower = TRUE)
+  # exception for imipenem
+  if (ab_name == "imipenem") ab_name <- "imipenem/cilastatin"
+  if (ab_name == "imipenem/relebactam") ab_name <- "imipenem/cilastatin/relebactam"
   if (ab_name %like% "/") {
     ab_name <- strsplit(ab_name, "[/ ]")[[1]]
   }
+  ab_name_full <- gsub(", and", " and", vector_and(ab_name, quotes = FALSE, sort = FALSE), fixed = TRUE)
   ab_name <- tolower(ab_name)
+  ab_name_and_second_part <- paste(ab_name[1], "and", paste(ab_name[-1], collapse = " "))
+  ab_name_and_second_part_reversed <- paste(paste(ab_name[-1], collapse = " "), "and", ab_name[1])
   ab_name_bla <- paste(ab_name[1], "and beta-lactamase inhibitor")
   atc_tbl_human <- get_atc_table(ab_name[1], type = "human")
   atc_tbl_vet <- get_atc_table(ab_name[1], type = "veterinary")
@@ -960,6 +964,10 @@ get_atc_code <- function(ab_name) {
     out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name)]
   } else if (ab_name_full %in% atc_tbl[[2]]) {
     out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_full)]
+  } else if (ab_name_and_second_part %in% atc_tbl[[2]]) {
+    out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_and_second_part)]
+  } else if (ab_name_and_second_part_reversed %in% atc_tbl[[2]]) {
+    out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_and_second_part_reversed)]
   } else if (ab_name_full %like% " and " && ab_name_bla %in% atc_tbl[[2]]) {
     out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_bla)]
   } else {
@@ -968,12 +976,16 @@ get_atc_code <- function(ab_name) {
   unique(out)
 }
 
-updated_atc <- lapply(seq_len(NROW(antimicrobials)),
+updated_atc <- lapply(seq_len(length(to_update)),
                       function(x) NA_character_)
 
+to_update <- 1:nrow(antimicrobials)
+# or just the empty ones:
+to_update <- which(sapply(antimicrobials$atc, length) == 0)
+
 # this takes around 10 minutes (some are skipped and go faster)
-for (i in seq_len(nrow(antimicrobials))) {
-  message(percentage(i / nrow(antimicrobials), digits = 1),
+for (i in to_update) {
+  message(percentage(i / length(updated_atc), digits = 1),
     " - Downloading ", antimicrobials$name[i],
     appendLF = FALSE
   )
@@ -989,12 +1001,12 @@ for (i in seq_len(nrow(antimicrobials))) {
 }
 
 updated_atc <- lapply(updated_atc, function(x) sort(x[!is.na(x)]))
-# duplicates
 antimicrobials$atc <- updated_atc
+# DO NOT FORGET TO UPDATE R/aa_globals.R!
+
 
 # update DDDs from WHOCC website ------------------------------------------
 
-# last time checked: 2024-02-22
 ddd_oral <- rep(NA_real_, nrow(antimicrobials))
 ddd_oral_units <- rep(NA_character_, nrow(antimicrobials))
 ddd_iv <- rep(NA_real_, nrow(antimicrobials))
@@ -1004,21 +1016,27 @@ for (i in seq_len(nrow(antimicrobials))) {
   on.exit(close(progress))
   progress$tick()
   atcs <- antimicrobials$atc[[i]]
-  if (!all(is.na(atcs))) {
-    for (j in seq_len(length(atcs))) {
-      # oral
-      if (is.na(ddd_oral[i])) {
-        ddd_oral[i] <- atc_online_ddd(atcs[j], administration = "O")
-        if (!is.na(ddd_oral[i])) {
-          ddd_oral_units[i] <- atc_online_ddd_units(atcs[j], administration = "O")
-        }
+  if (length(atcs) == 0) {
+    next
+  }
+  # only human DDDs
+  atcs <- atcs[atcs %unlike% "^Q"]
+  if (length(atcs) == 0) {
+    next
+  }
+  for (j in seq_len(length(atcs))) {
+    # oral
+    if (is.na(ddd_oral[i])) {
+      ddd_oral[i] <- atc_online_ddd(atcs[j], administration = "O")
+      if (!is.na(ddd_oral[i])) {
+        ddd_oral_units[i] <- atc_online_ddd_units(atcs[j], administration = "O")
       }
-      # parenteral
-      if (is.na(ddd_iv[i])) {
-        ddd_iv[i] <- atc_online_ddd(atcs[j], administration = "P")
-        if (!is.na(ddd_iv[i])) {
-          ddd_iv_units[i] <- atc_online_ddd_units(atcs[j], administration = "P")
-        }
+    }
+    # parenteral
+    if (is.na(ddd_iv[i])) {
+      ddd_iv[i] <- atc_online_ddd(atcs[j], administration = "P")
+      if (!is.na(ddd_iv[i])) {
+        ddd_iv_units[i] <- atc_online_ddd_units(atcs[j], administration = "P")
       }
     }
   }
@@ -1032,6 +1050,7 @@ antimicrobials$oral_ddd <- ddd_oral
 antimicrobials$oral_units <- ddd_oral_units
 antimicrobials$iv_ddd <- ddd_iv
 antimicrobials$iv_units <- ddd_iv_units
+# DO NOT FORGET TO UPDATE R/aa_globals.R!
 
 # Wrap up -----------------------------------------------------------------
 
@@ -1075,6 +1094,7 @@ for (i in 1:nrow(antimicrobials)) {
   # special cases
   if (antimicrobials$ab[i] == "VAN") syn <- syn[syn %unlike% "^tei?ch?o"]
   if (antimicrobials$ab[i] == "CLR") syn <- syn[syn %unlike% "^ery"]
+  # deliberately make empty fields NA: they are unknown at the moment
   antimicrobials[i, "atc"][[1]] <- ifelse(length(atc) == 0, list(NA_character_), list(atc))
   antimicrobials[i, "abbreviations"][[1]] <- ifelse(length(abb) == 0, list(NA_character_), list(abb))
   antimicrobials[i, "synonyms"][[1]] <- ifelse(length(syn) == 0, list(NA_character_), list(syn))

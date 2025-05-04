@@ -36,15 +36,21 @@
 #' - `cid`\cr Compound ID as found in PubChem. ***This is a unique identifier.***
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. ***This is a unique identifier.***
 #' - `group`\cr A short and concise group name, based on WHONET and WHOCC definitions
-#' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02`
+#' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02` (last updated `r documentation_date(TAXONOMY_VERSION$ATC_DDD$accessed_date)`):
 #' - `atc_group1`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like `"Macrolides, lincosamides and streptogramins"`
 #' - `atc_group2`\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like `"Macrolides"`
 #' - `abbr`\cr List of abbreviations as used in many countries, also for antimicrobial susceptibility testing (AST)
 #' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
+#'
+#' ATC properties (last updated `r documentation_date(TAXONOMY_VERSION$ATC_DDD$accessed_date)`):
+#'
 #' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment, currently available for `r sum(!is.na(AMR::antimicrobials$oral_ddd))` drugs
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(AMR::antimicrobials$iv_ddd))` drugs
 #' - `iv_units`\cr Units of `iv_ddd`
+#'
+#' LOINC:
+#'
 #' - `loinc`\cr All codes associated with the name of the antimicrobial drug from `r TAXONOMY_VERSION$LOINC$citation` Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
 #' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
@@ -70,7 +76,7 @@
 #' @inheritSection AMR Download Our Reference Data
 #' @source
 #'
-#' * World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://atcddd.fhi.no/atc_ddd_index/>
+#' * `r TAXONOMY_VERSION$ATC_DDD$citation` Accessed from <`r TAXONOMY_VERSION$ATC_DDD$url`> on `r documentation_date(TAXONOMY_VERSION$ATC_DDD$accessed_date)`.
 #'
 #' * `r TAXONOMY_VERSION$LOINC$citation` Accessed from <`r TAXONOMY_VERSION$LOINC$url`> on `r documentation_date(TAXONOMY_VERSION$LOINC$accessed_date)`.
 #'
