@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9269</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9270</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,79 +49,69 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.1.9269" id="amr-2119269">AMR 2.1.1.9269<a class="anchor" aria-label="anchor" href="#amr-2119269"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.1.9270" id="amr-2119270">AMR 2.1.1.9270<a class="anchor" aria-label="anchor" href="#amr-2119270"></a></h2>
 <p><em>(this beta version will eventually become v3.0. We’re happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using <a href="https://amr-for-r.org/#get-this-package">the instructions here</a>.)</em></p>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 <div class="section level3">
-<h3 id="tldr-2-1-1-9269">tl;dr<a class="anchor" aria-label="anchor" href="#tldr-2-1-1-9269"></a></h3>
-<ul><li>
-<strong>Scope Expansion</strong>: One Health support (Human + Veterinary + Environmental microbiology).</li>
-<li>
-<strong>Data Updates</strong>:
+<h3 id="tldr-2-1-1-9270">tl;dr<a class="anchor" aria-label="anchor" href="#tldr-2-1-1-9270"></a></h3>
+<ul><li>Scope Expansion: One Health support (Human + Veterinary + Environmental microbiology).</li>
+<li>Data Updates:
 <ul><li>
 <code>antibiotics</code> renamed to <code>antimicrobials</code>.</li>
 <li>Veterinary antimicrobials and WHOCC codes added.</li>
 <li>MycoBank fungal taxonomy integrated (+20,000 fungi).</li>
 </ul></li>
-<li>
-<strong>Breakpoints &amp; Interpretations</strong>:
+<li>Breakpoints &amp; Interpretations:
 <ul><li>CLSI/EUCAST 2024-2025 breakpoints added; EUCAST 2025 default.</li>
 <li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code> supports NI/SDD levels; parallel computation enabled.</li>
 <li>Custom S/I/R/SDD/NI definitions allowed.</li>
 <li>Improved handling of capped MICs.</li>
 </ul></li>
-<li>
-<strong>New Tools &amp; Functions</strong>:
+<li>New Tools &amp; Functions:
 <ul><li>WISCA antibiogram support (<code><a href="../reference/antibiogram.html">antibiogram()</a></code>, <code><a href="../reference/antibiogram.html">wisca()</a></code>).</li>
 <li>New ggplot2 extensions: <code>scale_*_mic()</code>, <code>scale_*_sir()</code>, <code><a href="../reference/as.mic.html">rescale_mic()</a></code>.</li>
 <li>New utility functions: <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>, <code><a href="../reference/mo_property.html">mo_group_members()</a></code>, <code><a href="../reference/as.mic.html">mic_p50()</a></code>, <code><a href="../reference/as.mic.html">mic_p90()</a></code>.</li>
 </ul></li>
-<li>
-<strong>Predictive Modelling</strong>:
+<li>Predictive Modelling:
 <ul><li>Full tidymodels compatibility for antimicrobial selectors.</li>
 <li>Deprecated <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> and <code><a href="../reference/resistance_predict.html">sir_predict()</a></code>.</li>
 </ul></li>
-<li>
-<strong>Python Compatibility</strong>: AMR R package now runs in Python.</li>
-<li>
-<strong>Selector Improvements</strong>:
+<li>Python Compatibility: AMR R package now runs in Python.</li>
+<li>Selector Improvements:
 <ul><li>Added selectors (<code><a href="../reference/antimicrobial_selectors.html">isoxazolylpenicillins()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">monobactams()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">nitrofurans()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">phenicols()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">rifamycins()</a></code>, and <code><a href="../reference/antimicrobial_selectors.html">sulfonamides()</a></code>)</li>
 <li>Selectors renamed from <code>ab_*</code> to <code>amr_*</code>; old names deprecated.</li>
 </ul></li>
-<li>
-<strong>MIC/Disks Handling</strong>:
+<li>MIC/Disks Handling:
 <ul><li>MIC strict comparisons, added levels.</li>
 <li>Disk diffusion range expanded (0–50 mm).</li>
 </ul></li>
-<li>
-<strong>EUCAST Rules and MDROs</strong>:
+<li>EUCAST Rules and MDROs:
 <ul><li>EUCAST v12–v15 rules implemented.</li>
 <li>Dutch MDRO 2024 guideline support in <code><a href="../reference/mdro.html">mdro()</a></code>.</li>
 </ul></li>
-<li>
-<strong>Infrastructure</strong>:
+<li>Infrastructure:
 <ul><li>New website: <a href="https://amr-for-r.org" class="uri">https://amr-for-r.org</a>.</li>
 <li>Improved <code>vctrs</code> integration for tidyverse workflows.</li>
 <li>Dropped SAS <code>.xpt</code> file support.</li>
 </ul></li>
-<li>
-<strong>Other Fixes &amp; Enhancements</strong>:
-<ul><li>Faster microorganism identification.</li>
+<li>Other Fixes &amp; Enhancements:
+<ul><li>Support for 8 new languages, adding to a total of 28 languages.</li>
+<li>Faster microorganism identification.</li>
 <li>Improved antimicrobial and MIC handling.</li>
 <li>Extended documentation, additional contributors acknowledged.</li>
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="full-changelog-2-1-1-9269">Full Changelog<a class="anchor" aria-label="anchor" href="#full-changelog-2-1-1-9269"></a></h3>
+<h3 id="full-changelog-2-1-1-9270">Full Changelog<a class="anchor" aria-label="anchor" href="#full-changelog-2-1-1-9270"></a></h3>
 <div class="section level4">
-<h4 id="breaking-2-1-1-9269">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9269"></a></h4>
+<h4 id="breaking-2-1-1-9270">Breaking<a class="anchor" aria-label="anchor" href="#breaking-2-1-1-9270"></a></h4>
 <ul><li>Dataset <code>antibiotics</code> has been renamed to <code>antimicrobials</code> as the data set contains more than just antibiotics. Using <code>antibiotics</code> will still work, but now returns a warning.</li>
 <li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over two years ago.</li>
 <li>Functions <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> and <code><a href="../reference/resistance_predict.html">sir_predict()</a></code> are now deprecated and will be removed in a future version. Use the <code>tidymodels</code> framework instead, for which we <a href="https://amr-for-r.org/articles/AMR_with_tidymodels.html">wrote a basic introduction</a>.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-2-1-1-9269">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9269"></a></h4>
+<h4 id="new-2-1-1-9270">New<a class="anchor" aria-label="anchor" href="#new-2-1-1-9270"></a></h4>
 <ul><li>
 <strong>One Health implementation</strong>
 <ul><li>Function <code><a href="../reference/as.sir.html">as.sir()</a></code> now has extensive support for veterinary breakpoints from CLSI. Use <code>breakpoint_type = "animal"</code> and set the <code>host</code> argument to a variable that contains animal species names.</li>
@@ -138,7 +128,7 @@
 </ul></li>
 <li>
 <strong>More global coverage of languages</strong>
-<ul><li>Added full support for 7 new languages: Arabic, Bengali, Hindi, Indonesian, Swahili, Urdu, and Vietnamese. The <code>AMR</code> package is now available in 27 languages.</li>
+<ul><li>Added full support for 8 new languages: Arabic, Bengali, Hindi, Indonesian, Korean, Swahili, Urdu, and Vietnamese. The <code>AMR</code> package is now available in 28 languages.</li>
 </ul></li>
 <li>
 <strong>Major update to fungal taxonomy and tools for mycologists</strong>
@@ -180,7 +170,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-2-1-1-9269">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9269"></a></h4>
+<h4 id="changed-2-1-1-9270">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-1-9270"></a></h4>
 <ul><li>SIR interpretation
 <ul><li>Support for parallel computing to greatly improve speed using the <code>parallel</code> package (part of base R). Use <code>as.sir(your_data, parallel = TRUE)</code> to run SIR interpretation using multiple cores.</li>
 <li>It is now possible to use column names for arguments <code>guideline</code>, <code>ab</code>, <code>mo</code>, and <code>uti</code>: <code>as.sir(..., ab = "column1", mo = "column2", uti = "column3")</code>. This greatly improves the flexibility for users.</li>
@@ -262,8 +252,8 @@
 <li>Added console colours support of <code>sir</code> class for Positron</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-2-1-1-9269">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9269"></a></h4>
-<ul><li>New website domain: <a href="https://amr-for-r.org" class="uri">https://amr-for-r.org</a>! The old domain (<a href="http://amr-for-r.org/" class="external-link uri">http://amr-for-r.org/</a>) will remain to work.</li>
+<h4 id="other-2-1-1-9270">Other<a class="anchor" aria-label="anchor" href="#other-2-1-1-9270"></a></h4>
+<ul><li>New website domain: <a href="https://amr-for-r.org" class="uri">https://amr-for-r.org</a>! The old domain will remain to work.</li>
 <li>Added Dr. Larisse Bolton and Aislinn Cook as contributors for their fantastic implementation of WISCA in a mathematically solid way</li>
 <li>Added Matthew Saab, Dr. Jordan Stull, and Prof. Javier Sanchez as contributors for their tremendous input on veterinary breakpoints and interpretations</li>
 <li>Added Prof. Kathryn Holt, Dr. Jane Hawkey, and Dr. Natacha Couto as contributors for their many suggestions, ideas and bugfixes</li>
@@ -273,7 +263,7 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="older-versions-2-1-1-9269">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9269"></a></h3>
+<h3 id="older-versions-2-1-1-9270">Older Versions<a class="anchor" aria-label="anchor" href="#older-versions-2-1-1-9270"></a></h3>
 <p>This changelog only contains changes from AMR v3.0 (March 2025) and later.</p>
 <ul><li>For prior v2 versions, please see <a href="https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md" class="external-link">our v2 archive</a>.</li>
 <li>For prior v1 versions, please see <a href="https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md" class="external-link">our v1 archive</a>.</li>

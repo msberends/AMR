@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9269</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9270</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@
 
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
-<dd><p>Language to coerce input values from any of the 27 supported languages - default to the system language if supported (see <code><a href="translate.html">get_AMR_locale()</a></code>).</p></dd>
+<dd><p>Language to coerce input values from any of the 28 supported languages - default to the system language if supported (see <code><a href="translate.html">get_AMR_locale()</a></code>).</p></dd>
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
@@ -185,7 +185,6 @@
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">set_ab_names()</span>: no atc found for column(s): "SXT" and "IPM"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           J01CE01 J01CF04 J01CF05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>  </span>
@@ -203,7 +202,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 37 more variables: J01CA04 &lt;sir&gt;, J01CR02 &lt;sir&gt;, J01CA01 &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01CR05 &lt;sir&gt;, J01DB04 &lt;sir&gt;, J01DE01 &lt;sir&gt;, J01DC02 &lt;sir&gt;, J01DC01 &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01DD01 &lt;sir&gt;, J01DD02 &lt;sir&gt;, J01DD04 &lt;sir&gt;, J01GB03 &lt;sir&gt;, J01GB01 &lt;sir&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01GB06 &lt;sir&gt;, J01GB04 &lt;sir&gt;, J01EA01 &lt;sir&gt;, SXT &lt;sir&gt;, J01XE01 &lt;sir&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01GB06 &lt;sir&gt;, J01GB04 &lt;sir&gt;, J01EA01 &lt;sir&gt;, J01EE01 &lt;sir&gt;, J01XE01 &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01XX01 &lt;sir&gt;, J01XX08 &lt;sir&gt;, J01MA02 &lt;sir&gt;, J01MA14 &lt;sir&gt;, J01XA01 &lt;sir&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   J01XA02 &lt;sir&gt;, J01AA07 &lt;sir&gt;, J01AA12 &lt;sir&gt;, J01AA02 &lt;sir&gt;, …</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>

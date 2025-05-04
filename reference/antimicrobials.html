@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9269</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9270</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,16 +70,16 @@
 <li><p><code>cid</code><br> Compound ID as found in PubChem. <em><strong>This is a unique identifier.</strong></em></p></li>
 <li><p><code>name</code><br> Official name as used by WHONET/EARS-Net or the WHO. <em><strong>This is a unique identifier.</strong></em></p></li>
 <li><p><code>group</code><br> A short and concise group name, based on WHONET and WHOCC definitions</p></li>
-<li><p><code>atc</code><br> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
+<li><p><code>atc</code><br> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code> (last updated May 4th, 2025):</p></li>
 <li><p><code>atc_group1</code><br> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></li>
 <li><p><code>atc_group2</code><br> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br> List of abbreviations as used in many countries, also for antimicrobial susceptibility testing (AST)</p></li>
 <li><p><code>synonyms</code><br> Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></li>
-<li><p><code>oral_ddd</code><br> Defined Daily Dose (DDD), oral treatment, currently available for 179 drugs</p></li>
+</ul><p>ATC properties (last updated May 4th, 2025):</p><ul><li><p><code>oral_ddd</code><br> Defined Daily Dose (DDD), oral treatment, currently available for 180 drugs</p></li>
 <li><p><code>oral_units</code><br> Units of <code>oral_ddd</code></p></li>
 <li><p><code>iv_ddd</code><br> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 153 drugs</p></li>
 <li><p><code>iv_units</code><br> Units of <code>iv_ddd</code></p></li>
-<li><p><code>loinc</code><br> All codes associated with the name of the antimicrobial drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use <code><a href="ab_property.html">ab_loinc()</a></code> to retrieve them quickly, see <code><a href="ab_property.html">ab_property()</a></code>.</p></li>
+</ul><p>LOINC:</p><ul><li><p><code>loinc</code><br> All codes associated with the name of the antimicrobial drug from Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Use <code><a href="ab_property.html">ab_loinc()</a></code> to retrieve them quickly, see <code><a href="ab_property.html">ab_property()</a></code>.</p></li>
 </ul></div>
 
 <div class="section">
@@ -103,7 +103,7 @@
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
 
-<ul><li><p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <a href="https://atcddd.fhi.no/atc_ddd_index/" class="external-link">https://atcddd.fhi.no/atc_ddd_index/</a></p></li>
+<ul><li><p>WHO Collaborating Centre for Drug Statistics Methodology, Guidelines for ATC classification and DDD assignment, Oslo Accessed from <a href="https://atcddd.fhi.no/atc_ddd_index/" class="external-link">https://atcddd.fhi.no/atc_ddd_index/</a> on May 4th, 2025.</p></li>
 <li><p>Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Accessed from <a href="https://loinc.org" class="external-link">https://loinc.org</a> on October 19th, 2023.</p></li>
 <li><p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href="https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm" class="external-link">https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm</a></p></li>
 </ul></div>
