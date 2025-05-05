@@ -282,7 +282,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name,
         ignore.case = FALSE,
         fixed = TRUE,
-        costs = c(insertions = 1, deletions = 1, substitutions = 3),
+        costs = c(insertions = 1, deletions = 1, substitutions = 2),
         counts = FALSE
       ))
       if (any(levenshtein <= 2)) {
@@ -355,7 +355,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       ab_df$lev_name <- as.double(utils::adist(x[i], ab_df$generalised_name,
         ignore.case = FALSE,
         fixed = TRUE,
-        costs = c(insertions = 1, deletions = 1, substitutions = 3),
+        costs = c(insertions = 1, deletions = 1, substitutions = 2),
         counts = FALSE
       ))
       ab_df$lev_syn <- vapply(
@@ -367,7 +367,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
             min(as.double(utils::adist(x[i], y[nchar(y) >= 5],
               ignore.case = FALSE,
               fixed = TRUE,
-              costs = c(insertions = 1, deletions = 1, substitutions = 3),
+              costs = c(insertions = 1, deletions = 1, substitutions = 2),
               counts = FALSE
             )), na.rm = TRUE)
           )
@@ -379,7 +379,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
         ab_df$lev_trans <- as.double(utils::adist(x[i], ab_df$trans,
           ignore.case = FALSE,
           fixed = TRUE,
-          costs = c(insertions = 1, deletions = 1, substitutions = 3),
+          costs = c(insertions = 1, deletions = 1, substitutions = 2),
           counts = FALSE
         ))
       } else {
@@ -651,8 +651,8 @@ generalise_antibiotic_name <- function(x) {
   x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x, perl = TRUE)
   # replace more than 1 space
   x <- trimws(gsub(" +", " ", x, perl = TRUE))
-  # remove last couple of words if they are 1-3 characters
-  x <- gsub("( .{1,3})+$", "", x)
+  # remove last couple of words if they numbers or units
+  x <- gsub(" ([0-9]{3,99}|U?M?C?G)+$", "", x)
   # move HIGH to end
   x <- trimws(gsub("(.*) HIGH(.*)", "\\1\\2 HIGH", x, perl = TRUE))
   x
