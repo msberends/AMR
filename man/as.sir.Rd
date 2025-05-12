@@ -249,7 +249,7 @@ The function \code{\link[=is.sir]{is.sir()}} detects if the input contains class
 
 The base R function \code{\link[=as.double]{as.double()}} can be used to retrieve quantitative values from a \code{sir} object: \code{"S"} = 1, \code{"I"}/\code{"SDD"} = 2, \code{"R"} = 3. All other values are rendered \code{NA} . \strong{Note:} Do not use \code{as.integer()}, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
 
-The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRUE} when a column contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R and/or NI and/or SDD), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
+The function \code{\link[=is_sir_eligible]{is_sir_eligible()}} returns \code{TRUE} when a column contains at most 5\% potentially invalid antimicrobial interpretations, and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 }
 
 \code{NA_sir_} is a missing value of the new \code{sir} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.

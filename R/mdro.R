@@ -354,7 +354,7 @@ mdro <- function(x = NULL,
         "row_number",
         "MDRO",
         "reason",
-        "columns_nonsusceptible"
+        "all_nonsusceptible_columns"
       )])
     } else {
       return(x$MDRO)
@@ -762,7 +762,7 @@ mdro <- function(x = NULL,
         ),
         stringsAsFactors = FALSE
       )
-      x[rows, "columns_nonsusceptible"] <<- vapply(
+      x[rows, "all_nonsusceptible_columns"] <<- vapply(
         FUN.VALUE = character(1),
         rows,
         function(row, group_vct = cols_ab) {
@@ -773,7 +773,7 @@ mdro <- function(x = NULL,
           )
           paste(
             sort(c(
-              unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ", fixed = TRUE)),
+              unlist(strsplit(x[row, "all_nonsusceptible_columns", drop = TRUE], ", ", fixed = TRUE)),
               names(cols_nonsus)[cols_nonsus]
             )),
             collapse = ", "
@@ -844,7 +844,7 @@ mdro <- function(x = NULL,
       )
 
       if (isTRUE(verbose)) {
-        x[rows, "columns_nonsusceptible"] <<- vapply(
+        x[rows, "all_nonsusceptible_columns"] <<- vapply(
           FUN.VALUE = character(1),
           rows,
           function(row, group_vct = lst_vector) {
@@ -891,7 +891,7 @@ mdro <- function(x = NULL,
   x$MDRO <- ifelse(!is.na(x$genus), 1, NA_integer_)
   x$row_number <- seq_len(nrow(x))
   x$reason <- NA_character_
-  x$columns_nonsusceptible <- ""
+  x$all_nonsusceptible_columns <- ""
 
   if (guideline$code == "cmi2012") {
     # CMI, 2012 ---------------------------------------------------------------
@@ -1948,7 +1948,7 @@ mdro <- function(x = NULL,
       "microorganism",
       "MDRO",
       "reason",
-      "columns_nonsusceptible"
+      "all_nonsusceptible_columns"
     ),
     drop = FALSE
     ]
@@ -2115,19 +2115,19 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
   }
 
-  columns_nonsusceptible <- as.data.frame(t(df[, is.sir(df), drop = FALSE] == "R"))
-  columns_nonsusceptible <- vapply(
+  all_nonsusceptible_columns <- as.data.frame(t(df[, is.sir(df), drop = FALSE] == "R"))
+  all_nonsusceptible_columns <- vapply(
     FUN.VALUE = character(1),
-    columns_nonsusceptible,
-    function(x) paste0(rownames(columns_nonsusceptible)[which(x)], collapse = " ")
+    all_nonsusceptible_columns,
+    function(x) paste0(rownames(all_nonsusceptible_columns)[which(x)], collapse = " ")
   )
-  columns_nonsusceptible[is.na(out)] <- NA_character_
+  all_nonsusceptible_columns[is.na(out)] <- NA_character_
 
   data.frame(
     row_number = seq_len(NROW(df)),
     MDRO = out,
     reason = reasons,
-    columns_nonsusceptible = columns_nonsusceptible,
+    all_nonsusceptible_columns = all_nonsusceptible_columns,
     stringsAsFactors = FALSE
   )
 }

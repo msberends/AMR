@@ -652,7 +652,7 @@ generalise_antibiotic_name <- function(x) {
   # replace more than 1 space
   x <- trimws(gsub(" +", " ", x, perl = TRUE))
   # remove last couple of words if they numbers or units
-  x <- gsub(" ([0-9]{3,99}|U?M?C?G)+$", "", x)
+  x <- gsub("( ([0-9]{3,}|U?M?C?G|L))+$", "", x, perl = TRUE)
   # move HIGH to end
   x <- trimws(gsub("(.*) HIGH(.*)", "\\1\\2 HIGH", x, perl = TRUE))
   x

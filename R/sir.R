@@ -161,7 +161,7 @@
 #'
 #' The base R function [as.double()] can be used to retrieve quantitative values from a `sir` object: `"S"` = 1, `"I"`/`"SDD"` = 2, `"R"` = 3. All other values are rendered `NA` . **Note:** Do not use `as.integer()`, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
 #'
-#' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R and/or NI and/or SDD), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
+#' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% potentially invalid antimicrobial interpretations, and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<https://www.eucast.org/newsiandr>).
 #'
@@ -387,7 +387,7 @@ as_sir_structure <- function(x,
                              method = NULL,
                              ref_tbl = NULL,
                              ref_breakpoints = NULL) {
-  out <- structure(
+  structure(
     factor(as.character(unlist(unname(x))),
       levels = c("S", "SDD", "I", "R", "NI"),
       ordered = TRUE
@@ -445,9 +445,9 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (all(x %in% c("S", "SDD", "I", "R", "NI", NA)) & !all(is.na(x))) {
+  } else if (!all(is.na(x)) && all(toupper(x) %in% c("S", "SDD", "I", "R", "NI", NA))) {
     return(TRUE)
-  } else if (!any(c("S", "SDD", "I", "R", "NI") %in% x, na.rm = TRUE) & !all(is.na(x))) {
+  } else if (!all(is.na(x)) && !any(c("S", "SDD", "I", "R", "NI") %in% gsub("([SIR])\\1+", "\\1", gsub("[^A-Z]", "", toupper(x), perl = TRUE), perl = TRUE), na.rm = TRUE)) {
     return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !x %in% c("", "-", "NULL")]
