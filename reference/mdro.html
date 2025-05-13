@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9274</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9275</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,14 +149,16 @@
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<ul><li><p>CMI 2012 paper - function <code>mdr_cmi2012()</code> or <code>mdro()</code>:<br>
+<ul><li><p>If <code>verbose</code> is set to <code>TRUE</code>:<br>
+A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns <code>row_number</code>, <code>microorganism</code>, <code>MDRO</code>, <code>reason</code>, <code>all_nonsusceptible_columns</code>, <code>guideline</code></p></li>
+<li><p>CMI 2012 paper - function <code>mdr_cmi2012()</code> or <code>mdro()</code>:<br>
 Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Multi-drug-resistant (MDR)</code> &lt; <code>Extensively drug-resistant (XDR)</code> &lt; <code>Pandrug-resistant (PDR)</code></p></li>
 <li><p>TB guideline - function <code>mdr_tb()</code> or <code>mdro(..., guideline = "TB")</code>:<br>
 Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Mono-resistant</code> &lt; <code>Poly-resistant</code> &lt; <code>Multi-drug-resistant</code> &lt; <code>Extensively drug-resistant</code></p></li>
 <li><p>German guideline - function <code>mrgn()</code> or <code>mdro(..., guideline = "MRGN")</code>:<br>
 Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>3MRGN</code> &lt; <code>4MRGN</code></p></li>
 <li><p>Everything else, except for custom guidelines:<br>
-Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Positive, unconfirmed</code> &lt; <code>Positive</code>. The value <code>"Positive, unconfirmed"</code> means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests</p></li>
+Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Positive, unconfirmed</code> &lt; <code>Positive</code>. The value <code>"Positive, unconfirmed"</code> means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. genotypic) tests</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
