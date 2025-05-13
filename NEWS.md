@@ -1,4 +1,4 @@
-# AMR 2.1.1.9274
+# AMR 2.1.1.9275
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -149,6 +149,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * MDRO determination (using `mdro()`)
   * Implemented the new Dutch national MDRO guideline (SRI-richtlijn BRMO, Nov 2024)
   * Added arguments `esbl`, `carbapenemase`, `mecA`, `mecC`, `vanA`, `vanB` to denote column names or logical values indicating presence of these genes (or production of their proteins)
+  * The Verbose Mode (`verbose = TRUE`) now includes the guideline name
 * Added console colours support of `sir` class for Positron
 
 ### Other

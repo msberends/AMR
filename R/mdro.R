@@ -141,6 +141,8 @@
 #' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
 #' @inheritSection as.sir Interpretation of SIR
 #' @return
+#' - If `verbose` is set to `TRUE`:\cr
+#'   A [data.frame] containing columns `row_number`, `microorganism`, `MDRO`, `reason`, `all_nonsusceptible_columns`, `guideline`
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr
 #'   Ordered [factor] with levels `Negative` < `Multi-drug-resistant (MDR)` < `Extensively drug-resistant (XDR)` < `Pandrug-resistant (PDR)`
 #' - TB guideline - function [mdr_tb()] or [`mdro(..., guideline = "TB")`][mdro()]:\cr
@@ -148,7 +150,7 @@
 #' - German guideline - function [mrgn()] or [`mdro(..., guideline = "MRGN")`][mdro()]:\cr
 #'   Ordered [factor] with levels `Negative` < `3MRGN` < `4MRGN`
 #' - Everything else, except for custom guidelines:\cr
-#'   Ordered [factor] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
+#'   Ordered [factor] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. genotypic) tests
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
 #' @export
@@ -349,17 +351,26 @@ mdro <- function(x = NULL,
         ))))
       }
     }
+
     if (isTRUE(verbose)) {
+      x$reason[is.na(x$reason)] <- "not covered by guideline"
+      x$microorganism <- NA_character_
+      x$guideline <- "Custom guideline"
       return(x[, c(
         "row_number",
+        "microorganism",
         "MDRO",
         "reason",
-        "all_nonsusceptible_columns"
-      )])
+        "all_nonsusceptible_columns",
+        "guideline"
+      ),
+      drop = FALSE
+      ])
     } else {
       return(x$MDRO)
     }
-  }
+  } # end of custom MDRO guideline
+
   guideline <- tolower(gsub("[^a-zA-Z0-9.]+", "", guideline))
   if (is.null(guideline)) {
     # default to the paper by Magiorakos et al. (2012)
@@ -772,10 +783,10 @@ mdro <- function(x = NULL,
             function(y) y %in% search_result
           )
           paste(
-            sort(c(
+            unique(sort(c(
               unlist(strsplit(x[row, "all_nonsusceptible_columns", drop = TRUE], ", ", fixed = TRUE)),
               names(cols_nonsus)[cols_nonsus]
-            )),
+            ))),
             collapse = ", "
           )
         }
@@ -849,7 +860,7 @@ mdro <- function(x = NULL,
           rows,
           function(row, group_vct = lst_vector) {
             cols_nonsus <- vapply(FUN.VALUE = logical(1), x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
-            paste(sort(names(cols_nonsus)[cols_nonsus]), collapse = ", ")
+            paste(unique(sort(names(cols_nonsus)[cols_nonsus])), collapse = ", ")
           }
         )
       }
@@ -1943,12 +1954,14 @@ mdro <- function(x = NULL,
     # format data set
     colnames(x)[colnames(x) == col_mo] <- "microorganism"
     x$microorganism <- mo_name(x$microorganism, language = NULL)
+    x$guideline <- paste0(guideline$author, " - ", guideline$name, ", ", guideline$version, ")")
     x[, c(
       "row_number",
       "microorganism",
       "MDRO",
       "reason",
-      "all_nonsusceptible_columns"
+      "all_nonsusceptible_columns",
+      "guideline"
     ),
     drop = FALSE
     ]
@@ -2119,7 +2132,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
   all_nonsusceptible_columns <- vapply(
     FUN.VALUE = character(1),
     all_nonsusceptible_columns,
-    function(x) paste0(rownames(all_nonsusceptible_columns)[which(x)], collapse = " ")
+    function(x) paste0(rownames(all_nonsusceptible_columns)[which(x)], collapse = ", ")
   )
   all_nonsusceptible_columns[is.na(out)] <- NA_character_
 

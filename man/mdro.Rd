@@ -72,6 +72,8 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE,
 }
 \value{
 \itemize{
+\item If \code{verbose} is set to \code{TRUE}:\cr
+A \link{data.frame} containing columns \code{row_number}, \code{microorganism}, \code{MDRO}, \code{reason}, \code{all_nonsusceptible_columns}, \code{guideline}
 \item CMI 2012 paper - function \code{\link[=mdr_cmi2012]{mdr_cmi2012()}} or \code{\link[=mdro]{mdro()}}:\cr
 Ordered \link{factor} with levels \code{Negative} < \code{Multi-drug-resistant (MDR)} < \verb{Extensively drug-resistant (XDR)} < \code{Pandrug-resistant (PDR)}
 \item TB guideline - function \code{\link[=mdr_tb]{mdr_tb()}} or \code{\link[=mdro]{mdro(..., guideline = "TB")}}:\cr
@@ -79,7 +81,7 @@ Ordered \link{factor} with levels \code{Negative} < \code{Mono-resistant} < \cod
 \item German guideline - function \code{\link[=mrgn]{mrgn()}} or \code{\link[=mdro]{mdro(..., guideline = "MRGN")}}:\cr
 Ordered \link{factor} with levels \code{Negative} < \verb{3MRGN} < \verb{4MRGN}
 \item Everything else, except for custom guidelines:\cr
-Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed} < \code{Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
+Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed} < \code{Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. genotypic) tests
 }
 }
 \description{
