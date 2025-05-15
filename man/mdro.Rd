@@ -19,7 +19,7 @@
 See the supported guidelines above for the \link{list} of publications used for this function.
 }
 \usage{
-mdro(x = NULL, guideline = "CMI2012", col_mo = NULL, esbl = NA,
+mdro(x = NULL, guideline = "CMI 2012", col_mo = NULL, esbl = NA,
   carbapenemase = NA, mecA = NA, mecC = NA, vanA = NA, vanB = NA,
   info = interactive(), pct_required_classes = 0.5, combine_SI = TRUE,
   verbose = FALSE, only_sir_columns = any(is.sir(x)), ...)
@@ -100,16 +100,16 @@ For the \code{pct_required_classes} argument, values above 1 will be divided by 
 
 Currently supported guidelines are (case-insensitive):
 \itemize{
-\item \code{guideline = "CMI2012"} (default)
+\item \code{guideline = "CMI 2012"} (default)
 
 Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\doi{10.1111/j.1469-0691.2011.03570.x})
-\item \code{guideline = "EUCAST3.3"} (or simply \code{guideline = "EUCAST"})
+\item \code{guideline = "EUCAST 3.3"} (or simply \code{guideline = "EUCAST"})
 
 The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf}{link})
-\item \code{guideline = "EUCAST3.2"}
+\item \code{guideline = "EUCAST 3.2"}
 
 The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{link})
-\item \code{guideline = "EUCAST3.1"}
+\item \code{guideline = "EUCAST 3.1"}
 
 The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
 \item \code{guideline = "TB"}
@@ -118,7 +118,7 @@ The international guideline for multi-drug resistant tuberculosis - World Health
 \item \code{guideline = "MRGN"}
 
 The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7; \doi{10.1186/s13756-015-0047-6}
-\item \code{guideline = "BRMO"}
+\item \code{guideline = "BRMO 2024"} (or simply \code{guideline = "BRMO"})
 
 The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" (\href{https://www.sri-richtlijnen.nl/brmo}{link})
 

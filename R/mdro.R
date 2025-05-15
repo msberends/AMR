@@ -56,19 +56,19 @@
 #'
 #' Currently supported guidelines are (case-insensitive):
 #'
-#' * `guideline = "CMI2012"` (default)
+#' * `guideline = "CMI 2012"` (default)
 #'
 #'   Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\doi{10.1111/j.1469-0691.2011.03570.x})
 #'
-#' * `guideline = "EUCAST3.3"` (or simply `guideline = "EUCAST"`)
+#' * `guideline = "EUCAST 3.3"` (or simply `guideline = "EUCAST"`)
 #'
 #'   The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf))
 #'
-#' * `guideline = "EUCAST3.2"`
+#' * `guideline = "EUCAST 3.2"`
 #'
 #'   The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf))
 #'
-#' * `guideline = "EUCAST3.1"`
+#' * `guideline = "EUCAST 3.1"`
 #'
 #'   The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf))
 #'
@@ -80,7 +80,7 @@
 #'
 #'   The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7; \doi{10.1186/s13756-015-0047-6}
 #'
-#' * `guideline = "BRMO"`
+#' * `guideline = "BRMO 2024"` (or simply `guideline = "BRMO"`)
 #'
 #'   The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" ([link](https://www.sri-richtlijnen.nl/brmo))
 #'
@@ -183,7 +183,7 @@
 #' }
 #' }
 mdro <- function(x = NULL,
-                 guideline = "CMI2012",
+                 guideline = "CMI 2012",
                  col_mo = NULL,
                  esbl = NA,
                  carbapenemase = NA,
@@ -220,8 +220,10 @@ mdro <- function(x = NULL,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
 
 
-  if (!isTRUE(only_sir_columns) && (!any(is.sir(x)) || !any(is_sir_eligible(x)))) {
-    stop_("There were no possible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
+  if (isTRUE(only_sir_columns) && !any(is.sir(x))) {
+    stop_("There were no SIR columns found in the data set, despite `only_sir_columns` being `TRUE`. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
+  } else if (!isTRUE(only_sir_columns) && !any(is.sir(x)) && !any(is_sir_eligible(x))) {
+    stop_("There were no eligible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
   }
 
   # get gene values as TRUE/FALSE
@@ -382,14 +384,15 @@ mdro <- function(x = NULL,
     # turn into latest EUCAST guideline
     guideline <- "eucast3.3"
   }
-  if (guideline == "nl") {
-    guideline <- "brmo"
+  if (guideline %in% c("nl", "brmo")) {
+    # turn into latest BRMO guideline
+    guideline <- "brmo2024"
   }
   if (guideline == "de") {
     guideline <- "mrgn"
   }
   stop_ifnot(
-    guideline %in% c("brmo", "mrgn", "eucast3.1", "eucast3.2", "eucast3.3", "tb", "cmi2012"),
+    guideline %in% c("brmo2017", "brmo2024", "mrgn", "eucast3.1", "eucast3.2", "eucast3.3", "tb", "cmi2012"),
     "invalid guideline: ", guideline.bak
   )
   guideline <- list(code = guideline)
@@ -447,7 +450,7 @@ mdro <- function(x = NULL,
     guideline$version <- NA_character_
     guideline$source_url <- paste0("Antimicrobial Resistance and Infection Control 4:7, 2015; ", font_url("https://doi.org/10.1186/s13756-015-0047-6", "doi: 10.1186/s13756-015-0047-6"))
     guideline$type <- "MRGNs"
-  } else if (guideline$code == "brmo") {
+  } else if (guideline$code == "brmo2024") {
     combine_SI <- TRUE # I must not be considered resistant
     guideline$name <- "Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "Samenwerkingsverband Richtlijnen Infectiepreventie (SRI)"
@@ -1520,7 +1523,7 @@ mdro <- function(x = NULL,
     x[which(x$MDRO == 3), "reason"] <- "4MRGN"
   }
 
-  if (guideline$code == "brmo") {
+  if (guideline$code == "brmo2024") {
     # Netherlands 2024 --------------------------------------------------------
     aminoglycosides <- c(GEN, TOB, AMK) # note 4: gentamicin or tobramycin or amikacin
     aminoglycosides_serratia_marcescens <- GEN # note 4: TOB and AMK do not count towards S. marcescens
@@ -2189,7 +2192,7 @@ mdr_cmi2012 <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = F
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "CMI2012", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "CMI 2012", ...)
 }
 
 #' @rdname mdro
