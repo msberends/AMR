@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9276</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9277</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mdro</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, guideline <span class="op">=</span> <span class="st">"CMI2012"</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, esbl <span class="op">=</span> <span class="cn">NA</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mdro</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, guideline <span class="op">=</span> <span class="st">"CMI 2012"</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, esbl <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  carbapenemase <span class="op">=</span> <span class="cn">NA</span>, mecA <span class="op">=</span> <span class="cn">NA</span>, mecC <span class="op">=</span> <span class="cn">NA</span>, vanA <span class="op">=</span> <span class="cn">NA</span>, vanB <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, pct_required_classes <span class="op">=</span> <span class="fl">0.5</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -172,20 +172,20 @@ Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">facto
 
 
 
-<p>Currently supported guidelines are (case-insensitive):</p><ul><li><p><code>guideline = "CMI2012"</code> (default)</p>
+<p>Currently supported guidelines are (case-insensitive):</p><ul><li><p><code>guideline = "CMI 2012"</code> (default)</p>
 <p>Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href="https://doi.org/10.1111/j.1469-0691.2011.03570.x" class="external-link">doi:10.1111/j.1469-0691.2011.03570.x</a>
 )</p></li>
-<li><p><code>guideline = "EUCAST3.3"</code> (or simply <code>guideline = "EUCAST"</code>)</p>
+<li><p><code>guideline = "EUCAST 3.3"</code> (or simply <code>guideline = "EUCAST"</code>)</p>
 <p>The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf" class="external-link">link</a>)</p></li>
-<li><p><code>guideline = "EUCAST3.2"</code></p>
+<li><p><code>guideline = "EUCAST 3.2"</code></p>
 <p>The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf" class="external-link">link</a>)</p></li>
-<li><p><code>guideline = "EUCAST3.1"</code></p>
+<li><p><code>guideline = "EUCAST 3.1"</code></p>
 <p>The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf" class="external-link">link</a>)</p></li>
 <li><p><code>guideline = "TB"</code></p>
 <p>The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href="https://www.who.int/publications/i/item/9789241548809" class="external-link">link</a>)</p></li>
 <li><p><code>guideline = "MRGN"</code></p>
 <p>The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7; <a href="https://doi.org/10.1186/s13756-015-0047-6" class="external-link">doi:10.1186/s13756-015-0047-6</a></p></li>
-<li><p><code>guideline = "BRMO"</code></p>
+<li><p><code>guideline = "BRMO 2024"</code> (or simply <code>guideline = "BRMO"</code>)</p>
 <p>The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" (<a href="https://www.sri-richtlijnen.nl/brmo" class="external-link">link</a>)</p>
 <p>Also:</p><ul><li><p><code>guideline = "BRMO 2017"</code></p>
 <p>The former Dutch national guideline - Werkgroep Infectiepreventie (WIP), RIVM, last revision as of 2017: "Bijzonder Resistente Micro-Organismen (BRMO)"</p></li>
