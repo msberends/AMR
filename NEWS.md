@@ -1,4 +1,4 @@
-# AMR 2.1.1.9275
+# AMR 2.1.1.9276
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -136,6 +136,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Updated all antimicrobial DDDs from WHOCC
 * Fix for using a manual value for `mo_transform` in `antibiogram()`
 * Fixed a bug for when `antibiogram()` returns an empty data set
+* Argument `only_sir_columns` now defaults to `TRUE` if any column of a data set contains a class 'sir' (functions `eucast_rules()`, `key_antimicrobials()`, `mdro()`, etc.)
 * Added Sensititre codes for animals, antimicrobials and microorganisms
 * Fix for mapping 'high level' antimicrobials in `as.ab()` (amphotericin B-high, gentamicin-high, kanamycin-high, streptomycin-high, tobramycin-high)
 * Improved overall algorithm of `as.ab()` for better performance and accuracy, including the new function `as_reset_session()` to remove earlier coercions.

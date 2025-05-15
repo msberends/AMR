@@ -711,40 +711,6 @@ format_included_data_number <- function(data) {
   paste0(ifelse(rounder == 0, "", "~"), format(round(n, rounder), decimal.mark = ".", big.mark = " "))
 }
 
-# for eucast_rules() and mdro(), creates markdown output with URLs and names
-create_eucast_ab_documentation <- function() {
-  x <- trimws(unique(toupper(unlist(strsplit(EUCAST_RULES_DF$then_change_these_antibiotics, ",", fixed = TRUE)))))
-  ab <- character()
-  for (val in x) {
-    if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
-      # antimicrobial group names, as defined in data-raw/_pre_commit_checks.R, such as `CARBAPENEMS`
-      val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
-    } else if (val %in% AMR_env$AB_lookup$ab) {
-      # separate drugs, such as `AMX`
-      val <- as.ab(val)
-    } else {
-      val <- as.sir(NA)
-    }
-    ab <- c(ab, val)
-  }
-  ab <- unique(ab)
-  atcs <- ab_atc(ab, only_first = TRUE)
-  # only keep ABx with an ATC code:
-  ab <- ab[!is.na(atcs)]
-  atcs <- atcs[!is.na(atcs)]
-
-  # sort all vectors on name:
-  ab_names <- ab_name(ab, language = NULL, tolower = TRUE)
-  ab <- ab[order(ab_names)]
-  atcs <- atcs[order(ab_names)]
-  ab_names <- ab_names[order(ab_names)]
-  # create the text:
-  atc_txt <- paste0("[", atcs, "](", ab_url(ab), ")")
-  out <- paste0(ab_names, " (`", ab, "`, ", atc_txt, ")", collapse = ", ")
-  substr(out, 1, 1) <- toupper(substr(out, 1, 1))
-  out
-}
-
 vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ") {
   # makes unique and sorts, and this also removed NAs
   v <- unique(v)
@@ -983,7 +949,8 @@ ascertain_sir_classes <- function(x, obj_name) {
     warning_(
       "the data provided in argument `", obj_name,
       "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
-      "See `?as.sir`."
+      "See `?as.sir`.",
+      immediate = TRUE
     )
     sirs_eligible <- is_sir_eligible(x)
     for (col in colnames(x)[sirs_eligible]) {

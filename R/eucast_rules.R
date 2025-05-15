@@ -70,7 +70,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param ... Column name of an antimicrobial, see section *Antimicrobials* below.
 #' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
 #' @param administration Route of administration, either `r vector_or(dosage$administration)`.
-#' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
+#' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
 #' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
 #' @param overwrite A [logical] indicating whether to overwrite existing SIR values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
 #' @inheritParams first_isolate
@@ -102,11 +102,9 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `eucast_rules(..., rules = "all")`. You can also set the package option [`AMR_eucastrules`][AMR-options], i.e. run `options(AMR_eucastrules = "all")`.
 #' @section Antimicrobials:
-#' To define antimicrobials column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
+#' To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use [guess_ab_col()] to find them.
 #'
-#' The following antimicrobials are eligible for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://atcddd.fhi.no/atc/structure_and_principles/))', sorted alphabetically:
-#'
-#' `r create_eucast_ab_documentation()`
+#' To manually specify a column, provide its name (case-insensitive) as an argument, e.g. `AMX = "amoxicillin"`. To skip a specific antimicrobial, set it to `NULL`, e.g. `TIC = NULL` to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
@@ -171,7 +169,7 @@ eucast_rules <- function(x,
                          version_expected_phenotypes = 1.2,
                          version_expertrules = 3.3,
                          ampc_cephalosporin_resistance = NA,
-                         only_sir_columns = FALSE,
+                         only_sir_columns = any(is.sir(x)),
                          custom_rules = NULL,
                          overwrite = FALSE,
                          ...) {

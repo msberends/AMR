@@ -37,7 +37,7 @@
 #' @param gram_negative Names of antibiotic drugs for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs.
 #' @param gram_positive Names of antibiotic drugs for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs.
 #' @param antifungal Names of antifungal drugs for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antifungal drugs.
-#' @param only_sir_columns A [logical] to indicate whether only columns must be included that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
+#' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
 #' @param ... Ignored, only in place to allow future extensions.
 #' @details
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
@@ -134,7 +134,7 @@ key_antimicrobials <- function(x = NULL,
                                  "anidulafungin", "caspofungin", "fluconazole",
                                  "miconazole", "nystatin", "voriconazole"
                                ),
-                               only_sir_columns = FALSE,
+                               only_sir_columns = any(is.sir(x)),
                                ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)
@@ -246,7 +246,7 @@ key_antimicrobials <- function(x = NULL,
 #' @rdname key_antimicrobials
 #' @export
 all_antimicrobials <- function(x = NULL,
-                               only_sir_columns = FALSE,
+                               only_sir_columns = any(is.sir(x)),
                                ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)

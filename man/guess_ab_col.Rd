@@ -14,7 +14,7 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE,
 
 \item{verbose}{A \link{logical} to indicate whether additional info should be printed.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE} if no columns of \code{x} have a class \link[=as.sir]{sir}.}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.

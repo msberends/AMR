@@ -131,7 +131,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
   version_expected_phenotypes = 1.2, ...)
 }
 \arguments{
-\item{only_sir_columns}{A \link{logical} to indicate whether only columns of class \code{sir} must be selected (default is \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}.}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE}.}
 
 \item{only_treatable}{A \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (default is \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE}).}
 

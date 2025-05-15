@@ -33,7 +33,7 @@
 #' @param x A [data.frame].
 #' @param search_string A text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`.
 #' @param verbose A [logical] to indicate whether additional info should be printed.
-#' @param only_sir_columns A [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `sir` (see [as.sir()]) on beforehand (default is `FALSE`).
+#' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
 #' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antimicrobials] data set for any column containing a name or code of that antibiotic.
 #' @return A column name of `x`, or `NULL` when no result is found.
 #' @export
@@ -211,7 +211,7 @@ get_column_abx <- function(x,
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (anyNA(newnames)) {
       if (isTRUE(info)) {
-        message_(" WARNING", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+        message_(paste0(font_yellow(font_bold(" WARNING: ")), "some columns returned `NA` for `as.ab()`"), as_note = FALSE)
       }
       warning_("Invalid antibiotic reference(s): ", vector_and(names(dots)[is.na(newnames)], quotes = FALSE),
         call = FALSE,
@@ -254,7 +254,10 @@ get_column_abx <- function(x,
     out <- out[order(names(out), out)]
   }
 
+  dups <- FALSE
+
   if (return_all == FALSE) {
+    dups <- names(out)[names(out) %in% names(out)[duplicated(names(out))]]
     # only keep the first hits, no duplicates
     duplicates <- c(out[duplicated(names(out))], out[duplicated(unname(out))])
     if (length(duplicates) > 0) {
@@ -264,6 +267,8 @@ get_column_abx <- function(x,
     if (isTRUE(info)) {
       if (all_okay == TRUE) {
         message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+      } else if (!isFALSE(dups)) {
+        message_(paste0(font_yellow(font_bold(" WARNING: ")), "some results from `as.ab()` are duplicated: ", vector_and(dups, quotes = "`")), as_note = FALSE)
       } else {
         message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
       }

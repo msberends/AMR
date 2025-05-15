@@ -195,13 +195,14 @@ mdro <- function(x = NULL,
                  pct_required_classes = 0.5,
                  combine_SI = TRUE,
                  verbose = FALSE,
-                 only_sir_columns = FALSE,
+                 only_sir_columns = any(is.sir(x)),
                  ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)
     # is also a fix for using a grouped df as input (i.e., a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
+
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(guideline, allow_class = c("list", "character"), allow_NULL = TRUE)
   if (!is.list(guideline)) meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -218,7 +219,8 @@ mdro <- function(x = NULL,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
 
-  if (!any(is_sir_eligible(x))) {
+
+  if (!isTRUE(only_sir_columns) && (!any(is.sir(x)) || !any(is_sir_eligible(x)))) {
     stop_("There were no possible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
   }
 
@@ -600,6 +602,7 @@ mdro <- function(x = NULL,
   CTX <- cols_ab["CTX"]
   CTZ <- cols_ab["CTZ"]
   CXM <- cols_ab["CXM"]
+  CZA <- cols_ab["CZA"]
   CZD <- cols_ab["CZD"]
   CZO <- cols_ab["CZO"]
   CZX <- cols_ab["CZX"]
@@ -697,7 +700,6 @@ mdro <- function(x = NULL,
   abx_tb <- abx_tb[!is.na(abx_tb)]
   stop_if(guideline$code == "tb" & length(abx_tb) == 0, "no antimycobacterials found in data set")
   # nolint end
-
   if (isTRUE(combine_SI)) {
     search_result <- "R"
   } else {
@@ -1618,28 +1620,24 @@ mdro <- function(x = NULL,
     )
 
     # Pseudomonas aeruginosa
-    if (ab_missing(PIP) && !ab_missing(TZP)) {
-      # take pip/tazo if just pip is not available - many labs only test for pip/tazo because of availability on a Vitek card
-      PIP <- TZP
-    }
     x$psae <- 0
-    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, TOB) == "R" | col_values(x, AMK) == "R"), 1, 0)
-    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, IPM) == "R" | col_values(x, MEM) == "R"), 1, 0)
-    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, PIP) == "R"), 1, 0)
-    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CAZ) == "R"), 1, 0)
-    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CIP) == "R" | col_values(x, NOR) == "R" | col_values(x, LVX) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, TOB) == "R") | NA_as_FALSE(col_values(x, AMK) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, IPM) == "R") | NA_as_FALSE(col_values(x, MEM) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, PIP) == "R") | NA_as_FALSE(col_values(x, TZP) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CAZ) == "R") | NA_as_FALSE(col_values(x, CZA) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CIP) == "R") | NA_as_FALSE(col_values(x, NOR) == "R") | NA_as_FALSE(col_values(x, LVX) == "R"), 1, 0)
     trans_tbl(
-      3,
+      1,
       rows = which(x$genus == "Pseudomonas" & x$species == "aeruginosa"),
-      cols = c(CAZ, CIP, GEN, IPM, MEM, TOB, PIP),
+      cols = "any",
       any_all = "all", # this will set all negatives to "guideline criteria not met" instead of "not covered by guideline"
-      reason = "P. aeruginosa: at least 3 classes contain R"
+      reason = "guideline criteria not met"
     )
     trans_tbl(
       3,
       rows = which(x$genus == "Pseudomonas" & x$species == "aeruginosa" & x$psae >= 3),
-      cols = c(CAZ, CIP, GEN, IPM, MEM, TOB, PIP),
-      any_all = "any", # this is the actual one, changing the ones with x$psae >= 3
+      cols = "any",
+      any_all = "any", # this is the actual one, overwriting the ones with x$psae >= 3
       reason = "P. aeruginosa: at least 3 classes contain R"
     )
 
@@ -2147,7 +2145,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
 
 #' @rdname mdro
 #' @export
-brmo <- function(x = NULL, only_sir_columns = FALSE, ...) {
+brmo <- function(x = NULL, only_sir_columns = any(is.sir(x)), ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
@@ -2160,7 +2158,7 @@ brmo <- function(x = NULL, only_sir_columns = FALSE, ...) {
 
 #' @rdname mdro
 #' @export
-mrgn <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
+mrgn <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
@@ -2172,7 +2170,7 @@ mrgn <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
 
 #' @rdname mdro
 #' @export
-mdr_tb <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
+mdr_tb <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
@@ -2184,7 +2182,7 @@ mdr_tb <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
 
 #' @rdname mdro
 #' @export
-mdr_cmi2012 <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
+mdr_cmi2012 <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
@@ -2196,7 +2194,7 @@ mdr_cmi2012 <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...
 
 #' @rdname mdro
 #' @export
-eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = FALSE, verbose = FALSE, ...) {
+eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(

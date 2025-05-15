@@ -286,6 +286,10 @@ test_that("test-mdro.R", {
     colnames(suppressWarnings(mdro(example_isolates[1:10, ], verbose = TRUE, info = FALSE))),
     c("row_number", "microorganism", "MDRO", "reason", "all_nonsusceptible_columns", "guideline")
   )
+  expect_equal(
+    colnames(suppressWarnings(mdro(example_isolates[1:10, ], verbose = TRUE, info = FALSE, guideline = custom_mdro_guideline(AMX == "R" ~ "Positive")))),
+    c("row_number", "microorganism", "MDRO", "reason", "all_nonsusceptible_columns", "guideline")
+  )
 
   # print groups
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {

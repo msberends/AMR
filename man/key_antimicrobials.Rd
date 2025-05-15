@@ -13,9 +13,9 @@ key_antimicrobials(x = NULL, col_mo = NULL, universal = c("ampicillin",
   "ceftazidime", "meropenem"), gram_positive = c("vancomycin", "teicoplanin",
   "tetracycline", "erythromycin", "oxacillin", "rifampin"),
   antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole",
-  "nystatin", "voriconazole"), only_sir_columns = FALSE, ...)
+  "nystatin", "voriconazole"), only_sir_columns = any(is.sir(x)), ...)
 
-all_antimicrobials(x = NULL, only_sir_columns = FALSE, ...)
+all_antimicrobials(x = NULL, only_sir_columns = any(is.sir(x)), ...)
 
 antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
   ignore_I = TRUE, points_threshold = 2, ...)
@@ -33,7 +33,7 @@ antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
 
 \item{antifungal}{Names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs.}
 
-\item{only_sir_columns}{A \link{logical} to indicate whether only columns must be included that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (default is \code{FALSE}).}
+\item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE} if no columns of \code{x} have a class \link[=as.sir]{sir}.}
 
 \item{...}{Ignored, only in place to allow future extensions.}
 
