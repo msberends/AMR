@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9275</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9276</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +62,9 @@
 <span>  <span class="st">"ceftazidime"</span>, <span class="st">"meropenem"</span><span class="op">)</span>, gram_positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vancomycin"</span>, <span class="st">"teicoplanin"</span>,</span>
 <span>  <span class="st">"tetracycline"</span>, <span class="st">"erythromycin"</span>, <span class="st">"oxacillin"</span>, <span class="st">"rifampin"</span><span class="op">)</span>,</span>
 <span>  antifungal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"anidulafungin"</span>, <span class="st">"caspofungin"</span>, <span class="st">"fluconazole"</span>, <span class="st">"miconazole"</span>,</span>
-<span>  <span class="st">"nystatin"</span>, <span class="st">"voriconazole"</span><span class="op">)</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="st">"nystatin"</span>, <span class="st">"voriconazole"</span><span class="op">)</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">all_antimicrobials</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_sir_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">all_antimicrobials</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"points"</span>, <span class="st">"keyantimicrobials"</span><span class="op">)</span>,</span>
 <span>  ignore_I <span class="op">=</span> <span class="cn">TRUE</span>, points_threshold <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -99,7 +99,7 @@
 
 
 <dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only columns must be included that were transformed to class <code>sir</code> (see <code><a href="as.sir.html">as.sir()</a></code>) on beforehand (default is <code>FALSE</code>).</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antimicrobial columns must be included that were transformed to class <a href="as.sir.html">sir</a> on beforehand. Defaults to <code>FALSE</code> if no columns of <code>x</code> have a class <a href="as.sir.html">sir</a>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
