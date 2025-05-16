@@ -38,13 +38,10 @@
 #' @param mecC [logical] values, or a column name containing logical values, indicating the presence of a *mecC* gene (or production of its proteins).
 #' @param vanA [logical] values, or a column name containing logical values, indicating the presence of a *vanA* gene (or production of its proteins).
 #' @param vanB [logical] values, or a column name containing logical values, indicating the presence of a *vanB* gene (or production of its proteins).
-#' @param ... In case of [custom_mdro_guideline()]: a set of rules, see section *Using Custom Guidelines* below. Otherwise: column name of an antibiotic, see section *Antimicrobials* below.
-#' @param as_factor A [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector.
 #' @inheritParams eucast_rules
 #' @param pct_required_classes Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI A [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
-#' @inheritSection eucast_rules Antimicrobials
 #' @details
 #' These functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
 #'
@@ -701,7 +698,7 @@ mdro <- function(x = NULL,
     x
   }
 
-  # antibiotic classes
+  # antimicrobial classes
   # nolint start
   aminoglycosides <- c(TOB, GEN)
   cephalosporins <- c(CDZ, CAC, CEC, CFR, RID, MAN, CTZ, CZD, CZO, CDR, DIT, FEP, CAT, CFM, CMX, CMZ, DIZ, CID, CFP, CSL, CND, CTX, CTT, CTF, FOX, CPM, CPO, CPD, CPR, CRD, CFS, CPT, CAZ, CCV, CTL, CTB, CZX, BPR, CFM1, CEI, CRO, CXM, LEX, CEP, HAP, CED, LTM, LOR)
@@ -1109,7 +1106,7 @@ mdro <- function(x = NULL,
       )
     }
 
-    # add antibiotic names of resistant ones to verbose output
+    # add antimicrobial names of resistant ones to verbose output
   }
 
   if (guideline$code == "eucast3.1") {

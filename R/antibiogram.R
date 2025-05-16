@@ -1190,7 +1190,8 @@ retrieve_wisca_parameters <- function(wisca_model, ...) {
   attributes(wisca_model)$wisca_parameters
 }
 
-# will be exported in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::tbl_sum, antibiogram)
 tbl_sum.antibiogram <- function(x, ...) {
   dims <- paste(format(NROW(x), big.mark = ","), AMR_env$cross_icon, format(NCOL(x), big.mark = ","))
   if (isTRUE(attributes(x)$wisca)) {
@@ -1203,7 +1204,8 @@ tbl_sum.antibiogram <- function(x, ...) {
   dims
 }
 
-# will be exported in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::tbl_format_footer, antibiogram)
 tbl_format_footer.antibiogram <- function(x, ...) {
   footer <- NextMethod()
   if (NROW(x) == 0) {
@@ -1271,7 +1273,8 @@ barplot.antibiogram <- function(height, ...) {
 
 #' @method autoplot antibiogram
 #' @rdname antibiogram
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::autoplot, antibiogram)
 autoplot.antibiogram <- function(object, ...) {
   df <- attributes(object)$long_numeric
   if (!"mo" %in% colnames(df)) {
@@ -1318,11 +1321,12 @@ autoplot.antibiogram <- function(object, ...) {
   out
 }
 
-# will be exported in zzz.R
 #' @method knit_print antibiogram
 #' @param italicise A [logical] to indicate whether the microorganism names in the [knitr][knitr::kable()] table should be made italic, using [italicise_taxonomy()].
 #' @param na Character to use for showing `NA` values.
 #' @rdname antibiogram
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(knitr::knit_print, antibiogram)
 knit_print.antibiogram <- function(x, italicise = TRUE, na = getOption("knitr.kable.NA", default = ""), ...) {
   stop_ifnot_installed("knitr")
   meet_criteria(italicise, allow_class = "logical", has_length = 1)

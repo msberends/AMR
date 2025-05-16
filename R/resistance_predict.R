@@ -401,7 +401,8 @@ ggplot_sir_predict <- function(x,
 
 #' @method autoplot resistance_predict
 #' @rdname resistance_predict
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::autoplot, resistance_predict)
 autoplot.resistance_predict <- function(object,
                                         main = paste("Resistance Prediction of", x_name),
                                         ribbon = TRUE,
@@ -414,7 +415,8 @@ autoplot.resistance_predict <- function(object,
 
 #' @method fortify resistance_predict
 #' @noRd
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::fortify, resistance_predict)
 fortify.resistance_predict <- function(model, data, ...) {
   as.data.frame(model)
 }

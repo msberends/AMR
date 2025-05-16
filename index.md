@@ -26,9 +26,12 @@
 <div style="display: flex; font-size: 0.8em;">
 
 <p style="text-align:left; width: 50%;">
+
 <small><a href="https://amr-for-r.org/">https://amr-for-r.org</a></small>
 </p>
+
 <p style="text-align:right; width: 50%;">
+
 <small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small>
 </p>
 
@@ -38,7 +41,7 @@
 
 ------------------------------------------------------------------------
 
-### Introduction
+## Introduction
 
 The `AMR` package is a peer-reviewed, [free and open-source](#copyright)
 R package with [zero
@@ -75,7 +78,7 @@ research at the Faculty of Medical Sciences of the [University of
 Groningen](https://www.rug.nl) and the [University Medical Center
 Groningen](https://www.umcg.nl).
 
-##### Used in over 175 countries, available in 28 languages
+### Used in over 175 countries, available in 28 languages
 
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;" /></a>
 
@@ -143,9 +146,9 @@ Urdu, and
 Vietnamese. Antimicrobial drug (group) names and colloquial
 microorganism names are provided in these languages.
 
-### Practical examples
+## Practical examples
 
-#### Filtering and selecting data
+### Filtering and selecting data
 
 One of the most powerful functions of this package, aside from
 calculating and plotting AMR, is selecting and filtering based on
@@ -200,7 +203,7 @@ about [all microorganisms](./reference/microorganisms.html) and [all
 antimicrobials](./reference/antimicrobials.html) in the `AMR` package
 make sure you get what you meant.
 
-#### Generating antibiograms
+### Generating antibiograms
 
 The `AMR` package supports generating traditional, combined, syndromic,
 and even weighted-incidence syndromic combination antibiograms (WISCA).
@@ -261,7 +264,7 @@ antibiogram(example_isolates,
 | Грамнегативні | 96% (95-98%,N=684)  | 96% (94-97%,N=686) | 91% (88-93%,N=684) |
 | Грампозитивні | 63% (60-66%,N=1170) | 34% (31-38%,N=665) | 77% (74-80%,N=724) |
 
-#### Interpreting and plotting MIC and SIR values
+### Interpreting and plotting MIC and SIR values
 
 The `AMR` package allows interpretation of MIC and disk diffusion values
 based on CLSI and EUCAST. Moreover, the `ggplot2` package is extended
@@ -301,7 +304,7 @@ ggplot(data.frame(mic = some_mic_values,
 <img src="./plot_readme.png" style="width: 1400px; max-width: 100%;">
 </a>
 
-#### Calculating resistance per group
+### Calculating resistance per group
 
 For a manual approach, you can use the `resistance` or
 `susceptibility()` function:
@@ -377,7 +380,7 @@ out %>% set_ab_names(property = "atc")
 #> 3 Outpatient 0.2       0.3676471 0.6052632      NA 0.8888889
 ```
 
-### What else can you do with this package?
+## What else can you do with this package?
 
 This package was intended as a comprehensive toolbox for integrated AMR
 data analysis. This package can be used for:
@@ -400,7 +403,7 @@ data analysis. This package can be used for:
   organisms (MDRO) ([tutorial](./reference/mdro.html))
 - Calculating (empirical) susceptibility of both mono therapy and
   combination therapies ([tutorial](./articles/AMR.html))
-- Apply AMR function in predictive modelling
+- Apply AMR functions in predictive modelling
   ([tutorial](./articles/AMR_with_tidymodels.html))
 - Getting properties for any microorganism (like Gram stain, species,
   genus or family) ([manual](./reference/mo_property.html))
@@ -420,9 +423,9 @@ data analysis. This package can be used for:
   ([link](./articles/datasets.html))
 - Principal component analysis for AMR ([tutorial](./articles/PCA.html))
 
-### Get this package
+## Get this package
 
-#### Latest official version
+### Latest official version
 
 [![CRAN](https://www.r-pkg.org/badges/version-ago/AMR)](https://cran.r-project.org/package=AMR)
 [![CRANlogs](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](https://cran.r-project.org/package=AMR)
@@ -443,7 +446,7 @@ the menu *Tools* \> *Install Packages…* and then type in “AMR” and press
 latest release. To use all functions and data sets mentioned on this
 website, install the latest beta version.
 
-#### Latest beta version
+### Latest beta version
 
 [![check-old](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml)
 [![check-recent](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main)](https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml)
@@ -462,13 +465,13 @@ install.packages("AMR", repos = "beta.amr-for-r.org")
 remotes::install_github("msberends/AMR")
 ```
 
-### Get started
+## Get started
 
 To find out how to conduct AMR data analysis, please [continue reading
 here to get started](./articles/AMR.html) or click a link in the [‘How
 to’ menu](./articles/).
 
-### Partners
+## Partners
 
 The initial development of this package was part of, related to, or made
 possible by the following non-profit organisations and initiatives:
@@ -483,7 +486,7 @@ possible by the following non-profit organisations and initiatives:
 
 </div>
 
-### Copyright
+## Copyright
 
 This R package is free, open-source software and licensed under the [GNU
 General Public License v2.0 (GPL-2)](./LICENSE-text.html). In a

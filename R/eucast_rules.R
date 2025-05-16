@@ -67,7 +67,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
 #' @param version_expertrules The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
-#' @param ... Column name of an antimicrobial, see section *Antimicrobials* below.
+#' @param ... Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; [guess_ab_col()] will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. `AMX = "amoxicillin"`. To skip a specific antimicrobial, set it to `NULL`, e.g. `TIC = NULL` to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
 #' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
 #' @param administration Route of administration, either `r vector_or(dosage$administration)`.
 #' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
@@ -101,10 +101,6 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 #'
 #' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `eucast_rules(..., rules = "all")`. You can also set the package option [`AMR_eucastrules`][AMR-options], i.e. run `options(AMR_eucastrules = "all")`.
-#' @section Antimicrobials:
-#' To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use [guess_ab_col()] to find them.
-#'
-#' To manually specify a column, provide its name (case-insensitive) as an argument, e.g. `AMX = "amoxicillin"`. To skip a specific antimicrobial, set it to `NULL`, e.g. `TIC = NULL` to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export

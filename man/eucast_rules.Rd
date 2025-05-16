@@ -53,7 +53,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{overwrite}{A \link{logical} indicating whether to overwrite existing SIR values (default: \code{FALSE}). When \code{FALSE}, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".}
 
-\item{...}{Column name of an antimicrobial, see section \emph{Antimicrobials} below.}
+\item{...}{Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; \code{\link[=guess_ab_col]{guess_ab_col()}} will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.}
 
 \item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
@@ -96,13 +96,6 @@ Important examples include amoxicillin and amoxicillin/clavulanic acid, and trim
 Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the package option \code{\link[=AMR-options]{AMR_eucastrules}}, i.e. run \code{options(AMR_eucastrules = "all")}.
 }
 }
-\section{Antimicrobials}{
-
-To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use \code{\link[=guess_ab_col]{guess_ab_col()}} to find them.
-
-To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
-}
-
 \section{Download Our Reference Data}{
 
 All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.

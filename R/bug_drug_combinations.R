@@ -356,7 +356,8 @@ format.bug_drug_combinations <- function(x,
   as_original_data_class(y, class(x.bak), extra_class = "formatted_bug_drug_combinations") # will remove tibble groups
 }
 
-# will be exported in zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(knitr::knit_print, formatted_bug_drug_combinations)
 knit_print.formatted_bug_drug_combinations <- function(x, ...) {
   stop_ifnot_installed("knitr")
   # make columns with MO names italic according to nomenclature

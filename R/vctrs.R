@@ -34,6 +34,67 @@
 
 # see https://github.com/tidyverse/dplyr/issues/5955 why this is required
 
+# LIST ALL EXPORTS
+# this prevents the requirement for putting `vctrs` as a the dependency in Imports
+
+# (NOTE 2024-02-22 this is the right way - it should be 2 '.'-separated S3 classes in the second argument)
+# S3: amr_selector
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, character.amr_selector)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, amr_selector.character)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.amr_selector)
+# S3: amr_selector_any_all
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, logical.amr_selector_any_all)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, amr_selector_any_all.logical)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, logical.amr_selector_any_all)
+# S3: ab
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, ab.default)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, ab.ab)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.ab)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, ab.character)
+# S3: av
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, av.default)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, av.av)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.av)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, av.character)
+# S3: mo
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, mo.default)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, mo.mo)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.mo)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, mo.character)
+# S3: disk
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype_full, disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype_abbr, disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, disk.default)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, disk.disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, disk.disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, integer.disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, disk.integer)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, double.disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, disk.double)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.disk)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, disk.character)
+# S3: mic
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, mic.default)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, mic.mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, double.mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, integer.mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, factor.mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, mic.character)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, mic.double)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, mic.integer)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, mic.factor)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, mic.mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_math, mic)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_arith, mic)
+# S3: sir
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, sir.default)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, sir.sir)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, character.sir)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, character.sir)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, sir.character)
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(vctrs::vec_cast, sir.sir)
+
 # S3: amr_selector ----
 # this does not need a .default method since it's used internally only
 vec_ptype2.character.amr_selector <- function(x, y, ...) {

@@ -158,7 +158,8 @@ is.disk <- function(x) {
   inherits(x, "disk")
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, disk)
 pillar_shaft.disk <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- font_na(NA)
@@ -232,7 +233,8 @@ rep.disk <- function(x, ...) {
   y
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, disk)
 get_skimmers.disk <- function(column) {
   skimr::sfl(
     skim_type = "disk",

@@ -1896,7 +1896,8 @@ print.sir_log <- function(x, ...) {
   print(x, ...)
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, sir)
 pillar_shaft.sir <- function(x, ...) {
   out <- trimws(format(x))
   if (has_colour()) {
@@ -1912,12 +1913,14 @@ pillar_shaft.sir <- function(x, ...) {
   create_pillar_column(out, align = "left", width = 5)
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::type_sum, sir)
 type_sum.sir <- function(x, ...) {
   "sir"
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(cleaner::freq, sir)
 freq.sir <- function(x, ...) {
   x_name <- deparse(substitute(x))
   x_name <- gsub(".*[$]", "", x_name)
@@ -1960,8 +1963,8 @@ freq.sir <- function(x, ...) {
   }
 }
 
-
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, sir)
 get_skimmers.sir <- function(column) {
   # get the variable name 'skim_variable'
   name_call <- function(.data) {

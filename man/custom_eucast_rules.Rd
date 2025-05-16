@@ -17,9 +17,6 @@ Define custom EUCAST rules for your organisation or specific analysis and use th
 }
 \details{
 Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the \code{\link[=eucast_rules]{eucast_rules()}} function.
-}
-\section{How it works}{
-
 \subsection{Basics}{
 
 If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
@@ -51,7 +48,11 @@ df
 #> 1      Escherichia coli   R    S     S
 #> 2 Klebsiella pneumoniae   R    S     S
 
-eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE, overwrite = TRUE)
+eucast_rules(df,
+             rules = "custom",
+             custom_rules = x,
+             info = FALSE,
+             overwrite = TRUE)
 #>                      mo TZP ampi cipro
 #> 1      Escherichia coli   R    R     S
 #> 2 Klebsiella pneumoniae   R    R     S
@@ -62,10 +63,16 @@ eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE, overwrite = T
 
 There is one exception in columns used for the rules: all column names of the \link{microorganisms} data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", and "snomed". Thus, this next example will work as well, despite the fact that the \code{df} data set does not contain a column \code{genus}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
-                         TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- custom_eucast_rules(
+  TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
+  TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R"
+)
 
-eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE, overwrite = TRUE)
+eucast_rules(df,
+             rules = "custom",
+             custom_rules = y,
+             info = FALSE,
+             overwrite = TRUE)
 #>                      mo TZP ampi cipro
 #> 1      Escherichia coli   R    S     S
 #> 2 Klebsiella pneumoniae   R    R     S
@@ -131,7 +138,6 @@ These 35 antimicrobial groups are allowed in the rules (case-insensitive) and ca
 }
 }
 }
-
 \examples{
 x <- custom_eucast_rules(
   AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",

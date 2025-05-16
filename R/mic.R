@@ -422,7 +422,8 @@ all_valid_mics <- function(x) {
   !any(is.na(x_mic)) && !all(is.na(x))
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, mic)
 pillar_shaft.mic <- function(x, ...) {
   if (!identical(levels(x), VALID_MIC_LEVELS) && message_not_thrown_before("pillar_shaft.mic")) {
     warning_(AMR_env$sup_1_icon, " These columns contain an outdated or altered structure - convert with `as.mic()` to update",
@@ -439,7 +440,8 @@ pillar_shaft.mic <- function(x, ...) {
   create_pillar_column(out, align = "right", width = max(nchar(font_stripstyle(out))))
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::type_sum, mic)
 type_sum.mic <- function(x, ...) {
   if (!identical(levels(x), VALID_MIC_LEVELS)) {
     paste0("mic", AMR_env$sup_1_icon)
@@ -582,7 +584,8 @@ hist.mic <- function(x, ...) {
   hist(log2(x))
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, mic)
 get_skimmers.mic <- function(column) {
   column <- as.mic(column) # make sure that currently implemented MIC levels are used
   skimr::sfl(

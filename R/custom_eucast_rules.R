@@ -33,7 +33,6 @@
 #' @param ... Rules in [formula][base::tilde] notation, see below for instructions, and in *Examples*.
 #' @details
 #' Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the [eucast_rules()] function.
-#' @section How it works:
 #'
 #' ### Basics
 #'
@@ -69,7 +68,11 @@
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    S     S
 #'
-#' eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE, overwrite = TRUE)
+#' eucast_rules(df,
+#'              rules = "custom",
+#'              custom_rules = x,
+#'              info = FALSE,
+#'              overwrite = TRUE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    R     S
 #' #> 2 Klebsiella pneumoniae   R    R     S
@@ -80,10 +83,16 @@
 #' There is one exception in columns used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), sort = FALSE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
 #'
 #' ```r
-#' y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
-#'                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
+#' y <- custom_eucast_rules(
+#'   TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
+#'   TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R"
+#' )
 #'
-#' eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE, overwrite = TRUE)
+#' eucast_rules(df,
+#'              rules = "custom",
+#'              custom_rules = y,
+#'              info = FALSE,
+#'              overwrite = TRUE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    R     S

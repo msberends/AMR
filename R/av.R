@@ -507,7 +507,8 @@ is.av <- function(x) {
   inherits(x, "av")
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, av)
 pillar_shaft.av <- function(x, ...) {
   out <- trimws(format(x))
   out[!is.na(x)] <- gsub("+", font_subtle("+"), out[!is.na(x)], fixed = TRUE)
@@ -515,7 +516,8 @@ pillar_shaft.av <- function(x, ...) {
   create_pillar_column(out, align = "left", min_width = 4)
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::type_sum, av)
 type_sum.av <- function(x, ...) {
   "av"
 }

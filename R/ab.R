@@ -503,7 +503,8 @@ ab_reset_session <- function() {
   }
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, ab)
 pillar_shaft.ab <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- font_na(NA)
@@ -519,7 +520,8 @@ pillar_shaft.ab <- function(x, ...) {
   create_pillar_column(out, align = "left", min_width = 4)
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::type_sum, ab)
 type_sum.ab <- function(x, ...) {
   "ab"
 }

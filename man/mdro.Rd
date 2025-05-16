@@ -61,9 +61,7 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
 
 \item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE} if no columns of \code{x} have a class \link[=as.sir]{sir}.}
 
-\item{...}{In case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antimicrobials} below.}
-
-\item{as_factor}{A \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector.}
+\item{...}{Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; \code{\link[=guess_ab_col]{guess_ab_col()}} will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.}
 }
 \value{
 \itemize{
@@ -136,13 +134,6 @@ Using a custom MDRO guideline is of importance if you have custom rules to deter
 Custom guidelines can be set with the \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} function.
 }
 }
-\section{Antimicrobials}{
-
-To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use \code{\link[=guess_ab_col]{guess_ab_col()}} to find them.
-
-To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
-}
-
 \section{Interpretation of SIR}{
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (\url{https://www.eucast.org/newsiandr}).

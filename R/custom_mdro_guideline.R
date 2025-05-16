@@ -31,10 +31,9 @@
 #'
 #' Define custom a MDRO guideline for your organisation or specific analysis and use the output of this function in [mdro()].
 #' @param ... Guideline rules in [formula][base::tilde] notation, see below for instructions, and in *Examples*.
-#' @inheritParams mdro
+#' @param as_factor A [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector. For combining rules sets (using [c()]) this value will be inherited from the first set at default.
 #' @details
 #' Using a custom MDRO guideline is of importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
-#' @section How it works:
 #'
 #' ### Basics
 #'
@@ -109,9 +108,9 @@
 #' )
 #' ```
 #'
-#' These `r length(DEFINED_AB_GROUPS)` antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
+#' All `r length(DEFINED_AB_GROUPS)` antimicrobial selectors are supported for use in the rules:
 #'
-#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0(tolower(gsub("^AB_", "", x)), "\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
+#' `r paste0(" * ", na.omit(sapply(DEFINED_AB_GROUPS, function(ab) ifelse(tolower(gsub("^AB_", "", ab)) %in% ls(envir = asNamespace("AMR")), paste0("[", tolower(gsub("^AB_", "", ab)), "()] can select: \\cr ", vector_and(ab_name(eval(parse(text = ab), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE, sort = TRUE)), character(0)), USE.NAMES = FALSE)), "\n", collapse = "")`
 #' @returns A [list] containing the custom rules
 #' @rdname custom_mdro_guideline
 #' @export
@@ -189,6 +188,7 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
 }
 
 #' @method c custom_mdro_guideline
+#' @param x Existing custom MDRO rules
 #' @rdname custom_mdro_guideline
 #' @export
 c.custom_mdro_guideline <- function(x, ..., as_factor = NULL) {
@@ -228,7 +228,7 @@ as.list.custom_mdro_guideline <- function(x, ...) {
 }
 
 #' @method print custom_mdro_guideline
-#' @rdname custom_mdro_guideline
+#' @noRd
 #' @export
 print.custom_mdro_guideline <- function(x, ...) {
   cat("A set of custom MDRO rules:\n")

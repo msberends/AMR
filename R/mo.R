@@ -620,7 +620,8 @@ mo_cleaning_regex <- function() {
 
 # UNDOCUMENTED METHODS ----------------------------------------------------
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, mo)
 pillar_shaft.mo <- function(x, ...) {
   add_MO_lookup_to_AMR_env()
   out <- trimws(format(x))
@@ -690,12 +691,14 @@ pillar_shaft.mo <- function(x, ...) {
   )
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::type_sum, mo)
 type_sum.mo <- function(x, ...) {
   "mo"
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(cleaner::freq, mo)
 freq.mo <- function(x, ...) {
   x_noNA <- as.mo(x[!is.na(x)]) # as.mo() to get the newest mo codes
   grams <- mo_gramstain(x_noNA, language = NULL)
@@ -736,7 +739,8 @@ freq.mo <- function(x, ...) {
   )
 }
 
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, mo)
 get_skimmers.mo <- function(column) {
   skimr::sfl(
     skim_type = "mo",

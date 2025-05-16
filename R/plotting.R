@@ -613,7 +613,8 @@ barplot.mic <- function(height,
 
 #' @method autoplot mic
 #' @rdname plot
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::autoplot, mic)
 autoplot.mic <- function(object,
                          mo = NULL,
                          ab = NULL,
@@ -708,7 +709,8 @@ autoplot.mic <- function(object,
 
 #' @method fortify mic
 #' @noRd
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::fortify, mic)
 fortify.mic <- function(object, ...) {
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
   stats::setNames(
@@ -847,7 +849,8 @@ barplot.disk <- function(height,
 
 #' @method autoplot disk
 #' @rdname plot
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::autoplot, disk)
 autoplot.disk <- function(object,
                           mo = NULL,
                           ab = NULL,
@@ -942,7 +945,8 @@ autoplot.disk <- function(object,
 
 #' @method fortify disk
 #' @noRd
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::fortify, disk)
 fortify.disk <- function(object, ...) {
   stats::setNames(
     as.data.frame(plotrange_as_table(object, expand = FALSE)),
@@ -1055,7 +1059,8 @@ barplot.sir <- function(height,
 
 #' @method autoplot sir
 #' @rdname plot
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::autoplot, sir)
 autoplot.sir <- function(object,
                          title = deparse(substitute(object)),
                          xlab = translate_AMR("Antimicrobial Interpretation", language = language),
@@ -1102,7 +1107,8 @@ autoplot.sir <- function(object,
 
 #' @method fortify sir
 #' @noRd
-# will be exported using s3_register() in R/zzz.R
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::fortify, sir)
 fortify.sir <- function(object, ...) {
   stats::setNames(
     as.data.frame(table(object)),
