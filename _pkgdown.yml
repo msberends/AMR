@@ -184,6 +184,7 @@ reference:
     - "`first_isolate`"
     - "`key_antimicrobials`"
     - "`mdro`"
+    - "`custom_mdro_guideline`"
     - "`bug_drug_combinations`"
     - "`antimicrobial_selectors`"
     - "`top_n_microorganisms`"
