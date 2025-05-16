@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9277</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9279</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +15,7 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
+      <ul class="navbar-nav me-auto"><li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-how-to" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-question-circle"></span> How to</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-how-to"><li><a class="dropdown-item" href="../articles/AMR.html"><span class="fa fa-directions"></span> Conduct AMR Analysis</a></li>
     <li><a class="dropdown-item" href="../reference/antibiogram.html"><span class="fa fa-file-prescription"></span> Generate Antibiogram (Trad./Syndromic/WISCA)</a></li>
@@ -23,7 +23,7 @@
     <li><a class="dropdown-item" href="../articles/datasets.html"><span class="fa fa-database"></span> Download Data Sets for Own Use</a></li>
     <li><a class="dropdown-item" href="../reference/AMR-options.html"><span class="fa fa-gear"></span> Set User- Or Team-specific Package Settings</a></li>
     <li><a class="dropdown-item" href="../articles/PCA.html"><span class="fa fa-compress"></span> Conduct Principal Component Analysis for AMR</a></li>
-    <li><a class="dropdown-item" href="../articles/MDR.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
+    <li><a class="dropdown-item" href="../reference/mdro.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
     <li><a class="dropdown-item" href="../articles/WHONET.html"><span class="fa fa-globe-americas"></span> Work with WHONET Data</a></li>
     <li><a class="dropdown-item" href="../articles/EUCAST.html"><span class="fa fa-exchange-alt"></span> Apply EUCAST Rules</a></li>
     <li><a class="dropdown-item" href="../reference/mo_property.html"><span class="fa fa-bug"></span> Get Taxonomy of a Microorganism</a></li>
@@ -31,7 +31,7 @@
     <li><a class="dropdown-item" href="../reference/av_property.html"><span class="fa fa-capsules"></span> Get Properties of an Antiviral Drug</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/AMR_for_Python.html"><span class="fa fab fa-python"></span> AMR for Python</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Manual</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Manual</a></li>
 <li class="nav-item"><a class="nav-link" href="../authors.html"><span class="fa fa-users"></span> Authors</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -60,8 +60,6 @@
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, pct_required_classes <span class="op">=</span> <span class="fl">0.5</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">custom_mdro_guideline</span><span class="op">(</span><span class="va">...</span>, as_factor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">brmo</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">mrgn</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -75,10 +73,6 @@
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p>See the supported guidelines above for the <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> of publications used for this function.</p>
-    </div>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
@@ -140,11 +134,7 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>In case of <code>custom_mdro_guideline()</code>: a set of rules, see section <em>Using Custom Guidelines</em> below. Otherwise: column name of an antibiotic, see section <em>Antimicrobials</em> below.</p></dd>
-
-
-<dt id="arg-as-factor">as_factor<a class="anchor" aria-label="anchor" href="#arg-as-factor"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the returned value should be an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> (<code>TRUE</code>, default), or otherwise a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector.</p></dd>
+<dd><p>Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; <code><a href="guess_ab_col.html">guess_ab_col()</a></code> will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. <code>AMX = "amoxicillin"</code>. To skip a specific antimicrobial, set it to <code>NULL</code>, e.g. <code>TIC = NULL</code> to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -165,22 +155,21 @@ Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">facto
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> call, see <em>Examples</em>.</p>
 <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
-<p><strong>Note:</strong> Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named <em>order</em> Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu <em>et al.</em> in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this <code>mdro()</code> function makes sure that results from before 2016 and after 2016 are identical.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="supported-international-national-guidelines">Supported International / National Guidelines<a class="anchor" aria-label="anchor" href="#supported-international-national-guidelines"></a></h2>
+<p><strong>Note:</strong> Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named <em>order</em> Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu <em>et al.</em> in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this <code>mdro()</code> function makes sure that results from before 2016 and after 2016 are identical.</p><div class="section">
+<h3 id="supported-international-national-guidelines">Supported International / National Guidelines<a class="anchor" aria-label="anchor" href="#supported-international-national-guidelines"></a></h3>
 
 
-
+<p>Please suggest to implement guidelines by <a href="https://github.com/msberends/AMR/issues/new?template=2-feature-request.yml&amp;title=Add%20new%20MDRO%20guideline" class="external-link">letting us know</a>.</p>
 <p>Currently supported guidelines are (case-insensitive):</p><ul><li><p><code>guideline = "CMI 2012"</code> (default)</p>
 <p>Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href="https://doi.org/10.1111/j.1469-0691.2011.03570.x" class="external-link">doi:10.1111/j.1469-0691.2011.03570.x</a>
 )</p></li>
 <li><p><code>guideline = "EUCAST 3.3"</code> (or simply <code>guideline = "EUCAST"</code>)</p>
-<p>The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf" class="external-link">link</a>)</p></li>
-<li><p><code>guideline = "EUCAST 3.2"</code></p>
-<p>The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf" class="external-link">link</a>)</p></li>
+<p>The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf" class="external-link">link</a>)</p>
+<p>Also:</p><ul><li><p><code>guideline = "EUCAST 3.2"</code></p>
+<p>The former European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf" class="external-link">link</a>)</p></li>
 <li><p><code>guideline = "EUCAST 3.1"</code></p>
-<p>The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf" class="external-link">link</a>)</p></li>
+<p>The former European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf" class="external-link">link</a>)</p></li>
+</ul></li>
 <li><p><code>guideline = "TB"</code></p>
 <p>The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href="https://www.who.int/publications/i/item/9789241548809" class="external-link">link</a>)</p></li>
 <li><p><code>guideline = "MRGN"</code></p>
@@ -190,47 +179,16 @@ Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">facto
 <p>Also:</p><ul><li><p><code>guideline = "BRMO 2017"</code></p>
 <p>The former Dutch national guideline - Werkgroep Infectiepreventie (WIP), RIVM, last revision as of 2017: "Bijzonder Resistente Micro-Organismen (BRMO)"</p></li>
 </ul></li>
-</ul><p>Please suggest to implement guidelines by letting us know: <a href="https://github.com/msberends/AMR/issues/new" class="external-link">https://github.com/msberends/AMR/issues/new</a>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="using-custom-guidelines">Using Custom Guidelines<a class="anchor" aria-label="anchor" href="#using-custom-guidelines"></a></h2>
+</ul></div>
+
+<div class="section">
+<h3 id="using-custom-guidelines">Using Custom Guidelines<a class="anchor" aria-label="anchor" href="#using-custom-guidelines"></a></h3>
 
 
+<p>Using a custom MDRO guideline is of importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.</p>
+<p>Custom guidelines can be set with the <code><a href="custom_mdro_guideline.html">custom_mdro_guideline()</a></code> function.</p>
+</div>
 
-<p>Custom guidelines can be set with the <code>custom_mdro_guideline()</code> function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.</p>
-<p>If you are familiar with the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> function of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation'. The rule is written <em>before</em> the tilde (<code>~</code>) and the consequence of the rule is written <em>after</em> the tilde:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>custom <span class="ot">&lt;-</span> <span class="fu">custom_mdro_guideline</span>(CIP <span class="sc">==</span> <span class="st">"R"</span> <span class="sc">&amp;</span> age <span class="sc">&gt;</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"Elderly Type A"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>                                ERY <span class="sc">==</span> <span class="st">"R"</span> <span class="sc">&amp;</span> age <span class="sc">&gt;</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"Elderly Type B"</span>)</span></code></pre><p></p></div>
-<p>If a row/an isolate matches the first rule, the value after the first <code>~</code> (in this case <em>'Elderly Type A'</em>) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited.</p>
-<p>You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>custom</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; A set of custom MDRO rules:</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt;   1. CIP is "R" and age is higher than 60 -&gt; Elderly Type A</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt;   2. ERY is "R" and age is higher than 60 -&gt; Elderly Type B</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;   3. Otherwise -&gt; Negative</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; Unmatched rows will return NA.</span></span></code></pre><p></p></div>
-<p>The outcome of the function can be used for the <code>guideline</code> argument in the <code>mdro()</code> function:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mdro</span>(example_isolates,</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>          <span class="at">guideline =</span> custom)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">table</span>(x)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt;       Negative Elderly Type A Elderly Type B</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;           1070            198            732</span></span></code></pre><p></p></div>
-<p>Rules can also be combined with other custom rules by using <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mdro</span>(example_isolates,</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>          <span class="at">guideline =</span> <span class="fu">c</span>(custom,</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>                        <span class="fu">custom_mdro_guideline</span>(ERY <span class="sc">==</span> <span class="st">"R"</span> <span class="sc">&amp;</span> age <span class="sc">&gt;</span> <span class="dv">50</span> <span class="sc">~</span> <span class="st">"Elderly Type C"</span>)))</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">table</span>(x)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;       Negative Elderly Type A Elderly Type B Elderly Type C</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;            961            198            732            109</span></span></code></pre><p></p></div>
-<p>The rules set (the <code>custom</code> object in this case) could be exported to a shared file location using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="antimicrobials">Antimicrobials<a class="anchor" aria-label="anchor" href="#antimicrobials"></a></h2>
-
-
-<p>To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use <code><a href="guess_ab_col.html">guess_ab_col()</a></code> to find them.</p>
-<p>To manually specify a column, provide its name (case-insensitive) as an argument, e.g. <code>AMX = "amoxicillin"</code>. To skip a specific antimicrobial, set it to <code>NULL</code>, e.g. <code>TIC = NULL</code> to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.</p>
     </div>
     <div class="section level2">
     <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
@@ -239,52 +197,49 @@ Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">facto
 <p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/newsiandr" class="external-link">https://www.eucast.org/newsiandr</a>).</p>
 <p>This AMR package follows insight; use <code><a href="proportion.html">susceptibility()</a></code> (equal to <code><a href="proportion.html">proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href="count.html">count_susceptible()</a></code> (equal to <code><a href="count.html">count_SI()</a></code>) to count susceptible isolates.</p>
     </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="custom_mdro_guideline.html">custom_mdro_guideline()</a></code></p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">mdro</span><span class="op">(</span><span class="va">example_isolates</span>, guideline <span class="op">=</span> <span class="st">"EUCAST"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">mdro</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">mdro()</span>: NA introduced for isolates where the available percentage of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #EEEEEE;">pct_required_classes</span>)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Ord.factor w/ 3 levels "Negative"&lt;"Positive, unconfirmed"&lt;..: 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Ord.factor w/ 4 levels "Negative"&lt;"Multi-drug-resistant (MDR)"&lt;..: NA NA 1 1 1 1 NA NA 1 1 ...</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> out</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         Negative       Multi-drug-resistant (MDR) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             1617                              128 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Extensively drug-resistant (XDR)          Pandrug-resistant (PDR) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                0                                0 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">mdro</span><span class="op">(</span><span class="va">example_isolates</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 3.3"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> out</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Negative Positive, unconfirmed              Positive </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  1994                     0                     6 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">mdro</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
-<span class="r-in"><span>  guideline <span class="op">=</span> <span class="fu">custom_mdro_guideline</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">AMX</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">~</span> <span class="st">"Custom MDRO 1"</span>,</span></span>
-<span class="r-in"><span>    <span class="va">VAN</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">~</span> <span class="st">"Custom MDRO 2"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> out</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Negative Custom MDRO 1 Custom MDRO 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           870           804           326 </span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu">mdro</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># no need to define `x` when used inside dplyr verbs:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MDRO <span class="op">=</span> <span class="fu">mdro</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">MDRO</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="count.html">count</a></span><span class="op">(</span><span class="va">MDRO</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">mdro()</span>: NA introduced for isolates where the available percentage of</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #EEEEEE;">pct_required_classes</span>)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `MDRO = mdro()`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in <span style="background-color: #EEEEEE;">mdro()</span>: NA introduced for isolates where the available percentage of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #EEEEEE;">pct_required_classes</span>)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         Negative       Multi-drug-resistant (MDR) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             1617                              128 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Extensively drug-resistant (XDR)          Pandrug-resistant (PDR) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                0                                0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   MDRO                           n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Negative                    <span style="text-decoration: underline;">1</span>617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Multi-drug-resistant (MDR)   128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #BB0000;">NA</span>                           255</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

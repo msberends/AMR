@@ -5,7 +5,6 @@
 <url><loc>https://amr-for-r.org/articles/AMR_for_Python.html</loc></url>
 <url><loc>https://amr-for-r.org/articles/AMR_with_tidymodels.html</loc></url>
 <url><loc>https://amr-for-r.org/articles/EUCAST.html</loc></url>
-<url><loc>https://amr-for-r.org/articles/MDR.html</loc></url>
 <url><loc>https://amr-for-r.org/articles/PCA.html</loc></url>
 <url><loc>https://amr-for-r.org/articles/WHONET.html</loc></url>
 <url><loc>https://amr-for-r.org/articles/WISCA.html</loc></url>
@@ -42,6 +41,7 @@
 <url><loc>https://amr-for-r.org/reference/clinical_breakpoints.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/count.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/custom_eucast_rules.html</loc></url>
+<url><loc>https://amr-for-r.org/reference/custom_mdro_guideline.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/dosage.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/eucast_rules.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/example_isolates.html</loc></url>

@@ -7,11 +7,10 @@ articles:
   AMR: AMR.html
   datasets: datasets.html
   EUCAST: EUCAST.html
-  MDR: MDR.html
   PCA: PCA.html
   WHONET: WHONET.html
   WISCA: WISCA.html
-last_built: 2025-05-15T11:11Z
+last_built: 2025-05-16T15:56Z
 urls:
   reference: https://amr-for-r.org/reference
   article: https://amr-for-r.org/articles

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9277</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9279</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
     <li><a class="dropdown-item" href="../articles/datasets.html"><span class="fa fa-database"></span> Download Data Sets for Own Use</a></li>
     <li><a class="dropdown-item" href="../reference/AMR-options.html"><span class="fa fa-gear"></span> Set User- Or Team-specific Package Settings</a></li>
     <li><a class="dropdown-item" href="../articles/PCA.html"><span class="fa fa-compress"></span> Conduct Principal Component Analysis for AMR</a></li>
-    <li><a class="dropdown-item" href="../articles/MDR.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
+    <li><a class="dropdown-item" href="../reference/mdro.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
     <li><a class="dropdown-item" href="../articles/WHONET.html"><span class="fa fa-globe-americas"></span> Work with WHONET Data</a></li>
     <li><a class="dropdown-item" href="../articles/EUCAST.html"><span class="fa fa-exchange-alt"></span> Apply EUCAST Rules</a></li>
     <li><a class="dropdown-item" href="../reference/mo_property.html"><span class="fa fa-bug"></span> Get Taxonomy of a Microorganism</a></li>
@@ -72,13 +72,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the <code><a href="eucast_rules.html">eucast_rules()</a></code> function.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="how-it-works">How it works<a class="anchor" aria-label="anchor" href="#how-it-works"></a></h2>
-
-
-<div class="section">
+    <p>Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the <code><a href="eucast_rules.html">eucast_rules()</a></code> function.</p><div class="section">
 <h3 id="basics">Basics<a class="anchor" aria-label="anchor" href="#basics"></a></h3>
 
 
@@ -104,7 +98,11 @@
 <span><span class="co">#&gt; 1      Escherichia coli   R    S     S</span></span>
 <span><span class="co">#&gt; 2 Klebsiella pneumoniae   R    S     S</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">df</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">x</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">df</span>,</span>
+<span>             rules <span class="op">=</span> <span class="st">"custom"</span>,</span>
+<span>             custom_rules <span class="op">=</span> <span class="va">x</span>,</span>
+<span>             info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>             overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                      mo TZP ampi cipro</span></span>
 <span><span class="co">#&gt; 1      Escherichia coli   R    R     S</span></span>
 <span><span class="co">#&gt; 2 Klebsiella pneumoniae   R    R     S</span></span></code></pre><p></p></div>
@@ -115,13 +113,26 @@
 
 
 <p>There is one exception in columns used for the rules: all column names of the <a href="microorganisms.html">microorganisms</a> data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", and "snomed". Thus, this next example will work as well, despite the fact that the <code>df</code> data set does not contain a column <code>genus</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_eucast_rules.html">custom_eucast_rules</a></span><span class="op">(</span><span class="va">TZP</span> <span class="op">==</span> <span class="st">"S"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"S"</span>,</span>
-<span>                         <span class="va">TZP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_eucast_rules.html">custom_eucast_rules</a></span><span class="op">(</span></span>
+<span>  <span class="va">TZP</span> <span class="op">==</span> <span class="st">"S"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"S"</span>,</span>
+<span>  <span class="va">TZP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">df</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">y</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">df</span>,</span>
+<span>             rules <span class="op">=</span> <span class="st">"custom"</span>,</span>
+<span>             custom_rules <span class="op">=</span> <span class="va">y</span>,</span>
+<span>             info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>             overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                      mo TZP ampi cipro</span></span>
 <span><span class="co">#&gt; 1      Escherichia coli   R    S     S</span></span>
 <span><span class="co">#&gt; 2 Klebsiella pneumoniae   R    R     S</span></span></code></pre><p></p></div>
+</div>
+
+<div class="section">
+<h3 id="sharing-rules-among-multiple-users">Sharing rules among multiple users<a class="anchor" aria-label="anchor" href="#sharing-rules-among-multiple-users"></a></h3>
+
+
+<p>The rules set (the <code>y</code> object in this case) could be exported to a shared file location using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</p>
 </div>
 
 <div class="section">

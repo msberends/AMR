@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9277</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9279</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <li><a class="dropdown-item" href="../articles/datasets.html"><span class="fa fa-database"></span> Download Data Sets for Own Use</a></li>
     <li><a class="dropdown-item" href="../reference/AMR-options.html"><span class="fa fa-gear"></span> Set User- Or Team-specific Package Settings</a></li>
     <li><a class="dropdown-item" href="../articles/PCA.html"><span class="fa fa-compress"></span> Conduct Principal Component Analysis for AMR</a></li>
-    <li><a class="dropdown-item" href="../articles/MDR.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
+    <li><a class="dropdown-item" href="../reference/mdro.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
     <li><a class="dropdown-item" href="../articles/WHONET.html"><span class="fa fa-globe-americas"></span> Work with WHONET Data</a></li>
     <li><a class="dropdown-item" href="../articles/EUCAST.html"><span class="fa fa-exchange-alt"></span> Apply EUCAST Rules</a></li>
     <li><a class="dropdown-item" href="../reference/mo_property.html"><span class="fa fa-bug"></span> Get Taxonomy of a Microorganism</a></li>
@@ -134,7 +134,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Column name of an antimicrobial, see section <em>Antimicrobials</em> below.</p></dd>
+<dd><p>Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; <code><a href="guess_ab_col.html">guess_ab_col()</a></code> will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. <code>AMX = "amoxicillin"</code>. To skip a specific antimicrobial, set it to <code>NULL</code>, e.g. <code>TIC = NULL</code> to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.</p></dd>
 
 
 <dt id="arg-ab">ab<a class="anchor" aria-label="anchor" href="#arg-ab"></a></dt>
@@ -173,13 +173,6 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the package option <code><a href="AMR-options.html">AMR_eucastrules</a></code>, i.e. run <code>options(AMR_eucastrules = "all")</code>.</p>
 </div>
 
-    </div>
-    <div class="section level2">
-    <h2 id="antimicrobials">Antimicrobials<a class="anchor" aria-label="anchor" href="#antimicrobials"></a></h2>
-
-
-<p>To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use <code><a href="guess_ab_col.html">guess_ab_col()</a></code> to find them.</p>
-<p>To manually specify a column, provide its name (case-insensitive) as an argument, e.g. <code>AMX = "amoxicillin"</code>. To skip a specific antimicrobial, set it to <code>NULL</code>, e.g. <code>TIC = NULL</code> to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.</p>
     </div>
     <div class="section level2">
     <h2 id="download-our-reference-data">Download Our Reference Data<a class="anchor" aria-label="anchor" href="#download-our-reference-data"></a></h2>

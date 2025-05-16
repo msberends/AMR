@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9277</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1.9279</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@
     <li><a class="dropdown-item" href="articles/datasets.html"><span class="fa fa-database"></span> Download Data Sets for Own Use</a></li>
     <li><a class="dropdown-item" href="reference/AMR-options.html"><span class="fa fa-gear"></span> Set User- Or Team-specific Package Settings</a></li>
     <li><a class="dropdown-item" href="articles/PCA.html"><span class="fa fa-compress"></span> Conduct Principal Component Analysis for AMR</a></li>
-    <li><a class="dropdown-item" href="articles/MDR.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
+    <li><a class="dropdown-item" href="reference/mdro.html"><span class="fa fa-skull-crossbones"></span> Determine Multi-Drug Resistance (MDR)</a></li>
     <li><a class="dropdown-item" href="articles/WHONET.html"><span class="fa fa-globe-americas"></span> Work with WHONET Data</a></li>
     <li><a class="dropdown-item" href="articles/EUCAST.html"><span class="fa fa-exchange-alt"></span> Apply EUCAST Rules</a></li>
     <li><a class="dropdown-item" href="reference/mo_property.html"><span class="fa fa-bug"></span> Get Taxonomy of a Microorganism</a></li>
@@ -107,26 +107,26 @@
 </div>
 <p><a href="./reference/clinical_breakpoints.html#response-from-clsi-and-eucast"><img src="./endorsement_clsi_eucast.jpg" class="endorse_img" align="right" height="120"></a></p>
 <hr>
-<div class="section level3">
-<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h3>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>The <code>AMR</code> package is a peer-reviewed, <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of <a href="./authors.html">many different researchers</a> from around the globe to make this a successful and durable project!</p>
 <p>This work was published in the Journal of Statistical Software (Volume 104(3); <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">DOI 10.18637/jss.v104.i03</a>) and formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>).</p>
 <p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~79 000 distinct microbial species</strong></a> (updated June 2024) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2025 and EUCAST 2011-2025 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
-<div class="section level5">
-<h5 id="used-in-over-175-countries-available-in-28-languages">Used in over 175 countries, available in 28 languages<a class="anchor" aria-label="anchor" href="#used-in-over-175-countries-available-in-28-languages"></a>
-</h5>
+<div class="section level3">
+<h3 id="used-in-over-175-countries-available-in-28-languages">Used in over 175 countries, available in 28 languages<a class="anchor" aria-label="anchor" href="#used-in-over-175-countries-available-in-28-languages"></a>
+</h3>
 <p><a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;"></a></p>
 <p>Since its first public release in early 2018, this R package has been used in almost all countries in the world. Click the map to enlarge and to see the country names.</p>
 <p>With the help of contributors from all corners of the world, the <code>AMR</code> package is available in <img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> English, <img src="lang_ar.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Arabic, <img src="lang_bn.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Bengali, <img src="lang_zh.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Chinese, <img src="lang_cs.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Czech, <img src="lang_da.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Danish, <img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dutch, <img src="lang_fi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Finnish, <img src="lang_fr.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> French, <img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> German, <img src="lang_el.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Greek, <img src="lang_hi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Hindi, <img src="lang_id.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Indonesian, <img src="lang_it.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Italian, <img src="lang_ja.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Japanese, <img src="lang_ko.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Korean, <img src="lang_no.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Norwegian, <img src="lang_pl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Polish, <img src="lang_pt.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Portuguese, <img src="lang_ro.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Romanian, <img src="lang_ru.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Russian, <img src="lang_es.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Spanish, <img src="lang_sw.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Swahili, <img src="lang_sv.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Swedish, <img src="lang_tr.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Turkish, <img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Ukrainian, <img src="lang_ur.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Urdu, and <img src="lang_vi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Vietnamese. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.</p>
 </div>
 </div>
+<div class="section level2">
+<h2 id="practical-examples">Practical examples<a class="anchor" aria-label="anchor" href="#practical-examples"></a>
+</h2>
 <div class="section level3">
-<h3 id="practical-examples">Practical examples<a class="anchor" aria-label="anchor" href="#practical-examples"></a>
+<h3 id="filtering-and-selecting-data">Filtering and selecting data<a class="anchor" aria-label="anchor" href="#filtering-and-selecting-data"></a>
 </h3>
-<div class="section level4">
-<h4 id="filtering-and-selecting-data">Filtering and selecting data<a class="anchor" aria-label="anchor" href="#filtering-and-selecting-data"></a>
-</h4>
 <p>One of the most powerful functions of this package, aside from calculating and plotting AMR, is selecting and filtering based on antimicrobial columns. This can be done using the so-called <a href="https://amr-for-r.org/reference/antimicrobial_selectors.html">antimicrobial selectors</a>, which work in base R, <code>dplyr</code> and <code>data.table</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
@@ -166,9 +166,9 @@
 <span><span class="co">#&gt; # ℹ 25 more rows</span></span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antimicrobial_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antimicrobial_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antimicrobials.html">all antimicrobials</a> in the <code>AMR</code> package make sure you get what you meant.</p>
 </div>
-<div class="section level4">
-<h4 id="generating-antibiograms">Generating antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
-</h4>
+<div class="section level3">
+<h3 id="generating-antibiograms">Generating antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
+</h3>
 <p>The <code>AMR</code> package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).</p>
 <p>If used inside <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> or <a href="https://quarto.org" class="external-link">Quarto</a>, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -358,9 +358,9 @@
 </tbody>
 </table>
 </div>
-<div class="section level4">
-<h4 id="interpreting-and-plotting-mic-and-sir-values">Interpreting and plotting MIC and SIR values<a class="anchor" aria-label="anchor" href="#interpreting-and-plotting-mic-and-sir-values"></a>
-</h4>
+<div class="section level3">
+<h3 id="interpreting-and-plotting-mic-and-sir-values">Interpreting and plotting MIC and SIR values<a class="anchor" aria-label="anchor" href="#interpreting-and-plotting-mic-and-sir-values"></a>
+</h3>
 <p>The <code>AMR</code> package allows interpretation of MIC and disk diffusion values based on CLSI and EUCAST. Moreover, the <code>ggplot2</code> package is extended with new scale functions, to allow plotting of log2-distributed MIC values and SIR values.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -391,9 +391,9 @@
 <span>  <span class="fu"><a href="reference/plot.html">scale_colour_sir</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><a href="./reference/plotting.html" title="Plotting Helpers for AMR Data Analysis"> <img src="./plot_readme.png" style="width: 1400px; max-width: 100%;"></a></p>
 </div>
-<div class="section level4">
-<h4 id="calculating-resistance-per-group">Calculating resistance per group<a class="anchor" aria-label="anchor" href="#calculating-resistance-per-group"></a>
-</h4>
+<div class="section level3">
+<h3 id="calculating-resistance-per-group">Calculating resistance per group<a class="anchor" aria-label="anchor" href="#calculating-resistance-per-group"></a>
+</h3>
 <p>For a manual approach, you can use the <code>resistance</code> or <code><a href="reference/proportion.html">susceptibility()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -457,9 +457,9 @@
 <span><span class="co">#&gt; 3 Outpatient 0.2       0.3676471 0.6052632      NA 0.8888889</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="what-else-can-you-do-with-this-package">What else can you do with this package?<a class="anchor" aria-label="anchor" href="#what-else-can-you-do-with-this-package"></a>
-</h3>
+<div class="section level2">
+<h2 id="what-else-can-you-do-with-this-package">What else can you do with this package?<a class="anchor" aria-label="anchor" href="#what-else-can-you-do-with-this-package"></a>
+</h2>
 <p>This package was intended as a comprehensive toolbox for integrated AMR data analysis. This package can be used for:</p>
 <ul>
 <li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature (<a href="(https://lpsn.dsmz.de)" class="external-link">LPSN</a>) and the Global Biodiversity Information Facility (<a href="https://www.gbif.org" class="external-link">GBIF</a>) (<a href="./reference/mo_property.html">manual</a>)</li>
@@ -467,9 +467,9 @@
 <li>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records (<a href="./reference/ab_from_text.html">manual</a>)</li>
 <li>Determining first isolates to be used for AMR data analysis (<a href="./reference/first_isolate.html">manual</a>)</li>
 <li>Calculating antimicrobial resistance (<a href="./articles/AMR.html">tutorial</a>)</li>
-<li>Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) (<a href="./articles/MDR.html">tutorial</a>)</li>
+<li>Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) (<a href="./reference/mdro.html">tutorial</a>)</li>
 <li>Calculating (empirical) susceptibility of both mono therapy and combination therapies (<a href="./articles/AMR.html">tutorial</a>)</li>
-<li>Apply AMR function in predictive modelling (<a href="./articles/AMR_with_tidymodels.html">tutorial</a>)</li>
+<li>Apply AMR functions in predictive modelling (<a href="./articles/AMR_with_tidymodels.html">tutorial</a>)</li>
 <li>Getting properties for any microorganism (like Gram stain, species, genus or family) (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Getting properties for any antimicrobial (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) (<a href="./reference/ab_property.html">manual</a>)</li>
 <li>Plotting antimicrobial resistance (<a href="./articles/AMR.html">tutorial</a>)</li>
@@ -480,12 +480,12 @@
 <li>Principal component analysis for AMR (<a href="./articles/PCA.html">tutorial</a>)</li>
 </ul>
 </div>
+<div class="section level2">
+<h2 id="get-this-package">Get this package<a class="anchor" aria-label="anchor" href="#get-this-package"></a>
+</h2>
 <div class="section level3">
-<h3 id="get-this-package">Get this package<a class="anchor" aria-label="anchor" href="#get-this-package"></a>
+<h3 id="latest-official-version">Latest official version<a class="anchor" aria-label="anchor" href="#latest-official-version"></a>
 </h3>
-<div class="section level4">
-<h4 id="latest-official-version">Latest official version<a class="anchor" aria-label="anchor" href="#latest-official-version"></a>
-</h4>
 <p><a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR" class="external-link">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -493,9 +493,9 @@
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest beta version.</p>
 </div>
-<div class="section level4">
-<h4 id="latest-beta-version">Latest beta version<a class="anchor" aria-label="anchor" href="#latest-beta-version"></a>
-</h4>
+<div class="section level3">
+<h3 id="latest-beta-version">Latest beta version<a class="anchor" aria-label="anchor" href="#latest-beta-version"></a>
+</h3>
 <p><a href="https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml" class="external-link"><img src="https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main" alt="check-old"></a> <a href="https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml" class="external-link"><img src="https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main" alt="check-recent"></a> <a href="https://www.codefactor.io/repository/github/msberends/amr" class="external-link"><img src="https://www.codefactor.io/repository/github/msberends/amr/badge" alt="CodeFactor"></a> <a href="https://codecov.io/gh/msberends/AMR?branch=main" class="external-link"><img src="https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg" alt="Codecov"></a></p>
 <p>Please read our <a href="https://github.com/msberends/AMR/wiki/Developer-Guideline" class="external-link">Developer Guideline here</a>.</p>
 <p>To install the latest and unpublished beta version:</p>
@@ -506,22 +506,22 @@
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
-</h3>
+<div class="section level2">
+<h2 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
+</h2>
 <p>To find out how to conduct AMR data analysis, please <a href="./articles/AMR.html">continue reading here to get started</a> or click a link in the <a href="./articles/">‘How to’ menu</a>.</p>
 </div>
-<div class="section level3">
-<h3 id="partners">Partners<a class="anchor" aria-label="anchor" href="#partners"></a>
-</h3>
+<div class="section level2">
+<h2 id="partners">Partners<a class="anchor" aria-label="anchor" href="#partners"></a>
+</h2>
 <p>The initial development of this package was part of, related to, or made possible by the following non-profit organisations and initiatives:</p>
 <div align="center">
 <p><a href="https://www.rug.nl" title="University of Groningen" class="external-link"><img src="./logo_rug.svg" style="max-width: 200px;"></a> <a href="https://www.umcg.nl" title="University Medical Center Groningen" class="external-link"><img src="./logo_umcg.svg" style="max-width: 200px;"></a> <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation" class="external-link"><img src="./logo_certe.svg" style="max-width: 200px;"></a> <a href="https://www.deutschland-nederland.eu" title="EurHealth-1-Health" class="external-link"><img src="./logo_eh1h.png" style="max-width: 200px;"></a> <a href="https://www.deutschland-nederland.eu" title="INTERREG" class="external-link"><img src="./logo_interreg.png" style="max-width: 200px;"></a></p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="copyright">Copyright<a class="anchor" aria-label="anchor" href="#copyright"></a>
-</h3>
+<div class="section level2">
+<h2 id="copyright">Copyright<a class="anchor" aria-label="anchor" href="#copyright"></a>
+</h2>
 <p>This R package is free, open-source software and licensed under the <a href="./LICENSE-text.html">GNU General Public License v2.0 (GPL-2)</a>. In a nutshell, this means that this package:</p>
 <ul>
 <li><p>May be used for commercial purposes</p></li>
