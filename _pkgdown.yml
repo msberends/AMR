@@ -89,7 +89,7 @@ navbar:
         href: "articles/PCA.html"
       - text: "Determine Multi-Drug Resistance (MDR)"
         icon: "fa-skull-crossbones"
-        href: "articles/MDR.html"
+        href: "reference/mdro.html"
       - text: "Work with WHONET Data"
         icon: "fa-globe-americas"
         href: "articles/WHONET.html"

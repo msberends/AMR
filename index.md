@@ -397,7 +397,7 @@ data analysis. This package can be used for:
   ([manual](./reference/first_isolate.html))
 - Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
 - Determining multi-drug resistance (MDR) / multi-drug resistant
-  organisms (MDRO) ([tutorial](./articles/MDR.html))
+  organisms (MDRO) ([tutorial](./reference/mdro.html))
 - Calculating (empirical) susceptibility of both mono therapy and
   combination therapies ([tutorial](./articles/AMR.html))
 - Apply AMR function in predictive modelling

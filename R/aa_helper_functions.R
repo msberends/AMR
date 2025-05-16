@@ -1020,6 +1020,17 @@ get_current_data <- function(arg_name, call) {
     }
   }
 
+  # now check if it was run with eval(), which has arguments `expr`, `envir`, and `enclos`
+  from_eval_parse <- vapply(FUN.VALUE = logical(1), frms, function(e) all(c("expr", "envir", "enclos") %in% names(e)))
+  for (env in frms[which(from_eval_parse)]) {
+    if (valid_df(env$envir)) {
+      # the element `envir` could contain the data in case of
+      # e.g. `eval(parse(text = "any(cephalosporins_3rd() == 'R')"), envir = example_isolates)`
+      # this is also used by run_custom_mdro_guideline() to support antimicrobial selectors in the part before `~`
+      return(env$envir)
+    }
+  }
+
   # no data.frame found, so an error  must be returned:
   if (is.na(arg_name)) {
     if (isTRUE(is.numeric(call))) {
@@ -1102,6 +1113,44 @@ get_group_names <- function(x) {
   } else {
     character(0)
   }
+}
+
+format_custom_query_rule <- function(query, colours = has_colour()) {
+  # this is used by custom EUCAST and custom MDRO rules
+
+  # font_black() is a bit expensive so do it once:
+  txt <- font_black("{text}")
+  query <- gsub(" & ", sub("{text}", font_bold(" and "), txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" | ", sub("{text}", " or ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" + ", sub("{text}", " plus ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" - ", sub("{text}", " minus ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" / ", sub("{text}", " divided by ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" * ", sub("{text}", " times ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" == ", sub("{text}", " is ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" > ", sub("{text}", " is higher than ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" < ", sub("{text}", " is lower than ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" >= ", sub("{text}", " is higher than or equal to ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" <= ", sub("{text}", " is lower than or equal to ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" ^ ", sub("{text}", " to the power of ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" %in% ", sub("{text}", " is one of ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub(" %like% ", sub("{text}", " resembles ", txt, fixed = TRUE), query, fixed = TRUE)
+  query <- gsub("any\\((.*)\\)$", paste0(font_black("any of "), "\\1"), query)
+  query <- gsub("all\\((.*)\\)$", paste0(font_black("all of "), "\\1"), query)
+  if (colours == TRUE) {
+    query <- gsub("[\"']R[\"']", font_rose_bg(" R "), query)
+    query <- gsub("[\"']SDD[\"']", font_orange_bg(" SDD "), query)
+    query <- gsub("[\"']S[\"']", font_green_bg(" S "), query)
+    query <- gsub("[\"']NI[\"']", font_grey_bg(font_black(" NI ")), query)
+    query <- gsub("[\"']I[\"']", font_orange_bg(" I "), query)
+  }
+  # replace the black colour 'stops' with blue colour 'starts'
+  query <- gsub("\033[39m", "\033[34m", as.character(query), fixed = TRUE)
+  # start with blue
+  query <- paste0("\033[34m", query)
+  if (colours == FALSE) {
+    query <- font_stripstyle(query)
+  }
+  query
 }
 
 unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {

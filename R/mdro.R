@@ -52,7 +52,9 @@
 #'
 #' **Note:** Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named *order* Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu *et al.* in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this [mdro()] function makes sure that results from before 2016 and after 2016 are identical.
 #'
-#' @section Supported International / National Guidelines:
+#' ### Supported International / National Guidelines
+#'
+#' Please suggest to implement guidelines by [letting us know](https://github.com/msberends/AMR/issues/new?template=2-feature-request.yml&title=Add%20new%20MDRO%20guideline).
 #'
 #' Currently supported guidelines are (case-insensitive):
 #'
@@ -64,13 +66,15 @@
 #'
 #'   The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf))
 #'
-#' * `guideline = "EUCAST 3.2"`
+#'   Also:
 #'
-#'   The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf))
+#'   * `guideline = "EUCAST 3.2"`
 #'
-#' * `guideline = "EUCAST 3.1"`
+#'      The former European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf))
 #'
-#'   The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf))
+#'   * `guideline = "EUCAST 3.1"`
+#'
+#'      The former European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf))
 #'
 #' * `guideline = "TB"`
 #'
@@ -90,55 +94,12 @@
 #'
 #'     The former Dutch national guideline - Werkgroep Infectiepreventie (WIP), RIVM, last revision as of 2017: "Bijzonder Resistente Micro-Organismen (BRMO)"
 #'
-#' Please suggest to implement guidelines by letting us know: <https://github.com/msberends/AMR/issues/new>.
+#' ### Using Custom Guidelines
 #'
-#' @section Using Custom Guidelines:
+#' Using a custom MDRO guideline is of importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 #'
-#' Custom guidelines can be set with the [custom_mdro_guideline()] function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
+#' Custom guidelines can be set with the [custom_mdro_guideline()] function.
 #'
-#' If you are familiar with the [`case_when()`][dplyr::case_when()] function of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule is written *before* the tilde (`~`) and the consequence of the rule is written *after* the tilde:
-#'
-#' ```
-#' custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
-#'                                 ERY == "R" & age > 60 ~ "Elderly Type B")
-#' ```
-#'
-#' If a row/an isolate matches the first rule, the value after the first `~` (in this case *'Elderly Type A'*) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited.
-#'
-#' You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.
-#'
-#' ```
-#' custom
-#' #> A set of custom MDRO rules:
-#' #>   1. CIP is "R" and age is higher than 60 -> Elderly Type A
-#' #>   2. ERY is "R" and age is higher than 60 -> Elderly Type B
-#' #>   3. Otherwise -> Negative
-#' #>
-#' #> Unmatched rows will return NA.
-#' ```
-#'
-#' The outcome of the function can be used for the `guideline` argument in the [mdro()] function:
-#'
-#' ```
-#' x <- mdro(example_isolates,
-#'           guideline = custom)
-#' table(x)
-#' #>       Negative Elderly Type A Elderly Type B
-#' #>           1070            198            732
-#' ```
-#'
-#' Rules can also be combined with other custom rules by using [c()]:
-#'
-#' ```
-#' x <- mdro(example_isolates,
-#'           guideline = c(custom,
-#'                         custom_mdro_guideline(ERY == "R" & age > 50 ~ "Elderly Type C")))
-#' table(x)
-#' #>       Negative Elderly Type A Elderly Type B Elderly Type C
-#' #>            961            198            732            109
-#' ```
-#'
-#' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
 #' @inheritSection as.sir Interpretation of SIR
 #' @return
 #' - If `verbose` is set to `TRUE`:\cr
@@ -153,33 +114,22 @@
 #'   Ordered [factor] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. genotypic) tests
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
+#' @seealso [custom_mdro_guideline()]
 #' @export
-#' @source
-#' See the supported guidelines above for the [list] of publications used for this function.
 #' @examples
-#' out <- mdro(example_isolates, guideline = "EUCAST")
+#' out <- mdro(example_isolates)
 #' str(out)
 #' table(out)
 #'
-#' out <- mdro(example_isolates,
-#'   guideline = custom_mdro_guideline(
-#'     AMX == "R" ~ "Custom MDRO 1",
-#'     VAN == "R" ~ "Custom MDRO 2"
-#'   )
-#' )
+#' out <- mdro(example_isolates, guideline = "EUCAST 3.3")
 #' table(out)
 #'
 #' \donttest{
 #' if (require("dplyr")) {
-#'   example_isolates %>%
-#'     mdro() %>%
-#'     table()
-#'
 #'   # no need to define `x` when used inside dplyr verbs:
 #'   example_isolates %>%
 #'     mutate(MDRO = mdro()) %>%
-#'     pull(MDRO) %>%
-#'     table()
+#'     count(MDRO)
 #' }
 #' }
 mdro <- function(x = NULL,
@@ -1947,7 +1897,6 @@ mdro <- function(x = NULL,
     )
   }
 
-
   if (isTRUE(verbose)) {
     # fill in empty reasons
     x$reason[is.na(x$reason)] <- "not covered by guideline"
@@ -1969,181 +1918,6 @@ mdro <- function(x = NULL,
   } else {
     x$MDRO
   }
-}
-
-#' @rdname mdro
-#' @export
-custom_mdro_guideline <- function(..., as_factor = TRUE) {
-  meet_criteria(as_factor, allow_class = "logical", has_length = 1)
-
-  dots <- tryCatch(list(...),
-    error = function(e) "error"
-  )
-  stop_if(
-    identical(dots, "error"),
-    "rules must be a valid formula inputs (e.g., using '~'), see `?mdro`"
-  )
-  n_dots <- length(dots)
-  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using `?mdro`.")
-  out <- vector("list", n_dots)
-  for (i in seq_len(n_dots)) {
-    stop_ifnot(
-      inherits(dots[[i]], "formula"),
-      "rule ", i, " must be a valid formula input (e.g., using '~'), see `?mdro`"
-    )
-
-    # Query
-    qry <- dots[[i]][[2]]
-    if (inherits(qry, "call")) {
-      qry <- as.expression(qry)
-    }
-    qry <- as.character(qry)
-    # these will prevent vectorisation, so replace them:
-    qry <- gsub("&&", "&", qry, fixed = TRUE)
-    qry <- gsub("||", "|", qry, fixed = TRUE)
-    # support filter()-like writing: custom_mdro_guideline('CIP == "R", AMX == "S"' ~ "result 1")
-    qry <- gsub(" *, *", " & ", qry)
-    # format nicely, setting spaces around operators
-    qry <- gsub(" *([&|+-/*^><==]+) *", " \\1 ", qry)
-    qry <- gsub("'", "\"", qry, fixed = TRUE)
-    out[[i]]$query <- as.expression(qry)
-
-    # Value
-    val <- tryCatch(eval(dots[[i]][[3]]), error = function(e) NULL)
-    stop_if(is.null(val), "rule ", i, " must return a valid value, it now returns an error: ", tryCatch(eval(dots[[i]][[3]]), error = function(e) e$message))
-    stop_if(length(val) > 1, "rule ", i, " must return a value of length 1, not ", length(val))
-    out[[i]]$value <- as.character(val)
-  }
-
-  names(out) <- paste0("rule", seq_len(n_dots))
-  out <- set_clean_class(out, new_class = c("custom_mdro_guideline", "list"))
-  attr(out, "values") <- unname(c("Negative", vapply(FUN.VALUE = character(1), unclass(out), function(x) x$value)))
-  attr(out, "as_factor") <- as_factor
-  out
-}
-
-#' @method c custom_mdro_guideline
-#' @noRd
-#' @export
-c.custom_mdro_guideline <- function(x, ..., as_factor = NULL) {
-  if (length(list(...)) == 0) {
-    return(x)
-  }
-  if (!is.null(as_factor)) {
-    meet_criteria(as_factor, allow_class = "logical", has_length = 1)
-  } else {
-    as_factor <- attributes(x)$as_factor
-  }
-  for (g in list(...)) {
-    stop_ifnot(inherits(g, "custom_mdro_guideline"),
-      "for combining custom MDRO guidelines, all rules must be created with `custom_mdro_guideline()`",
-      call = FALSE
-    )
-    vals <- attributes(x)$values
-    if (!all(attributes(g)$values %in% vals)) {
-      vals <- unname(unique(c(vals, attributes(g)$values)))
-    }
-    attributes(g) <- NULL
-    x <- c(unclass(x), unclass(g))
-    attr(x, "values") <- vals
-  }
-  names(x) <- paste0("rule", seq_len(length(x)))
-  x <- set_clean_class(x, new_class = c("custom_mdro_guideline", "list"))
-  attr(x, "values") <- vals
-  attr(x, "as_factor") <- as_factor
-  x
-}
-
-#' @method as.list custom_mdro_guideline
-#' @noRd
-#' @export
-as.list.custom_mdro_guideline <- function(x, ...) {
-  c(x, ...)
-}
-
-#' @method print custom_mdro_guideline
-#' @export
-#' @noRd
-print.custom_mdro_guideline <- function(x, ...) {
-  cat("A set of custom MDRO rules:\n")
-  for (i in seq_len(length(x))) {
-    rule <- x[[i]]
-    rule$query <- format_custom_query_rule(rule$query)
-    cat("  ", i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then: "), font_red(rule$value), "\n", sep = "")
-  }
-  cat("  ", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
-  cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
-  if (isTRUE(attributes(x)$as_factor)) {
-    cat("Results will be of class 'factor', with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")
-  } else {
-    cat("Results will be of class 'character'.\n")
-  }
-}
-
-run_custom_mdro_guideline <- function(df, guideline, info) {
-  n_dots <- length(guideline)
-  stop_if(n_dots == 0, "no custom guidelines set", call = -2)
-  out <- character(length = NROW(df))
-  reasons <- character(length = NROW(df))
-  for (i in seq_len(n_dots)) {
-    qry <- tryCatch(eval(parse(text = guideline[[i]]$query), envir = df, enclos = parent.frame()),
-      error = function(e) {
-        AMR_env$err_msg <- e$message
-        return("error")
-      }
-    )
-    if (identical(qry, "error")) {
-      warning_("in `custom_mdro_guideline()`: rule ", i,
-        " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
-        AMR_env$err_msg,
-        call = FALSE,
-        add_fn = font_red
-      )
-      next
-    }
-    stop_ifnot(is.logical(qry), "in custom_mdro_guideline(): rule ", i, " (`", guideline[[i]]$query,
-      "`) must return `TRUE` or `FALSE`, not ",
-      format_class(class(qry), plural = FALSE),
-      call = FALSE
-    )
-
-    new_mdros <- which(qry == TRUE & out == "")
-
-    if (isTRUE(info)) {
-      cat(word_wrap(
-        "- Custom MDRO rule ", i, ": `", as.character(guideline[[i]]$query),
-        "` (", length(new_mdros), " rows matched)"
-      ), "\n", sep = "")
-    }
-    val <- guideline[[i]]$value
-    out[new_mdros] <- val
-    reasons[new_mdros] <- paste0(
-      "matched rule ",
-      gsub("rule", "", names(guideline)[i], fixed = TRUE), ": ", as.character(guideline[[i]]$query)
-    )
-  }
-  out[out == ""] <- "Negative"
-  reasons[out == "Negative"] <- "no rules matched"
-
-  if (isTRUE(attributes(guideline)$as_factor)) {
-    out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
-  }
-
-  all_nonsusceptible_columns <- as.data.frame(t(df[, is.sir(df), drop = FALSE] == "R"))
-  all_nonsusceptible_columns <- vapply(
-    FUN.VALUE = character(1),
-    all_nonsusceptible_columns,
-    function(x) paste0(rownames(all_nonsusceptible_columns)[which(x)], collapse = ", ")
-  )
-  all_nonsusceptible_columns[is.na(out)] <- NA_character_
-
-  data.frame(
-    row_number = seq_len(NROW(df)),
-    MDRO = out,
-    reason = reasons,
-    all_nonsusceptible_columns = all_nonsusceptible_columns,
-    stringsAsFactors = FALSE
-  )
 }
 
 #' @rdname mdro

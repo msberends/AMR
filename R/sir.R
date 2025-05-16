@@ -1903,7 +1903,7 @@ pillar_shaft.sir <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey("  NA")
-    out[x == "NI"] <- font_grey_bg("  NI ")
+    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
     out[x == "S"] <- font_green_bg("  S  ")
     out[x == "I"] <- font_orange_bg("  I  ")
     out[x == "SDD"] <- font_orange_bg(" SDD ")

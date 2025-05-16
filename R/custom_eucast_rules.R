@@ -89,6 +89,10 @@
 #' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
+#' ### Sharing rules among multiple users
+#'
+#' The rules set (the `y` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
+#'
 #' ### Usage of multiple antimicrobials and antimicrobial group names
 #'
 #' You can define antimicrobial groups instead of single antimicrobials for the rule consequence, which is the part *after* the tilde (~). In the examples above, the antimicrobial group `aminopenicillins` includes both ampicillin and amoxicillin.
@@ -277,36 +281,4 @@ print.custom_eucast_rules <- function(x, ...) {
     rule_then <- paste0("     ", word_wrap(paste0(agents, collapse = ", "), extra_indent = 5))
     cat("\n  ", rule_if, "\n", rule_then, "\n", sep = "")
   }
-}
-
-format_custom_query_rule <- function(query, colours = has_colour()) {
-  # font_black() is a bit expensive so do it once:
-  txt <- font_black("{text}")
-  query <- gsub(" & ", sub("{text}", font_bold(" and "), txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" | ", sub("{text}", " or ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" + ", sub("{text}", " plus ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" - ", sub("{text}", " minus ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" / ", sub("{text}", " divided by ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" * ", sub("{text}", " times ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" == ", sub("{text}", " is ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" > ", sub("{text}", " is higher than ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" < ", sub("{text}", " is lower than ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" >= ", sub("{text}", " is higher than or equal to ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" <= ", sub("{text}", " is lower than or equal to ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" ^ ", sub("{text}", " to the power of ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" %in% ", sub("{text}", " is one of ", txt, fixed = TRUE), query, fixed = TRUE)
-  query <- gsub(" %like% ", sub("{text}", " resembles ", txt, fixed = TRUE), query, fixed = TRUE)
-  if (colours == TRUE) {
-    query <- gsub('"R"', font_rose_bg(" R "), query, fixed = TRUE)
-    query <- gsub('"S"', font_green_bg(" S "), query, fixed = TRUE)
-    query <- gsub('"I"', font_orange_bg(" I "), query, fixed = TRUE)
-  }
-  # replace the black colour 'stops' with blue colour 'starts'
-  query <- gsub("\033[39m", "\033[34m", as.character(query), fixed = TRUE)
-  # start with blue
-  query <- paste0("\033[34m", query)
-  if (colours == FALSE) {
-    query <- font_stripstyle(query)
-  }
-  query
 }

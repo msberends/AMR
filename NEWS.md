@@ -1,4 +1,4 @@
-# AMR 2.1.1.9277
+# AMR 2.1.1.9278
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
@@ -148,9 +148,10 @@ This package now supports not only tools for AMR data analysis in clinical setti
 * Improved algorithm of `first_isolate()` when using the phenotype-based method, to prioritise records with the highest availability of SIR values
 * `scale_y_percent()` can now cope with ranges outside the 0-100% range
 * MDRO determination (using `mdro()`)
+  * The Verbose Mode (`verbose = TRUE`) now includes the guideline name
   * Implemented the new Dutch national MDRO guideline (SRI-richtlijn BRMO, Nov 2024)
   * Added arguments `esbl`, `carbapenemase`, `mecA`, `mecC`, `vanA`, `vanB` to denote column names or logical values indicating presence of these genes (or production of their proteins)
-  * The Verbose Mode (`verbose = TRUE`) now includes the guideline name
+  * Added upport for antimicrobial selectors to use as as a custom rule (`custom_mdro_guideline()`)
 * Added console colours support of `sir` class for Positron
 
 ### Other

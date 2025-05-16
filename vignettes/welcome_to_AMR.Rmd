@@ -41,7 +41,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records ([manual](https://amr-for-r.org/reference/ab_from_text.html))
   * Determining first isolates to be used for AMR data analysis ([manual](https://amr-for-r.org/reference/first_isolate.html))
   * Calculating antimicrobial resistance ([tutorial](https://amr-for-r.org/articles/AMR.html))
-  * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](https://amr-for-r.org/articles/MDR.html))
+  * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](https://amr-for-r.org/reference/mdro.html))
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](https://amr-for-r.org/articles/AMR.html))
   * Apply AMR functions in predictive modelling ([tutorial](https://amr-for-r.org/articles/AMR_with_tidymodels.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](https://amr-for-r.org/reference/mo_property.html))

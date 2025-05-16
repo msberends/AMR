@@ -8,23 +8,17 @@
 \alias{BRMO}
 \alias{3MRGN}
 \alias{4MRGN}
-\alias{custom_mdro_guideline}
 \alias{brmo}
 \alias{mrgn}
 \alias{mdr_tb}
 \alias{mdr_cmi2012}
 \alias{eucast_exceptional_phenotypes}
 \title{Determine Multidrug-Resistant Organisms (MDRO)}
-\source{
-See the supported guidelines above for the \link{list} of publications used for this function.
-}
 \usage{
 mdro(x = NULL, guideline = "CMI 2012", col_mo = NULL, esbl = NA,
   carbapenemase = NA, mecA = NA, mecC = NA, vanA = NA, vanB = NA,
   info = interactive(), pct_required_classes = 0.5, combine_SI = TRUE,
   verbose = FALSE, only_sir_columns = any(is.sir(x)), ...)
-
-custom_mdro_guideline(..., as_factor = TRUE)
 
 brmo(x = NULL, only_sir_columns = any(is.sir(x)), ...)
 
@@ -94,9 +88,9 @@ These functions are context-aware. This means that the \code{x} argument can be 
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 
 \strong{Note:} Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named \emph{order} Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu \emph{et al.} in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this \code{\link[=mdro]{mdro()}} function makes sure that results from before 2016 and after 2016 are identical.
-}
-\section{Supported International / National Guidelines}{
+\subsection{Supported International / National Guidelines}{
 
+Please suggest to implement guidelines by \href{https://github.com/msberends/AMR/issues/new?template=2-feature-request.yml&title=Add\%20new\%20MDRO\%20guideline}{letting us know}.
 
 Currently supported guidelines are (case-insensitive):
 \itemize{
@@ -106,12 +100,16 @@ Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug
 \item \code{guideline = "EUCAST 3.3"} (or simply \code{guideline = "EUCAST"})
 
 The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf}{link})
+
+Also:
+\itemize{
 \item \code{guideline = "EUCAST 3.2"}
 
-The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{link})
+The former European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{link})
 \item \code{guideline = "EUCAST 3.1"}
 
-The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
+The former European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
+}
 \item \code{guideline = "TB"}
 
 The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/publications/i/item/9789241548809}{link})
@@ -129,56 +127,15 @@ Also:
 The former Dutch national guideline - Werkgroep Infectiepreventie (WIP), RIVM, last revision as of 2017: "Bijzonder Resistente Micro-Organismen (BRMO)"
 }
 }
-
-Please suggest to implement guidelines by letting us know: \url{https://github.com/msberends/AMR/issues/new}.
 }
 
-\section{Using Custom Guidelines}{
+\subsection{Using Custom Guidelines}{
 
+Using a custom MDRO guideline is of importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 
-Custom guidelines can be set with the \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
-
-If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
-                                ERY == "R" & age > 60 ~ "Elderly Type B")
-}\if{html}{\out{</div>}}
-
-If a row/an isolate matches the first rule, the value after the first \code{~} (in this case \emph{'Elderly Type A'}) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited.
-
-You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{custom
-#> A set of custom MDRO rules:
-#>   1. CIP is "R" and age is higher than 60 -> Elderly Type A
-#>   2. ERY is "R" and age is higher than 60 -> Elderly Type B
-#>   3. Otherwise -> Negative
-#>
-#> Unmatched rows will return NA.
-}\if{html}{\out{</div>}}
-
-The outcome of the function can be used for the \code{guideline} argument in the \code{\link[=mdro]{mdro()}} function:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{x <- mdro(example_isolates,
-          guideline = custom)
-table(x)
-#>       Negative Elderly Type A Elderly Type B
-#>           1070            198            732
-}\if{html}{\out{</div>}}
-
-Rules can also be combined with other custom rules by using \code{\link[=c]{c()}}:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{x <- mdro(example_isolates,
-          guideline = c(custom,
-                        custom_mdro_guideline(ERY == "R" & age > 50 ~ "Elderly Type C")))
-table(x)
-#>       Negative Elderly Type A Elderly Type B Elderly Type C
-#>            961            198            732            109
-}\if{html}{\out{</div>}}
-
-The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}}.
+Custom guidelines can be set with the \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} function.
 }
-
+}
 \section{Antimicrobials}{
 
 To let the function automatically detect antimicrobial column names, do not provide any named arguments. It will then use \code{\link[=guess_ab_col]{guess_ab_col()}} to find them.
@@ -194,29 +151,22 @@ This AMR package follows insight; use \code{\link[=susceptibility]{susceptibilit
 }
 
 \examples{
-out <- mdro(example_isolates, guideline = "EUCAST")
+out <- mdro(example_isolates)
 str(out)
 table(out)
 
-out <- mdro(example_isolates,
-  guideline = custom_mdro_guideline(
-    AMX == "R" ~ "Custom MDRO 1",
-    VAN == "R" ~ "Custom MDRO 2"
-  )
-)
+out <- mdro(example_isolates, guideline = "EUCAST 3.3")
 table(out)
 
 \donttest{
 if (require("dplyr")) {
-  example_isolates \%>\%
-    mdro() \%>\%
-    table()
-
   # no need to define `x` when used inside dplyr verbs:
   example_isolates \%>\%
     mutate(MDRO = mdro()) \%>\%
-    pull(MDRO) \%>\%
-    table()
+    count(MDRO)
 }
 }
+}
+\seealso{
+\code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}
 }
