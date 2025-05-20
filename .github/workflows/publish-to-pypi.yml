@@ -60,7 +60,7 @@ jobs:
           cd data-raw/
           bash _generate_python_wrapper.sh
       
-      - name: Publish to PyPI
+      - name: Upload to PyPI
         continue-on-error: true
         env:
           TWINE_USERNAME: "__token__"
@@ -69,7 +69,7 @@ jobs:
           cd PythonPackage/AMR
           python -m twine upload dist/*
           
-      - name: Publish to PyPI Testserver
+      - name: Upload to PyPI Testserver
         continue-on-error: true
         env:
           TWINE_USERNAME: "__token__"
@@ -77,20 +77,27 @@ jobs:
         run: |
           cd PythonPackage/AMR
           python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-          
-      - name: Install conda-build
-        continue-on-error: true
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          miniconda-version: "latest"
+          channels: conda-forge,defaults
+          activate-environment: build-env
+          python-version: "3.9"
+
+      - name: Install conda-build and anaconda-client
         run: |
-          pip install conda-build anaconda
+          conda install -y conda-build anaconda-client
 
       - name: Build conda package
-        continue-on-error: true
         run: |
           cd PythonPackage/AMR
-          conda skeleton pypi .  # Generates meta.yaml for the local folder
+          conda skeleton pypi .  # Or use custom recipe
           conda-build ./ --output-folder conda-bld
-          
-      - name: Publish to Anaconda
+
+      - name: Upload to Anaconda
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
