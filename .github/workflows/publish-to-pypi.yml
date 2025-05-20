@@ -61,6 +61,7 @@ jobs:
           bash _generate_python_wrapper.sh
       
       - name: Publish to PyPI
+        continue-on-error: true
         env:
           TWINE_USERNAME: "__token__"
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
@@ -76,6 +77,26 @@ jobs:
         run: |
           cd PythonPackage/AMR
           python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+          
+      - name: Install conda-build
+        continue-on-error: true
+        run: |
+          pip install conda-build anaconda
+
+      - name: Build conda package
+        continue-on-error: true
+        run: |
+          cd PythonPackage/AMR
+          conda skeleton pypi .  # Generates meta.yaml for the local folder
+          conda-build ./ --output-folder conda-bld
+          
+      - name: Publish to Anaconda
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+        run: |
+          anaconda login --token $ANACONDA_API_TOKEN
+          anaconda upload conda-bld/**/amr-*.tar.bz2 --user msberends --label main
+          rm -rf conda-bld
 
       - name: Git push to python-wrapper branch
         run: |
