@@ -445,9 +445,9 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (!all(is.na(x)) && all(toupper(x) %in% c("S", "SDD", "I", "R", "NI", NA))) {
+  } else if (!all(is.na(x)) && all(x %in% c("S", "SDD", "I", "R", "NI", NA, "s", "sdd", "i", "r", "ni"))) {
     return(TRUE)
-  } else if (!all(is.na(x)) && !any(c("S", "SDD", "I", "R", "NI") %in% gsub("([SIR])\\1+", "\\1", gsub("[^A-Z]", "", toupper(x), perl = TRUE), perl = TRUE), na.rm = TRUE)) {
+  } else if (!all(is.na(x)) && !any(c("S", "SDD", "I", "R", "NI") %in% gsub("([SIR])\\1+", "\\1", gsub("[^A-Z]", "", toupper(unique(x[1:10000])), perl = TRUE), perl = TRUE), na.rm = TRUE)) {
     return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !x %in% c("", "-", "NULL")]
