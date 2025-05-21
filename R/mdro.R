@@ -499,10 +499,11 @@ mdro <- function(x = NULL,
   if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
     if (isTRUE(info)) {
-      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many MDRO rules depend on it.")
+      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many MDRO rules depend on it.", add_fn = font_red)
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
+  cols_ab <- cols_ab[!duplicated(cols_ab)]
 
   # nolint start
   AMC <- cols_ab["AMC"]
@@ -1607,20 +1608,20 @@ mdro <- function(x = NULL,
       reason = "E. faecium: vanA/vanB gene + penicillin group"
     )
 
-    # Staphylococcus aureus
+    # Staphylococcus aureus complex (= aureus, argenteus or schweitzeri)
     trans_tbl(
       2,
-      rows = which(x$genus == "Staphylococcus" & x$species == "aureus" & (is.na(mecA) | is.na(mecC))),
+      rows = which(x$genus == "Staphylococcus" & x$species %in% c("aureus", "argenteus", "schweitzeri") & (is.na(mecA) | is.na(mecC))),
       cols = c(AMC, TZP, FLC, OXA, FOX, FOX1),
       any_all = "any",
-      reason = "S. aureus: potential MRSA"
+      reason = "S. aureus complex: potential MRSA"
     )
     trans_tbl(
       3,
-      rows = which(x$genus == "Staphylococcus" & x$species == "aureus" & (mecA == TRUE | mecC == TRUE)),
+      rows = which(x$genus == "Staphylococcus" & x$species %in% c("aureus", "argenteus", "schweitzeri") & (mecA == TRUE | mecC == TRUE)),
       cols = "any",
       any_all = "any",
-      reason = "S. aureus: mecA/mecC gene"
+      reason = "S. aureus complex: mecA/mecC gene"
     )
 
     # Candida auris

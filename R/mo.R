@@ -276,11 +276,16 @@ as.mo <- function(x,
     AMR_env$mo_failures <- NULL
 
     # Laboratory systems: remove (translated) entries like "no growth", "not E. coli", etc.
-    x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
-    x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") ")] <- NA_character_
+    x[trimws2(x) %like% translate_AMR("no .*growth", language = language)] <- NA_character_
+    x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") ")] <- NA_character_
 
     # groups are in our taxonomic table with a capital G
     x <- gsub(" group( |$)", " Group\\1", x, perl = TRUE)
+
+    # convert translations
+    x[x %like_case% "enter[o\u00F6]?[ck]o[ck](ken)?$"] <- gsub("(.* )?enter[o\u00F6]?[ck]o[ck](ken)?$", "enterococcus", x[x %like_case% "enter[o\u00F6]?[ck]o[ck](ken)?$"], perl = TRUE)
+    x[x %like_case% "strept[o\u00F6]?[ck]o[ck](ken)?$"] <- gsub("(.* )?strept[o\u00F6]?[ck]o[ck](ken)?$", "streptococcus", x[x %like_case% "strept[o\u00F6]?[ck]o[ck](ken)?$"], perl = TRUE)
+    x[x %like_case% "staph[yij]?[lo]*[ck]o[ck](ken)?$"] <- gsub("(.* )?staph[yij]?[lo]*[ck]o[ck](ken)?$", "staphylococcus", x[x %like_case% "staph[yij]?[lo]*[ck]o[ck](ken)?$"], perl = TRUE)
 
     # run over all unique leftovers
     x_unique <- unique(x[is.na(out) & !is.na(x)])
@@ -1065,6 +1070,8 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "mil+er+i gr"] <- "B_STRPT_MILL"
   out[x %like_case% "((strepto|^s).* viridans|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
   out[x %like_case% "(viridans.* (strepto|^s).*|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
+  out[x %like_case% "meningo[ck]o[ck](ken)?$"] <- "B_NESSR_MNNG"
+  out[x %like_case% "pneumo[ck]o[ck](ken)?$"] <- "B_STRPT_PNMN"
 
   # Salmonella in different languages, like "Salmonella grupo B"
   out[x %like_case% "salmonella.* [abcdefgh]$"] <- gsub(".*salmonella.* ([abcdefgh])$",
