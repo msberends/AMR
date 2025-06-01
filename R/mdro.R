@@ -204,14 +204,14 @@ mdro <- function(x = NULL,
   }
   if (is.character(vanA)) {
     meet_criteria(vanA, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    vanA <- x[[VanA]]
+    vanA <- x[[vanA]]
     meet_criteria(vanA, allow_class = "logical", allow_NA = TRUE)
   } else if (length(vanA) == 1) {
     vanA <- rep(vanA, NROW(x))
   }
   if (is.character(vanB)) {
     meet_criteria(vanB, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    vanB <- x[[VanB]]
+    vanB <- x[[vanB]]
     meet_criteria(vanB, allow_class = "logical", allow_NA = TRUE)
   } else if (length(vanB) == 1) {
     vanB <- rep(vanB, NROW(x))
