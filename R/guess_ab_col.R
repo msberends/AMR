@@ -272,25 +272,24 @@ get_column_abx <- function(x,
       } else {
         message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
       }
+
       for (i in seq_len(length(out))) {
-        if (isTRUE(verbose) && !names(out[i]) %in% names(duplicates)) {
+        if (isTRUE(verbose) && !out[i] %in% duplicates) {
           message_(
             "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
             " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
           )
         }
-        if (names(out[i]) %in% names(duplicates)) {
-          already_set_as <- out[unname(out) == unname(out[i])][1L]
-          if (names(out)[i] != names(already_set_as)) {
-            warning_(
+        if (out[i] %in% duplicates) {
+          already_set_as <- out[which(out == out[i])[1L]]
+          if (names(out)[i] != already_set_as) {
+            message_(
               paste0(
                 "Column '", font_bold(out[i]), "' will not be used for ",
-                names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
-                ", as it is already set for ",
-                names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"
+                names(out)[i], " (", suppressMessages(ab_name(names(out)[i], tolower = TRUE, language = NULL, fast_mode = TRUE)), ")",
+                ", as this antimicrobial has already been set."
               ),
-              add_fn = font_red,
-              immediate = verbose
+              add_fn = font_red
             )
           }
         }

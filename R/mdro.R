@@ -204,14 +204,14 @@ mdro <- function(x = NULL,
   }
   if (is.character(vanA)) {
     meet_criteria(vanA, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    vanA <- x[[vanA]]
+    vanA <- x[[VanA]]
     meet_criteria(vanA, allow_class = "logical", allow_NA = TRUE)
   } else if (length(vanA) == 1) {
     vanA <- rep(vanA, NROW(x))
   }
   if (is.character(vanB)) {
     meet_criteria(vanB, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    vanB <- x[[vanB]]
+    vanB <- x[[VanB]]
     meet_criteria(vanB, allow_class = "logical", allow_NA = TRUE)
   } else if (length(vanB) == 1) {
     vanB <- rep(vanB, NROW(x))
@@ -1526,9 +1526,9 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      rows = which(x[[SXT]] == "R" &
-        (x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
-        (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
+      rows = which(col_values(x, SXT) == "R" &
+        (col_values(x, GEN) == "R" | col_values(x, TOB) == "R" | col_values(x, AMK) == "R") &
+        (col_values(x, CIP) == "R" | col_values(x, NOR) == "R" | col_values(x, LVX) == "R") &
         (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c("Citrobacter freundii", "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
       cols = c(SXT, aminoglycosides, fluoroquinolones),
       any_all = "any",
@@ -1536,9 +1536,9 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      rows = which(x[[SXT]] == "R" &
-        x[[GEN]] == "R" &
-        (x[[CIP]] == "R" | x[[NOR]] == "R" | x[[LVX]] == "R") &
+      rows = which(col_values(x, SXT) == "R" &
+        col_values(x, GEN) == "R" &
+        (col_values(x, CIP) == "R" | col_values(x, NOR) == "R" | col_values(x, LVX) == "R") &
         paste(x$genus, x$species) == "Serratia marcescens"),
       cols = c(SXT, aminoglycosides_serratia_marcescens, fluoroquinolones),
       any_all = "any",
@@ -1548,8 +1548,8 @@ mdro <- function(x = NULL,
     # Acinetobacter baumannii-calcoaceticus complex
     trans_tbl(
       3,
-      rows = which((x[[GEN]] == "R" | x[[TOB]] == "R" | x[[AMK]] == "R") &
-        (x[[CIP]] == "R" | x[[LVX]] == "R") &
+      rows = which((col_values(x, GEN) == "R" | col_values(x, TOB) == "R" | col_values(x, AMK) == "R") &
+        (col_values(x, CIP) == "R" | col_values(x, LVX) == "R") &
         x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]),
       cols = c(aminoglycosides, CIP, LVX),
       any_all = "any",

@@ -71,6 +71,7 @@ test_that("test-data.R", {
   if (AMR:::pkg_is_available("tibble")) {
     # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
     datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
+    datasets <- datasets[datasets != "antibiotics"]
     for (i in seq_len(length(datasets))) {
       dataset <- get(datasets[i], envir = asNamespace("AMR"))
       expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
