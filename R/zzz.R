@@ -110,14 +110,6 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
     AB_LOOKUP <- create_AB_AV_lookup(AMR::antimicrobials)
   }
 
-  # deprecated antibiotics data set
-  makeActiveBinding("antibiotics", function() {
-    if (interactive()) {
-      deprecation_warning(old = "antibiotics", new = "antimicrobials", is_dataset = TRUE)
-    }
-    AMR::antimicrobials
-  }, env = asNamespace(pkgname))
-
   AMR_env$AB_lookup <- cbind(AMR::antimicrobials, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
 }

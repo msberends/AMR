@@ -948,6 +948,8 @@ get_atc_code <- function(ab) {
   # exception for imipenem
   if (ab_name == "imipenem") ab_name <- "imipenem/cilastatin"
   if (ab_name == "imipenem/relebactam") ab_name <- "imipenem/cilastatin/relebactam"
+  if (ab_name == "ceftaroline") ab_name <- "ceftaroline fosamil"
+  ab_name.bak <- ab_name
   if (ab_name %like% "/") {
     ab_name <- strsplit(ab_name, "[/ ]")[[1]]
   }
@@ -971,28 +973,33 @@ get_atc_code <- function(ab) {
   } else if (ab_name_full %like% " and " && ab_name_bla %in% atc_tbl[[2]]) {
     out <- atc_tbl[[1]][which(atc_tbl[[2]] == ab_name_bla)]
   } else {
+    if (any(atc_tbl_human$X1 %like% ab_name.bak, na.rm = TRUE)) {
+      message("returning NA, but DO MIND: ", ab_name.bak, " resembles ATC name(s) ", toString(atc_tbl_human$X1), appendLF = FALSE)
+    }
     out <- NA_character_
   }
   unique(out)
 }
 
+# update all:
+to_update <- 1:nrow(antimicrobials)
+# or just the empty ones:
+to_update <- which(sapply(antimicrobials$atc, function(x) length(x[!is.na(x)])) == 0)
+
 updated_atc <- lapply(seq_len(length(to_update)),
                       function(x) NA_character_)
 
-to_update <- 1:nrow(antimicrobials)
-# or just the empty ones:
-to_update <- which(sapply(antimicrobials$atc, length) == 0)
 
-# this takes around 10 minutes (some are skipped and go faster)
+# this takes around 10 minutes for the whole table (some ABx are skipped and go faster)
 for (i in to_update) {
-  message(percentage(i / length(updated_atc), digits = 1),
+  message(percentage(which(to_update == i) / length(updated_atc), digits = 1),
     " - Downloading ", antimicrobials$name[i],
     appendLF = FALSE
   )
   atcs <- get_atc_code(antimicrobials$name[i])
   if (length(atcs[!is.na(atcs)]) > 0) {
     updated_atc[[i]] <- atcs
-    message(" (", length(atcs[!is.na(atcs)]), " results: ", toString(atcs[!is.na(atcs)]), ")")
+    message(font_blue(paste0(" (", length(atcs[!is.na(atcs)]), " results: ", toString(atcs[!is.na(atcs)]), ")")))
     # let the WHO server rest for a second - they might have a limitation on the queries per second
     Sys.sleep(1)
   } else {
@@ -1001,7 +1008,8 @@ for (i in to_update) {
 }
 
 updated_atc <- lapply(updated_atc, function(x) sort(x[!is.na(x)]))
-antimicrobials$atc <- updated_atc
+antimicrobials$atc[to_update] <- updated_atc[to_update]
+
 # DO NOT FORGET TO UPDATE R/aa_globals.R!
 
 

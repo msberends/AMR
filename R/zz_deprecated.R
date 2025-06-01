@@ -36,9 +36,45 @@
 NULL
 
 #' @rdname AMR-deprecated
-#' @usage NULL
+#' @usage antibiotics
 #' @export
-"antibiotics"
+antibiotics <- local({
+  warned <- FALSE
+  value <- AMR::antimicrobials
+  structure(
+    value,
+    class = c("deprecated_amr_dataset", class(value))
+  )
+})
+.amr_deprecation_warn <- function() {
+  deprecation_warning(old = "antibiotics", new = "antimicrobials", is_dataset = TRUE)
+  invisible(NULL)
+}
+#' @export
+`[.deprecated_amr_dataset` <- function(x, ...) {
+  .amr_deprecation_warn()
+  NextMethod("[")
+}
+#' @export
+`[[.deprecated_amr_dataset` <- function(x, ...) {
+  .amr_deprecation_warn()
+  NextMethod("[[")
+}
+#' @export
+`$.deprecated_amr_dataset` <- function(x, name) {
+  .amr_deprecation_warn()
+  NextMethod("$")
+}
+#' @export
+print.deprecated_amr_dataset <- function(x, ...) {
+  .amr_deprecation_warn()
+  NextMethod("print")
+}
+#' @export
+as.data.frame.deprecated_amr_dataset <- function(x, ...) {
+  .amr_deprecation_warn()
+  NextMethod("as.data.frame")
+}
 
 # REMEMBER to search for `deprecation_warning` in the package code to find all instances.
 # currently deprecated arguments at least:

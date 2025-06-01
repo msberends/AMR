@@ -8,9 +8,11 @@
 \alias{ab_selector}
 \title{Deprecated Functions, Arguments, or Datasets}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 497 rows and 14 columns.
+An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 497 rows and 14 columns.
 }
 \usage{
+antibiotics
+
 ab_class(...)
 
 ab_selector(...)
