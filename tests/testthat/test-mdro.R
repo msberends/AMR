@@ -48,7 +48,7 @@ test_that("test-mdro.R", {
   # example_isolates should have these finding using Dutch guidelines
   expect_equal(
     as.double(table(outcome)),
-    c(1977, 23, 0)
+    c(1977, 21, 2)
   )
 
   expect_equal(

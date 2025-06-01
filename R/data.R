@@ -29,7 +29,10 @@
 
 #' Data Sets with `r format(nrow(antimicrobials) + nrow(antivirals), big.mark = " ")` Antimicrobial Drugs
 #'
+#' @description
 #' Two data sets containing all antimicrobials and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antimicrobials] data set. Three identifiers are included in this data set: an antimicrobial ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
+#'
+#' **The `antibiotics` data set has been renamed to `antimicrobials`. The old name will be removed in a future version.**
 #' @format
 #' ### For the [antimicrobials] data set: a [tibble][tibble::tibble] with `r nrow(antimicrobials)` observations and `r ncol(antimicrobials)` variables:
 #' - `ab`\cr antimicrobial ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.***
@@ -87,6 +90,9 @@
 #' antimicrobials
 #' antivirals
 "antimicrobials"
+
+#' @rdname antimicrobials
+"antibiotics"
 
 #' @rdname antimicrobials
 "antivirals"

@@ -1490,7 +1490,7 @@ mdro <- function(x = NULL,
     if (length(ESBLs) > 0) {
       trans_tbl(
         2, # positive, unconfirmed
-        rows = which(x$order == "Enterobacterales" & x[[ESBLs[1]]] == "R" & x[[ESBLs[2]]] == "R" & is.na(esbl)),
+        rows = which(x$order == "Enterobacterales" & col_values(x, ESBLs[1]) == "R" & col_values(x, ESBLs[2]) == "R" & is.na(esbl)),
         cols = c(AMX %or% AMP, cephalosporins_3rd),
         any_all = "all",
         reason = "Enterobacterales: potential ESBL"

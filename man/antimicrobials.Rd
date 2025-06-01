@@ -3,6 +3,7 @@
 \docType{data}
 \name{antimicrobials}
 \alias{antimicrobials}
+\alias{antibiotics}
 \alias{antivirals}
 \title{Data Sets with 617 Antimicrobial Drugs}
 \format{
@@ -49,6 +50,8 @@ LOINC:
 }
 }
 
+An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 497 rows and 14 columns.
+
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 120 rows and 11 columns.
 }
 \source{
@@ -61,10 +64,14 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \usage{
 antimicrobials
 
+antibiotics
+
 antivirals
 }
 \description{
 Two data sets containing all antimicrobials and antivirals. Use \code{\link[=as.ab]{as.ab()}} or one of the \code{\link[=ab_property]{ab_*}} functions to retrieve values from the \link{antimicrobials} data set. Three identifiers are included in this data set: an antimicrobial ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
+
+\strong{The \code{antibiotics} data set has been renamed to \code{antimicrobials}. The old name will be removed in a future version.}
 }
 \details{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}. Do note that ATC codes are not unique. For example, J01CR02 is officially the ATC code for "amoxicillin and beta-lactamase inhibitor". Consequently, these two items from the \link{antimicrobials} data set both return \code{"J01CR02"}:
