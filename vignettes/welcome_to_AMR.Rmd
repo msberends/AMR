@@ -36,7 +36,7 @@ The `AMR` package is available in `r AMR:::vector_and(vapply(FUN.VALUE = charact
 
 This package was intended as a comprehensive toolbox for integrated AMR data analysis. This package can be used for:
 
-  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature ([LPSN]((https://lpsn.dsmz.de))) and the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)) ([manual](https://amr-for-r.org/reference/mo_property.html))
+  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature ([LPSN](https://lpsn.dsmz.de)) and the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)) ([manual](https://amr-for-r.org/reference/mo_property.html))
   * Interpreting raw MIC and disk diffusion values, based on any CLSI or EUCAST guideline ([manual](https://amr-for-r.org/reference/as.sir.html))
   * Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records ([manual](https://amr-for-r.org/reference/ab_from_text.html))
   * Determining first isolates to be used for AMR data analysis ([manual](https://amr-for-r.org/reference/first_isolate.html))

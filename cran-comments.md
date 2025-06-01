@@ -1,5 +1,5 @@
-As with all previous >20 releases, some CHECKs might return a NOTE for *just* hitting the installation size limit, though its size has been brought down to a minimum in collaboration with CRAN maintainers previously.
+As with all previous >20 releases, some CHECKs on `oldrel` may return a `NOTE` for narrowly exceeding the installation size limit. This has been reduced to a minimum in prior coordination with CRAN maintainers and currently returns only an `INFO` on `release` and `devel`.
 
-We consider this a high-impact package: it was published in the Journal of Statistical Software (2022), is included in a CRAN Task View (Epidemiology), and is according to download stats (cranlogs) used in almost all countries in the world. If there is anything to note, please let us know up-front without directly archiving the current version. That said, we continually unit test our package extensively and have no reason to assume that anything is wrong.
+We treat this as a high-impact package: it was published in the *Journal of Statistical Software* (2022), is listed in the CRAN Task View "Epidemiology", and (based on cranlogs download statistics) is used globally. If there is anything to address, we would appreciate being informed before archiving the current version. We conduct extensive automated unit testing and have no indication of unresolved issues.
 
-Thanks for maintaining and hosting CRAN! It's empowering R and its use enormously!
+Thank you for your continued maintenance of CRAN, it plays a central role in the success and growth of the R ecosystem.

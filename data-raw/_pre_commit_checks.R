@@ -625,6 +625,11 @@ if (changed_md5(dosage)) {
   try(arrow::write_parquet(dosage, "data-raw/datasets/dosage.parquet"), silent = TRUE)
 }
 
+# Set `antibiotics` as a deprecated data set
+antibiotics <- structure(antimicrobials, class = c("deprecated_amr_dataset", class(antimicrobials)))
+usethis::use_data(antibiotics, internal = FALSE, overwrite = TRUE, compress = "xz", version = 2)
+rm(antibiotics)
+
 suppressMessages(reset_AMR_locale())
 
 devtools::load_all(quiet = TRUE)

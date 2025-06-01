@@ -60,6 +60,7 @@ else
 fi
 
 git add data-raw/*
+git add data/*
 git add -u
 
 exit 0

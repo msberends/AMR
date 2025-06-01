@@ -387,7 +387,7 @@ data analysis. This package can be used for:
 
 - Reference for the taxonomy of microorganisms, since the package
   contains all microbial (sub)species from the List of Prokaryotic names
-  with Standing in Nomenclature ([LPSN]((https://lpsn.dsmz.de))) and the
+  with Standing in Nomenclature ([LPSN](https://lpsn.dsmz.de)) and the
   Global Biodiversity Information Facility
   ([GBIF](https://www.gbif.org))
   ([manual](./reference/mo_property.html))

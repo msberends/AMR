@@ -35,17 +35,6 @@
 #' @rdname AMR-deprecated
 NULL
 
-#' @rdname AMR-deprecated
-#' @usage antibiotics
-#' @export
-antibiotics <- local({
-  warned <- FALSE
-  value <- AMR::antimicrobials
-  structure(
-    value,
-    class = c("deprecated_amr_dataset", class(value))
-  )
-})
 .amr_deprecation_warn <- function() {
   deprecation_warning(old = "antibiotics", new = "antimicrobials", is_dataset = TRUE)
   invisible(NULL)

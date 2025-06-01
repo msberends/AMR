@@ -1,49 +1,8 @@
-# AMR 2.1.1.9286
+# AMR 2.1.1.9287
 
 *(this beta version will eventually become v3.0. We're happy to reach a new major milestone soon, which will be all about the new One Health support! Install this beta using [the instructions here](https://amr-for-r.org/#get-this-package).)*
 
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
-
-## tl;dr
-
-- Scope Expansion: One Health support (Human + Veterinary + Environmental microbiology).
-- Data Updates: 
-  - `antibiotics` renamed to `antimicrobials`.
-  - Veterinary antimicrobials and WHOCC codes added.
-  - MycoBank fungal taxonomy integrated (+20,000 fungi).
-- Breakpoints & Interpretations:
-  - CLSI/EUCAST 2024-2025 breakpoints added; EUCAST 2025 default.
-  - `as.sir()` supports NI/SDD levels; parallel computation enabled.
-  - Custom S/I/R/SDD/NI definitions allowed.
-  - Improved handling of capped MICs.
-- New Tools & Functions:
-  - WISCA antibiogram support (`antibiogram()`, `wisca()`).
-  - New ggplot2 extensions: `scale_*_mic()`, `scale_*_sir()`, `rescale_mic()`.
-  - New utility functions: `top_n_microorganisms()`, `mo_group_members()`, `mic_p50()`, `mic_p90()`.
-- Predictive Modelling:
-  - Full tidymodels compatibility for antimicrobial selectors.
-  - Deprecated `resistance_predict()` and `sir_predict()`.
-- Python Compatibility: AMR R package now runs in Python.
-- Selector Improvements:
-  * Added selectors (`isoxazolylpenicillins()`, `monobactams()`, `nitrofurans()`, `phenicols()`, `rifamycins()`, and `sulfonamides()`)
-  - Selectors renamed from `ab_*` to `amr_*`; old names deprecated.
-- MIC/Disks Handling:
-  - MIC strict comparisons, added levels.
-  - Disk diffusion range expanded (0–50 mm).
-- EUCAST Rules and MDROs:
-  - EUCAST v12–v15 rules implemented.
-  - Dutch MDRO 2024 guideline support in `mdro()`.
-- Infrastructure:
-  - New website: https://amr-for-r.org.
-  - Improved `vctrs` integration for tidyverse workflows.
-  - Dropped SAS `.xpt` file support.
-- Other Fixes & Enhancements:
-  - Support for 8 new languages, adding to a total of 28 languages.
-  - Faster microorganism identification.
-  - Improved antimicrobial and MIC handling.
-  - Extended documentation, additional contributors acknowledged.
-
-## Full Changelog
 
 ### Breaking
 * Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.

@@ -51,6 +51,7 @@ if command -v Rscript > /dev/null; then
     currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
     echo "- Adding changed files in ./data-raw and ./man to this commit"
     git add data-raw/*
+    git add data/*
     git add man/*
     git add R/sysdata.rda
     git add NAMESPACE
@@ -112,6 +113,7 @@ echo ""
 echo "${currentversion}" > .git/commit_version.tmp
 
 git add data-raw/*
+git add data/*
 git add -u
 
 exit 0

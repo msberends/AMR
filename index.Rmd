@@ -192,7 +192,7 @@ out %>% set_ab_names(property = "atc")
 
 This package was intended as a comprehensive toolbox for integrated AMR data analysis. This package can be used for:
 
-  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature ([LPSN]((https://lpsn.dsmz.de))) and the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)) ([manual](./reference/mo_property.html))
+  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature ([LPSN](https://lpsn.dsmz.de)) and the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)) ([manual](./reference/mo_property.html))
   * Interpreting raw MIC and disk diffusion values, based on any CLSI or EUCAST guideline ([manual](./reference/as.sir.html))
   * Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records ([manual](./reference/ab_from_text.html))
   * Determining first isolates to be used for AMR data analysis ([manual](./reference/first_isolate.html))
