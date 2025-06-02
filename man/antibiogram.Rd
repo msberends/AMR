@@ -11,7 +11,7 @@
 \source{
 \itemize{
 \item Bielicki JA \emph{et al.} (2016). \strong{Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data} \emph{Journal of Antimicrobial Chemotherapy} 71(3); \doi{10.1093/jac/dkv397}
-\item Bielicki JA \emph{et al.} (2020). \strong{Evaluation of the coverage of 3 antibiotic regimens for neonatal sepsis in the hospital setting across Asian countries} \emph{JAMA Netw Open.} 3(2):e1921124; \doi{10.1001.jamanetworkopen.2019.21124}
+\item Bielicki JA \emph{et al.} (2020). \strong{Evaluation of the coverage of 3 antibiotic regimens for neonatal sepsis in the hospital setting across Asian countries} \emph{JAMA Netw Open.} 3(2):e1921124; \doi{10.1001/jamanetworkopen.2019.21124}
 \item Klinker KP \emph{et al.} (2021). \strong{Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms}. \emph{Therapeutic Advances in Infectious Disease}, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
 \item Barbieri E \emph{et al.} (2021). \strong{Development of a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) to guide the choice of the empiric antibiotic treatment for urinary tract infection in paediatric patients: a Bayesian approach} \emph{Antimicrobial Resistance & Infection Control} May 1;10(1):74; \doi{10.1186/s13756-021-00939-2}
 \item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
@@ -163,7 +163,7 @@ Set \code{digits} (defaults to \code{0}) to alter the rounding of the susceptibi
 
 There are various antibiogram types, as summarised by Klinker \emph{et al.} (2021, \doi{10.1177/20499361211011373}), and they are all supported by \code{\link[=antibiogram]{antibiogram()}}.
 
-For clinical coverage estimations, \strong{use WISCA whenever possible}, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki \emph{et al.} (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section \emph{Explaining WISCA} on this page. Do note that WISCA is pathogen-agnostic, meaning that the outcome is not stratied by pathogen, but rather by syndrome.
+For clinical coverage estimations, \strong{use WISCA whenever possible}, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki \emph{et al.} (2020, \doi{10.1001/jamanetworkopen.2019.21124}). See the section \emph{Explaining WISCA} on this page. Do note that WISCA is pathogen-agnostic, meaning that the outcome is not stratied by pathogen, but rather by syndrome.
 \enumerate{
 \item \strong{Traditional Antibiogram}
 

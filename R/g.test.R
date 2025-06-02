@@ -72,7 +72,7 @@
 #'
 #' If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use *G*-tests for each category, of course.
 #' @seealso [chisq.test()]
-#' @references 1. McDonald, J.H. 2014. **Handbook of Biological Statistics (3rd ed.)**. Sparky House Publishing, Baltimore, Maryland. <http://www.biostathandbook.com/gtestgof.html>.
+#' @references 1. McDonald, J.H. 2014. **Handbook of Biological Statistics (3rd ed.)**. Sparky House Publishing, Baltimore, Maryland.
 #' @source The code for this function is identical to that of [chisq.test()], except that:
 #' - The calculation of the statistic was changed to \eqn{2 * sum(x * log(x / E))}
 #' - Yates' continuity correction was removed as it does not apply to a *G*-test

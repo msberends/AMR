@@ -110,7 +110,7 @@
 #'
 #' There are various antibiogram types, as summarised by Klinker *et al.* (2021, \doi{10.1177/20499361211011373}), and they are all supported by [antibiogram()].
 #'
-#' For clinical coverage estimations, **use WISCA whenever possible**, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki *et al.* (2020, \doi{10.1001.jamanetworkopen.2019.21124}). See the section *Explaining WISCA* on this page. Do note that WISCA is pathogen-agnostic, meaning that the outcome is not stratied by pathogen, but rather by syndrome.
+#' For clinical coverage estimations, **use WISCA whenever possible**, since it provides more precise coverage estimates by accounting for pathogen incidence and antimicrobial susceptibility, as has been shown by Bielicki *et al.* (2020, \doi{10.1001/jamanetworkopen.2019.21124}). See the section *Explaining WISCA* on this page. Do note that WISCA is pathogen-agnostic, meaning that the outcome is not stratied by pathogen, but rather by syndrome.
 #'
 #' 1. **Traditional Antibiogram**
 #'
@@ -266,7 +266,7 @@
 #' For more background, interpretation, and examples, see [the WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
 #' @source
 #' * Bielicki JA *et al.* (2016). **Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data** *Journal of Antimicrobial Chemotherapy* 71(3); \doi{10.1093/jac/dkv397}
-#' * Bielicki JA *et al.* (2020). **Evaluation of the coverage of 3 antibiotic regimens for neonatal sepsis in the hospital setting across Asian countries** *JAMA Netw Open.* 3(2):e1921124; \doi{10.1001.jamanetworkopen.2019.21124}
+#' * Bielicki JA *et al.* (2020). **Evaluation of the coverage of 3 antibiotic regimens for neonatal sepsis in the hospital setting across Asian countries** *JAMA Netw Open.* 3(2):e1921124; \doi{10.1001/jamanetworkopen.2019.21124}
 #' * Klinker KP *et al.* (2021). **Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms**. *Therapeutic Advances in Infectious Disease*, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
 #' * Barbieri E *et al.* (2021). **Development of a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) to guide the choice of the empiric antibiotic treatment for urinary tract infection in paediatric patients: a Bayesian approach** *Antimicrobial Resistance & Infection Control* May 1;10(1):74; \doi{10.1186/s13756-021-00939-2}
 #' * **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
