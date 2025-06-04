@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,6 +111,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <li><p>A combination of the above, using <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, e.g.:</p><ul><li><p><code>c(aminoglycosides(), "AMP", "AMC")</code></p></li>
 <li><p><code>c(aminoglycosides(), carbapenems())</code></p></li>
 </ul></li>
+<li><p>Column indices using numbers</p></li>
 <li><p>Combination therapy, indicated by using <code>"+"</code>, with or without <a href="antimicrobial_selectors.html">antimicrobial selectors</a>, e.g.:</p><ul><li><p><code>"cipro + genta"</code></p></li>
 <li><p><code>"TZP+TOB"</code></p></li>
 <li><p><code>c("TZP", "TZP+GEN", "TZP+TOB")</code></p></li>
@@ -410,7 +411,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem) and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 10 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 10 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Pathogen       Amikacin    Gentamicin Imipenem Kanamycin Meropenem Tobramycin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> CoNS           0% (0-8%,N… 86% (82-9… 52% (37… 0% (0-8%… 52% (37-… 22% (12-3…</span>
@@ -433,7 +435,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 96% (94-97%,N=686) 96% (95-98%,N=684)  0% (0-10%,N=35) 98% (96-…</span>
@@ -447,7 +450,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"name"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem) and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 5 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 5 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen                                 Imipenem             Meropenem       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Coagulase-negative Staphylococcus (CoNS) 52% (37-67%,N=48)    52% (37-67%,N=4…</span>
@@ -466,7 +470,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85-91%,N=641)     99% (97-99%,N=691)     98% (97-99%,N=693)    </span>
@@ -483,7 +488,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">ureidopenicillins()</span><span style="color: #0000BB;"> using column '</span><span style="color: #0000BB; font-weight: bold;">TZP</span><span style="color: #0000BB;">' (piperacillin/tazobactam)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-neg… 88% (85-91%,N=641)     99% (97-99%,N=691)     98% (97-99%,N=693)    </span>
@@ -501,7 +507,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span></span>
 <span class="r-in"><span>  sep <span class="op">=</span> <span class="st">" &amp; "</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      Ciprofloxacin      `Ciprofloxacin &amp; Gentamicin`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 91% (88-93%,N=684) 99% (97-99%,N=694)          </span>
@@ -520,7 +527,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">carbapenems()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">IPM</span><span style="color: #0000BB;">' (imipenem) and '</span><span style="color: #0000BB; font-weight: bold;">MEM</span><span style="color: #0000BB;">' (meropenem)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 14 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 14 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    `Syndromic Group` Pathogen   Amikacin Gentamicin Imipenem Kanamycin Meropenem</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Clinical          CoNS       <span style="color: #BB0000;">NA</span>       89% (84-9… 57% (39… <span style="color: #BB0000;">NA</span>        57% (39-…</span>
@@ -557,7 +565,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ For </span><span style="color: #0000BB; background-color: #EEEEEE;">aminoglycosides()</span><span style="color: #0000BB;"> using columns '</span><span style="color: #0000BB; font-weight: bold;">GEN</span><span style="color: #0000BB;">' (gentamicin), '</span><span style="color: #0000BB; font-weight: bold;">TOB</span><span style="color: #0000BB;">'</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  (tobramycin), '</span><span style="color: #0000BB; font-weight: bold;">AMK</span><span style="color: #0000BB;">' (amikacin), and '</span><span style="color: #0000BB; font-weight: bold;">KAN</span><span style="color: #0000BB;">' (kanamycin)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (non-WISCA / 95% CI): 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No UCI             E. coli  100% (97-100%,N=119) 98% (96-99%,N=32… 98% (96-99…</span>
@@ -574,7 +583,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span>,</span></span>
 <span class="r-in"><span>  wisca <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram (WISCA / 95% CI): 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          73.4% (68.3-78.6%)        92.3% (90.7-93.7%)                </span>
