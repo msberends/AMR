@@ -40,6 +40,7 @@
 #'   - A combination of the above, using `c()`, e.g.:
 #'     - `c(aminoglycosides(), "AMP", "AMC")`
 #'     - `c(aminoglycosides(), carbapenems())`
+#'   - Column indices using numbers
 #'   - Combination therapy, indicated by using `"+"`, with or without [antimicrobial selectors][antimicrobial_selectors], e.g.:
 #'     - `"cipro + genta"`
 #'     - `"TZP+TOB"`
@@ -452,7 +453,7 @@ antibiogram.default <- function(x,
     deprecation_warning("antibiotics", "antimicrobials", fn = "antibiogram", is_argument = TRUE)
     antimicrobials <- list(...)$antibiotics
   }
-  meet_criteria(antimicrobials, allow_class = "character", allow_NA = FALSE, allow_NULL = FALSE)
+  meet_criteria(antimicrobials, allow_class = c("character", "numeric", "integer"), allow_NA = FALSE, allow_NULL = FALSE)
   if (!is.function(mo_transform)) {
     meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE, allow_NA = TRUE)
   }
@@ -1194,12 +1195,13 @@ retrieve_wisca_parameters <- function(wisca_model, ...) {
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::tbl_sum, antibiogram)
 tbl_sum.antibiogram <- function(x, ...) {
   dims <- paste(format(NROW(x), big.mark = ","), AMR_env$cross_icon, format(NCOL(x), big.mark = ","))
+  names(dims) <- "An Antibiogram"
   if (isTRUE(attributes(x)$wisca)) {
-    names(dims) <- paste0("An Antibiogram (WISCA / ", attributes(x)$conf_interval * 100, "% CI)")
+    dims <- c(dims, Type = paste0("WISCA with ", attributes(x)$conf_interval * 100, "% CI"))
   } else if (isTRUE(attributes(x)$formatting_type >= 13)) {
-    names(dims) <- paste0("An Antibiogram (non-WISCA / ", attributes(x)$conf_interval * 100, "% CI)")
+    dims <- c(dims, Type = paste0("Non-WISCA with ", attributes(x)$conf_interval * 100, "% CI"))
   } else {
-    names(dims) <- paste0("An Antibiogram (non-WISCA)")
+    dims <- c(dims, Type = paste0("Non-WISCA without CI"))
   }
   dims
 }

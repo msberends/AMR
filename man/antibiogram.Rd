@@ -56,6 +56,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 \item \code{c(aminoglycosides(), "AMP", "AMC")}
 \item \code{c(aminoglycosides(), carbapenems())}
 }
+\item Column indices using numbers
 \item Combination therapy, indicated by using \code{"+"}, with or without \link[=antimicrobial_selectors]{antimicrobial selectors}, e.g.:
 \itemize{
 \item \code{"cipro + genta"}

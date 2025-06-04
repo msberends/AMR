@@ -1,3 +1,11 @@
+# AMR 3.0.0.9001
+
+# Changed
+* Fix for `antibiogram()` for when no antimicrobials are set
+* Fixed some specific Dutch translations antimicrobials
+
+
+
 # AMR 3.0.0
 
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
@@ -122,7 +130,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
 
 ## Older Versions
 
-This changelog only contains changes from AMR v3.0 (March 2025) and later.
+This changelog only contains changes from AMR v3.0 (June 2025) and later.
 
 * For prior v2 versions, please see [our v2 archive](https://github.com/msberends/AMR/blob/v2.1.1/NEWS.md).
 * For prior v1 versions, please see [our v1 archive](https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md).

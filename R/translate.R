@@ -258,6 +258,11 @@ translate_into_language <- function(from,
     return(from)
   }
 
+  if (only_affect_ab_names == TRUE) {
+    df_trans$pattern[df_trans$regular_expr == TRUE] <- paste0(df_trans$pattern[df_trans$regular_expr == TRUE], "$")
+    df_trans$pattern[df_trans$regular_expr == TRUE] <- gsub("$$", "$", df_trans$pattern[df_trans$regular_expr == TRUE], fixed = TRUE)
+  }
+
   lapply(
     # starting with longest pattern, since more general translations are shorter, such as 'Group'
     order(nchar(df_trans$pattern), decreasing = TRUE),
