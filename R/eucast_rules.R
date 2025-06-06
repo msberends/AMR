@@ -457,6 +457,13 @@ eucast_rules <- function(x,
   n_added <- 0
   n_changed <- 0
 
+  rule_current <- ""
+  rule_group_current <- ""
+  rule_group_previous <- ""
+  rule_next <- ""
+  rule_previous <- ""
+  rule_text <- ""
+
   # >>> Apply Other rules: enzyme inhibitors <<< ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
     if (isTRUE(info)) {

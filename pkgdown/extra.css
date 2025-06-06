@@ -41,7 +41,7 @@
 
   --bs-success: var(--amr-green-dark) !important;
   --bs-light: var(--amr-green-light) !important;
-  /* --bs-light was this: #128f76a6; that's success with 60% alpha */
+  /* --bs-light was this: #128f76a6; that's bs-success with 60% alpha */
   --bs-info: var(--amr-green-middle) !important;
   --bs-link-color: var(--amr-green-dark) !important;
   --bs-link-color-rgb: var(--amr-green-dark-rgb) !important;
@@ -104,6 +104,16 @@ body.amr-for-python * {
 .navbar .algolia-autocomplete .aa-dropdown-menu {
   background-color: var(--amr-green-dark) !important;
 }
+
+.version-main {
+  font-weight: bold;
+  color: var(--bs-navbar-brand-color);
+}
+.version-build {
+  font-weight: normal;
+  opacity: 0.75;
+  font-size: 0.85em;
+}
 input[type="search"] {
   color: var(--bs-tertiary-bg) !important;
   background-color: var(--amr-green-light) !important;
@@ -149,6 +159,7 @@ this shows on top of every sidebar to the right
   margin-top: 10px;
   border: 2px dashed var(--amr-green-dark);
   text-align: center;
+  background: var(--bs-body-bg);
 }
 .amr-gpt-assistant * {
   width: 90%;

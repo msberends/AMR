@@ -28,8 +28,8 @@ AMR:::reset_all_thrown_messages()
 > Now available for Python too! [Click here](./articles/AMR_for_Python.html) to read more.
 
 <div style="display: flex; font-size: 0.8em;">
-  <p style="text-align:left; width: 50%;"><small><a href="https://amr-for-r.org/">https://amr-for-r.org</a></small></p>
-  <p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small></p>
+  <p style="text-align:left; width: 50%;"><small><a href="https://amr-for-r.org/">amr-for-r.org</a></small></p>
+  <p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">doi.org/10.18637/jss.v104.i03</a></small></p>
 </div>
 
 <a href="./reference/clinical_breakpoints.html#response-from-clsi-and-eucast"><img src="./endorsement_clsi_eucast.jpg" class="endorse_img" align="right" height="120" /></a>

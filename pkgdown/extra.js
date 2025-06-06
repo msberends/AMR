@@ -29,9 +29,21 @@
 # ==================================================================== #
 */
 
-$(document).ready(function() {
+$(function () {
   // add GPT assistant info
   $('aside').prepend('<div class="amr-gpt-assistant"><a target="_blank" href="https://chat.amr-for-r.org"><img src="https://amr-for-r.org/AMRforRGPT.svg"></a></div>');
+
+  // split version number in navbar into main version and build number
+  $('.nav-text').each(function () {
+    const $el = $(this);
+    const text = $.trim($el.text());
+    const lastDotIndex = text.lastIndexOf('.');
+    if (lastDotIndex > -1) {
+      const main = text.substring(0, lastDotIndex);
+      const build = text.substring(lastDotIndex);
+      $el.html(`<span class="version-main">${main}</span><span class="version-build">${build}</span>`);
+    }
+  });
 
   // replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");

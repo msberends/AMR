@@ -1,9 +1,8 @@
-# AMR 3.0.0.9001
+# AMR 3.0.0.9002
 
-# Changed
+### Changed
 * Fix for `antibiogram()` for when no antimicrobials are set
-* Fixed some specific Dutch translations antimicrobials
-
+* Fixed some specific Dutch translations for antimicrobials
 
 
 # AMR 3.0.0
