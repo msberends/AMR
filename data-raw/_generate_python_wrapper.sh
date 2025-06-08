@@ -56,7 +56,8 @@ os.makedirs(r_lib_path, exist_ok=True)
 os.environ['R_LIBS_SITE'] = r_lib_path
 
 from rpy2 import robjects
-from rpy2.robjects import pandas2ri
+from rpy2.robjects.conversion import localconverter
+from rpy2.robjects import default_converter, numpy2ri, pandas2ri
 from rpy2.robjects.packages import importr, isinstalled
 
 # Import base and utils
@@ -94,27 +95,26 @@ if r_amr_version != python_amr_version:
 print(f"AMR: Setting up R environment and AMR datasets...", flush=True)
 
 # Activate the automatic conversion between R and pandas DataFrames
-pandas2ri.activate()
+with localconverter(default_converter + numpy2ri.converter + pandas2ri.converter):
+    # example_isolates
+    example_isolates = robjects.r('''
+    df <- AMR::example_isolates
+    df[] <- lapply(df, function(x) {
+        if (inherits(x, c("Date", "POSIXt", "factor"))) {
+            as.character(x)
+        } else {
+            x
+        }
+    })
+    df <- df[, !sapply(df, is.list)]
+    df
+    ''')
+    example_isolates['date'] = pd.to_datetime(example_isolates['date'])
 
-# example_isolates
-example_isolates = pandas2ri.rpy2py(robjects.r('''
-df <- AMR::example_isolates
-df[] <- lapply(df, function(x) {
-    if (inherits(x, c("Date", "POSIXt", "factor"))) {
-        as.character(x)
-    } else {
-        x
-    }
-})
-df <- df[, !sapply(df, is.list)]
-df
-'''))
-example_isolates['date'] = pd.to_datetime(example_isolates['date'])
-
-# microorganisms
-microorganisms = pandas2ri.rpy2py(robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]'))
-antimicrobials = pandas2ri.rpy2py(robjects.r('AMR::antimicrobials[, !sapply(AMR::antimicrobials, is.list)]'))
-clinical_breakpoints = pandas2ri.rpy2py(robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]'))
+    # microorganisms
+    microorganisms = robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]')
+    antimicrobials = robjects.r('AMR::antimicrobials[, !sapply(AMR::antimicrobials, is.list)]')
+    clinical_breakpoints = robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]')
 
 base.options(warn = 0)
 
@@ -129,15 +129,14 @@ echo "from .datasets import clinical_breakpoints" >> $init_file
 
 # Write header to the functions Python file, including the convert_to_python function
 cat <<EOL > "$functions_file"
+import functools
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 from rpy2.robjects.vectors import StrVector, FactorVector, IntVector, FloatVector, DataFrame
-from rpy2.robjects import pandas2ri
+from rpy2.robjects.conversion import localconverter
+from rpy2.robjects import default_converter, numpy2ri, pandas2ri
 import pandas as pd
 import numpy as np
-
-# Activate automatic conversion between R data frames and pandas data frames
-pandas2ri.activate()
 
 # Import the AMR R package
 amr_r = importr('AMR')
@@ -156,10 +155,8 @@ def convert_to_python(r_output):
         return list(r_output)  # Convert to a Python list of integers or floats
     
     # Check if it's a pandas-compatible R data frame
-    elif isinstance(r_output, pd.DataFrame):
+    elif isinstance(r_output, (pd.DataFrame, DataFrame)):
         return r_output  # Return as pandas DataFrame (already converted by pandas2ri)
-    elif isinstance(r_output, DataFrame):
-        return pandas2ri.rpy2py(r_output) # Return as pandas DataFrame
 
     # Check if the input is a NumPy array and has a string data type
     if isinstance(r_output, np.ndarray) and np.issubdtype(r_output.dtype, np.str_):
@@ -167,6 +164,15 @@ def convert_to_python(r_output):
     
     # Fall-back
     return r_output
+
+def r_to_python(r_func):
+    """Decorator that runs an rpy2 function under a localconverter
+    and then applies convert_to_python to its output."""
+    @functools.wraps(r_func)
+    def wrapper(*args, **kwargs):
+        with localconverter(default_converter + numpy2ri.converter + pandas2ri.converter):
+            return convert_to_python(r_func(*args, **kwargs))
+    return wrapper
 EOL
 
 # Directory where the .Rd files are stored (update path as needed)
@@ -246,11 +252,12 @@ for rd_file in "$rd_dir"/*.Rd; do
         gsub("FALSE", "False", func_args)
         gsub("NULL", "None", func_args)
 
-        # Write the Python function definition to the output file
-        print "def " func_name_py "(" func_args "):" >> "'"$functions_file"'"
-        print "    \"\"\"Please see our website of the R package for the full manual: https://amr-for-r.org\"\"\"" >> "'"$functions_file"'"
-        print "    return convert_to_python(amr_r." func_name_py "(" func_args "))" >> "'"$functions_file"'"
-        
+        # Write the Python function definition to the output file, using decorator
+        print "@r_to_python" >> "'"$functions_file"'"  
+        print "def " func_name_py "(" func_args "):" >> "'"$functions_file"'"  
+        print "    \"\"\"Please see our website of the R package for the full manual: https://amr-for-r.org\"\"\"" >> "'"$functions_file"'"  
+        print "    return amr_r." func_name_py "(" func_args ")" >> "'"$functions_file"'"  
+
         print "from .functions import " func_name_py >> "'"$init_file"'"
     }
     ' "$rd_file"
