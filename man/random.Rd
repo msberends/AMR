@@ -7,18 +7,24 @@
 \alias{random_sir}
 \title{Random MIC Values/Disk Zones/SIR Generation}
 \usage{
-random_mic(size = NULL, mo = NULL, ab = NULL, ...)
+random_mic(size = NULL, mo = NULL, ab = NULL, skew = "right",
+  severity = 1, ...)
 
-random_disk(size = NULL, mo = NULL, ab = NULL, ...)
+random_disk(size = NULL, mo = NULL, ab = NULL, skew = "left",
+  severity = 1, ...)
 
 random_sir(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...)
 }
 \arguments{
 \item{size}{Desired size of the returned vector. If used in a \link{data.frame} call or \code{dplyr} verb, will get the current (group) size if left blank.}
 
-\item{mo}{Any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}.}
+\item{mo}{Any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be the same length as \code{size}.}
 
 \item{ab}{Any \link{character} that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
+
+\item{skew}{Direction of skew for MIC or disk values, either \code{"right"} or \code{"left"}. A left-skewed distribution has the majority of the data on the right.}
+
+\item{severity}{Skew severity; higher values will increase the skewedness. Default is \code{2}; use \code{0} to prevent skewedness.}
 
 \item{...}{Ignored, only in place to allow future extensions.}
 
@@ -31,17 +37,25 @@ class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=a
 These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial drug, the generated results will reflect reality as much as possible.
 }
 \details{
-The base \R function \code{\link[=sample]{sample()}} is used for generating values.
-
-Generated values are based on the EUCAST 2025 guideline as implemented in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
+Internally, MIC and disk zone values are sampled based on clinical breakpoints defined in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the \code{skew} and \code{severity} arguments:
+\itemize{
+\item \code{skew = "right"} places more emphasis on lower MIC or higher disk values.
+\item \code{skew = "left"} places more emphasis on higher MIC or lower disk values.
+\item \code{severity} controls the exponential bias applied.
+}
 }
 \examples{
 random_mic(25)
 random_disk(25)
 random_sir(25)
 
+# add more skewedness, make more realistic by setting a bug and/or drug:
+disks <- random_disk(100, severity = 2, mo = "Escherichia coli", ab = "CIP")
+plot(disks)
+# `plot()` and `ggplot2::autoplot()` allow for coloured bars if `mo` and `ab` are set
+plot(disks, mo = "Escherichia coli", ab = "CIP", guideline = "CLSI 2025")
+
 \donttest{
-# make the random generation more realistic by setting a bug and/or drug:
 random_mic(25, "Klebsiella pneumoniae") # range 0.0625-64
 random_mic(25, "Klebsiella pneumoniae", "meropenem") # range 0.0625-16
 random_mic(25, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4

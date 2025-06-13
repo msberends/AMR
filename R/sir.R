@@ -159,7 +159,7 @@
 #'
 #' The function [is.sir()] detects if the input contains class `sir`. If the input is a [data.frame] or [list], it iterates over all columns/items and returns a [logical] vector.
 #'
-#' The base R function [as.double()] can be used to retrieve quantitative values from a `sir` object: `"S"` = 1, `"I"`/`"SDD"` = 2, `"R"` = 3. All other values are rendered `NA` . **Note:** Do not use `as.integer()`, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
+#' The base R function [as.double()] can be used to retrieve quantitative values from a `sir` object: `"S"` = 1, `"I"`/`"SDD"` = 2, `"R"` = 3. All other values are rendered `NA`. **Note:** Do not use `as.integer()`, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.
 #'
 #' The function [is_sir_eligible()] returns `TRUE` when a column contains at most 5% potentially invalid antimicrobial interpretations, and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of SIR:

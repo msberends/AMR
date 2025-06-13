@@ -442,7 +442,7 @@ eucast_rules <- function(x,
     # big speed gain! only analyse unique rows:
     pm_distinct(`.rowid`, .keep_all = TRUE) %pm>%
     as.data.frame(stringsAsFactors = FALSE)
-  x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]), info = info)
+  x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]), info = FALSE)
   # rename col_mo to prevent interference with joined columns
   colnames(x)[colnames(x) == col_mo] <- ".col_mo"
   col_mo <- ".col_mo"
@@ -450,8 +450,8 @@ eucast_rules <- function(x,
   x <- left_join_microorganisms(x, by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL, info = FALSE)
   x$genus_species <- trimws(paste(x$genus, x$species))
-  if (isTRUE(info) && NROW(x) > 10000) {
-    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+  if (isTRUE(info) && NROW(x.bak) > 10000) {
+    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
 
   n_added <- 0
@@ -624,31 +624,16 @@ eucast_rules <- function(x,
     eucast_rules_df <- eucast_rules_df %pm>%
       rbind_AMR(eucast_rules_df_total %pm>%
         subset(reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
-    # eucast_rules_df <- subset(
-    #   eucast_rules_df,
-    #   reference.rule_group %unlike% "breakpoint" |
-    #     (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints)
-    # )
   }
   if (any(c("all", "expected_phenotypes") %in% rules)) {
     eucast_rules_df <- eucast_rules_df %pm>%
       rbind_AMR(eucast_rules_df_total %pm>%
         subset(reference.rule_group %like% "expected" & reference.version == version_expected_phenotypes))
-    # eucast_rules_df <- subset(
-    #   eucast_rules_df,
-    #   reference.rule_group %unlike% "expected" |
-    #     (reference.rule_group %like% "expected" & reference.version == version_expected_phenotypes)
-    # )
   }
   if (any(c("all", "expert") %in% rules)) {
     eucast_rules_df <- eucast_rules_df %pm>%
       rbind_AMR(eucast_rules_df_total %pm>%
         subset(reference.rule_group %like% "expert" & reference.version == version_expertrules))
-    # eucast_rules_df <- subset(
-    #   eucast_rules_df,
-    #   reference.rule_group %unlike% "expert" |
-    #     (reference.rule_group %like% "expert" & reference.version == version_expertrules)
-    # )
   }
   ## filter out AmpC de-repressed cephalosporin-resistant mutants ----
   # no need to filter on version number here - the rules contain these version number, so are inherently filtered
@@ -671,6 +656,9 @@ eucast_rules <- function(x,
   # we only hints on remaining rows in `eucast_rules_df`
   screening_abx <- as.character(AMR::antimicrobials$ab[which(AMR::antimicrobials$ab %like% "-S$")])
   screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(EUCAST_RULES_DF$and_these_antibiotics[!is.na(EUCAST_RULES_DF$and_these_antibiotics)], ", *")))]
+  if (isTRUE(info)) {
+    cat("\n")
+  }
   for (ab_s in screening_abx) {
     ab <- gsub("-S$", "", ab_s)
     if (ab %in% names(cols_ab) && !ab_s %in% names(cols_ab)) {
@@ -901,7 +889,9 @@ eucast_rules <- function(x,
     }
     for (i in seq_len(length(custom_rules))) {
       rule <- custom_rules[[i]]
-      rows <- which(eval(parse(text = rule$query), envir = x))
+      rows <- tryCatch(which(eval(parse(text = rule$query), envir = x)),
+        error = function(e) stop_(paste0(conditionMessage(e), font_red(" (check available data and compare with the custom rules set)")), call = FALSE)
+      )
       cols <- as.character(rule$result_group)
       cols <- c(
         cols[cols %in% colnames(x)], # direct column names
@@ -915,9 +905,8 @@ eucast_rules <- function(x,
         get_antibiotic_names(cols)
       )
       if (isTRUE(info)) {
-        # print rule
         cat(italicise_taxonomy(
-          word_wrap(format_custom_query_rule(rule$query, colours = FALSE),
+          word_wrap(rule_text,
             width = getOption("width") - 30,
             extra_indent = 6
           ),

@@ -361,3 +361,15 @@
 #' @examples
 #' dosage
 "dosage"
+
+#' Data Set with `r format(nrow(esbl_isolates), big.mark = " ")` ESBL Isolates
+#'
+#' A data set containing `r format(nrow(esbl_isolates), big.mark = " ")` microbial isolates with MIC values of common antibiotics and a binary `esbl` column for extended-spectrum beta-lactamase (ESBL) production. This data set contains randomised fictitious data but reflects reality and can be used to practise AMR-related machine learning, e.g., classification modelling with [tidymodels](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
+#' @format A [tibble][tibble::tibble] with `r format(nrow(esbl_isolates), big.mark = " ")` observations and `r ncol(esbl_isolates)` variables:
+#' - `esbl`\cr Logical indicator if the isolate is ESBL-producing
+#' - `genus`\cr Genus of the microorganism
+#' - `AMC:COL`\cr MIC values for 17 antimicrobial agents, transformed to class [`mic`] (see [as.mic()])
+#' @details See our [tidymodels integration][amr-tidymodels] for an example using this data set.
+#' @examples
+#' esbl_isolates
+"esbl_isolates"

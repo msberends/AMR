@@ -432,11 +432,17 @@ pillar_shaft.mic <- function(x, ...) {
   }
   crude_numbers <- as.double(x)
   operators <- gsub("[^<=>]+", "", as.character(x))
+  # colourise operators
   operators[!is.na(operators) & operators != ""] <- font_silver(operators[!is.na(operators) & operators != ""], collapse = NULL)
   out <- trimws(paste0(operators, trimws(format(crude_numbers))))
   out[is.na(x)] <- font_na(NA)
   # make trailing zeroes less visible
-  out[out %like% "[.]"] <- gsub("([.]?0+)$", font_silver("\\1"), out[out %like% "[.]"], perl = TRUE)
+  if (is_dark()) {
+    fn <- font_silver
+  } else {
+    fn <- font_white
+  }
+  out[out %like% "[.]"] <- gsub("([.]?0+)$", fn("\\1"), out[out %like% "[.]"], perl = TRUE)
   create_pillar_column(out, align = "right", width = max(nchar(font_stripstyle(out))))
 }
 

@@ -26,7 +26,14 @@ knitr::opts_chunk$set(
 
 Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. 
 
-In this post, we will explore how to use the `tidymodels` framework to predict resistance patterns in the `example_isolates` dataset in two examples. 
+In this post, we will explore how to use the `tidymodels` framework to predict resistance patterns in the `example_isolates` dataset in two examples.
+
+This post contains the following examples:
+
+1. Using Antimicrobial Selectors
+2. Predicting ESBL Presence Using Raw MICs
+3. Predicting AMR Over Time
+
 
 ## Example 1: Using Antimicrobial Selectors
 
@@ -208,10 +215,150 @@ This workflow is extensible to other antimicrobial classes and resistance patter
 
 ---
 
+## Example 2: Predicting ESBL Presence Using Raw MICs
 
-## Example 2: Predicting AMR Over Time
+In this second example, we demonstrate how to use `<mic>` columns directly in `tidymodels` workflows using AMR-specific recipe steps. This includes a transformation to `log2` scale using `step_mic_log2()`, which prepares MIC values for use in classification models.
 
-In this second example, we aim to predict antimicrobial resistance (AMR) trends over time using `tidymodels`. We will model resistance to three antibiotics (amoxicillin `AMX`, amoxicillin-clavulanic acid `AMC`, and ciprofloxacin `CIP`), based on historical data grouped by year and hospital ward.
+This approach and idea formed the basis for the publication [DOI: 10.3389/fmicb.2025.1582703](https://doi.org/10.3389/fmicb.2025.1582703) to model the presence of extended-spectrum beta-lactamases (ESBL).
+
+### **Objective**
+
+Our goal is to:
+
+1. Use raw MIC values to predict whether a bacterial isolate produces ESBL.
+2. Apply AMR-aware preprocessing in a `tidymodels` recipe.
+3. Train a classification model and evaluate its predictive performance.
+
+### **Data Preparation**
+
+We use the `esbl_isolates` dataset that comes with the AMR package.
+
+```{r}
+# Load required libraries
+library(AMR)
+library(tidymodels)
+
+# View the esbl_isolates data set
+esbl_isolates
+
+# Prepare a binary outcome and convert to ordered factor
+data <- esbl_isolates %>%
+  mutate(esbl = factor(esbl, levels = c(FALSE, TRUE), ordered = TRUE))
+```
+
+**Explanation:**
+
+- `esbl_isolates`: Contains MIC test results and ESBL status for each isolate.
+- `mutate(esbl = ...)`: Converts the target column to an ordered factor for classification.
+
+### **Defining the Workflow**
+
+#### 1. Preprocessing with a Recipe
+
+We use our `step_mic_log2()` function to log2-transform MIC values, ensuring that MICs are numeric and properly scaled. All MIC predictors can easily and agnostically selected using the new `all_mic_predictors()`:
+
+```{r}
+# Split into training and testing sets
+set.seed(123)
+split <- initial_split(data)
+training_data <- training(split)
+testing_data <- testing(split)
+
+# Define the recipe
+mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
+  remove_role(genus, old_role = "predictor") %>%  # Remove non-informative variable
+  step_mic_log2(all_mic_predictors()) #%>%         # Log2 transform all MIC predictors
+ # prep()
+
+mic_recipe
+```
+
+**Explanation:**
+
+- `remove_role()`: Removes irrelevant variables like genus.
+- `step_mic_log2()`: Applies `log2(as.numeric(...))` to all MIC predictors in one go.
+- `prep()`: Finalises the recipe based on training data.
+
+#### 2. Specifying the Model
+
+We use a simple logistic regression to model ESBL presence, though recent models such as xgboost ([link to `parsnip` manual](https://parsnip.tidymodels.org/reference/details_boost_tree_xgboost.html)) could be much more precise.
+
+```{r}
+# Define the model
+model <- logistic_reg(mode = "classification") %>%
+  set_engine("glm")
+
+model
+```
+
+**Explanation:**
+
+- `logistic_reg()`: Specifies a binary classification model.
+- `set_engine("glm")`: Uses the base R GLM engine.
+
+#### 3. Building the Workflow
+
+```{r}
+# Create workflow
+workflow_model <- workflow() %>%
+  add_recipe(mic_recipe) %>%
+  add_model(model)
+
+workflow_model
+```
+
+### **Training and Evaluating the Model**
+
+```{r}
+# Fit the model
+fitted <- fit(workflow_model, training_data)
+
+# Generate predictions
+predictions <- predict(fitted, testing_data) %>%
+  bind_cols(testing_data)
+
+# Evaluate model performance
+our_metrics <- metric_set(accuracy, kap, ppv, npv)
+metrics <- our_metrics(predictions, truth = esbl, estimate = .pred_class)
+
+metrics
+```
+
+**Explanation:**
+
+- `fit()`: Trains the model on the processed training data.
+- `predict()`: Produces predictions for unseen test data.
+- `metric_set()`: Allows evaluating multiple classification metrics.
+
+It appears we can predict ESBL gene presence with a positive predictive value (PPV) of `r round(metrics$.estimate[3], 3) * 100`% and a negative predictive value (NPV) of `r round(metrics$.estimate[4], 3) * 100` using a simplistic logistic regression model.
+
+### **Visualising Predictions**
+
+We can visualise predictions by comparing predicted and actual ESBL status.
+
+```{r}
+library(ggplot2)
+
+ggplot(predictions, aes(x = esbl, fill = .pred_class)) +
+  geom_bar(position = "stack") +
+  labs(title = "Predicted vs Actual ESBL Status",
+       x = "Actual ESBL",
+       y = "Count") +
+  theme_minimal()
+```
+
+### **Conclusion**
+
+In this example, we showcased how the new `AMR`-specific recipe steps simplify working with `<mic>` columns in `tidymodels`. The `step_mic_log2()` transformation converts ordered MICs to log2-transformed numerics, improving compatibility with classification models.
+
+This pipeline enables realistic, reproducible, and interpretable modelling of antimicrobial resistance data.
+
+---
+
+
+## Example 3: Predicting AMR Over Time
+
+In this third example, we aim to predict antimicrobial resistance (AMR) trends over time using `tidymodels`. We will model resistance to three antibiotics (amoxicillin `AMX`, amoxicillin-clavulanic acid `AMC`, and ciprofloxacin `CIP`), based on historical data grouped by year and hospital ward.
 
 ### **Objective**
 

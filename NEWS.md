@@ -1,8 +1,17 @@
-# AMR 3.0.0.9002
+# AMR 3.0.0.9003
+
+### New
+* Integration with the **tidymodels** framework to allow seamless use of MIC and SIR data in modelling pipelines via `recipes`
+  - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
+  - `tidyselect` helpers: `all_mic()`, `all_mic_predictors()`, `all_sir()`, `all_sir_predictors()`
+  - Enables seamless use of MIC and SIR data in modelling pipelines via `recipes`
 
 ### Changed
-* Fix for `antibiogram()` for when no antimicrobials are set
+* Fixed a bug in `antibiogram()` for when no antimicrobials are set
+* Fixed a bug in `as.ab()` for antimicrobial codes with a number in it if they are preceded by a space
+* Fixed a bug in `eucast_rules()` for using specific custom rules
 * Fixed some specific Dutch translations for antimicrobials
+* Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 
 
 # AMR 3.0.0

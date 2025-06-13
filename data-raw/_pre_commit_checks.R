@@ -663,7 +663,9 @@ if (files_changed()) {
 }
 
 # Update index.md and README.md -------------------------------------------
-if (files_changed("man/microorganisms.Rd") ||
+if (files_changed("README.Rmd") ||
+    files_changed("index.Rmd") ||
+    files_changed("man/microorganisms.Rd") ||
     files_changed("man/antimicrobials.Rd") ||
     files_changed("man/clinical_breakpoints.Rd") ||
     files_changed("man/antibiogram.Rd") ||

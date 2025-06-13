@@ -127,6 +127,24 @@ test_that("test-zzz.R", {
     "type_sum" = "pillar",
     # readxl
     "read_excel" = "readxl",
+    # recipes
+    "add_step" = "recipes",
+    "bake" = "recipes",
+    "check_new_data" = "recipes",
+    "check_type" = "recipes",
+    "has_role" = "recipes",
+    "is_trained" = "recipes",
+    "prep" = "recipes",
+    "print_step" = "recipes",
+    "rand_id" = "recipes",
+    "recipe" = "recipes",
+    "recipes_eval_select" = "recipes",
+    "sel2char" = "recipes",
+    "step" = "recipes",
+    "step_center" = "recipes",
+    "tidy" = "recipes",
+    # rlang
+    "enquos" = "rlang",
     # rmarkdown
     "html_vignette" = "rmarkdown",
     # skimr

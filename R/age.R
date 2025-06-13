@@ -208,7 +208,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
     split_at <- c(0, split_at)
   }
   split_at <- split_at[!is.na(split_at)]
-  stop_if(length(split_at) == 1, "invalid value for `split_at`") # only 0 is available
+  stop_if(length(split_at) == 1, "invalid value for `split_at`.") # only 0 is available
 
   # turn input values to 'split_at' indices
   y <- x
