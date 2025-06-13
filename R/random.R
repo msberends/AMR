@@ -88,8 +88,9 @@ random_mic <- function(size = NULL, mo = NULL, ab = NULL, skew = "right", severi
       out[out == min(out)] <- paste0("<=", out[out == min(out)])
     }
     if (stats::runif(1) > 0.5 && length(unique(out)) > 1) {
-      out[out == max(out)] <- paste0(">=", out[out == max(out)])
+      out[out == max(out) & out %unlike% "<="] <- paste0(">=", out[out == max(out) & out %unlike% "<="])
     }
+
     return(out)
   } else {
     random_exec("MIC", size = size, mo = mo, ab = ab, skew = skew, severity = severity)
@@ -163,7 +164,7 @@ random_exec <- function(method_type, size, mo = NULL, ab = NULL, skew = "right",
       out[out == min(out)] <- paste0("<=", out[out == min(out)])
     }
     if (stats::runif(1) > 0.5 && length(unique(out)) > 1) {
-      out[out == max(out)] <- paste0(">=", out[out == max(out)])
+      out[out == max(out) & out %unlike% "<="] <- paste0(">=", out[out == max(out) & out %unlike% "<="])
     }
     return(as.mic(out))
   } else if (method_type == "DISK") {
