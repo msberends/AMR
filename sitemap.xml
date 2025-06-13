@@ -24,6 +24,7 @@
 <url><loc>https://amr-for-r.org/reference/add_custom_microorganisms.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/age.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/age_groups.html</loc></url>
+<url><loc>https://amr-for-r.org/reference/amr-tidymodels.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/antibiogram.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/antimicrobial_selectors.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/antimicrobials.html</loc></url>
@@ -43,6 +44,7 @@
 <url><loc>https://amr-for-r.org/reference/custom_eucast_rules.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/custom_mdro_guideline.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/dosage.html</loc></url>
+<url><loc>https://amr-for-r.org/reference/esbl_isolates.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/eucast_rules.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/example_isolates.html</loc></url>
 <url><loc>https://amr-for-r.org/reference/example_isolates_unclean.html</loc></url>

@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -309,7 +309,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
 
 <p>The function <code>is.sir()</code> detects if the input contains class <code>sir</code>. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> or <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>, it iterates over all columns/items and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
-<p>The base R function <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> can be used to retrieve quantitative values from a <code>sir</code> object: <code>"S"</code> = 1, <code>"I"</code>/<code>"SDD"</code> = 2, <code>"R"</code> = 3. All other values are rendered <code>NA</code> . <strong>Note:</strong> Do not use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code>, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.</p>
+<p>The base R function <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> can be used to retrieve quantitative values from a <code>sir</code> object: <code>"S"</code> = 1, <code>"I"</code>/<code>"SDD"</code> = 2, <code>"R"</code> = 3. All other values are rendered <code>NA</code>. <strong>Note:</strong> Do not use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code>, since that (because of how R works internally) will return the factor level indices, and not these aforementioned quantitative values.</p>
 <p>The function <code>is_sir_eligible()</code> returns <code>TRUE</code> when a column contains at most 5% potentially invalid antimicrobial interpretations, and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 </div>
 
@@ -414,10 +414,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2025-06-06 <span style="color: #949494;">07:43:11</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2025-06-06 <span style="color: #949494;">07:43:12</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2025-06-06 <span style="color: #949494;">07:43:12</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2025-06-06 <span style="color: #949494;">07:43:12</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2025-06-13 <span style="color: #949494;">15:10:25</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2025-06-13 <span style="color: #949494;">15:10:25</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2025-06-13 <span style="color: #949494;">15:10:26</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2025-06-13 <span style="color: #949494;">15:10:26</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
@@ -614,7 +614,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span><span class="co"># For CLEANING existing SIR values -------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"SDD"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"NI"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">as.sir()</span>: 3 results in index '20' truncated (38%) that were invalid</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">as.sir()</span>: 3 results in index '21' truncated (38%) that were invalid</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B", and "C"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    SDD  I    R    NI   &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</span>

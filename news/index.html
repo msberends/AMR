@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +49,26 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.0.9002" id="amr-3009002">AMR 3.0.0.9002<a class="anchor" aria-label="anchor" href="#amr-3009002"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.0.9004" id="amr-3009004">AMR 3.0.0.9004<a class="anchor" aria-label="anchor" href="#amr-3009004"></a></h2>
 <div class="section level4">
-<h4 id="changed-3-0-0-9002">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-0-9002"></a></h4>
-<ul><li>Fix for <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
+<h4 id="new-3-0-0-9004">New<a class="anchor" aria-label="anchor" href="#new-3-0-0-9004"></a></h4>
+<ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of MIC and SIR data in modelling pipelines via <code>recipes</code>
+<ul><li>
+<code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
+<li>
+<code>tidyselect</code> helpers: <code><a href="../reference/amr-tidymodels.html">all_mic()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic_predictors()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_sir()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_sir_predictors()</a></code>
+</li>
+<li>Enables seamless use of MIC and SIR data in modelling pipelines via <code>recipes</code>
+</li>
+</ul></li>
+</ul></div>
+<div class="section level4">
+<h4 id="changed-3-0-0-9004">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-0-9004"></a></h4>
+<ul><li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
+<li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> for antimicrobial codes with a number in it if they are preceded by a space</li>
+<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> for using specific custom rules</li>
 <li>Fixed some specific Dutch translations for antimicrobials</li>
+<li>Updated <code><a href="../reference/random.html">random_mic()</a></code> and <code><a href="../reference/random.html">random_disk()</a></code> to set skewedness of the distribution and allow multiple microorganisms</li>
 </ul></div>
 </div>
     <div class="section level2">

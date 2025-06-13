@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 06 June 2025.</p>
+generated on 13 June 2025.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -147,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2025-06-06</td>
+<td align="center">2025-06-13</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2025-06-06</td>
+<td align="center">2025-06-13</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2025-06-06</td>
+<td align="center">2025-06-13</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -1312,18 +1312,18 @@ values for <em>Klebsiella pneumoniae</em> and ciprofloxacin:</p>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>MIC <span class="op">=</span> <span class="va">mic_values</span>, SIR <span class="op">=</span> <span class="va">sir_values</span><span class="op">)</span></span>
 <span><span class="va">my_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 100 × 2</span></span></span>
-<span><span class="co">#&gt;          MIC SIR  </span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    16<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     0.005 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     1<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="color: #555555;">&gt;=</span>256<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     0.025 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    16<span style="color: #555555;">.000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.025 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     0.5<span style="color: #555555;">00</span> <span style="color: #080808; background-color: #FFD787;">  I  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     0.005 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt;         MIC SIR  </span></span>
+<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #555555;">&lt;=</span>0.0001 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>   0.016<span style="color: #BBBBBB;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #555555;">&gt;=</span>8<span style="color: #BBBBBB;">.0000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>   0.032<span style="color: #BBBBBB;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>   0.008<span style="color: #BBBBBB;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  64<span style="color: #BBBBBB;">.0000</span> <span style="color: #080808; background-color: #FFAFAF;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>   0.008<span style="color: #BBBBBB;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>   0.125<span style="color: #BBBBBB;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   0.032<span style="color: #BBBBBB;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   0.0002 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre></div>
 <p>This allows direct interpretation according to EUCAST or CLSI
 breakpoints, facilitating automated AMR data processing.</p>
