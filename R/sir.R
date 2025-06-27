@@ -1651,25 +1651,22 @@ as_sir_method <- function(method_short,
       next
     }
 
-    # sort on host and taxonomic rank
-    # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
-    if (is.na(uti_current)) {
-      breakpoints_current <- breakpoints_current %pm>%
-        #  `uti` is a column in the data set
-        # this will put UTI = FALSE first, then UTI = NA, then UTI = TRUE
-        pm_mutate(uti_index = ifelse(!is.na(uti) & uti == FALSE, 1,
-          ifelse(is.na(uti), 2,
-            3
-          )
-        )) %pm>%
-        # be as specific as possible (i.e. prefer species over genus):
-        pm_arrange(rank_index, uti_index)
-    } else if (uti_current == TRUE) {
-      breakpoints_current <- breakpoints_current %pm>%
-        subset(uti == TRUE) %pm>%
-        # be as specific as possible (i.e. prefer species over genus):
-        pm_arrange(rank_index)
+    # if the user explicitly set uti, keep only those rows
+    if (!is.na(uti_current)) {
+      breakpoints_current <- breakpoints_current[breakpoints_current$uti == uti_current, , drop = FALSE]
     }
+
+    # build a helper factor so FALSE < NA < TRUE
+    uti_index <- factor(
+      ifelse(is.na(breakpoints_current$uti), "NA",
+        as.character(breakpoints_current$uti)
+      ),
+      levels = c("FALSE", "NA", "TRUE")
+    )
+
+    # sort on host and taxonomic rank first, then by UTI
+    # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
+    breakpoints_current <- breakpoints_current[order(breakpoints_current$rank_index, uti_index), , drop = FALSE]
 
     # throw messages for different body sites
     site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
