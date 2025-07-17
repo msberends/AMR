@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,13 @@ The default is to split on young children (0-11), youth (12-24), young adults (2
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: ggplot2</span>
-<span class="r-plt img"><img src="age_groups-1.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">as.sir()</span>: 271 results in index 'age_group' truncated (100%) that were</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> invalid antimicrobial interpretations: "0-11", "12-24", "25-54", "55-74",</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> and "75+"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ggplot2::geom_col(data = function(x) {    sir_df(data = x, translate_ab = translate_ab, language = language,         minimum = minimum, combine_SI = combine_SI)}, mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x),     y = str2lang(y), fill = str2lang(fill))), position = position,     ...):</span> Problem while computing layer data.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Error occurred in the 1st layer.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `sir_df()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> incorrect number of dimensions</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

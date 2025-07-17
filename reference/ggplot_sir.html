@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,10 +59,10 @@
 <span>  fill <span class="op">=</span> <span class="st">"interpretation"</span>, facet <span class="op">=</span> <span class="cn">NULL</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>, translate_ab <span class="op">=</span> <span class="st">"name"</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>S</span>
-<span>  <span class="op">=</span> <span class="st">"#3CAEA3"</span>, SI <span class="op">=</span> <span class="st">"#3CAEA3"</span>, I <span class="op">=</span> <span class="st">"#F6D55C"</span>, IR <span class="op">=</span> <span class="st">"#ED553B"</span>, R <span class="op">=</span> <span class="st">"#ED553B"</span><span class="op">)</span>,</span>
-<span>  datalabels <span class="op">=</span> <span class="cn">TRUE</span>, datalabels.size <span class="op">=</span> <span class="fl">2.5</span>, datalabels.colour <span class="op">=</span> <span class="st">"grey15"</span>,</span>
-<span>  title <span class="op">=</span> <span class="cn">NULL</span>, subtitle <span class="op">=</span> <span class="cn">NULL</span>, caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x.title <span class="op">=</span> <span class="st">"Antimicrobial"</span>, y.title <span class="op">=</span> <span class="st">"Proportion"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  <span class="op">=</span> <span class="st">"#3CAEA3"</span>, SI <span class="op">=</span> <span class="st">"#3CAEA3"</span>, SDD <span class="op">=</span> <span class="st">"#8FD6C4"</span>, I <span class="op">=</span> <span class="st">"#F6D55C"</span>, IR <span class="op">=</span> <span class="st">"#ED553B"</span>,</span>
+<span>  R <span class="op">=</span> <span class="st">"#ED553B"</span><span class="op">)</span>, datalabels <span class="op">=</span> <span class="cn">TRUE</span>, datalabels.size <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>  datalabels.colour <span class="op">=</span> <span class="st">"grey15"</span>, title <span class="op">=</span> <span class="cn">NULL</span>, subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NULL</span>, x.title <span class="op">=</span> <span class="st">"Antimicrobial"</span>, y.title <span class="op">=</span> <span class="st">"Proportion"</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">geom_sir</span><span class="op">(</span>position <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"antibiotic"</span>, <span class="st">"interpretation"</span><span class="op">)</span>,</span>
 <span>  fill <span class="op">=</span> <span class="st">"interpretation"</span>, translate_ab <span class="op">=</span> <span class="st">"name"</span>, minimum <span class="op">=</span> <span class="fl">30</span>,</span>
@@ -256,18 +256,23 @@
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">age_group</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">ggplot_sir</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"age_group"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 6 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_col()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 6 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_text()`).</span>
-<span class="r-plt img"><img src="ggplot_sir-8.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">as.sir()</span>: 271 results in index 'age_group' truncated (100%) that were</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> invalid antimicrobial interpretations: "0-11", "12-24", "25-54", "55-74",</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> and "75+"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ggplot2::geom_col(data = function(x) {    sir_df(data = x, translate_ab = translate_ab, language = language,         minimum = minimum, combine_SI = combine_SI)}, mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x),     y = str2lang(y), fill = str2lang(fill))), position = position,     ...):</span> Problem while computing layer data.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Error occurred in the 1st layer.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `sir_df()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> incorrect number of dimensions</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># a shorter version which also adjusts data label colours:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">AMX</span>, <span class="va">NIT</span>, <span class="va">FOS</span>, <span class="va">TMP</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">ggplot_sir</span><span class="op">(</span>colours <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="ggplot_sir-9.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ggplot2::geom_col(data = function(x) {    sir_df(data = x, translate_ab = translate_ab, language = language,         minimum = minimum, combine_SI = combine_SI)}, mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x),     y = str2lang(y), fill = str2lang(fill))), position = position,     ...):</span> Problem while converting geom to grob.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Error occurred in the 1st layer.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Unknown colour name: FALSE</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># it also supports groups (don't forget to use the group var on `x` or `facet`):</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -285,7 +290,12 @@
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #EEEEEE;">mo_is_gram_negative()</span></span>
-<span class="r-plt img"><img src="ggplot_sir-10.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">as.sir()</span>: 700 results in index 'ward' truncated (100%) that were</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> invalid antimicrobial interpretations: "Clinical" and "ICU"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ggplot2::geom_col(data = function(x) {    sir_df(data = x, translate_ab = translate_ab, language = language,         minimum = minimum, combine_SI = combine_SI)}, mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x),     y = str2lang(y), fill = str2lang(fill))), position = position,     ...):</span> Problem while computing layer data.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Error occurred in the 1st layer.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `sir_df()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> incorrect number of dimensions</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

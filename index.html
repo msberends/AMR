@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,10 +99,10 @@
 </blockquote>
 <div style="display: flex; font-size: 0.8em;">
 <p style="text-align:left; width: 50%;">
-<small><a href="https://amr-for-r.org/">https://amr-for-r.org</a></small>
+<small><a href="https://amr-for-r.org/">amr-for-r.org</a></small>
 </p>
 <p style="text-align:right; width: 50%;">
-<small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank" class="external-link">https://doi.org/10.18637/jss.v104.i03</a></small>
+<small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank" class="external-link">doi.org/10.18637/jss.v104.i03</a></small>
 </p>
 </div>
 <p><a href="./reference/clinical_breakpoints.html#response-from-clsi-and-eucast"><img src="./endorsement_clsi_eucast.jpg" class="endorse_img" align="right" height="120"></a></p>
@@ -407,9 +407,9 @@
 <span><span class="co">#&gt; # A tibble: 3 × 5</span></span>
 <span><span class="co">#&gt;   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;       </span></span>
-<span><span class="co">#&gt; 1 Clinical     0.2289362 0.205-0.254    0.3147503 0.284-0.347 </span></span>
-<span><span class="co">#&gt; 2 ICU          0.2902655 0.253-0.33     0.4004739 0.353-0.449 </span></span>
-<span><span class="co">#&gt; 3 Outpatient   0.2       0.131-0.285    0.3676471 0.254-0.493</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Clinical         0.229 0.205-0.254        0.315 0.284-0.347 </span></span>
+<span><span class="co">#&gt; 2 ICU              0.290 0.253-0.33         0.400 0.353-0.449 </span></span>
+<span><span class="co">#&gt; 3 Outpatient       0.2   0.131-0.285        0.368 0.254-0.493</span></span></code></pre></div>
 <p>Or use <a href="https://amr-for-r.org/reference/antimicrobial_selectors.html">antimicrobial selectors</a> to select a series of antibiotic columns:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://amr-for-r.org">AMR</a></span><span class="op">)</span></span>
@@ -432,29 +432,29 @@
 <span><span class="co">#&gt; "Outpatient" (minimum = 30).</span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
-<span><span class="co">#&gt;   ward             GEN       TOB       AMK   KAN       COL</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Clinical   0.2289362 0.3147503 0.6258993     1 0.7802956</span></span>
-<span><span class="co">#&gt; 2 ICU        0.2902655 0.4004739 0.6624473     1 0.8574144</span></span>
-<span><span class="co">#&gt; 3 Outpatient 0.2       0.3676471 0.6052632    NA 0.8888889</span></span></code></pre></div>
+<span><span class="co">#&gt;   ward         GEN   TOB   AMK   KAN   COL</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Clinical   0.229 0.315 0.626     1 0.780</span></span>
+<span><span class="co">#&gt; 2 ICU        0.290 0.400 0.662     1 0.857</span></span>
+<span><span class="co">#&gt; 3 Outpatient 0.2   0.368 0.605    NA 0.889</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic columns to names:</span></span>
 <span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
-<span><span class="co">#&gt;   ward       gentamicin tobramycin  amikacin kanamycin  colistin</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Clinical    0.2289362  0.3147503 0.6258993         1 0.7802956</span></span>
-<span><span class="co">#&gt; 2 ICU         0.2902655  0.4004739 0.6624473         1 0.8574144</span></span>
-<span><span class="co">#&gt; 3 Outpatient  0.2        0.3676471 0.6052632        NA 0.8888889</span></span></code></pre></div>
+<span><span class="co">#&gt;   ward       gentamicin tobramycin amikacin kanamycin colistin</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Clinical        0.229      0.315    0.626         1    0.780</span></span>
+<span><span class="co">#&gt; 2 ICU             0.290      0.400    0.662         1    0.857</span></span>
+<span><span class="co">#&gt; 3 Outpatient      0.2        0.368    0.605        NA    0.889</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic column to ATC codes:</span></span>
 <span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
-<span><span class="co">#&gt;   ward         J01GB03   J01GB01   J01GB06 J01GB04   J01XB01</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Clinical   0.2289362 0.3147503 0.6258993       1 0.7802956</span></span>
-<span><span class="co">#&gt; 2 ICU        0.2902655 0.4004739 0.6624473       1 0.8574144</span></span>
-<span><span class="co">#&gt; 3 Outpatient 0.2       0.3676471 0.6052632      NA 0.8888889</span></span></code></pre></div>
+<span><span class="co">#&gt;   ward       J01GB03 J01GB01 J01GB06 J01GB04 J01XB01</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Clinical     0.229   0.315   0.626       1   0.780</span></span>
+<span><span class="co">#&gt; 2 ICU          0.290   0.400   0.662       1   0.857</span></span>
+<span><span class="co">#&gt; 3 Outpatient   0.2     0.368   0.605      NA   0.889</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
