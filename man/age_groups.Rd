@@ -4,12 +4,15 @@
 \alias{age_groups}
 \title{Split Ages into Age Groups}
 \usage{
-age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
+age_groups(x, split_at = c(0, 12, 25, 55, 75), names = NULL,
+  na.rm = FALSE)
 }
 \arguments{
 \item{x}{Age, e.g. calculated with \code{\link[=age]{age()}}.}
 
 \item{split_at}{Values to split \code{x} at - the default is age groups 0-11, 12-24, 25-54, 55-74 and 75+. See \emph{Details}.}
+
+\item{names}{Optional names to be given to the various age groups.}
 
 \item{na.rm}{A \link{logical} to indicate whether missing values should be removed.}
 }
@@ -17,7 +20,7 @@ age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 Ordered \link{factor}
 }
 \description{
-Split ages into age groups defined by the \code{split} argument. This allows for easier demographic (antimicrobial resistance) analysis.
+Split ages into age groups defined by the \code{split} argument. This allows for easier demographic (antimicrobial resistance) analysis. The function returns an ordered \link{factor}.
 }
 \details{
 To split ages, the input for the \code{split_at} argument can be:
@@ -41,6 +44,7 @@ age_groups(ages, 50)
 
 # split into 0-19, 20-49 and 50+
 age_groups(ages, c(20, 50))
+age_groups(ages, c(20, 50), names = c("Under 20 years", "20 to 50 years", "Over 50 years"))
 
 # split into groups of ten years
 age_groups(ages, 1:10 * 10)

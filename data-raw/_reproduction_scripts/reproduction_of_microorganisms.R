@@ -288,7 +288,7 @@ for (page in LETTERS) {
   url <- paste0("https://lpsn.dsmz.de/genus?page=", page)
   x <- tryCatch(read_html(url),
                 error = function(e) {
-                  message("Waiting 10 seconds because of error: ", e$message)
+                  message("Waiting 10 seconds because of error: ", conditionMessage(e))
                   Sys.sleep(10)
                   read_html(url)
                 })

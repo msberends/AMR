@@ -1,16 +1,24 @@
-# AMR 3.0.0.9004
+# AMR 3.0.0.9011
+
+This is primarily a bugfix release, though we added one nice feature too.
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of MIC and SIR data in modelling pipelines via `recipes`
   - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
-  - `tidyselect` helpers: `all_mic()`, `all_mic_predictors()`, `all_sir()`, `all_sir_predictors()`
-  - Enables seamless use of MIC and SIR data in modelling pipelines via `recipes`
+  - New `tidyselect` helpers: `all_mic()`, `all_mic_predictors()`, `all_sir()`, `all_sir_predictors()`
 
 ### Changed
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
+* Fixed a bug in `antibiogram()` to allow column names containing the `+` character (#222)
 * Fixed a bug in `as.ab()` for antimicrobial codes with a number in it if they are preceded by a space
 * Fixed a bug in `eucast_rules()` for using specific custom rules
+* Fixed a bug in `as.sir()` to allow any tidyselect language (#220)
+* Fixed a bug in `as.sir()` to pick right breakpoint when `uti = FALSE` (#216)
+* Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
+* Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials
+* Added `names` to `age_groups()` so that custom names can be given (#215)
+* Added note to `as.sir()` to make it explicit when higher-level taxonomic breakpoints are used (#218)
 * Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 
 

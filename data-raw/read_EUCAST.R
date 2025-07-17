@@ -283,7 +283,7 @@ for (i in 2:length(sheets_to_analyse)) {
         guideline_name = guideline_name
       )
     ),
-    error = function(e) message(e$message)
+    error = function(e) message(conditionMessage(e))
   )
 }
 

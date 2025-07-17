@@ -69,7 +69,9 @@
 #' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
-#' @param ... For using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
+#' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()] such as `as.sir(df, penicillins())`.
+#'
+#' Otherwise: arguments passed on to methods.
 #' @details
 #' *Note: The clinical breakpoints in this package were validated through, and imported from, [WHONET](https://whonet.org). The public use of this `AMR` package has been endorsed by both CLSI and EUCAST. See [clinical_breakpoints] for more information.*
 #'
@@ -225,8 +227,11 @@
 #'   df_wide %>% mutate_if(is.mic, as.sir)
 #'   df_wide %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
 #'   df_wide %>% mutate(across(where(is.mic), as.sir))
+#'
 #'   df_wide %>% mutate_at(vars(amoxicillin:tobra), as.sir)
 #'   df_wide %>% mutate(across(amoxicillin:tobra, as.sir))
+#'
+#'   df_wide %>% mutate(across(aminopenicillins(), as.sir))
 #'
 #'   # approaches that all work with additional arguments:
 #'   df_long %>%
@@ -722,8 +727,17 @@ as.sir.data.frame <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
   meet_criteria(max_cores, allow_class = c("numeric", "integer"), has_length = 1)
-
   x.bak <- x
+
+  if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
+    sel <- colnames(pm_select(x, ...))
+  } else {
+    sel <- colnames(x)
+  }
+  if (!is.null(col_mo)) {
+    sel <- sel[sel != col_mo]
+  }
+
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
     if (is.factor(x[, i, drop = TRUE])) {
@@ -803,15 +817,6 @@ as.sir.data.frame <- function(x,
   }
 
   i <- 0
-  if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
-    sel <- colnames(pm_select(x, ...))
-  } else {
-    sel <- colnames(x)
-  }
-  if (!is.null(col_mo)) {
-    sel <- sel[sel != col_mo]
-  }
-
   ab_cols <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
@@ -863,7 +868,7 @@ as.sir.data.frame <- function(x,
     cl <- tryCatch(parallel::makeCluster(n_cores, type = "PSOCK"),
       error = function(e) {
         if (isTRUE(info)) {
-          message_("Could not create parallel cluster, using single-core computation. Error message: ", e$message, add_fn = font_red)
+          message_("Could not create parallel cluster, using single-core computation. Error message: ", conditionMessage(e), add_fn = font_red)
         }
         return(NULL)
       }
@@ -1135,7 +1140,6 @@ as_sir_method <- function(method_short,
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
-    message()
     message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n", add_fn = font_green)
   }
 
@@ -1553,7 +1557,7 @@ as_sir_method <- function(method_short,
       ))
 
     if (breakpoint_type == "animal") {
-      # 2025-03-13 for now, only strictly follow guideline for current host, no extrapolation
+      # 2025-03-13/ for now, only strictly follow guideline for current host, no extrapolation
       breakpoints_current <- breakpoints_current[which(breakpoints_current$host == host_current), , drop = FALSE]
     }
 
@@ -1651,25 +1655,22 @@ as_sir_method <- function(method_short,
       next
     }
 
-    # sort on host and taxonomic rank
-    # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
-    if (is.na(uti_current)) {
-      breakpoints_current <- breakpoints_current %pm>%
-        #  `uti` is a column in the data set
-        # this will put UTI = FALSE first, then UTI = NA, then UTI = TRUE
-        pm_mutate(uti_index = ifelse(!is.na(uti) & uti == FALSE, 1,
-          ifelse(is.na(uti), 2,
-            3
-          )
-        )) %pm>%
-        # be as specific as possible (i.e. prefer species over genus):
-        pm_arrange(rank_index, uti_index)
-    } else if (uti_current == TRUE) {
-      breakpoints_current <- breakpoints_current %pm>%
-        subset(uti == TRUE) %pm>%
-        # be as specific as possible (i.e. prefer species over genus):
-        pm_arrange(rank_index)
+    # if the user explicitly set uti, keep only those rows
+    if (!is.na(uti_current)) {
+      breakpoints_current <- breakpoints_current[breakpoints_current$uti == uti_current, , drop = FALSE]
     }
+
+    # build a helper factor so FALSE < NA < TRUE
+    uti_index <- factor(
+      ifelse(is.na(breakpoints_current$uti), "NA",
+        as.character(breakpoints_current$uti)
+      ),
+      levels = c("FALSE", "NA", "TRUE")
+    )
+
+    # sort on host and taxonomic rank first, then by UTI
+    # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
+    breakpoints_current <- breakpoints_current[order(breakpoints_current$rank_index, uti_index), , drop = FALSE]
 
     # throw messages for different body sites
     site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
@@ -1682,7 +1683,7 @@ as_sir_method <- function(method_short,
       # only UTI breakpoints available
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI); assuming `uti = TRUE`.")
+        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI) - assuming `uti = TRUE`.")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
       # both UTI and Non-UTI breakpoints available
@@ -1705,7 +1706,7 @@ as_sir_method <- function(method_short,
       new_sir <- rep(as.sir("R"), length(rows))
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, "")
+        paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ".")
       )
     } else if (nrow(breakpoints_current) == 0) {
       # no rules available
@@ -1713,41 +1714,48 @@ as_sir_method <- function(method_short,
     } else {
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
+      if (breakpoints_current$rank_index > 3) {
+        # we resort to a high-level taxonomic record since there are no breakpoint on genus (rank_index = 3) or lower, so note this
+        notes_current <- paste0(
+          "No genus- or species-level breakpoint available - applying higher taxonomic level instead.\n",
+          notes_current
+        )
+      }
 
       notes_current <- paste0(
         notes_current, "\n",
         ifelse(breakpoints_current$mo == "UNKNOWN" | breakpoints_current$ref_tbl %like% "PK.*PD",
-          "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this",
+          "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this.",
           ""
         ),
         "\n",
         ifelse(breakpoints_current$site %like% "screen" | breakpoints_current$ref_tbl %like% "screen",
-          "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this",
+          "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this.",
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]",
-          paste0("MIC values with the operator '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values with the operator '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]",
-          paste0("MIC values with the operator '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values with the operator '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R,
-          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^<=[0-9]" & as.double(values) == breakpoints_current$breakpoint_R,
-          paste0("MIC values at the R breakpoint with the operator '<=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values at the R breakpoint with the operator '<=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^>=[0-9]" & as.double(values) == breakpoints_current$breakpoint_S,
-          paste0("MIC values at the S breakpoint with the operator '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values at the S breakpoint with the operator '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         )
       )
@@ -1757,7 +1765,7 @@ as_sir_method <- function(method_short,
         notes_current <- paste0(
           notes_current, "\n",
           ifelse(!is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R),
-            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE",
+            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE.",
             ""
           )
         )
@@ -1796,7 +1804,7 @@ as_sir_method <- function(method_short,
       }
 
       # write to verbose output
-      notes_current <- trimws2(notes_current)
+      notes_current <- gsub("\n\n", "\n", trimws2(notes_current), fixed = TRUE)
       notes_current[notes_current == ""] <- NA_character_
       out <- data.frame(
         # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added
@@ -1904,11 +1912,11 @@ pillar_shaft.sir <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey("  NA")
-    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
     out[x == "S"] <- font_green_bg("  S  ")
+    out[x == "SDD"] <- font_green_lighter_bg(" SDD ")
     out[x == "I"] <- font_orange_bg("  I  ")
-    out[x == "SDD"] <- font_orange_bg(" SDD ")
     out[x == "R"] <- font_rose_bg("  R  ")
+    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
   }
   create_pillar_column(out, align = "left", width = 5)
 }

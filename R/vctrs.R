@@ -30,7 +30,6 @@
 # These are all S3 implementations for the vctrs package,
 # that is used internally by tidyverse packages such as dplyr.
 # They are to convert AMR-specific classes to bare characters and integers.
-# All of them will be exported using s3_register() in R/zzz.R when loading the package.
 
 # see https://github.com/tidyverse/dplyr/issues/5955 why this is required
 

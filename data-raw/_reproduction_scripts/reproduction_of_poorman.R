@@ -108,3 +108,18 @@ writeLines(contents, "R/aa_helper_pm_functions.R")
 
 # note: pm_left_join() will be overwritten by aaa_helper_functions.R, which contains a faster implementation
 # replace `res <- as.data.frame(res)` with  `res <- as.data.frame(res, stringsAsFactors = FALSE)`
+
+# after running, pm_select must be altered. The line:
+# col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE)
+# ... must be replaced with this to support tidyselect functionality such as `starts_with()`:
+# col_pos <- tryCatch(pm_select_positions(.data, ..., .group_pos = TRUE), error = function(e) NULL)
+# if (is.null(col_pos)) {
+#   # try with tidyverse
+#   select_dplyr <- import_fn("select", "dplyr", error_on_fail = FALSE)
+#   if (!is.null(select_dplyr)) {
+#     col_pos <- which(colnames(.data) %in% colnames(select_dplyr(.data, ...)))
+#   } else {
+#     # this will throw an error as it did, but dplyr is not available, so no other option
+#     col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE)
+#   }
+# }

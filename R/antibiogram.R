@@ -576,6 +576,15 @@ antibiogram.default <- function(x,
     }
     antimicrobials <- unlist(antimicrobials)
   } else {
+    existing_ab_combined_cols <- ab_trycatch[ab_trycatch %like% "[+]" & ab_trycatch %in% colnames(x)]
+    if (length(existing_ab_combined_cols) > 0 && !is.null(ab_transform)) {
+      ab_transform <- NULL
+      warning_(
+        "Detected column name(s) containing the '+' character, which conflicts with the expected syntax in `antibiogram()`: the '+' is used to combine separate antimicrobial agent columns (e.g., \"AMP+GEN\").\n\n",
+        "To avoid incorrectly guessing which antimicrobials this represents, `ab_transform` was automatically set to `NULL`.\n\n",
+        "If this is unintended, please rename the column(s) to avoid using '+' in the name, or set `ab_transform = NULL` explicitly to suppress this message."
+      )
+    }
     antimicrobials <- ab_trycatch
   }
 

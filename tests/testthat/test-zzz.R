@@ -63,10 +63,12 @@ test_that("test-zzz.R", {
     "progress_bar" = "progress",
     "read_html" = "xml2",
     "right_join" = "dplyr",
+    "select" = "dplyr",
     "semi_join" = "dplyr",
     "showQuestion" = "rstudioapi",
     "symbol" = "cli",
     "tibble" = "tibble",
+    "where" = "tidyselect",
     "write.xlsx" = "openxlsx"
   )
 

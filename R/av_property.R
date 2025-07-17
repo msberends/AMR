@@ -264,7 +264,7 @@ av_validate <- function(x, property, ...) {
     # try to catch an error when inputting an invalid argument
     # so the 'call.' can be set to FALSE
     tryCatch(x[1L] %in% AMR_env$AV_lookup[1, property, drop = TRUE],
-      error = function(e) stop(e$message, call. = FALSE)
+      error = function(e) stop(conditionMessage(e), call. = FALSE)
     )
 
     if (!all(x %in% AMR_env$AV_lookup[, property, drop = TRUE])) {

@@ -47,6 +47,6 @@ sir_df <- function(data,
       combine_SI = combine_SI,
       confidence_level = confidence_level
     ),
-    error = function(e) stop_(gsub("in sir_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc_df(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
