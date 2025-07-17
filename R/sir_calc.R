@@ -257,12 +257,15 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   data <- as.data.frame(data, stringsAsFactors = FALSE)
 
   for (i in seq_len(ncol(data))) {
-    data[, i] <- as.character(as.sir(data[, i, drop = TRUE]))
-    if (isTRUE(combine_SI)) {
-      if ("SDD" %in% data[, i, drop = TRUE] && message_not_thrown_before("sir_calc_df", combine_SI, entire_session = TRUE)) {
-        message_("Note that `sir_calc_df()` will also count dose-dependent susceptibility, 'SDD', as 'SI' when `combine_SI = TRUE`. This note will be shown once for this session.", as_note = FALSE)
+    # transform SIR columns
+    if (is.sir(data[, i, drop = TRUE])) {
+      data[, i] <- as.character(data[, i, drop = TRUE])
+      if (isTRUE(combine_SI)) {
+        if ("SDD" %in% data[, i, drop = TRUE] && message_not_thrown_before("sir_calc_df", combine_SI, entire_session = TRUE)) {
+          message_("Note that `sir_calc_df()` will also count dose-dependent susceptibility, 'SDD', as 'SI' when `combine_SI = TRUE`. This note will be shown once for this session.", as_note = FALSE)
+        }
+        data[, i] <- gsub("(I|S|SDD)", "SI", data[, i, drop = TRUE])
       }
-      data[, i] <- gsub("(I|S|SDD)", "SI", data[, i, drop = TRUE])
     }
   }
 

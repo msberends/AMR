@@ -1140,7 +1140,6 @@ as_sir_method <- function(method_short,
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
-    message()
     message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n", add_fn = font_green)
   }
 
@@ -1558,7 +1557,7 @@ as_sir_method <- function(method_short,
       ))
 
     if (breakpoint_type == "animal") {
-      # 2025-03-13 for now, only strictly follow guideline for current host, no extrapolation
+      # 2025-03-13/ for now, only strictly follow guideline for current host, no extrapolation
       breakpoints_current <- breakpoints_current[which(breakpoints_current$host == host_current), , drop = FALSE]
     }
 
@@ -1684,7 +1683,7 @@ as_sir_method <- function(method_short,
       # only UTI breakpoints available
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI); assuming `uti = TRUE`.")
+        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI) - assuming `uti = TRUE`.")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
       # both UTI and Non-UTI breakpoints available
@@ -1707,7 +1706,7 @@ as_sir_method <- function(method_short,
       new_sir <- rep(as.sir("R"), length(rows))
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, "")
+        paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ".")
       )
     } else if (nrow(breakpoints_current) == 0) {
       # no rules available
@@ -1715,41 +1714,48 @@ as_sir_method <- function(method_short,
     } else {
       # then run the rules
       breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
+      if (breakpoints_current$rank_index > 3) {
+        # we resort to a high-level taxonomic record since there are no breakpoint on genus (rank_index = 3) or lower, so note this
+        notes_current <- paste0(
+          "No genus- or species-level breakpoint available - applying higher taxonomic level instead.\n",
+          notes_current
+        )
+      }
 
       notes_current <- paste0(
         notes_current, "\n",
         ifelse(breakpoints_current$mo == "UNKNOWN" | breakpoints_current$ref_tbl %like% "PK.*PD",
-          "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this",
+          "Some PK/PD breakpoints were applied - use `include_PKPD = FALSE` to prevent this.",
           ""
         ),
         "\n",
         ifelse(breakpoints_current$site %like% "screen" | breakpoints_current$ref_tbl %like% "screen",
-          "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this",
+          "Some screening breakpoints were applied - use `include_screening = FALSE` to prevent this.",
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]",
-          paste0("MIC values with the operator '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values with the operator '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]",
-          paste0("MIC values with the operator '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values with the operator '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R,
-          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^<=[0-9]" & as.double(values) == breakpoints_current$breakpoint_R,
-          paste0("MIC values at the R breakpoint with the operator '<=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values at the R breakpoint with the operator '<=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
         ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^>=[0-9]" & as.double(values) == breakpoints_current$breakpoint_S,
-          paste0("MIC values at the S breakpoint with the operator '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\""),
+          paste0("MIC values at the S breakpoint with the operator '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         )
       )
@@ -1759,7 +1765,7 @@ as_sir_method <- function(method_short,
         notes_current <- paste0(
           notes_current, "\n",
           ifelse(!is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R),
-            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE",
+            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE.",
             ""
           )
         )
@@ -1798,7 +1804,7 @@ as_sir_method <- function(method_short,
       }
 
       # write to verbose output
-      notes_current <- trimws2(notes_current)
+      notes_current <- gsub("\n\n", "\n", trimws2(notes_current), fixed = TRUE)
       notes_current[notes_current == ""] <- NA_character_
       out <- data.frame(
         # recycling 1 to 2 rows does not always seem to work, which is why vectorise_log_entry() was added

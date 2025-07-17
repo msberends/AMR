@@ -1,4 +1,4 @@
-# AMR 3.0.0.9009
+# AMR 3.0.0.9010
 
 This is primarily a bugfix release, though we added one nice feature too.
 
@@ -15,8 +15,9 @@ This is primarily a bugfix release, though we added one nice feature too.
 * Fixed a bug in `as.sir()` to allow any tidyselect language (#220)
 * Fixed a bug in `as.sir()` to pick right breakpoint when `uti = FALSE` (#216)
 * Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
-* Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent)
+* Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials
+* Added note to `as.sir()` to make it explicit when higher-level taxonomic breakpoints are used (#218)
 * Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 
 
