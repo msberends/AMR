@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,7 +121,60 @@ may affect the computations for subsequent operations.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://tidymodels.tidymodels.org" class="external-link">"tidymodels"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># The below approach formed the basis for this paper: DOI 10.3389/fmicb.2025.1582703</span></span></span>
+<span class="r-in"><span>  <span class="co"># Presence of ESBL genes was predicted based on raw MIC values.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># example data set in the AMR package</span></span></span>
+<span class="r-in"><span>  <span class="va">esbl_isolates</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Prepare a binary outcome and convert to ordered factor</span></span></span>
+<span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">esbl_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>esbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">esbl</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Split into training and testing sets</span></span></span>
+<span class="r-in"><span>  <span class="va">split</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">training_data</span> <span class="op">&lt;-</span> <span class="fu">training</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">testing_data</span> <span class="op">&lt;-</span> <span class="fu">testing</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Create and prep a recipe with MIC log2 transformation</span></span></span>
+<span class="r-in"><span>  <span class="va">mic_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">esbl</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># Optionally remove non-predictive variables</span></span></span>
+<span class="r-in"><span>    <span class="fu">remove_role</span><span class="op">(</span><span class="va">genus</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># Apply the log2 transformation to all MIC predictors</span></span></span>
+<span class="r-in"><span>    <span class="fu">step_mic_log2</span><span class="op">(</span><span class="fu">all_mic_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># And apply the preparation steps</span></span></span>
+<span class="r-in"><span>    <span class="fu">prep</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># View prepped recipe</span></span></span>
+<span class="r-in"><span>  <span class="va">mic_recipe</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Apply the recipe to training and testing data</span></span></span>
+<span class="r-in"><span>  <span class="va">out_training</span> <span class="op">&lt;-</span> <span class="fu">bake</span><span class="op">(</span><span class="va">mic_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">out_testing</span> <span class="op">&lt;-</span> <span class="fu">bake</span><span class="op">(</span><span class="va">mic_recipe</span>, new_data <span class="op">=</span> <span class="va">testing_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Fit a logistic regression model</span></span></span>
+<span class="r-in"><span>  <span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu">logistic_reg</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glm"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">fit</span><span class="op">(</span><span class="va">esbl</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">out_training</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Generate predictions on the test set</span></span></span>
+<span class="r-in"><span>  <span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fitted</span>, <span class="va">out_testing</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">out_testing</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Evaluate predictions using standard classification metrics</span></span></span>
+<span class="r-in"><span>  <span class="va">our_metrics</span> <span class="op">&lt;-</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">accuracy</span>, <span class="va">kap</span>, <span class="va">ppv</span>, <span class="va">npv</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu">our_metrics</span><span class="op">(</span><span class="va">predictions</span>, truth <span class="op">=</span> <span class="va">esbl</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Show performance</span></span></span>
+<span class="r-in"><span>  <span class="va">metrics</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: tidymodels</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Attaching packages</span> ────────────────────────────────────── tidymodels 1.3.0 ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">broom       </span> 1.0.8     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">rsample     </span> 1.3.0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dials       </span> 1.4.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble      </span> 3.3.0</span>
@@ -135,86 +188,7 @@ may affect the computations for subsequent operations.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span>  masks <span style="color: #0000BB;">stats</span>::filter()</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>     masks <span style="color: #0000BB;">stats</span>::lag()</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">recipes</span>::<span style="color: #00BB00;">step()</span>  masks <span style="color: #0000BB;">stats</span>::step()</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># The below approach formed the basis for this paper: DOI 10.3389/fmicb.2025.1582703</span></span></span>
-<span class="r-in"><span><span class="co"># Presence of ESBL genes was predicted based on raw MIC values.</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># example data set in the AMR package</span></span></span>
-<span class="r-in"><span><span class="va">esbl_isolates</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 500 × 19</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    esbl  genus   AMC   AMP   TZP   CXM   FOX   CTX   CAZ   GEN   TOB   TMP   SXT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FALSE Esch…    32    32     4    64    64  8<span style="color: #BBBBBB;">.00</span>  8<span style="color: #BBBBBB;">.00</span>     1     1  16<span style="color: #BBBBBB;">.0</span>    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> FALSE Esch…    32    32     4    64    64  4<span style="color: #BBBBBB;">.00</span>  8<span style="color: #BBBBBB;">.00</span>     1     1  16<span style="color: #BBBBBB;">.0</span>   320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> FALSE Esch…     4     2    64     8     4  8<span style="color: #BBBBBB;">.00</span>  0.12    16    16   0.5    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> FALSE Kleb…    32    32    16    64    64  8<span style="color: #BBBBBB;">.00</span>  8<span style="color: #BBBBBB;">.00</span>     1     1   0.5    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> FALSE Esch…    32    32     4     4     4  0.25  2<span style="color: #BBBBBB;">.00</span>     1     1  16<span style="color: #BBBBBB;">.0</span>   320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FALSE Citr…    32    32    16    64    64 64<span style="color: #BBBBBB;">.00</span> 32<span style="color: #BBBBBB;">.00</span>     1     1   0.5    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> FALSE Morg…    32    32     4    64    64 16<span style="color: #BBBBBB;">.00</span>  2<span style="color: #BBBBBB;">.00</span>     1     1   0.5    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> FALSE Prot…    16    32     4     1     4  8<span style="color: #BBBBBB;">.00</span>  0.12     1     1  16<span style="color: #BBBBBB;">.0</span>   320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FALSE Ente…    32    32     8    64    64 32<span style="color: #BBBBBB;">.00</span>  4<span style="color: #BBBBBB;">.00</span>     1     1   0.5    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FALSE Citr…    32    32    32    64    64  8<span style="color: #BBBBBB;">.00</span> 64<span style="color: #BBBBBB;">.00</span>     1     1  16<span style="color: #BBBBBB;">.0</span>   320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 490 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: NIT &lt;mic&gt;, FOS &lt;mic&gt;, CIP &lt;mic&gt;, IPM &lt;mic&gt;, MEM &lt;mic&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   COL &lt;mic&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Prepare a binary outcome and convert to ordered factor</span></span></span>
-<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">esbl_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>esbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">esbl</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Split into training and testing sets</span></span></span>
-<span class="r-in"><span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">training_data</span> <span class="op">&lt;-</span> <span class="fu">training</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">testing_data</span> <span class="op">&lt;-</span> <span class="fu">testing</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Create and prep a recipe with MIC log2 transformation</span></span></span>
-<span class="r-in"><span><span class="va">mic_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">esbl</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="co"># Optionally remove non-predictive variables</span></span></span>
-<span class="r-in"><span>  <span class="fu">remove_role</span><span class="op">(</span><span class="va">genus</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="co"># Apply the log2 transformation to all MIC predictors</span></span></span>
-<span class="r-in"><span>  <span class="fu">step_mic_log2</span><span class="op">(</span><span class="fu">all_mic_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">prep</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># View prepped recipe</span></span></span>
-<span class="r-in"><span><span class="va">mic_recipe</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────────────────</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inputs </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of variables by role</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> outcome:          1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> predictor:       17</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> undeclared role:  1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Training information </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Training data contained 375 data points and no incomplete rows.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Operations </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Log2 transformation of MIC columns: <span style="color: #0000BB;">AMC</span>, <span style="color: #0000BB;">AMP</span>, <span style="color: #0000BB;">TZP</span>, <span style="color: #0000BB;">CXM</span>, <span style="color: #0000BB;">FOX</span>, ... | <span style="font-style: italic;">Trained</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Apply the recipe to training and testing data</span></span></span>
-<span class="r-in"><span><span class="va">out_training</span> <span class="op">&lt;-</span> <span class="fu">bake</span><span class="op">(</span><span class="va">mic_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">out_testing</span> <span class="op">&lt;-</span> <span class="fu">bake</span><span class="op">(</span><span class="va">mic_recipe</span>, new_data <span class="op">=</span> <span class="va">testing_data</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fit a logistic regression model</span></span></span>
-<span class="r-in"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu">logistic_reg</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glm"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">fit</span><span class="op">(</span><span class="va">esbl</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">out_training</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Generate predictions on the test set</span></span></span>
-<span class="r-in"><span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fitted</span>, <span class="va">out_testing</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">out_testing</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Evaluate predictions using standard classification metrics</span></span></span>
-<span class="r-in"><span><span class="va">our_metrics</span> <span class="op">&lt;-</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">accuracy</span>, <span class="va">kap</span>, <span class="va">ppv</span>, <span class="va">npv</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu">our_metrics</span><span class="op">(</span><span class="va">predictions</span>, truth <span class="op">=</span> <span class="va">esbl</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Show performance:</span></span></span>
-<span class="r-in"><span><span class="co"># - negative predictive value (NPV) of ~98%</span></span></span>
-<span class="r-in"><span><span class="co"># - positive predictive value (PPV) of ~94%</span></span></span>
-<span class="r-in"><span><span class="va">metrics</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .metric  .estimator .estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
