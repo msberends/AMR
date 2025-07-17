@@ -69,7 +69,9 @@
 #' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
-#' @param ... For using on a [data.frame]: names of columns to apply [as.sir()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
+#' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()] such as `as.sir(df, penicillins())`.
+#'
+#' Otherwise: arguments passed on to methods.
 #' @details
 #' *Note: The clinical breakpoints in this package were validated through, and imported from, [WHONET](https://whonet.org). The public use of this `AMR` package has been endorsed by both CLSI and EUCAST. See [clinical_breakpoints] for more information.*
 #'
@@ -225,8 +227,11 @@
 #'   df_wide %>% mutate_if(is.mic, as.sir)
 #'   df_wide %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
 #'   df_wide %>% mutate(across(where(is.mic), as.sir))
+#'
 #'   df_wide %>% mutate_at(vars(amoxicillin:tobra), as.sir)
 #'   df_wide %>% mutate(across(amoxicillin:tobra, as.sir))
+#'
+#'   df_wide %>% mutate(across(aminopenicillins(), as.sir))
 #'
 #'   # approaches that all work with additional arguments:
 #'   df_long %>%
@@ -722,8 +727,17 @@ as.sir.data.frame <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
   meet_criteria(max_cores, allow_class = c("numeric", "integer"), has_length = 1)
-
   x.bak <- x
+
+  if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
+    sel <- colnames(pm_select(x, ...))
+  } else {
+    sel <- colnames(x)
+  }
+  if (!is.null(col_mo)) {
+    sel <- sel[sel != col_mo]
+  }
+
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
     if (is.factor(x[, i, drop = TRUE])) {
@@ -803,15 +817,6 @@ as.sir.data.frame <- function(x,
   }
 
   i <- 0
-  if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
-    sel <- colnames(pm_select(x, ...))
-  } else {
-    sel <- colnames(x)
-  }
-  if (!is.null(col_mo)) {
-    sel <- sel[sel != col_mo]
-  }
-
   ab_cols <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
@@ -863,7 +868,7 @@ as.sir.data.frame <- function(x,
     cl <- tryCatch(parallel::makeCluster(n_cores, type = "PSOCK"),
       error = function(e) {
         if (isTRUE(info)) {
-          message_("Could not create parallel cluster, using single-core computation. Error message: ", e$message, add_fn = font_red)
+          message_("Could not create parallel cluster, using single-core computation. Error message: ", conditionMessage(e), add_fn = font_red)
         }
         return(NULL)
       }
@@ -1901,11 +1906,11 @@ pillar_shaft.sir <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey("  NA")
-    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
     out[x == "S"] <- font_green_bg("  S  ")
+    out[x == "SDD"] <- font_green_lighter_bg(" SDD ")
     out[x == "I"] <- font_orange_bg("  I  ")
-    out[x == "SDD"] <- font_orange_bg(" SDD ")
     out[x == "R"] <- font_rose_bg("  R  ")
+    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
   }
   create_pillar_column(out, align = "left", width = 5)
 }

@@ -1186,7 +1186,7 @@ parse_and_convert <- function(x) {
         parsed <- gsub('"', "", parsed, fixed = TRUE)
         parsed
       },
-      error = function(e) stop(e$message, call. = FALSE)
+      error = function(e) stop(conditionMessage(e), call. = FALSE)
     ) # this will also be thrown when running `as.mo(no_existing_object)`
   }
   out <- trimws2(out)

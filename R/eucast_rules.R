@@ -1178,7 +1178,7 @@ edit_sir <- function(x,
             ifelse(length(rows) > 10, "...", ""),
             " while writing value '", to,
             "' to column(s) `", paste(cols, collapse = "`, `"),
-            "`:\n", e$message
+            "`:\n", conditionMessage(e)
           ),
           call. = FALSE
         )

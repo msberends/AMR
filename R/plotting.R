@@ -377,6 +377,13 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
   args <- list(...)
   args[c("value", "labels", "limits")] <- NULL
 
+  if (length(colours_SIR) == 1) {
+    colours_SIR <- rep(colours_SIR, 4)
+  } else if (length(colours_SIR) == 3) {
+    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
+  }
+  colours_SIR <- unname(colours_SIR)
+
   if (identical(aesthetics, "x")) {
     ggplot_fn <- ggplot2::scale_x_discrete
   } else {
@@ -388,8 +395,8 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
         values = c(
           S = colours_SIR[1],
           SDD = colours_SIR[2],
-          I = colours_SIR[2],
-          R = colours_SIR[3],
+          I = colours_SIR[3],
+          R = colours_SIR[4],
           NI = "grey30"
         )
       )
@@ -427,11 +434,16 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
 
 #' @rdname plot
 #' @export
-scale_x_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+scale_x_sir <- function(colours_SIR = c(
+                          S = "#3CAEA3",
+                          SDD = "#8FD6C4",
+                          I = "#F6D55C",
+                          R = "#ED553B"
+                        ),
                         language = get_AMR_locale(),
                         eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
                         ...) {
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
   create_scale_sir(aesthetics = "x", colours_SIR = colours_SIR, language = language, eucast_I = eucast_I)
@@ -439,11 +451,16 @@ scale_x_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
 
 #' @rdname plot
 #' @export
-scale_colour_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+scale_colour_sir <- function(colours_SIR = c(
+                               S = "#3CAEA3",
+                               SDD = "#8FD6C4",
+                               I = "#F6D55C",
+                               R = "#ED553B"
+                             ),
                              language = get_AMR_locale(),
                              eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
                              ...) {
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
   args <- list(...)
@@ -463,11 +480,16 @@ scale_color_sir <- scale_colour_sir
 
 #' @rdname plot
 #' @export
-scale_fill_sir <- function(colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+scale_fill_sir <- function(colours_SIR = c(
+                             S = "#3CAEA3",
+                             SDD = "#8FD6C4",
+                             I = "#F6D55C",
+                             R = "#ED553B"
+                           ),
                            language = get_AMR_locale(),
                            eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
                            ...) {
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(eucast_I, allow_class = "logical", has_length = 1)
   args <- list(...)
@@ -491,7 +513,12 @@ plot.mic <- function(x,
                      main = deparse(substitute(x)),
                      ylab = translate_AMR("Frequency", language = language),
                      xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
-                     colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                     colours_SIR = c(
+                       S = "#3CAEA3",
+                       SDD = "#8FD6C4",
+                       I = "#F6D55C",
+                       R = "#ED553B"
+                     ),
                      language = get_AMR_locale(),
                      expand = TRUE,
                      include_PKPD = getOption("AMR_include_PKPD", TRUE),
@@ -503,15 +530,11 @@ plot.mic <- function(x,
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   x <- as.mic(x) # make sure that currently implemented MIC levels are used
-
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 3)
-  }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
   x <- plotrange_as_table(x, expand = expand)
@@ -549,12 +572,16 @@ plot.mic <- function(x,
       legend_col <- colours_SIR[1]
     }
     if (any(cols_sub$cols == colours_SIR[2] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
+      legend_txt <- c(legend_txt, "(SDD) Susceptible dose-dependent")
       legend_col <- c(legend_col, colours_SIR[2])
     }
     if (any(cols_sub$cols == colours_SIR[3] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, "(R) Resistant")
+      legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
       legend_col <- c(legend_col, colours_SIR[3])
+    }
+    if (any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
+      legend_txt <- c(legend_txt, "(R) Resistant")
+      legend_col <- c(legend_col, colours_SIR[4])
     }
 
     legend("top",
@@ -580,7 +607,12 @@ barplot.mic <- function(height,
                         main = deparse(substitute(height)),
                         ylab = translate_AMR("Frequency", language = language),
                         xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
-                        colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                        colours_SIR = c(
+                          S = "#3CAEA3",
+                          SDD = "#8FD6C4",
+                          I = "#F6D55C",
+                          R = "#ED553B"
+                        ),
                         language = get_AMR_locale(),
                         expand = TRUE,
                         ...) {
@@ -590,7 +622,7 @@ barplot.mic <- function(height,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
@@ -622,7 +654,12 @@ autoplot.mic <- function(object,
                          title = deparse(substitute(object)),
                          ylab = translate_AMR("Frequency", language = language),
                          xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
-                         colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                         colours_SIR = c(
+                           S = "#3CAEA3",
+                           SDD = "#8FD6C4",
+                           I = "#F6D55C",
+                           R = "#ED553B"
+                         ),
                          language = get_AMR_locale(),
                          expand = TRUE,
                          include_PKPD = getOption("AMR_include_PKPD", TRUE),
@@ -635,7 +672,7 @@ autoplot.mic <- function(object,
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
@@ -731,7 +768,12 @@ plot.disk <- function(x,
                       mo = NULL,
                       ab = NULL,
                       guideline = getOption("AMR_guideline", "EUCAST"),
-                      colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                      colours_SIR = c(
+                        S = "#3CAEA3",
+                        SDD = "#8FD6C4",
+                        I = "#F6D55C",
+                        R = "#ED553B"
+                      ),
                       language = get_AMR_locale(),
                       expand = TRUE,
                       include_PKPD = getOption("AMR_include_PKPD", TRUE),
@@ -743,13 +785,10 @@ plot.disk <- function(x,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 3)
-  }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
   x <- plotrange_as_table(x, expand = expand)
@@ -783,12 +822,16 @@ plot.disk <- function(x,
   if (any(colours_SIR %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
-    if (any(cols_sub$cols == colours_SIR[3] & cols_sub$count > 0)) {
+    if (any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
       legend_txt <- "(R) Resistant"
-      legend_col <- colours_SIR[3]
+      legend_col <- colours_SIR[4]
+    }
+    if (any(cols_sub$cols == colours_SIR[3] & cols_sub$count > 0)) {
+      legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
+      legend_col <- c(legend_col, colours_SIR[3])
     }
     if (any(cols_sub$cols == colours_SIR[2] & cols_sub$count > 0)) {
-      legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
+      legend_txt <- c(legend_txt, "(SDD) Susceptible dose-dependent")
       legend_col <- c(legend_col, colours_SIR[2])
     }
     if (any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
@@ -818,7 +861,12 @@ barplot.disk <- function(height,
                          mo = NULL,
                          ab = NULL,
                          guideline = getOption("AMR_guideline", "EUCAST"),
-                         colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                         colours_SIR = c(
+                           S = "#3CAEA3",
+                           SDD = "#8FD6C4",
+                           I = "#F6D55C",
+                           R = "#ED553B"
+                         ),
                          language = get_AMR_locale(),
                          expand = TRUE,
                          ...) {
@@ -828,7 +876,7 @@ barplot.disk <- function(height,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
@@ -858,7 +906,12 @@ autoplot.disk <- function(object,
                           ylab = translate_AMR("Frequency", language = language),
                           xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
                           guideline = getOption("AMR_guideline", "EUCAST"),
-                          colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                          colours_SIR = c(
+                            S = "#3CAEA3",
+                            SDD = "#8FD6C4",
+                            I = "#F6D55C",
+                            R = "#ED553B"
+                          ),
                           language = get_AMR_locale(),
                           expand = TRUE,
                           include_PKPD = getOption("AMR_include_PKPD", TRUE),
@@ -871,7 +924,7 @@ autoplot.disk <- function(object,
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
@@ -1024,22 +1077,31 @@ barplot.sir <- function(height,
                         main = deparse(substitute(height)),
                         xlab = translate_AMR("Antimicrobial Interpretation", language = language),
                         ylab = translate_AMR("Frequency", language = language),
-                        colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                        colours_SIR = c(
+                          S = "#3CAEA3",
+                          SDD = "#8FD6C4",
+                          I = "#F6D55C",
+                          R = "#ED553B"
+                        ),
                         language = get_AMR_locale(),
                         expand = TRUE,
                         ...) {
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 3)
+    colours_SIR <- rep(colours_SIR, 4)
+  } else if (length(colours_SIR) == 3) {
+    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
   }
+  colours_SIR <- unname(colours_SIR)
+
   # add SDD and N to colours
-  colours_SIR <- c(colours_SIR[1:2], colours_SIR[2], colours_SIR[3], "#888888")
+  colours_SIR <- c(colours_SIR, "grey30")
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
   x <- table(height)
@@ -1065,14 +1127,19 @@ autoplot.sir <- function(object,
                          title = deparse(substitute(object)),
                          xlab = translate_AMR("Antimicrobial Interpretation", language = language),
                          ylab = translate_AMR("Frequency", language = language),
-                         colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B"),
+                         colours_SIR = c(
+                           S = "#3CAEA3",
+                           SDD = "#8FD6C4",
+                           I = "#F6D55C",
+                           R = "#ED553B"
+                         ),
                          language = get_AMR_locale(),
                          ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
 
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -1082,8 +1149,11 @@ autoplot.sir <- function(object,
   }
 
   if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 3)
+    colours_SIR <- rep(colours_SIR, 4)
+  } else if (length(colours_SIR) == 3) {
+    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
   }
+  colours_SIR <- unname(colours_SIR)
 
   df <- as.data.frame(table(object), stringsAsFactors = TRUE)
   colnames(df) <- c("x", "n")
@@ -1095,9 +1165,9 @@ autoplot.sir <- function(object,
       values = c(
         "S" = colours_SIR[1],
         "SDD" = colours_SIR[2],
-        "I" = colours_SIR[2],
-        "R" = colours_SIR[3],
-        "NI" = "#888888"
+        "I" = colours_SIR[3],
+        "R" = colours_SIR[4],
+        "NI" = "grey30"
       ),
       limits = force
     ) +
@@ -1182,6 +1252,13 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
 
   guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
 
+  if (length(colours_SIR) == 1) {
+    colours_SIR <- rep(colours_SIR, 4)
+  } else if (length(colours_SIR) == 3) {
+    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
+  }
+  colours_SIR <- unname(colours_SIR)
+
   # store previous interpretations to backup
   sir_history <- AMR_env$sir_interpretation_history
   # and clear previous interpretations
@@ -1223,9 +1300,9 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     cols[is.na(sir)] <- "#BEBEBE"
     cols[sir == "S"] <- colours_SIR[1]
     cols[sir == "SDD"] <- colours_SIR[2]
-    cols[sir == "I"] <- colours_SIR[2]
-    cols[sir == "R"] <- colours_SIR[3]
-    cols[sir == "NI"] <- "#888888"
+    cols[sir == "I"] <- colours_SIR[3]
+    cols[sir == "R"] <- colours_SIR[4]
+    cols[sir == "NI"] <- "grey30"
     sub <- bquote(.(abname) ~ "-" ~ italic(.(moname)) ~ .(guideline_txt))
   } else {
     cols <- "#BEBEBE"
@@ -1284,10 +1361,15 @@ scale_y_percent <- function(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.
 #' @export
 scale_sir_colours <- function(...,
                               aesthetics,
-                              colours_SIR = c("#3CAEA3", "#F6D55C", "#ED553B")) {
+                              colours_SIR = c(
+                                S = "#3CAEA3",
+                                SDD = "#8FD6C4",
+                                I = "#F6D55C",
+                                R = "#ED553B"
+                              )) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(aesthetics, allow_class = "character", is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
-  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3))
+  meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
 
   if ("fill" %in% aesthetics && message_not_thrown_before("scale_sir_colours", "fill", entire_session = TRUE)) {
     warning_("Using `scale_sir_colours()` for the `fill` aesthetic has been superseded by `scale_fill_sir()`, please use that instead. This warning will be shown once per session.")
@@ -1296,67 +1378,52 @@ scale_sir_colours <- function(...,
     warning_("Using `scale_sir_colours()` for the `colour` aesthetic has been superseded by `scale_colour_sir()`, please use that instead. This warning will be shown once per session.")
   }
 
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 3)
-  }
-  # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_sir()
   if ("colours" %in% names(list(...))) {
-    original_cols <- c(
-      S = colours_SIR[1],
-      SI = colours_SIR[1],
-      I = colours_SIR[2],
-      IR = colours_SIR[3],
-      R = colours_SIR[3]
-    )
-    colours <- replace(original_cols, names(list(...)$colours), list(...)$colours)
+    colours_SIR <- list(...)$colours
+  }
+
+  if (length(colours_SIR) == 1) {
+    colours_SIR <- rep(colours_SIR, 4)
+  } else if (length(colours_SIR) == 3) {
+    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
+  }
+
+  # behaviour when coming from ggplot_sir()
+  if ("colours" %in% names(list(...))) {
     # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
     # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
-    return(ggplot2::scale_fill_manual(values = colours, limits = force, aesthetics = aesthetics))
+    return(ggplot2::scale_fill_manual(values = colours_SIR, limits = force, aesthetics = aesthetics))
   }
   if (identical(unlist(list(...)), FALSE)) {
     return(invisible())
   }
 
-  names_susceptible <- c(
-    "S", "SI", "IS", "S+I", "I+S", "susceptible", "Susceptible",
-    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
-      "replacement",
-      drop = TRUE
-    ])
-  )
+  colours_SIR <- unname(colours_SIR)
+
+  names_susceptible <- c("S", "SI", "IS", "S+I", "I+S", "susceptible", "Susceptible")
+  names_susceptible_dose_dep <- c("SDD", "susceptible dose-dependent", "Susceptible dose-dependent")
   names_incr_exposure <- c(
     "I", "intermediate", "increased exposure", "incr. exposure",
-    "Increased exposure", "Incr. exposure", "Susceptible, incr. exp.",
-    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Intermediate"),
-      "replacement",
-      drop = TRUE
-    ]),
-    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible, incr. exp."),
-      "replacement",
-      drop = TRUE
-    ])
+    "Increased exposure", "Incr. exposure", "Susceptible, incr. exp."
   )
-  names_resistant <- c(
-    "R", "IR", "RI", "R+I", "I+R", "resistant", "Resistant",
-    unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Resistant"),
-      "replacement",
-      drop = TRUE
-    ])
-  )
+  names_resistant <- c("R", "IR", "RI", "R+I", "I+R", "resistant", "Resistant")
 
   susceptible <- rep(colours_SIR[1], length(names_susceptible))
   names(susceptible) <- names_susceptible
-  incr_exposure <- rep(colours_SIR[2], length(names_incr_exposure))
+  susceptible_dose_dep <- rep(colours_SIR[2], length(names_susceptible_dose_dep))
+  names(susceptible_dose_dep) <- names_susceptible_dose_dep
+  incr_exposure <- rep(colours_SIR[3], length(names_incr_exposure))
   names(incr_exposure) <- names_incr_exposure
-  resistant <- rep(colours_SIR[3], length(names_resistant))
+  resistant <- rep(colours_SIR[4], length(names_resistant))
   names(resistant) <- names_resistant
 
-  original_cols <- c(susceptible, incr_exposure, resistant)
+  original_cols <- c(susceptible, susceptible_dose_dep, incr_exposure, resistant)
   dots <- c(...)
-  # replace S, I, R as colours: scale_sir_colours(mydatavalue = "S")
+  # replace S, SDD, I, R as colours: scale_sir_colours(mydatavalue = "S")
   dots[dots == "S"] <- colours_SIR[1]
-  dots[dots == "I"] <- colours_SIR[2]
-  dots[dots == "R"] <- colours_SIR[3]
+  dots[dots == "SDD"] <- colours_SIR[2]
+  dots[dots == "I"] <- colours_SIR[3]
+  dots[dots == "R"] <- colours_SIR[4]
   cols <- replace(original_cols, names(dots), dots)
   # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
   # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530

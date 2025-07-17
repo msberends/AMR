@@ -527,7 +527,7 @@ amr_selector <- function(filter,
   )
   call <- substitute(filter)
   agents <- tryCatch(AMR_env$AB_lookup[which(eval(call, envir = AMR_env$AB_lookup)), "ab", drop = TRUE],
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(conditionMessage(e), call = -5)
   )
   agents <- ab_in_data[ab_in_data %in% agents]
   message_agent_names(
@@ -640,7 +640,7 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
         )
       }
     ),
-    error = function(e) stop_("in not_intrinsic_resistant(): ", e$message, call = FALSE)
+    error = function(e) stop_("in not_intrinsic_resistant(): ", conditionMessage(e), call = FALSE)
   )
 
   agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]

@@ -237,7 +237,7 @@ resistance <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -255,7 +255,7 @@ susceptibility <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -283,7 +283,7 @@ sir_confidence_interval <- function(...,
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
   n <- tryCatch(
     sir_calc(...,
@@ -291,7 +291,7 @@ sir_confidence_interval <- function(...,
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 
   if (x == 0) {
@@ -347,7 +347,7 @@ proportion_R <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -365,7 +365,7 @@ proportion_IR <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -383,7 +383,7 @@ proportion_I <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -401,7 +401,7 @@ proportion_SI <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -419,7 +419,7 @@ proportion_S <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -443,6 +443,6 @@ proportion_df <- function(data,
       combine_SI = combine_SI,
       confidence_level = confidence_level
     ),
-    error = function(e) stop_(gsub("in sir_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc_df(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }

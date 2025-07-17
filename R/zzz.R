@@ -127,7 +127,7 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
           suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
           packageStartupMessage("OK.")
         },
-        error = function(e) packageStartupMessage("Failed: ", e$message)
+        error = function(e) packageStartupMessage("Failed: ", conditionMessage(e))
       )
     }
   }
@@ -143,7 +143,7 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
           suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
           packageStartupMessage("OK.")
         },
-        error = function(e) packageStartupMessage("Failed: ", e$message)
+        error = function(e) packageStartupMessage("Failed: ", conditionMessage(e))
       )
     }
   }

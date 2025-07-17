@@ -952,7 +952,19 @@ pm_select_env$get_nrow <- function() nrow(pm_select_env$.data)
 pm_select_env$get_ncol <- function() ncol(pm_select_env$.data)
 
 pm_select <- function(.data, ...) {
-  col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE)
+  # col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE),
+  col_pos <- tryCatch(pm_select_positions(.data, ..., .group_pos = TRUE), error = function(e) NULL)
+  if (is.null(col_pos)) {
+    # try with tidyverse
+    select_dplyr <- import_fn("select", "dplyr", error_on_fail = FALSE)
+    if (!is.null(select_dplyr)) {
+      col_pos <- which(colnames(.data) %in% colnames(select_dplyr(.data, ...)))
+    } else {
+      # this will throw an error as it did, but dplyr is not available, so no other option
+      col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE)
+    }
+  }
+
   map_names <- names(col_pos)
   map_names_length <- nchar(map_names)
   if (any(map_names_length == 0L)) {

@@ -178,6 +178,7 @@ ggplot_sir <- function(data,
                        colours = c(
                          S = "#3CAEA3",
                          SI = "#3CAEA3",
+                         SDD = "#8FD6C4",
                          I = "#F6D55C",
                          IR = "#ED553B",
                          R = "#ED553B"
