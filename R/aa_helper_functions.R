@@ -519,7 +519,7 @@ word_wrap <- function(...,
     )
     msg <- paste0(parts, collapse = "`")
   }
-  msg <- gsub("`(.+?)`", font_grey_bg("\\1"), msg)
+  msg <- gsub("`(.+?)`", font_grey_bg("`\\1`"), msg)
 
   # clean introduced whitespace in between fullstops
   msg <- gsub("[.] +[.]", "..", msg)

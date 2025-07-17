@@ -1,4 +1,4 @@
-# AMR 3.0.0.9010
+# AMR 3.0.0.9011
 
 This is primarily a bugfix release, though we added one nice feature too.
 
@@ -17,6 +17,7 @@ This is primarily a bugfix release, though we added one nice feature too.
 * Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
 * Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials
+* Added `names` to `age_groups()` so that custom names can be given (#215)
 * Added note to `as.sir()` to make it explicit when higher-level taxonomic breakpoints are used (#218)
 * Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 

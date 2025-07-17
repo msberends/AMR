@@ -65,56 +65,59 @@ Pre-processing pipeline steps include:
 These steps integrate with \code{recipes::recipe()} and work like standard preprocessing steps. They are useful for preparing data for modelling, especially with classification models.
 }
 \examples{
-library(tidymodels)
+if (require("tidymodels")) {
 
-# The below approach formed the basis for this paper: DOI 10.3389/fmicb.2025.1582703
-# Presence of ESBL genes was predicted based on raw MIC values.
+  # The below approach formed the basis for this paper: DOI 10.3389/fmicb.2025.1582703
+  # Presence of ESBL genes was predicted based on raw MIC values.
 
 
-# example data set in the AMR package
-esbl_isolates
+  # example data set in the AMR package
+  esbl_isolates
 
-# Prepare a binary outcome and convert to ordered factor
-data <- esbl_isolates \%>\%
-  mutate(esbl = factor(esbl, levels = c(FALSE, TRUE), ordered = TRUE))
+  # Prepare a binary outcome and convert to ordered factor
+  data <- esbl_isolates \%>\%
+    mutate(esbl = factor(esbl, levels = c(FALSE, TRUE), ordered = TRUE))
 
-# Split into training and testing sets
-split <- initial_split(data)
-training_data <- training(split)
-testing_data <- testing(split)
+  # Split into training and testing sets
+  split <- initial_split(data)
+  training_data <- training(split)
+  testing_data <- testing(split)
 
-# Create and prep a recipe with MIC log2 transformation
-mic_recipe <- recipe(esbl ~ ., data = training_data) \%>\%
-  # Optionally remove non-predictive variables
-  remove_role(genus, old_role = "predictor") \%>\%
-  # Apply the log2 transformation to all MIC predictors
-  step_mic_log2(all_mic_predictors()) \%>\%
-  prep()
+  # Create and prep a recipe with MIC log2 transformation
+  mic_recipe <- recipe(esbl ~ ., data = training_data) \%>\%
 
-# View prepped recipe
-mic_recipe
+    # Optionally remove non-predictive variables
+    remove_role(genus, old_role = "predictor") \%>\%
 
-# Apply the recipe to training and testing data
-out_training <- bake(mic_recipe, new_data = NULL)
-out_testing <- bake(mic_recipe, new_data = testing_data)
+    # Apply the log2 transformation to all MIC predictors
+    step_mic_log2(all_mic_predictors()) \%>\%
 
-# Fit a logistic regression model
-fitted <- logistic_reg(mode = "classification") \%>\%
-  set_engine("glm") \%>\%
-  fit(esbl ~ ., data = out_training)
+    # And apply the preparation steps
+    prep()
 
-# Generate predictions on the test set
-predictions <- predict(fitted, out_testing) \%>\%
-  bind_cols(out_testing)
+  # View prepped recipe
+  mic_recipe
 
-# Evaluate predictions using standard classification metrics
-our_metrics <- metric_set(accuracy, kap, ppv, npv)
-metrics <- our_metrics(predictions, truth = esbl, estimate = .pred_class)
+  # Apply the recipe to training and testing data
+  out_training <- bake(mic_recipe, new_data = NULL)
+  out_testing <- bake(mic_recipe, new_data = testing_data)
 
-# Show performance:
-# - negative predictive value (NPV) of ~98\%
-# - positive predictive value (PPV) of ~94\%
-metrics
+  # Fit a logistic regression model
+  fitted <- logistic_reg(mode = "classification") \%>\%
+    set_engine("glm") \%>\%
+    fit(esbl ~ ., data = out_training)
+
+  # Generate predictions on the test set
+  predictions <- predict(fitted, out_testing) \%>\%
+    bind_cols(out_testing)
+
+  # Evaluate predictions using standard classification metrics
+  our_metrics <- metric_set(accuracy, kap, ppv, npv)
+  metrics <- our_metrics(predictions, truth = esbl, estimate = .pred_class)
+
+  # Show performance
+  metrics
+}
 }
 \seealso{
 \code{\link[recipes:recipe]{recipes::recipe()}}, \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.sir]{as.sir()}}

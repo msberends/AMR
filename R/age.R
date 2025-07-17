@@ -128,9 +128,10 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 
 #' Split Ages into Age Groups
 #'
-#' Split ages into age groups defined by the `split` argument. This allows for easier demographic (antimicrobial resistance) analysis.
+#' Split ages into age groups defined by the `split` argument. This allows for easier demographic (antimicrobial resistance) analysis. The function returns an ordered [factor].
 #' @param x Age, e.g. calculated with [age()].
 #' @param split_at Values to split `x` at - the default is age groups 0-11, 12-24, 25-54, 55-74 and 75+. See *Details*.
+#' @param names Optional names to be given to the various age groups.
 #' @param na.rm A [logical] to indicate whether missing values should be removed.
 #' @details To split ages, the input for the `split_at` argument can be:
 #'
@@ -152,6 +153,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #'
 #' # split into 0-19, 20-49 and 50+
 #' age_groups(ages, c(20, 50))
+#' age_groups(ages, c(20, 50), names = c("Under 20 years", "20 to 50 years", "Over 50 years"))
 #'
 #' # split into groups of ten years
 #' age_groups(ages, 1:10 * 10)
@@ -181,9 +183,10 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #'     )
 #' }
 #' }
-age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
+age_groups <- function(x, split_at = c(0, 12, 25, 55, 75), names = NULL, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("numeric", "integer"), is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(split_at, allow_class = c("numeric", "integer", "character"), is_positive_or_zero = TRUE, is_finite = TRUE)
+  meet_criteria(names, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
 
   if (any(x < 0, na.rm = TRUE)) {
@@ -223,6 +226,11 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   lbls[length(lbls)] <- paste0(split_at[length(split_at)], "+")
 
   agegroups <- factor(lbls[y], levels = lbls, ordered = TRUE)
+
+  if (!is.null(names)) {
+    stop_ifnot(length(names) == length(levels(agegroups)), "`names` must have the same length as the number of age groups (", length(levels(agegroups)), ").")
+    levels(agegroups) <- names
+  }
 
   if (isTRUE(na.rm)) {
     agegroups <- agegroups[!is.na(agegroups)]

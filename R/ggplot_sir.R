@@ -206,7 +206,7 @@ ggplot_sir <- function(data,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
-  meet_criteria(colours, allow_class = c("character", "logical"))
+  meet_criteria(colours, allow_class = c("character", "logical"), allow_NULL = TRUE)
   meet_criteria(datalabels, allow_class = "logical", has_length = 1)
   meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
@@ -246,7 +246,7 @@ ggplot_sir <- function(data,
     ) +
     theme_sir()
 
-  if (fill == "interpretation") {
+  if (fill == "interpretation" && !is.null(colours) && !isFALSE(colours)) {
     p <- suppressWarnings(p + scale_sir_colours(aesthetics = "fill", colours = colours))
   }
 
