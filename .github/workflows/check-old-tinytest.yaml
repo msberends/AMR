@@ -59,8 +59,15 @@ jobs:
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
 
     steps:
+      - name: Set up locales
+        run: |
+          sudo locale-gen en_US.UTF-8
+          sudo update-locale LANG=en_US.UTF-8
+
       - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-r@v2
