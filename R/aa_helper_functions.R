@@ -63,31 +63,6 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   merged
 }
 
-# support where() like tidyverse (this function will also be used when running `antibiogram()`):
-where <- function(fn) {
-  # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
-  if (!is.function(fn)) {
-    stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
-  }
-  df <- pm_select_env$.data
-  cols <- pm_select_env$get_colnames()
-  if (is.null(df)) {
-    df <- get_current_data("where", call = FALSE)
-    cols <- colnames(df)
-  }
-  preds <- unlist(lapply(
-    df,
-    function(x, fn) {
-      do.call("fn", list(x))
-    },
-    fn
-  ))
-  if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
-  data_cols <- cols
-  cols <- data_cols[preds]
-  which(data_cols %in% cols)
-}
-
 # copied and slightly rewritten from {poorman} under permissive license (2021-10-15)
 # https://github.com/nathaneastwood/poorman, MIT licensed, Nathan Eastwood, 2020
 case_when_AMR <- function(...) {
@@ -1636,6 +1611,36 @@ get_n_cores <- function(max_cores = Inf) {
   n_cores
 }
 
+# Support `where()` if tidyselect not installed ----
+if (!is.null(import_fn("where", "tidyselect", error_on_fail = FALSE))) {
+  # tidyselect::where() exists, load the namespace to make `where()`s work across the package in default arguments
+  loadNamespace("tidyselect")
+} else {
+  where <- function(fn) {
+    # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
+    if (!is.function(fn)) {
+      stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
+    }
+    df <- pm_select_env$.data
+    cols <- pm_select_env$get_colnames()
+    if (is.null(df)) {
+      df <- get_current_data("where", call = FALSE)
+      cols <- colnames(df)
+    }
+    preds <- unlist(lapply(
+      df,
+      function(x, fn) {
+        do.call("fn", list(x))
+      },
+      fn
+    ))
+    if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
+    data_cols <- cols
+    cols <- data_cols[preds]
+    which(data_cols %in% cols)
+  }
+}
+
 # Faster data.table implementations ----
 
 match <- function(x, table, ...) {
@@ -1654,52 +1659,6 @@ match <- function(x, table, ...) {
     base::`%in%`(x, table)
   }
 }
-
-# nolint start
-
-# Register S3 methods ----
-# copied from vctrs::s3_register by their permission:
-# https://github.com/r-lib/vctrs/blob/05968ce8e669f73213e3e894b5f4424af4f46316/R/register-s3.R
-s3_register <- function(generic, class, method = NULL) {
-  stopifnot(is.character(generic), length(generic) == 1)
-  stopifnot(is.character(class), length(class) == 1)
-  pieces <- strsplit(generic, "::")[[1]]
-  stopifnot(length(pieces) == 2)
-  package <- pieces[[1]]
-  generic <- pieces[[2]]
-  caller <- parent.frame()
-  get_method_env <- function() {
-    top <- topenv(caller)
-    if (isNamespace(top)) {
-      asNamespace(environmentName(top))
-    } else {
-      caller
-    }
-  }
-  get_method <- function(method, env) {
-    if (is.null(method)) {
-      get(paste0(generic, ".", class), envir = get_method_env())
-    } else {
-      method
-    }
-  }
-  method_fn <- get_method(method)
-  stopifnot(is.function(method_fn))
-  setHook(packageEvent(package, "onLoad"), function(...) {
-    ns <- asNamespace(package)
-    method_fn <- get_method(method)
-    registerS3method(generic, class, method_fn, envir = ns)
-  })
-  if (!isNamespaceLoaded(package)) {
-    return(invisible())
-  }
-  envir <- asNamespace(package)
-  if (exists(generic, envir)) {
-    registerS3method(generic, class, method_fn, envir = envir)
-  }
-  invisible()
-}
-
 
 # Support old R versions ----
 # these functions were not available in previous versions of R

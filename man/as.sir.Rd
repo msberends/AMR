@@ -75,7 +75,9 @@ sir_interpretation_history(clean = FALSE)
 \arguments{
 \item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres).}
 
-\item{...}{For using on a \link{data.frame}: names of columns to apply \code{\link[=as.sir]{as.sir()}} on (supports tidy selection such as \code{column1:column4}). Otherwise: arguments passed on to methods.}
+\item{...}{For using on a \link{data.frame}: selection of columns to apply \code{as.sir()} to. Supports \link[tidyselect:starts_with]{tidyselect language} such as \code{where(is.mic)}, \code{starts_with(...)}, or \code{column1:column4}, and can thus also be \link[=amr_selector]{antimicrobial selectors} such as \code{as.sir(df, penicillins())}.
+
+Otherwise: arguments passed on to methods.}
 
 \item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}.}
 
@@ -314,8 +316,11 @@ if (require("dplyr")) {
   df_wide \%>\% mutate_if(is.mic, as.sir)
   df_wide \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
   df_wide \%>\% mutate(across(where(is.mic), as.sir))
+
   df_wide \%>\% mutate_at(vars(amoxicillin:tobra), as.sir)
   df_wide \%>\% mutate(across(amoxicillin:tobra, as.sir))
+
+  df_wide \%>\% mutate(across(aminopenicillins(), as.sir))
 
   # approaches that all work with additional arguments:
   df_long \%>\%

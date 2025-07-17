@@ -27,12 +27,12 @@
 
 <p style="text-align:left; width: 50%;">
 
-<small><a href="https://amr-for-r.org/">https://amr-for-r.org</a></small>
+<small><a href="https://amr-for-r.org/">amr-for-r.org</a></small>
 </p>
 
 <p style="text-align:right; width: 50%;">
 
-<small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">https://doi.org/10.18637/jss.v104.i03</a></small>
+<small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">doi.org/10.18637/jss.v104.i03</a></small>
 </p>
 
 </div>
@@ -321,9 +321,9 @@ example_isolates %>%
 #> # A tibble: 3 × 5
 #>   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int
 #>   <chr>            <dbl> <chr>              <dbl> <chr>       
-#> 1 Clinical     0.2289362 0.205-0.254    0.3147503 0.284-0.347 
-#> 2 ICU          0.2902655 0.253-0.33     0.4004739 0.353-0.449 
-#> 3 Outpatient   0.2       0.131-0.285    0.3676471 0.254-0.493
+#> 1 Clinical         0.229 0.205-0.254        0.315 0.284-0.347 
+#> 2 ICU              0.290 0.253-0.33         0.400 0.353-0.449 
+#> 3 Outpatient       0.2   0.131-0.285        0.368 0.254-0.493
 ```
 
 Or use [antimicrobial
@@ -351,33 +351,33 @@ out <- example_isolates %>%
 #> "Outpatient" (minimum = 30).
 out
 #> # A tibble: 3 × 6
-#>   ward             GEN       TOB       AMK   KAN       COL
-#>   <chr>          <dbl>     <dbl>     <dbl> <dbl>     <dbl>
-#> 1 Clinical   0.2289362 0.3147503 0.6258993     1 0.7802956
-#> 2 ICU        0.2902655 0.4004739 0.6624473     1 0.8574144
-#> 3 Outpatient 0.2       0.3676471 0.6052632    NA 0.8888889
+#>   ward         GEN   TOB   AMK   KAN   COL
+#>   <chr>      <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 Clinical   0.229 0.315 0.626     1 0.780
+#> 2 ICU        0.290 0.400 0.662     1 0.857
+#> 3 Outpatient 0.2   0.368 0.605    NA 0.889
 ```
 
 ``` r
 # transform the antibiotic columns to names:
 out %>% set_ab_names()
 #> # A tibble: 3 × 6
-#>   ward       gentamicin tobramycin  amikacin kanamycin  colistin
-#>   <chr>           <dbl>      <dbl>     <dbl>     <dbl>     <dbl>
-#> 1 Clinical    0.2289362  0.3147503 0.6258993         1 0.7802956
-#> 2 ICU         0.2902655  0.4004739 0.6624473         1 0.8574144
-#> 3 Outpatient  0.2        0.3676471 0.6052632        NA 0.8888889
+#>   ward       gentamicin tobramycin amikacin kanamycin colistin
+#>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>    <dbl>
+#> 1 Clinical        0.229      0.315    0.626         1    0.780
+#> 2 ICU             0.290      0.400    0.662         1    0.857
+#> 3 Outpatient      0.2        0.368    0.605        NA    0.889
 ```
 
 ``` r
 # transform the antibiotic column to ATC codes:
 out %>% set_ab_names(property = "atc")
 #> # A tibble: 3 × 6
-#>   ward         J01GB03   J01GB01   J01GB06 J01GB04   J01XB01
-#>   <chr>          <dbl>     <dbl>     <dbl>   <dbl>     <dbl>
-#> 1 Clinical   0.2289362 0.3147503 0.6258993       1 0.7802956
-#> 2 ICU        0.2902655 0.4004739 0.6624473       1 0.8574144
-#> 3 Outpatient 0.2       0.3676471 0.6052632      NA 0.8888889
+#>   ward       J01GB03 J01GB01 J01GB06 J01GB04 J01XB01
+#>   <chr>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+#> 1 Clinical     0.229   0.315   0.626       1   0.780
+#> 2 ICU          0.290   0.400   0.662       1   0.857
+#> 3 Outpatient   0.2     0.368   0.605      NA   0.889
 ```
 
 ## What else can you do with this package?
