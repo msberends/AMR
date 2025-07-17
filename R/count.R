@@ -126,7 +126,7 @@ count_resistant <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -139,7 +139,7 @@ count_susceptible <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -152,7 +152,7 @@ count_S <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -165,7 +165,7 @@ count_SI <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -178,7 +178,7 @@ count_I <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -191,7 +191,7 @@ count_IR <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -204,7 +204,7 @@ count_R <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -217,7 +217,7 @@ count_all <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }
 
@@ -240,6 +240,6 @@ count_df <- function(data,
       combine_SI = combine_SI,
       confidence_level = 0.95 # doesn't matter, will be removed
     ),
-    error = function(e) stop_(gsub("in sir_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc_df(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )
 }

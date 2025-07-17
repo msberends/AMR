@@ -99,7 +99,7 @@ pca <- function(x,
     new_list <- list(0)
     for (i in seq_len(length(dots) - 1)) {
       new_list[[i]] <- tryCatch(eval(dots[[i + 1]], envir = x),
-        error = function(e) stop(e$message, call. = FALSE)
+        error = function(e) stop(conditionMessage(e), call. = FALSE)
       )
       if (length(new_list[[i]]) == 1) {
         if (is.character(new_list[[i]]) && new_list[[i]] %in% colnames(x)) {

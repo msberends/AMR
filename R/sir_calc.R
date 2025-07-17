@@ -244,7 +244,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   translate_ab <- get_translate_ab(translate_ab)
 
   data.bak <- data
-  # select only groups and antimicrobials
+  # select only groups and antibiotics
   if (is_null_or_grouped_tbl(data)) {
     data_has_groups <- TRUE
     groups <- get_group_names(data)
@@ -255,15 +255,14 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   }
 
   data <- as.data.frame(data, stringsAsFactors = FALSE)
-  if (isTRUE(combine_SI)) {
-    for (i in seq_len(ncol(data))) {
-      if (is.sir(data[, i, drop = TRUE])) {
-        data[, i] <- as.character(data[, i, drop = TRUE])
-        if ("SDD" %in% data[, i, drop = TRUE] && message_not_thrown_before("sir_calc_df", combine_SI, entire_session = TRUE)) {
-          message_("Note that `sir_calc_df()` will also count dose-dependent susceptibility, 'SDD', as 'SI' when `combine_SI = TRUE`. This note will be shown once for this session.", as_note = FALSE)
-        }
-        data[, i] <- gsub("(I|S|SDD)", "SI", data[, i, drop = TRUE])
+
+  for (i in seq_len(ncol(data))) {
+    data[, i] <- as.character(as.sir(data[, i, drop = TRUE]))
+    if (isTRUE(combine_SI)) {
+      if ("SDD" %in% data[, i, drop = TRUE] && message_not_thrown_before("sir_calc_df", combine_SI, entire_session = TRUE)) {
+        message_("Note that `sir_calc_df()` will also count dose-dependent susceptibility, 'SDD', as 'SI' when `combine_SI = TRUE`. This note will be shown once for this session.", as_note = FALSE)
       }
+      data[, i] <- gsub("(I|S|SDD)", "SI", data[, i, drop = TRUE])
     }
   }
 
@@ -364,7 +363,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   } else {
     # don't use as.sir() here, as it would add the class 'sir' and we would like
     # the same data structure as output, regardless of input
-    if (out$value[out$interpretation == "SDD"] > 0) {
+    if (any(out$value[out$interpretation == "SDD"] > 0, na.rm = TRUE)) {
       out$interpretation <- factor(out$interpretation, levels = c("S", "SDD", "I", "R"), ordered = TRUE)
     } else {
       out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)

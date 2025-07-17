@@ -789,7 +789,7 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
 
   # if object is missing, or another error:
   tryCatch(invisible(object),
-    error = function(e) AMR_env$meet_criteria_error_txt <- e$message
+    error = function(e) AMR_env$meet_criteria_error_txt <- conditionMessage(e)
   )
   if (!is.null(AMR_env$meet_criteria_error_txt)) {
     error_txt <- AMR_env$meet_criteria_error_txt
@@ -1293,6 +1293,10 @@ font_yellow_bg <- function(..., collapse = " ") {
 font_green_bg <- function(..., collapse = " ") {
   # this is #3caea3 (picked to be colourblind-safe with other SIR colours)
   try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;79m", after = "\033[49m", collapse = collapse)
+}
+font_green_lighter_bg <- function(..., collapse = " ") {
+  # this is #8FD6C4 (picked to be colourblind-safe with other SIR colours)
+  try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;158m", after = "\033[49m", collapse = collapse)
 }
 font_purple_bg <- function(..., collapse = " ") {
   try_colour(font_black(..., collapse = collapse, adapt = FALSE), before = "\033[48;5;89m", after = "\033[49m", collapse = collapse)

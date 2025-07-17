@@ -9,10 +9,10 @@ ggplot_sir(data, position = NULL, x = "antibiotic",
   fill = "interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
   limits = NULL, translate_ab = "name", combine_SI = TRUE,
   minimum = 30, language = get_AMR_locale(), nrow = NULL, colours = c(S
-  = "#3CAEA3", SI = "#3CAEA3", I = "#F6D55C", IR = "#ED553B", R = "#ED553B"),
-  datalabels = TRUE, datalabels.size = 2.5, datalabels.colour = "grey15",
-  title = NULL, subtitle = NULL, caption = NULL,
-  x.title = "Antimicrobial", y.title = "Proportion", ...)
+  = "#3CAEA3", SI = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", IR = "#ED553B",
+  R = "#ED553B"), datalabels = TRUE, datalabels.size = 2.5,
+  datalabels.colour = "grey15", title = NULL, subtitle = NULL,
+  caption = NULL, x.title = "Antimicrobial", y.title = "Proportion", ...)
 
 geom_sir(position = NULL, x = c("antibiotic", "interpretation"),
   fill = "interpretation", translate_ab = "name", minimum = 30,

@@ -175,7 +175,7 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
 
     # Value
     val <- tryCatch(eval(dots[[i]][[3]]), error = function(e) NULL)
-    stop_if(is.null(val), "rule ", i, " must return a valid value, it now returns an error: ", tryCatch(eval(dots[[i]][[3]]), error = function(e) e$message))
+    stop_if(is.null(val), "rule ", i, " must return a valid value, it now returns an error: ", tryCatch(eval(dots[[i]][[3]]), error = function(e) conditionMessage(e)))
     stop_if(length(val) > 1, "rule ", i, " must return a value of length 1, not ", length(val))
     out[[i]]$value <- as.character(val)
   }
@@ -254,7 +254,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
   for (i in seq_len(n_dots)) {
     qry <- tryCatch(eval(parse(text = guideline[[i]]$query), envir = df, enclos = parent.frame()),
       error = function(e) {
-        AMR_env$err_msg <- e$message
+        AMR_env$err_msg <- conditionMessage(e)
         return("error")
       }
     )

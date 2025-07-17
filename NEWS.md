@@ -1,4 +1,4 @@
-# AMR 3.0.0.9007
+# AMR 3.0.0.9008
 
 This is primarily a bugfix release, though we added one nice feature too.
 
@@ -13,6 +13,8 @@ This is primarily a bugfix release, though we added one nice feature too.
 * Fixed a bug in `as.ab()` for antimicrobial codes with a number in it if they are preceded by a space
 * Fixed a bug in `eucast_rules()` for using specific custom rules
 * Fixed a bug in `as.sir()` to allow any tidyselect language (#220)
+* Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
+* Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent)
 * Fixed some specific Dutch translations for antimicrobials
 * Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 

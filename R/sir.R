@@ -868,7 +868,7 @@ as.sir.data.frame <- function(x,
     cl <- tryCatch(parallel::makeCluster(n_cores, type = "PSOCK"),
       error = function(e) {
         if (isTRUE(info)) {
-          message_("Could not create parallel cluster, using single-core computation. Error message: ", e$message, add_fn = font_red)
+          message_("Could not create parallel cluster, using single-core computation. Error message: ", conditionMessage(e), add_fn = font_red)
         }
         return(NULL)
       }
@@ -1909,11 +1909,11 @@ pillar_shaft.sir <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey("  NA")
-    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
     out[x == "S"] <- font_green_bg("  S  ")
+    out[x == "SDD"] <- font_green_lighter_bg(" SDD ")
     out[x == "I"] <- font_orange_bg("  I  ")
-    out[x == "SDD"] <- font_orange_bg(" SDD ")
     out[x == "R"] <- font_rose_bg("  R  ")
+    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
   }
   create_pillar_column(out, align = "left", width = 5)
 }
