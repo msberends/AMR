@@ -211,6 +211,10 @@ if (require("ggplot2")) {
   autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
 }
 if (require("ggplot2")) {
+  autoplot(some_mic_values, mo = "Staph aureus", ab = "Ceftaroline", guideline = "CLSI")
+}
+
+if (require("ggplot2")) {
   # support for 27 languages, various guidelines, and many options
   autoplot(some_disk_values,
     mo = "Escherichia coli", ab = "cipro",
@@ -267,7 +271,7 @@ if (require("ggplot2")) {
     aes(group, mic)
   ) +
     geom_boxplot() +
-    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    geom_violin(linetype = 2, colour = "grey30", fill = NA) +
     scale_y_mic()
 }
 if (require("ggplot2")) {
@@ -279,7 +283,7 @@ if (require("ggplot2")) {
     aes(group, mic)
   ) +
     geom_boxplot() +
-    geom_violin(linetype = 2, colour = "grey", fill = NA) +
+    geom_violin(linetype = 2, colour = "grey30", fill = NA) +
     scale_y_mic(mic_range = c(NA, 0.25))
 }
 
@@ -312,7 +316,7 @@ if (require("ggplot2")) {
     aes(x = group, y = mic, colour = sir)
   ) +
     theme_minimal() +
-    geom_boxplot(fill = NA, colour = "grey") +
+    geom_boxplot(fill = NA, colour = "grey30") +
     geom_jitter(width = 0.25)
 
   plain

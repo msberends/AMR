@@ -90,6 +90,10 @@
 #'   autoplot(some_mic_values, mo = "Escherichia coli", ab = "cipro")
 #' }
 #' if (require("ggplot2")) {
+#'   autoplot(some_mic_values, mo = "Staph aureus", ab = "Ceftaroline", guideline = "CLSI")
+#' }
+#'
+#' if (require("ggplot2")) {
 #'   # support for 27 languages, various guidelines, and many options
 #'   autoplot(some_disk_values,
 #'     mo = "Escherichia coli", ab = "cipro",
@@ -146,7 +150,7 @@
 #'     aes(group, mic)
 #'   ) +
 #'     geom_boxplot() +
-#'     geom_violin(linetype = 2, colour = "grey", fill = NA) +
+#'     geom_violin(linetype = 2, colour = "grey30", fill = NA) +
 #'     scale_y_mic()
 #' }
 #' if (require("ggplot2")) {
@@ -158,7 +162,7 @@
 #'     aes(group, mic)
 #'   ) +
 #'     geom_boxplot() +
-#'     geom_violin(linetype = 2, colour = "grey", fill = NA) +
+#'     geom_violin(linetype = 2, colour = "grey30", fill = NA) +
 #'     scale_y_mic(mic_range = c(NA, 0.25))
 #' }
 #'
@@ -191,7 +195,7 @@
 #'     aes(x = group, y = mic, colour = sir)
 #'   ) +
 #'     theme_minimal() +
-#'     geom_boxplot(fill = NA, colour = "grey") +
+#'     geom_boxplot(fill = NA, colour = "grey30") +
 #'     geom_jitter(width = 0.25)
 #'
 #'   plain
@@ -377,12 +381,7 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
   args <- list(...)
   args[c("value", "labels", "limits")] <- NULL
 
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 4)
-  } else if (length(colours_SIR) == 3) {
-    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
-  }
-  colours_SIR <- unname(colours_SIR)
+  colours_SIR <- expand_SIR_colours(colours_SIR)
 
   if (identical(aesthetics, "x")) {
     ggplot_fn <- ggplot2::scale_x_discrete
@@ -536,6 +535,7 @@ plot.mic <- function(x,
 
   x <- as.mic(x) # make sure that currently implemented MIC levels are used
   main <- gsub(" +", " ", paste0(main, collapse = " "))
+  colours_SIR <- expand_SIR_colours(colours_SIR)
 
   x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
@@ -683,6 +683,8 @@ autoplot.mic <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
+  colours_SIR <- expand_SIR_colours(colours_SIR)
+
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
   x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
@@ -702,12 +704,14 @@ autoplot.mic <- function(object,
   colnames(df) <- c("mic", "count")
   df$cols <- cols_sub$cols
   df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
-  df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
-  df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
+  df$cols[df$cols == colours_SIR[2]] <- "(SDD) Susceptible dose-dependent"
+  df$cols[df$cols == colours_SIR[3]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
+  df$cols[df$cols == colours_SIR[4]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
     levels = translate_into_language(
       c(
         "(S) Susceptible",
+        "(SDD) Susceptible dose-dependent",
         paste("(I)", plot_name_of_I(cols_sub$guideline)),
         "(R) Resistant"
       ),
@@ -721,10 +725,10 @@ autoplot.mic <- function(object,
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
       "(SDD) Susceptible dose-dependent" = colours_SIR[2],
-      "(I) Susceptible, incr. exp." = colours_SIR[2],
-      "(I) Intermediate" = colours_SIR[2],
-      "(R) Resistant" = colours_SIR[3],
-      "(NI) Non-interpretable" = "grey"
+      "(I) Susceptible, incr. exp." = colours_SIR[3],
+      "(I) Intermediate" = colours_SIR[3],
+      "(R) Resistant" = colours_SIR[4],
+      "(NI) Non-interpretable" = "grey30"
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
@@ -790,6 +794,7 @@ plot.disk <- function(x,
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   main <- gsub(" +", " ", paste0(main, collapse = " "))
+  colours_SIR <- expand_SIR_colours(colours_SIR)
 
   x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
@@ -935,6 +940,8 @@ autoplot.disk <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
+  colours_SIR <- expand_SIR_colours(colours_SIR)
+
   x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
@@ -952,10 +959,10 @@ autoplot.disk <- function(object,
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("disk", "count")
   df$cols <- cols_sub$cols
-
   df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
-  df$cols[df$cols == colours_SIR[2]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
-  df$cols[df$cols == colours_SIR[3]] <- "(R) Resistant"
+  df$cols[df$cols == colours_SIR[2]] <- "(SDD) Susceptible dose-dependent"
+  df$cols[df$cols == colours_SIR[3]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
+  df$cols[df$cols == colours_SIR[4]] <- "(R) Resistant"
   df$cols <- factor(translate_into_language(df$cols, language = language),
     levels = translate_into_language(
       c(
@@ -973,10 +980,10 @@ autoplot.disk <- function(object,
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
       "(SDD) Susceptible dose-dependent" = colours_SIR[2],
-      "(I) Susceptible, incr. exp." = colours_SIR[2],
-      "(I) Intermediate" = colours_SIR[2],
-      "(R) Resistant" = colours_SIR[3],
-      "(NI) Non-interpretable" = "grey"
+      "(I) Susceptible, incr. exp." = colours_SIR[3],
+      "(I) Intermediate" = colours_SIR[3],
+      "(R) Resistant" = colours_SIR[4],
+      "(NI) Non-interpretable" = "grey30"
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
@@ -1093,12 +1100,7 @@ barplot.sir <- function(height,
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 4)
-  } else if (length(colours_SIR) == 3) {
-    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
-  }
-  colours_SIR <- unname(colours_SIR)
+  colours_SIR <- expand_SIR_colours(colours_SIR)
 
   # add SDD and N to colours
   colours_SIR <- c(colours_SIR, "grey30")
@@ -1148,12 +1150,7 @@ autoplot.sir <- function(object,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
 
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 4)
-  } else if (length(colours_SIR) == 3) {
-    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
-  }
-  colours_SIR <- unname(colours_SIR)
+  colours_SIR <- expand_SIR_colours(colours_SIR)
 
   df <- as.data.frame(table(object), stringsAsFactors = TRUE)
   colnames(df) <- c("x", "n")
@@ -1251,13 +1248,6 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
   stop_if(length(x) == 0, "no observations to plot", call = FALSE)
 
   guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
-
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 4)
-  } else if (length(colours_SIR) == 3) {
-    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
-  }
-  colours_SIR <- unname(colours_SIR)
 
   # store previous interpretations to backup
   sir_history <- AMR_env$sir_interpretation_history
@@ -1382,11 +1372,7 @@ scale_sir_colours <- function(...,
     colours_SIR <- list(...)$colours
   }
 
-  if (length(colours_SIR) == 1) {
-    colours_SIR <- rep(colours_SIR, 4)
-  } else if (length(colours_SIR) == 3) {
-    colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
-  }
+  colours_SIR <- expand_SIR_colours(colours_SIR, unname = FALSE)
 
   # behaviour when coming from ggplot_sir()
   if ("colours" %in% names(list(...))) {
@@ -1501,4 +1487,32 @@ labels_sir_count <- function(position = NULL,
         pm_select(-gr)
     }
   )
+}
+
+expand_SIR_colours <- function(colours_SIR, unname = TRUE) {
+  sir_order <- c("S", "SDD", "I", "R")
+
+  if (is.null(names(colours_SIR))) {
+    if (length(colours_SIR) == 1) {
+      colours_SIR <- rep(colours_SIR, 4)
+    } else if (length(colours_SIR) == 3) {
+      # old method for AMR < 3.0.1 which allowed for 3 colours
+      # fill in green for SDD as extra colour
+      colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
+    }
+    names(colours_SIR) <- sir_order
+  } else {
+    # named input: match and reorder
+    stop_ifnot(
+      all(names(colours_SIR) %in% sir_order),
+      "Unknown names in `colours_SIR`. Expected any of: ", vector_or(sir_order, quotes = FALSE, sort = FALSE), "."
+    )
+    colours_SIR <- colours_SIR[sir_order]
+  }
+
+  if (unname) {
+    colours_SIR <- unname(colours_SIR)
+  }
+
+  return(colours_SIR)
 }

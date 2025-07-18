@@ -171,14 +171,14 @@ example_isolates %>%
   select(bacteria,
          aminoglycosides(),
          carbapenems())
-#> ℹ Using column 'mo' as input for mo_fullname()
-#> ℹ Using column 'mo' as input for mo_is_gram_negative()
-#> ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()
+#> ℹ Using column 'mo' as input for `mo_fullname()`
+#> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
+#> ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`
 #> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
 #>   Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
 #>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
 #>    <chr>                        <sir> <sir> <sir> <sir> <sir> <sir>
@@ -215,9 +215,9 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 ``` r
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
 #>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For carbapenems() using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
@@ -289,7 +289,7 @@ ggplot(data.frame(mic = some_mic_values,
                   sir = interpretation),
        aes(x = group, y = mic, colour = sir)) +
   theme_minimal() +
-  geom_boxplot(fill = NA, colour = "grey") +
+  geom_boxplot(fill = NA, colour = "grey30") +
   geom_jitter(width = 0.25) +
   
   # NEW scale function: plot MIC values to x, y, colour or fill
@@ -340,15 +340,15 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For aminoglycosides() using columns 'GEN' (gentamicin), 'TOB'
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
 #>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For polymyxins() using column 'COL' (colistin)
+#> ℹ For `polymyxins()` using column 'COL' (colistin)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
 #> ! Introducing NA: only 23 results available for KAN in group: ward =
-#> "Outpatient" (minimum = 30).
+#> "Outpatient" (`minimum` = 30).
 out
 #> # A tibble: 3 × 6
 #>   ward         GEN   TOB   AMK   KAN   COL

@@ -133,7 +133,7 @@ ggplot(data.frame(mic = some_mic_values,
                   sir = interpretation),
        aes(x = group, y = mic, colour = sir)) +
   theme_minimal() +
-  geom_boxplot(fill = NA, colour = "grey") +
+  geom_boxplot(fill = NA, colour = "grey30") +
   geom_jitter(width = 0.25) +
   
   # NEW scale function: plot MIC values to x, y, colour or fill
