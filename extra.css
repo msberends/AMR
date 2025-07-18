@@ -190,6 +190,15 @@ this shows on top of every sidebar to the right
   }
 }
 
+.template-reference-topic h3,
+.template-reference-topic h3 code {
+  color: var(--amr-green-dark) !important;
+}
+.template-reference-topic h3 {
+  font-weight: normal;
+  margin-top: 2rem;
+}
+
 /* replace 'Developers' with 'Maintainers' */
 .developers h2 {
   display: none;
