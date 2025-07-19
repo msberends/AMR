@@ -177,8 +177,8 @@ ggplot_sir <- function(data,
                        nrow = NULL,
                        colours = c(
                          S = "#3CAEA3",
-                         SI = "#3CAEA3",
                          SDD = "#8FD6C4",
+                         SI = "#3CAEA3",
                          I = "#F6D55C",
                          IR = "#ED553B",
                          R = "#ED553B"

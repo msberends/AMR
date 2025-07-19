@@ -1490,7 +1490,7 @@ labels_sir_count <- function(position = NULL,
 }
 
 expand_SIR_colours <- function(colours_SIR, unname = TRUE) {
-  sir_order <- c("S", "SDD", "I", "R")
+  sir_order <- c("S", "SDD", "SI", "I", "IR", "R")
 
   if (is.null(names(colours_SIR))) {
     if (length(colours_SIR) == 1) {
