@@ -381,7 +381,7 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
   args <- list(...)
   args[c("value", "labels", "limits")] <- NULL
 
-  colours_SIR <- expand_SIR_colours(colours_SIR)
+  colours_SIR <- expand_SIR_colours(colours_SIR, unname = FALSE)
 
   if (identical(aesthetics, "x")) {
     ggplot_fn <- ggplot2::scale_x_discrete
@@ -391,24 +391,19 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
       args,
       list(
         aesthetics = aesthetics,
-        values = c(
-          S = colours_SIR[1],
-          SDD = colours_SIR[2],
-          I = colours_SIR[3],
-          R = colours_SIR[4],
-          NI = "grey30"
-        )
+        values = c(colours_SIR, NI = "grey30")
       )
     )
   }
   scale <- do.call(ggplot_fn, args)
 
   scale$labels <- function(x) {
-    stop_ifnot(all(x %in% c(levels(NA_sir_), NA)),
+    stop_ifnot(all(x %in% c(levels(NA_sir_), "SI", "IR", NA)),
       "Apply `scale_", aesthetics[1], "_sir()` to a variable of class 'sir', see `?as.sir`.",
       call = FALSE
     )
-    x <- as.character(as.sir(x))
+    x <- as.character(x)
+    x[!x %in% c("SI", "IR")] <- as.character(as.sir(x[!x %in% c("SI", "IR")]))
     if (!is.null(language)) {
       x[x == "S"] <- "(S) Susceptible"
       x[x == "SDD"] <- "(SDD) Susceptible dose-dependent"
@@ -418,6 +413,8 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
         x[x == "I"] <- "(I) Intermediate"
       }
       x[x == "R"] <- "(R) Resistant"
+      x[x == "SI"] <- "(S/I) Susceptible"
+      x[x == "IR"] <- "(I/R) Non-susceptible"
       x[x == "NI"] <- "(NI) Non-interpretable"
       x <- translate_AMR(x, language = language)
     }
@@ -425,7 +422,7 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
   }
   scale$limits <- function(x, ...) {
     # force SIR in the right order
-    as.character(sort(factor(x, levels = levels(NA_sir_))))
+    as.character(sort(factor(x, levels = c(levels(NA_sir_), "SI", "IR"))))
   }
 
   scale
@@ -1490,7 +1487,7 @@ labels_sir_count <- function(position = NULL,
 }
 
 expand_SIR_colours <- function(colours_SIR, unname = TRUE) {
-  sir_order <- c("S", "SDD", "SI", "I", "IR", "R")
+  sir_order <- c("S", "SDD", "I", "R", "SI", "IR")
 
   if (is.null(names(colours_SIR))) {
     if (length(colours_SIR) == 1) {
@@ -1500,13 +1497,21 @@ expand_SIR_colours <- function(colours_SIR, unname = TRUE) {
       # fill in green for SDD as extra colour
       colours_SIR <- c(colours_SIR[1], colours_SIR[1], colours_SIR[2], colours_SIR[3])
     }
+    if (length(colours_SIR) == 4) {
+      # add colours for SI (same as S) and IR (same as R)
+      colours_SIR <- c(colours_SIR[1:4], colours_SIR[1], colours_SIR[4])
+    }
     names(colours_SIR) <- sir_order
   } else {
     # named input: match and reorder
     stop_ifnot(
       all(names(colours_SIR) %in% sir_order),
-      "Unknown names in `colours_SIR`. Expected any of: ", vector_or(sir_order, quotes = FALSE, sort = FALSE), "."
+      "Unknown names in `colours_SIR`. Expected any of: ", vector_or(levels(NA_sir_), quotes = FALSE, sort = FALSE), "."
     )
+    if (length(colours_SIR) == 4) {
+      # add colours for SI (same as S) and IR (same as R)
+      colours_SIR <- c(colours_SIR[1:4], SI = unname(colours_SIR[1]), IR = unname(colours_SIR[4]))
+    }
     colours_SIR <- colours_SIR[sir_order]
   }
 
