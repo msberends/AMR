@@ -68,49 +68,56 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo "Updating semantic versioning and date..."
 
-# Get tags from remote and remove tags not on remote
-git fetch origin --prune --prune-tags --quiet
-currenttagfull=$(git describe --tags --abbrev=0)
-currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
-
-# Assume main branch to be 'main' or 'master'
-defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
-if [ "$currenttag" = "" ]; then
-  currenttag="0.0.1"
-  currentcommit=$(git rev-list --count ${defaultbranch})
-  echo "- No git tags found, creating one in format 'v(x).(y).(z)' - currently ${currentcommit} previous commits in '${defaultbranch}'"
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+if [ "$current_branch" != "main" ]; then
+  echo "- Current branch is '$current_branch'; skipping version/date update (only runs on 'main')"
 else
-  currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
-  echo "- Latest tag is '${currenttagfull}', with ${currentcommit} previous commits in '${defaultbranch}'"
-fi
-
-# Combine tag and commit number
-currentversion="$currenttag.$((currentcommit + 9001))"
-echo "- ${currentpkg} pkg version set to ${currentversion}"
-
-# Update version number and date in DESCRIPTION
-sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
-sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
-echo "- Updated version number and date in ./DESCRIPTION"
-rm -f DESCRIPTION--
-git add DESCRIPTION
-
-# Update version number in NEWS.md
-if [ -e "NEWS.md" ]; then
-  if [ "$currentpkg" = "your" ]; then
-    currentpkg=""
+  # Version update logic begins here
+  
+  # Get tags from remote and remove tags not on remote
+  git fetch origin --prune --prune-tags --quiet
+  currenttagfull=$(git describe --tags --abbrev=0)
+  currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
+  
+  # Assume main branch to be 'main' or 'master'
+  defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
+  if [ "$currenttag" = "" ]; then
+    currenttag="0.0.1"
+    currentcommit=$(git rev-list --count ${defaultbranch})
+    echo "- No git tags found, creating one in format 'v(x).(y).(z)' - currently ${currentcommit} previous commits in '${defaultbranch}'"
+  else
+    currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
+    echo "- Latest tag is '${currenttagfull}', with ${currentcommit} previous commits in '${defaultbranch}'"
   fi
-  sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
-  echo "- Updated version number in ./NEWS.md"
-  rm -f NEWS.md--
-  git add NEWS.md
-else
-  echo "- No NEWS.md found!"
+  
+  # Combine tag and commit number
+  currentversion="$currenttag.$((currentcommit + 9001))"
+  echo "- ${currentpkg} pkg version set to ${currentversion}"
+  
+  # Update version number and date in DESCRIPTION
+  sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
+  sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
+  echo "- Updated version number and date in ./DESCRIPTION"
+  rm -f DESCRIPTION--
+  git add DESCRIPTION
+  
+  # Update version number in NEWS.md
+  if [ -e "NEWS.md" ]; then
+    if [ "$currentpkg" = "your" ]; then
+      currentpkg=""
+    fi
+    sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
+    echo "- Updated version number in ./NEWS.md"
+    rm -f NEWS.md--
+    git add NEWS.md
+  else
+    echo "- No NEWS.md found!"
+  fi
+  echo ""
+  
+  # Save the version number for use in the commit-msg hook
+  echo "${currentversion}" > .git/commit_version.tmp
 fi
-echo ""
-
-# Save the version number for use in the commit-msg hook
-echo "${currentversion}" > .git/commit_version.tmp
 
 git add data-raw/*
 git add data/*
