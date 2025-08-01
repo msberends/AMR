@@ -70,7 +70,7 @@ is_sir_eligible(x, threshold = 0.05)
   language = get_AMR_locale(), verbose = FALSE, info = interactive(),
   parallel = FALSE, max_cores = -1, conserve_capped_values = NULL)
 
-sir_interpretation_history(clean = FALSE)
+sir_interpretation_history(sir_values = NULL, clean = FALSE)
 }
 \arguments{
 \item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres).}
@@ -146,6 +146,8 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 \item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. This requires no additional packages, as the used \code{parallel} package is part of base \R. On Windows and on \R < 4.0.0 \code{\link[parallel:clusterApply]{parallel::parLapply()}} will be used, in all other cases the more efficient \code{\link[parallel:mclapply]{parallel::mclapply()}} will be used.}
 
 \item{max_cores}{Maximum number of cores to use if \code{parallel = TRUE}. Use a negative value to subtract that number from the available number of cores, e.g. a value of \code{-2} on an 8-core machine means that at most 6 cores will be used. Defaults to \code{-1}. There will never be used more cores than variables to analyse. The available number of cores are detected using \code{\link[parallelly:availableCores]{parallelly::availableCores()}} if that package is installed, and base \R's \code{\link[parallel:detectCores]{parallel::detectCores()}} otherwise.}
+
+\item{sir_values}{SIR values that were interpreted from MIC or disk diffusion values using \code{\link[=as.sir]{as.sir()}}.}
 
 \item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
