@@ -41,7 +41,7 @@
 #' @inheritParams eucast_rules
 #' @param pct_required_classes Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI A [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.
-#' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
+#' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function returns a data set with the MDRO results in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @details
 #' These functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
 #'
@@ -772,7 +772,7 @@ mdro <- function(x = NULL,
         )
       }
       x[rows_to_change, "MDRO"] <<- to
-      x[rows_to_change, "reason"] <<- reason
+      x[rows_to_change, "reason"] <<- paste0(x[rows_to_change, "reason", drop = TRUE], "; ", reason)
       x[rows_not_to_change, "reason"] <<- "guideline criteria not met"
     }
   }
@@ -854,7 +854,7 @@ mdro <- function(x = NULL,
   x <- left_join_microorganisms(x, by = col_mo)
   x$MDRO <- ifelse(!is.na(x$genus), 1, NA_integer_)
   x$row_number <- seq_len(nrow(x))
-  x$reason <- NA_character_
+  x$reason <- ""
   x$all_nonsusceptible_columns <- ""
 
   if (guideline$code == "cmi2012") {
@@ -1899,6 +1899,7 @@ mdro <- function(x = NULL,
     # fill in empty reasons
     x$reason[is.na(x$reason)] <- "not covered by guideline"
     x[rows_empty, "reason"] <- paste(x[rows_empty, "reason"], "(note: no available test results)")
+    x$reason <- trimws(gsub("^;", "", x$reason))
     # format data set
     colnames(x)[colnames(x) == col_mo] <- "microorganism"
     x$microorganism <- mo_name(x$microorganism, language = NULL)

@@ -1,4 +1,4 @@
-# AMR 3.0.0.9017
+# AMR 3.0.0.9018
 
 This is primarily a bugfix release, though we added one nice feature too.
 
@@ -15,6 +15,7 @@ This is primarily a bugfix release, though we added one nice feature too.
 * Fixed a bug in `as.sir()` to allow any tidyselect language (#220)
 * Fixed a bug in `as.sir()` to pick right breakpoint when `uti = FALSE` (#216)
 * Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
+* Fixed `mdro()` to contain all reasons in verbose output (#227)
 * Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials
 * Added `names` to `age_groups()` so that custom names can be given (#215)
