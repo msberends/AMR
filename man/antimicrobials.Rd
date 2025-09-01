@@ -5,9 +5,9 @@
 \alias{antimicrobials}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data Sets with 617 Antimicrobial Drugs}
+\title{Data Sets with 616 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antimicrobials} data set: a \link[tibble:tibble]{tibble} with 497 observations and 14 variables:}{
+\subsection{For the \link{antimicrobials} data set: a \link[tibble:tibble]{tibble} with 496 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr antimicrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{\strong{This is a unique identifier.}}
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}
@@ -50,7 +50,7 @@ LOINC:
 }
 }
 
-An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 497 rows and 14 columns.
+An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 496 rows and 14 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 120 rows and 11 columns.
 }

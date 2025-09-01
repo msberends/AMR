@@ -174,48 +174,23 @@ mdro <- function(x = NULL,
   }
 
   # get gene values as TRUE/FALSE
-  if (is.character(esbl)) {
-    meet_criteria(esbl, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    esbl <- x[[esbl]]
-    meet_criteria(esbl, allow_class = "logical", allow_NA = TRUE)
-  } else if (length(esbl) == 1) {
-    esbl <- rep(esbl, NROW(x))
+  resolve_gene_var <- function(x, gene, varname) {
+    if (is.character(gene)) {
+      meet_criteria(gene, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
+      gene <- x[[gene]]
+      meet_criteria(gene, allow_class = "logical", allow_NA = TRUE)
+    } else if (length(gene) == 1) {
+      gene <- rep(gene, NROW(x))
+    }
+    x[[varname]] <- gene
+    x
   }
-  if (is.character(carbapenemase)) {
-    meet_criteria(carbapenemase, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    carbapenemase <- x[[carbapenemase]]
-    meet_criteria(carbapenemase, allow_class = "logical", allow_NA = TRUE)
-  } else if (length(carbapenemase) == 1) {
-    carbapenemase <- rep(carbapenemase, NROW(x))
-  }
-  if (is.character(mecA)) {
-    meet_criteria(mecA, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    mecA <- x[[mecA]]
-    meet_criteria(mecA, allow_class = "logical", allow_NA = TRUE)
-  } else if (length(mecA) == 1) {
-    mecA <- rep(mecA, NROW(x))
-  }
-  if (is.character(mecC)) {
-    meet_criteria(mecC, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    mecC <- x[[mecC]]
-    meet_criteria(mecC, allow_class = "logical", allow_NA = TRUE)
-  } else if (length(mecC) == 1) {
-    mecC <- rep(mecC, NROW(x))
-  }
-  if (is.character(vanA)) {
-    meet_criteria(vanA, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    vanA <- x[[vanA]]
-    meet_criteria(vanA, allow_class = "logical", allow_NA = TRUE)
-  } else if (length(vanA) == 1) {
-    vanA <- rep(vanA, NROW(x))
-  }
-  if (is.character(vanB)) {
-    meet_criteria(vanB, is_in = colnames(x), allow_NA = FALSE, has_length = 1)
-    vanB <- x[[vanB]]
-    meet_criteria(vanB, allow_class = "logical", allow_NA = TRUE)
-  } else if (length(vanB) == 1) {
-    vanB <- rep(vanB, NROW(x))
-  }
+  x <- resolve_gene_var(x, esbl, "esbl")
+  x <- resolve_gene_var(x, carbapenemase, "carbapenemase")
+  x <- resolve_gene_var(x, mecA, "mecA")
+  x <- resolve_gene_var(x, mecC, "mecC")
+  x <- resolve_gene_var(x, vanA, "vanA")
+  x <- resolve_gene_var(x, vanB, "vanB")
 
   info.bak <- info
   # don't throw info's more than once per call
@@ -1498,7 +1473,7 @@ mdro <- function(x = NULL,
     }
     trans_tbl(
       3, # positive
-      rows = which(x$order == "Enterobacterales" & esbl == TRUE),
+      rows = which(x$order == "Enterobacterales" & x$esbl == TRUE),
       cols = "any",
       any_all = "any",
       reason = "Enterobacterales: ESBL"
@@ -1519,7 +1494,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      rows = which(x$order == "Enterobacterales" & carbapenemase == TRUE),
+      rows = which(x$order == "Enterobacterales" & x$carbapenemase == TRUE),
       cols = "any",
       any_all = "any",
       reason = "Enterobacterales: carbapenemase"
@@ -1557,14 +1532,14 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       2, # unconfirmed
-      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & is.na(carbapenemase)),
+      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & is.na(x$carbapenemase)),
       cols = carbapenems,
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: potential carbapenemase"
     )
     trans_tbl(
       3,
-      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & carbapenemase == TRUE),
+      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & x$carbapenemase == TRUE),
       cols = carbapenems,
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: carbapenemase"
@@ -1574,6 +1549,7 @@ mdro <- function(x = NULL,
     x$psae <- 0
     x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, TOB) == "R") | NA_as_FALSE(col_values(x, AMK) == "R"), 1, 0)
     x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, IPM) == "R") | NA_as_FALSE(col_values(x, MEM) == "R"), 1, 0)
+    x$psae <- x$psae + ifelse(NA_as_FALSE(x$carbapenemase), 1, 0)
     x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, PIP) == "R") | NA_as_FALSE(col_values(x, TZP) == "R"), 1, 0)
     x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CAZ) == "R") | NA_as_FALSE(col_values(x, CZA) == "R"), 1, 0)
     x$psae <- x$psae + ifelse(NA_as_FALSE(col_values(x, CIP) == "R") | NA_as_FALSE(col_values(x, NOR) == "R") | NA_as_FALSE(col_values(x, LVX) == "R"), 1, 0)
@@ -1602,7 +1578,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      rows = which(x$genus == "Enterococcus" & x$species == "faecium" & (vanA == TRUE | vanB == TRUE)),
+      rows = which(x$genus == "Enterococcus" & x$species == "faecium" & (x$vanA == TRUE | x$vanB == TRUE)),
       cols = c(PEN, AMX, AMP, VAN),
       any_all = "any",
       reason = "E. faecium: vanA/vanB gene + penicillin group"
@@ -1611,14 +1587,14 @@ mdro <- function(x = NULL,
     # Staphylococcus aureus complex (= aureus, argenteus or schweitzeri)
     trans_tbl(
       2,
-      rows = which(x$genus == "Staphylococcus" & x$species %in% c("aureus", "argenteus", "schweitzeri") & (is.na(mecA) | is.na(mecC))),
+      rows = which(x$genus == "Staphylococcus" & x$species %in% c("aureus", "argenteus", "schweitzeri") & (is.na(x$mecA) | is.na(x$mecC))),
       cols = c(AMC, TZP, FLC, OXA, FOX, FOX1),
       any_all = "any",
       reason = "S. aureus complex: potential MRSA"
     )
     trans_tbl(
       3,
-      rows = which(x$genus == "Staphylococcus" & x$species %in% c("aureus", "argenteus", "schweitzeri") & (mecA == TRUE | mecC == TRUE)),
+      rows = which(x$genus == "Staphylococcus" & x$species %in% c("aureus", "argenteus", "schweitzeri") & (x$mecA == TRUE | x$mecC == TRUE)),
       cols = "any",
       any_all = "any",
       reason = "S. aureus complex: mecA/mecC gene"
@@ -1899,7 +1875,10 @@ mdro <- function(x = NULL,
     # fill in empty reasons
     x$reason[is.na(x$reason)] <- "not covered by guideline"
     x[rows_empty, "reason"] <- paste(x[rows_empty, "reason"], "(note: no available test results)")
+    # starting semicolons must be removed
     x$reason <- trimws(gsub("^;", "", x$reason))
+    # if criteria were not met initially, but later they were, then they have a following semicolon; remove the initial lack of meeting criteria
+    x$reason <- trimws(gsub("guideline criteria not met;", "", x$reason, fixed = TRUE))
     # format data set
     colnames(x)[colnames(x) == col_mo] <- "microorganism"
     x$microorganism <- mo_name(x$microorganism, language = NULL)

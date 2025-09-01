@@ -1,4 +1,4 @@
-# AMR 3.0.0.9018
+# AMR 3.0.0.9019
 
 This is primarily a bugfix release, though we added one nice feature too.
 
@@ -15,11 +15,16 @@ This is primarily a bugfix release, though we added one nice feature too.
 * Fixed a bug in `as.sir()` to allow any tidyselect language (#220)
 * Fixed a bug in `as.sir()` to pick right breakpoint when `uti = FALSE` (#216)
 * Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
-* Fixed `mdro()` to contain all reasons in verbose output (#227)
+* Fixed a bug the `antimicrobials` data set to remove statins (#229)
+* Fixed a bug in `mdro()` to make sure all genes specified in arguments are acknowledges
+* Fixed ATC J01CR05 to map to piperacillin/tazobactam rather than piperacillin/sulbactam (#230)
 * Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials
+* Added all reasons in verbose output of `mdro()` (#227)
 * Added `names` to `age_groups()` so that custom names can be given (#215)
 * Added note to `as.sir()` to make it explicit when higher-level taxonomic breakpoints are used (#218)
+* Added antibiotic codes from the Comprehensive Antibiotic Resistance Database (CARD) to the `antimicrobials` data set (#225)
+* Updated Fosfomycin to be of antibiotic class 'Phosphonics' (#225)
 * Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 
 
