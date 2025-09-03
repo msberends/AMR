@@ -42,16 +42,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
         with:
           # this is to keep timestamps, the default fetch-depth: 1 gets the timestamps of the moment of cloning
           # we need this for the download page on our website - dates must be of the files, not of the latest git push
           fetch-depth: 0
 
-      - name: Preserve timestamps
-        run: |
-          sudo apt install git-restore-mtime
-          git restore-mtime
+      - name: restore timestamps
+        uses: chetan/git-restore-mtime-action@v2
 
       - uses: r-lib/actions/setup-pandoc@v2
 
