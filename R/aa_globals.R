@@ -233,6 +233,7 @@ globalVariables(c(
   "uti_index",
   "value",
   "varname",
+  "where",
   "x",
   "xvar",
   "y",

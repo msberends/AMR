@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      PYPI_PAT: ${{ secrets.PYPI_PAT }}
+      GH_REPO_SCOPE: ${{ secrets.GH_REPO_SCOPE }}
     
     steps:
       - name: Checkout code
@@ -78,6 +78,7 @@ jobs:
           cd PythonPackage/AMR
           python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
+      # TODO - Support Miniconda and Anaconda too
       # - name: Set up Miniconda
       #   continue-on-error: true
       #   uses: conda-incubator/setup-miniconda@v2
@@ -117,7 +118,7 @@ jobs:
           rm -rf PythonPackage
 
           git init
-          git remote add origin https://$PYPI_PAT@github.com/msberends/AMR
+          git remote add origin https://$GH_REPO_SCOPE@github.com/msberends/AMR
           git checkout --orphan python-wrapper
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -125,4 +126,4 @@ jobs:
           git rm -rf . || true
           git add .
           git commit -m "Python wrapper update"
-          git push https://$PYPI_PAT@github.com/msberends/AMR.git python-wrapper --force
+          git push https://$GH_REPO_SCOPE@github.com/msberends/AMR.git python-wrapper --force

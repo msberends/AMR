@@ -1,11 +1,6 @@
-# AMR 3.0.0.9021
+# AMR 3.0.0.9022
 
-This is primarily a bugfix release, though we added one nice feature too.
-
-### New
-* Integration with the **tidymodels** framework to allow seamless use of MIC and SIR data in modelling pipelines via `recipes`
-  - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
-  - New `tidyselect` helpers: `all_mic()`, `all_mic_predictors()`, `all_sir()`, `all_sir_predictors()`
+This is a bugfix release following the release of v3.0.0 in June 2025.
 
 ### Changed
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
@@ -16,7 +11,7 @@ This is primarily a bugfix release, though we added one nice feature too.
 * Fixed a bug in `as.sir()` to pick right breakpoint when `uti = FALSE` (#216)
 * Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
 * Fixed a bug the `antimicrobials` data set to remove statins (#229)
-* Fixed a bug in `mdro()` to make sure all genes specified in arguments are acknowledges
+* Fixed a bug in `mdro()` to make sure all genes specified in arguments are acknowledged
 * Fixed ATC J01CR05 to map to piperacillin/tazobactam rather than piperacillin/sulbactam (#230)
 * Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials

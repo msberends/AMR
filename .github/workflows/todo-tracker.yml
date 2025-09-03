@@ -32,35 +32,44 @@ on:
     # only on main
     branches: "main"
 
-name: Publish GPT Training Data to GitHub
+name: Update TODO Tracker
 
 jobs:
-  update-amr-assistant:
+  update-todo:
     runs-on: ubuntu-latest
-    
-    env:
-      GH_REPO_SCOPE: ${{ secrets.GH_REPO_SCOPE }}
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Build the training data
-        run: |
-          bash data-raw/_generate_GPT_knowledge_input.sh
 
-      - name: Git push to amr-for-r-assistant repo
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate TODO list from R/
         run: |
-          mkdir ~/other
-          # to also mv hidden files:
-          shopt -s dotglob
-          mv ./* ~/other/
-          git clone https://github.com/msberends/amr-for-r-assistant
-          cd amr-for-r-assistant
-          mv ~/other/data-raw/latest_training_data.txt ./
-          
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add latest_training_data.txt
-          git commit -m "GPT training data update"
-          git push https://$GH_REPO_SCOPE@github.com/msberends/amr-for-r-assistant.git main --force
+          echo "## TODO Report" > todo.md
+          echo "" >> todo.md
+          echo "_This issue is automatically updated on each push to `main`._" >> todo.md
+          echo "" >> todo.md
+          todos=$(find R/ -type f ! -name "sysdata.rda" -exec grep -nH "TODO" {} + || true)
+          if [ -z "$todos" ]; then
+            echo "✅ No TODOs found." >> todo.md
+          else
+            echo "$todos" | awk -F: '
+              {
+                file = $1
+                line = $2
+                text = substr($0, index($0,$3))
+                if (file != last_file) {
+                  if (last_file != "") print ""
+                  print "### " file
+                  last_file = file
+                }
+                printf "L%s: %s\n", line, text
+              }
+            ' >> todo.md
+          fi
+
+      - name: Update GitHub issue
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GH_REPO_SCOPE }}
+          issue-number: 231
+          body-file: todo.md
+          edit-mode: replace
