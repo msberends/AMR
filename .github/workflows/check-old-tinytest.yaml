@@ -76,9 +76,14 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install tinytest from CRAN
+      - name: Install suggested pkgs (and tinytest) from CRAN
         run: |
-          install.packages("tinytest", repos = "https://cran.r-project.org")
+          desc_lines <- readLines('DESCRIPTION')
+          suggests <- readLines('DESCRIPTION')[grepl("^(Suggests:|  )", readLines('DESCRIPTION'))]
+          suggests <- suggests[(which(grepl("^Suggests", suggests)) + 1):length(suggests)]
+          suggests <- gsub("[ ,]", "", suggests)
+          pkgs <- unique(c(suggests, "tinytest"))
+          for (p in pkgs) try(install.packages(p, repos = "https://cran.r-project.org"), silent = TRUE)
         shell: Rscript {0}
 
       - name: Show session info
