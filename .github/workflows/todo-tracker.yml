@@ -47,7 +47,7 @@ jobs:
           echo "" >> todo.md
           echo "_This overview is automatically updated on each push to \`main\`. It provides an automated overview of all mentions of the text \`TODO\`._" >> todo.md
           echo "" >> todo.md
-          todos=$(find R/ -type f ! -name "sysdata.rda" -exec grep -nH "TODO" {} + || true)
+          todos=$(grep -rn --include=\*.{R,Rmd,yaml,yml,md,css,js} --exclude=todo-tracker.yml "TODO" . || true)
           if [ -z "$todos" ]; then
             echo "✅ No TODOs found." >> todo.md
           else
@@ -74,6 +74,6 @@ jobs:
         with:
           token: ${{ secrets.GH_REPO_SCOPE }}
           issue-number: 231
-          comment-id: 3379846566
+          comment-id: 3253439219
           body-file: todo.md
           edit-mode: replace
