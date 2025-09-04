@@ -47,19 +47,20 @@ jobs:
           echo "" >> todo.md
           echo "_This overview is automatically updated on each push to \`main\`. It provides an automated overview of all mentions of the text \`TODO\`._" >> todo.md
           echo "" >> todo.md
-          todos=$(grep -rn --include=\*.{R,Rmd,yaml,yml,md,css,js} --exclude=todo-tracker.yml "TODO" . || true)
+          todos=$(grep -rn --include=\*.{R,Rmd,yaml,yml,md,css,js}  --exclude={todo-tracker.yml,todo.md} "TODO" . || true)
           if [ -z "$todos" ]; then
             echo "✅ No TODOs found." >> todo.md
           else
-            echo "$todos" | awk -F: '
+            echo "$todos" | awk -F: -v repo="https://github.com/msberends/AMR/blob/main/" '
               {
                 file = $1
+                gsub("^\\./", "", file)  # remove leading ./ if present
                 line = $2
                 text = substr($0, index($0,$3))
                 if (file != last_file) {
                   if (last_file != "") print "```"
                   print ""
-                  print "### " file
+                  print "### [`" file "`](" repo file ")"
                   print "```r"
                   last_file = file
                 }

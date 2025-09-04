@@ -58,8 +58,12 @@ To install the latest ‘beta’ version:
 
 ``` r
 install.packages("AMR", repos = "beta.amr-for-r.org")
+```
 
-# if this does not work, try to install directly from GitHub using the 'remotes' package:
+If this does not work, try to install directly from GitHub using the
+`remotes` package:
+
+``` r
 remotes::install_github("msberends/AMR")
 ```
 
