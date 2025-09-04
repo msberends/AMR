@@ -43,9 +43,9 @@ jobs:
 
       - name: Generate TODO list from R/
         run: |
-          echo "## TODO Report" > todo.md
+          echo "## \`TODO\` Report" > todo.md
           echo "" >> todo.md
-          echo "_This issue is automatically updated on each push to `main`._" >> todo.md
+          echo "_This overview is automatically updated on each push to \`main\`. It provides an automated overview of all mentions of the text \`TODO\`._" >> todo.md
           echo "" >> todo.md
           todos=$(find R/ -type f ! -name "sysdata.rda" -exec grep -nH "TODO" {} + || true)
           if [ -z "$todos" ]; then
@@ -57,13 +57,16 @@ jobs:
                 line = $2
                 text = substr($0, index($0,$3))
                 if (file != last_file) {
-                  if (last_file != "") print ""
+                  if (last_file != "") print "```"
+                  print ""
                   print "### " file
+                  print "```r"
                   last_file = file
                 }
                 printf "L%s: %s\n", line, text
               }
             ' >> todo.md
+            echo "\`\`\`" >> todo.md
           fi
 
       - name: Update GitHub issue
@@ -71,5 +74,6 @@ jobs:
         with:
           token: ${{ secrets.GH_REPO_SCOPE }}
           issue-number: 231
+          comment-id: 3379846566
           body-file: todo.md
           edit-mode: replace
