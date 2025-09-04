@@ -1,4 +1,4 @@
-# AMR 3.0.0.9025
+# AMR 3.0.0.9026
 
 This is a bugfix release following the release of v3.0.0 in June 2025.
 

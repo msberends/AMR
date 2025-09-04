@@ -221,6 +221,12 @@ In this second example, we demonstrate how to use `<mic>` columns directly in `t
 
 This approach and idea formed the basis for the publication [DOI: 10.3389/fmicb.2025.1582703](https://doi.org/10.3389/fmicb.2025.1582703) to model the presence of extended-spectrum beta-lactamases (ESBL).
 
+> NOTE: THIS EXAMPLE WILL BE AVAILABLE IN A NEXT VERSION (#TODO)
+> 
+> The new AMR package version will contain new tidymodels selectors such as `step_mic_log2()`.
+
+<!--
+
 ### **Objective**
 
 Our goal is to:
@@ -347,11 +353,15 @@ ggplot(predictions, aes(x = esbl, fill = .pred_class)) +
   theme_minimal()
 ```
 
+<!--
+
 ### **Conclusion**
 
 In this example, we showcased how the new `AMR`-specific recipe steps simplify working with `<mic>` columns in `tidymodels`. The `step_mic_log2()` transformation converts ordered MICs to log2-transformed numerics, improving compatibility with classification models.
 
 This pipeline enables realistic, reproducible, and interpretable modelling of antimicrobial resistance data.
+
+-->
 
 ---
 
