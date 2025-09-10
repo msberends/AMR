@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,40 +48,6 @@
       <small>Source: <a href="https://github.com/msberends/AMR/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.0.9021" id="amr-3009021">AMR 3.0.0.9021<a class="anchor" aria-label="anchor" href="#amr-3009021"></a></h2>
-<p>This is primarily a bugfix release, though we added one nice feature too.</p>
-<div class="section level4">
-<h4 id="new-3-0-0-9021">New<a class="anchor" aria-label="anchor" href="#new-3-0-0-9021"></a></h4>
-<ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of MIC and SIR data in modelling pipelines via <code>recipes</code>
-<ul><li>
-<code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
-<li>New <code>tidyselect</code> helpers: <code><a href="../reference/amr-tidymodels.html">all_mic()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic_predictors()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_sir()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_sir_predictors()</a></code>
-</li>
-</ul></li>
-</ul></div>
-<div class="section level4">
-<h4 id="changed-3-0-0-9021">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-0-9021"></a></h4>
-<ul><li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
-<li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> to allow column names containing the <code>+</code> character (<a href="https://github.com/msberends/AMR/issues/222" class="external-link">#222</a>)</li>
-<li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> for antimicrobial codes with a number in it if they are preceded by a space</li>
-<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> for using specific custom rules</li>
-<li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> to allow any tidyselect language (<a href="https://github.com/msberends/AMR/issues/220" class="external-link">#220</a>)</li>
-<li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> to pick right breakpoint when <code>uti = FALSE</code> (<a href="https://github.com/msberends/AMR/issues/216" class="external-link">#216</a>)</li>
-<li>Fixed a bug in <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code> when using <code>combine_SI = FALSE</code> (<a href="https://github.com/msberends/AMR/issues/213" class="external-link">#213</a>)</li>
-<li>Fixed a bug the <code>antimicrobials</code> data set to remove statins (<a href="https://github.com/msberends/AMR/issues/229" class="external-link">#229</a>)</li>
-<li>Fixed a bug in <code><a href="../reference/mdro.html">mdro()</a></code> to make sure all genes specified in arguments are acknowledges</li>
-<li>Fixed ATC J01CR05 to map to piperacillin/tazobactam rather than piperacillin/sulbactam (<a href="https://github.com/msberends/AMR/issues/230" class="external-link">#230</a>)</li>
-<li>Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (<a href="https://github.com/msberends/AMR/issues/223" class="external-link">#223</a>)</li>
-<li>Fixed some specific Dutch translations for antimicrobials</li>
-<li>Added all reasons in verbose output of <code><a href="../reference/mdro.html">mdro()</a></code> (<a href="https://github.com/msberends/AMR/issues/227" class="external-link">#227</a>)</li>
-<li>Added <code>names</code> to <code><a href="../reference/age_groups.html">age_groups()</a></code> so that custom names can be given (<a href="https://github.com/msberends/AMR/issues/215" class="external-link">#215</a>)</li>
-<li>Added note to <code><a href="../reference/as.sir.html">as.sir()</a></code> to make it explicit when higher-level taxonomic breakpoints are used (<a href="https://github.com/msberends/AMR/issues/218" class="external-link">#218</a>)</li>
-<li>Added antibiotic codes from the Comprehensive Antibiotic Resistance Database (CARD) to the <code>antimicrobials</code> data set (<a href="https://github.com/msberends/AMR/issues/225" class="external-link">#225</a>)</li>
-<li>Updated Fosfomycin to be of antibiotic class ‘Phosphonics’ (<a href="https://github.com/msberends/AMR/issues/225" class="external-link">#225</a>)</li>
-<li>Updated <code><a href="../reference/random.html">random_mic()</a></code> and <code><a href="../reference/random.html">random_disk()</a></code> to set skewedness of the distribution and allow multiple microorganisms</li>
-</ul></div>
-</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.0.0" id="amr-300">AMR 3.0.0<a class="anchor" aria-label="anchor" href="#amr-300"></a></h2><p class="text-muted">CRAN release: 2025-06-02</p>
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
