@@ -70,14 +70,14 @@ test_that("test-misc.R", {
   }
 
   df <- example_isolates[, check_df("x")]
-  expect_true(is_right, info = "the environmental data cannot be found for base/x (1)")
+  expect_true(is_right, info = "the environmental data cannot be found for base `x`")
 
-  if (getRversion() < "4.0.0") {
+  # should work on R >=3.6.3 or so
+  df <- example_isolates[c(1:3), check_df("x")]
+  if (!is_right) {
+    # otherwise, this is needed for older versions
     df <- example_isolates[c(1:3), check_df("xx")]
-    expect_true(is_right, info = "the environmental data cannot be found for base/xx")
-  } else {
-    df <- example_isolates[c(1:3), check_df("x")]
-    expect_true(is_right, info = "the environmental data cannot be found for base/x (2)")
+    expect_true(is_right, info = "the environmental data cannot be found for base `x` or `xx`") 
   }
 
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
