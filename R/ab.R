@@ -202,6 +202,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   if (sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
+    if (any(x_new[!already_known] %in% unlist(AMR_env$AV_lookup$generalised_all, use.names = FALSE), na.rm = TRUE)) {
+      warning_("in `as.ab()`: some input seem to resemble antiviral drugs - use `as.av()` or e.g. `av_name()` for these, not `as.ab()` or e.g. `ab_name()`.")
+    }
   }
 
   for (i in which(!already_known)) {
@@ -448,7 +451,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_unknown <- x_unknown[!x_unknown %in% c("", NA)]
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
+      "in `as.ab()`: ", ifelse(length(unique(x_unknown)) == 1, "this value", "these values"), " could not be coerced to a valid antimicrobial ID: ",
       vector_and(x_unknown), "."
     )
   }
@@ -625,6 +628,20 @@ rep.ab <- function(x, ...) {
   out <- as.character(outer(e1, e2, paste, sep = " + "))
   out <- gsub(" [+] $", "", out)
   out
+}
+
+# this prevents the requirement for putting the dependency in Imports:
+#' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, ab)
+get_skimmers.ab <- function(column) {
+  ab <- as.ab(column, info = FALSE)
+  ab <- ab[!is.na(ab)]
+  skimr::sfl(
+    skim_type = "ab",
+    n_unique = ~ length(unique(ab)),
+    top_ab = ~ names(sort(-table(ab)))[1L],
+    top_ab_name = ~ names(sort(-table(ab_name(ab, info = FALSE))))[1L],
+    top_group = ~ names(sort(-table(ab_group(ab, info = FALSE))))[1L]
+  )
 }
 
 generalise_antibiotic_name <- function(x) {

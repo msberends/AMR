@@ -236,12 +236,14 @@ rep.disk <- function(x, ...) {
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, disk)
 get_skimmers.disk <- function(column) {
+  column <- as.integer(column)
   skimr::sfl(
     skim_type = "disk",
-    min = ~ min(as.double(.), na.rm = TRUE),
-    max = ~ max(as.double(.), na.rm = TRUE),
-    median = ~ stats::median(as.double(.), na.rm = TRUE),
-    n_unique = ~ length(unique(stats::na.omit(.))),
-    hist = ~ skimr::inline_hist(stats::na.omit(as.double(.)))
+    p0 = ~ stats::quantile(column, probs = 0, na.rm = TRUE, names = FALSE),
+    p25 = ~ stats::quantile(column, probs = 0.25, na.rm = TRUE, names = FALSE),
+    p50 = ~ stats::quantile(column, probs = 0.5, na.rm = TRUE, names = FALSE),
+    p75 = ~ stats::quantile(column, probs = 0.75, na.rm = TRUE, names = FALSE),
+    p100 = ~ stats::quantile(column, probs = 1, na.rm = TRUE, names = FALSE),
+    hist = ~ skimr::inline_hist(stats::na.omit(column), 10)
   )
 }

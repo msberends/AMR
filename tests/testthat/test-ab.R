@@ -96,6 +96,14 @@ test_that("test-ab.R", {
     rep("GEH", 8)
   )
 
+  # skimr
+  if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
+    expect_named(
+      skim(clinical_breakpoints$ab),
+      c("skim_type", "skim_variable", "n_missing", "complete_rate", "ab.n_unique", "ab.top_ab", "ab.top_ab_name", "ab.top_group")
+    )
+  }
+
   # assigning and subsetting
   x <- AMR::antimicrobials$ab
   expect_inherits(x[1], "ab")

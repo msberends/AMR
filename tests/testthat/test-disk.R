@@ -60,4 +60,12 @@ test_that("test-disk.R", {
   if (AMR:::pkg_is_available("tibble")) {
     expect_output(print(tibble::tibble(d = as.disk(12))))
   }
+
+  # skimr
+  if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
+    expect_named(
+      skim(random_disk(100)),
+      c("skim_type", "skim_variable", "n_missing", "complete_rate", "disk.p0", "disk.p25", "disk.p50", "disk.p75", "disk.p100", "disk.hist")
+    )
+  }
 })

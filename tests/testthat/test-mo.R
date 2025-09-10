@@ -321,4 +321,12 @@ test_that("test-mo.R", {
   if (AMR:::pkg_is_available("cleaner")) {
     expect_inherits(cleaner::freq(example_isolates$mo), "freq")
   }
+
+  # skimr
+  if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
+    expect_named(
+      skim(example_isolates$mo),
+      c("skim_type", "skim_variable", "n_missing", "complete_rate", "mo.n_unique", "mo.gram_negative", "mo.gram_positive", "mo.yeast", "mo.top_genus", "mo.top_species")
+    )
+  }
 })

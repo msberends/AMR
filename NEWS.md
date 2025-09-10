@@ -1,4 +1,4 @@
-# AMR 3.0.0.9026
+# AMR 3.0.0.9027
 
 This is a bugfix release following the release of v3.0.0 in June 2025.
 
@@ -13,8 +13,10 @@ This is a bugfix release following the release of v3.0.0 in June 2025.
 * Fixed a bug the `antimicrobials` data set to remove statins (#229)
 * Fixed a bug in `mdro()` to make sure all genes specified in arguments are acknowledged
 * Fixed ATC J01CR05 to map to piperacillin/tazobactam rather than piperacillin/sulbactam (#230)
+* Fixed skimmers (`skimr` package) of class `ab`, `sir`, and `disk` (#234)
 * Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)
 * Fixed some specific Dutch translations for antimicrobials
+* Added a warning to `as.ab()` if input resembles antiviral codes or names (#232)
 * Added all reasons in verbose output of `mdro()` (#227)
 * Added `names` to `age_groups()` so that custom names can be given (#215)
 * Added note to `as.sir()` to make it explicit when higher-level taxonomic breakpoints are used (#218)

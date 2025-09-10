@@ -596,12 +596,12 @@ get_skimmers.mic <- function(column) {
   column <- as.mic(column) # make sure that currently implemented MIC levels are used
   skimr::sfl(
     skim_type = "mic",
-    p0 = ~ stats::quantile(., probs = 0, na.rm = TRUE, names = FALSE),
-    p25 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE, names = FALSE),
-    p50 = ~ stats::quantile(., probs = 0.5, na.rm = TRUE, names = FALSE),
-    p75 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE, names = FALSE),
-    p100 = ~ stats::quantile(., probs = 1, na.rm = TRUE, names = FALSE),
-    hist = ~ skimr::inline_hist(log2(stats::na.omit(.)), 5)
+    p0 = ~ stats::quantile(column, probs = 0, na.rm = TRUE, names = FALSE),
+    p25 = ~ stats::quantile(column, probs = 0.25, na.rm = TRUE, names = FALSE),
+    p50 = ~ stats::quantile(column, probs = 0.5, na.rm = TRUE, names = FALSE),
+    p75 = ~ stats::quantile(column, probs = 0.75, na.rm = TRUE, names = FALSE),
+    p100 = ~ stats::quantile(column, probs = 1, na.rm = TRUE, names = FALSE),
+    hist = ~ skimr::inline_hist(log2(stats::na.omit(column)), 10)
   )
 }
 

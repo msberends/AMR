@@ -1974,33 +1974,18 @@ freq.sir <- function(x, ...) {
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, sir)
 get_skimmers.sir <- function(column) {
-  # get the variable name 'skim_variable'
-  name_call <- function(.data) {
-    calls <- sys.calls()
-    frms <- sys.frames()
-    calls_txt <- vapply(calls, function(x) paste(deparse(x), collapse = ""), FUN.VALUE = character(1))
-    if (any(calls_txt %like% "skim_variable", na.rm = TRUE)) {
-      ind <- which(calls_txt %like% "skim_variable")[1L]
-      vars <- tryCatch(eval(parse(text = ".data$skim_variable$sir"), envir = frms[[ind]]),
-        error = function(e) NULL
-      )
-      tryCatch(ab_name(as.character(calls[[length(calls)]][[2]]), language = NULL, info = FALSE),
-        error = function(e) NA_character_
-      )
-    } else {
-      NA_character_
-    }
-  }
-
+  # TODO add here in AMR 3.1.0 details about guideline
   skimr::sfl(
     skim_type = "sir",
-    ab_name = name_call,
-    count_R = count_R,
-    count_S = count_susceptible,
+    # guideline = function(x) "EUCAST 2025", # or "Multiple"
+    # origin = function(x) "MIC", # or "Multiple"
+    count_S = count_S,
     count_I = count_I,
-    prop_R = ~ proportion_R(., minimum = 0),
-    prop_S = ~ susceptibility(., minimum = 0),
-    prop_I = ~ proportion_I(., minimum = 0)
+    count_R = count_R,
+    prop_S = ~ round(proportion_S(., minimum = 0) * 100, 1),
+    prop_I = ~ round(proportion_I(., minimum = 0) * 100, 1),
+    prop_R = ~ round(proportion_R(., minimum = 0) * 100, 1),
+    hist = ~ skimr::inline_hist(as.double(stats::na.omit(.)), 3)
   )
 }
 

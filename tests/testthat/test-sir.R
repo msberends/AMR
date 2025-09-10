@@ -103,22 +103,13 @@ test_that("test-sir.R", {
       pull(MEM) %>%
       is.sir())
   }
+
+  # skimr
   if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
-    expect_inherits(
-      skim(example_isolates),
-      "data.frame"
+    expect_named(
+      skim(example_isolates$PEN),
+      c("skim_type", "skim_variable", "n_missing", "complete_rate", "sir.count_S", "sir.count_I", "sir.count_R", "sir.prop_S", "sir.prop_I", "sir.prop_R", "sir.hist")
     )
-    if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-      expect_inherits(
-        example_isolates %>%
-          mutate(
-            m = as.mic(2),
-            d = as.disk(20)
-          ) %>%
-          skim(),
-        "data.frame"
-      )
-    }
   }
 
   expect_equal(as.sir(c("", "-", NA, "NULL")), c(NA_sir_, NA_sir_, NA_sir_, NA_sir_))

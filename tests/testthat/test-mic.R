@@ -81,6 +81,14 @@ test_that("test-mic.R", {
     expect_output(print(tibble::tibble(m = as.mic(2:4))))
   }
 
+  # skimr
+  if (AMR:::pkg_is_available("skimr", min_version = "2.0.0", also_load = TRUE)) {
+    expect_named(
+      skim(random_mic(100)),
+      c("skim_type", "skim_variable", "n_missing", "complete_rate", "mic.p0", "mic.p25", "mic.p50", "mic.p75", "mic.p100", "mic.hist")
+    )
+  }
+
   # all mathematical operations
   x <- random_mic(50)
   x_double <- as.double(gsub("[<=>]+", "", as.character(x)))
