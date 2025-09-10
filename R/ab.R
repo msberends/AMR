@@ -202,7 +202,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   if (sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
-    if (any(x_new[!already_known] %in% unlist(AMR_env$AV_lookup$generalised_all, use.names = FALSE), na.rm = TRUE)) {
+    if (any(x_new[!already_known & !is.na(x_new)] %in% unlist(AMR_env$AV_lookup$generalised_all, use.names = FALSE), na.rm = TRUE)) {
       warning_("in `as.ab()`: some input seem to resemble antiviral drugs - use `as.av()` or e.g. `av_name()` for these, not `as.ab()` or e.g. `ab_name()`.")
     }
   }
