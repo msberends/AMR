@@ -48,7 +48,6 @@ echo "Running prehook..."
 if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_checks.R')"
-    currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
     echo "- Adding changed files in ./data-raw and ./man to this commit"
     git add data-raw/*
     git add data/*
@@ -57,11 +56,9 @@ if command -v Rscript > /dev/null; then
     git add NAMESPACE
   else
     echo "- R package 'pkgload', 'devtools', or 'dplyr' not installed!"
-    currentpkg="your"
   fi
 else
   echo "- R is not available on your system!"
-  currentpkg="your"
 fi
 echo ""
 
@@ -92,7 +89,7 @@ else
   
   # Combine tag and commit number
   currentversion="$currenttag.$((currentcommit + 9001))"
-  echo "- ${currentpkg} pkg version set to ${currentversion}"
+  echo "- AMR pkg version set to ${currentversion}"
   
   # Update version number and date in DESCRIPTION
   sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
@@ -103,10 +100,7 @@ else
   
   # Update version number in NEWS.md
   if [ -e "NEWS.md" ]; then
-    if [ "$currentpkg" = "your" ]; then
-      currentpkg=""
-    fi
-    sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
+    sed -i -- "1s/.*/# AMR ${currentversion}/" NEWS.md
     echo "- Updated version number in ./NEWS.md"
     rm -f NEWS.md--
     git add NEWS.md
