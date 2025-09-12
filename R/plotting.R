@@ -247,6 +247,7 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
     as.double(rescale_mic(x = as.double(as.mic(x)), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE))
   }
   scale$transform_df <- function(self, df) {
+    out <- list()
     if (!aest %in% colnames(df)) {
       # support for geom_hline(), geom_vline(), etc
       other_x <- c("xintercept", "xmin", "xmax", "xend", "width")
@@ -258,11 +259,11 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       } else {
         stop_("No support for plotting df with `scale_", aest, "_mic()` with columns ", vector_and(colnames(df), sort = FALSE))
       }
-      out <- rescale_mic(x = as.double(as.mic(df[[aest_val]])), keep_operators = "none", mic_range = NULL, as.mic = TRUE)
-      if (!is.null(self$mic_values_rescaled) && any(out < min(self$mic_values_rescaled, na.rm = TRUE) | out > max(self$mic_values_rescaled, na.rm = TRUE), na.rm = TRUE)) {
+      mics <- rescale_mic(x = as.double(as.mic(df[[aest_val]])), keep_operators = "none", mic_range = NULL, as.mic = TRUE)
+      if (!is.null(self$mic_values_rescaled) && any(mics < min(self$mic_values_rescaled, na.rm = TRUE) | mics > max(self$mic_values_rescaled, na.rm = TRUE), na.rm = TRUE)) {
         warning_("The value for `", aest_val, "` is outside the plotted MIC range, consider using/updating the `mic_range` argument in `scale_", aest, "_mic()`.")
       }
-      df[[aest_val]] <- log2(as.double(out))
+      out[[aest_val]] <- log2(as.double(mics))
     } else {
       self$mic_values_rescaled <- rescale_mic(x = as.double(as.mic(df[[aest]])), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
       # create new breaks and labels here
@@ -286,11 +287,11 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
 
       self$mic_values_log <- log2(as.double(self$mic_values_rescaled))
       if (aest == "y" && "group" %in% colnames(df) && "x" %in% colnames(df)) {
-        df$group <- as.integer(factor(df$x))
+        out$group <- as.integer(factor(df$x))
       }
-      df[[aest]] <- self$mic_values_log
+      out[[aest]] <- self$mic_values_log
     }
-    df
+    out
   }
 
   scale$breaks <- function(..., self) {
@@ -317,7 +318,6 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       }
     }
   }
-
   scale$limits <- function(x, ..., self) {
     if (!is.null(self$mic_limits_set)) {
       if (is.function(self$mic_limits_set)) {

@@ -77,7 +77,7 @@ test_that("test-misc.R", {
   if (!is_right) {
     # otherwise, this is needed for older versions
     df <- example_isolates[c(1:3), check_df("xx")]
-    expect_true(is_right, info = "the environmental data cannot be found for base `x` or `xx`") 
+    expect_true(is_right, info = "the environmental data cannot be found for base `x` or `xx`")
   }
 
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {

@@ -1,8 +1,9 @@
-# AMR 3.0.0.9030
+# AMR 3.0.0.9031
 
 This is a bugfix release following the release of v3.0.0 in June 2025.
 
 ### Changed
+* Allow support for newest `ggplot2` v4.0.0
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
 * Fixed a bug in `antibiogram()` to allow column names containing the `+` character (#222)
 * Fixed a bug in `as.ab()` for antimicrobial codes with a number in it if they are preceded by a space
