@@ -1,9 +1,9 @@
-# AMR 3.0.0.9031
+# AMR 3.0.0.9032
 
 This is a bugfix release following the release of v3.0.0 in June 2025.
 
 ### Changed
-* Allow support for newest `ggplot2` v4.0.0
+* Fixed bugs introduced by `ggplot2` v4.0.0 (#236)
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
 * Fixed a bug in `antibiogram()` to allow column names containing the `+` character (#222)
 * Fixed a bug in `as.ab()` for antimicrobial codes with a number in it if they are preceded by a space
@@ -22,7 +22,7 @@ This is a bugfix release following the release of v3.0.0 in June 2025.
 * Added `names` to `age_groups()` so that custom names can be given (#215)
 * Added note to `as.sir()` to make it explicit when higher-level taxonomic breakpoints are used (#218)
 * Added antibiotic codes from the Comprehensive Antibiotic Resistance Database (CARD) to the `antimicrobials` data set (#225)
-* Updated Fosfomycin to be of antibiotic class 'Phosphonics' (#225)
+* Updated Fosfomycin to be of antibiotic class Phosphonics (#225)
 * Updated `random_mic()` and `random_disk()` to set skewedness of the distribution and allow multiple microorganisms
 
 
