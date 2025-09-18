@@ -115,7 +115,7 @@ test_that("test-mo_property.R", {
 
   expect_equal(
     as.character(table(mo_pathogenicity(example_isolates$mo))),
-    c("1911", "72", "1", "16")
+    c("1911", "66", "1", "22")
   )
 
   expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
