@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9034</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -367,9 +367,9 @@
 <span class="r-in"><span><span class="fu">mo_mycobank</span><span class="op">(</span><span class="st">"Candida krusei"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "337013"</span>
 <span class="r-in"><span><span class="fu">mo_mycobank</span><span class="op">(</span><span class="st">"Candida krusei"</span>, keep_synonyms <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function <span style="background-color: #EEEEEE;">`as.mo()`</span> returned one old taxonomic name. Use <span style="background-color: #EEEEEE;">`as.mo(...,</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="background-color: #EEEEEE;">keep_synonyms = FALSE)`</span> to clean the input to currently accepted taxonomic</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> names, or set the R option <span style="background-color: #EEEEEE;">`AMR_keep_synonyms`</span> to <span style="background-color: #EEEEEE;">`FALSE`</span>. This warning</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function <span style="background-color: #444444;">`as.mo()`</span> returned one old taxonomic name. Use <span style="background-color: #444444;">`as.mo(...,</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="background-color: #444444;">keep_synonyms = FALSE)`</span> to clean the input to currently accepted taxonomic</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> names, or set the R option <span style="background-color: #444444;">`AMR_keep_synonyms`</span> to <span style="background-color: #444444;">`FALSE`</span>. This warning</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> will be shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "268707"</span>
 <span class="r-in"><span></span></span>
@@ -462,8 +462,8 @@
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">mo_is_gram_positive</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="count.html">count</a></span><span class="op">(</span><span class="fu">mo_genus</span><span class="op">(</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #EEEEEE;">`mo_is_gram_positive()`</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #EEEEEE;">`mo_genus()`</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #444444;">`mo_is_gram_positive()`</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #444444;">`mo_genus()`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    `mo_genus()`        n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -490,8 +490,8 @@
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">mo_is_intrinsic_resistant</span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"vanco"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="count.html">count</a></span><span class="op">(</span><span class="fu">mo_genus</span><span class="op">(</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #EEEEEE;">`mo_is_intrinsic_resistant()`</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #EEEEEE;">`mo_genus()`</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #444444;">`mo_is_intrinsic_resistant()`</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #444444;">`mo_genus()`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 19 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    `mo_genus()`         n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>

@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9034</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -215,7 +215,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># apply EUCAST rules: some results wil be changed</span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">`eucast_rules()`</span>: not all columns with antimicrobial results are of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`eucast_rules()`</span>: not all columns with antimicrobial results are of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'sir'. Transform them on beforehand, with e.g.:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(CXM:AMX)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is_sir_eligible, as.sir)</span>
@@ -233,7 +233,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="co"># do not apply EUCAST rules, but rather get a data.frame</span></span></span>
 <span class="r-in"><span><span class="co"># containing all details about the transformations:</span></span></span>
 <span class="r-in"><span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">`eucast_rules()`</span>: not all columns with antimicrobial results are of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`eucast_rules()`</span>: not all columns with antimicrobial results are of</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> class 'sir'. Transform them on beforehand, with e.g.:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% as.sir(CXM:AMX)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   - a %&gt;% mutate_if(is_sir_eligible, as.sir)</span>

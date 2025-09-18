@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9034</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -205,8 +205,8 @@ Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">facto
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">mdro</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #EEEEEE;">`mdro()`</span>: NA introduced for isolates where the available percentage of</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #EEEEEE;">`pct_required_classes`</span>)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`mdro()`</span>: NA introduced for isolates where the available percentage of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #444444;">`pct_required_classes`</span>)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Ord.factor w/ 4 levels "Negative"&lt;"Multi-drug-resistant (MDR)"&lt;..: NA NA 1 1 1 1 NA NA 1 1 ...</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
@@ -232,8 +232,8 @@ Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">facto
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `MDRO = mdro()`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in <span style="background-color: #EEEEEE;">`mdro()`</span>: NA introduced for isolates where the available percentage of</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #EEEEEE;">`pct_required_classes`</span>)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in <span style="background-color: #444444;">`mdro()`</span>: NA introduced for isolates where the available percentage of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial classes was below 50% (set with <span style="background-color: #444444;">`pct_required_classes`</span>)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   MDRO                           n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
