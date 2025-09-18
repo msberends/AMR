@@ -61,7 +61,7 @@
 #'
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #'
-#' ### Different methods
+#' ## Different methods
 #'
 #' According to previously-mentioned sources, there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
 #'
@@ -89,21 +89,29 @@
 #' | - Major difference in any antimicrobial result   | - `first_isolate(x, type = "points")`                 |
 #' | - Any difference in key antimicrobial results    | - `first_isolate(x, type = "keyantimicrobials")`      |
 #'
-#' ### Isolate-based
+#' **Isolate-based**
+#'
+#' _Minimum variables required: Microorganism identifier_
 #'
 #' This method does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the [first_isolate()] function. For example, the default setting for `include_unknown` (`FALSE`) will omit selection of rows without a microbial ID.
 #'
-#' ### Patient-based
+#' **Patient-based**
 #'
-#' To include every genus-species combination per patient once, set the `episode_days` to `Inf`. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are *excluded* that were found years after the initial isolate.
+#' _Minimum variables required: Microorganism identifier, Patient identifier_
 #'
-#' ### Episode-based
+#' This method includes every genus-species combination per patient once. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are *excluded* that were found years after the initial isolate.
 #'
-#' To include every genus-species combination per patient episode once, set the `episode_days` to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.
+#' **Episode-based**
+#'
+#' _Minimum variables required: Microorganism identifier, Patient identifier, Date_
+#'
+#' To include every genus-species combination per patient episode once, set the `episode_days` to a sensible number of days. Depending on the type of analysis, this could be e.g., 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.
 #'
 #' This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant *Staphylococcus aureus* (MRSA) isolate cannot be differentiated from a wildtype *Staphylococcus aureus* isolate.
 #'
-#' ### Phenotype-based
+#' **Phenotype-based**
+#'
+#' _Minimum variables required: Microorganism identifier, Patient identifier, Date, Antimicrobial test results_
 #'
 #' This is a more reliable method, since it also *weighs* the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
 #'

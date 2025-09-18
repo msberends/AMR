@@ -18,7 +18,7 @@ A \link[tibble:tibble]{tibble} with 78 679 observations and 26 variables:
 \item \code{lpsn}\cr Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set. \emph{\strong{This is a unique identifier}}, though available for only ~33 000 records.
 \item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
 \item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
-\item \code{mycobank}\cr Identifier ('MycoBank #') of MycoBank. \emph{\strong{This is a unique identifier}}, though available for only ~18 000 records.
+\item \code{mycobank}\cr Identifier ('MycoBank #') of MycoBank. \emph{\strong{This is a unique identifier}}, though available for only ~19 000 records.
 \item \code{mycobank_parent}\cr MycoBank identifier of the parent taxon
 \item \code{mycobank_renamed_to}\cr MycoBank identifier of the currently valid taxon
 \item \code{gbif}\cr Identifier ('taxonID') of Global Biodiversity Information Facility (GBIF). \emph{\strong{This is a unique identifier}}, though available for only ~49 000 records.
@@ -70,7 +70,7 @@ Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://ww
 \item ~28 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
 \item ~8 100 (sub)species from the kingdom of Protozoa
 \item ~1 600 (sub)species from 39 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
-\item All ~22 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
+\item All ~26 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 \item The identifier of the parent taxons
 \item The year and first author of the related scientific publication

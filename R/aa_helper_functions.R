@@ -485,11 +485,7 @@ word_wrap <- function(...,
   }
 
   # format backticks
-  if (pkg_is_available("cli") &&
-    tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE) &&
-    tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) {
-      return(FALSE)
-    }) &&
+  if (pkg_is_available("cli") && in_rstudio() &&
     tryCatch(getExportedValue("versionInfo", ns = asNamespace("rstudioapi"))()$version > "2023.6.0.0", error = function(e) {
       return(FALSE)
     })) {
@@ -1188,6 +1184,13 @@ reset_all_thrown_messages <- function() {
   )
 }
 
+in_rstudio <- function() {
+  identical(Sys.getenv("RSTUDIO"), "1")
+}
+in_positron <- function() {
+  identical(Sys.getenv("POSITRON"), "1")
+}
+
 has_colour <- function() {
   if (is.null(AMR_env$supports_colour)) {
     if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {
@@ -1222,7 +1225,7 @@ is_dark <- function() {
   AMR_env$current_theme <- tryCatch(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$editor, error = function(e) NULL)
   if (!identical(AMR_env$current_theme, AMR_env$former_theme) || is.null(AMR_env$is_dark_theme)) {
     AMR_env$former_theme <- AMR_env$current_theme
-    AMR_env$is_dark_theme <- !has_colour() || tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
+    AMR_env$is_dark_theme <- !has_colour() || tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) TRUE)
   }
   isTRUE(AMR_env$is_dark_theme)
 }

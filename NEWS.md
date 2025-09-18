@@ -1,4 +1,4 @@
-# AMR 3.0.0.9033
+# AMR 3.0.0.9034
 
 This is a bugfix release following the release of v3.0.0 in June 2025.
 
@@ -11,8 +11,9 @@ This is a bugfix release following the release of v3.0.0 in June 2025.
 * Fixed a bug in `as.sir()` to allow any tidyselect language (#220)
 * Fixed a bug in `as.sir()` to pick right breakpoint when `uti = FALSE` (#216)
 * Fixed a bug in `ggplot_sir()` when using `combine_SI = FALSE` (#213)
-* Fixed a bug the `antimicrobials` data set to remove statins (#229)
 * Fixed a bug in `mdro()` to make sure all genes specified in arguments are acknowledged
+* Fixed a bug the `antimicrobials` data set to remove statins (#229)
+* Fixed a bug the `microorganisms` data set for MycoBank IDs and synonyms (#233)
 * Fixed ATC J01CR05 to map to piperacillin/tazobactam rather than piperacillin/sulbactam (#230)
 * Fixed skimmers (`skimr` package) of class `ab`, `sir`, and `disk` (#234)
 * Fixed all plotting to contain a separate colour for SDD (susceptible dose-dependent) (#223)

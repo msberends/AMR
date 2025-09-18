@@ -108,26 +108,30 @@ All mentioned methods are covered in the \code{\link[=first_isolate]{first_isola
    - Any difference in key antimicrobial results \tab - \code{first_isolate(x, type = "keyantimicrobials")} \cr
 }
 
-}
 
-\subsection{Isolate-based}{
+\strong{Isolate-based}
+
+\emph{Minimum variables required: Microorganism identifier}
 
 This method does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the \code{\link[=first_isolate]{first_isolate()}} function. For example, the default setting for \code{include_unknown} (\code{FALSE}) will omit selection of rows without a microbial ID.
-}
 
-\subsection{Patient-based}{
+\strong{Patient-based}
 
-To include every genus-species combination per patient once, set the \code{episode_days} to \code{Inf}. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are \emph{excluded} that were found years after the initial isolate.
-}
+\emph{Minimum variables required: Microorganism identifier, Patient identifier}
 
-\subsection{Episode-based}{
+This method includes every genus-species combination per patient once. This method makes sure that no duplicate isolates are selected from the same patient. This method is preferred to e.g. identify the first MRSA finding of each patient to determine the incidence. Conversely, in a large longitudinal data set, this could mean that isolates are \emph{excluded} that were found years after the initial isolate.
 
-To include every genus-species combination per patient episode once, set the \code{episode_days} to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.
+\strong{Episode-based}
+
+\emph{Minimum variables required: Microorganism identifier, Patient identifier, Date}
+
+To include every genus-species combination per patient episode once, set the \code{episode_days} to a sensible number of days. Depending on the type of analysis, this could be e.g., 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data or ICU cases, long episodes are common for analysing regional and national data.
 
 This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant \emph{Staphylococcus aureus} (MRSA) isolate cannot be differentiated from a wildtype \emph{Staphylococcus aureus} isolate.
-}
 
-\subsection{Phenotype-based}{
+\strong{Phenotype-based}
+
+\emph{Minimum variables required: Microorganism identifier, Patient identifier, Date, Antimicrobial test results}
 
 This is a more reliable method, since it also \emph{weighs} the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
 \enumerate{
