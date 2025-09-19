@@ -284,10 +284,14 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
         self$mic_values_levels[1] <- paste0("<=", self$mic_values_levels[1])
         self$mic_values_levels[length(self$mic_values_levels)] <- paste0(">=", self$mic_values_levels[length(self$mic_values_levels)])
       }
-
       self$mic_values_log <- log2(as.double(self$mic_values_rescaled))
-      if (aest == "y" && "group" %in% colnames(df) && "x" %in% colnames(df)) {
-        out$group <- as.integer(factor(df$x))
+
+      if (aest == "y" && "group" %in% colnames(df)) {
+        if (!"x" %in% colnames(df) || all(is.na(df$x))) {
+          out$group <- 1
+        } else {
+          out$group <- as.integer(factor(df$x))
+        }
       }
       out[[aest]] <- self$mic_values_log
     }
@@ -329,7 +333,7 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       rng <- range(log2(as.mic(self$mic_values_levels)))
       # add 0.5 extra space
       rng <- c(rng[1] - 0.5, rng[2] + 0.5)
-      if (!is.na(x[1]) && x[1] == 0) {
+      if (!is.null(x) && !is.na(x[1]) && x[1] == 0) {
         # scale that start at 0 must remain so, e.g. in case of geom_col()
         rng[1] <- 0
       }
