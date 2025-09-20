@@ -172,12 +172,20 @@ Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC 
 \details{
 \subsection{The \verb{scale_*_mic()} Functions}{
 
-The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale. They also allow to rescale the MIC range with an 'inside' or 'outside' range if required, and retain the operators in MIC values (such as \code{>=}) if desired. Missing intermediate log2 levels will be plotted too.
+The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale.
+
+There is normally no need to add these scale functions to your plot, as they are applied automatically when plotting values of class \link[=as.mic]{mic}.
+
+When manually added though, they allow to rescale the MIC range with an 'inside' or 'outside' range if required, and provide the option to retain the operators in MIC values (such as \code{>=}). Missing intermediate log2 levels will always be plotted too.
 }
 
 \subsection{The \verb{scale_*_sir()} Functions}{
 
-The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI). At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 28 supported languages (use \code{language = NULL} to keep S/I/R). Also, except for \code{\link[=scale_x_sir]{scale_x_sir()}}, they set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
+The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI).
+
+There is normally no need to add these scale functions to your plot, as they are applied automatically when plotting values of class \link[=as.sir]{sir}.
+
+At default, they translate the S/I/R values to an interpretative text ("Susceptible", "Resistant", etc.) in any of the 28 supported languages (use \code{language = NULL} to keep S/I/R). Also, except for \code{\link[=scale_x_sir]{scale_x_sir()}}, they set colour-blind friendly colours to the \code{colour} and \code{fill} aesthetics.
 }
 
 \subsection{Additional \code{ggplot2} Functions}{
@@ -235,17 +243,12 @@ if (require("ggplot2")) {
   ) +
     geom_col()
   mic_plot +
-    labs(title = "without scale_x_mic()")
+    labs(title = "scale_x_mic() automatically applied")
 }
 if (require("ggplot2")) {
   mic_plot +
-    scale_x_mic() +
-    labs(title = "with scale_x_mic()")
-}
-if (require("ggplot2")) {
-  mic_plot +
-    scale_x_mic(keep_operators = "all") +
-    labs(title = "with scale_x_mic() keeping all operators")
+    scale_x_mic(keep_operators = "none") +
+    labs(title = "with scale_x_mic() keeping no operators")
 }
 if (require("ggplot2")) {
   mic_plot +
@@ -272,7 +275,7 @@ if (require("ggplot2")) {
   ) +
     geom_boxplot() +
     geom_violin(linetype = 2, colour = "grey30", fill = NA) +
-    scale_y_mic()
+    labs(title = "scale_y_mic() automatically applied")
 }
 if (require("ggplot2")) {
   ggplot(
@@ -304,7 +307,7 @@ if (require("ggplot2")) {
 
 # Plotting using scale_y_mic() and scale_colour_sir() ------------------
 if (require("ggplot2")) {
-  plain <- ggplot(
+  mic_sir_plot <- ggplot(
     data.frame(
       mic = some_mic_values,
       group = some_groups,
@@ -318,21 +321,16 @@ if (require("ggplot2")) {
     theme_minimal() +
     geom_boxplot(fill = NA, colour = "grey30") +
     geom_jitter(width = 0.25)
-
-  plain
+    labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
+    
+  mic_sir_plot
 }
 if (require("ggplot2")) {
-  # and now with our MIC and SIR scale functions:
-  plain +
-    scale_y_mic() +
-    scale_colour_sir()
-}
-if (require("ggplot2")) {
-  plain +
+  mic_sir_plot +
     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
     scale_colour_sir(
-      language = "pt",
-      name = "Support in 27 languages"
+      language = "pt", # Portuguese
+      name = "Support in 28 languages"
     )
 }
 }

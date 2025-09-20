@@ -1499,12 +1499,13 @@ mdro <- function(x = NULL,
       any_all = "any",
       reason = "Enterobacterales: carbapenemase"
     )
+    c.freundii_complex <- AMR::microorganisms.groups$mo_name[AMR::microorganisms.groups$mo_group_name == "Citrobacter freundii complex"]
     trans_tbl(
       3,
       rows = which(col_values(x, SXT) == "R" &
         (col_values(x, GEN) == "R" | col_values(x, TOB) == "R" | col_values(x, AMK) == "R") &
         (col_values(x, CIP) == "R" | col_values(x, NOR) == "R" | col_values(x, LVX) == "R") &
-        (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c("Citrobacter freundii", "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
+        (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c(c.freundii_complex, "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
       cols = c(SXT, aminoglycosides, fluoroquinolones),
       any_all = "any",
       reason = "Enterobacterales group II: aminoglycoside + fluoroquinolone + cotrimoxazol"

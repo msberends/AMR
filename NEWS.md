@@ -1,9 +1,11 @@
-# AMR 3.0.0.9036
+# AMR 3.0.1
 
 This is a bugfix release following the release of v3.0.0 in June 2025.
 
 ### Changed
 * Fixed bugs introduced by `ggplot2` v4.0.0 (#236)
+  * MIC scale functions (such as `scale_y_mic()`) will now be applied automatically when plotting values of class `mic`
+  * SIR scale functions (such as `scale_x_sir()`) will now be applied automatically when plotting values of class `sir`
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
 * Fixed a bug in `antibiogram()` to allow column names containing the `+` character (#222)
 * Fixed a bug in `as.ab()` for antimicrobial codes with a number in it if they are preceded by a space
