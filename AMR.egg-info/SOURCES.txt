@@ -1,0 +1,10 @@
+README.md
+setup.py
+AMR/__init__.py
+AMR/datasets.py
+AMR/functions.py
+AMR.egg-info/PKG-INFO
+AMR.egg-info/SOURCES.txt
+AMR.egg-info/dependency_links.txt
+AMR.egg-info/requires.txt
+AMR.egg-info/top_level.txt
