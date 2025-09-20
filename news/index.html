@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +49,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.0.9036" id="amr-3009036">AMR 3.0.0.9036<a class="anchor" aria-label="anchor" href="#amr-3009036"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1" id="amr-301">AMR 3.0.1<a class="anchor" aria-label="anchor" href="#amr-301"></a></h2><p class="text-muted">CRAN release: 2025-09-20</p>
 <p>This is a bugfix release following the release of v3.0.0 in June 2025.</p>
 <div class="section level4">
-<h4 id="changed-3-0-0-9036">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-0-9036"></a></h4>
-<ul><li>Fixed bugs introduced by <code>ggplot2</code> v4.0.0 (<a href="https://github.com/msberends/AMR/issues/236" class="external-link">#236</a>)</li>
+<h4 id="changed-3-0-1">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1"></a></h4>
+<ul><li>Fixed bugs introduced by <code>ggplot2</code> v4.0.0 (<a href="https://github.com/msberends/AMR/issues/236" class="external-link">#236</a>)
+<ul><li>MIC scale functions (such as <code><a href="../reference/plot.html">scale_y_mic()</a></code>) will now be applied automatically when plotting values of class <code>mic</code>
+</li>
+<li>SIR scale functions (such as <code><a href="../reference/plot.html">scale_x_sir()</a></code>) will now be applied automatically when plotting values of class <code>sir</code>
+</li>
+</ul></li>
 <li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
 <li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> to allow column names containing the <code>+</code> character (<a href="https://github.com/msberends/AMR/issues/222" class="external-link">#222</a>)</li>
 <li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> for antimicrobial codes with a number in it if they are preceded by a space</li>
