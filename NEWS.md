@@ -1,3 +1,9 @@
+# AMR 3.0.1.9001
+
+### Changed
+* Fixed a bug in `antibiogram()` for when no antimicrobials are set
+
+
 # AMR 3.0.1
 
 This is a bugfix release following the release of v3.0.0 in June 2025.

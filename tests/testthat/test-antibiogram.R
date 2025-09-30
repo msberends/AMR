@@ -32,6 +32,9 @@ test_that("test-antibiogram.R", {
 
   # Traditional antibiogram ----------------------------------------------
 
+
+  ab0 <- antibiogram(example_isolates)
+
   ab1 <- antibiogram(example_isolates,
     antimicrobials = c(aminoglycosides(), carbapenems())
   )

@@ -1620,8 +1620,8 @@ get_n_cores <- function(max_cores = Inf) {
 
 # Support `where()` if tidyselect not installed ----
 if (!is.null(import_fn("where", "tidyselect", error_on_fail = FALSE))) {
-  # tidyselect::where() exists, load the namespace to make `where()`s work across the package in default arguments
-  loadNamespace("tidyselect")
+  # tidyselect::where() exists, retrieve from their namespace to make `where()`s work across the package in default arguments
+  where <- tidyselect::where
 } else {
   where <- function(fn) {
     # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32

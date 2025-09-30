@@ -453,7 +453,7 @@ antibiogram.default <- function(x,
     deprecation_warning("antibiotics", "antimicrobials", fn = "antibiogram", is_argument = TRUE)
     antimicrobials <- list(...)$antibiotics
   }
-  meet_criteria(antimicrobials, allow_class = c("character", "numeric", "integer"), allow_NA = FALSE, allow_NULL = FALSE)
+  meet_criteria(antimicrobials, allow_class = c("character", "numeric", "integer", "function"), allow_NA = FALSE, allow_NULL = FALSE)
   if (!is.function(mo_transform)) {
     meet_criteria(mo_transform, allow_class = "character", has_length = 1, is_in = c("name", "shortname", "gramstain", colnames(AMR::microorganisms)), allow_NULL = TRUE, allow_NA = TRUE)
   }
@@ -518,6 +518,10 @@ antibiogram.default <- function(x,
 
   # get antimicrobials
   ab_trycatch <- tryCatch(colnames(suppressWarnings(x[, antimicrobials, drop = FALSE])), error = function(e) NULL)
+  if (is.null(ab_trycatch)) {
+    # try with tidyverse
+    ab_trycatch <- tryCatch(colnames(dplyr::select(x, {{ antimicrobials }})), error = function(e) NULL)
+  }
   if (is.null(ab_trycatch)) {
     stop_ifnot(is.character(suppressMessages(antimicrobials)), "`antimicrobials` must be an antimicrobial selector, or a character vector.")
     antimicrobials.bak <- antimicrobials
