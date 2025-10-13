@@ -35,24 +35,26 @@ library(readr)
 library(tidyr)
 devtools::load_all()
 
-# Install the WHONET software on Windows (http://www.whonet.org/software.html),
-# and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
-# (for ASIARS-Net update, also copy C:\WHONET\Codes to the data-raw/WHONET/ folder)
-
 # BE SURE TO RUN data-raw/_reproduction_scripts/reproduction_of_microorganisms.groups.R FIRST TO GET THE GROUPS!
 
 # READ DATA ----
 
-whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("", "NA", "-"), show_col_types = FALSE) |>
+# files are retrieved from https://github.com/AClark-WHONET/AMRIE
+
+github_repo <- "https://raw.github.com/AClark-WHONET/AMRIE/main/Interpretation%20Engine/Resources"
+file_organisms <- file.path(github_repo, "Organisms.txt")
+file_breakpoints <- file.path(github_repo, "Breakpoints.txt")
+file_antibiotics <- file.path(github_repo, "Antibiotics.txt")
+
+whonet_organisms <- read_tsv(file_organisms, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   # remove old taxonomic names
   filter(TAXONOMIC_STATUS == "C") |>
   mutate(ORGANISM_CODE = toupper(WHONET_ORG_CODE))
 
-whonet_breakpoints <- read_tsv("data-raw/WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"),
-                               show_col_types = FALSE, guess_max = Inf) |>
+whonet_breakpoints <- read_tsv(file_breakpoints, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   filter(GUIDELINES %in% c("CLSI", "EUCAST"))
 
-whonet_antibiotics <- read_tsv("data-raw/WHONET/Resources/Antibiotics.txt", na = c("", "NA", "-"), show_col_types = FALSE) |>
+whonet_antibiotics <- read_tsv(file_antibiotics, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   arrange(WHONET_ABX_CODE) |>
   distinct(WHONET_ABX_CODE, .keep_all = TRUE)
 

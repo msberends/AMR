@@ -1,4 +1,4 @@
-# AMR 3.0.1.9001
+# AMR 3.0.1.9002
 
 ### Changed
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set

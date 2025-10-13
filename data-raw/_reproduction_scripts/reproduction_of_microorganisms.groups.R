@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-# This data set is being used in the clinical_breakpoints data set, and thus by as.sir().
+# This data set is being referenced from in the clinical_breakpoints data set, and also by as.sir().
 # It prevents the breakpoints table from being extremely long for species that are part of a species group.
 # Also used by eucast_rules() to expand group names.
 
@@ -35,10 +35,6 @@ library(dplyr)
 library(readr)
 library(tidyr)
 devtools::load_all()
-
-# Install the WHONET software on Windows (http://www.whonet.org/software.html),
-# and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
-
 
 # BACTERIAL COMPLEXES
 # find all bacterial complex in the NCBI Taxonomy Browser here:
@@ -48,9 +44,14 @@ devtools::load_all()
 
 # READ DATA ----
 
-whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
+# files are retrieved from https://github.com/AClark-WHONET/AMRIE
+
+github_repo <- "https://raw.github.com/AClark-WHONET/AMRIE/main/Interpretation%20Engine/Resources"
+file_organisms <- file.path(github_repo, "Organisms.txt")
+
+whonet_organisms <- read_tsv(file_organisms, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   # remove old taxonomic names
-  filter(TAXONOMIC_STATUS == "C") %>%
+  filter(TAXONOMIC_STATUS == "C") |>
   mutate(ORGANISM_CODE = toupper(WHONET_ORG_CODE))
 
 whonet_organisms <- whonet_organisms %>%
@@ -87,7 +88,7 @@ microorganisms.groups <- whonet_organisms %>%
             mo = ifelse(is.na(mo),
                         as.character(as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0)),
                         mo)) %>% 
-  # add our own CoNS and CoPS, WHONET does not strictly follow Becker et al (2014, 2019, 2020)
+  # add our own CoNS and CoPS, WHONET does not strictly follow Becker et al. (2014, 2019, 2020)
   filter(mo_group != as.mo("CoNS")) %>% 
   bind_rows(tibble(mo_group = as.mo("CoNS"), mo = MO_CONS)) %>% 
   filter(mo_group != as.mo("CoPS")) %>% 
@@ -153,7 +154,7 @@ microorganisms.groups <- whonet_organisms %>%
   filter(mo_group != "B_YERSN_PSDT-C") %>% 
   bind_rows(tibble(mo_group = as.mo("B_YERSN_PSDT-C"),
                    mo = paste("Yersinia", c("pseudotuberculosis", "pestis", "similis", "wautersii")) %>% as.mo(keep_synonyms = TRUE))) %>% 
-  # RGM are Rapidly-grwoing Mycobacteria, see https://pubmed.ncbi.nlm.nih.gov/28084211/
+  # RGM are Rapidly-growing Mycobacteria, see https://pubmed.ncbi.nlm.nih.gov/28084211/
   filter(mo_group != "B_MYCBC_RGM") %>% 
   bind_rows(tibble(mo_group = as.mo("B_MYCBC_RGM"),
                    mo = paste("Mycobacterium", c( "abscessus abscessus", "abscessus bolletii", "abscessus massiliense", "agri", "aichiense", "algericum", "alvei", "anyangense", "arabiense", "aromaticivorans", "aubagnense", "aubagnense", "aurum", "austroafricanum", "bacteremicum", "boenickei", "bourgelatii", "brisbanense", "brumae", "canariasense", "celeriflavum", "chelonae", "chitae", "chlorophenolicum", "chubuense", "confluentis", "cosmeticum", "crocinum", "diernhoferi", "duvalii", "elephantis", "fallax", "flavescens", "fluoranthenivorans", "fortuitum", "franklinii", "frederiksbergense", "gadium", "gilvum", "goodii", "hassiacum", "hippocampi", "hodleri", "holsaticum", "houstonense", "immunogenum", "insubricum", "iranicum", "komossense", "litorale", "llatzerense", "madagascariense", "mageritense", "monacense", "moriokaense", "mucogenicum", "mucogenicum", "murale", "neoaurum", "neworleansense", "novocastrense", "obuense", "pallens", "parafortuitum", "peregrinum", "phlei", "phocaicum", "phocaicum", "porcinum", "poriferae", "psychrotolerans", "pyrenivorans", "rhodesiae", "rufum", "rutilum", "salmoniphilum", "sediminis", "senegalense", "septicum", "setense", "smegmatis", "sphagni", "thermoresistibile", "tokaiense", "vaccae", "vanbaalenii", "wolinskyi")) %>% as.mo(keep_synonyms = TRUE)))
