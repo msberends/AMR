@@ -145,7 +145,7 @@ $(function () {
       x = x.replace("Kathryn", "Prof. Kathryn");
       x = x.replace("Larisse", "Dr. Larisse");
       x = x.replace("Matthijs", "Dr. Matthijs");
-      x = x.replace("Natacha", "Dr. Natacha");
+      x = x.replace("Natacha", "Prof. Natacha");
       x = x.replace("Peter", "Dr. Peter");
       x = x.replace("Rogier", "Dr. Rogier");
       x = x.replace("Sofia", "Dr. Sofia");
