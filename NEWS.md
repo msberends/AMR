@@ -1,7 +1,8 @@
-# AMR 3.0.1.9002
+# AMR 3.0.1.9003
 
 ### Changed
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
+* Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the `antimicrobials` data set
 
 
 # AMR 3.0.1

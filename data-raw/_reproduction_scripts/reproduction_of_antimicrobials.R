@@ -912,6 +912,24 @@ antimicrobials <- antimicrobials %>%
       oral_ddd = NA_real_
     ))
 
+# add Taniborbactam and Cefepime/taniborbactam
+antimicrobials <- antimicrobials |>
+  mutate(ab = as.character(ab)) |>
+  bind_rows(
+    antimicrobials |>
+      filter(ab == "FPE") |>
+      mutate(ab = as.character(ab)) |>
+      mutate(ab = "FTA",
+             name = "Cefepime/taniborbactam",
+             cid = NA_real_),
+    antimicrobials |>
+      filter(ab == "TBP") |>
+      mutate(ab = as.character(ab)) |>
+      mutate(ab = "TAN",
+             name = "Taniborbactam",
+             cid = 76902493,
+             abbreviations = list("VNRX-5133"))
+  )
 
 
 # update ATC codes from WHOCC website -------------------------------------
