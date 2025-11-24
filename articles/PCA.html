@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -210,18 +210,18 @@ per drug explain the difference per microorganism.</p>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></span></code></pre></div>
-<p><img src="PCA_files/figure-html/unnamed-chunk-5-1.png" width="750"></p>
+<p><img src="PCA_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="750"></p>
 <p>But we can’t see the explanation of the points. Perhaps this works
 better with our new <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> function, that
 automatically adds the right labels and even groups:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggplot_pca.html">ggplot_pca</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></span></code></pre></div>
-<p><img src="PCA_files/figure-html/unnamed-chunk-6-1.png" width="750"></p>
+<p><img src="PCA_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="750"></p>
 <p>You can also print an ellipse per group, and edit the appearance:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggplot_pca.html">ggplot_pca</a></span><span class="op">(</span><span class="va">pca_result</span>, ellipse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"An AMR/PCA biplot!"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="PCA_files/figure-html/unnamed-chunk-7-1.png" width="750"></p>
+<p><img src="PCA_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="750"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
