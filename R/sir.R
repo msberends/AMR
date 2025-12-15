@@ -42,22 +42,22 @@
 #' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
 #'
 #' `"none"`
-#'   * `<=` and `>=` are treated as-is.
-#'   * `<` and `>` are treated as-is.
+#'   * `<=`, `<`, `>` and `>=` are ignored.
 #'
-#' `"conservative"`
-#'   * `<=` and `>=` return `"NI"` (non-interpretable) if the MIC is within the breakpoint guideline range.
-#'   * `<` always returns `"S"`, and `>` always returns `"R"`.
+#' `"conservative"` (default)
+#'   * `<=`, `<`, `>` and `>=` return `"NI"` (non-interpretable) if the *true* MIC could be at either side of the breakpoint.
+#'   * This is the only mode that preserves uncertainty for ECOFFs.
 #'
-#' `"standard"` (default)
-#'   * `<=` and `>=` return `"NI"` (non-interpretable) if the MIC is within the breakpoint guideline range.
-#'   * `<` and `>` are treated as-is.
+#' `"standard"`
+#'   * `<=` and `>=` return `"NI"` (non-interpretable) if the *true* MIC could be at either side of the breakpoint.
+#'   * `<` always returns `"S"`, regardless of the breakpoint.
+#'   * `>` always returns `"R"`, regardless of the breakpoint.
 #'
-#' `"inverse"`
-#'   * `<=` and `>=` are treated as-is.
-#'   * `<` always returns `"S"`, and `>` always returns `"R"`.
+#' `"lenient"`
+#'   * `<=` and `<` always return `"S"`, regardless of the breakpoint.
+#'   * `>=` and `>` always return `"R"`, regardless of the breakpoint.
 #'
-#' The default `"standard"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
+#' The default `"conservative"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these cases to `"R"`. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
 #' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
@@ -69,7 +69,7 @@
 #' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
-#' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()] such as `as.sir(df, penicillins())`.
+#' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()], e.g. `as.sir(df, penicillins())`.
 #'
 #' Otherwise: arguments passed on to methods.
 #' @details
@@ -95,7 +95,7 @@
 #'      # fast processing with parallel computing:
 #'      as.sir(your_data, ..., parallel = TRUE)
 #'      ```
-#'    * Operators like "<=" will be stripped before interpretation. When using `capped_mic_handling = "conservative"`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`capped_mic_handling = "standard"`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+#'    * Operators like "<=" will be considered according to the `capped_mic_handling` setting. At default, an MIC value of e.g. ">2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the *true* MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
 #'    * **Note:** When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
 #'
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
@@ -353,6 +353,10 @@
 #'
 #' as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 #' as.sir("<= 0.002; S") # will return "S"
+#'
+#' as.sir(c(1, 2, 3))
+#' as.sir(c(1, 2, 3), S = 3, I = 2, R = 1)
+#'
 #' sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' is.sir(sir_data)
 #' plot(sir_data) # for percentages
@@ -486,18 +490,18 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 #' @param info A [logical] to print information about the process, defaults to `TRUE` only in [interactive sessions][base::interactive()].
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x,
-                           S = "^(S|U)+$",
-                           I = "^(I)+$",
-                           R = "^(R)+$",
-                           NI = "^(N|NI|V)+$",
-                           SDD = "^(SDD|D|H)+$",
+                           S = "^(S|U|1)+$",
+                           I = "^(I|2)+$",
+                           R = "^(R|3)+$",
+                           NI = "^(N|NI|V|4)+$",
+                           SDD = "^(SDD|D|H|5)+$",
                            info = interactive(),
                            ...) {
-  meet_criteria(S, allow_class = "character", has_length = 1)
-  meet_criteria(I, allow_class = "character", has_length = 1)
-  meet_criteria(R, allow_class = "character", has_length = 1)
-  meet_criteria(NI, allow_class = "character", has_length = 1)
-  meet_criteria(SDD, allow_class = "character", has_length = 1)
+  meet_criteria(S, allow_class = c("character", "numeric", "integer"), has_length = 1)
+  meet_criteria(I, allow_class = c("character", "numeric", "integer"), has_length = 1)
+  meet_criteria(R, allow_class = c("character", "numeric", "integer"), has_length = 1)
+  meet_criteria(NI, allow_class = c("character", "numeric", "integer"), has_length = 1)
+  meet_criteria(SDD, allow_class = c("character", "numeric", "integer"), has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   if (inherits(x, "sir")) {
     return(as_sir_structure(x))
@@ -506,30 +510,14 @@ as.sir.default <- function(x,
   x.bak <- x
   x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
 
-  if (inherits(x.bak, c("numeric", "integer")) && all(x %in% c(1:3, NA))) {
+  lbls <- attr(x.bak, "labels", exact = TRUE)
+  if (inherits(x.bak, c("numeric", "integer")) && all(x %in% c(1:3, NA)) && !is.null(lbls) && all(c("S", "I", "R") %in% names(lbls)) && all(c(1:3) %in% lbls)) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
-    lbls <- attributes(x.bak)$labels
-    if (!is.null(lbls) && all(c("S", "I", "R") %in% names(lbls)) && all(c(1:3) %in% lbls)) {
-      x[x.bak == 1] <- names(lbls[lbls == 1])
-      x[x.bak == 2] <- names(lbls[lbls == 2])
-      x[x.bak == 3] <- names(lbls[lbls == 3])
-    } else {
-      x[x.bak == 1] <- "S"
-      x[x.bak == 2] <- "I"
-      x[x.bak == 3] <- "R"
-    }
-  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "S", "I", "R", NA_character_))) {
-    x[x.bak == "1"] <- "S"
-    x[x.bak == "2"] <- "I"
-    x[x.bak == "3"] <- "R"
-  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "4", "5", "S", "SDD", "I", "R", "NI", NA_character_))) {
-    x[x.bak == "1"] <- "S"
-    x[x.bak == "2"] <- "SDD"
-    x[x.bak == "3"] <- "I"
-    x[x.bak == "4"] <- "R"
-    x[x.bak == "5"] <- "NI"
+    x[x.bak == 1] <- names(lbls[lbls == 1])
+    x[x.bak == 2] <- names(lbls[lbls == 2])
+    x[x.bak == 3] <- names(lbls[lbls == 3])
   } else if (!all(is.na(x)) && !identical(levels(x), c("S", "SDD", "I", "R", "NI")) && !all(x %in% c("S", "SDD", "I", "R", "NI", NA))) {
-    if (all(x %unlike% "(S|I|R)", na.rm = TRUE)) {
+    if (all(x %unlike% "(S|I|R)", na.rm = TRUE) && !all(x %in% c(1, 2, 3, 4, 5), na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
         warning_("in `as.sir()`: input values were guessed to be MIC values - preferably transform them with `as.mic()` before running `as.sir()`.")
@@ -569,7 +557,8 @@ as.sir.default <- function(x,
     x[x %like% "not|non"] <- "NI"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
     x[x %like% "dose"] <- "SDD"
-    x <- gsub("[^A-Z]+", "", x, perl = TRUE)
+    mtch <- grepl(paste0("(", S, "|", I, "|", R, "|", NI, "|", SDD, "|[A-Z]+)"), x, perl = TRUE)
+    x[!mtch] <- ""
     # apply regexes set by user
     x[x %like% S] <- "S"
     x[x %like% I] <- "I"
@@ -580,6 +569,22 @@ as.sir.default <- function(x,
     na_after <- length(x[is.na(x) | x == ""])
 
     if (!isFALSE(list(...)$warn)) { # so as.sir(..., warn = FALSE) will never throw a warning
+      if (all(x.bak %in% c(1, 2, 3, 4, 5), na.rm = TRUE) && message_not_thrown_before("as.sir", "numeric_interpretation", x, x.bak)) {
+        out1 <- unique(x[x.bak == 1])
+        out2 <- unique(x[x.bak == 2])
+        out3 <- unique(x[x.bak == 3])
+        out4 <- unique(x[x.bak == 4])
+        out5 <- unique(x[x.bak == 5])
+        out <- c(
+          ifelse(length(out1) > 0, paste0("1 as \"", out1, "\""), NA_character_),
+          ifelse(length(out2) > 0, paste0("2 as \"", out2, "\""), NA_character_),
+          ifelse(length(out3) > 0, paste0("3 as \"", out3, "\""), NA_character_),
+          ifelse(length(out4) > 0, paste0("4 as \"", out4, "\""), NA_character_),
+          ifelse(length(out5) > 0, paste0("5 as \"", out5, "\""), NA_character_)
+        )
+        message_("in `as.sir()`: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
+      }
+
       if (na_before != na_after) {
         list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
           unique() %pm>%
@@ -714,7 +719,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character")
   meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "conservative", "none", "inverse"))
+  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("none", "conservative", "standard", "lenient"))
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1)
@@ -795,8 +800,8 @@ as.sir.data.frame <- function(x,
     col_specimen <- suppressMessages(search_type_in_df(x = x, type = "specimen", info = info))
     if (!is.null(col_specimen)) {
       uti <- x[, col_specimen, drop = TRUE] %like% "urin"
-      values <- sort(unique(x[uti, col_specimen, drop = TRUE]))
-      if (length(values) > 1) {
+      col_values <- sort(unique(x[uti, col_specimen, drop = TRUE]))
+      if (length(col_values) > 1) {
         plural <- c("s", "", "")
       } else {
         plural <- c("", "s", "a ")
@@ -804,7 +809,7 @@ as.sir.data.frame <- function(x,
       if (isTRUE(info)) {
         message_(
           "Assuming value", plural[1], " ",
-          vector_and(values, quotes = TRUE),
+          vector_and(col_values, quotes = TRUE),
           " in column '", font_bold(col_specimen),
           "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
           ".\n  Use `as.sir(uti = FALSE)` to prevent this."
@@ -1117,7 +1122,7 @@ as_sir_method <- function(method_short,
   meet_criteria(ab, allow_class = c("ab", "character"), has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(guideline, allow_class = "character", has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(uti, allow_class = c("logical", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
-  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("standard", "conservative", "none", "inverse"), .call_depth = -2)
+  meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("none", "conservative", "standard", "lenient"), .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
@@ -1378,8 +1383,8 @@ as_sir_method <- function(method_short,
 
   # create the unique data frame to be filled to save time
   df <- data.frame(
-    values = x,
-    values_bak = x,
+    input_clean = x,
+    input_original = x,
     guideline = guideline_coerced,
     mo = mo,
     ab = ab,
@@ -1393,7 +1398,7 @@ as_sir_method <- function(method_short,
       # CLSI in log 2 ----
       # CLSI says: if MIC is not a log2 value it must be rounded up to the nearest log2 value
       log2_levels <- as.double(VALID_MIC_LEVELS[which(VALID_MIC_LEVELS %in% 2^c(-20:20))])
-      test_values <- df$values
+      test_values <- df$input_clean
       test_values_dbl <- as.double(test_values)
       test_values_dbl[test_values %like% "^>[0-9]"] <- test_values_dbl[test_values %like% "^>[0-9]"] + 0.0000001
       test_values_dbl[test_values %like% "^<[0-9]"] <- test_values_dbl[test_values %like% "^<[0-9]"] - 0.0000001
@@ -1417,12 +1422,12 @@ as_sir_method <- function(method_short,
           }
         }
       )
-      df$values[which(df$guideline %like% "CLSI" & test_values != test_outcome)] <- test_outcome[which(df$guideline %like% "CLSI" & test_values != test_outcome)]
+      df$input_clean[which(df$guideline %like% "CLSI" & test_values != test_outcome)] <- test_outcome[which(df$guideline %like% "CLSI" & test_values != test_outcome)]
     }
-    df$values <- as.mic(df$values)
+    df$input_clean <- as.mic(df$input_clean)
   } else if (method == "disk") {
     # when as.sir.disk is called directly
-    df$values <- as.disk(df$values)
+    df$input_clean <- as.disk(df$input_clean)
   }
 
   df_unique <- unique(df[, c("guideline", "mo", "ab", "uti", "host"), drop = FALSE])
@@ -1500,8 +1505,8 @@ as_sir_method <- function(method_short,
       # this can happen if a host is unavailable, just continue with the next one, since a note about hosts having NA are already given at this point
       next
     }
-    values <- df[rows, "values", drop = TRUE]
-    values_bak <- df[rows, "values_bak", drop = TRUE]
+    input_clean <- df[rows, "input_clean", drop = TRUE]
+    input_original <- df[rows, "input_original", drop = TRUE]
     notes_current <- rep("", length(rows))
     new_sir <- rep(NA_sir_, length(rows))
 
@@ -1636,11 +1641,11 @@ as_sir_method <- function(method_short,
         ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
         mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
         host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
-        input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
+        input_given = vectorise_log_entry(as.character(input_original), length(rows)),
         ab = vectorise_log_entry(ab_current, length(rows)),
         mo = vectorise_log_entry(mo_current, length(rows)),
         host = vectorise_log_entry(host_current, length(rows)),
-        input = vectorise_log_entry(as.character(values), length(rows)),
+        input = vectorise_log_entry(as.character(input_clean), length(rows)),
         outcome = vectorise_log_entry(NA_sir_, length(rows)),
         notes = vectorise_log_entry("No breakpoint available", length(rows)),
         guideline = vectorise_log_entry(guideline_current, length(rows)),
@@ -1734,31 +1739,51 @@ as_sir_method <- function(method_short,
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]",
-          paste0("MIC values with the operator '<' are all considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ifelse(method == "mic" & capped_mic_handling == "none" & as.character(input_original) %like% "^[<>][0-9]" &
+          ((as.character(input_original) %like% "^<" & as.double(input_clean) > breakpoints_current$breakpoint_S) |
+            (as.character(input_original) %like% "^>" & as.double(input_clean) < breakpoints_current$breakpoint_R)),
+        paste0("Operators such as '<' and '>' were ignored since capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling == "standard" & as.character(input_original) %like% "^[<][0-9]",
+          paste0("MIC values with the operator '<' are considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]",
-          paste0("MIC values with the operator '>' are all considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ifelse(method == "mic" & capped_mic_handling == "standard" & as.character(input_original) %like% "^[>][0-9]",
+          paste0("MIC values with the operator '>' are considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R,
-          paste0("MIC values within the breakpoint guideline range with the operator '<=' or '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ifelse(method == "mic" & capped_mic_handling == "lenient" & as.character(input_original) %like% "^[<]=?[0-9]",
+          paste0("MIC values with the operator '<' or '<=' are considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^<=[0-9]" & as.double(values) == breakpoints_current$breakpoint_R,
-          paste0("MIC values at the R breakpoint with the operator '<=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ifelse(method == "mic" & capped_mic_handling == "lenient" & as.character(input_original) %like% "^[>]=?[0-9]",
+          paste0("MIC values with the operator '>' or '>=' are considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^>=[0-9]" & as.double(values) == breakpoints_current$breakpoint_S,
-          paste0("MIC values at the S breakpoint with the operator '>=' are considered 'NI' (non-interpretable) since capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ifelse(method == "mic" & capped_mic_handling == "conservative" & as.character(input_original) %like% "^[<>][0-9]" &
+          ((as.character(input_original) %like% "^<" & as.double(input_clean) > breakpoints_current$breakpoint_S) |
+            (as.character(input_original) %like% "^>" & as.double(input_clean) < breakpoints_current$breakpoint_R)),
+        paste0("MIC values are considered 'NI' (non-interpretable) if the true MIC could be at either side of the breakpoint and capped_mic_handling = \"", capped_mic_handling, "\"."),
+        ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(input_original) %like% "^<=[0-9]" & as.double(input_clean) > breakpoints_current$breakpoint_S,
+          paste0("MIC values are considered 'NI' (non-interpretable) if the true MIC could be at either side of the breakpoint and capped_mic_handling = \"", capped_mic_handling, "\"."),
+          ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(input_original) %like% "^>=[0-9]" & as.double(input_clean) <= breakpoints_current$breakpoint_R,
+          paste0("MIC values are considered 'NI' (non-interpretable) if the true MIC could be at either side of the breakpoint and capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         )
       )
+
       if (isTRUE(substitute_missing_r_breakpoint) && !is.na(breakpoints_current$breakpoint_S) && is.na(breakpoints_current$breakpoint_R)) {
         # breakpoints_current only has 1 row at this moment
         breakpoints_current$breakpoint_R <- breakpoints_current$breakpoint_S
@@ -1774,27 +1799,62 @@ as_sir_method <- function(method_short,
       ## actual interpretation ----
       if (method == "mic") {
         new_sir <- case_when_AMR(
-          is.na(values) ~ NA_sir_,
-          capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[<][0-9]" ~ as.sir("S"),
-          capped_mic_handling %in% c("conservative", "inverse") & as.character(values_bak) %like% "^[>][0-9]" ~ as.sir("R"),
-          capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^[><]=[0-9]" & as.double(values) > breakpoints_current$breakpoint_S & as.double(values) < breakpoints_current$breakpoint_R ~ as.sir("NI"),
-          capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^<=[0-9]" & as.double(values) == breakpoints_current$breakpoint_R ~ as.sir("NI"),
-          capped_mic_handling %in% c("conservative", "standard") & as.character(values_bak) %like% "^>=[0-9]" & as.double(values) == breakpoints_current$breakpoint_S ~ as.sir("NI"),
-          values <= breakpoints_current$breakpoint_S ~ as.sir("S"),
-          guideline_current %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.sir("R"),
-          guideline_current %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+          is.na(input_clean) ~ NA_sir_,
+
+          # "lenient" for any cap: force S/R
+          capped_mic_handling == "lenient" &
+            as.character(input_original) %like% "^[<]=?[0-9]"
+          ~ as.sir("S"),
+          capped_mic_handling == "lenient" &
+            as.character(input_original) %like% "^[>]=?[0-9]"
+          ~ as.sir("R"),
+
+          # "standard" for < and >: force S/R
+          capped_mic_handling == "standard" &
+            as.character(input_original) %like% "^[<][0-9]"
+          ~ as.sir("S"),
+          capped_mic_handling == "standard" &
+            as.character(input_original) %like% "^[>][0-9]"
+          ~ as.sir("R"),
+
+          # "conservative" for < and >: NI if the true MIC could be on either side of a breakpoint
+          capped_mic_handling == "conservative" &
+            as.character(input_original) %like% "^[<][0-9]" &
+            as.double(input_clean) > breakpoints_current$breakpoint_S
+          ~ as.sir("NI"),
+          capped_mic_handling == "conservative" &
+            as.character(input_original) %like% "^[>][0-9]" &
+            as.double(input_clean) < breakpoints_current$breakpoint_R
+          ~ as.sir("NI"),
+
+          # both "conservative" and standard": only NI for <= and >= when the true MIC could be at either side of a breakpoint
+          capped_mic_handling %in% c("conservative", "standard") &
+            as.character(input_original) %like% "^<=[0-9]" &
+            as.double(input_clean) > breakpoints_current$breakpoint_S
+          ~ as.sir("NI"),
+          capped_mic_handling %in% c("conservative", "standard") &
+            as.character(input_original) %like% "^>=[0-9]" &
+            as.double(input_clean) <= breakpoints_current$breakpoint_R
+          ~ as.sir("NI"),
+
+          # otherwise: the normal (uncapped or ignored) interpretation
+          input_clean <= breakpoints_current$breakpoint_S ~ as.sir("S"),
+          guideline_current %like% "EUCAST" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
+          guideline_current %like% "CLSI" & input_clean >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
+
           # and NA otherwise
           TRUE ~ NA_sir_
         )
       } else if (method == "disk") {
         new_sir <- case_when_AMR(
-          is.na(values) ~ NA_sir_,
-          as.double(values) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
-          guideline_current %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
-          guideline_current %like% "CLSI" & as.double(values) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          is.na(input_clean) ~ NA_sir_,
+          as.double(input_clean) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
+          guideline_current %like% "EUCAST" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          guideline_current %like% "CLSI" & as.double(input_clean) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
@@ -1814,11 +1874,11 @@ as_sir_method <- function(method_short,
         ab_given = vectorise_log_entry(ab.bak[match(ab_current, df$ab)][1], length(rows)),
         mo_given = vectorise_log_entry(mo.bak[match(mo_current, df$mo)][1], length(rows)),
         host_given = vectorise_log_entry(host.bak[match(host_current, df$host)][1], length(rows)),
-        input_given = vectorise_log_entry(as.character(values_bak), length(rows)),
+        input_given = vectorise_log_entry(as.character(input_original), length(rows)),
         ab = vectorise_log_entry(breakpoints_current[, "ab", drop = TRUE], length(rows)),
         mo = vectorise_log_entry(breakpoints_current[, "mo", drop = TRUE], length(rows)),
         host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
-        input = vectorise_log_entry(as.character(values), length(rows)),
+        input = vectorise_log_entry(as.character(input_clean), length(rows)),
         outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
         notes = font_stripstyle(notes_current), # vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
         guideline = vectorise_log_entry(guideline_current, length(rows)),

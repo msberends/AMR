@@ -32,8 +32,9 @@ is.sir(x)
 
 is_sir_eligible(x, threshold = 0.05)
 
-\method{as.sir}{default}(x, S = "^(S|U)+$", I = "^(I)+$", R = "^(R)+$",
-  NI = "^(N|NI|V)+$", SDD = "^(SDD|D|H)+$", info = interactive(), ...)
+\method{as.sir}{default}(x, S = "^(S|U|1)+$", I = "^(I|2)+$",
+  R = "^(R|3)+$", NI = "^(N|NI|V|4)+$", SDD = "^(SDD|D|H|5)+$",
+  info = interactive(), ...)
 
 \method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
@@ -75,7 +76,7 @@ sir_interpretation_history(clean = FALSE)
 \arguments{
 \item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres).}
 
-\item{...}{For using on a \link{data.frame}: selection of columns to apply \code{as.sir()} to. Supports \link[tidyselect:starts_with]{tidyselect language} such as \code{where(is.mic)}, \code{starts_with(...)}, or \code{column1:column4}, and can thus also be \link[=amr_selector]{antimicrobial selectors} such as \code{as.sir(df, penicillins())}.
+\item{...}{For using on a \link{data.frame}: selection of columns to apply \code{as.sir()} to. Supports \link[tidyselect:starts_with]{tidyselect language} such as \code{where(is.mic)}, \code{starts_with(...)}, or \code{column1:column4}, and can thus also be \link[=amr_selector]{antimicrobial selectors}, e.g. \code{as.sir(df, penicillins())}.
 
 Otherwise: arguments passed on to methods.}
 
@@ -97,29 +98,29 @@ Otherwise: arguments passed on to methods.}
 
 \code{"none"}
 \itemize{
-\item \code{<=} and \code{>=} are treated as-is.
-\item \code{<} and \code{>} are treated as-is.
+\item \code{<=}, \code{<}, \code{>} and \code{>=} are ignored.
 }
 
-\code{"conservative"}
+\code{"conservative"} (default)
 \itemize{
-\item \code{<=} and \code{>=} return \code{"NI"} (non-interpretable) if the MIC is within the breakpoint guideline range.
-\item \code{<} always returns \code{"S"}, and \code{>} always returns \code{"R"}.
+\item \code{<=}, \code{<}, \code{>} and \code{>=} return \code{"NI"} (non-interpretable) if the \emph{true} MIC could be at either side of the breakpoint.
+\item This is the only mode that preserves uncertainty for ECOFFs.
 }
 
-\code{"standard"} (default)
+\code{"standard"}
 \itemize{
-\item \code{<=} and \code{>=} return \code{"NI"} (non-interpretable) if the MIC is within the breakpoint guideline range.
-\item \code{<} and \code{>} are treated as-is.
+\item \code{<=} and \code{>=} return \code{"NI"} (non-interpretable) if the \emph{true} MIC could be at either side of the breakpoint.
+\item \code{<} always returns \code{"S"}, regardless of the breakpoint.
+\item \code{>} always returns \code{"R"}, regardless of the breakpoint.
 }
 
-\code{"inverse"}
+\code{"lenient"}
 \itemize{
-\item \code{<=} and \code{>=} are treated as-is.
-\item \code{<} always returns \code{"S"}, and \code{>} always returns \code{"R"}.
+\item \code{<=} and \code{<} always return \code{"S"}, regardless of the breakpoint.
+\item \code{>=} and \code{>} always return \code{"R"}, regardless of the breakpoint.
 }
 
-The default \code{"standard"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
+The default \code{"conservative"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
 
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 
@@ -179,7 +180,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", g
 # fast processing with parallel computing:
 as.sir(your_data, ..., parallel = TRUE)
 }\if{html}{\out{</div>}}
-\item Operators like "<=" will be stripped before interpretation. When using \code{capped_mic_handling = "conservative"}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{capped_mic_handling = "standard"}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+\item Operators like "<=" will be considered according to the \code{capped_mic_handling} setting. At default, an MIC value of e.g. ">2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the \emph{true} MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
 \item \strong{Note:} When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
@@ -442,6 +443,10 @@ as.sir(
 
 as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 as.sir("<= 0.002; S") # will return "S"
+
+as.sir(c(1, 2, 3))
+as.sir(c(1, 2, 3), S = 3, I = 2, R = 1)
+
 sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.sir(sir_data)
 plot(sir_data) # for percentages

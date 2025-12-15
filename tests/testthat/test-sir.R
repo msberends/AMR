@@ -391,6 +391,17 @@ test_that("test-sir.R", {
   expect_warning(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE))
 
 
+  # Capped MIC handling ---------------------------------------------------
+
+  out1 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "none")
+  out2 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "conservative")
+  out3 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "standard")
+  out4 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "lenient")
+  expect_equal(out1, as.sir(c("R", "R", "R")))
+  expect_equal(out2, as.sir(c("R", "NI", "R")))
+  expect_equal(out3, as.sir(c("R", "S", "R")))
+  expect_equal(out4, as.sir(c("R", "S", "R")))
+
   # Parallel computing ----------------------------------------------------
 
   # MB 29 Apr 2025: I have run the code of AVC, PEI, Canada (dataset of 2854x65), and compared it like this:
