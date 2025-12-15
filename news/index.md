@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9003
+## AMR 3.0.1.9004
 
 #### Changed
 
@@ -9,6 +9,25 @@
   when no antimicrobials are set
 - Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the
   `antimicrobials` data set
+- Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
+  where for numeric input the arguments `S`, `i`, and `R` would not be
+  considered ([\#244](https://github.com/msberends/AMR/issues/244))
+- Added explaining message to
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) when
+  interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R)
+  ([\#244](https://github.com/msberends/AMR/issues/244))
+- Updated handling of capped MIC values (`<`, `<=`, `>`, `>=`) in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) in the
+  argument `capped_mic_handling`:
+  ([\#243](https://github.com/msberends/AMR/issues/243))
+  - Introduced four clearly defined options: `"none"`, `"conservative"`
+    (default), `"standard"`, and `"lenient"`
+  - Interpretation of capped MIC values now consistently returns `"NI"`
+    (non-interpretable) when the true MIC could be at either side of a
+    breakpoint, depending on the selected handling mode
+  - This results in more reliable behaviour compared to previous
+    versions for capped MIC values
+  - Removed the `"inverse"` option, which has now become redundant
 
 ## AMR 3.0.1
 

@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 24 November
+methodology remains unchanged. This page was generated on 15 December
 2025.
 
 ## Introduction
@@ -52,9 +52,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2025-11-24 |    abcd    | Escherichia coli |  S  |  S  |
-| 2025-11-24 |    abcd    | Escherichia coli |  S  |  R  |
-| 2025-11-24 |    efgh    | Escherichia coli |  R  |  S  |
+| 2025-12-15 |    abcd    | Escherichia coli |  S  |  S  |
+| 2025-12-15 |    abcd    | Escherichia coli |  S  |  R  |
+| 2025-12-15 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -322,7 +322,7 @@ our_data <- our_data %>%
 #> ℹ Using column 'patient_id' as input for `col_patient_id`.
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold
 #>   of 2
-#> => Found 2,724 'phenotype-based' first isolates (90.8% of total where a
+#> => Found 2,730 'phenotype-based' first isolates (91.0% of total where a
 #>    microbial ID was available)
 ```
 
@@ -342,11 +342,11 @@ our_data_1st <- our_data %>%
   filter_first_isolate()
 ```
 
-So we end up with 2 724 isolates for analysis. Now our data looks like:
+So we end up with 2 730 isolates for analysis. Now our data looks like:
 
 ``` r
 our_data_1st
-#> # A tibble: 2,724 × 9
+#> # A tibble: 2,730 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
 #>    <chr>      <chr>    <date>     <mo>         <sir> <sir> <sir> <sir> <lgl>
 #>  1 J3         A        2012-11-21 B_ESCHR_COLI   R     I     S     S   TRUE 
@@ -359,7 +359,7 @@ our_data_1st
 #>  8 J3         A        2019-06-19 B_ESCHR_COLI   S     S     S     S   TRUE 
 #>  9 G6         A        2015-04-27 B_STPHY_AURS   S     S     S     S   TRUE 
 #> 10 P4         A        2011-06-21 B_ESCHR_COLI   S     S     S     S   TRUE 
-#> # ℹ 2,714 more rows
+#> # ℹ 2,720 more rows
 ```
 
 Time for the analysis.
@@ -373,29 +373,29 @@ and `sir` classes that we now have in our data set:
 ``` r
 summary(our_data_1st)
 #>   patient_id          hospital              date           
-#>  Length:2724        Length:2724        Min.   :2011-01-01  
-#>  Class :character   Class :character   1st Qu.:2013-04-07  
-#>  Mode  :character   Mode  :character   Median :2015-06-03  
+#>  Length:2730        Length:2730        Min.   :2011-01-01  
+#>  Class :character   Class :character   1st Qu.:2013-04-06  
+#>  Mode  :character   Mode  :character   Median :2015-06-04  
 #>                                        Mean   :2015-06-09  
-#>                                        3rd Qu.:2017-08-11  
+#>                                        3rd Qu.:2017-08-14  
 #>                                        Max.   :2019-12-27  
 #>    bacteria               AMX                    AMC                
 #>  Class :mo             Class:sir              Class:sir             
-#>  <NA>  :0              %S   :41.6% (n=1133)   %S   :52.6% (n=1432)  
+#>  <NA>  :0              %S   :40.1% (n=1071)   %S   :51.1% (n=1354)  
 #>  Unique:4              %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     
-#>  #1    :B_ESCHR_COLI   %I   :16.4% (n=446)    %I   :12.2% (n=333)   
-#>  #2    :B_STPHY_AURS   %R   :42.0% (n=1145)   %R   :35.2% (n=959)   
+#>  #1    :B_ESCHR_COLI   %I   :17.0% (n=453)    %I   :12.7% (n=335)   
+#>  #2    :B_STPHY_AURS   %R   :42.9% (n=1147)   %R   :36.2% (n=959)   
 #>  #3    :B_STRPT_PNMN   %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     
 #>     CIP                    GEN                  first        
 #>  Class:sir              Class:sir              Mode:logical  
-#>  %S   :52.5% (n=1431)   %S   :61.0% (n=1661)   TRUE:2724     
+#>  %S   :52.2% (n=1426)   %S   :60.7% (n=1656)   TRUE:2730     
 #>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)                    
-#>  %I   : 6.5% (n=176)    %I   : 3.0% (n=82)                   
-#>  %R   :41.0% (n=1117)   %R   :36.0% (n=981)                  
+#>  %I   : 6.5% (n=178)    %I   : 3.0% (n=83)                   
+#>  %R   :41.2% (n=1126)   %R   :36.3% (n=991)                  
 #>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)
 
 glimpse(our_data_1st)
-#> Rows: 2,724
+#> Rows: 2,730
 #> Columns: 9
 #> $ patient_id <chr> "J3", "R7", "P3", "P10", "B7", "W3", "M3", "J3", "G6", "P4"…
 #> $ hospital   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A",…
@@ -410,7 +410,7 @@ glimpse(our_data_1st)
 # number of unique values per column:
 sapply(our_data_1st, n_distinct)
 #> patient_id   hospital       date   bacteria        AMX        AMC        CIP 
-#>        260          3       1854          4          3          3          3 
+#>        260          3       1854          4          4          4          3 
 #>        GEN      first 
 #>          3          1
 ```
@@ -437,9 +437,9 @@ our_data_1st %>%
 #> # A tibble: 4 × 2
 #>   `mo_name(bacteria)`          n
 #>   <chr>                    <int>
-#> 1 Escherichia coli          1321
-#> 2 Staphylococcus aureus      682
-#> 3 Streptococcus pneumoniae   402
+#> 1 Escherichia coli          1326
+#> 2 Staphylococcus aureus      684
+#> 3 Streptococcus pneumoniae   401
 #> 4 Klebsiella pneumoniae      319
 ```
 
@@ -453,7 +453,7 @@ in:
 our_data_1st %>%
   select(date, aminoglycosides())
 #> ℹ For `aminoglycosides()` using column 'GEN' (gentamicin)
-#> # A tibble: 2,724 × 2
+#> # A tibble: 2,730 × 2
 #>    date       GEN  
 #>    <date>     <sir>
 #>  1 2012-11-21   S  
@@ -466,13 +466,13 @@ our_data_1st %>%
 #>  8 2019-06-19   S  
 #>  9 2015-04-27   S  
 #> 10 2011-06-21   S  
-#> # ℹ 2,714 more rows
+#> # ℹ 2,720 more rows
 
 our_data_1st %>%
   select(bacteria, betalactams())
 #> ℹ For `betalactams()` using columns 'AMX' (amoxicillin) and 'AMC'
 #>   (amoxicillin/clavulanic acid)
-#> # A tibble: 2,724 × 3
+#> # A tibble: 2,730 × 3
 #>    bacteria     AMX   AMC  
 #>    <mo>         <sir> <sir>
 #>  1 B_ESCHR_COLI   R     I  
@@ -485,11 +485,11 @@ our_data_1st %>%
 #>  8 B_ESCHR_COLI   S     S  
 #>  9 B_STPHY_AURS   S     S  
 #> 10 B_ESCHR_COLI   S     S  
-#> # ℹ 2,714 more rows
+#> # ℹ 2,720 more rows
 
 our_data_1st %>%
   select(bacteria, where(is.sir))
-#> # A tibble: 2,724 × 5
+#> # A tibble: 2,730 × 5
 #>    bacteria     AMX   AMC   CIP   GEN  
 #>    <mo>         <sir> <sir> <sir> <sir>
 #>  1 B_ESCHR_COLI   R     I     S     S  
@@ -502,13 +502,13 @@ our_data_1st %>%
 #>  8 B_ESCHR_COLI   S     S     S     S  
 #>  9 B_STPHY_AURS   S     S     S     S  
 #> 10 B_ESCHR_COLI   S     S     S     S  
-#> # ℹ 2,714 more rows
+#> # ℹ 2,720 more rows
 
 # filtering using AB selectors is also possible:
 our_data_1st %>%
   filter(any(aminoglycosides() == "R"))
 #> ℹ For `aminoglycosides()` using column 'GEN' (gentamicin)
-#> # A tibble: 981 × 9
+#> # A tibble: 991 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
 #>    <chr>      <chr>    <date>     <mo>         <sir> <sir> <sir> <sir> <lgl>
 #>  1 J5         A        2017-12-25 B_STRPT_PNMN   R     S     S     R   TRUE 
@@ -521,13 +521,13 @@ our_data_1st %>%
 #>  8 P5         A        2019-03-09 B_STPHY_AURS   S     S     S     R   TRUE 
 #>  9 Q8         A        2019-08-10 B_STPHY_AURS   S     S     S     R   TRUE 
 #> 10 K5         A        2013-03-15 B_STRPT_PNMN   S     S     S     R   TRUE 
-#> # ℹ 971 more rows
+#> # ℹ 981 more rows
 
 our_data_1st %>%
   filter(all(betalactams() == "R"))
 #> ℹ For `betalactams()` using columns 'AMX' (amoxicillin) and 'AMC'
 #>   (amoxicillin/clavulanic acid)
-#> # A tibble: 462 × 9
+#> # A tibble: 461 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
 #>    <chr>      <chr>    <date>     <mo>         <sir> <sir> <sir> <sir> <lgl>
 #>  1 M7         A        2013-07-22 B_STRPT_PNMN   R     R     S     S   TRUE 
@@ -540,13 +540,13 @@ our_data_1st %>%
 #>  8 Q2         A        2019-09-22 B_ESCHR_COLI   R     R     S     S   TRUE 
 #>  9 X7         A        2011-03-20 B_ESCHR_COLI   R     R     S     R   TRUE 
 #> 10 V1         A        2018-08-07 B_STPHY_AURS   R     R     S     S   TRUE 
-#> # ℹ 452 more rows
+#> # ℹ 451 more rows
 
 # even works in base R (since R 3.0):
 our_data_1st[all(betalactams() == "R"), ]
 #> ℹ For `betalactams()` using columns 'AMX' (amoxicillin) and 'AMC'
 #>   (amoxicillin/clavulanic acid)
-#> # A tibble: 462 × 9
+#> # A tibble: 461 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
 #>    <chr>      <chr>    <date>     <mo>         <sir> <sir> <sir> <sir> <lgl>
 #>  1 M7         A        2013-07-22 B_STRPT_PNMN   R     R     S     S   TRUE 
@@ -559,7 +559,7 @@ our_data_1st[all(betalactams() == "R"), ]
 #>  8 Q2         A        2019-09-22 B_ESCHR_COLI   R     R     S     S   TRUE 
 #>  9 X7         A        2011-03-20 B_ESCHR_COLI   R     R     S     R   TRUE 
 #> 10 V1         A        2018-08-07 B_STPHY_AURS   R     R     S     S   TRUE 
-#> # ℹ 452 more rows
+#> # ℹ 451 more rows
 ```
 
 ### Generate antibiograms
@@ -843,7 +843,7 @@ These functions can be used on their own:
 
 ``` r
 our_data_1st %>% resistance(AMX)
-#> [1] 0.4203377
+#> [1] 0.4294272
 ```
 
 Or can be used in conjunction with
@@ -858,8 +858,8 @@ our_data_1st %>%
 #> # A tibble: 3 × 2
 #>   hospital amoxicillin
 #>   <chr>          <dbl>
-#> 1 A              0.340
-#> 2 B              0.551
+#> 1 A              0.341
+#> 2 B              0.586
 #> 3 C              0.370
 ```
 

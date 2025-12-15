@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
 
 <ul><li><p><code>AMR_antibiogram_formatting_type</code> <br> A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> (1-22) to use in <code><a href="antibiogram.html">antibiogram()</a></code>, to indicate which formatting type to use.</p></li>
 <li><p><code>AMR_breakpoint_type</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate which breakpoint type to use. This must be either "ECOFF", "animal", or "human".</p></li>
-<li><p><code>AMR_capped_mic_handling</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate how capped MIC values (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) should be interpreted. Must be one of <code>"standard"</code>, <code>"strict"</code>, <code>"relaxed"</code>, or <code>"inverse"</code> - the default is <code>"standard"</code>.</p></li>
+<li><p><code>AMR_capped_mic_handling</code> <br> A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> to use in <code><a href="as.sir.html">as.sir()</a></code>, to indicate how capped MIC values (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) should be interpreted. Must be one of <code>"none"</code>, <code>"conservative"</code>, <code>"standard"</code>, or <code>"lenient"</code> - the default is <code>"conservative"</code>.</p></li>
 <li><p><code>AMR_cleaning_regex</code> <br> A <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> (case-insensitive) to use in <code><a href="as.mo.html">as.mo()</a></code> and all <code><a href="mo_property.html">mo_*</a></code> functions, to clean the user input. The default is the outcome of <code><a href="as.mo.html">mo_cleaning_regex()</a></code>, which removes texts between brackets and texts such as "species" and "serovar".</p></li>
 <li><p><code>AMR_custom_ab</code> <br> A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code>.</p></li>
 <li><p><code>AMR_custom_mo</code> <br> A file location to an RDS file, to use custom microorganisms with this package. This is explained in <code><a href="add_custom_microorganisms.html">add_custom_microorganisms()</a></code>.</p></li>

@@ -24,8 +24,9 @@ is.sir(x)
 is_sir_eligible(x, threshold = 0.05)
 
 # Default S3 method
-as.sir(x, S = "^(S|U)+$", I = "^(I)+$", R = "^(R)+$",
-  NI = "^(N|NI|V)+$", SDD = "^(SDD|D|H)+$", info = interactive(), ...)
+as.sir(x, S = "^(S|U|1)+$", I = "^(I|2)+$",
+  R = "^(R|3)+$", NI = "^(N|NI|V|4)+$", SDD = "^(SDD|D|H|5)+$",
+  info = interactive(), ...)
 
 # S3 method for class 'mic'
 as.sir(x, mo = NULL, ab = deparse(substitute(x)),
@@ -115,8 +116,8 @@ disk diffusion diameters:
   language](https://tidyselect.r-lib.org/reference/starts_with.html)
   such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and
   can thus also be [antimicrobial
-  selectors](https://amr-for-r.org/reference/antimicrobial_selectors.md)
-  such as `as.sir(df, penicillins())`.
+  selectors](https://amr-for-r.org/reference/antimicrobial_selectors.md),
+  e.g. `as.sir(df, penicillins())`.
 
   Otherwise: arguments passed on to methods.
 
@@ -187,31 +188,31 @@ disk diffusion diameters:
 
   `"none"`
 
-  - `<=` and `>=` are treated as-is.
+  - `<=`, `<`, `>` and `>=` are ignored.
 
-  - `<` and `>` are treated as-is.
+  `"conservative"` (default)
 
-  `"conservative"`
+  - `<=`, `<`, `>` and `>=` return `"NI"` (non-interpretable) if the
+    *true* MIC could be at either side of the breakpoint.
 
-  - `<=` and `>=` return `"NI"` (non-interpretable) if the MIC is within
-    the breakpoint guideline range.
+  - This is the only mode that preserves uncertainty for ECOFFs.
 
-  - `<` always returns `"S"`, and `>` always returns `"R"`.
+  `"standard"`
 
-  `"standard"` (default)
+  - `<=` and `>=` return `"NI"` (non-interpretable) if the *true* MIC
+    could be at either side of the breakpoint.
 
-  - `<=` and `>=` return `"NI"` (non-interpretable) if the MIC is within
-    the breakpoint guideline range.
+  - `<` always returns `"S"`, regardless of the breakpoint.
 
-  - `<` and `>` are treated as-is.
+  - `>` always returns `"R"`, regardless of the breakpoint.
 
-  `"inverse"`
+  `"lenient"`
 
-  - `<=` and `>=` are treated as-is.
+  - `<=` and `<` always return `"S"`, regardless of the breakpoint.
 
-  - `<` always returns `"S"`, and `>` always returns `"R"`.
+  - `>=` and `>` always return `"R"`, regardless of the breakpoint.
 
-  The default `"standard"` setting ensures cautious handling of
+  The default `"conservative"` setting ensures cautious handling of
   uncertain values while preserving interpretability. This option can
   also be set with the package option
   [`AMR_capped_mic_handling`](https://amr-for-r.org/reference/AMR-options.md).
@@ -397,14 +398,12 @@ The `as.sir()` function can work in four ways:
           # fast processing with parallel computing:
           as.sir(your_data, ..., parallel = TRUE)
 
-    - Operators like "\<=" will be stripped before interpretation. When
-      using `capped_mic_handling = "conservative"`, an MIC value of e.g.
-      "\>2" will always return "R", even if the breakpoint according to
-      the chosen guideline is "\>=4". This is to prevent that capped
-      values from raw laboratory data would not be treated
-      conservatively. The default behaviour
-      (`capped_mic_handling = "standard"`) considers "\>2" to be lower
-      than "\>=4" and might in this case return "S" or "I".
+    - Operators like "\<=" will be considered according to the
+      `capped_mic_handling` setting. At default, an MIC value of e.g.
+      "\>2" will return "NI" (non-interpretable) if the breakpoint is
+      4-8; the *true* MIC could be at either side of the breakpoint.
+      This is to prevent that capped values from raw laboratory data
+      would not be treated conservatively.
 
     - **Note:** When using CLSI as the guideline, MIC values must be
       log2-based doubling dilutions. Values not in this format, will be
@@ -649,10 +648,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2025-11-24 10:38:56     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2025-11-24 10:38:56     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2025-11-24 10:38:56     1 DISK   tobra       Escherich… human      16         
-#> 4 2025-11-24 10:38:56     1 DISK   genta       Escherich… human      18         
+#> 1 2025-12-15 12:29:02     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2025-12-15 12:29:02     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2025-12-15 12:29:02     1 DISK   tobra       Escherich… human      16         
+#> 4 2025-12-15 12:29:03     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
@@ -858,8 +857,20 @@ as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 #> Class 'sir'
 #> [1] S    SDD  I    R    NI   <NA> <NA> <NA>
 as.sir("<= 0.002; S") # will return "S"
+#> Warning: in `as.sir()`: 1 result in index '20' truncated (100%) that were invalid
+#> antimicrobial interpretations: "<= 0.002; S"
 #> Class 'sir'
-#> [1] S
+#> [1] <NA>
+
+as.sir(c(1, 2, 3))
+#> ℹ in `as.sir()`: Interpreting input value 1 as "S", 2 as "I", and 3 as "R"
+#> Class 'sir'
+#> [1] S I R
+as.sir(c(1, 2, 3), S = 3, I = 2, R = 1)
+#> ℹ in `as.sir()`: Interpreting input value 1 as "R", 2 as "I", and 3 as "S"
+#> Class 'sir'
+#> [1] R I S
+
 sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.sir(sir_data)
 #> [1] TRUE

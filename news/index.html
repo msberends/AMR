@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +49,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9003" id="amr-3019003">AMR 3.0.1.9003<a class="anchor" aria-label="anchor" href="#amr-3019003"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9004" id="amr-3019004">AMR 3.0.1.9004<a class="anchor" aria-label="anchor" href="#amr-3019004"></a></h2>
 <div class="section level4">
-<h4 id="changed-3-0-1-9003">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9003"></a></h4>
+<h4 id="changed-3-0-1-9004">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9004"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
 <li>Added taniborbactam (<code>TAN</code>) and cefepime/taniborbactam (<code>FTA</code>) to the <code>antimicrobials</code> data set</li>
+<li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where for numeric input the arguments <code>S</code>, <code>i</code>, and <code>R</code> would not be considered (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
+<li>Added explaining message to <code><a href="../reference/as.sir.html">as.sir()</a></code> when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
+<li>Updated handling of capped MIC values (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in <code><a href="../reference/as.sir.html">as.sir()</a></code> in the argument <code>capped_mic_handling</code>: (<a href="https://github.com/msberends/AMR/issues/243" class="external-link">#243</a>)
+<ul><li>Introduced four clearly defined options: <code>"none"</code>, <code>"conservative"</code> (default), <code>"standard"</code>, and <code>"lenient"</code>
+</li>
+<li>Interpretation of capped MIC values now consistently returns <code>"NI"</code> (non-interpretable) when the true MIC could be at either side of a breakpoint, depending on the selected handling mode</li>
+<li>This results in more reliable behaviour compared to previous versions for capped MIC values</li>
+<li>Removed the <code>"inverse"</code> option, which has now become redundant</li>
+</ul></li>
 </ul></div>
 </div>
     <div class="section level2">

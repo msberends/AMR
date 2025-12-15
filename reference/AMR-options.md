@@ -21,8 +21,8 @@ This is an overview of all the package-specific
   A [character](https://rdrr.io/r/base/character.html) to use in
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), to indicate
   how capped MIC values (`<`, `<=`, `>`, `>=`) should be interpreted.
-  Must be one of `"standard"`, `"strict"`, `"relaxed"`, or `"inverse"` -
-  the default is `"standard"`.
+  Must be one of `"none"`, `"conservative"`, `"standard"`, or
+  `"lenient"` - the default is `"conservative"`.
 
 - `AMR_cleaning_regex`  
   A [regular expression](https://rdrr.io/r/base/regex.html)
