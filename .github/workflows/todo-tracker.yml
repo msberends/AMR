@@ -43,7 +43,11 @@ jobs:
 
       - name: Generate TODO list from R/
         run: |
+          export TZ=Europe/Amsterdam
+          last_updated=$(date +"%e %B %Y %H:%M:%S %Z" | sed 's/^ *//')
           echo "## \`TODO\` Report" > todo.md
+          echo "" >> todo.md
+          echo "**Last Updated: ${last_updated}**" >> todo.md
           echo "" >> todo.md
           echo "_This overview is automatically updated on each push to \`main\`. It provides an automated overview of all mentions of the text \`TODO\`._" >> todo.md
           echo "" >> todo.md

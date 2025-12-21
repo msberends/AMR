@@ -234,7 +234,7 @@ reference:
     - "`antimicrobials`"
     - "`clinical_breakpoints`"
     - "`example_isolates`"
-    # TODO - "`esbl_isolates`"
+    - "`esbl_isolates`"
     - "`microorganisms.codes`"
     - "`microorganisms.groups`"
     - "`intrinsic_resistant`"
