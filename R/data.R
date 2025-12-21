@@ -282,7 +282,7 @@
 
 #' Data Set with Clinical Breakpoints for SIR Interpretation
 #'
-#' @description Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This dataset contain breakpoints for humans, `r length(unique(clinical_breakpoints$host[!clinical_breakpoints$host %in% clinical_breakpoints$type]))` different animal groups, and ECOFFs.
+#' @description Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. This data set contains breakpoints for humans, `r length(unique(clinical_breakpoints$host[!clinical_breakpoints$host %in% clinical_breakpoints$type]))` different animal groups, and ECOFFs.
 #'
 #' These breakpoints are currently implemented:
 #' - For **clinical microbiology**: EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "human")$guideline)))`;
@@ -362,14 +362,14 @@
 #' dosage
 "dosage"
 
-# TODO #' Data Set with `r format(nrow(esbl_isolates), big.mark = " ")` ESBL Isolates
-# TODO #'
-# TODO #' A data set containing `r format(nrow(esbl_isolates), big.mark = " ")` microbial isolates with MIC values of common antibiotics and a binary `esbl` column for extended-spectrum beta-lactamase (ESBL) production. This data set contains randomised fictitious data but reflects reality and can be used to practise AMR-related machine learning, e.g., classification modelling with [tidymodels](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
-# TODO #' @format A [tibble][tibble::tibble] with `r format(nrow(esbl_isolates), big.mark = " ")` observations and `r ncol(esbl_isolates)` variables:
-# TODO #' - `esbl`\cr Logical indicator if the isolate is ESBL-producing
-# TODO #' - `genus`\cr Genus of the microorganism
-# TODO #' - `AMC:COL`\cr MIC values for 17 antimicrobial agents, transformed to class [`mic`] (see [as.mic()])
-# TODO #' @details See our [tidymodels integration][amr-tidymodels] for an example using this data set.
-# TODO #' @examples
-# TODO #' esbl_isolates
-# TODO "esbl_isolates"
+#' Data Set with `r format(nrow(esbl_isolates), big.mark = " ")` ESBL Isolates
+#'
+#' A data set containing `r format(nrow(esbl_isolates), big.mark = " ")` microbial isolates with MIC values of common antibiotics and a binary `esbl` column for extended-spectrum beta-lactamase (ESBL) production. This data set contains randomised fictitious data but reflects reality and can be used to practise AMR-related machine learning, e.g., classification modelling with [tidymodels](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
+#' @format A [tibble][tibble::tibble] with `r format(nrow(esbl_isolates), big.mark = " ")` observations and `r ncol(esbl_isolates)` variables:
+#' - `esbl`\cr Logical indicator if the isolate is ESBL-producing
+#' - `genus`\cr Genus of the microorganism
+#' - `AMC:COL`\cr MIC values for 17 antimicrobial agents, transformed to class [`mic`] (see [as.mic()])
+#' @details See our [tidymodels integration][amr-tidymodels] for an example using this data set.
+#' @examples
+#' esbl_isolates
+"esbl_isolates"

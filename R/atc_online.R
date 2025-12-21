@@ -99,7 +99,8 @@ atc_online_property <- function(atc_code,
   read_html <- import_fn("read_html", "xml2")
 
   if (!all(atc_code %in% unlist(AMR::antimicrobials$atc))) {
-    atc_code <- as.character(ab_atc(atc_code, only_first = TRUE))
+    missing <- atc_code %unlike% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]"
+    atc_code[missing] <- as.character(ab_atc(atc_code[missing], only_first = TRUE))
   }
 
   if (!has_internet()) {

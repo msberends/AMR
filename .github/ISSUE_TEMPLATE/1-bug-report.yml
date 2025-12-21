@@ -22,9 +22,9 @@ body:
       label: Minimal Reproducible Example (optional)
       description: Please include a short R code snippet that reproduces the problem, if possible.
       placeholder: 
-        e.g.
-        ```r
-        ab_name("amoxicillin/clavulanic acid", language = "es")
+        e.g.\n\n
+        ```r<br>
+        ab_name("amoxicillin/clavulanic acid", language = "es")\n
         ```
     validations:
       required: false
@@ -42,7 +42,7 @@ body:
       multiple: false
       options:
         - ''
-        - Latest CRAN version (3.0.0)
-        - One of the latest GitHub versions (3.0.0.9xxx)
+        - Latest CRAN version (3.0.1)
+        - One of the latest GitHub versions (3.0.1.9xxx)
     validations:
       required: true

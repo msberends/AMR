@@ -966,8 +966,13 @@ get_current_data <- function(arg_name, call) {
       # an element `.data` will be in the environment when using dplyr::select()
       return(env$`.data`)
     } else if (valid_df(env$training)) {
-      # an element `training` will be in the environment when using some tidymodels functions such as `prep()`
-      return(env$training)
+      if (!is.null(env$x) && valid_df(env$x$template)) {
+        # an element `x$template` will be in the environment when using some tidymodels functions such as `prep()`
+        return(env$x$template)
+      } else {
+        # this is a fallback for some tidymodels functions such as `prep()`
+        return(env$training)
+      }
     } else if (valid_df(env$data)) {
       # an element `data` will be in the environment when using older dplyr versions, or some tidymodels functions such as `fit()`
       return(env$data)

@@ -1,4 +1,10 @@
-# AMR 3.0.1.9004
+# AMR 3.0.1.9005
+
+### New
+* Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
+  - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
+  - New `tidyselect` helpers: `all_sir()`, `all_sir_predictors()`, `all_mic()`, `all_mic_predictors()`, `all_disk()`, `all_disk_predictors()`
+* Data set `esbl_isolates` to practise with AMR modelling
 
 ### Changed
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
@@ -48,7 +54,7 @@ This is a bugfix release following the release of v3.0.0 in June 2025.
 This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the [University of Prince Edward Island's Atlantic Veterinary College](https://www.upei.ca/avc), Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.
 
 ### Breaking
-* Dataset `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
+* Data set `antibiotics` has been renamed to `antimicrobials` as the data set contains more than just antibiotics. Using `antibiotics` will still work, but now returns a warning.
 * Removed all functions and references that used the deprecated `rsi` class, which were all replaced with their `sir` equivalents over two years ago.
 * Functions `resistance_predict()` and `sir_predict()` are now deprecated and will be removed in a future version. Use the `tidymodels` framework instead, for which we [wrote a basic introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 
@@ -60,7 +66,7 @@ This package now supports not only tools for AMR data analysis in clinical setti
   * `ab_atc()` now supports ATC codes of veterinary antimicrobials (that all start with "Q")
   * `ab_url()` now supports retrieving the WHOCC url of their ATCvet pages
 * **Support for WISCA antibiograms**  
-  * The `antibiogram()` function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in datasets with sparse data. A dedicated `wisca()` function is also available for easy usage.
+  * The `antibiogram()` function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in data sets with sparse data. A dedicated `wisca()` function is also available for easy usage.
 * **More global coverage of languages**
   * Added full support for 8 new languages: Arabic, Bengali, Hindi, Indonesian, Korean, Swahili, Urdu, and Vietnamese. The `AMR` package is now available in 28 languages.
 * **Major update to fungal taxonomy and tools for mycologists**

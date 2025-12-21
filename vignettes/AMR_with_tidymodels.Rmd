@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-> This page was entirely written by our [AMR for R Assistant](https://chat.amr-for-r.org), a ChatGPT manually-trained model able to answer any question about the `AMR` package.
+> This page was almost entirely written by our [AMR for R Assistant](https://chat.amr-for-r.org), a ChatGPT manually-trained model able to answer any question about the `AMR` package.
 
 Antimicrobial resistance (AMR) is a global health crisis, and understanding resistance patterns is crucial for managing effective treatments. The `AMR` R package provides robust tools for analysing AMR data, including convenient antimicrobial selector functions like `aminoglycosides()` and `betalactams()`. 
 
@@ -219,18 +219,163 @@ This workflow is extensible to other antimicrobial classes and resistance patter
 
 In this second example, we demonstrate how to use `<mic>` columns directly in `tidymodels` workflows using AMR-specific recipe steps. This includes a transformation to `log2` scale using `step_mic_log2()`, which prepares MIC values for use in classification models.
 
-This approach and idea formed the basis for the publication [DOI: 10.3389/fmicb.2025.1582703](https://doi.org/10.3389/fmicb.2025.1582703) to model the presence of extended-spectrum beta-lactamases (ESBL).
+This approach and idea formed the basis for the publication [DOI: 10.3389/fmicb.2025.1582703](https://doi.org/10.3389/fmicb.2025.1582703) to model the presence of extended-spectrum beta-lactamases (ESBL) based on MIC values.
 
-> NOTE: THIS EXAMPLE WILL BE AVAILABLE IN A NEXT VERSION (#TODO)
-> 
-> The new AMR package version will contain new tidymodels selectors such as `step_mic_log2()`.
+### **Objective**
 
-<!-- TODO for AMR v3.1.0: add info from here: https://github.com/msberends/AMR/blob/2461631bcefa78ebdb37bdfad359be74cdd9165a/vignettes/AMR_with_tidymodels.Rmd#L212-L291 -->
+Our goal is to:
+
+1. Use raw MIC values to predict whether a bacterial isolate produces ESBL.
+2. Apply AMR-aware preprocessing in a `tidymodels` recipe.
+3. Train a classification model and evaluate its predictive performance.
+
+### **Data Preparation**
+
+We use the `esbl_isolates` dataset that comes with the AMR package.
+
+```{r}
+# Load required libraries
+library(AMR)
+library(tidymodels)
+
+# View the esbl_isolates data set
+esbl_isolates
+
+# Prepare a binary outcome and convert to ordered factor
+data <- esbl_isolates %>%
+  mutate(esbl = factor(esbl, levels = c(FALSE, TRUE), ordered = TRUE))
+```
+
+**Explanation:**
+
+- `esbl_isolates`: Contains MIC test results and ESBL status for each isolate.
+- `mutate(esbl = ...)`: Converts the target column to an ordered factor for classification.
+
+### **Defining the Workflow**
+
+#### 1. Preprocessing with a Recipe
+
+We use our `step_mic_log2()` function to log2-transform MIC values, ensuring that MICs are numeric and properly scaled. All MIC predictors can easily and agnostically selected using the new `all_mic_predictors()`:
+
+```{r}
+# Split into training and testing sets
+set.seed(123)
+split <- initial_split(data)
+training_data <- training(split)
+testing_data <- testing(split)
+
+# Define the recipe
+mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
+  remove_role(genus, old_role = "predictor") %>%  # Remove non-informative variable
+  step_mic_log2(all_mic_predictors()) #%>%         # Log2 transform all MIC predictors
+ # prep()
+
+mic_recipe
+```
+
+**Explanation:**
+
+- `remove_role()`: Removes irrelevant variables like genus.
+- `step_mic_log2()`: Applies `log2(as.numeric(...))` to all MIC predictors in one go.
+- `prep()`: Finalises the recipe based on training data.
+
+#### 2. Specifying the Model
+
+We use a simple logistic regression to model ESBL presence, though recent models such as xgboost ([link to `parsnip` manual](https://parsnip.tidymodels.org/reference/details_boost_tree_xgboost.html)) could be much more precise.
+
+```{r}
+# Define the model
+model <- logistic_reg(mode = "classification") %>%
+  set_engine("glm")
+
+model
+```
+
+**Explanation:**
+
+- `logistic_reg()`: Specifies a binary classification model.
+- `set_engine("glm")`: Uses the base R GLM engine.
+
+#### 3. Building the Workflow
+
+```{r}
+# Create workflow
+workflow_model <- workflow() %>%
+  add_recipe(mic_recipe) %>%
+  add_model(model)
+
+workflow_model
+```
+
+### **Training and Evaluating the Model**
+
+```{r}
+# Fit the model
+fitted <- fit(workflow_model, training_data)
+
+# Generate predictions
+predictions <- predict(fitted, testing_data) %>%
+  bind_cols(predict(fitted, out_testing, type = "prob")) %>% # add probabilities
+  bind_cols(testing_data)
+
+# Evaluate model performance
+our_metrics <- metric_set(accuracy, recall, precision, sensitivity, specificity, ppv, npv)
+metrics <- our_metrics(predictions, truth = esbl, estimate = .pred_class)
+
+metrics
+```
+
+**Explanation:**
+
+- `fit()`: Trains the model on the processed training data.
+- `predict()`: Produces predictions for unseen test data.
+- `metric_set()`: Allows evaluating multiple classification metrics. This will make `our_metrics` to become a function that we can use to check the predictions with.
+
+It appears we can predict ESBL gene presence with a positive predictive value (PPV) of `r round(metrics[metrics$.metric == "ppv", ]$.estimate, 3) * 100`% and a negative predictive value (NPV) of `r round(metrics[metrics$.metric == "npv", ]$.estimate, 3) * 100` using a simplistic logistic regression model.
+
+### **Visualising Predictions**
+
+We can visualise predictions by comparing predicted and actual ESBL status.
+
+```{r}
+library(ggplot2)
+
+ggplot(predictions, aes(x = esbl, fill = .pred_class)) +
+  geom_bar(position = "stack") +
+  labs(title = "Predicted vs Actual ESBL Status",
+       x = "Actual ESBL",
+       y = "Count") +
+  theme_minimal()
+```
+
+And plot the certainties too - how certain were the actual predictions?
+
+```{r}
+predictions %>%
+  mutate(certainty = ifelse(.pred_class == "FALSE",
+                            .pred_FALSE,
+                            .pred_TRUE),
+         correct = ifelse(esbl == .pred_class, "Right", "Wrong")) %>%
+  ggplot(aes(x = seq_len(nrow(predictions)),
+             y = certainty,
+             colour = correct)) +
+  scale_colour_manual(values = c(Right = "green3", Wrong = "red2"),
+                      name = "Correct?") +
+  geom_point() + 
+  scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
+                     limits = c(0.5, 1)) +
+  theme_minimal()
+```
+### **Conclusion**
+
+In this example, we showcased how the new `AMR`-specific recipe steps simplify working with `<mic>` columns in `tidymodels`. The `step_mic_log2()` transformation converts ordered MICs to log2-transformed numerics, improving compatibility with classification models.
+
+This pipeline enables realistic, reproducible, and interpretable modelling of antimicrobial resistance data.
 
 ---
 
 
-## Example 2: Predicting AMR Over Time
+## Example 3: Predicting AMR Over Time
 
 In this third example, we aim to predict antimicrobial resistance (AMR) trends over time using `tidymodels`. We will model resistance to three antibiotics (amoxicillin `AMX`, amoxicillin-clavulanic acid `AMC`, and ciprofloxacin `CIP`), based on historical data grouped by year and hospital ward.
 

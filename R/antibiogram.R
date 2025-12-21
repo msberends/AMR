@@ -163,7 +163,7 @@
 #'          antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 #'    ```
 #'
-#'    WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre datasets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).
+#'    WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre data sets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).
 #'
 #' ### Grouped tibbles
 #'
