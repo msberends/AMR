@@ -1,6 +1,6 @@
 ---
 title: "AMR with tidymodels"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
@@ -8,7 +8,7 @@ vignette: >
   %\VignetteIndexEntry{AMR with tidymodels}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -208,7 +208,7 @@ predictions %>%
 
 ### **Conclusion**
 
-In this post, we demonstrated how to build a machine learning pipeline with the `tidymodels` framework and the `AMR` package. By combining selector functions like `aminoglycosides()` and `betalactams()` with `tidymodels`, we efficiently prepared data, trained a model, and evaluated its performance.
+In this example, we demonstrated how to build a machine learning pipeline with the `tidymodels` framework and the `AMR` package. By combining selector functions like `aminoglycosides()` and `betalactams()` with `tidymodels`, we efficiently prepared data, trained a model, and evaluated its performance.
 
 This workflow is extensible to other antimicrobial classes and resistance patterns, empowering users to analyse AMR data systematically and reproducibly.
 
@@ -267,8 +267,8 @@ testing_data <- testing(split)
 # Define the recipe
 mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
   remove_role(genus, old_role = "predictor") %>%  # Remove non-informative variable
-  step_mic_log2(all_mic_predictors()) #%>%         # Log2 transform all MIC predictors
- # prep()
+  step_mic_log2(all_mic_predictors()) %>%         # Log2 transform all MIC predictors
+  prep()
 
 mic_recipe
 ```
@@ -361,11 +361,12 @@ predictions %>%
              colour = correct)) +
   scale_colour_manual(values = c(Right = "green3", Wrong = "red2"),
                       name = "Correct?") +
-  geom_point() + 
+  geom_point() +
   scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
                      limits = c(0.5, 1)) +
   theme_minimal()
 ```
+
 ### **Conclusion**
 
 In this example, we showcased how the new `AMR`-specific recipe steps simplify working with `<mic>` columns in `tidymodels`. The `step_mic_log2()` transformation converts ordered MICs to log2-transformed numerics, improving compatibility with classification models.
@@ -487,7 +488,7 @@ fitted_workflow_time <- resistance_workflow_time %>%
 # Make predictions
 predictions_time <- fitted_workflow_time %>%
   predict(test_time) %>%
-  bind_cols(test_time) 
+  bind_cols(test_time)
 
 # Evaluate model
 metrics_time <- predictions_time %>%
