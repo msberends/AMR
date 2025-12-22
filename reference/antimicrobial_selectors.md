@@ -1013,6 +1013,9 @@ if (require("data.table")) {
 #> Loading required package: data.table
 #> 
 #> Attaching package: ‘data.table’
+#> The following object is masked from ‘package:purrr’:
+#> 
+#>     transpose
 #> The following objects are masked from ‘package:dplyr’:
 #> 
 #>     between, first, last

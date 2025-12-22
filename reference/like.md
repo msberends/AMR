@@ -88,6 +88,8 @@ inserted text will be iterated over `%like%` -\> `%unlike%` -\>
 ``` r
 # data.table has a more limited version of %like%, so unload it:
 try(detach("package:data.table", unload = TRUE), silent = TRUE)
+#> Warning: ‘data.table’ namespace cannot be unloaded:
+#>   namespace ‘data.table’ is imported by ‘prodlim’ so cannot be unloaded
 
 a <- "This is a test"
 b <- "TEST"

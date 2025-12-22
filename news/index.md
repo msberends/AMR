@@ -1,6 +1,23 @@
 # Changelog
 
-## AMR 3.0.1.9004
+## AMR 3.0.1.9007
+
+#### New
+
+- Integration with the **tidymodels** framework to allow seamless use of
+  SIR, MIC and disk data in modelling pipelines via `recipes`
+  - [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+    to transform `<mic>` columns with log2, and
+    [`step_sir_numeric()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+    to convert `<sir>` columns to numeric
+  - New `tidyselect` helpers:
+    [`all_sir()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+    [`all_sir_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+    [`all_mic()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+    [`all_mic_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+    [`all_disk()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+    [`all_disk_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+- Data set `esbl_isolates` to practise with AMR modelling
 
 #### Changed
 
@@ -119,8 +136,8 @@ this change.
 
 #### Breaking
 
-- Dataset `antibiotics` has been renamed to `antimicrobials` as the data
-  set contains more than just antibiotics. Using `antibiotics` will
+- Data set `antibiotics` has been renamed to `antimicrobials` as the
+  data set contains more than just antibiotics. Using `antibiotics` will
   still work, but now returns a warning.
 - Removed all functions and references that used the deprecated `rsi`
   class, which were all replaced with their `sir` equivalents over two
@@ -158,7 +175,7 @@ this change.
     Combination Antibiograms (WISCA), a powerful Bayesian method for
     estimating regimen coverage probabilities using pathogen incidence
     and antimicrobial susceptibility data. WISCA offers improved
-    precision for syndrome-specific treatment, even in datasets with
+    precision for syndrome-specific treatment, even in data sets with
     sparse data. A dedicated
     [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) function
     is also available for easy usage.

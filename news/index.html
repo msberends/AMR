@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9004" id="amr-3019004">AMR 3.0.1.9004<a class="anchor" aria-label="anchor" href="#amr-3019004"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9007" id="amr-3019007">AMR 3.0.1.9007<a class="anchor" aria-label="anchor" href="#amr-3019007"></a></h2>
 <div class="section level4">
-<h4 id="changed-3-0-1-9004">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9004"></a></h4>
+<h4 id="new-3-0-1-9007">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9007"></a></h4>
+<ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
+<ul><li>
+<code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
+<li>New <code>tidyselect</code> helpers: <code><a href="../reference/amr-tidymodels.html">all_sir()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_sir_predictors()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic_predictors()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_disk()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_disk_predictors()</a></code>
+</li>
+</ul></li>
+<li>Data set <code>esbl_isolates</code> to practise with AMR modelling</li>
+</ul></div>
+<div class="section level4">
+<h4 id="changed-3-0-1-9007">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9007"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
 <li>Added taniborbactam (<code>TAN</code>) and cefepime/taniborbactam (<code>FTA</code>) to the <code>antimicrobials</code> data set</li>
 <li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where for numeric input the arguments <code>S</code>, <code>i</code>, and <code>R</code> would not be considered (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
@@ -104,7 +114,7 @@
 <p>This package now supports not only tools for AMR data analysis in clinical settings, but also for veterinary and environmental microbiology. This was made possible through a collaboration with the <a href="https://www.upei.ca/avc" class="external-link">University of Prince Edward Island’s Atlantic Veterinary College</a>, Canada. To celebrate this great improvement of the package, we also updated the package logo to reflect this change.</p>
 <div class="section level4">
 <h4 id="breaking-3-0-0">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-0"></a></h4>
-<ul><li>Dataset <code>antibiotics</code> has been renamed to <code>antimicrobials</code> as the data set contains more than just antibiotics. Using <code>antibiotics</code> will still work, but now returns a warning.</li>
+<ul><li>Data set <code>antibiotics</code> has been renamed to <code>antimicrobials</code> as the data set contains more than just antibiotics. Using <code>antibiotics</code> will still work, but now returns a warning.</li>
 <li>Removed all functions and references that used the deprecated <code>rsi</code> class, which were all replaced with their <code>sir</code> equivalents over two years ago.</li>
 <li>Functions <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> and <code><a href="../reference/resistance_predict.html">sir_predict()</a></code> are now deprecated and will be removed in a future version. Use the <code>tidymodels</code> framework instead, for which we <a href="https://amr-for-r.org/articles/AMR_with_tidymodels.html">wrote a basic introduction</a>.</li>
 </ul></div>
@@ -122,7 +132,7 @@
 </ul></li>
 <li>
 <strong>Support for WISCA antibiograms</strong>
-<ul><li>The <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in datasets with sparse data. A dedicated <code><a href="../reference/antibiogram.html">wisca()</a></code> function is also available for easy usage.</li>
+<ul><li>The <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function now supports creating true Weighted-Incidence Syndromic Combination Antibiograms (WISCA), a powerful Bayesian method for estimating regimen coverage probabilities using pathogen incidence and antimicrobial susceptibility data. WISCA offers improved precision for syndrome-specific treatment, even in data sets with sparse data. A dedicated <code><a href="../reference/antibiogram.html">wisca()</a></code> function is also available for easy usage.</li>
 </ul></li>
 <li>
 <strong>More global coverage of languages</strong>

@@ -2,7 +2,7 @@
 
 Data set containing clinical breakpoints to interpret MIC and disk
 diffusion to SIR values, according to international guidelines. This
-dataset contain breakpoints for humans, 7 different animal groups, and
+data set contains breakpoints for humans, 7 different animal groups, and
 ECOFFs.
 
 These breakpoints are currently implemented:

@@ -391,6 +391,8 @@ information about how to work with functions in this package.
   : Data Set with Clinical Breakpoints for SIR Interpretation
 - [`example_isolates`](https://amr-for-r.org/reference/example_isolates.md)
   : Data Set with 2 000 Example Isolates
+- [`esbl_isolates`](https://amr-for-r.org/reference/esbl_isolates.md) :
+  Data Set with 500 ESBL Isolates
 - [`microorganisms.codes`](https://amr-for-r.org/reference/microorganisms.codes.md)
   : Data Set with 6 036 Common Microorganism Codes
 - [`microorganisms.groups`](https://amr-for-r.org/reference/microorganisms.groups.md)

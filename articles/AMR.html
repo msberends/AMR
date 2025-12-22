@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 15 December 2025.</p>
+generated on 22 December 2025.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -147,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2025-12-15</td>
+<td align="center">2025-12-22</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2025-12-15</td>
+<td align="center">2025-12-22</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2025-12-15</td>
+<td align="center">2025-12-22</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -1254,7 +1254,7 @@ function on a grouped <code>tibble</code>, i.e., using
 provides an extension to that function:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">combined_ab</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="720"></p>
+<p><img src="AMR_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="720"></p>
 <p>To calculate antimicrobial resistance in a more sensible way, also by
 correcting for too few results, we use the <code><a href="../reference/proportion.html">resistance()</a></code> and
 <code><a href="../reference/proportion.html">susceptibility()</a></code> functions.</p>
@@ -1348,7 +1348,7 @@ categories.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"MIC Distribution and SIR Interpretation"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Sample Groups"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"MIC (mg/L)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_files/figure-html/mic_plot-1.png" class="r-plt" width="720"></p>
+<p><img src="AMR_files/figure-html/mic_plot-1.png" class="r-plt" alt="" width="720"></p>
 <p>This plot provides an intuitive way to assess susceptibility patterns
 across different groups while incorporating clinical breakpoints.</p>
 <p>For a more straightforward and less manual approach,
@@ -1357,12 +1357,12 @@ extended by this package to directly plot MIC and disk diffusion
 values:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_files/figure-html/autoplot-1.png" class="r-plt" width="720"></p>
+<p><img src="AMR_files/figure-html/autoplot-1.png" class="r-plt" alt="" width="720"></p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># by providing `mo` and `ab`, colours will indicate the SIR interpretation:</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_files/figure-html/autoplot-2.png" class="r-plt" width="720"></p>
+<p><img src="AMR_files/figure-html/autoplot-2.png" class="r-plt" alt="" width="720"></p>
 <hr>
 <p><em>Author: Dr. Matthijs Berends, 23rd Feb 2025</em></p>
 </div>

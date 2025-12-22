@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 15 December
+methodology remains unchanged. This page was generated on 22 December
 2025.
 
 ## Introduction
@@ -52,9 +52,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2025-12-15 |    abcd    | Escherichia coli |  S  |  S  |
-| 2025-12-15 |    abcd    | Escherichia coli |  S  |  R  |
-| 2025-12-15 |    efgh    | Escherichia coli |  R  |  S  |
+| 2025-12-22 |    abcd    | Escherichia coli |  S  |  S  |
+| 2025-12-22 |    abcd    | Escherichia coli |  S  |  R  |
+| 2025-12-22 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 

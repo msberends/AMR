@@ -427,9 +427,9 @@ pathogen, but rather by syndrome.
 
     WISCA uses a sophisticated Bayesian decision model to combine both
     local and pooled antimicrobial resistance data. This approach not
-    only evaluates local patterns but can also draw on multi-centre
-    datasets to improve regimen accuracy, even in low-incidence
-    infections like paediatric bloodstream infections (BSIs).
+    only evaluates local patterns but can also draw on multi-centre data
+    sets to improve regimen accuracy, even in low-incidence infections
+    like paediatric bloodstream infections (BSIs).
 
 ### Grouped tibbles
 
@@ -777,9 +777,9 @@ antibiogram(example_isolates,
 #> # Type:           WISCA with 95% CI
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          73.4% (67.6-78.6%)        92.4% (90.6-93.7%)                
-#> 2 ICU               57.4% (49.7-65.6%)        85% (82.1-87.6%)                  
-#> 3 Outpatient        56.9% (46.9-66.7%)        74.4% (69-79.7%)                  
+#> 1 Clinical          73.5% (68.1-78.6%)        92.3% (90.8-93.8%)                
+#> 2 ICU               57.3% (49.8-64.9%)        84.8% (82-87.7%)                  
+#> 3 Outpatient        56.8% (47-67%)            74.4% (68.6-79.7%)                
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -804,9 +804,9 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |73.6% (68.4-79%)        |
-#> |ICU             |57.4% (49.7-65.4%)      |
-#> |Outpatient      |57% (47.2-66.7%)        |
+#> |Clinical        |73.6% (68.5-78.7%)      |
+#> |ICU             |57.4% (49.3-65.8%)      |
+#> |Outpatient      |57% (47.1-67.3%)        |
 
 
 # Generate plots with ggplot2 or base R --------------------------------

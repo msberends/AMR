@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -282,7 +282,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span><span class="co"># this is equal to:</span></span>
 <span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">your_data</span>,</span>
 <span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
-<p>WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre datasets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).</p></li>
+<p>WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre data sets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).</p></li>
 </ol></div>
 
 <div class="section">
@@ -587,9 +587,9 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          73.4% (67.6-78.6%)        92.4% (90.6-93.7%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               57.4% (49.7-65.6%)        85% (82.1-87.6%)                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        56.9% (46.9-66.7%)        74.4% (69-79.7%)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          73.5% (68.1-78.6%)        92.3% (90.8-93.8%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               57.3% (49.8-64.9%)        84.8% (82-87.7%)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        56.8% (47-67%)            74.4% (68.6-79.7%)                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -614,9 +614,9 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Syndromic Group |Piperacillin/tazobactam |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------|:-----------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |73.6% (68.4-79%)        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |57.4% (49.7-65.4%)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57% (47.2-66.7%)        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |73.6% (68.5-78.7%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |57.4% (49.3-65.8%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57% (47.1-67.3%)        |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
