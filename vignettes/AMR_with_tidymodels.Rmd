@@ -315,7 +315,7 @@ fitted <- fit(workflow_model, training_data)
 
 # Generate predictions
 predictions <- predict(fitted, testing_data) %>%
-  bind_cols(predict(fitted, out_testing, type = "prob")) %>% # add probabilities
+  bind_cols(predict(fitted, testing_data, type = "prob")) %>% # add probabilities
   bind_cols(testing_data)
 
 # Evaluate model performance
