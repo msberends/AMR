@@ -267,10 +267,9 @@ testing_data <- testing(split)
 # Define the recipe
 mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
   remove_role(genus, old_role = "predictor") %>%  # Remove non-informative variable
-  step_mic_log2(all_mic_predictors()) %>%         # Log2 transform all MIC predictors
-  prep()
+  step_mic_log2(all_mic_predictors())             # Log2 transform all MIC predictors
 
-mic_recipe
+prep(mic_recipe)
 ```
 
 **Explanation:**
@@ -331,7 +330,7 @@ metrics
 - `predict()`: Produces predictions for unseen test data.
 - `metric_set()`: Allows evaluating multiple classification metrics. This will make `our_metrics` to become a function that we can use to check the predictions with.
 
-It appears we can predict ESBL gene presence with a positive predictive value (PPV) of `r round(metrics[metrics$.metric == "ppv", ]$.estimate, 3) * 100`% and a negative predictive value (NPV) of `r round(metrics[metrics$.metric == "npv", ]$.estimate, 3) * 100` using a simplistic logistic regression model.
+It appears we can predict ESBL gene presence with a positive predictive value (PPV) of `r round(metrics[metrics$.metric == "ppv", ]$.estimate, 3) * 100`% and a negative predictive value (NPV) of `r round(metrics[metrics$.metric == "npv", ]$.estimate, 3) * 100`% using a simplistic logistic regression model.
 
 ### **Visualising Predictions**
 
@@ -369,7 +368,7 @@ predictions %>%
 
 ### **Conclusion**
 
-In this example, we showcased how the new `AMR`-specific recipe steps simplify working with `<mic>` columns in `tidymodels`. The `step_mic_log2()` transformation converts ordered MICs to log2-transformed numerics, improving compatibility with classification models.
+In this example, we showcased how the new `AMR`-specific recipe steps simplify working with `<mic>` columns in `tidymodels`. The `step_mic_log2()` transformation converts MICs (with or without operators) to log2-transformed numerics, improving compatibility with classification models.
 
 This pipeline enables realistic, reproducible, and interpretable modelling of antimicrobial resistance data.
 
