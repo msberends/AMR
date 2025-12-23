@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -419,7 +419,7 @@ ROC curve looks like this:</p>
 <h3 id="conclusion">
 <strong>Conclusion</strong><a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h3>
-<p>In this post, we demonstrated how to build a machine learning
+<p>In this example, we demonstrated how to build a machine learning
 pipeline with the <code>tidymodels</code> framework and the
 <code>AMR</code> package. By combining selector functions like
 <code><a href="../reference/antimicrobial_selectors.html">aminoglycosides()</a></code> and <code><a href="../reference/antimicrobial_selectors.html">betalactams()</a></code> with
@@ -521,10 +521,9 @@ predictors can easily and agnostically selected using the new
 <span><span class="co"># Define the recipe</span></span>
 <span><span class="va">mic_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">esbl</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">remove_role</span><span class="op">(</span><span class="va">genus</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># Remove non-informative variable</span></span>
-<span>  <span class="fu"><a href="../reference/amr-tidymodels.html">step_mic_log2</a></span><span class="op">(</span><span class="fu"><a href="../reference/amr-tidymodels.html">all_mic_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co">#%&gt;%         # Log2 transform all MIC predictors</span></span>
-<span> <span class="co"># prep()</span></span>
+<span>  <span class="fu"><a href="../reference/amr-tidymodels.html">step_mic_log2</a></span><span class="op">(</span><span class="fu"><a href="../reference/amr-tidymodels.html">all_mic_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>             <span class="co"># Log2 transform all MIC predictors</span></span>
 <span></span>
-<span><span class="va">mic_recipe</span></span>
+<span><span class="fu">prep</span><span class="op">(</span><span class="va">mic_recipe</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -534,8 +533,11 @@ predictors can easily and agnostically selected using the new
 <span><span class="co">#&gt; predictor:       17</span></span>
 <span><span class="co">#&gt; undeclared role:  1</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Training information</span></span>
+<span><span class="co">#&gt; Training data contained 375 data points and no incomplete rows.</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Operations</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Log2 transformation of MIC columns: <span style="color: #0000BB;">all_mic_predictors()</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Log2 transformation of MIC columns: <span style="color: #0000BB;">AMC</span>, <span style="color: #0000BB;">AMP</span>, <span style="color: #0000BB;">TZP</span>, <span style="color: #0000BB;">CXM</span>, <span style="color: #0000BB;">FOX</span>, ... | <span style="font-style: italic;">Trained</span></span></span></code></pre></div>
 <p><strong>Explanation:</strong></p>
 <ul>
 <li>
@@ -641,7 +643,7 @@ that we can use to check the predictions with.</li>
 </ul>
 <p>It appears we can predict ESBL gene presence with a positive
 predictive value (PPV) of 92.1% and a negative predictive value (NPV) of
-91.9 using a simplistic logistic regression model.</p>
+91.9% using a simplistic logistic regression model.</p>
 </div>
 <div class="section level3">
 <h3 id="visualising-predictions">
@@ -672,17 +674,21 @@ predictions?</p>
 <span>             colour <span class="op">=</span> <span class="va">correct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Right <span class="op">=</span> <span class="st">"green3"</span>, Wrong <span class="op">=</span> <span class="st">"red2"</span><span class="op">)</span>,</span>
 <span>                      name <span class="op">=</span> <span class="st">"Correct?"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="fl">100</span>, <span class="st">"%"</span><span class="op">)</span>,</span>
 <span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="720">
-### <strong>Conclusion</strong></p>
+<p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="720"></p>
+</div>
+<div class="section level3">
+<h3 id="conclusion-1">
+<strong>Conclusion</strong><a class="anchor" aria-label="anchor" href="#conclusion-1"></a>
+</h3>
 <p>In this example, we showcased how the new <code>AMR</code>-specific
 recipe steps simplify working with <code>&lt;mic&gt;</code> columns in
 <code>tidymodels</code>. The <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> transformation
-converts ordered MICs to log2-transformed numerics, improving
-compatibility with classification models.</p>
+converts MICs (with or without operators) to log2-transformed numerics,
+improving compatibility with classification models.</p>
 <p>This pipeline enables realistic, reproducible, and interpretable
 modelling of antimicrobial resistance data.</p>
 <hr>
@@ -872,7 +878,7 @@ evaluate performance.</p>
 <span><span class="co"># Make predictions</span></span>
 <span><span class="va">predictions_time</span> <span class="op">&lt;-</span> <span class="va">fitted_workflow_time</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">test_time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">test_time</span><span class="op">)</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">test_time</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Evaluate model</span></span>
 <span><span class="va">metrics_time</span> <span class="op">&lt;-</span> <span class="va">predictions_time</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -931,8 +937,8 @@ sets.</li>
 <p><img src="AMR_with_tidymodels_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="720"></p>
 </div>
 <div class="section level3">
-<h3 id="conclusion-1">
-<strong>Conclusion</strong><a class="anchor" aria-label="anchor" href="#conclusion-1"></a>
+<h3 id="conclusion-2">
+<strong>Conclusion</strong><a class="anchor" aria-label="anchor" href="#conclusion-2"></a>
 </h3>
 <p>In this example, we demonstrated how to analyze AMR trends over time
 using <code>tidymodels</code>. By aggregating resistance rates by year

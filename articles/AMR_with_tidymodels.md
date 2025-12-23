@@ -332,9 +332,9 @@ predictions %>%
 
 ### **Conclusion**
 
-In this post, we demonstrated how to build a machine learning pipeline
-with the `tidymodels` framework and the `AMR` package. By combining
-selector functions like
+In this example, we demonstrated how to build a machine learning
+pipeline with the `tidymodels` framework and the `AMR` package. By
+combining selector functions like
 [`aminoglycosides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
 and
 [`betalactams()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
@@ -431,10 +431,9 @@ testing_data <- testing(split)
 # Define the recipe
 mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
   remove_role(genus, old_role = "predictor") %>%  # Remove non-informative variable
-  step_mic_log2(all_mic_predictors()) #%>%         # Log2 transform all MIC predictors
- # prep()
+  step_mic_log2(all_mic_predictors())             # Log2 transform all MIC predictors
 
-mic_recipe
+prep(mic_recipe)
 #> 
 #> ── Recipe ──────────────────────────────────────────────────────────────────────
 #> 
@@ -444,8 +443,11 @@ mic_recipe
 #> predictor:       17
 #> undeclared role:  1
 #> 
+#> ── Training information
+#> Training data contained 375 data points and no incomplete rows.
+#> 
 #> ── Operations
-#> • Log2 transformation of MIC columns: all_mic_predictors()
+#> • Log2 transformation of MIC columns: AMC, AMP, TZP, CXM, FOX, ... | Trained
 ```
 
 **Explanation:**
@@ -540,8 +542,8 @@ metrics
   check the predictions with.
 
 It appears we can predict ESBL gene presence with a positive predictive
-value (PPV) of 92.1% and a negative predictive value (NPV) of 91.9 using
-a simplistic logistic regression model.
+value (PPV) of 92.1% and a negative predictive value (NPV) of 91.9%
+using a simplistic logistic regression model.
 
 ### **Visualising Predictions**
 
@@ -574,20 +576,22 @@ predictions %>%
              colour = correct)) +
   scale_colour_manual(values = c(Right = "green3", Wrong = "red2"),
                       name = "Correct?") +
-  geom_point() + 
+  geom_point() +
   scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
                      limits = c(0.5, 1)) +
   theme_minimal()
 ```
 
-![](AMR_with_tidymodels_files/figure-html/unnamed-chunk-15-1.png) \###
-**Conclusion**
+![](AMR_with_tidymodels_files/figure-html/unnamed-chunk-15-1.png)
+
+### **Conclusion**
 
 In this example, we showcased how the new `AMR`-specific recipe steps
 simplify working with `<mic>` columns in `tidymodels`. The
 [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md)
-transformation converts ordered MICs to log2-transformed numerics,
-improving compatibility with classification models.
+transformation converts MICs (with or without operators) to
+log2-transformed numerics, improving compatibility with classification
+models.
 
 This pipeline enables realistic, reproducible, and interpretable
 modelling of antimicrobial resistance data.
@@ -762,7 +766,7 @@ fitted_workflow_time <- resistance_workflow_time %>%
 # Make predictions
 predictions_time <- fitted_workflow_time %>%
   predict(test_time) %>%
-  bind_cols(test_time) 
+  bind_cols(test_time)
 
 # Evaluate model
 metrics_time <- predictions_time %>%
