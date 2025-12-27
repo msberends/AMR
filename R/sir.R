@@ -389,26 +389,15 @@ as.sir <- function(x, ...) {
   UseMethod("as.sir")
 }
 
-as_sir_structure <- function(x,
-                             guideline = NULL,
-                             mo = NULL,
-                             ab = NULL,
-                             method = NULL,
-                             ref_tbl = NULL,
-                             ref_breakpoints = NULL) {
+as_sir_structure <- function(x) {
+  int <- attr(x, "interpretation_details")
   structure(
     factor(as.character(unlist(unname(x))),
       levels = c("S", "SDD", "I", "R", "NI"),
       ordered = TRUE
     ),
-    # TODO for #170
-    # guideline = guideline,
-    # mo = mo,
-    # ab = ab,
-    # method = method,
-    # ref_tbl = ref_tbl,
-    # ref_breakpoints = ref_breakpoints,
-    class = c("sir", "ordered", "factor")
+    interpretation_details = int,
+    class = c(if (!is.null(int)) "interpreted_sir" else NULL, "sir", "ordered", "factor")
   )
 }
 
@@ -1654,9 +1643,11 @@ as_sir_method <- function(method_short,
         breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
         stringsAsFactors = FALSE
       )
+      attr(new_sir, "interpretation_details") <- out
       out <- subset(out, !is.na(input_given))
       AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
       notes <- c(notes, notes_current)
+      df[rows, "result"] <- new_sir
       next
     }
 
@@ -1887,6 +1878,7 @@ as_sir_method <- function(method_short,
         breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
         stringsAsFactors = FALSE
       )
+      attr(new_sir, "interpretation_details") <- out
       out <- subset(out, !is.na(input_given))
       AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out)
     }
@@ -1931,20 +1923,33 @@ as_sir_method <- function(method_short,
   new_part <- new_part[order(new_part$index), , drop = FALSE]
   AMR_env$sir_interpretation_history <- rbind_AMR(old_part, new_part)
 
-  df$result
+  as_sir_structure(df$result)
 }
 
 #' @rdname as.sir
+#' @param sir_values SIR values that were interpreted from MIC or disk diffusion values using [as.sir()].
 #' @param clean A [logical] to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.
 #' @export
-sir_interpretation_history <- function(clean = FALSE) {
+sir_interpretation_history <- function(sir_values = NULL, clean = FALSE) {
+  # for AMR v3.0.0 and lower, the first argument was `clean`, so allow `sir_interpretation_history(TRUE)` to keep working
+  if (is.logical(sir_values) && missing(clean)) {
+    clean <- sir_values
+    sir_values <- NULL
+    warning_("For `sir_interpretation_history()`, the `clean` argument is no longer the first argument, please update your code to explicitly state 'clean': `sir_interpretation_history(clean = ", clean, ")`.")
+  }
+  meet_criteria(sir_values, allow_class = "sir", allow_NULL = TRUE)
   meet_criteria(clean, allow_class = "logical", has_length = 1)
-  out <- AMR_env$sir_interpretation_history
-  out <- out[which(!is.na(out$datetime)), , drop = FALSE]
-  out$outcome <- as.sir(out$outcome)
-  out$site <- as.character(out$site)
-  if (isTRUE(clean)) {
-    AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
+
+  if (!is.null(sir_values)) {
+    out <- attr(sir_values, "interpretation_details")
+  } else {
+    out <- AMR_env$sir_interpretation_history
+    out <- out[which(!is.na(out$datetime)), , drop = FALSE]
+    out$outcome <- as.sir(out$outcome)
+    out$site <- as.character(out$site)
+    if (isTRUE(clean)) {
+      AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
+    }
   }
   if (pkg_is_available("tibble")) {
     out <- import_fn("as_tibble", "tibble")(out)
@@ -2053,19 +2058,58 @@ get_skimmers.sir <- function(column) {
 #' @export
 #' @noRd
 print.sir <- function(x, ...) {
-  x_name <- deparse(substitute(x))
   cat("Class 'sir'\n")
-  # TODO for #170
-  # if (!is.null(attributes(x)$guideline) && !all(is.na(attributes(x)$guideline))) {
-  #   cat(font_blue(word_wrap("These values were interpreted using ",
-  #                           font_bold(vector_and(attributes(x)$guideline, quotes = FALSE)),
-  #                           " based on ",
-  #                           vector_and(attributes(x)$method, quotes = FALSE),
-  #                           " values. ",
-  #                           "Use `sir_interpretation_history(", x_name, ")` to return a full logbook.")))
-  #   cat("\n")
-  # }
   print(as.character(x), quote = FALSE)
+}
+
+#' @method print interpreted_sir
+#' @export
+#' @noRd
+print.interpreted_sir <- function(x, ...) {
+  cat("Class 'sir'\n")
+  print(as.character(x), quote = FALSE)
+
+  if (length(x) == 0) {
+    return(invisible())
+  }
+
+  int <- attr(x, "interpretation_details")
+  if (NROW(int) == 0) {
+    if (length(x) == 1) {
+      cat(font_blue(word_wrap("Source data were lost for this interpreted value.")))
+    } else {
+      cat(font_blue(word_wrap("Source data were lost for these interpreted values.")))
+    }
+  } else {
+    relevant_cols <- int[, c("guideline", "method", "ab", "mo"), drop = FALSE]
+    relevant_cols <- unique(relevant_cols)
+    vals1_plural <- ifelse(length(x) == 1, "This value was", "These values were")
+    vals2_plural <- ifelse(length(x) == 1, "value", "values")
+    method_fn <- ifelse(relevant_cols$method == "MIC", "MIC", "disk diffusion")
+    if (NROW(relevant_cols) == 1) {
+      in_host <- ifelse(relevant_cols$host == "human", "", paste0(" in ", relevant_cols$host))
+      cat(font_blue(word_wrap(
+        vals1_plural, " interpreted using ",
+        relevant_cols$guideline,
+        " based on the ",
+        method_fn,
+        " ", vals2_plural, " for ",
+        ab_name(relevant_cols$ab, language = NULL, info = FALSE, tolower = TRUE), " in ",
+        italicise_taxonomy(mo_name(relevant_cols$mo, language = NULL, info = FALSE), type = "ansi"),
+        in_host,
+        "."
+      )))
+    } else {
+      cat(font_blue(word_wrap(
+        vals1_plural, " interpreted using ",
+        vector_and(relevant_cols$guideline, quotes = FALSE),
+        " based on ",
+        vector_and(method_fn, quotes = FALSE),
+        " ", vals2_plural, "."
+      )))
+    }
+    cat(font_blue(word_wrap("\nUse `sir_interpretation_history()` on this object to return a full logbook.\n")))
+  }
 }
 
 
@@ -2123,51 +2167,132 @@ summary.sir <- function(object, ...) {
   value
 }
 
+#' @method [ sir
+#' @export
+#' @noRd
+"[.sir" <- function(x, ...) {
+  y <- NextMethod()
+  det <- attr(x, "interpretation_details")
+  if (!is.null(det)) {
+    subset_idx <- seq_along(x)[...]
+    # safer than relying on implicit eval inside NextMethod()
+    attr(y, "interpretation_details") <- det[subset_idx, , drop = FALSE]
+  }
+  y
+}
+#' @method [[ sir
+#' @export
+#' @noRd
+"[[.sir" <- function(x, i, ...) {
+  if (length(i) != 1L) {
+    stop("attempt to select more than one element with [[.", call. = FALSE)
+  }
+  x[i] # calls `[.sir`, ensures attr alignment
+}
+
 #' @method [<- sir
 #' @export
 #' @noRd
 "[<-.sir" <- function(i, j, ..., value) {
   value <- as.sir(value)
   y <- NextMethod()
-  attributes(y) <- attributes(i)
+
+  old_det <- attr(i, "interpretation_details")
+  new_det <- attr(value, "interpretation_details")
+
+  len_y <- length(y)
+
+  # Neither i nor value have details -> do nothing
+  if (is.null(old_det) && is.null(new_det)) {
+    return(y)
+  }
+
+  # Start building full_det as copy of old_det or empty
+  full_det <- if (!is.null(old_det)) old_det else data.frame(row = seq_along(i))
+
+  # Ensure full_det has correct row count and order
+  if (nrow(full_det) != length(i)) {
+    attr(y, "interpretation_details") <- NULL
+    return(y)
+  }
+
+  # Which rows are being assigned?
+  assign_idx <- if (missing(j)) seq_along(i) else j
+  assign_idx <- as.integer(assign_idx)
+
+  # If new_det is missing or too short, fill it
+  if (is.null(new_det)) {
+    new_det <- data.frame(row = assign_idx)
+  } else if (nrow(new_det) != length(value)) {
+    new_det <- data.frame(row = assign_idx)
+  }
+
+  # Add temporary .row to track positions
+  full_det$.row <- seq_len(nrow(full_det))
+  new_det$.row <- assign_idx
+
+  # Replace old rows with new rows
+  full_det <- rbind(
+    subset(full_det, !.row %in% assign_idx),
+    new_det
+  )
+  full_det <- full_det[order(full_det$.row), , drop = FALSE]
+  full_det$.row <- NULL
+
+  # Clean up: ensure right number of rows
+  if (nrow(full_det) == len_y) {
+    attr(y, "interpretation_details") <- full_det
+  } else {
+    attr(y, "interpretation_details") <- NULL
+  }
+
   y
 }
 #' @method [[<- sir
 #' @export
 #' @noRd
 "[[<-.sir" <- function(i, j, ..., value) {
-  value <- as.sir(value)
-  y <- NextMethod()
-  attributes(y) <- attributes(i)
-  y
+  if (!is.null(det) && length(i) == 1 && nrow(det) >= i) {
+    i[j] <- value
+    i
+  } else {
+    NextMethod()
+  }
 }
 #' @method c sir
 #' @export
 #' @noRd
-c.sir <- function(...) {
-  lst <- list(...)
+c.sir <- function(..., recursive = FALSE) {
+  lst <- lapply(
+    list(...),
+    function(x) {
+      list(
+        values = as.character(x),
+        interpretation_details = attr(x, "interpretation_details")
+      )
+    }
+  )
+  x <- unlist(lapply(lst, `[[`, "values"), use.names = FALSE)
+  details <- lapply(lst, `[[`, "interpretation_details")
+  has_details <- vapply(details, is.data.frame, logical(1))
+  if (!any(has_details)) {
+    return(as_sir_structure(x))
+  }
 
-  # TODO for #170
-  # guideline <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$guideline %or% NA_character_)
-  # mo <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$mo %or% NA_character_)
-  # ab <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ab %or% NA_character_)
-  # method <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$method %or% NA_character_)
-  # ref_tbl <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_tbl %or% NA_character_)
-  # ref_breakpoints <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ref_breakpoints %or% NA_character_)
+  # Pre-allocate details (no Map, no matrix allocation)
+  combined_details <- do.call(rbind, lapply(seq_along(details), function(i) {
+    d <- details[[i]]
+    if (is.null(d)) {
+      # generate NA rows of correct length, but fast
+      n <- length(details[[i]])
+      as.data.frame(matrix(NA, nrow = n, ncol = 0))
+    } else {
+      d
+    }
+  }))
 
-  out <- as.sir(unlist(lapply(list(...), as.character)))
-
-  # TODO for #170
-  # if (!all(is.na(guideline))) {
-  #   attributes(out)$guideline <- guideline
-  #   attributes(out)$mo <- mo
-  #   attributes(out)$ab <- ab
-  #   attributes(out)$method <- method
-  #   attributes(out)$ref_tbl <- ref_tbl
-  #   attributes(out)$ref_breakpoints <- ref_breakpoints
-  # }
-
-  out
+  attr(x, "interpretation_details") <- combined_details
+  as_sir_structure(x)
 }
 
 #' @method unique sir
