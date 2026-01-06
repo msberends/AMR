@@ -24,11 +24,11 @@ c(x, ..., as_factor = NULL)
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
   the returned value should be an ordered
-  [factor](https://rdrr.io/r/base/factor.html) (`TRUE`, default), or
-  otherwise a [character](https://rdrr.io/r/base/character.html) vector.
-  For combining rules sets (using
-  [`c()`](https://rdrr.io/r/base/c.html)) this value will be inherited
-  from the first set at default.
+  [factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+  (`TRUE`, default), or otherwise a
+  [character](https://rdrr.io/r/base/character.html) vector. For
+  combining rules sets (using [`c()`](https://rdrr.io/r/base/c.html))
+  this value will be inherited from the first set at default.
 
 - x:
 
@@ -126,7 +126,7 @@ antimicrobial group:
       all(glycopeptides() == "R")      ~ "My MDRO #3"
     )
 
-All 35 antimicrobial selectors are supported for use in the rules:
+All 38 antimicrobial selectors are supported for use in the rules:
 
 - [`aminoglycosides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -140,7 +140,7 @@ All 35 antimicrobial selectors are supported for use in the rules:
 
 - [`aminopenicillins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
-  amoxicillin and ampicillin
+  amoxicillin, amoxicillin/clavulanic acid, and ampicillin
 
 - [`antifungals()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -318,7 +318,8 @@ All 35 antimicrobial selectors are supported for use in the rules:
 
 - [`lincosamides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
-  clindamycin, lincomycin, and pirlimycin
+  clindamycin, clindamycin inducible screening test, lincomycin, and
+  pirlimycin
 
 - [`lipoglycopeptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -327,9 +328,10 @@ All 35 antimicrobial selectors are supported for use in the rules:
 - [`macrolides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
   acetylmidecamycin, acetylspiramycin, azithromycin, clarithromycin,
-  dirithromycin, erythromycin, flurithromycin, gamithromycin, josamycin,
-  kitasamycin, meleumycin, midecamycin, miocamycin, nafithromycin,
-  oleandomycin, rokitamycin, roxithromycin, solithromycin, spiramycin,
+  clindamycin inducible screening test, dirithromycin, erythromycin,
+  flurithromycin, gamithromycin, josamycin, kitasamycin, meleumycin,
+  midecamycin, miocamycin, nafithromycin, oleandomycin, pirlimycin,
+  primycin, rokitamycin, roxithromycin, solithromycin, spiramycin,
   telithromycin, tildipirosin, tilmicosin, troleandomycin,
   tulathromycin, tylosin, and tylvalosin
 
@@ -369,6 +371,10 @@ All 35 antimicrobial selectors are supported for use in the rules:
   can select:  
   chloramphenicol, florfenicol, and thiamphenicol
 
+- [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  can select:  
+  amikacin/fosfomycin and fosfomycin
+
 - [`polymyxins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
   colistin, polymyxin B, and polymyxin B/polysorbate 80
@@ -385,17 +391,21 @@ All 35 antimicrobial selectors are supported for use in the rules:
   nalidixic acid, nalidixic acid screening test, nemonoxacin,
   nifuroquine, nitroxoline, norfloxacin, norfloxacin screening test,
   norfloxacin/metronidazole, norfloxacin/tinidazole, ofloxacin,
-  ofloxacin/ornidazole, orbifloxacin, oxolinic acid, pazufloxacin,
-  pefloxacin, pefloxacin screening test, pipemidic acid, piromidic acid,
-  pradofloxacin, premafloxacin, prulifloxacin, rosoxacin, rufloxacin,
-  sarafloxacin, sitafloxacin, sparfloxacin, temafloxacin, tilbroquinol,
-  tioxacin, tosufloxacin, and trovafloxacin
+  ofloxacin/ornidazole, orbifloxacin, oxolinic acid, ozenoxacin,
+  pazufloxacin, pefloxacin, pefloxacin screening test, pipemidic acid,
+  piromidic acid, pradofloxacin, premafloxacin, prulifloxacin,
+  rosoxacin, rufloxacin, sarafloxacin, sitafloxacin, sparfloxacin,
+  temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and trovafloxacin
 
 - [`rifamycins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
   rifabutin, rifampicin, rifampicin/ethambutol/isoniazid,
   rifampicin/isoniazid, rifampicin/pyrazinamide/ethambutol/isoniazid,
   rifampicin/pyrazinamide/isoniazid, rifamycin, and rifapentine
+
+- [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  can select:  
+  zoliflodacin
 
 - [`streptogramins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  

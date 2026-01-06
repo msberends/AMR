@@ -167,7 +167,7 @@ mo_info("Enterobacter asburiae/cloacae")
 #> [1] ""
 #> 
 #> $ref
-#> [1] "Self-added, 2025"
+#> [1] "Self-added, 2026"
 #> 
 #> $snomed
 #> [1] NA

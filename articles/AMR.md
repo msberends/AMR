@@ -3,8 +3,8 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 23 December
-2025.
+methodology remains unchanged. This page was generated on 06 January
+2026.
 
 ## Introduction
 
@@ -38,7 +38,7 @@ mentioned above.
 The `AMR` package enables standardised and reproducible AMR data
 analysis, with the application of evidence-based rules, determination of
 first isolates, translation of various codes for microorganisms and
-antimicrobial agents, determination of (multi-drug) resistant
+antimicrobial drugs, determination of (multi-drug) resistant
 microorganisms, and calculation of antimicrobial resistance, prevalence
 and future trends.
 
@@ -52,9 +52,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2025-12-23 |    abcd    | Escherichia coli |  S  |  S  |
-| 2025-12-23 |    abcd    | Escherichia coli |  S  |  R  |
-| 2025-12-23 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-01-06 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-01-06 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-01-06 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -672,8 +672,8 @@ antibiogram(example_isolates,
 
 | Patógeno      | Amikacina          | Gentamicina         | Kanamicina      | Tobramicina        |
 |:--------------|:-------------------|:--------------------|:----------------|:-------------------|
-| Gram negativo | 98% (96-99%,N=256) | 96% (95-98%,N=684)  | 0% (0-10%,N=35) | 96% (94-97%,N=686) |
-| Gram positivo | 0% (0-1%,N=436)    | 63% (60-66%,N=1170) | 0% (0-1%,N=436) | 34% (31-38%,N=665) |
+| Gram-negative | 98% (96-99%,N=256) | 96% (95-98%,N=684)  | 0% (0-10%,N=35) | 96% (94-97%,N=686) |
+| Gram-positive | 0% (0-1%,N=436)    | 63% (60-66%,N=1170) | 0% (0-1%,N=436) | 34% (31-38%,N=665) |
 
 #### Combined Antibiogram
 

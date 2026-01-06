@@ -145,26 +145,31 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
   `all_nonsusceptible_columns`, `guideline`
 
 - CMI 2012 paper - function `mdr_cmi2012()` or `mdro()`:  
-  Ordered [factor](https://rdrr.io/r/base/factor.html) with levels
-  `Negative` \< `Multi-drug-resistant (MDR)` \<
+  Ordered
+  [factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+  with levels `Negative` \< `Multi-drug-resistant (MDR)` \<
   `Extensively drug-resistant (XDR)` \< `Pandrug-resistant (PDR)`
 
 - TB guideline - function `mdr_tb()` or `mdro(..., guideline = "TB")`:  
-  Ordered [factor](https://rdrr.io/r/base/factor.html) with levels
-  `Negative` \< `Mono-resistant` \< `Poly-resistant` \<
+  Ordered
+  [factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+  with levels `Negative` \< `Mono-resistant` \< `Poly-resistant` \<
   `Multi-drug-resistant` \< `Extensively drug-resistant`
 
 - German guideline - function `mrgn()` or
   `mdro(..., guideline = "MRGN")`:  
-  Ordered [factor](https://rdrr.io/r/base/factor.html) with levels
-  `Negative` \< `3MRGN` \< `4MRGN`
+  Ordered
+  [factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+  with levels `Negative` \< `3MRGN` \< `4MRGN`
 
 - Everything else, except for custom guidelines:  
-  Ordered [factor](https://rdrr.io/r/base/factor.html) with levels
-  `Negative` \< `Positive, unconfirmed` \< `Positive`. The value
-  `"Positive, unconfirmed"` means that, according to the guideline, it
-  is not entirely sure if the isolate is multi-drug resistant and this
-  should be confirmed with additional (e.g. genotypic) tests
+  Ordered
+  [factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+  with levels `Negative` \< `Positive, unconfirmed` \< `Positive`. The
+  value `"Positive, unconfirmed"` means that, according to the
+  guideline, it is not entirely sure if the isolate is multi-drug
+  resistant and this should be confirmed with additional (e.g.
+  genotypic) tests
 
 ## Details
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
 <span></span>
 <span><span class="fu">ab_tradenames</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ab_group</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">ab_group</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, all_groups <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ab_atc</span><span class="op">(</span><span class="va">x</span>, only_first <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -226,7 +226,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [89] "vetramox"        "wymox"           "zamocillin"      "zamocilline"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [93] "zimox"          </span>
 <span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Aminopenicillins"</span>
 <span class="r-in"><span><span class="fu">ab_atc_group1</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactam antibacterials, penicillins"</span>
 <span class="r-in"><span><span class="fu">ab_atc_group2</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
@@ -262,7 +262,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Amoxicillin"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $group</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Aminopenicillins"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $atc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA04"  "QG51AA03" "QJ01CA04"</span>
@@ -328,7 +328,7 @@
 <span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMP"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA01"  "QJ01CA01" "QJ51CA01" "QS01AA19" "S01AA19" </span>
 <span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"J01CA01"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Aminopenicillins"</span>
 <span class="r-in"><span><span class="fu">ab_loinc</span><span class="op">(</span><span class="st">"ampicillin"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "101477-8" "101478-6" "18864-9"  "18865-6"  "20374-5"  "21066-6" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "23618-2"  "27-3"     "28-1"     "29-9"     "30-7"     "31-5"    </span>

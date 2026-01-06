@@ -208,10 +208,10 @@ antibiogram(example_isolates,
             language = "uk") # Ukrainian
 ```
 
-| Збудник       | Гентаміцин          | Тобраміцин         | Ципрофлоксацин     |
-|:--------------|:--------------------|:-------------------|:-------------------|
-| Грамнегативні | 96% (95-98%,N=684)  | 96% (94-97%,N=686) | 91% (88-93%,N=684) |
-| Грампозитивні | 63% (60-66%,N=1170) | 34% (31-38%,N=665) | 77% (74-80%,N=724) |
+| Збудник       | Ciprofloxacin      | Гентаміцин          | Тобраміцин         |
+|:--------------|:-------------------|:--------------------|:-------------------|
+| Gram-negative | 91% (88-93%,N=684) | 96% (95-98%,N=684)  | 96% (94-97%,N=686) |
+| Gram-positive | 77% (74-80%,N=724) | 63% (60-66%,N=1170) | 34% (31-38%,N=665) |
 
 ### Interpreting and plotting MIC and SIR values
 
@@ -725,9 +725,11 @@ or determine multi-drug resistant microorganisms (MDRO,
   [`oxazolidinones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`penicillins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`phenicols()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`polymyxins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`quinolones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`rifamycins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`streptogramins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`sulfonamides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`tetracyclines()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)

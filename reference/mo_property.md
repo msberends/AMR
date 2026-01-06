@@ -180,8 +180,9 @@ mo_property(x, property = "fullname", language = get_AMR_locale(),
 - An [integer](https://rdrr.io/r/base/integer.html) in case of
   `mo_year()`
 
-- An [ordered factor](https://rdrr.io/r/base/factor.html) in case of
-  `mo_pathogenicity()`
+- An [ordered
+  factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+  in case of `mo_pathogenicity()`
 
 - A [list](https://rdrr.io/r/base/list.html) in case of `mo_taxonomy()`,
   `mo_synonyms()`, `mo_snomed()`, and `mo_info()`
@@ -238,9 +239,10 @@ Since the top-level of the taxonomy is sometimes referred to as
 Determination of human pathogenicity (`mo_pathogenicity()`) is strongly
 based on Bartlett *et al.* (2022,
 [doi:10.1099/mic.0.001269](https://doi.org/10.1099/mic.0.001269) ). This
-function returns a [factor](https://rdrr.io/r/base/factor.html) with the
-levels *Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and
-*Unknown*.
+function returns a
+[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+with the levels *Pathogenic*, *Potentially pathogenic*,
+*Non-pathogenic*, and *Unknown*.
 
 Determination of the Gram stain (`mo_gramstain()`) will be based on the
 taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the
@@ -540,15 +542,15 @@ mo_shortname("Strep agalactiae", Lancefield = TRUE)
 # language support  --------------------------------------------------------
 
 mo_gramstain("Klebsiella pneumoniae", language = "de") # German
-#> [1] "Gramnegativ"
+#> [1] "Gram-negative"
 mo_gramstain("Klebsiella pneumoniae", language = "nl") # Dutch
-#> [1] "Gram-negatief"
+#> [1] "Gram-negative"
 mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
-#> [1] "Gram negativo"
+#> [1] "Gram-negative"
 mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
-#> [1] "Αρνητικό κατά Gram"
+#> [1] "Gram-negative"
 mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
-#> [1] "Грамнегативні"
+#> [1] "Gram-negative"
 
 # mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
 mo_kingdom("Klebsiella pneumoniae")
@@ -558,7 +560,7 @@ mo_type("Klebsiella pneumoniae")
 mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
 #> [1] "Bacteria"
 mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
-#> [1] "细菌"
+#> [1] "Bacteria"
 
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
 #> [1] "Streptococcus Gruppe A"

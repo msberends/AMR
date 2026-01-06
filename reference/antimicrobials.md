@@ -40,7 +40,8 @@ antivirals
   unique identifier.***
 
 - `group`  
-  A short and concise group name, based on WHONET and WHOCC definitions
+  One or more short and concise group names, based on WHONET and WHOCC
+  definitions
 
 - `atc`  
   ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC,
@@ -220,17 +221,17 @@ unlike any other info from this package.** See
 antimicrobials
 #> # A tibble: 498 × 14
 #>    ab        cid name   group atc   atc_group1 atc_group2 abbreviations synonyms
-#>    <ab>    <dbl> <chr>  <chr> <lis> <chr>      <chr>      <list>        <named >
-#>  1 AMA      4649 4-ami… Anti… <chr> Drugs for… Aminosali… <chr [1]>     <chr>   
-#>  2 ACM   6450012 Acety… Macr… <chr> NA         NA         <chr [1]>     <chr>   
-#>  3 ASP  49787020 Acety… Macr… <chr> NA         NA         <chr [1]>     <chr>   
-#>  4 ALS      8954 Aldes… Othe… <chr> Drugs for… Drugs for… <chr [1]>     <chr>   
-#>  5 AMK     37768 Amika… Amin… <chr> Aminoglyc… Other ami… <chr [6]>     <chr>   
-#>  6 AKF        NA Amika… Amin… <chr> NA         NA         <chr [1]>     <chr>   
-#>  7 AMO     54260 Amoro… Anti… <chr> Antifunga… Other ant… <chr [1]>     <chr>   
-#>  8 AMX     33613 Amoxi… Beta… <chr> Beta-lact… Penicilli… <chr [4]>     <chr>   
-#>  9 AMC  23665637 Amoxi… Beta… <chr> Beta-lact… Combinati… <chr [6]>     <chr>   
-#> 10 AXS    465441 Amoxi… Beta… <chr> NA         NA         <chr [1]>     <chr>   
+#>    <ab>    <dbl> <chr>  <lis> <lis> <chr>      <chr>      <list>        <named >
+#>  1 AMA      4649 4-ami… <chr> <chr> Drugs for… Aminosali… <chr [1]>     <chr>   
+#>  2 ACM   6450012 Acety… <chr> <chr> NA         NA         <chr [1]>     <chr>   
+#>  3 ASP  49787020 Acety… <chr> <chr> NA         NA         <chr [1]>     <chr>   
+#>  4 ALS      8954 Aldes… <chr> <chr> Drugs for… Drugs for… <chr [1]>     <chr>   
+#>  5 AMK     37768 Amika… <chr> <chr> Aminoglyc… Other ami… <chr [6]>     <chr>   
+#>  6 AKF        NA Amika… <chr> <chr> NA         NA         <chr [1]>     <chr>   
+#>  7 AMO     54260 Amoro… <chr> <chr> Antifunga… Other ant… <chr [1]>     <chr>   
+#>  8 AMX     33613 Amoxi… <chr> <chr> Beta-lact… Penicilli… <chr [4]>     <chr>   
+#>  9 AMC  23665637 Amoxi… <chr> <chr> Beta-lact… Combinati… <chr [6]>     <chr>   
+#> 10 AXS    465441 Amoxi… <chr> <chr> NA         NA         <chr [1]>     <chr>   
 #> # ℹ 488 more rows
 #> # ℹ 5 more variables: oral_ddd <dbl>, oral_units <chr>, iv_ddd <dbl>,
 #> #   iv_units <chr>, loinc <list>

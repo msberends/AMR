@@ -16,7 +16,7 @@ ab_synonyms(x, ...)
 
 ab_tradenames(x, ...)
 
-ab_group(x, language = get_AMR_locale(), ...)
+ab_group(x, language = get_AMR_locale(), all_groups = FALSE, ...)
 
 ab_atc(x, only_first = FALSE, ...)
 
@@ -228,7 +228,7 @@ ab_tradenames("AMX")
 #> [89] "vetramox"        "wymox"           "zamocillin"      "zamocilline"    
 #> [93] "zimox"          
 ab_group("AMX")
-#> [1] "Beta-lactams/penicillins"
+#> [1] "Aminopenicillins"
 ab_atc_group1("AMX")
 #> [1] "Beta-lactam antibacterials, penicillins"
 ab_atc_group2("AMX")
@@ -264,7 +264,7 @@ ab_info("AMX") # all properties as a list
 #> [1] "Amoxicillin"
 #> 
 #> $group
-#> [1] "Beta-lactams/penicillins"
+#> [1] "Aminopenicillins"
 #> 
 #> $atc
 #> [1] "J01CA04"  "QG51AA03" "QJ01CA04"
@@ -330,7 +330,7 @@ ab_info("AMX") # all properties as a list
 ab_atc("AMP")
 #> [1] "J01CA01"  "QJ01CA01" "QJ51CA01" "QS01AA19" "S01AA19" 
 ab_group("J01CA01")
-#> [1] "Beta-lactams/penicillins"
+#> [1] "Aminopenicillins"
 ab_loinc("ampicillin")
 #>  [1] "101477-8" "101478-6" "18864-9"  "18865-6"  "20374-5"  "21066-6" 
 #>  [7] "23618-2"  "27-3"     "28-1"     "29-9"     "30-7"     "31-5"    

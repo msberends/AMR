@@ -112,7 +112,7 @@ Available: 481 (96.2%, NA: 19 = 3.8%)
 Unique: 3
 
 Drug: Amoxicillin/clavulanic acid (AMC, J01CR02/QJ01CR02)  
-Drug group: Beta-lactams/penicillins  
+Drug group: Aminopenicillins  
 %SI: 78.59%
 
 |     | Item | Count | Percent | Cum. Count | Cum. Percent |

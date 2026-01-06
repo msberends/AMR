@@ -75,6 +75,8 @@ penicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 phenicols(only_sir_columns = FALSE, return_all = TRUE, ...)
 
+phosphonics(only_sir_columns = FALSE, return_all = TRUE, ...)
+
 polymyxins(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
@@ -82,6 +84,8 @@ quinolones(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
 rifamycins(only_sir_columns = FALSE, return_all = TRUE, ...)
+
+spiropyrimidinetriones(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 streptogramins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -247,7 +251,8 @@ quite slow in terms of performance.
   tobramycin (TOB), and tobramycin-high (TOH)
 
 - `aminopenicillins()` can select:  
-  amoxicillin (AMX) and ampicillin (AMP)
+  amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), and ampicillin
+  (AMP)
 
 - `antifungals()` can select:  
   amorolfine (AMO), amphotericin B (AMB), amphotericin B-high (AMH),
@@ -455,18 +460,20 @@ quite slow in terms of performance.
   (OXA-S)
 
 - `lincosamides()` can select:  
-  clindamycin (CLI), lincomycin (LIN), and pirlimycin (PRL)
+  clindamycin (CLI), clindamycin inducible screening test (CLI-S),
+  lincomycin (LIN), and pirlimycin (PRL)
 
 - `lipoglycopeptides()` can select:  
   dalbavancin (DAL), oritavancin (ORI), and telavancin (TLV)
 
 - `macrolides()` can select:  
   acetylmidecamycin (ACM), acetylspiramycin (ASP), azithromycin (AZM),
-  clarithromycin (CLR), dirithromycin (DIR), erythromycin (ERY),
-  flurithromycin (FLR1), gamithromycin (GAM), josamycin (JOS),
-  kitasamycin (KIT), meleumycin (MEL), midecamycin (MID), miocamycin
-  (MCM), nafithromycin (ZWK), oleandomycin (OLE), rokitamycin (ROK),
-  roxithromycin (RXT), solithromycin (SOL), spiramycin (SPI),
+  clarithromycin (CLR), clindamycin inducible screening test (CLI-S),
+  dirithromycin (DIR), erythromycin (ERY), flurithromycin (FLR1),
+  gamithromycin (GAM), josamycin (JOS), kitasamycin (KIT), meleumycin
+  (MEL), midecamycin (MID), miocamycin (MCM), nafithromycin (ZWK),
+  oleandomycin (OLE), pirlimycin (PRL), primycin (PRM), rokitamycin
+  (ROK), roxithromycin (RXT), solithromycin (SOL), spiramycin (SPI),
   telithromycin (TLT), tildipirosin (TIP), tilmicosin (TIL),
   troleandomycin (TRL), tulathromycin (TUL), tylosin (TYL), and
   tylvalosin (TYL1)
@@ -508,6 +515,9 @@ quite slow in terms of performance.
 - `phenicols()` can select:  
   chloramphenicol (CHL), florfenicol (FLR), and thiamphenicol (THI)
 
+- `phosphonics()` can select:  
+  amikacin/fosfomycin (AKF) and fosfomycin (FOS)
+
 - `polymyxins()` can select:  
   colistin (COL), polymyxin B (PLB), and polymyxin B/polysorbate 80
   (POP)
@@ -527,11 +537,11 @@ quite slow in terms of performance.
   (NIF), nitroxoline (NTR), norfloxacin (NOR), norfloxacin screening
   test (NOR-S), norfloxacin/metronidazole (NME), norfloxacin/tinidazole
   (NTI), ofloxacin (OFX), ofloxacin/ornidazole (OOR), orbifloxacin
-  (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF),
-  pefloxacin screening test (PEF-S), pipemidic acid (PPA), piromidic
-  acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin
-  (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR),
-  sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX),
+  (ORB), oxolinic acid (OXO), ozenoxacin (OZN), pazufloxacin (PAZ),
+  pefloxacin (PEF), pefloxacin screening test (PEF-S), pipemidic acid
+  (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX),
+  prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin
+  (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX),
   tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and
   trovafloxacin (TVA)
 
@@ -541,6 +551,9 @@ quite slow in terms of performance.
   rifampicin/pyrazinamide/ethambutol/isoniazid (RPEI),
   rifampicin/pyrazinamide/isoniazid (RPI), rifamycin (RFM), and
   rifapentine (RFP)
+
+- `spiropyrimidinetriones()` can select:  
+  zoliflodacin (ZFD)
 
 - `streptogramins()` can select:  
   pristinamycin (PRI) and quinupristin/dalfopristin (QDA)

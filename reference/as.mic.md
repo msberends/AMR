@@ -64,8 +64,9 @@ droplevels(x, as.mic = FALSE, ...)
 
 ## Value
 
-Ordered [factor](https://rdrr.io/r/base/factor.html) with additional
-class `mic`, that in mathematical operations acts as a
+Ordered
+[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+with additional class `mic`, that in mathematical operations acts as a
 [numeric](https://rdrr.io/r/base/numeric.html) vector. Bear in mind that
 the outcome of any mathematical operation on MICs will return a
 [numeric](https://rdrr.io/r/base/numeric.html) value.
@@ -77,10 +78,12 @@ To interpret MIC values as SIR values, use
 It supports guidelines from EUCAST (2011-2025) and CLSI (2011-2025).
 
 This class for MIC values is a quite a special data type: formally it is
-an ordered [factor](https://rdrr.io/r/base/factor.html) with valid MIC
-values as [factor](https://rdrr.io/r/base/factor.html) levels (to make
-sure only valid MIC values are retained), but for any mathematical
-operation it acts as decimal numbers:
+an ordered
+[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+with valid MIC values as
+[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
+levels (to make sure only valid MIC values are retained), but for any
+mathematical operation it acts as decimal numbers:
 
     x <- random_mic(10)
     x
@@ -134,9 +137,10 @@ Using [`as.double()`](https://rdrr.io/r/base/double.html) or
 [`as.numeric()`](https://rdrr.io/r/base/numeric.html) on MIC values will
 remove the operators and return a numeric vector. Do **not** use
 [`as.integer()`](https://rdrr.io/r/base/integer.html) on MIC values as
-by the R convention on [factor](https://rdrr.io/r/base/factor.html)s, it
-will return the index of the factor levels (which is often useless for
-regular users).
+by the R convention on
+[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)s,
+it will return the index of the factor levels (which is often useless
+for regular users).
 
 The function `is.mic()` detects if the input contains class `mic`. If
 the input is a [data.frame](https://rdrr.io/r/base/data.frame.html) or

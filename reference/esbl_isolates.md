@@ -25,7 +25,7 @@ observations and 19 variables:
   Genus of the microorganism
 
 - `AMC:COL`  
-  MIC values for 17 antimicrobial agents, transformed to class
+  MIC values for 17 antimicrobial drugs, transformed to class
   [`mic`](https://amr-for-r.org/reference/as.mic.md) (see
   [`as.mic()`](https://amr-for-r.org/reference/as.mic.md))
 

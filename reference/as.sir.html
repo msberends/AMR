@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
     </div>
 
     <div class="ref-description section level2">
-    <p>Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. <code>as.sir()</code> transforms the input to a new class <code>sir</code>, which is an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> containing the levels <code>S</code>, <code>SDD</code>, <code>I</code>, <code>R</code>, <code>NI</code>.</p>
+    <p>Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. <code>as.sir()</code> transforms the input to a new class <code>sir</code>, which is an ordered <a href="https://rdatatable.gitlab.io/data.table/reference/fctr.html" class="external-link">factor</a> containing the levels <code>S</code>, <code>SDD</code>, <code>I</code>, <code>R</code>, <code>NI</code>.</p>
 <p>Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, see <em>Details</em>. All breakpoints used for interpretation are available in our <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set.</p>
     </div>
 
@@ -232,7 +232,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with new class <code>sir</code></p>
+    <p>Ordered <a href="https://rdatatable.gitlab.io/data.table/reference/fctr.html" class="external-link">factor</a> with new class <code>sir</code></p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -416,10 +416,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2025-12-23 <span style="color: #949494;">10:09:01</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2025-12-23 <span style="color: #949494;">10:09:02</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2025-12-23 <span style="color: #949494;">10:09:02</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2025-12-23 <span style="color: #949494;">10:09:02</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-01-06 <span style="color: #949494;">22:18:05</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-01-06 <span style="color: #949494;">22:18:05</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-01-06 <span style="color: #949494;">22:18:05</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-01-06 <span style="color: #949494;">22:18:06</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>

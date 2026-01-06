@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9009
+## AMR 3.0.1.9008
 
 #### New
 
@@ -11,13 +11,20 @@
     [`step_sir_numeric()`](https://amr-for-r.org/reference/amr-tidymodels.md)
     to convert `<sir>` columns to numeric
   - New `tidyselect` helpers:
-    [`all_sir()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-    [`all_sir_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-    [`all_mic()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-    [`all_mic_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-    [`all_disk()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-    [`all_disk_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+    - [`all_sir()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+      [`all_sir_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+    - [`all_mic()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+      [`all_mic_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+    - [`all_disk()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+      [`all_disk_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
 - Data set `esbl_isolates` to practise with AMR modelling
+- AMR selectors
+  [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  and
+  [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+- [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
+  an argument `all_groups` to return all groups the antimicrobial drug
+  is in ([\#246](https://github.com/msberends/AMR/issues/246))
 
 #### Changed
 
@@ -45,6 +52,13 @@
   - This results in more reliable behaviour compared to previous
     versions for capped MIC values
   - Removed the `"inverse"` option, which has now become redundant
+- Fixed some foreign translations of antimicrobial drugs
+- `antimicrobials$group` is now a `list` instead of a `character`, to
+  contain any group the drug is in
+  ([\#246](https://github.com/msberends/AMR/issues/246))
+- [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) now
+  returns values consist with the AMR selectors
+  ([\#246](https://github.com/msberends/AMR/issues/246))
 
 ## AMR 3.0.1
 

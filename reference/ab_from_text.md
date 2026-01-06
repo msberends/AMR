@@ -147,7 +147,7 @@ ab_from_text("500 mg amoxi po and 400mg cipro iv", collapse = ", ")
 # if you want to know which antibiotic groups were administered, do e.g.:
 abx <- ab_from_text("500 mg amoxi po and 400mg cipro iv")
 ab_group(abx[[1]])
-#> [1] "Beta-lactams/penicillins" "Fluoroquinolones"        
+#> [1] "Aminopenicillins" "Fluoroquinolones"
 
 if (require("dplyr")) {
   tibble(clinical_text = c(

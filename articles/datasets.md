@@ -100,15 +100,15 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 24 November 2025 10:24:02 UTC. Find more info
-about the contents, (scientific) source, and structure of this [data set
+It was last updated on 6 January 2026 22:08:50 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
 **Direct download links:**
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.rds)
-  (45 kB)  
+  (46 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.txt)
   (0.1 MB)  
@@ -134,14 +134,14 @@ as comma separated values.
 
 **Example content**
 
-| ab  |   cid    |            name             |          group           |              atc               |                 atc_group1                  |                          atc_group2                          |    abbreviations    |                        synonyms                         | oral_ddd | oral_units | iv_ddd | iv_units |             loinc              |
-|:---:|:--------:|:---------------------------:|:------------------------:|:------------------------------:|:-------------------------------------------:|:------------------------------------------------------------:|:-------------------:|:-------------------------------------------------------:|:--------:|:----------:|:------:|:--------:|:------------------------------:|
-| AMK |  37768   |          Amikacin           |     Aminoglycosides      | D06AX12, J01GB06, QD06AX12, …  |        Aminoglycoside antibacterials        |                    Other aminoglycosides                     |  ak, ami, amik, …   |          amikacillin, amikacina, amikacine, …           |          |            |  1.0   |    g     |    101493-5, 11-7, 12-5, …     |
-| AMX |  33613   |         Amoxicillin         | Beta-lactams/penicillins |  J01CA04, QG51AA03, QJ01CA04   |   Beta-lactam antibacterials, penicillins   |              Penicillins with extended spectrum              | ac, amox, amoxic, … |             acuotricina, alfamox, alfida, …             |   1.5    |     g      |  3.0   |    g     |    101498-4, 15-8, 16-6, …     |
-| AMC | 23665637 | Amoxicillin/clavulanic acid | Beta-lactams/penicillins |       J01CR02, QJ01CR02        |   Beta-lactam antibacterials, penicillins   | Combinations of penicillins, incl. beta-lactamase inhibitors |  a/c, amcl, aml, …  |               amocla, amoclan, amoclav, …               |   1.5    |     g      |  3.0   |    g     |                                |
-| AMP |   6249   |         Ampicillin          | Beta-lactams/penicillins | J01CA01, QJ01CA01, QJ51CA01, … |   Beta-lactam antibacterials, penicillins   |              Penicillins with extended spectrum              | am, amp, amp100, …  |             adobacillin, alpen, amblosin, …             |   2.0    |     g      |  6.0   |    g     | 101477-8, 101478-6, 18864-9, … |
-| AZM |  447043  |        Azithromycin         | Macrolides/lincosamides  | J01FA10, QJ01FA10, QS01AA26, … | Macrolides, lincosamides and streptogramins |                          Macrolides                          |  az, azi, azit, …   |           aritromicina, aruzilina, azasite, …           |   0.3    |     g      |  0.5   |    g     | 100043-9, 16420-2, 16421-0, …  |
-| PEN |   5904   |      Benzylpenicillin       | Beta-lactams/penicillins | J01CE01, QJ01CE01, QJ51CE01, … |       Combinations of antibacterials        |                Combinations of antibacterials                | bepe, pen, peni, …  | bencilpenicilina, benzopenicillin, benzylpenicilline, … |          |            |  3.6   |    g     |                                |
+| ab  |   cid    |            name             |                     group                      |              atc               |                 atc_group1                  |                          atc_group2                          |    abbreviations    |                        synonyms                         | oral_ddd | oral_units | iv_ddd | iv_units |             loinc              |
+|:---:|:--------:|:---------------------------:|:----------------------------------------------:|:------------------------------:|:-------------------------------------------:|:------------------------------------------------------------:|:-------------------:|:-------------------------------------------------------:|:--------:|:----------:|:------:|:--------:|:------------------------------:|
+| AMK |  37768   |          Amikacin           |                Aminoglycosides                 | D06AX12, J01GB06, QD06AX12, …  |        Aminoglycoside antibacterials        |                    Other aminoglycosides                     |  ak, ami, amik, …   |          amikacillin, amikacina, amikacine, …           |          |            |  1.0   |    g     |    101493-5, 11-7, 12-5, …     |
+| AMX |  33613   |         Amoxicillin         |  Aminopenicillins, Penicillins, Beta-lactams   |  J01CA04, QG51AA03, QJ01CA04   |   Beta-lactam antibacterials, penicillins   |              Penicillins with extended spectrum              | ac, amox, amoxic, … |             acuotricina, alfamox, alfida, …             |   1.5    |     g      |  3.0   |    g     |    101498-4, 15-8, 16-6, …     |
+| AMC | 23665637 | Amoxicillin/clavulanic acid | Aminopenicillins, Penicillins, Beta-lactams, … |       J01CR02, QJ01CR02        |   Beta-lactam antibacterials, penicillins   | Combinations of penicillins, incl. beta-lactamase inhibitors |  a/c, amcl, aml, …  |               amocla, amoclan, amoclav, …               |   1.5    |     g      |  3.0   |    g     |                                |
+| AMP |   6249   |         Ampicillin          |  Aminopenicillins, Penicillins, Beta-lactams   | J01CA01, QJ01CA01, QJ51CA01, … |   Beta-lactam antibacterials, penicillins   |              Penicillins with extended spectrum              | am, amp, amp100, …  |             adobacillin, alpen, amblosin, …             |   2.0    |     g      |  6.0   |    g     | 101477-8, 101478-6, 18864-9, … |
+| AZM |  447043  |        Azithromycin         |                   Macrolides                   | J01FA10, QJ01FA10, QS01AA26, … | Macrolides, lincosamides and streptogramins |                          Macrolides                          |  az, azi, azit, …   |           aritromicina, aruzilina, azasite, …           |   0.3    |     g      |  0.5   |    g     | 100043-9, 16420-2, 16421-0, …  |
+| PEN |   5904   |      Benzylpenicillin       |           Penicillins, Beta-lactams            | J01CE01, QJ01CE01, QJ51CE01, … |       Combinations of antibacterials        |                Combinations of antibacterials                | bepe, pen, peni, …  | bencilpenicilina, benzopenicillin, benzylpenicilline, … |          |            |  3.6   |    g     |                                |
 
 ------------------------------------------------------------------------
 

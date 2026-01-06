@@ -135,7 +135,7 @@ TZP (piperacillin/tazobactam) is "R":
     #>   1. If TZP is "R" then set to "R":
     #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 
-These 35 antimicrobial groups are allowed in the rules
+These 38 antimicrobial groups are allowed in the rules
 (case-insensitive) and can be used in any combination:
 
 - aminoglycosides  
@@ -148,7 +148,7 @@ These 35 antimicrobial groups are allowed in the rules
   tobramycin-high)
 
 - aminopenicillins  
-  (amoxicillin and ampicillin)
+  (amoxicillin, amoxicillin/clavulanic acid, and ampicillin)
 
 - antifungals  
   (amorolfine, amphotericin B, amphotericin B-high, anidulafungin,
@@ -170,6 +170,18 @@ These 35 antimicrobial groups are allowed in the rules
   rifampicin/pyrazinamide/isoniazid, rifamycin, rifapentine, sodium
   aminosalicylate, streptomycin/isoniazid, terizidone, thioacetazone,
   thioacetazone/isoniazid, tiocarlide, and viomycin)
+
+- betalactamase_inhibitors  
+  (amoxicillin/clavulanic acid, amoxicillin/sulbactam,
+  ampicillin/sulbactam, avibactam, aztreonam/avibactam,
+  aztreonam/nacubactam, cefepime/enmetazobactam, cefepime/nacubactam,
+  cefepime/taniborbactam, cefepime/tazobactam, cefepime/zidebactam,
+  cefoperazone/sulbactam, cefotaxime/sulbactam, ceftaroline/avibactam,
+  ceftazidime/avibactam, ceftolozane/tazobactam, imipenem/relebactam,
+  meropenem/nacubactam, meropenem/vaborbactam, mezlocillin/sulbactam,
+  nacubactam, penicillin/sulbactam, piperacillin/sulbactam,
+  piperacillin/tazobactam, sulbactam, sultamicillin, taniborbactam,
+  tazobactam, ticarcillin/clavulanic acid, and zidebactam)
 
 - betalactams  
   (amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam,
@@ -338,16 +350,18 @@ These 35 antimicrobial groups are allowed in the rules
   and oxacillin screening test)
 
 - lincosamides  
-  (clindamycin, lincomycin, and pirlimycin)
+  (clindamycin, clindamycin inducible screening test, lincomycin, and
+  pirlimycin)
 
 - lipoglycopeptides  
   (dalbavancin, oritavancin, and telavancin)
 
 - macrolides  
   (acetylmidecamycin, acetylspiramycin, azithromycin, clarithromycin,
-  dirithromycin, erythromycin, flurithromycin, gamithromycin, josamycin,
-  kitasamycin, meleumycin, midecamycin, miocamycin, nafithromycin,
-  oleandomycin, rokitamycin, roxithromycin, solithromycin, spiramycin,
+  clindamycin inducible screening test, dirithromycin, erythromycin,
+  flurithromycin, gamithromycin, josamycin, kitasamycin, meleumycin,
+  midecamycin, miocamycin, nafithromycin, oleandomycin, pirlimycin,
+  primycin, rokitamycin, roxithromycin, solithromycin, spiramycin,
   telithromycin, tildipirosin, tilmicosin, troleandomycin,
   tulathromycin, tylosin, and tylvalosin)
 
@@ -382,6 +396,9 @@ These 35 antimicrobial groups are allowed in the rules
 - phenicols  
   (chloramphenicol, florfenicol, and thiamphenicol)
 
+- phosphonics  
+  (amikacin/fosfomycin and fosfomycin)
+
 - polymyxins  
   (colistin, polymyxin B, and polymyxin B/polysorbate 80)
 
@@ -396,16 +413,19 @@ These 35 antimicrobial groups are allowed in the rules
   nalidixic acid, nalidixic acid screening test, nemonoxacin,
   nifuroquine, nitroxoline, norfloxacin, norfloxacin screening test,
   norfloxacin/metronidazole, norfloxacin/tinidazole, ofloxacin,
-  ofloxacin/ornidazole, orbifloxacin, oxolinic acid, pazufloxacin,
-  pefloxacin, pefloxacin screening test, pipemidic acid, piromidic acid,
-  pradofloxacin, premafloxacin, prulifloxacin, rosoxacin, rufloxacin,
-  sarafloxacin, sitafloxacin, sparfloxacin, temafloxacin, tilbroquinol,
-  tioxacin, tosufloxacin, and trovafloxacin)
+  ofloxacin/ornidazole, orbifloxacin, oxolinic acid, ozenoxacin,
+  pazufloxacin, pefloxacin, pefloxacin screening test, pipemidic acid,
+  piromidic acid, pradofloxacin, premafloxacin, prulifloxacin,
+  rosoxacin, rufloxacin, sarafloxacin, sitafloxacin, sparfloxacin,
+  temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and trovafloxacin)
 
 - rifamycins  
   (rifabutin, rifampicin, rifampicin/ethambutol/isoniazid,
   rifampicin/isoniazid, rifampicin/pyrazinamide/ethambutol/isoniazid,
   rifampicin/pyrazinamide/isoniazid, rifamycin, and rifapentine)
+
+- spiropyrimidinetriones  
+  (zoliflodacin)
 
 - streptogramins  
   (pristinamycin and quinupristin/dalfopristin)
@@ -456,10 +476,10 @@ x
 #> A set of custom EUCAST rules:
 #> 
 #>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
-#>      amoxicillin (AMX), ampicillin (AMP)
+#>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
 #>   2. If AMC is  I  and genus is "Klebsiella" then set to  I :
-#>      amoxicillin (AMX), ampicillin (AMP)
+#>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 
 # run the custom rule set (verbose = TRUE will return a logbook instead of the data set):
 eucast_rules(example_isolates,
@@ -490,10 +510,10 @@ x2
 #> A set of custom EUCAST rules:
 #> 
 #>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
-#>      amoxicillin (AMX), ampicillin (AMP)
+#>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
 #>   2. If AMC is  I  and genus is "Klebsiella" then set to  I :
-#>      amoxicillin (AMX), ampicillin (AMP)
+#>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
 #>   3. If TZP is  R  then set to  R :
 #>      biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM),
