@@ -9,7 +9,7 @@ A \link[tibble:tibble]{tibble} with 500 observations and 19 variables:
 \itemize{
 \item \code{esbl}\cr Logical indicator if the isolate is ESBL-producing
 \item \code{genus}\cr Genus of the microorganism
-\item \code{AMC:COL}\cr MIC values for 17 antimicrobial agents, transformed to class \code{\link{mic}} (see \code{\link[=as.mic]{as.mic()}})
+\item \code{AMC:COL}\cr MIC values for 17 antimicrobial drugs, transformed to class \code{\link{mic}} (see \code{\link[=as.mic]{as.mic()}})
 }
 }
 \usage{

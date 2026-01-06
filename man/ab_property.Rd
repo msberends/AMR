@@ -27,7 +27,7 @@ ab_synonyms(x, ...)
 
 ab_tradenames(x, ...)
 
-ab_group(x, language = get_AMR_locale(), ...)
+ab_group(x, language = get_AMR_locale(), all_groups = FALSE, ...)
 
 ab_atc(x, only_first = FALSE, ...)
 

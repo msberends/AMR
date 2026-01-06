@@ -263,18 +263,45 @@ translate_into_language <- function(from,
     df_trans$pattern[df_trans$regular_expr == TRUE] <- gsub("$$", "$", df_trans$pattern[df_trans$regular_expr == TRUE], fixed = TRUE)
   }
 
+  # regex part
   lapply(
     # starting with longest pattern, since more general translations are shorter, such as 'Group'
-    order(nchar(df_trans$pattern), decreasing = TRUE),
+    order(nchar(df_trans$pattern), decreasing = TRUE)[df_trans$regular_expr == TRUE],
     function(i) {
       from_unique_translated <<- gsub(
         pattern = df_trans$pattern[i],
         replacement = df_trans[i, lang, drop = TRUE],
         x = from_unique_translated,
-        ignore.case = !df_trans$case_sensitive[i] & df_trans$regular_expr[i],
-        fixed = !df_trans$regular_expr[i],
-        perl = df_trans$regular_expr[i]
+        ignore.case = !df_trans$case_sensitive[i],
+        fixed = FALSE,
+        perl = TRUE
       )
+    }
+  )
+  # non-regex part
+  from_unique_translated <- vapply(
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    from_unique_translated,
+    function(x) {
+      words <- strsplit(x, " ", fixed = TRUE)[[1]]
+      # print(words)
+      for (i in seq_along(words)) {
+        word_trans <- df_trans[[lang]][df_trans$regular_expr == FALSE][match(words[i], df_trans$pattern[df_trans$regular_expr == FALSE])]
+        if (!is.na(word_trans)) {
+          words[i] <- word_trans
+        }
+      }
+      words <- paste(words, collapse = " ")
+      words <- strsplit(x, "/", fixed = TRUE)[[1]]
+      # print(words)
+      for (i in seq_along(words)) {
+        word_trans <- df_trans[[lang]][df_trans$regular_expr == FALSE][match(words[i], df_trans$pattern[df_trans$regular_expr == FALSE])]
+        if (!is.na(word_trans)) {
+          words[i] <- word_trans
+        }
+      }
+      paste(words, collapse = " ")
     }
   )
 

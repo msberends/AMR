@@ -12,7 +12,7 @@
 \item \code{ab}\cr antimicrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. \emph{\strong{This is a unique identifier.}}
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}
 \item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{\strong{This is a unique identifier.}}
-\item \code{group}\cr A short and concise group name, based on WHONET and WHOCC definitions
+\item \code{group}\cr One or more short and concise group names, based on WHONET and WHOCC definitions
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02} (last updated May 4th, 2025):
 \item \code{atc_group1}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}

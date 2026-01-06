@@ -38,7 +38,7 @@
 #' - `ab`\cr antimicrobial ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available. ***This is a unique identifier.***
 #' - `cid`\cr Compound ID as found in PubChem. ***This is a unique identifier.***
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO. ***This is a unique identifier.***
-#' - `group`\cr A short and concise group name, based on WHONET and WHOCC definitions
+#' - `group`\cr One or more short and concise group names, based on WHONET and WHOCC definitions
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02` (last updated `r documentation_date(TAXONOMY_VERSION$ATC_DDD$accessed_date)`):
 #' - `atc_group1`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like `"Macrolides, lincosamides and streptogramins"`
 #' - `atc_group2`\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like `"Macrolides"`
@@ -368,7 +368,7 @@
 #' @format A [tibble][tibble::tibble] with `r format(nrow(esbl_isolates), big.mark = " ")` observations and `r ncol(esbl_isolates)` variables:
 #' - `esbl`\cr Logical indicator if the isolate is ESBL-producing
 #' - `genus`\cr Genus of the microorganism
-#' - `AMC:COL`\cr MIC values for 17 antimicrobial agents, transformed to class [`mic`] (see [as.mic()])
+#' - `AMC:COL`\cr MIC values for 17 antimicrobial drugs, transformed to class [`mic`] (see [as.mic()])
 #' @details See our [tidymodels integration][amr-tidymodels] for an example using this data set.
 #' @examples
 #' esbl_isolates

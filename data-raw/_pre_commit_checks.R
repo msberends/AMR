@@ -368,7 +368,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
 pre_commit_lst$AB_AMINOGLYCOSIDES <- antimicrobials %>%
   filter(group %like% "aminoglycoside") %>%
   pull(ab)
-pre_commit_lst$AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
+pre_commit_lst$AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX", "AMC"))
 pre_commit_lst$AB_ANTIFUNGALS <- antimicrobials %>%
   filter(group %like% "antifungal") %>%
   pull(ab)
@@ -397,10 +397,6 @@ pre_commit_lst$AB_CEPHALOSPORINS_5TH <- antimicrobials %>%
   filter(group %like% "cephalosporin.*5") %>%
   pull(ab)
 pre_commit_lst$AB_CEPHALOSPORINS_EXCEPT_CAZ <- pre_commit_lst$AB_CEPHALOSPORINS[pre_commit_lst$AB_CEPHALOSPORINS != "CAZ"]
-pre_commit_lst$AB_FLUOROQUINOLONES <- antimicrobials %>%
-  # see DOI 10.23937/2378-3656/1410369, more specifically this table: https://www.clinmedjournals.org/articles/cmrcr/cmrcr-8-369-table1.html
-  filter((group %like% "quinolone" | atc_group1 %like% "quinolone" | atc_group2 %like% "quinolone") & name %unlike% " acid|nalidixic|cinoxacin|flumequine|oxolinic|piromidic|pipemidic|rosoxacin") %>%
-  pull(ab)
 pre_commit_lst$AB_GLYCOPEPTIDES <- antimicrobials %>%
   filter(group %like% "glycopeptide") %>%
   pull(ab)
@@ -410,10 +406,10 @@ pre_commit_lst$AB_ISOXAZOLYLPENICILLINS <- antimicrobials %>%
 pre_commit_lst$AB_LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
 pre_commit_lst$AB_GLYCOPEPTIDES_EXCEPT_LIPO <- pre_commit_lst$AB_GLYCOPEPTIDES[!pre_commit_lst$AB_GLYCOPEPTIDES %in% pre_commit_lst$AB_LIPOGLYCOPEPTIDES]
 pre_commit_lst$AB_LINCOSAMIDES <- antimicrobials %>%
-  filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2) & name %like% "^(pirlimycin)" & name %unlike% "screening|inducible")) %>%
+  filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2) & name %like% "^(pirlimycin|clinda)")) %>%
   pull(ab)
 pre_commit_lst$AB_MACROLIDES <- antimicrobials %>%
-  filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2) & name %like% "^(acetylmidecamycin|acetylspiramycin|gamith?romycin|kitasamycin|meleumycin|nafith?romycin|solith?romycin|tildipirosin|tilmicosin|tulath?romycin|tylosin|tylvalosin)" & name %unlike% "screening|inducible")) %>%
+  filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2)) | name %like% "^(acetylmidecamycin|acetylspiramycin|gamith?romycin|kitasamycin|meleumycin|nafith?romycin|primycin|solith?romycin|tildipirosin|tilmicosin|tulath?romycin|tylosin|tylvalosin)") %>%
   pull(ab)
 pre_commit_lst$AB_MONOBACTAMS <- antimicrobials %>%
   filter(group %like% "monobactam") %>%
@@ -430,14 +426,24 @@ pre_commit_lst$AB_PENICILLINS <- antimicrobials %>%
 pre_commit_lst$AB_PHENICOLS <- antimicrobials %>%
   filter(group %like% "phenicol" | atc_group1 %like% "phenicol" | atc_group2 %like% "phenicol") %>%
   pull(ab)
+pre_commit_lst$AB_PHOSPHONICS <- antimicrobials %>%
+  filter(group %like% "phosphonic" | name %like% "fosfo") %>%
+  pull(ab)
 pre_commit_lst$AB_POLYMYXINS <- antimicrobials %>%
   filter(group %like% "polymyxin") %>%
   pull(ab)
 pre_commit_lst$AB_QUINOLONES <- antimicrobials %>%
-  filter(group %like% "quinolone" | atc_group1 %like% "quinolone" | atc_group2 %like% "quinolone") %>%
+  filter(group %like% "quinolone" | atc_group1 %like% "quinolone" | atc_group2 %like% "quinolone" | name %like% "ozenoxacin") %>%
+  pull(ab)
+pre_commit_lst$AB_FLUOROQUINOLONES <- antimicrobials %>%
+  # see DOI 10.23937/2378-3656/1410369, more specifically this table: https://www.clinmedjournals.org/articles/cmrcr/cmrcr-8-369-table1.html
+  filter(ab %in% pre_commit_lst$AB_QUINOLONES & name %unlike% " acid|nalidixic|cinoxacin|flumequine|oxolinic|ozenoxacin|piromidic|pipemidic|rosoxacin") %>%
   pull(ab)
 pre_commit_lst$AB_RIFAMYCINS <- antimicrobials %>%
   filter(name %like% "Rifampi|Rifabutin|Rifapentine|rifamy") %>%
+  pull(ab)
+pre_commit_lst$AB_SPIROPYRIMIDINETRIONES <- antimicrobials %>%
+  filter(name %like% "zoliflodacin") %>%
   pull(ab)
 pre_commit_lst$AB_STREPTOGRAMINS <- antimicrobials %>%
   filter(atc_group2 %like% "streptogramin") %>%
@@ -453,12 +459,98 @@ pre_commit_lst$AB_SULFONAMIDES <- antimicrobials %>%
   filter(group %like% "trimethoprim" & name %unlike% "trimethoprim") %>%
   pull(ab)
 pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
-pre_commit_lst$AB_BETALACTAMS <- sort(c(pre_commit_lst$AB_PENICILLINS, pre_commit_lst$AB_CEPHALOSPORINS, pre_commit_lst$AB_CARBAPENEMS, pre_commit_lst$AB_MONOBACTAMS))
+pre_commit_lst$AB_BETALACTAMS <- sort(c(
+  pre_commit_lst$AB_PENICILLINS,
+  pre_commit_lst$AB_CEPHALOSPORINS,
+  pre_commit_lst$AB_CARBAPENEMS,
+  pre_commit_lst$AB_MONOBACTAMS))
+pre_commit_lst$AB_BETALACTAMASE_INHIBITORS <- antimicrobials %>%
+  filter(atc_group2 %like% "Beta-lactamase inhibitors" | name %like% "bactam") %>%
+  pull(ab)
+# for EUCAST:
 pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antimicrobials %>%
-  filter(name %like% "/" & name %unlike% "EDTA" & ab %in% pre_commit_lst$AB_BETALACTAMS) %>%
+  filter(ab %in% pre_commit_lst$AB_BETALACTAMS & name %like% "/" & name %unlike% "EDTA") %>%
   pull(ab)
 # this will be used for documentation:
 pre_commit_lst$DEFINED_AB_GROUPS <- sort(names(pre_commit_lst)[names(pre_commit_lst) %like% "^AB_" & names(pre_commit_lst) != "AB_LOOKUP"])
+
+# Update the antimicrobials$group column
+usethis::ui_info("Updating 'group' column in antimicrobials data set from AB_* vectors")
+prettify_group_name <- function(name) {
+  raw <- gsub("^AB_", "", name)
+  pretty <- tools::toTitleCase(gsub("_", " ", tolower(raw)))
+  pretty[pretty %like% " (except|with) "] <- ""
+  pretty <- gsub(" (1st|2nd|3rd|4th|5th|6th)", " (\\1 gen.)", pretty)
+  pretty <- gsub("([Bb])eta[-]?", "\\1eta-", pretty)
+  pretty <- gsub(" Inhibitor", " inhibitor", pretty)
+  pretty <- pretty[pretty != ""]
+  return(pretty)
+}
+group_map <- vector("list", length = nrow(antimicrobials))
+names(group_map) <- antimicrobials$ab
+for (group_name in pre_commit_lst$DEFINED_AB_GROUPS) {
+  ab_vector <- pre_commit_lst[[group_name]]
+  pretty_name <- prettify_group_name(group_name)
+  for (ab in ab_vector) {
+    ab_chr <- as.character(ab)
+    group_map[[ab_chr]] <- sort(unique(c(group_map[[ab_chr]], pretty_name)))
+  }
+}
+for (i in seq_along(group_map)) {
+  if (is.null(group_map[[i]])) {
+    group_map[[i]] <- "Other"
+    if (antimicrobials$group[i] %unlike% "other") {
+      print(paste0(i, ": ", antimicrobials$group[i], " (", antimicrobials$ab[i], ", ", antimicrobials$name[i], ")"))
+    }
+  }
+  group_map[[i]] <- group_map[[i]][order(nchar(group_map[[i]]))]
+}
+
+# create priority list for ab_group()
+pre_commit_lst$ABX_PRIORITY_LIST <- c("Aminopenicillins",
+                                      "Isoxazolylpenicillins",
+                                      "Ureidopenicillins",
+                                      "Oxazolidinones",
+                                      "Carbapenems",
+                                      "Cephalosporins (1st gen.)",
+                                      "Cephalosporins (2nd gen.)",
+                                      "Cephalosporins (3rd gen.)",
+                                      "Cephalosporins (4th gen.)",
+                                      "Cephalosporins (5th gen.)",
+                                      "Cephalosporins",
+                                      "Penicillins",
+                                      "Monobactams",
+                                      "Aminoglycosides",
+                                      "Lipoglycopeptides",
+                                      "Glycopeptides",
+                                      "Lincosamides",
+                                      "Streptogramins",
+                                      "Macrolides",
+                                      "Nitrofurans",
+                                      "Phenicols",
+                                      "Phosphonics",
+                                      "Polymyxins",
+                                      "Fluoroquinolones",
+                                      "Quinolones",
+                                      "Rifamycins",
+                                      "Spiropyrimidinetriones",
+                                      "Trimethoprims",
+                                      "Sulfonamides",
+                                      "Tetracyclines",
+                                      "Antifungals",
+                                      "Antimycobacterials",
+                                      "Beta-lactams",
+                                      "Beta-lactamase inhibitors",
+                                      "Other")
+if (!all(unlist(antimicrobials$group) %in% pre_commit_lst$ABX_PRIORITY_LIST)) {
+  stop("Missing group(s) in priority list: ", paste(setdiff(unlist(antimicrobials$group), pre_commit_lst$ABX_PRIORITY_LIST), collapse = ", "))
+}
+for (i in seq_along(group_map)) {
+  group_map[[i]] <- intersect(pre_commit_lst$ABX_PRIORITY_LIST, group_map[[i]])
+}
+antimicrobials$group <- unname(group_map)
+usethis::use_data(antimicrobials, overwrite = TRUE, version = 2, compress = "xz")
+rm(antimicrobials)
 
 pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(antimicrobials)
 pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(antivirals)

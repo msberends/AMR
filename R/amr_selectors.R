@@ -427,6 +427,14 @@ phenicols <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
 
 #' @rdname antimicrobial_selectors
 #' @export
+phosphonics <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(return_all, allow_class = "logical", has_length = 1)
+  amr_select_exec("phosphonics", only_sir_columns = only_sir_columns, return_all = return_all)
+}
+
+#' @rdname antimicrobial_selectors
+#' @export
 polymyxins <- function(only_sir_columns = FALSE, only_treatable = TRUE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
@@ -448,6 +456,14 @@ rifamycins <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(return_all, allow_class = "logical", has_length = 1)
   amr_select_exec("rifamycins", only_sir_columns = only_sir_columns, return_all = return_all)
+}
+
+#' @rdname antimicrobial_selectors
+#' @export
+spiropyrimidinetriones <- function(only_sir_columns = FALSE, return_all = TRUE, ...) {
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(return_all, allow_class = "logical", has_length = 1)
+  amr_select_exec("spiropyrimidinetriones", only_sir_columns = only_sir_columns, return_all = return_all)
 }
 
 #' @rdname antimicrobial_selectors
@@ -685,7 +701,7 @@ amr_select_exec <- function(function_name,
   }
 
   # untreatable drugs
-  untreatable <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam)")]
+  untreatable <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$name %like% "(-high|EDTA|polysorbate|macromethod|screening|nacubactam|inducible)")]
   if (!is.null(vars_df) && only_treatable == TRUE) {
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "amr_class", "untreatable")) {
@@ -713,9 +729,9 @@ amr_select_exec <- function(function_name,
   if (is.null(amr_class_args) || isTRUE(function_name %in% c("antifungals", "antimycobacterials"))) {
     ab_group <- NULL
     if (isTRUE(function_name == "antifungals")) {
-      abx <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$group == "Antifungals")]
+      abx <- AMR_env$AB_lookup$ab[which(vapply(FUN.VALUE = logical(1), AMR_env$AB_lookup$group, function(x) "Antifungals" %in% x))]
     } else if (isTRUE(function_name == "antimycobacterials")) {
-      abx <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$group == "Antimycobacterials")]
+      abx <- AMR_env$AB_lookup$ab[which(vapply(FUN.VALUE = logical(1), AMR_env$AB_lookup$group, function(x) "Antimycobacterials" %in% x))]
     } else {
       # their upper case equivalent are vectors with class 'ab', created in data-raw/_pre_commit_checks.R
       # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
@@ -723,7 +739,11 @@ amr_select_exec <- function(function_name,
       # manually added codes from add_custom_antimicrobials() must also be supported
       if (length(AMR_env$custom_ab_codes) > 0) {
         custom_ab <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% AMR_env$custom_ab_codes), ]
-        check_string <- paste0(custom_ab$group, custom_ab$atc_group1, custom_ab$atc_group2)
+        check_string <- paste0(
+          vapply(FUN.VALUE = character(1), custom_ab$group, function(x) paste(x, collapse = " ")),
+          custom_ab$atc_group1,
+          custom_ab$atc_group2
+        )
         if (function_name == "betalactams") {
           find_group <- "beta[-]?lactams"
         } else if (function_name %like% "cephalosporins_") {
@@ -1001,11 +1021,11 @@ find_ab_names <- function(ab_group, n = 3) {
   # try popular first, they have DDDs
   drugs <- AMR_env$AB_lookup[which((!is.na(AMR_env$AB_lookup$iv_ddd) | !is.na(AMR_env$AB_lookup$oral_ddd)) &
     AMR_env$AB_lookup$name %unlike% " " &
-    AMR_env$AB_lookup$group %like% ab_group &
+    vapply(FUN.VALUE = character(1), AMR_env$AB_lookup$group, function(x) paste(x, collapse = " ")) %like% ab_group &
     AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
   if (length(drugs) < n) {
     # now try it all
-    drugs <- AMR_env$AB_lookup[which((AMR_env$AB_lookup$group %like% ab_group |
+    drugs <- AMR_env$AB_lookup[which((vapply(FUN.VALUE = character(1), AMR_env$AB_lookup$group, function(x) paste(x, collapse = " ")) %like% ab_group |
       AMR_env$AB_lookup$atc_group1 %like% ab_group |
       AMR_env$AB_lookup$atc_group2 %like% ab_group) &
       AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name

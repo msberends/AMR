@@ -164,10 +164,29 @@ ab_tradenames <- function(x, ...) {
 
 #' @rdname ab_property
 #' @export
-ab_group <- function(x, language = get_AMR_locale(), ...) {
+ab_group <- function(x, language = get_AMR_locale(), all_groups = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
-  translate_into_language(ab_validate(x = x, property = "group", ...), language = language, only_affect_ab_names = TRUE)
+  meet_criteria(all_groups, allow_class = "logical", has_length = 1)
+
+  grps <- ab_validate(x = x, property = "group", ...)
+  for (i in seq_along(grps)) {
+    # take the first match based on ABX_PRIORITY_LIST
+    if (all_groups == FALSE) {
+      grps[[i]] <- grps[[i]][1]
+    } else if (length(grps[[i]]) > 1) {
+      grps[[i]] <- grps[[i]][grps[[i]] != "Beta-lactamase inhibitors"] # leave these out if there are other groups
+    }
+    if (language != "en") {
+      grps[[i]] <- translate_into_language(grps[[i]], language = language, only_affect_ab_names = TRUE)
+    }
+  }
+  names(grps) <- x
+  if (length(grps) == 1 || all_groups == FALSE) {
+    unname(unlist(grps))
+  } else {
+    grps
+  }
 }
 
 #' @rdname ab_property
