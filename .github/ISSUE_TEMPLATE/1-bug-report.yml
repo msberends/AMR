@@ -22,9 +22,9 @@ body:
       label: Minimal Reproducible Example (optional)
       description: Please include a short R code snippet that reproduces the problem, if possible.
       placeholder: 
-        e.g.\n\n
-        ```r<br>
-        ab_name("amoxicillin/clavulanic acid", language = "es")\n
+        e.g.  
+        ```r  
+        ab_name("amoxicillin/clavulanic acid", language = "es")  
         ```
     validations:
       required: false
