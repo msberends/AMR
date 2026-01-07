@@ -263,6 +263,30 @@ translate_into_language <- function(from,
     df_trans$pattern[df_trans$regular_expr == TRUE] <- gsub("$$", "$", df_trans$pattern[df_trans$regular_expr == TRUE], fixed = TRUE)
   }
 
+  # non-regex part
+  translate_tokens <- function(tokens) {
+    patterns <- df_trans$pattern[df_trans$regular_expr == FALSE]
+    replacements <- df_trans[[lang]][df_trans$regular_expr == FALSE]
+    matches <- match(tokens, patterns)
+    tokens[!is.na(matches)] <- replacements[matches[!is.na(matches)]]
+    tokens
+  }
+  from_unique_translated[order(nchar(from_unique_translated), decreasing = TRUE)] <- vapply(
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    from_unique_translated[order(nchar(from_unique_translated), decreasing = TRUE)],
+    function(x) {
+      delimiters <- "[ /()]"
+      split_regex <- paste0("(?<=", delimiters, ")|(?=", delimiters, ")")
+      tokens <- strsplit(x, split_regex, perl = TRUE)[[1]]
+      tokens <- translate_tokens(tokens)
+      out <- paste(tokens, collapse = "")
+      # also try with those tokens
+      out <- translate_tokens(out)
+      out
+    }
+  )
+
   df_trans_regex <- df_trans[which(df_trans$regular_expr == TRUE), ]
   # regex part
   lapply(
@@ -277,26 +301,6 @@ translate_into_language <- function(from,
         fixed = FALSE,
         perl = TRUE
       )
-    }
-  )
-  # non-regex part
-  translate_tokens <- function(tokens) {
-    patterns <- df_trans$pattern[df_trans$regular_expr == FALSE]
-    replacements <- df_trans[[lang]][df_trans$regular_expr == FALSE]
-    matches <- match(tokens, patterns)
-    tokens[!is.na(matches)] <- replacements[matches[!is.na(matches)]]
-    tokens
-  }
-  from_unique_translated <- vapply(
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    from_unique_translated,
-    function(x) {
-      delimiters <- "[ /()]"
-      split_regex <- paste0("(?<=", delimiters, ")|(?=", delimiters, ")")
-      tokens <- strsplit(x, split_regex, perl = TRUE)[[1]]
-      tokens <- translate_tokens(tokens)
-      paste(tokens, collapse = "")
     }
   )
 
