@@ -279,29 +279,23 @@ translate_into_language <- function(from,
     }
   )
   # non-regex part
+  translate_tokens <- function(tokens) {
+    patterns <- df_trans$pattern[df_trans$regular_expr == FALSE]
+    replacements <- df_trans[[lang]][df_trans$regular_expr == FALSE]
+    matches <- match(tokens, patterns)
+    tokens[!is.na(matches)] <- replacements[matches[!is.na(matches)]]
+    tokens
+  }
   from_unique_translated <- vapply(
     FUN.VALUE = character(1),
     USE.NAMES = FALSE,
     from_unique_translated,
     function(x) {
-      words <- strsplit(x, " ", fixed = TRUE)[[1]]
-      # print(words)
-      for (i in seq_along(words)) {
-        word_trans <- df_trans[[lang]][df_trans$regular_expr == FALSE][match(words[i], df_trans$pattern[df_trans$regular_expr == FALSE])]
-        if (!is.na(word_trans)) {
-          words[i] <- word_trans
-        }
-      }
-      words <- paste(words, collapse = " ")
-      words <- strsplit(x, "/", fixed = TRUE)[[1]]
-      # print(words)
-      for (i in seq_along(words)) {
-        word_trans <- df_trans[[lang]][df_trans$regular_expr == FALSE][match(words[i], df_trans$pattern[df_trans$regular_expr == FALSE])]
-        if (!is.na(word_trans)) {
-          words[i] <- word_trans
-        }
-      }
-      paste(words, collapse = " ")
+      delimiters <- "[ /()]"
+      split_regex <- paste0("(?<=", delimiters, ")|(?=", delimiters, ")")
+      tokens <- strsplit(x, split_regex, perl = TRUE)[[1]]
+      tokens <- translate_tokens(tokens)
+      paste(tokens, collapse = "")
     }
   )
 

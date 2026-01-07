@@ -301,7 +301,7 @@ ab_info <- function(x, language = get_AMR_locale(), ...) {
     ab = as.character(x),
     cid = ab_cid(x),
     name = ab_name(x, language = language),
-    group = ab_group(x, language = language),
+    group = ab_group(x, language = language, all_groups = TRUE),
     atc = ab_atc(x),
     atc_group1 = ab_atc_group1(x, language = language),
     atc_group2 = ab_atc_group2(x, language = language),
