@@ -101,7 +101,7 @@ mo_name("Coagulase-negative Staphylococcus (CoNS)")
 set_AMR_locale("Dutch")
 #> ℹ Using Dutch (Nederlands) for the AMR package for this session.
 ab_name("Ciprofloxacin")
-#> [1] "Ciprofloxacin"
+#> [1] "Ciprofloxacine"
 mo_name("Coagulase-negative Staphylococcus (CoNS)")
 #> [1] "Coagulase-negatieve Staphylococcus (CNS)"
 

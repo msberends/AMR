@@ -542,15 +542,15 @@ mo_shortname("Strep agalactiae", Lancefield = TRUE)
 # language support  --------------------------------------------------------
 
 mo_gramstain("Klebsiella pneumoniae", language = "de") # German
-#> [1] "Gram-negative"
+#> [1] "Gramnegativ"
 mo_gramstain("Klebsiella pneumoniae", language = "nl") # Dutch
-#> [1] "Gram-negative"
+#> [1] "Gram-negatief"
 mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
-#> [1] "Gram-negative"
+#> [1] "Gram negativo"
 mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
-#> [1] "Gram-negative"
+#> [1] "Αρνητικό κατά Gram"
 mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
-#> [1] "Gram-negative"
+#> [1] "Грамнегативні"
 
 # mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
 mo_kingdom("Klebsiella pneumoniae")
@@ -560,7 +560,7 @@ mo_type("Klebsiella pneumoniae")
 mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
 #> [1] "Bacteria"
 mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
-#> [1] "Bacteria"
+#> [1] "细菌"
 
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
 #> [1] "Streptococcus Gruppe A"

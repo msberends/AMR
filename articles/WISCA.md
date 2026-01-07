@@ -207,10 +207,10 @@ wisca(data,
       language = "Spanish")
 ```
 
-| Grupo sindrómico | Amoxicillin/ácido clavulánico | Amoxicillin/ácido clavulánico + Ciprofloxacin | Amoxicillin/ácido clavulánico + Gentamicina |
-|:-----------------|:------------------------------|:----------------------------------------------|:--------------------------------------------|
-| No UCI           | 70% (67.8-72.4%)              | 85.3% (83.3-87.2%)                            | 87% (85.3-88.8%)                            |
-| UCI              | 80.9% (77.7-83.9%)            | 88.2% (85.5-90.6%)                            | 90.9% (88.7-93%)                            |
+| Syndromic Grupo | Amoxicilina/clavulanic acid | Amoxicilina/clavulanic acid + Ciprofloxacina | Amoxicilina/clavulanic acid + Gentamicina |
+|:----------------|:----------------------------|:---------------------------------------------|:------------------------------------------|
+| No UCI          | 70% (67.8-72.4%)            | 85.3% (83.3-87.2%)                           | 87% (85.3-88.8%)                          |
+| UCI             | 80.9% (77.7-83.9%)          | 88.2% (85.5-90.6%)                           | 90.9% (88.7-93%)                          |
 
 ## Sensible defaults, which can be customised
 
