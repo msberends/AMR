@@ -121,7 +121,7 @@ set_AMR_locale("German")
 set_AMR_locale("de")
 #> ℹ Using German (Deutsch) for the AMR package for this session.
 ab_name("amox/clav")
-#> [1] "Amoxicillin/clavulanic acid"
+#> [1] "Amoxicillin/Clavulansäure"
 
 # reset to system default
 reset_AMR_locale()

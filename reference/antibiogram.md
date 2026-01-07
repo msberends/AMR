@@ -757,10 +757,10 @@ antibiogram(ex1,
 #>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
 #> # An Antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
-#>   `Syndromic Grupo` Patógeno Amikacina            Gentamicina        Tobramicina
-#>   <chr>             <chr>    <chr>                <chr>              <chr>      
-#> 1 No UCI            E. coli  100% (97-100%,N=119) 98% (96-99%,N=323) 98% (96-99…
-#> 2 UCI               E. coli  100% (93-100%,N=52)  99% (95-100%,N=13… 96% (92-99…
+#>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina
+#>   <chr>              <chr>    <chr>                <chr>             <chr>      
+#> 1 No UCI             E. coli  100% (97-100%,N=119) 98% (96-99%,N=32… 98% (96-99…
+#> 2 UCI                E. coli  100% (93-100%,N=52)  99% (95-100%,N=1… 96% (92-99…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
 #> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
 
