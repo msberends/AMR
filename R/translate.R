@@ -263,16 +263,17 @@ translate_into_language <- function(from,
     df_trans$pattern[df_trans$regular_expr == TRUE] <- gsub("$$", "$", df_trans$pattern[df_trans$regular_expr == TRUE], fixed = TRUE)
   }
 
+  df_trans_regex <- df_trans[which(df_trans$regular_expr == TRUE), ]
   # regex part
   lapply(
     # starting with longest pattern, since more general translations are shorter, such as 'Group'
-    order(nchar(df_trans$pattern), decreasing = TRUE)[df_trans$regular_expr == TRUE],
+    order(nchar(df_trans_regex$pattern), decreasing = TRUE),
     function(i) {
       from_unique_translated <<- gsub(
-        pattern = df_trans$pattern[i],
-        replacement = df_trans[i, lang, drop = TRUE],
+        pattern = df_trans_regex$pattern[i],
+        replacement = df_trans_regex[i, lang, drop = TRUE],
         x = from_unique_translated,
-        ignore.case = !df_trans$case_sensitive[i],
+        ignore.case = !df_trans_regex$case_sensitive[i],
         fixed = FALSE,
         perl = TRUE
       )
