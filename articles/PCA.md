@@ -113,7 +113,7 @@ summary(pca_result)
 #> [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"
 #> Importance of components:
 #>                           PC1    PC2    PC3     PC4     PC5     PC6       PC7
-#> Standard deviation     2.1539 1.6807 0.6138 0.33879 0.20808 0.03140 1.232e-16
+#> Standard deviation     2.1539 1.6807 0.6138 0.33879 0.20808 0.03140 9.577e-17
 #> Proportion of Variance 0.5799 0.3531 0.0471 0.01435 0.00541 0.00012 0.000e+00
 #> Cumulative Proportion  0.5799 0.9330 0.9801 0.99446 0.99988 1.00000 1.000e+00
 ```

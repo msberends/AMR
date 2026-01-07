@@ -103,7 +103,7 @@ set_AMR_locale("Dutch")
 ab_name("Ciprofloxacin")
 #> [1] "Ciprofloxacin"
 mo_name("Coagulase-negative Staphylococcus (CoNS)")
-#> [1] "Coagulase-negatieve Staphylococcus (CoNS)"
+#> [1] "Coagulase-negatieve Staphylococcus (CNS)"
 
 # setting yet another language
 set_AMR_locale("German")
@@ -111,7 +111,7 @@ set_AMR_locale("German")
 ab_name("Ciprofloxacin")
 #> [1] "Ciprofloxacin"
 mo_name("Coagulase-negative Staphylococcus (CoNS)")
-#> [1] "Koagulase-negative Staphylococcus (CoNS)"
+#> [1] "Koagulase-negative Staphylococcus (KNS)"
 
 # set_AMR_locale() understands endonyms, English exonyms, and ISO 639-1:
 set_AMR_locale("Deutsch")
@@ -121,7 +121,7 @@ set_AMR_locale("German")
 set_AMR_locale("de")
 #> ℹ Using German (Deutsch) for the AMR package for this session.
 ab_name("amox/clav")
-#> [1] "Amoxicillin Clavulansäure"
+#> [1] "Amoxicillin/clavulanic acid"
 
 # reset to system default
 reset_AMR_locale()

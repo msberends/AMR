@@ -650,10 +650,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-01-06 22:18:05     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-01-06 22:18:05     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-01-06 22:18:05     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-01-06 22:18:06     1 DISK   genta       Escherich… human      18         
+#> 1 2026-01-07 10:05:32     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-01-07 10:05:32     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-01-07 10:05:32     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-01-07 10:05:33     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

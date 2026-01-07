@@ -264,7 +264,7 @@ ab_info("AMX") # all properties as a list
 #> [1] "Amoxicillin"
 #> 
 #> $group
-#> [1] "Aminopenicillins"
+#> [1] "Aminopenicillins" "Penicillins"      "Beta-lactams"    
 #> 
 #> $atc
 #> [1] "J01CA04"  "QG51AA03" "QJ01CA04"
