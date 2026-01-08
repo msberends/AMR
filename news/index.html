@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9015" id="amr-3019015">AMR 3.0.1.9015<a class="anchor" aria-label="anchor" href="#amr-3019015"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9016" id="amr-3019016">AMR 3.0.1.9016<a class="anchor" aria-label="anchor" href="#amr-3019016"></a></h2>
 <div class="section level4">
-<h4 id="new-3-0-1-9015">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9015"></a></h4>
+<h4 id="new-3-0-1-9016">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9016"></a></h4>
 <ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
 <ul><li>
 <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
@@ -74,7 +74,7 @@
 <code><a href="../reference/ab_property.html">ab_group()</a></code> gained an argument <code>all_groups</code> to return all groups the antimicrobial drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9015">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9015"></a></h4>
+<h4 id="changed-3-0-1-9016">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9016"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
 <li>Added taniborbactam (<code>TAN</code>) and cefepime/taniborbactam (<code>FTA</code>) to the <code>antimicrobials</code> data set</li>
 <li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where for numeric input the arguments <code>S</code>, <code>i</code>, and <code>R</code> would not be considered (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
