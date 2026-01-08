@@ -39,7 +39,7 @@ test_that("test-ab_property.R", {
   expect_inherits(ab_tradenames("AMX"), "character")
   expect_inherits(ab_tradenames(c("AMX", "AMX")), "list")
 
-  expect_identical(ab_group("AMX", language = NULL), "Beta-lactams/penicillins")
+  expect_identical(ab_group("AMX", language = NULL), "Aminopenicillins")
   expect_identical(ab_atc_group1("AMX", language = NULL), "Beta-lactam antibacterials, penicillins")
   expect_identical(ab_atc_group2("AMX", language = NULL), "Penicillins with extended spectrum")
 
