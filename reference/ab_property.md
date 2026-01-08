@@ -72,6 +72,16 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
   other arguments passed on to
   [`as.ab()`](https://amr-for-r.org/reference/as.ab.md).
 
+- all_groups:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
+  all antimicrobial groups must be return as a vector for each input
+  value. For example, an antibiotic in the "aminopenicillins" group, is
+  also in the "penicillins" and "beta-lactams" groups. Setting
+  `all_groups = TRUE` would return all three for such an antibiotic,
+  while `all_groups = FALSE` (default) only returns the most distinctive
+  group name.
+
 - only_first:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether

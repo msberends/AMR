@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9016</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,6 +105,10 @@
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>In case of <code>set_ab_names()</code> and <code>data</code> is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>: columns to select (supports tidy selection such as <code>column1:column4</code>), otherwise other arguments passed on to <code><a href="as.ab.html">as.ab()</a></code>.</p></dd>
+
+
+<dt id="arg-all-groups">all_groups<a class="anchor" aria-label="anchor" href="#arg-all-groups"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all antimicrobial groups must be return as a vector for each input value. For example, an antibiotic in the "aminopenicillins" group, is also in the "penicillins" and "beta-lactams" groups. Setting <code>all_groups = TRUE</code> would return all three for such an antibiotic, while <code>all_groups = FALSE</code> (default) only returns the most distinctive group name.</p></dd>
 
 
 <dt id="arg-only-first">only_first<a class="anchor" aria-label="anchor" href="#arg-only-first"></a></dt>
