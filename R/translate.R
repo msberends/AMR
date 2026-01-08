@@ -264,44 +264,26 @@ translate_into_language <- function(from,
   }
 
   # non-regex part
-  translate_tokens <- function(tokens) {
-    patterns <- df_trans$pattern[df_trans$regular_expr == FALSE]
-    replacements <- df_trans[[lang]][df_trans$regular_expr == FALSE]
-    matches <- match(tokens, patterns)
-    tokens[!is.na(matches)] <- replacements[matches[!is.na(matches)]]
-    tokens
+  translate_exec <- function(term) {
+    # sort trans file on length of pattern
+    trns <- df_trans[order(nchar(df_trans$pattern), decreasing = TRUE), ]
+    for (i in seq_len(nrow(trns))) {
+      term <- gsub(
+        pattern = trns$pattern[i],
+        replacement = trns[i, lang, drop = TRUE],
+        x = term,
+        ignore.case = !trns$case_sensitive[i] & trns$regular_expr[i],
+        fixed = !trns$regular_expr[i],
+        perl = trns$regular_expr[i],
+      )
+    }
+    term
   }
   from_unique_translated[order(nchar(from_unique_translated), decreasing = TRUE)] <- vapply(
     FUN.VALUE = character(1),
     USE.NAMES = FALSE,
     from_unique_translated[order(nchar(from_unique_translated), decreasing = TRUE)],
-    function(x) {
-      delimiters <- "[ /()]"
-      split_regex <- paste0("(?<=", delimiters, ")|(?=", delimiters, ")")
-      tokens <- strsplit(x, split_regex, perl = TRUE)[[1]]
-      tokens <- translate_tokens(tokens)
-      out <- paste(tokens, collapse = "")
-      # also try with those tokens
-      out <- translate_tokens(out)
-      out
-    }
-  )
-
-  df_trans_regex <- df_trans[which(df_trans$regular_expr == TRUE), ]
-  # regex part
-  lapply(
-    # starting with longest pattern, since more general translations are shorter, such as 'Group'
-    order(nchar(df_trans_regex$pattern), decreasing = TRUE),
-    function(i) {
-      from_unique_translated <<- gsub(
-        pattern = df_trans_regex$pattern[i],
-        replacement = df_trans_regex[i, lang, drop = TRUE],
-        x = from_unique_translated,
-        ignore.case = !df_trans_regex$case_sensitive[i],
-        fixed = FALSE,
-        perl = TRUE
-      )
-    }
+    translate_exec
   )
 
   # force UTF-8 for diacritics
