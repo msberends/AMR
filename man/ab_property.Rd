@@ -59,6 +59,8 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
 
 \item{...}{In case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: columns to select (supports tidy selection such as \code{column1:column4}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}.}
 
+\item{all_groups}{A \link{logical} to indicate whether all antimicrobial groups must be return as a vector for each input value. For example, an antibiotic in the "aminopenicillins" group, is also in the "penicillins" and "beta-lactams" groups. Setting \code{all_groups = TRUE} would return all three for such an antibiotic, while \code{all_groups = FALSE} (default) only returns the most distinctive group name.}
+
 \item{only_first}{A \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group).}
 
 \item{administration}{Way of administration, either \code{"oral"} or \code{"iv"}.}

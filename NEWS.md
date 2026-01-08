@@ -1,4 +1,4 @@
-# AMR 3.0.1.9016
+# AMR 3.0.1.9017
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
