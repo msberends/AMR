@@ -1042,24 +1042,8 @@ get_current_column <- function() {
 
   # cur_column() doesn't always work (only allowed for certain conditions set by dplyr), but it's probably still possible:
   frms <- lapply(sys.frames(), function(env) {
-    if (tryCatch(!is.null(env$i), error = function(e) FALSE)) {
-      if (!is.null(env$tibble_vars)) {
-        # for mutate_if()
-        # TODO remove later, was part of older dplyr versions (at least not in dplyr 1.1.4)
-        env$tibble_vars[env$i]
-      } else {
-        # for mutate(across())
-        if (!is.null(env$data) && is.data.frame(env$data)) {
-          df <- env$data
-        } else {
-          df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
-        }
-        if (is.data.frame(df)) {
-          colnames(df)[env$i]
-        } else {
-          env$i
-        }
-      }
+    if (all(c("dots", "i") %in% names(env))) {
+      names(env$dots)[env$i]
     } else {
       NULL
     }

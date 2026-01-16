@@ -449,14 +449,14 @@ pre_commit_lst$AB_STREPTOGRAMINS <- antimicrobials %>%
   filter(atc_group2 %like% "streptogramin") %>%
   pull(ab)
 pre_commit_lst$AB_TETRACYCLINES <- antimicrobials %>%
-  filter(group %like% "tetracycline") %>%
+  filter(atc_group1 %like% "tetracycline" | atc_group2 %like% "tetracycline" | name %like% "chlortetracycline|cetocycline|demeclocycline|doxycycline|eravacycline|lymecycline|meclocycline|meth?acycline|minocycline|omadacycline|oxytetracycline|rolitetracycline|sarecycline|tetracycline|tigecycline") %>%
   pull(ab)
 pre_commit_lst$AB_TETRACYCLINES_EXCEPT_TGC <- pre_commit_lst$AB_TETRACYCLINES[pre_commit_lst$AB_TETRACYCLINES != "TGC"]
 pre_commit_lst$AB_TRIMETHOPRIMS <- antimicrobials %>%
-  filter(group %like% "trimethoprim") %>%
+  filter(atc_group1 %like% "trimethoprim" | atc_group2 %like% "trimethoprim" | name %like% "trimethoprim|ormetroprim|iclaprim") %>%
   pull(ab)
 pre_commit_lst$AB_SULFONAMIDES <- antimicrobials %>%
-  filter(group %like% "trimethoprim" & name %unlike% "trimethoprim") %>%
+  filter(name %like% "(^|/)sulf[oai]") %>%
   pull(ab)
 pre_commit_lst$AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
 pre_commit_lst$AB_BETALACTAMS <- sort(c(
@@ -500,7 +500,7 @@ for (i in seq_along(group_map)) {
   if (is.null(group_map[[i]])) {
     group_map[[i]] <- "Other"
     if (antimicrobials$group[i] %unlike% "other") {
-      print(paste0(i, ": ", antimicrobials$group[i], " (", antimicrobials$ab[i], ", ", antimicrobials$name[i], ")"))
+      usethis::ui_warn("AB had a group but not anymore: ", antimicrobials$name[i], " (", antimicrobials$ab[i], "), was ", toString(antimicrobials$group[i]))
     }
   }
   group_map[[i]] <- group_map[[i]][order(nchar(group_map[[i]]))]
@@ -550,7 +550,6 @@ for (i in seq_along(group_map)) {
 }
 antimicrobials$group <- unname(group_map)
 usethis::use_data(antimicrobials, overwrite = TRUE, version = 2, compress = "xz")
-rm(antimicrobials)
 
 pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(antimicrobials)
 pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(antivirals)
@@ -738,7 +737,33 @@ files_changed <- function(paths = "^(R|data)/") {
 # Update URLs -------------------------------------------------------------
 if (files_changed()) {
   usethis::ui_info("Checking URLs for redirects")
-  invisible(urlchecker::url_update("."))
+  # Step 1: Get sources from tools (excluding man/)
+  sources <- tools:::url_db_from_package_sources(".")
+  sources <- sources[!grepl("^man/", sources$Parent), ]
+  # Step 2: Get URLs from .R files in R/
+  r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
+  # Function to extract URLs from a file
+  extract_urls_from_file <- function(file_path) {
+    lines <- readLines(file_path, warn = FALSE)
+    urls <- stringr::str_extract_all(lines, "https?://[^\\s)\"'>]+")
+    urls <- unlist(urls)
+    if (length(urls) == 0) {
+      return(NULL)
+    }
+    # Remove trailing punctuation (e.g., .,), etc.)
+    urls <- stringr::str_replace(urls, "[\\.,;)]+$", "")
+    data.frame(
+      URL = urls,
+      Parent = gsub("^\\./", "", file_path),
+      stringsAsFactors = FALSE
+    )
+  }
+  r_file_urls <- do.call(rbind, lapply(r_files, extract_urls_from_file))
+  # Step 3: Combine the two sources
+  total <- rbind(sources, r_file_urls)
+  # Step 4: Check URLs and update
+  results <- urlchecker::url_check(db = total)
+  invisible(urlchecker::url_update(results = results))
 }
 
 # Style pkg ---------------------------------------------------------------
@@ -771,5 +796,6 @@ if (files_changed("README.Rmd") ||
 }
 
 # Finished ----------------------------------------------------------------
+rm(antimicrobials)
 usethis::ui_done("All done")
 suppressMessages(reset_AMR_locale())

@@ -18,7 +18,7 @@ intrinsic_resistant
 Data set containing 'EUCAST Expected Resistant Phenotypes' of \emph{all} bug-drug combinations between the \link{microorganisms} and \link{antimicrobials} data sets.
 }
 \details{
-This data set is currently based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023).
+This data set is currently based on \href{https://www.eucast.org/bacteria/important-additional-information/expert-rules/}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023).
 
 This data set is internally used by:
 \itemize{

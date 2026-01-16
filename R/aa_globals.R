@@ -34,37 +34,37 @@ EUCAST_VERSION_BREAKPOINTS <- list(
     version_txt = "v15.0",
     year = 2025,
     title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/clinical_breakpoints/"
+    url = "https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/"
   ),
   "14.0" = list(
     version_txt = "v14.0",
     year = 2024,
     title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/clinical_breakpoints/"
+    url = "https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/"
   ),
   "13.1" = list(
     version_txt = "v13.1",
     year = 2023,
     title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/clinical_breakpoints/"
+    url = "https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/"
   ),
   "12.0" = list(
     version_txt = "v12.0",
     year = 2022,
     title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/clinical_breakpoints/"
+    url = "https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/"
   ),
   "11.0" = list(
     version_txt = "v11.0",
     year = 2021,
     title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/clinical_breakpoints/"
+    url = "https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/"
   ),
   "10.0" = list(
     version_txt = "v10.0",
     year = 2020,
     title = "'EUCAST Clinical Breakpoint Tables'",
-    url = "https://www.eucast.org/ast_of_bacteria/previous_versions_of_documents/"
+    url = "https://www.eucast.org/bacteria/document-archive/"
   )
 )
 EUCAST_VERSION_EXPERT_RULES <- list(
@@ -72,19 +72,19 @@ EUCAST_VERSION_EXPERT_RULES <- list(
     version_txt = "v3.3",
     year = 2021,
     title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
+    url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
   ),
   "3.2" = list(
     version_txt = "v3.2",
     year = 2020,
     title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
+    url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
   ),
   "3.1" = list(
     version_txt = "v3.1",
     year = 2016,
     title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
+    url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
   )
 )
 EUCAST_VERSION_EXPECTED_PHENOTYPES <- list(
@@ -92,7 +92,7 @@ EUCAST_VERSION_EXPECTED_PHENOTYPES <- list(
     version_txt = "v1.2",
     year = 2023,
     title = "'EUCAST Expected Resistant Phenotypes'",
-    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes"
+    url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
   )
 )
 

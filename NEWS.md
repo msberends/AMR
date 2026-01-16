@@ -1,4 +1,4 @@
-# AMR 3.0.1.9017
+# AMR 3.0.1.9018
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -9,21 +9,25 @@
     - `all_disk()`, `all_disk_predictors()`
 * Data set `esbl_isolates` to practise with AMR modelling
 * AMR selectors `phosphonics()` and `spiropyrimidinetriones()`
-* `ab_group()` gained an argument `all_groups` to return all groups the antimicrobial drug is in (#246)
+* `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)
 
-### Changed
+### Fixes
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
-* Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the `antimicrobials` data set
 * Fixed a bug in `as.sir()` where for numeric input the arguments `S`,  `i`,  and `R` would not be considered (#244)
+* Fixed some foreign translations of antimicrobial drugs
+* Fixed a bug for printing column names to the console when using `mutate_at(vars(...), as.mic)` (#249)
+
+### Updates
+* `ab_group()` gained an argument `all_groups` to return all groups the antimicrobial drug is in (#246)
+* Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the `antimicrobials` data set
 * Added explaining message to `as.sir()` when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (#244)
 * Updated handling of capped MIC values (`<`, `<=`, `>`, `>=`) in `as.sir()` in the argument `capped_mic_handling`: (#243)
   * Introduced four clearly defined options: `"none"`, `"conservative"` (default), `"standard"`, and `"lenient"`
   * Interpretation of capped MIC values now consistently returns `"NI"` (non-interpretable) when the true MIC could be at either side of a breakpoint, depending on the selected handling mode
   * This results in more reliable behaviour compared to previous versions for capped MIC values
   * Removed the `"inverse"` option, which has now become redundant
-* Fixed some foreign translations of antimicrobial drugs
-* `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)
 * `ab_group()` now returns values consist with the AMR selectors (#246)
+
 
 # AMR 3.0.1
 

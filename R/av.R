@@ -51,7 +51,7 @@
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://atcddd.fhi.no/atc_ddd_index/}
 #'
-#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
+#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://health.ec.europa.eu/documents/community-register/html/reg_hum_atc.htm}
 #' @aliases av
 #' @return A [character] [vector] with additional class [`ab`]
 #' @seealso

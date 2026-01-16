@@ -260,7 +260,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
     cur_col <- get_current_column()
     warning_("in `as.mic()`: ", na_after - na_before, " result",
       ifelse(na_after - na_before > 1, "s", ""),
-      ifelse(is.null(cur_col), "", paste0(" in index '", cur_col, "'")),
+      ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
       " truncated (",
       round(((na_after - na_before) / length(x)) * 100),
       "%) that were invalid MICs: ",
