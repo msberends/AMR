@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9017</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9017" id="amr-3019017">AMR 3.0.1.9017<a class="anchor" aria-label="anchor" href="#amr-3019017"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9018" id="amr-3019018">AMR 3.0.1.9018<a class="anchor" aria-label="anchor" href="#amr-3019018"></a></h2>
 <div class="section level4">
-<h4 id="new-3-0-1-9017">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9017"></a></h4>
+<h4 id="new-3-0-1-9018">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9018"></a></h4>
 <ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
 <ul><li>
 <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
@@ -71,13 +71,20 @@
 <li>AMR selectors <code><a href="../reference/antimicrobial_selectors.html">phosphonics()</a></code> and <code><a href="../reference/antimicrobial_selectors.html">spiropyrimidinetriones()</a></code>
 </li>
 <li>
-<code><a href="../reference/ab_property.html">ab_group()</a></code> gained an argument <code>all_groups</code> to return all groups the antimicrobial drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
+<code>antimicrobials$group</code> is now a <code>list</code> instead of a <code>character</code>, to contain any group the drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9017">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9017"></a></h4>
+<h4 id="fixes-3-0-1-9018">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9018"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
-<li>Added taniborbactam (<code>TAN</code>) and cefepime/taniborbactam (<code>FTA</code>) to the <code>antimicrobials</code> data set</li>
 <li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where for numeric input the arguments <code>S</code>, <code>i</code>, and <code>R</code> would not be considered (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
+<li>Fixed some foreign translations of antimicrobial drugs</li>
+<li>Fixed a bug for printing column names to the console when using <code>mutate_at(vars(...), as.mic)</code> (<a href="https://github.com/msberends/AMR/issues/249" class="external-link">#249</a>)</li>
+</ul></div>
+<div class="section level4">
+<h4 id="updates-3-0-1-9018">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9018"></a></h4>
+<ul><li>
+<code><a href="../reference/ab_property.html">ab_group()</a></code> gained an argument <code>all_groups</code> to return all groups the antimicrobial drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
+<li>Added taniborbactam (<code>TAN</code>) and cefepime/taniborbactam (<code>FTA</code>) to the <code>antimicrobials</code> data set</li>
 <li>Added explaining message to <code><a href="../reference/as.sir.html">as.sir()</a></code> when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
 <li>Updated handling of capped MIC values (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in <code><a href="../reference/as.sir.html">as.sir()</a></code> in the argument <code>capped_mic_handling</code>: (<a href="https://github.com/msberends/AMR/issues/243" class="external-link">#243</a>)
 <ul><li>Introduced four clearly defined options: <code>"none"</code>, <code>"conservative"</code> (default), <code>"standard"</code>, and <code>"lenient"</code>
@@ -86,9 +93,6 @@
 <li>This results in more reliable behaviour compared to previous versions for capped MIC values</li>
 <li>Removed the <code>"inverse"</code> option, which has now become redundant</li>
 </ul></li>
-<li>Fixed some foreign translations of antimicrobial drugs</li>
-<li>
-<code>antimicrobials$group</code> is now a <code>list</code> instead of a <code>character</code>, to contain any group the drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
 <li>
 <code><a href="../reference/ab_property.html">ab_group()</a></code> now returns values consist with the AMR selectors (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
 </ul></div>

@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 08 January
+methodology remains unchanged. This page was generated on 16 January
 2026.
 
 ## Introduction
@@ -52,9 +52,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-01-08 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-01-08 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-01-08 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-01-16 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-01-16 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-01-16 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -318,6 +318,8 @@ our_data <- our_data %>%
   mutate(first = first_isolate(info = TRUE))
 #> ℹ Determining first isolates using an episode length of 365 days
 #> ℹ Using column 'bacteria' as input for `col_mo`.
+#> ℹ Column 'first' is SIR eligible (despite only having empty values), since
+#>   it seems to be cefozopran (ZOP)
 #> ℹ Using column 'date' as input for `col_date`.
 #> ℹ Using column 'patient_id' as input for `col_patient_id`.
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold

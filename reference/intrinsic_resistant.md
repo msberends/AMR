@@ -33,7 +33,7 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 271
 
 This data set is currently based on ['EUCAST Expected Resistant
 Phenotypes'
-v1.2](https://www.eucast.org/expert_rules_and_expected_phenotypes)
+v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
 (2023).
 
 This data set is internally used by:

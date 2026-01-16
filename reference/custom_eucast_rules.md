@@ -431,28 +431,36 @@ These 38 antimicrobial groups are allowed in the rules
   (pristinamycin and quinupristin/dalfopristin)
 
 - sulfonamides  
-  (brodimoprim, sulfadiazine, sulfadiazine/tetroxoprim,
-  sulfadimethoxine, sulfadimidine, sulfafurazole, sulfaisodimidine,
-  sulfalene, sulfamazone, sulfamerazine, sulfamethizole,
+  (isoniazid/sulfamethoxazole/trimethoprim/pyridoxine,
+  ormetroprim/sulfamethoxazole, sulfachlorpyridazine, sulfadiazine,
+  sulfadiazine/tetroxoprim, sulfadiazine/trimethoprim, sulfadimethoxine,
+  sulfadimidine, sulfadimidine/trimethoprim, sulfafurazole,
+  sulfaisodimidine, sulfalene, sulfamazone, sulfamerazine,
+  sulfamerazine/trimethoprim, sulfamethazine, sulfamethizole,
   sulfamethoxazole, sulfamethoxypyridazine, sulfametomidine,
-  sulfametoxydiazine, sulfamoxole, sulfanilamide, sulfaperin,
-  sulfaphenazole, sulfapyridine, sulfathiazole, and sulfathiourea)
+  sulfametoxydiazine, sulfametrole/trimethoprim, sulfamoxole,
+  sulfamoxole/trimethoprim, sulfanilamide, sulfaperin, sulfaphenazole,
+  sulfapyridine, sulfasuccinamide, sulfathiazole, sulfathiourea,
+  sulfisoxazole, sulfonamide, and trimethoprim/sulfamethoxazole)
 
 - tetracyclines  
   (cetocycline, chlortetracycline, clomocycline, demeclocycline,
   doxycycline, eravacycline, lymecycline, metacycline, minocycline,
   omadacycline, oxytetracycline, penimepicycline, rolitetracycline,
-  sarecycline, tetracycline, tetracycline screening test, and
-  tigecycline)
+  sarecycline, tetracycline, tetracycline screening test,
+  tetracycline/oleandomycin, and tigecycline)
 
 - tetracyclines_except_tgc  
   (cetocycline, chlortetracycline, clomocycline, demeclocycline,
   doxycycline, eravacycline, lymecycline, metacycline, minocycline,
   omadacycline, oxytetracycline, penimepicycline, rolitetracycline,
-  sarecycline, tetracycline, and tetracycline screening test)
+  sarecycline, tetracycline, tetracycline screening test, and
+  tetracycline/oleandomycin)
 
 - trimethoprims  
-  (brodimoprim, sulfadiazine, sulfadiazine/tetroxoprim,
+  (brodimoprim, iclaprim,
+  isoniazid/sulfamethoxazole/trimethoprim/pyridoxine,
+  ormetroprim/sulfamethoxazole, sulfadiazine, sulfadiazine/tetroxoprim,
   sulfadiazine/trimethoprim, sulfadimethoxine, sulfadimidine,
   sulfadimidine/trimethoprim, sulfafurazole, sulfaisodimidine,
   sulfalene, sulfamazone, sulfamerazine, sulfamerazine/trimethoprim,

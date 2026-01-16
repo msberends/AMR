@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9017</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
     <p>For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:</p><ul><li><p><strong>CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data</strong>, 2011-2025, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p></li>
 <li><p><strong>CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing</strong>, 2011-2025, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m100/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m100/</a>.</p></li>
 <li><p><strong>CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals</strong>, 2019-2025, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/veterinary-medicine/documents/vet01/" class="external-link">https://clsi.org/standards/products/veterinary-medicine/documents/vet01/</a>.</p></li>
-<li><p><strong>EUCAST Breakpoint tables for interpretation of MICs and zone diameters</strong>, 2011-2025, <em>European Committee on Antimicrobial Susceptibility Testing</em> (EUCAST). <a href="https://www.eucast.org/clinical_breakpoints" class="external-link">https://www.eucast.org/clinical_breakpoints</a>.</p></li>
+<li><p><strong>EUCAST Breakpoint tables for interpretation of MICs and zone diameters</strong>, 2011-2025, <em>European Committee on Antimicrobial Susceptibility Testing</em> (EUCAST). <a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/" class="external-link">https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/</a>.</p></li>
 <li><p><strong>WHONET</strong> as a source for machine-reading the clinical breakpoints (<a href="https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet">read more here</a>), 1989-2025, <em>WHO Collaborating Centre for Surveillance of Antimicrobial Resistance</em>. <a href="https://whonet.org/" class="external-link">https://whonet.org/</a>.</p></li>
 </ul></div>
     <div class="section level2">
@@ -175,7 +175,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
 
 <dt id="arg-add-intrinsic-resistance">add_intrinsic_resistance<a class="anchor" aria-label="anchor" href="#arg-add-intrinsic-resistance"></a></dt>
-<dd><p><em>(only useful when using a EUCAST guideline)</em> a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in <em>Klebsiella</em> species. Determination is based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, that itself is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021).</p></dd>
+<dd><p><em>(only useful when using a EUCAST guideline)</em> a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in <em>Klebsiella</em> species. Determination is based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, that itself is based on <a href="https://www.eucast.org/bacteria/important-additional-information/expert-rules/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021).</p></dd>
 
 
 <dt id="arg-reference-data">reference_data<a class="anchor" aria-label="anchor" href="#arg-reference-data"></a></dt>
@@ -321,7 +321,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
     <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
 
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/newsiandr" class="external-link">https://www.eucast.org/newsiandr</a>).</p>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/</a>).</p>
 <p>This AMR package follows insight; use <code><a href="proportion.html">susceptibility()</a></code> (equal to <code><a href="proportion.html">proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href="count.html">count_susceptible()</a></code> (equal to <code><a href="count.html">count_SI()</a></code>) to count susceptible isolates.</p>
     </div>
     <div class="section level2">
@@ -416,10 +416,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-01-08 <span style="color: #949494;">13:08:47</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-01-08 <span style="color: #949494;">13:08:47</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-01-08 <span style="color: #949494;">13:08:48</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-01-08 <span style="color: #949494;">13:08:48</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-01-16 <span style="color: #949494;">10:04:38</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-01-16 <span style="color: #949494;">10:04:39</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-01-16 <span style="color: #949494;">10:04:39</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-01-16 <span style="color: #949494;">10:04:39</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
@@ -620,13 +620,13 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span><span class="co"># For CLEANING existing SIR values -------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"SDD"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"NI"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`as.sir()`</span>: 3 results in index '21' truncated (38%) that were invalid</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B", and "C"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`as.sir()`</span>: 3 results truncated (38%) that were invalid antimicrobial</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> interpretations: "A", "B", and "C"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    SDD  I    R    NI   &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="st">"&lt;= 0.002; S"</span><span class="op">)</span> <span class="co"># will return "S"</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`as.sir()`</span>: 1 result in index '21' truncated (100%) that were invalid</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "&lt;= 0.002; S"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`as.sir()`</span>: 1 result truncated (100%) that were invalid antimicrobial</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> interpretations: "&lt;= 0.002; S"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;NA&gt;</span>
 <span class="r-in"><span></span></span>

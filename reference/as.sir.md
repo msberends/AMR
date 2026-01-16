@@ -93,7 +93,7 @@ disk diffusion diameters:
 - **EUCAST Breakpoint tables for interpretation of MICs and zone
   diameters**, 2011-2025, *European Committee on Antimicrobial
   Susceptibility Testing* (EUCAST).
-  <https://www.eucast.org/clinical_breakpoints>.
+  <https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/>.
 
 - **WHONET** as a source for machine-reading the clinical breakpoints
   ([read more
@@ -228,7 +228,7 @@ disk diffusion diameters:
   [intrinsic_resistant](https://amr-for-r.org/reference/intrinsic_resistant.md)
   data set, that itself is based on ['EUCAST Expert Rules' and 'EUCAST
   Intrinsic Resistance and Unusual Phenotypes'
-  v3.3](https://www.eucast.org/expert_rules_and_expected_phenotypes)
+  v3.3](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
   (2021).
 
 - reference_data:
@@ -537,7 +537,8 @@ base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing
 (EUCAST) has decided to change the definitions of susceptibility testing
-categories S, I, and R (<https://www.eucast.org/newsiandr>).
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
 
 This AMR package follows insight; use
 [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
@@ -650,10 +651,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-01-08 13:08:47     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-01-08 13:08:47     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-01-08 13:08:48     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-01-08 13:08:48     1 DISK   genta       Escherich… human      18         
+#> 1 2026-01-16 10:04:38     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-01-16 10:04:39     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-01-16 10:04:39     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-01-16 10:04:39     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
@@ -854,13 +855,13 @@ as.sir(
 # For CLEANING existing SIR values -------------------------------------
 
 as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
-#> Warning: in `as.sir()`: 3 results in index '21' truncated (38%) that were invalid
-#> antimicrobial interpretations: "A", "B", and "C"
+#> Warning: in `as.sir()`: 3 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "A", "B", and "C"
 #> Class 'sir'
 #> [1] S    SDD  I    R    NI   <NA> <NA> <NA>
 as.sir("<= 0.002; S") # will return "S"
-#> Warning: in `as.sir()`: 1 result in index '21' truncated (100%) that were invalid
-#> antimicrobial interpretations: "<= 0.002; S"
+#> Warning: in `as.sir()`: 1 result truncated (100%) that were invalid antimicrobial
+#> interpretations: "<= 0.002; S"
 #> Class 'sir'
 #> [1] <NA>
 

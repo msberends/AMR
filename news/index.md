@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9017
+## AMR 3.0.1.9018
 
 #### New
 
@@ -22,20 +22,30 @@
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   and
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
-- [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
-  an argument `all_groups` to return all groups the antimicrobial drug
-  is in ([\#246](https://github.com/msberends/AMR/issues/246))
+- `antimicrobials$group` is now a `list` instead of a `character`, to
+  contain any group the drug is in
+  ([\#246](https://github.com/msberends/AMR/issues/246))
 
-#### Changed
+#### Fixes
 
 - Fixed a bug in
   [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) for
   when no antimicrobials are set
-- Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the
-  `antimicrobials` data set
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   where for numeric input the arguments `S`, `i`, and `R` would not be
   considered ([\#244](https://github.com/msberends/AMR/issues/244))
+- Fixed some foreign translations of antimicrobial drugs
+- Fixed a bug for printing column names to the console when using
+  `mutate_at(vars(...), as.mic)`
+  ([\#249](https://github.com/msberends/AMR/issues/249))
+
+#### Updates
+
+- [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
+  an argument `all_groups` to return all groups the antimicrobial drug
+  is in ([\#246](https://github.com/msberends/AMR/issues/246))
+- Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the
+  `antimicrobials` data set
 - Added explaining message to
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) when
   interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R)
@@ -52,10 +62,6 @@
   - This results in more reliable behaviour compared to previous
     versions for capped MIC values
   - Removed the `"inverse"` option, which has now become redundant
-- Fixed some foreign translations of antimicrobial drugs
-- `antimicrobials$group` is now a `list` instead of a `character`, to
-  contain any group the drug is in
-  ([\#246](https://github.com/msberends/AMR/issues/246))
 - [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) now
   returns values consist with the AMR selectors
   ([\#246](https://github.com/msberends/AMR/issues/246))

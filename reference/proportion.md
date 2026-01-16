@@ -236,7 +236,8 @@ input.
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing
 (EUCAST) has decided to change the definitions of susceptibility testing
-categories S, I, and R (<https://www.eucast.org/newsiandr>).
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
 
 This AMR package follows insight; use `susceptibility()` (equal to
 `proportion_SI()`) to determine antimicrobial susceptibility and

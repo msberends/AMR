@@ -277,7 +277,7 @@ Determination of intrinsic resistance (`mo_is_intrinsic_resistant()`)
 will be based on the
 [intrinsic_resistant](https://amr-for-r.org/reference/intrinsic_resistant.md)
 data set, which is based on ['EUCAST Expected Resistant Phenotypes'
-v1.2](https://www.eucast.org/expert_rules_and_expected_phenotypes)
+v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
 (2023). The `mo_is_intrinsic_resistant()` function can be vectorised
 over both argument `x` (input for microorganisms) and `ab` (input for
 antimicrobials).

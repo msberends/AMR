@@ -231,7 +231,7 @@ codes or names of *E. coli* and *K. pneumoniae* and contains a column
 "vancomycin", this column will be removed (or rather, unselected) using
 this function. It currently applies ['EUCAST Expected Resistant
 Phenotypes'
-v1.2](https://www.eucast.org/expert_rules_and_expected_phenotypes)
+v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
 (2023) to determine intrinsic resistance, using the
 [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
 function internally. Because of this determination, this function is
@@ -559,14 +559,21 @@ quite slow in terms of performance.
   pristinamycin (PRI) and quinupristin/dalfopristin (QDA)
 
 - `sulfonamides()` can select:  
-  brodimoprim (BDP), sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT),
-  sulfadimethoxine (SUD), sulfadimidine (SDM), sulfafurazole (SLF),
-  sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO),
-  sulfamerazine (SLF3), sulfamethizole (SLF4), sulfamethoxazole (SMX),
+  isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST),
+  ormetroprim/sulfamethoxazole (ORS), sulfachlorpyridazine (SUP),
+  sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT),
+  sulfadiazine/trimethoprim (SLT1), sulfadimethoxine (SUD),
+  sulfadimidine (SDM), sulfadimidine/trimethoprim (SLT2), sulfafurazole
+  (SLF), sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO),
+  sulfamerazine (SLF3), sulfamerazine/trimethoprim (SLT3),
+  sulfamethazine (SUM), sulfamethizole (SLF4), sulfamethoxazole (SMX),
   sulfamethoxypyridazine (SLF5), sulfametomidine (SLF6),
-  sulfametoxydiazine (SLF7), sulfamoxole (SLF8), sulfanilamide (SLF9),
-  sulfaperin (SLF10), sulfaphenazole (SLF11), sulfapyridine (SLF12),
-  sulfathiazole (SUT), and sulfathiourea (SLF13)
+  sulfametoxydiazine (SLF7), sulfametrole/trimethoprim (SLT4),
+  sulfamoxole (SLF8), sulfamoxole/trimethoprim (SLT5), sulfanilamide
+  (SLF9), sulfaperin (SLF10), sulfaphenazole (SLF11), sulfapyridine
+  (SLF12), sulfasuccinamide (SNA), sulfathiazole (SUT), sulfathiourea
+  (SLF13), sulfisoxazole (SOX), sulfonamide (SSS), and
+  trimethoprim/sulfamethoxazole (SXT)
 
 - `tetracyclines()` can select:  
   cetocycline (CTO), chlortetracycline (CTE), clomocycline (CLM1),
@@ -574,13 +581,16 @@ quite slow in terms of performance.
   lymecycline (LYM), metacycline (MTC), minocycline (MNO), omadacycline
   (OMC), oxytetracycline (OXY), penimepicycline (PNM1), rolitetracycline
   (RLT), sarecycline (SRC), tetracycline (TCY), tetracycline screening
-  test (TCY-S), and tigecycline (TGC)
+  test (TCY-S), tetracycline/oleandomycin (TOL), and tigecycline (TGC)
 
 - `trimethoprims()` can select:  
-  brodimoprim (BDP), sulfadiazine (SDI), sulfadiazine/tetroxoprim (SLT),
-  sulfadiazine/trimethoprim (SLT1), sulfadimethoxine (SUD),
-  sulfadimidine (SDM), sulfadimidine/trimethoprim (SLT2), sulfafurazole
-  (SLF), sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO),
+  brodimoprim (BDP), iclaprim (ICL),
+  isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST),
+  ormetroprim/sulfamethoxazole (ORS), sulfadiazine (SDI),
+  sulfadiazine/tetroxoprim (SLT), sulfadiazine/trimethoprim (SLT1),
+  sulfadimethoxine (SUD), sulfadimidine (SDM),
+  sulfadimidine/trimethoprim (SLT2), sulfafurazole (SLF),
+  sulfaisodimidine (SLF1), sulfalene (SLF2), sulfamazone (SZO),
   sulfamerazine (SLF3), sulfamerazine/trimethoprim (SLT3),
   sulfamethizole (SLF4), sulfamethoxazole (SMX), sulfamethoxypyridazine
   (SLF5), sulfametomidine (SLF6), sulfametoxydiazine (SLF7),

@@ -413,24 +413,31 @@ All 38 antimicrobial selectors are supported for use in the rules:
 
 - [`sulfonamides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
-  brodimoprim, sulfadiazine, sulfadiazine/tetroxoprim, sulfadimethoxine,
-  sulfadimidine, sulfafurazole, sulfaisodimidine, sulfalene,
-  sulfamazone, sulfamerazine, sulfamethizole, sulfamethoxazole,
-  sulfamethoxypyridazine, sulfametomidine, sulfametoxydiazine,
-  sulfamoxole, sulfanilamide, sulfaperin, sulfaphenazole, sulfapyridine,
-  sulfathiazole, and sulfathiourea
+  isoniazid/sulfamethoxazole/trimethoprim/pyridoxine,
+  ormetroprim/sulfamethoxazole, sulfachlorpyridazine, sulfadiazine,
+  sulfadiazine/tetroxoprim, sulfadiazine/trimethoprim, sulfadimethoxine,
+  sulfadimidine, sulfadimidine/trimethoprim, sulfafurazole,
+  sulfaisodimidine, sulfalene, sulfamazone, sulfamerazine,
+  sulfamerazine/trimethoprim, sulfamethazine, sulfamethizole,
+  sulfamethoxazole, sulfamethoxypyridazine, sulfametomidine,
+  sulfametoxydiazine, sulfametrole/trimethoprim, sulfamoxole,
+  sulfamoxole/trimethoprim, sulfanilamide, sulfaperin, sulfaphenazole,
+  sulfapyridine, sulfasuccinamide, sulfathiazole, sulfathiourea,
+  sulfisoxazole, sulfonamide, and trimethoprim/sulfamethoxazole
 
 - [`tetracyclines()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
   cetocycline, chlortetracycline, clomocycline, demeclocycline,
   doxycycline, eravacycline, lymecycline, metacycline, minocycline,
   omadacycline, oxytetracycline, penimepicycline, rolitetracycline,
-  sarecycline, tetracycline, tetracycline screening test, and
-  tigecycline
+  sarecycline, tetracycline, tetracycline screening test,
+  tetracycline/oleandomycin, and tigecycline
 
 - [`trimethoprims()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
-  brodimoprim, sulfadiazine, sulfadiazine/tetroxoprim,
+  brodimoprim, iclaprim,
+  isoniazid/sulfamethoxazole/trimethoprim/pyridoxine,
+  ormetroprim/sulfamethoxazole, sulfadiazine, sulfadiazine/tetroxoprim,
   sulfadiazine/trimethoprim, sulfadimethoxine, sulfadimidine,
   sulfadimidine/trimethoprim, sulfafurazole, sulfaisodimidine,
   sulfalene, sulfamazone, sulfamerazine, sulfamerazine/trimethoprim,
@@ -506,14 +513,6 @@ my_guideline
 #> Results will be of class 'factor', with ordered levels: Negative < Custom MDRO 1 < Custom MDRO 2
 
 out <- mdro(example_isolates, guideline = my_guideline)
-#> ℹ Column 'esbl' is SIR eligible (despite only having empty values), since
-#>   it seems to be tazobactam (TAZ)
-#> ℹ Column 'mecC' is SIR eligible (despite only having empty values), since
-#>   it seems to be mecillinam (MEC)
-#> ℹ Column 'vanA' is SIR eligible (despite only having empty values), since
-#>   it seems to be lenampicillin (LEN)
-#> ℹ Column 'vanB' is SIR eligible (despite only having empty values), since
-#>   it seems to be metronidazole (MTR)
 #> ℹ For `cephalosporins_2nd()` using columns 'CXM' (cefuroxime) and 'FOX'
 #>   (cefoxitin)
 #> ℹ Assuming a filter on all 2 cephalosporins_2nd. Wrap around `all()` or
