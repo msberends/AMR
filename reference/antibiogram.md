@@ -154,7 +154,7 @@ knit_print(x, italicise = TRUE,
 
   A column name of `x`, or values calculated to split rows of `x`, e.g.
   by using [`ifelse()`](https://rdrr.io/r/base/ifelse.html) or
-  [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html).
+  [`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html).
   See *Examples*.
 
 - add_total_n:

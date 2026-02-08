@@ -107,7 +107,7 @@ data %>% freq(AMC_ND2)
 
 Class: factor \> ordered \> sir (numeric)  
 Length: 500  
-Levels: 5: S \< SDD \< I \< R \< NI  
+Levels: 8: S \< SDD \< I \< R \< NI \< WT \< NWT \< NS  
 Available: 481 (96.2%, NA: 19 = 3.8%)  
 Unique: 3
 

@@ -7,13 +7,15 @@ allowing valid MIC values known to the field of (medical) microbiology.
 ## Usage
 
 ``` r
-as.mic(x, na.rm = FALSE, keep_operators = "all")
+as.mic(x, na.rm = FALSE, keep_operators = "all",
+  round_to_next_log2 = FALSE)
 
 is.mic(x)
 
 NA_mic_
 
-rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
+rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE,
+  round_to_next_log2 = FALSE)
 
 mic_p50(x, na.rm = FALSE, ...)
 
@@ -43,6 +45,15 @@ droplevels(x, as.mic = FALSE, ...)
   `FALSE`) to remove all operators, or `"edges"` to keep operators only
   at both ends of the range.
 
+- round_to_next_log2:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to round up all
+  values to the next log2 level, that are not either 0.0001, 0.0002,
+  0.0005, 0.001, 0.002, 0.004, 0.008, 0.016, 0.032, 0.064, 0.125, 0.25,
+  0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, or 4096.
+  Values that are already in this list (with or without operators), are
+  left unchanged (including any operators).
+
 - mic_range:
 
   A manual range to rescale the MIC values, e.g.,
@@ -54,7 +65,7 @@ droplevels(x, as.mic = FALSE, ...)
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
   the `mic` class should be kept - the default is `TRUE` for
   `rescale_mic()` and `FALSE` for
-  [`droplevels()`](https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html).
+  [`droplevels()`](https://rdrr.io/pkg/data.table/man/fdroplevels.html).
   When setting this to `FALSE` in `rescale_mic()`, the output will have
   factor levels that acknowledge `mic_range`.
 
@@ -64,9 +75,8 @@ droplevels(x, as.mic = FALSE, ...)
 
 ## Value
 
-Ordered
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-with additional class `mic`, that in mathematical operations acts as a
+Ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with
+additional class `mic`, that in mathematical operations acts as a
 [numeric](https://rdrr.io/r/base/numeric.html) vector. Bear in mind that
 the outcome of any mathematical operation on MICs will return a
 [numeric](https://rdrr.io/r/base/numeric.html) value.
@@ -78,12 +88,11 @@ To interpret MIC values as SIR values, use
 It supports guidelines from EUCAST (2011-2025) and CLSI (2011-2025).
 
 This class for MIC values is a quite a special data type: formally it is
-an ordered
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-with valid MIC values as
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-levels (to make sure only valid MIC values are retained), but for any
-mathematical operation it acts as decimal numbers:
+an ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with
+valid MIC values as
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html) levels (to make
+sure only valid MIC values are retained), but for any mathematical
+operation it acts as decimal numbers:
 
     x <- random_mic(10)
     x
@@ -138,9 +147,9 @@ Using [`as.double()`](https://rdrr.io/r/base/double.html) or
 remove the operators and return a numeric vector. Do **not** use
 [`as.integer()`](https://rdrr.io/r/base/integer.html) on MIC values as
 by the R convention on
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)s,
-it will return the index of the factor levels (which is often useless
-for regular users).
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html)s, it will return
+the index of the factor levels (which is often useless for regular
+users).
 
 The function `is.mic()` detects if the input contains class `mic`. If
 the input is a [data.frame](https://rdrr.io/r/base/data.frame.html) or
@@ -149,8 +158,8 @@ columns/items and returns a
 [logical](https://rdrr.io/r/base/logical.html) vector.
 
 Use
-[`droplevels()`](https://rdatatable.gitlab.io/data.table/reference/fdroplevels.html)
-to drop unused levels. At default, it will return a plain factor. Use
+[`droplevels()`](https://rdrr.io/pkg/data.table/man/fdroplevels.html) to
+drop unused levels. At default, it will return a plain factor. Use
 `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 
 With `rescale_mic()`, existing MIC ranges can be limited to a defined

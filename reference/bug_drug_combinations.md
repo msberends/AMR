@@ -102,7 +102,7 @@ format(x, translate_ab = "name (ab, atc)",
 
 The function `bug_drug_combinations()` returns a
 [data.frame](https://rdrr.io/r/base/data.frame.html) with columns "mo",
-"ab", "S", "SDD", "I", "R", and "total".
+"ab", "S", "SDD", "I", "R", "WT, "NWT", and "total".
 
 ## Details
 
@@ -143,30 +143,30 @@ example_isolates
 # \donttest{
 x <- bug_drug_combinations(example_isolates)
 head(x)
-#> # A tibble: 6 × 8
-#>   mo                ab        S   SDD     I     R    NI total
-#>   <chr>             <chr> <int> <int> <int> <int> <int> <int>
-#> 1 (unknown species) AMC      15     0     0     0     0    15
-#> 2 (unknown species) AMK       0     0     0     0     0     0
-#> 3 (unknown species) AMP      15     0     0     1     0    16
-#> 4 (unknown species) AMX      15     0     0     1     0    16
-#> 5 (unknown species) AZM       3     0     0     3     0     6
-#> 6 (unknown species) CAZ       0     0     0     0     0     0
+#> # A tibble: 6 × 11
+#>   mo                ab        S   SDD     I     R    NI    WT   NWT    NS total
+#>   <chr>             <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+#> 1 (unknown species) AMC      15     0     0     0     0     0     0     0    15
+#> 2 (unknown species) AMK       0     0     0     0     0     0     0     0     0
+#> 3 (unknown species) AMP      15     0     0     1     0     0     0     0    16
+#> 4 (unknown species) AMX      15     0     0     1     0     0     0     0    16
+#> 5 (unknown species) AZM       3     0     0     3     0     0     0     0     6
+#> 6 (unknown species) CAZ       0     0     0     0     0     0     0     0     0
 #> Use 'format()' on this result to get a publishable/printable format.
 format(x, translate_ab = "name (atc)")
 #> # A tibble: 39 × 12
 #>    Group     Drug  CoNS  `E. coli` `E. faecalis` `K. pneumoniae` `P. aeruginosa`
 #>    <chr>     <chr> <chr> <chr>     <chr>         <chr>           <chr>          
 #>  1 "Aminogl… Amik… "100… "  0.0% … "100.0% (39/… ""              ""             
-#>  2 ""        Gent… " 13… "  2.0% … "100.0% (39/… " 10.3% (6/58)" "  0.0% (0/30)"
+#>  2 ""        Gent… " 16… "  2.0% … "100.0% (39/… " 10.3% (6/58)" " 10.0% (3/30)"
 #>  3 ""        Kana… "100… ""        "100.0% (39/… ""              "100.0% (30/30…
 #>  4 ""        Tobr… " 78… "  2.6% … "100.0% (39/… " 10.3% (6/58)" "  0.0% (0/30)"
 #>  5 "Aminope… Amox… " 93… " 50.0% … ""            "100.0% (58/58… "100.0% (30/30…
-#>  6 ""        Amox… " 42… " 13.1% … ""            " 10.3% (6/58)" "100.0% (30/30…
+#>  6 ""        Amox… " 42… " 28.9% … ""            " 15.5% (9/58)" "100.0% (30/30…
 #>  7 ""        Ampi… " 93… " 50.0% … ""            "100.0% (58/58… "100.0% (30/30…
 #>  8 "Carbape… Imip… " 47… "  0.0% … "  0.0% (0/3… "  0.0% (0/51)" ""             
 #>  9 ""        Mero… " 47… "  0.0% … ""            "  0.0% (0/53)" ""             
-#> 10 "Cephalo… Cefa… " 47… "  2.4% … "100.0% (39/… ""              "100.0% (30/30…
+#> 10 "Cephalo… Cefa… " 47… "  3.7% … "100.0% (39/… ""              "100.0% (30/30…
 #> # ℹ 29 more rows
 #> # ℹ 5 more variables: `P. mirabilis` <chr>, `S. aureus` <chr>,
 #> #   `S. epidermidis` <chr>, `S. hominis` <chr>, `S. pneumoniae` <chr>
@@ -175,19 +175,19 @@ format(x, translate_ab = "name (atc)")
 bug_drug_combinations(example_isolates,
   FUN = mo_gramstain
 )
-#> # A tibble: 80 × 8
-#>    mo            ab        S   SDD     I     R    NI total
-#>    <chr>         <chr> <int> <int> <int> <int> <int> <int>
-#>  1 Gram-negative AMC     463     0    89   174     0   726
-#>  2 Gram-negative AMK     251     0     0     5     0   256
-#>  3 Gram-negative AMP     226     0     0   405     0   631
-#>  4 Gram-negative AMX     226     0     0   405     0   631
-#>  5 Gram-negative AZM       1     0     2   696     0   699
-#>  6 Gram-negative CAZ     607     0     0    27     0   634
-#>  7 Gram-negative CHL       1     0     0    30     0    31
-#>  8 Gram-negative CIP     610     0    11    63     0   684
-#>  9 Gram-negative CLI      18     0     1   709     0   728
-#> 10 Gram-negative COL     309     0     0    78     0   387
+#> # A tibble: 80 × 11
+#>    mo            ab        S   SDD     I     R    NI    WT   NWT    NS total
+#>    <chr>         <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+#>  1 Gram-negative AMC     463     0    89   174     0     0     0     0   726
+#>  2 Gram-negative AMK     251     0     0     5     0     0     0     0   256
+#>  3 Gram-negative AMP     226     0     0   405     0     0     0     0   631
+#>  4 Gram-negative AMX     226     0     0   405     0     0     0     0   631
+#>  5 Gram-negative AZM       1     0     2   696     0     0     0     0   699
+#>  6 Gram-negative CAZ     607     0     0    27     0     0     0     0   634
+#>  7 Gram-negative CHL       1     0     0    30     0     0     0     0    31
+#>  8 Gram-negative CIP     610     0    11    63     0     0     0     0   684
+#>  9 Gram-negative CLI      18     0     1   709     0     0     0     0   728
+#> 10 Gram-negative COL     309     0     0    78     0     0     0     0   387
 #> # ℹ 70 more rows
 #> Use 'format()' on this result to get a publishable/printable format.
 
@@ -199,19 +199,19 @@ bug_drug_combinations(example_isolates,
     )
   }
 )
-#> # A tibble: 80 × 8
-#>    mo      ab        S   SDD     I     R    NI total
-#>    <chr>   <chr> <int> <int> <int> <int> <int> <int>
-#>  1 E. coli AMC     332     0    74    61     0   467
-#>  2 E. coli AMK     171     0     0     0     0   171
-#>  3 E. coli AMP     196     0     0   196     0   392
-#>  4 E. coli AMX     196     0     0   196     0   392
-#>  5 E. coli AZM       0     0     0   467     0   467
-#>  6 E. coli CAZ     449     0     0    11     0   460
-#>  7 E. coli CHL       0     0     0     0     0     0
-#>  8 E. coli CIP     398     0     1    57     0   456
-#>  9 E. coli CLI       0     0     0   467     0   467
-#> 10 E. coli COL     240     0     0     0     0   240
+#> # A tibble: 80 × 11
+#>    mo      ab        S   SDD     I     R    NI    WT   NWT    NS total
+#>    <chr>   <chr> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+#>  1 E. coli AMC     332     0    74    61     0     0     0     0   467
+#>  2 E. coli AMK     171     0     0     0     0     0     0     0   171
+#>  3 E. coli AMP     196     0     0   196     0     0     0     0   392
+#>  4 E. coli AMX     196     0     0   196     0     0     0     0   392
+#>  5 E. coli AZM       0     0     0   467     0     0     0     0   467
+#>  6 E. coli CAZ     449     0     0    11     0     0     0     0   460
+#>  7 E. coli CHL       0     0     0     0     0     0     0     0     0
+#>  8 E. coli CIP     398     0     1    57     0     0     0     0   456
+#>  9 E. coli CLI       0     0     0   467     0     0     0     0   467
+#> 10 E. coli COL     240     0     0     0     0     0     0     0   240
 #> # ℹ 70 more rows
 #> Use 'format()' on this result to get a publishable/printable format.
 # }

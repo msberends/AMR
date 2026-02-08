@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,7 +118,7 @@ resistant to ampicillin.</p>
 <em>Klebsiella</em> being susceptible to ampicillin. This could be
 because an antibiogram is available before an identification is
 available, and the antibiogram is then not re-interpreted based on the
-identification. The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function resolves this,
+identification. The <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code> function resolves this,
 by applying the latest ‘EUCAST Expected Resistant Phenotypes’
 guideline:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -136,7 +136,7 @@ guideline:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Klebsiella pneumoniae <span style="color: #080808; background-color: #5FD7AF;">  S  </span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Escherichia coli      <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">oops</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/interpretive_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">oops</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
 <span><span class="co">#&gt;   mo                    ampicillin</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span>     </span></span>
@@ -246,7 +246,7 @@ reading</em>, and is basically a form of imputation:</p>
 </tbody>
 </table>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">data</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/interpretive_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">data</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">mo</th>

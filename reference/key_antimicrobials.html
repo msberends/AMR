@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,10 +168,14 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># those strings can be compared with:</span></span></span>
 <span class="r-in"><span><span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">strainA</span>, <span class="va">strainB</span>, type <span class="op">=</span> <span class="st">"keyantimicrobials"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`as.sir()`</span>: 4 results truncated (33%) that were invalid antimicrobial</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> interpretations: "."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span><span class="co"># TRUE, because I is ignored (as well as missing values)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">strainA</span>, <span class="va">strainB</span>, type <span class="op">=</span> <span class="st">"keyantimicrobials"</span>, ignore_I <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in <span style="background-color: #444444;">`as.sir()`</span>: 4 results truncated (33%) that were invalid antimicrobial</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> interpretations: "."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"><span><span class="co"># FALSE, because I is not ignored and so the 4th [character] differs</span></span></span>
 <span class="r-in"><span></span></span>
@@ -191,6 +195,14 @@
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">my_patients</span><span class="op">$</span><span class="va">first_regular</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">my_patients</span><span class="op">$</span><span class="va">first_weighted</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 823 warnings in `mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `first_weighted = first_isolate(col_keyantimicrobials =</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   "keyab")`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> in <span style="background-color: #444444;">`as.sir()`</span>: 1 result in column 'first_weighted' truncated (8%) that were</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> invalid antimicrobial interpretations: "."</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 822 remaining warnings.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1383</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9018
+## AMR 3.0.1.9019
 
 #### New
 
@@ -22,9 +22,22 @@
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   and
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
-- `antimicrobials$group` is now a `list` instead of a `character`, to
-  contain any group the drug is in
-  ([\#246](https://github.com/msberends/AMR/issues/246))
+- Support for Wildtype (WT) / Non-wildtype (NWT) in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), all plotting
+  functions, and all susceptibility/resistance functions.
+  - [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) gained an
+    argument `as_wt_nwt`, which defaults to `TRUE` only when
+    `breakpoint_type = "ECOFF"`
+    ([\#254](https://github.com/msberends/AMR/issues/254))
+  - This transforms the output from S/R to WT/NWT
+  - Functions such as
+    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+    count WT as S and NWT as R
+- [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  which allows future implementation of CLSI interpretive rules
+  ([\#235](https://github.com/msberends/AMR/issues/235))
+  - [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+    has become a wrapper around that function.
 
 #### Fixes
 
@@ -38,9 +51,21 @@
 - Fixed a bug for printing column names to the console when using
   `mutate_at(vars(...), as.mic)`
   ([\#249](https://github.com/msberends/AMR/issues/249))
+- Fixed a bug to disregard `NI` for susceptibility proportion functions
+- Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo
+  and CoPS to Stafilococco coagulasi-positivo
+  ([\#256](https://github.com/msberends/AMR/issues/256))
 
 #### Updates
 
+- [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) and
+  [`rescale_mic()`](https://amr-for-r.org/reference/as.mic.md) gained
+  the argument `round_to_next_log2`, which can be set to `TRUE` to round
+  all values up to the nearest next log2 level
+  ([\#255](https://github.com/msberends/AMR/issues/255))
+- `antimicrobials$group` is now a `list` instead of a `character`, to
+  contain any group the drug is in
+  ([\#246](https://github.com/msberends/AMR/issues/246))
 - [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
   an argument `all_groups` to return all groups the antimicrobial drug
   is in ([\#246](https://github.com/msberends/AMR/issues/246))
@@ -93,7 +118,7 @@ This is a bugfix release following the release of v3.0.0 in June 2025.
   for antimicrobial codes with a number in it if they are preceded by a
   space
 - Fixed a bug in
-  [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
   for using specific custom rules
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   to allow any tidyselect language
@@ -232,7 +257,7 @@ this change.
     interpretations.
   - Added all Expected Resistant Phenotypes from EUCAST (v1.2). The
     default `rules` for
-    [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+    [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
     are now: `c("breakpoints", "expected_phenotypes")`.
   - Updated the `intrinsic_resistant` data set, which is now based on
     EUCAST Expected Resistant Phenotypes v1.2
@@ -242,7 +267,7 @@ this change.
     data set contains 24 breakpoints that can return the value “SDD”
     instead of “I”.
   - EUCAST interpretive rules (using
-    [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md))
+    [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md))
     are now available for EUCAST 12 (2022), 13 (2023), 14 (2024), and 15
     (2025).
   - EUCAST dosage tables (`dosage` data set) are now available for
@@ -441,7 +466,7 @@ this change.
   - [`is.mic()`](https://amr-for-r.org/reference/as.mic.md) now returns
     a vector of `TRUE`/`FALSE` if the input is a `data.frame`, just like
     [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
-- [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+- [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
   now has an argument `overwrite` (default: `FALSE`) to indicate whether
   non-`NA` values should be overwritten
 - Disks of 0 to 5 mm are now allowed, the newly allowed range for disk
@@ -467,7 +492,7 @@ this change.
   returns an empty data set
 - Argument `only_sir_columns` now defaults to `TRUE` if any column of a
   data set contains a class ‘sir’ (functions
-  [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md),
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
   [`key_antimicrobials()`](https://amr-for-r.org/reference/key_antimicrobials.md),
   [`mdro()`](https://amr-for-r.org/reference/mdro.md), etc.)
 - Added Sensititre codes for animals, antimicrobials and microorganisms

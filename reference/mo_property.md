@@ -180,9 +180,8 @@ mo_property(x, property = "fullname", language = get_AMR_locale(),
 - An [integer](https://rdrr.io/r/base/integer.html) in case of
   `mo_year()`
 
-- An [ordered
-  factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-  in case of `mo_pathogenicity()`
+- An [ordered factor](https://rdrr.io/pkg/data.table/man/fctr.html) in
+  case of `mo_pathogenicity()`
 
 - A [list](https://rdrr.io/r/base/list.html) in case of `mo_taxonomy()`,
   `mo_synonyms()`, `mo_snomed()`, and `mo_info()`
@@ -240,9 +239,8 @@ Determination of human pathogenicity (`mo_pathogenicity()`) is strongly
 based on Bartlett *et al.* (2022,
 [doi:10.1099/mic.0.001269](https://doi.org/10.1099/mic.0.001269) ). This
 function returns a
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-with the levels *Pathogenic*, *Potentially pathogenic*,
-*Non-pathogenic*, and *Unknown*.
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html) with the levels
+*Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
 
 Determination of the Gram stain (`mo_gramstain()`) will be based on the
 taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the

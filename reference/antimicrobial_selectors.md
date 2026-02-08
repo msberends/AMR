@@ -233,7 +233,7 @@ this function. It currently applies ['EUCAST Expected Resistant
 Phenotypes'
 v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
 (2023) to determine intrinsic resistance, using the
-[`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
 function internally. Because of this determination, this function is
 quite slow in terms of performance.
 

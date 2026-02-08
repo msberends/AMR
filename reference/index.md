@@ -126,7 +126,7 @@ guidelines. Afterwards, you can extend antibiotic interpretations by
 applying [EUCAST
 rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/)
 with
-[`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md).
+[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
 
 - [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   [`NA_sir_`](https://amr-for-r.org/reference/as.sir.md)
@@ -146,9 +146,11 @@ with
   [`NA_disk_`](https://amr-for-r.org/reference/as.disk.md)
   [`is.disk()`](https://amr-for-r.org/reference/as.disk.md) : Transform
   Input to Disk Diffusion Diameters
-- [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
-  [`eucast_dosage()`](https://amr-for-r.org/reference/eucast_rules.md) :
-  Apply EUCAST Rules
+- [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  [`clsi_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  [`eucast_dosage()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  : Apply Interpretive Rules
 - [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md)
   : Define Custom EUCAST Rules
 

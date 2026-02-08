@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
     </div>
 
     <div class="ref-description section level2">
-    <p>Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. <code>as.sir()</code> transforms the input to a new class <code>sir</code>, which is an ordered <a href="https://rdatatable.gitlab.io/data.table/reference/fctr.html" class="external-link">factor</a> containing the levels <code>S</code>, <code>SDD</code>, <code>I</code>, <code>R</code>, <code>NI</code>.</p>
+    <p>Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. <code>as.sir()</code> transforms the input to a new class <code>sir</code>, which is an ordered <a href="https://rdrr.io/pkg/data.table/man/fctr.html" class="external-link">factor</a> containing the levels <code>S</code>, <code>SDD</code>, <code>I</code>, <code>R</code>, <code>NI</code>.</p>
 <p>Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, see <em>Details</em>. All breakpoints used for interpretation are available in our <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set.</p>
     </div>
 
@@ -69,12 +69,14 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, S <span class="op">=</span> <span class="st">"^(S|U|1)+$"</span>, I <span class="op">=</span> <span class="st">"^(I|2)+$"</span>,</span>
 <span>  R <span class="op">=</span> <span class="st">"^(R|3)+$"</span>, NI <span class="op">=</span> <span class="st">"^(N|NI|V|4)+$"</span>, SDD <span class="op">=</span> <span class="st">"^(SDD|D|H|5)+$"</span>,</span>
+<span>  WT <span class="op">=</span> <span class="st">"^(WT|6)+$"</span>, NWT <span class="op">=</span> <span class="st">"^(NWT|7)+$"</span>, NS <span class="op">=</span> <span class="st">"^(NS|8)+$"</span>,</span>
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'mic'</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, mo <span class="op">=</span> <span class="cn">NULL</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>, uti <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  capped_mic_handling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_capped_mic_handling"</span>, <span class="st">"standard"</span><span class="op">)</span>,</span>
+<span>  as_wt_nwt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">breakpoint_type</span>, <span class="st">"ECOFF"</span><span class="op">)</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span>,</span>
 <span>  substitute_missing_r_breakpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_substitute_missing_r_breakpoint"</span>,</span>
@@ -87,6 +89,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span><span class="co"># S3 method for class 'disk'</span></span>
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, mo <span class="op">=</span> <span class="cn">NULL</span>, ab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>, uti <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  as_wt_nwt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">breakpoint_type</span>, <span class="st">"ECOFF"</span><span class="op">)</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span>,</span>
 <span>  substitute_missing_r_breakpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_substitute_missing_r_breakpoint"</span>,</span>
@@ -100,6 +103,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span><span class="fu">as.sir</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>, uti <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  capped_mic_handling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_capped_mic_handling"</span>, <span class="st">"standard"</span><span class="op">)</span>,</span>
+<span>  as_wt_nwt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">breakpoint_type</span>, <span class="st">"ECOFF"</span><span class="op">)</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="clinical_breakpoints.html">clinical_breakpoints</a></span>,</span>
 <span>  substitute_missing_r_breakpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_substitute_missing_r_breakpoint"</span>,</span>
@@ -137,7 +141,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <dd><p>Maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see <em>Examples</em>.</p></dd>
 
 
-<dt id="arg-s-i-r-ni-sdd">S, I, R, NI, SDD<a class="anchor" aria-label="anchor" href="#arg-s-i-r-ni-sdd"></a></dt>
+<dt id="arg-s-i-r-ni-sdd-wt-nwt-ns">S, I, R, NI, SDD, WT, NWT, NS<a class="anchor" aria-label="anchor" href="#arg-s-i-r-ni-sdd-wt-nwt-ns"></a></dt>
 <dd><p>A case-independent <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> to translate input to this result. This regular expression will be run <em>after</em> all non-letters and whitespaces are removed from the input.</p></dd>
 
 
@@ -172,6 +176,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 </ul><p><code>"lenient"</code></p><ul><li><p><code>&lt;=</code> and <code>&lt;</code> always return <code>"S"</code>, regardless of the breakpoint.</p></li>
 <li><p><code>&gt;=</code> and <code>&gt;</code> always return <code>"R"</code>, regardless of the breakpoint.</p></li>
 </ul><p>The default <code>"conservative"</code> setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option <code><a href="AMR-options.html">AMR_capped_mic_handling</a></code>.</p></dd>
+
+
+<dt id="arg-as-wt-nwt">as_wt_nwt<a class="anchor" aria-label="anchor" href="#arg-as-wt-nwt"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to return <code>"WT"</code>/<code>"NWT"</code> instead of <code>"S"</code>/<code>"R"</code>. Defaults to <code>TRUE</code> when using ECOFFs, i.e., when <code>breakpoint_type</code> is set to <code>"ECOFF"</code>.</p></dd>
 
 
 <dt id="arg-add-intrinsic-resistance">add_intrinsic_resistance<a class="anchor" aria-label="anchor" href="#arg-add-intrinsic-resistance"></a></dt>
@@ -232,7 +240,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Ordered <a href="https://rdatatable.gitlab.io/data.table/reference/fctr.html" class="external-link">factor</a> with new class <code>sir</code></p>
+    <p>Ordered <a href="https://rdrr.io/pkg/data.table/man/fctr.html" class="external-link">factor</a> with new class <code>sir</code></p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -302,7 +310,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <h3 id="after-interpretation">After Interpretation<a class="anchor" aria-label="anchor" href="#after-interpretation"></a></h3>
 
 
-<p>After using <code>as.sir()</code>, you can use the <code><a href="eucast_rules.html">eucast_rules()</a></code> defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>After using <code>as.sir()</code>, you can use the <code><a href="interpretive_rules.html">eucast_rules()</a></code> defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
 <p>To determine which isolates are multi-drug resistant, be sure to run <code><a href="mdro.html">mdro()</a></code> (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about <a href="mdro.html">interpreting multidrug-resistant organisms here</a>.</p>
 </div>
 
@@ -416,10 +424,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-01-16 <span style="color: #949494;">10:04:38</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-01-16 <span style="color: #949494;">10:04:39</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-01-16 <span style="color: #949494;">10:04:39</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-01-16 <span style="color: #949494;">10:04:39</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-02-08 <span style="color: #949494;">22:25:52</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-02-08 <span style="color: #949494;">22:25:53</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-02-08 <span style="color: #949494;">22:25:53</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-02-08 <span style="color: #949494;">22:25:54</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>

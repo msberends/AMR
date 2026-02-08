@@ -2,7 +2,7 @@
 
 Define custom EUCAST rules for your organisation or specific analysis
 and use the output of this function in
-[`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md).
+[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
 
 ## Usage
 
@@ -25,13 +25,13 @@ A [list](https://rdrr.io/r/base/list.html) containing the custom rules
 
 Some organisations have their own adoption of EUCAST rules. This
 function can be used to define custom EUCAST rules to be used in the
-[`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
 function.
 
 ### Basics
 
 If you are familiar with the
-[`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)
+[`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html)
 function of the `dplyr` package, you will recognise the input method to
 set your own rules. Rules must be set using what R considers to be the
 'formula notation'. The rule itself is written *before* the tilde (`~`)

@@ -47,7 +47,7 @@ This is an overview of all the package-specific
 - `AMR_eucastrules`  
   A [character](https://rdrr.io/r/base/character.html) to set the
   default types of rules for
-  [`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
   function, must be one or more of: `"breakpoints"`, `"expert"`,
   `"other"`, `"custom"`, `"all"`, and defaults to
   `c("breakpoints", "expert")`.

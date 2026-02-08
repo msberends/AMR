@@ -24,8 +24,8 @@ c(x, ..., as_factor = NULL)
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
   the returned value should be an ordered
-  [factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-  (`TRUE`, default), or otherwise a
+  [factor](https://rdrr.io/pkg/data.table/man/fctr.html) (`TRUE`,
+  default), or otherwise a
   [character](https://rdrr.io/r/base/character.html) vector. For
   combining rules sets (using [`c()`](https://rdrr.io/r/base/c.html))
   this value will be inherited from the first set at default.
@@ -47,7 +47,7 @@ ward, state of contact isolation or other variables in your data.
 ### Basics
 
 If you are familiar with the
-[`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)
+[`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html)
 function of the `dplyr` package, you will recognise the input method to
 set your own rules. Rules must be set using what R considers to be the
 'formula notation'. The rule itself is written *before* the tilde (`~`)

@@ -66,8 +66,8 @@ joined columns will not get a suffix.
 
 If the `dplyr` package is installed, their join functions will be used.
 Otherwise, the much slower
-[`merge()`](https://rdatatable.gitlab.io/data.table/reference/merge.html)
-and [`interaction()`](https://rdrr.io/r/base/interaction.html) functions
+[`merge()`](https://rdrr.io/pkg/data.table/man/merge.html) and
+[`interaction()`](https://rdrr.io/r/base/interaction.html) functions
 from base R will be used.
 
 ## Examples

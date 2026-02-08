@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,7 @@
       </dl></div><div class="section level2">
       <h2 id="preparing-data-antimicrobial-results">Preparing data: antimicrobial results<a class="anchor" aria-label="anchor" href="#preparing-data-antimicrobial-results"></a></h2>
 
-      <div class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST rules</a> with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</p></div>
+      <div class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST rules</a> with <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code>.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -177,10 +177,10 @@
 
         <dt>
 
-          <code><a href="eucast_rules.html">eucast_rules()</a></code> <code><a href="eucast_rules.html">eucast_dosage()</a></code>
+          <code><a href="interpretive_rules.html">interpretive_rules()</a></code> <code><a href="interpretive_rules.html">eucast_rules()</a></code> <code><a href="interpretive_rules.html">clsi_rules()</a></code> <code><a href="interpretive_rules.html">eucast_dosage()</a></code>
 
         </dt>
-        <dd>Apply EUCAST Rules</dd>
+        <dd>Apply Interpretive Rules</dd>
 
         <dt>
 

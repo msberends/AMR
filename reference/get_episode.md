@@ -178,20 +178,20 @@ x
 df <- example_isolates[sample(seq_len(2000), size = 100), ]
 
 get_episode(df$date, episode_days = 60) # indices
-#>   [1] 43  9  7 14 28 40 49 29 19 27 10 44 18 22 42 12  8 36 13  3 46  5  4 35 38
-#>  [26] 16 22 23 16 10 42 13  2 45 18 19 39 32 22 36 40 45 39 40 11 23 25 39 26 23
-#>  [51] 25 12 17 23 30 30 34 16 21 37 40 26 11  7  4 16 43 22 47 37 39 31 25 41  1
-#>  [76] 45 39 23 32 45 20 22 15 14 13 43  9 38 29  6 48 24 21 23 44 19 31  1  3 33
+#>   [1] 29 42  9  7 14 28 39 48 29 19 27 10 43 18 22 41 12  8 35 13  3 45  5  4 34
+#>  [26] 37 16 22 23 16 10 41 13  2 44 18 19 38 32 22 35 39 44 38 39 11 23 25 38 26
+#>  [51] 23 25 12 17 23 30 30 33 16 21 36 39 26 11  7  4 16 42 22 46 36 38 31 25 40
+#>  [76]  1 44 38 23 32 44 20 22 15 14 13 42  9 37 29  6 47 24 21 23 43 19 31  1  3
 is_new_episode(df$date, episode_days = 60) # TRUE/FALSE
-#>   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#>   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
 #>  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-#>  [25]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
-#>  [37]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
-#>  [49]  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
-#>  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
-#>  [73] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
-#>  [85] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
-#>  [97] FALSE FALSE FALSE  TRUE
+#>  [25]  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+#>  [37] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+#>  [49] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+#>  [61]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+#>  [73]  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+#>  [85] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+#>  [97] FALSE FALSE FALSE FALSE
 
 # filter on results from the third 60-day episode only, using base R
 df[which(get_episode(df$date, 60) == 3), ]
@@ -287,7 +287,7 @@ if (require("dplyr")) {
 #> # A tibble: 3 × 5
 #>   ward       n_patients n_episodes_365 n_episodes_60 n_episodes_30
 #>   <chr>           <int>          <int>         <int>         <int>
-#> 1 Clinical           58             14            38            44
+#> 1 Clinical           58             13            37            44
 #> 2 ICU                26              7            20            23
 #> 3 Outpatient          7              4             6             7
 
@@ -321,16 +321,16 @@ if (require("dplyr")) {
 #> # Groups:   patient, mo, ward [96]
 #>    patient mo            ward     flag_episode
 #>    <chr>   <mo>          <chr>    <lgl>       
-#>  1 917895  B_STPHY_CPTS  ICU      TRUE        
-#>  2 022060  B_ENTRBC_CLOC ICU      TRUE        
-#>  3 C36883  B_ESCHR_COLI  Clinical TRUE        
-#>  4 5DF436  B_STPHY_AURS  ICU      TRUE        
-#>  5 971739  B_STPHY_CONS  Clinical TRUE        
-#>  6 488175  B_ESCHR_COLI  Clinical TRUE        
-#>  7 5DB1C8  B_STPHY_CPTS  Clinical TRUE        
-#>  8 BC9909  B_ENTRBC_CLOC Clinical TRUE        
-#>  9 5B78D5  B_STPHY_AURS  Clinical TRUE        
-#> 10 284FFF  B_STPHY_EPDR  Clinical TRUE        
+#>  1 473F39  B_ESCHR_COLI  Clinical TRUE        
+#>  2 917895  B_STPHY_CPTS  ICU      TRUE        
+#>  3 022060  B_ENTRBC_CLOC ICU      TRUE        
+#>  4 C36883  B_ESCHR_COLI  Clinical TRUE        
+#>  5 5DF436  B_STPHY_AURS  ICU      TRUE        
+#>  6 971739  B_STPHY_CONS  Clinical TRUE        
+#>  7 488175  B_ESCHR_COLI  Clinical TRUE        
+#>  8 5DB1C8  B_STPHY_CPTS  Clinical TRUE        
+#>  9 BC9909  B_ENTRBC_CLOC Clinical TRUE        
+#> 10 5B78D5  B_STPHY_AURS  Clinical TRUE        
 #> # ℹ 90 more rows
 # }
 ```

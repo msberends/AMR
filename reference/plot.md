@@ -295,7 +295,7 @@ log2 levels will always be plotted too.
 The functions `scale_x_sir()`, `scale_colour_sir()`, and
 `scale_fill_sir()` functions allow to plot the
 [sir](https://amr-for-r.org/reference/as.sir.md) class in the right
-order (S \< SDD \< I \< R \< NI).
+order (S \< SDD \< I \< R \< NI \< WT \< NWT \< NS).
 
 There is normally no need to add these scale functions to your plot, as
 they are applied automatically when plotting values of class

@@ -61,11 +61,11 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 78
 - `oxygen_tolerance`  
   Oxygen tolerance, either "aerobe", "anaerobe",
   "anaerobe/microaerophile", "facultative anaerobe", "likely facultative
-  anaerobe", or "microaerophile". These data were retrieved from BacDive
-  (see *Source*). Items that contain "likely" are missing from BacDive
-  and were extrapolated from other species within the same genus to
-  guess the oxygen tolerance. Currently 68.3% of all ~39 000 bacteria in
-  the data set contain an oxygen tolerance.
+  anaerobe", "microaerophile", or NA. These data were retrieved from
+  BacDive (see *Source*). Items that contain "likely" are missing from
+  BacDive and were extrapolated from other species within the same genus
+  to guess the oxygen tolerance. Currently 68.3% of all ~39 000 bacteria
+  in the data set contain an oxygen tolerance.
 
 - `source`  
   Either "GBIF", "LPSN", "Manually added", "MycoBank", or "manually

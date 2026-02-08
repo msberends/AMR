@@ -1,25 +1,40 @@
-# Apply EUCAST Rules
+# Apply Interpretive Rules
+
+**WORK IN PROGRESS**
+
+**The `interpretive_rules()` function is new, to allow CLSI 'rules' too.
+The old `eucast_rules()` function will stay as a wrapper, but we need to
+generalise more parts of the underlying code to allow more than just
+EUCAST.**
 
 Apply rules from clinical breakpoints notes and expected resistant
-phenotypes as defined by the European Committee on Antimicrobial
+phenotypes as defined by e.g. the European Committee on Antimicrobial
 Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*.
 Use `eucast_dosage()` to get a
 [data.frame](https://rdrr.io/r/base/data.frame.html) with advised
 dosages of a certain bug-drug combination, which is based on the
 [dosage](https://amr-for-r.org/reference/dosage.md) data set.
 
-To improve the interpretation of the antibiogram before EUCAST rules are
-applied, some non-EUCAST rules can applied at default, see *Details*.
+To improve the interpretation of the antibiogram before CLSI/EUCAST
+interpretive rules are applied, some AMR-specific rules can be applied
+at default, see *Details*.
 
 ## Usage
 
 ``` r
-eucast_rules(x, col_mo = NULL, info = interactive(),
-  rules = getOption("AMR_eucastrules", default = c("breakpoints",
+interpretive_rules(x, col_mo = NULL, guideline = getOption("AMR_guideline",
+  "EUCAST"), info = interactive(),
+  rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
   "expected_phenotypes")), verbose = FALSE, version_breakpoints = 15,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
   custom_rules = NULL, overwrite = FALSE, ...)
+
+eucast_rules(x, rules = getOption("AMR_interpretive_rules", default =
+  c("breakpoints", "expected_phenotypes")), ...)
+
+clsi_rules(x, rules = getOption("AMR_interpretive_rules", default =
+  c("breakpoints", "expected_phenotypes")), ...)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 ```
@@ -72,6 +87,12 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   [`mo`](https://amr-for-r.org/reference/as.mo.md). Values will be
   coerced using [`as.mo()`](https://amr-for-r.org/reference/as.mo.md).
 
+- guideline:
+
+  A guideline name, either "EUCAST" (default) or "CLSI". This can be set
+  with the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md).
+
 - info:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
@@ -86,9 +107,10 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   `"custom"`, `"all"`, and defaults to
   `c("breakpoints", "expected_phenotypes")`. The default value can be
   set to another value using the package option
-  [`AMR_eucastrules`](https://amr-for-r.org/reference/AMR-options.md):
-  `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to
-  fill in argument `custom_rules` too. Custom rules can be created with
+  [`AMR_interpretive_rules`](https://amr-for-r.org/reference/AMR-options.md):
+  `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be
+  sure to fill in argument `custom_rules` too. Custom rules can be
+  created with
   [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md).
 
 - verbose:
@@ -179,7 +201,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 - administration:
 
-  Route of administration, either "", "im", "iv", or "oral".
+  Route of administration, either "", "im", "iv", "oral", or NA.
 
 ## Value
 
@@ -237,8 +259,8 @@ Since these rules are not officially approved by EUCAST, they are not
 applied at default. To use these rules, include `"other"` to the `rules`
 argument, or use `eucast_rules(..., rules = "all")`. You can also set
 the package option
-[`AMR_eucastrules`](https://amr-for-r.org/reference/AMR-options.md),
-i.e. run `options(AMR_eucastrules = "all")`.
+[`AMR_interpretive_rules`](https://amr-for-r.org/reference/AMR-options.md),
+i.e. run `options(AMR_interpretive_rules = "all")`.
 
 ## Download Our Reference Data
 
@@ -291,9 +313,9 @@ head(a)
 b <- eucast_rules(a, overwrite = TRUE)
 #> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of
 #> class 'sir'. Transform them on beforehand, with e.g.:
-#>   - a %>% as.sir(CXM:AMX)
-#>   - a %>% mutate_if(is_sir_eligible, as.sir)
-#>   - a %>% mutate(across(where(is_sir_eligible), as.sir))
+#>   - x %>% as.sir(CXM:AMX)
+#>   - x %>% mutate_if(is_sir_eligible, as.sir)
+#>   - x %>% mutate(across(where(is_sir_eligible), as.sir))
 
 head(b)
 #>                       mo VAN AMX COL CAZ CXM PEN FOX
@@ -309,9 +331,9 @@ head(b)
 c <- eucast_rules(a, overwrite = TRUE, verbose = TRUE)
 #> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of
 #> class 'sir'. Transform them on beforehand, with e.g.:
-#>   - a %>% as.sir(CXM:AMX)
-#>   - a %>% mutate_if(is_sir_eligible, as.sir)
-#>   - a %>% mutate(across(where(is_sir_eligible), as.sir))
+#>   - x %>% as.sir(CXM:AMX)
+#>   - x %>% mutate_if(is_sir_eligible, as.sir)
+#>   - x %>% mutate(across(where(is_sir_eligible), as.sir))
 head(c)
 #>   row col           mo_fullname old new rule          rule_group
 #> 1   1 AMX Staphylococcus aureus   -   S              Breakpoints

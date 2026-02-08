@@ -4,8 +4,8 @@ Clean up existing SIR values, or interpret minimum inhibitory
 concentration (MIC) values and disk diffusion diameters according to
 EUCAST or CLSI. `as.sir()` transforms the input to a new class `sir`,
 which is an ordered
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-containing the levels `S`, `SDD`, `I`, `R`, `NI`.
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html) containing the
+levels `S`, `SDD`, `I`, `R`, `NI`.
 
 Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI
 2011-2025, see *Details*. All breakpoints used for interpretation are
@@ -27,12 +27,14 @@ is_sir_eligible(x, threshold = 0.05)
 # Default S3 method
 as.sir(x, S = "^(S|U|1)+$", I = "^(I|2)+$",
   R = "^(R|3)+$", NI = "^(N|NI|V|4)+$", SDD = "^(SDD|D|H|5)+$",
+  WT = "^(WT|6)+$", NWT = "^(NWT|7)+$", NS = "^(NS|8)+$",
   info = interactive(), ...)
 
 # S3 method for class 'mic'
 as.sir(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
@@ -45,6 +47,7 @@ as.sir(x, mo = NULL, ab = deparse(substitute(x)),
 # S3 method for class 'disk'
 as.sir(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
@@ -58,6 +61,7 @@ as.sir(x, mo = NULL, ab = deparse(substitute(x)),
 as.sir(x, ..., col_mo = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
@@ -127,7 +131,7 @@ disk diffusion diameters:
   Maximum fraction of invalid antimicrobial interpretations of `x`, see
   *Examples*.
 
-- S, I, R, NI, SDD:
+- S, I, R, NI, SDD, WT, NWT, NS:
 
   A case-independent [regular
   expression](https://rdrr.io/r/base/regex.html) to translate input to
@@ -217,6 +221,12 @@ disk diffusion diameters:
   uncertain values while preserving interpretability. This option can
   also be set with the package option
   [`AMR_capped_mic_handling`](https://amr-for-r.org/reference/AMR-options.md).
+
+- as_wt_nwt:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to return
+  `"WT"`/`"NWT"` instead of `"S"`/`"R"`. Defaults to `TRUE` when using
+  ECOFFs, i.e., when `breakpoint_type` is set to `"ECOFF"`.
 
 - add_intrinsic_resistance:
 
@@ -350,9 +360,8 @@ disk diffusion diameters:
 
 ## Value
 
-Ordered
-[factor](https://rdatatable.gitlab.io/data.table/reference/fctr.html)
-with new class `sir`
+Ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with new
+class `sir`
 
 ## Details
 
@@ -495,7 +504,7 @@ options to set before analysis:
 ### After Interpretation
 
 After using `as.sir()`, you can use the
-[`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
 defined by EUCAST to (1) apply inferred susceptibility and resistance
 based on results of other antimicrobials and (2) apply intrinsic
 resistance based on taxonomic properties of a microorganism.
@@ -651,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-01-16 10:04:38     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-01-16 10:04:39     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-01-16 10:04:39     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-01-16 10:04:39     1 DISK   genta       Escherich… human      18         
+#> 1 2026-02-08 22:25:52     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-02-08 22:25:53     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-02-08 22:25:53     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-02-08 22:25:54     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

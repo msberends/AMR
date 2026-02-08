@@ -31,7 +31,7 @@ Sometimes, laboratory data can still contain such strains with
 *Klebsiella* being susceptible to ampicillin. This could be because an
 antibiogram is available before an identification is available, and the
 antibiogram is then not re-interpreted based on the identification. The
-[`eucast_rules()`](https://amr-for-r.org/reference/eucast_rules.md)
+[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
 function resolves this, by applying the latest ‘EUCAST Expected
 Resistant Phenotypes’ guideline:
 

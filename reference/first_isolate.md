@@ -334,6 +334,2268 @@ example_isolates[first_isolate(info = TRUE), ]
 #> ℹ Using column 'patient' as input for `col_patient_id`.
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold
 #>   of 2
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 32 results truncated (80%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 34 results truncated (85%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 34 results truncated (85%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 32 results truncated (80%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 36 results truncated (90%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
 #> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
 #> => Found 1,387 'phenotype-based' first isolates (69.4% of total where a
 #>    microbial ID was available)
@@ -360,6 +2622,2268 @@ example_isolates[first_isolate(info = TRUE), ]
 # \donttest{
 # get all first Gram-negatives
 example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 32 results truncated (80%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 34 results truncated (85%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 34 results truncated (85%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 32 results truncated (80%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 36 results truncated (90%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
 #> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
 #> # A tibble: 441 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
@@ -393,6 +4917,13 @@ if (require("dplyr")) {
 #> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
 #> => Found 1,387 'phenotype-based' first isolates (69.4% of total where a
 #>    microbial ID was available)
+#> Warning: There were 1131 warnings in `filter()`.
+#> The first warning was:
+#> ℹ In argument: `first_isolate(info = TRUE)`.
+#> Caused by warning:
+#> ! in `as.sir()`: 7 results in column '' truncated (18%) that were invalid
+#> antimicrobial interpretations: "."
+#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 1130 remaining warnings.
 #> # A tibble: 1,387 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -418,6 +4949,2268 @@ if (require("dplyr")) {
   example_isolates %>%
     filter_first_isolate(info = FALSE)
 }
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 32 results truncated (80%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 30 results truncated (75%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 34 results truncated (85%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 34 results truncated (85%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 27 results truncated (68%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 10 results truncated (25%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 7 results truncated (18%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 28 results truncated (70%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 11 results truncated (28%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 8 results truncated (20%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 9 results truncated (22%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 32 results truncated (80%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 40 results truncated (100%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 29 results truncated (72%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 15 results truncated (38%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 33 results truncated (82%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 36 results truncated (90%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 24 results truncated (60%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 26 results truncated (65%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 22 results truncated (55%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 16 results truncated (40%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 19 results truncated (48%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 18 results truncated (45%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 14 results truncated (35%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 13 results truncated (32%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 17 results truncated (42%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 12 results truncated (30%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 21 results truncated (52%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 23 results truncated (57%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 25 results truncated (62%) that were invalid antimicrobial
+#> interpretations: "."
+#> Warning: in `as.sir()`: 20 results truncated (50%) that were invalid antimicrobial
+#> interpretations: "."
 #> # A tibble: 1,387 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -463,6 +7256,14 @@ if (require("dplyr")) {
 #> ℹ Excluding 1 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
 #> => Found 99 'phenotype-based' first isolates (82.5% of total where a
 #>    microbial ID was available)
+#> Warning: There were 1019 warnings in `mutate()`.
+#> The first warning was:
+#> ℹ In argument: `first = first_isolate(info = TRUE)`.
+#> ℹ In group 1: `ward = "Clinical"`.
+#> Caused by warning:
+#> ! in `as.sir()`: 7 results in column 'first' truncated (18%) that were
+#> invalid antimicrobial interpretations: "."
+#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 1018 remaining warnings.
 #> # A tibble: 2,000 × 5
 #> # Groups:   ward [3]
 #>    ward     date       patient mo           first

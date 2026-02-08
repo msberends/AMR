@@ -2,7 +2,7 @@
 
 EUCAST breakpoints used in this package are based on the dosages in this
 data set. They can be retrieved with
-[`eucast_dosage()`](https://amr-for-r.org/reference/eucast_rules.md).
+[`eucast_dosage()`](https://amr-for-r.org/reference/interpretive_rules.md).
 
 ## Usage
 
@@ -35,7 +35,7 @@ observations and 9 variables:
   Number of times a dose must be administered
 
 - `administration`  
-  Route of administration, either "", "im", "iv", or "oral"
+  Route of administration, either "", "im", "iv", "oral", or NA
 
 - `notes`  
   Additional dosage notes
