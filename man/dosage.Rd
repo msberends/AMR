@@ -12,7 +12,7 @@ A \link[tibble:tibble]{tibble} with 759 observations and 9 variables:
 \item \code{type}\cr Type of the dosage, either "high_dosage", "standard_dosage", or "uncomplicated_uti"
 \item \code{dose}\cr Dose, such as "2 g" or "25 mg/kg"
 \item \code{dose_times}\cr Number of times a dose must be administered
-\item \code{administration}\cr Route of administration, either "", "im", "iv", or "oral"
+\item \code{administration}\cr Route of administration, either "", "im", "iv", "oral", or NA
 \item \code{notes}\cr Additional dosage notes
 \item \code{original_txt}\cr Original text in the PDF file of EUCAST
 \item \code{eucast_version}\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply, either 15, 14, 13.1, 12, or 11

@@ -12,13 +12,15 @@
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
-as.mic(x, na.rm = FALSE, keep_operators = "all")
+as.mic(x, na.rm = FALSE, keep_operators = "all",
+  round_to_next_log2 = FALSE)
 
 is.mic(x)
 
 NA_mic_
 
-rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE)
+rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE,
+  round_to_next_log2 = FALSE)
 
 mic_p50(x, na.rm = FALSE, ...)
 
@@ -32,6 +34,8 @@ mic_p90(x, na.rm = FALSE, ...)
 \item{na.rm}{A \link{logical} indicating whether missing values should be removed.}
 
 \item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
+
+\item{round_to_next_log2}{A \link{logical} to round up all values to the next log2 level, that are not either 0.0001, 0.0002, 0.0005, 0.001, 0.002, 0.004, 0.008, 0.016, 0.032, 0.064, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, or 4096. Values that are already in this list (with or without operators), are left unchanged (including any operators).}
 
 \item{mic_range}{A manual range to rescale the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}.}
 

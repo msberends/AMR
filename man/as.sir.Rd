@@ -34,11 +34,13 @@ is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{default}(x, S = "^(S|U|1)+$", I = "^(I|2)+$",
   R = "^(R|3)+$", NI = "^(N|NI|V|4)+$", SDD = "^(SDD|D|H|5)+$",
+  WT = "^(WT|6)+$", NWT = "^(NWT|7)+$", NS = "^(NS|8)+$",
   info = interactive(), ...)
 
 \method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
@@ -50,6 +52,7 @@ is_sir_eligible(x, threshold = 0.05)
 
 \method{as.sir}{disk}(x, mo = NULL, ab = deparse(substitute(x)),
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
@@ -62,6 +65,7 @@ is_sir_eligible(x, threshold = 0.05)
 \method{as.sir}{data.frame}(x, ..., col_mo = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
@@ -82,7 +86,7 @@ Otherwise: arguments passed on to methods.}
 
 \item{threshold}{Maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}.}
 
-\item{S, I, R, NI, SDD}{A case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
+\item{S, I, R, NI, SDD, WT, NWT, NS}{A case-independent \link[base:regex]{regular expression} to translate input to this result. This regular expression will be run \emph{after} all non-letters and whitespaces are removed from the input.}
 
 \item{info}{A \link{logical} to print information about the process, defaults to \code{TRUE} only in \link[base:interactive]{interactive sessions}.}
 
@@ -121,6 +125,8 @@ Otherwise: arguments passed on to methods.}
 }
 
 The default \code{"conservative"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
+
+\item{as_wt_nwt}{A \link{logical} to return \code{"WT"}/\code{"NWT"} instead of \code{"S"}/\code{"R"}. Defaults to \code{TRUE} when using ECOFFs, i.e., when \code{breakpoint_type} is set to \code{"ECOFF"}.}
 
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/bacteria/important-additional-information/expert-rules/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).}
 

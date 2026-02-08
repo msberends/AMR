@@ -19,7 +19,7 @@ Define custom EUCAST rules for your organisation or specific analysis and use th
 Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the \code{\link[=eucast_rules]{eucast_rules()}} function.
 \subsection{Basics}{
 
-If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
+If you are familiar with the \code{\link[dplyr:case-and-replace-when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
                          TZP == "R" ~ aminopenicillins == "R")

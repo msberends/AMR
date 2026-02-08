@@ -685,8 +685,12 @@ format_included_data_number <- function(data) {
 vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ") {
   # makes unique and sorts, and this also removed NAs
   v <- unique(v)
+  has_na <- anyNA(v)
   if (isTRUE(sort)) {
     v <- sort(v)
+    if (has_na) {
+      v <- c(v, NA)
+    }
   }
   if (isTRUE(reverse)) {
     v <- rev(v)
@@ -708,18 +712,25 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     # class 'sir' should be sorted like this
     v <- c("S", "I", "R")
   }
-  if (identical(v, c("I", "NI", "R", "S", "SDD"))) {
+  if (identical(v, sort(VALID_SIR_LEVELS))) {
     # class 'sir' should be sorted like this
-    v <- c("S", "SDD", "I", "R", "NI")
+    v <- VALID_SIR_LEVELS
   }
   # oxford comma
   if (last_sep %in% c(" or ", " and ") && length(v) > 2) {
     last_sep <- paste0(",", last_sep)
   }
+  NAs <- which(is.na(v))
+
+  if (is.numeric(v)) {
+    v <- trimws(vapply(FUN.VALUE = character(1), v, format, scientific = FALSE))
+  }
+  quoted <- paste0(quotes, v, quotes)
+  quoted[NAs] <- "NA"
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
   paste0(
-    paste0(quotes, v[seq_len(length(v) - 1)], quotes, collapse = ", "),
-    last_sep, paste0(quotes, v[length(v)], quotes)
+    paste(quoted[seq_len(length(quoted) - 1)], collapse = ", "),
+    last_sep, quoted[length(quoted)]
   )
 }
 
@@ -1097,11 +1108,14 @@ format_custom_query_rule <- function(query, colours = has_colour()) {
   query <- gsub("any\\((.*)\\)$", paste0(font_black("any of "), "\\1"), query)
   query <- gsub("all\\((.*)\\)$", paste0(font_black("all of "), "\\1"), query)
   if (colours == TRUE) {
-    query <- gsub("[\"']R[\"']", font_rose_bg(" R "), query)
-    query <- gsub("[\"']SDD[\"']", font_orange_bg(" SDD "), query)
     query <- gsub("[\"']S[\"']", font_green_bg(" S "), query)
-    query <- gsub("[\"']NI[\"']", font_grey_bg(font_black(" NI ")), query)
+    query <- gsub("[\"']SDD[\"']", font_orange_bg(" SDD "), query)
     query <- gsub("[\"']I[\"']", font_orange_bg(" I "), query)
+    query <- gsub("[\"']R[\"']", font_rose_bg(" R "), query)
+    query <- gsub("[\"']NI[\"']", font_grey_bg(font_black(" NI ")), query)
+    query <- gsub("[\"']WT[\"']", font_green_bg(" SDD "), query)
+    query <- gsub("[\"']NWT[\"']", font_rose_bg(" I "), query)
+    query <- gsub("[\"']NS[\"']", font_rose_bg(" R "), query)
   }
   # replace the black colour 'stops' with blue colour 'starts'
   query <- gsub("\033[39m", "\033[34m", as.character(query), fixed = TRUE)

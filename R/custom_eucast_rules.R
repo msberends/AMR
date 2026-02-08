@@ -220,8 +220,8 @@ custom_eucast_rules <- function(...) {
     result_value <- as.character(result)[[3]]
     result_value[result_value == "NA"] <- NA
     stop_ifnot(
-      result_value %in% c("S", "SDD", "I", "R", "NI", NA),
-      "the resulting value of rule ", i, " must be either \"S\", \"SDD\", \"I\", \"R\", \"NI\" or NA"
+      result_value %in% c(VALID_SIR_LEVELS, NA),
+      paste0("the resulting value of rule ", i, " must be either ", vector_or(c(VALID_SIR_LEVELS, NA), sort = FALSE))
     )
     result_value <- as.sir(result_value)
 

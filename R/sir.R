@@ -27,6 +27,8 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
+VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
+
 #' Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data
 #'
 #' @description Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] containing the levels `S`, `SDD`, `I`, `R`, `NI`.
@@ -58,6 +60,7 @@
 #'   * `>=` and `>` always return `"R"`, regardless of the breakpoint.
 #'
 #' The default `"conservative"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
+#' @param as_wt_nwt A [logical] to return `"WT"`/`"NWT"` instead of `"S"`/`"R"`. Defaults to `TRUE` when using ECOFFs, i.e., when `breakpoint_type` is set to `"ECOFF"`.
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these cases to `"R"`. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
 #' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
@@ -398,7 +401,7 @@ as_sir_structure <- function(x,
                              ref_breakpoints = NULL) {
   structure(
     factor(as.character(unlist(unname(x))),
-      levels = c("S", "SDD", "I", "R", "NI"),
+      levels = VALID_SIR_LEVELS,
       ordered = TRUE
     ),
     # TODO for #170
@@ -454,9 +457,9 @@ is_sir_eligible <- function(x, threshold = 0.05) {
   %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (!all(is.na(x)) && all(x %in% c("S", "SDD", "I", "R", "NI", NA, "s", "sdd", "i", "r", "ni"))) {
+  } else if (!all(is.na(x)) && all(x %in% c(VALID_SIR_LEVELS, tolower(VALID_SIR_LEVELS), NA))) {
     return(TRUE)
-  } else if (!all(is.na(x)) && !any(c("S", "SDD", "I", "R", "NI") %in% gsub("([SIR])\\1+", "\\1", gsub("[^A-Z]", "", toupper(unique(x[1:10000])), perl = TRUE), perl = TRUE), na.rm = TRUE)) {
+  } else if (!all(is.na(x)) && !any(VALID_SIR_LEVELS %in% gsub("([SIR])\\1+", "\\1", gsub("[^A-Z]", "", toupper(unique(x[1:10000])), perl = TRUE), perl = TRUE), na.rm = TRUE)) {
     return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !x %in% c("", "-", "NULL")]
@@ -486,7 +489,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
 
 #' @rdname as.sir
 #' @export
-#' @param S,I,R,NI,SDD A case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
+#' @param S,I,R,NI,SDD,WT,NWT,NS A case-independent [regular expression][base::regex] to translate input to this result. This regular expression will be run *after* all non-letters and whitespaces are removed from the input.
 #' @param info A [logical] to print information about the process, defaults to `TRUE` only in [interactive sessions][base::interactive()].
 # extra param: warn (logical, to never throw a warning)
 as.sir.default <- function(x,
@@ -495,13 +498,19 @@ as.sir.default <- function(x,
                            R = "^(R|3)+$",
                            NI = "^(N|NI|V|4)+$",
                            SDD = "^(SDD|D|H|5)+$",
+                           WT = "^(WT|6)+$",
+                           NWT = "^(NWT|7)+$",
+                           NS = "^(NS|8)+$",
                            info = interactive(),
                            ...) {
-  meet_criteria(S, allow_class = c("character", "numeric", "integer"), has_length = 1)
-  meet_criteria(I, allow_class = c("character", "numeric", "integer"), has_length = 1)
-  meet_criteria(R, allow_class = c("character", "numeric", "integer"), has_length = 1)
-  meet_criteria(NI, allow_class = c("character", "numeric", "integer"), has_length = 1)
-  meet_criteria(SDD, allow_class = c("character", "numeric", "integer"), has_length = 1)
+  meet_criteria(S, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(I, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(R, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(NI, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(SDD, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(WT, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(NWT, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
+  meet_criteria(NS, allow_class = c("character", "numeric", "integer", "factor"), has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   if (inherits(x, "sir")) {
     return(as_sir_structure(x))
@@ -516,7 +525,7 @@ as.sir.default <- function(x,
     x[x.bak == 1] <- names(lbls[lbls == 1])
     x[x.bak == 2] <- names(lbls[lbls == 2])
     x[x.bak == 3] <- names(lbls[lbls == 3])
-  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "SDD", "I", "R", "NI")) && !all(x %in% c("S", "SDD", "I", "R", "NI", NA))) {
+  } else if (!all(is.na(x)) && !identical(levels(x), VALID_SIR_LEVELS) && !all(x %in% c(VALID_SIR_LEVELS, NA))) {
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE) && !all(x %in% c(1, 2, 3, 4, 5), na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
@@ -557,7 +566,7 @@ as.sir.default <- function(x,
     x[x %like% "not|non"] <- "NI"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
     x[x %like% "dose"] <- "SDD"
-    mtch <- grepl(paste0("(", S, "|", I, "|", R, "|", NI, "|", SDD, "|[A-Z]+)"), x, perl = TRUE)
+    mtch <- grepl(paste0("(", S, "|", I, "|", R, "|", NI, "|", SDD, "|", WT, "|", NWT, "|", NS, "|[A-Z]+)"), x, perl = TRUE)
     x[!mtch] <- ""
     # apply regexes set by user
     x[x %like% S] <- "S"
@@ -565,22 +574,31 @@ as.sir.default <- function(x,
     x[x %like% R] <- "R"
     x[x %like% NI] <- "NI"
     x[x %like% SDD] <- "SDD"
-    x[!x %in% c("S", "SDD", "I", "R", "NI")] <- NA_character_
+    x[x %like% WT] <- "WT"
+    x[x %like% NWT] <- "NWT"
+    x[x %like% NS] <- "NS"
+    x[!x %in% VALID_SIR_LEVELS] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
 
     if (!isFALSE(list(...)$warn)) { # so as.sir(..., warn = FALSE) will never throw a warning
-      if (all(x.bak %in% c(1, 2, 3, 4, 5), na.rm = TRUE) && message_not_thrown_before("as.sir", "numeric_interpretation", x, x.bak)) {
+      if (all(x.bak %in% c(1:8), na.rm = TRUE) && message_not_thrown_before("as.sir", "numeric_interpretation", x, x.bak)) {
         out1 <- unique(x[x.bak == 1])
         out2 <- unique(x[x.bak == 2])
         out3 <- unique(x[x.bak == 3])
         out4 <- unique(x[x.bak == 4])
         out5 <- unique(x[x.bak == 5])
+        out6 <- unique(x[x.bak == 6])
+        out7 <- unique(x[x.bak == 7])
+        out8 <- unique(x[x.bak == 8])
         out <- c(
           ifelse(length(out1) > 0, paste0("1 as \"", out1, "\""), NA_character_),
           ifelse(length(out2) > 0, paste0("2 as \"", out2, "\""), NA_character_),
           ifelse(length(out3) > 0, paste0("3 as \"", out3, "\""), NA_character_),
           ifelse(length(out4) > 0, paste0("4 as \"", out4, "\""), NA_character_),
-          ifelse(length(out5) > 0, paste0("5 as \"", out5, "\""), NA_character_)
+          ifelse(length(out5) > 0, paste0("5 as \"", out5, "\""), NA_character_),
+          ifelse(length(out6) > 0, paste0("6 as \"", out6, "\""), NA_character_),
+          ifelse(length(out7) > 0, paste0("7 as \"", out7, "\""), NA_character_),
+          ifelse(length(out8) > 0, paste0("8 as \"", out8, "\""), NA_character_)
         )
         message_("in `as.sir()`: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
       }
@@ -615,6 +633,7 @@ as.sir.mic <- function(x,
                        guideline = getOption("AMR_guideline", "EUCAST"),
                        uti = NULL,
                        capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+                       as_wt_nwt = identical(breakpoint_type, "ECOFF"),
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::clinical_breakpoints,
                        substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
@@ -636,6 +655,7 @@ as.sir.mic <- function(x,
     guideline = guideline,
     uti = uti,
     capped_mic_handling = capped_mic_handling,
+    as_wt_nwt = as_wt_nwt,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
     substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
@@ -658,6 +678,7 @@ as.sir.disk <- function(x,
                         ab = deparse(substitute(x)),
                         guideline = getOption("AMR_guideline", "EUCAST"),
                         uti = NULL,
+                        as_wt_nwt = identical(breakpoint_type, "ECOFF"),
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::clinical_breakpoints,
                         substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
@@ -678,6 +699,7 @@ as.sir.disk <- function(x,
     guideline = guideline,
     uti = uti,
     capped_mic_handling = "standard", # will be ignored for non-MIC anyway
+    as_wt_nwt = as_wt_nwt,
     add_intrinsic_resistance = add_intrinsic_resistance,
     reference_data = reference_data,
     substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
@@ -702,6 +724,7 @@ as.sir.data.frame <- function(x,
                               guideline = getOption("AMR_guideline", "EUCAST"),
                               uti = NULL,
                               capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+                              as_wt_nwt = identical(breakpoint_type, "ECOFF"),
                               add_intrinsic_resistance = FALSE,
                               reference_data = AMR::clinical_breakpoints,
                               substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
@@ -720,6 +743,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(guideline, allow_class = "character")
   meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("none", "conservative", "standard", "lenient"))
+  meet_criteria(as_wt_nwt, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1)
@@ -899,6 +923,7 @@ as.sir.data.frame <- function(x,
           guideline = guideline,
           uti = uti,
           capped_mic_handling = capped_mic_handling,
+          as_wt_nwt = as_wt_nwt,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
           substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
@@ -926,6 +951,7 @@ as.sir.data.frame <- function(x,
           ab = ab_col,
           guideline = guideline,
           uti = uti,
+          as_wt_nwt = as_wt_nwt,
           add_intrinsic_resistance = add_intrinsic_resistance,
           reference_data = reference_data,
           substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
@@ -988,7 +1014,7 @@ as.sir.data.frame <- function(x,
       on.exit(parallel::stopCluster(cl), add = TRUE)
       parallel::clusterExport(cl, varlist = c(
         "x", "x.bak", "x_mo", "ab_cols", "types",
-        "capped_mic_handling", "add_intrinsic_resistance",
+        "capped_mic_handling", "as_wt_nwt", "add_intrinsic_resistance",
         "reference_data", "substitute_missing_r_breakpoint", "include_screening", "include_PKPD",
         "breakpoint_type", "guideline", "host", "uti", "info", "verbose",
         "col_mo", "AMR_env", "conserve_capped_values",
@@ -1101,6 +1127,7 @@ as_sir_method <- function(method_short,
                           guideline,
                           uti,
                           capped_mic_handling,
+                          as_wt_nwt,
                           add_intrinsic_resistance,
                           reference_data,
                           substitute_missing_r_breakpoint,
@@ -1123,6 +1150,7 @@ as_sir_method <- function(method_short,
   meet_criteria(guideline, allow_class = "character", has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(uti, allow_class = c("logical", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("none", "conservative", "standard", "lenient"), .call_depth = -2)
+  meet_criteria(as_wt_nwt, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
@@ -1409,8 +1437,7 @@ as_sir_method <- function(method_short,
           if (is.na(mic_val)) {
             return(NA_real_)
           } else {
-            # find the smallest log2 level that is >= mic_val
-            log2_val <- log2_levels[which(log2_levels >= as.double(mic_val))][1]
+            log2_val <- COMMON_MIC_VALUES[which(COMMON_MIC_VALUES >= as.double(mic_val))][1]
             if (!is.na(log2_val) && as.double(mic_val) != log2_val) {
               if (message_not_thrown_before("as.sir", "CLSI", "MICupscaling")) {
                 warning_("Some MICs were converted to the nearest higher log2 level, following the CLSI interpretation guideline.")
@@ -1863,6 +1890,12 @@ as_sir_method <- function(method_short,
         )
       }
 
+      # rewrite S/R to WT/NWT if needed
+      if (isTRUE(as_wt_nwt)) {
+        new_sir[new_sir == "S"] <- "WT"
+        new_sir[new_sir == "R"] <- "NWT"
+      }
+
       # write to verbose output
       notes_current <- gsub("\n\n", "\n", trimws2(notes_current), fixed = TRUE)
       notes_current[notes_current == ""] <- NA_character_
@@ -1977,6 +2010,9 @@ pillar_shaft.sir <- function(x, ...) {
     out[x == "I"] <- font_orange_bg("  I  ")
     out[x == "R"] <- font_rose_bg("  R  ")
     out[x == "NI"] <- font_grey_bg(font_black("  NI "))
+    out[x == "WT"] <- font_green_bg(font_black("  WT "))
+    out[x == "NWT"] <- font_rose_bg(font_black(" NWT "))
+    out[x == "NS"] <- font_rose_bg(font_black("  NS "))
   }
   create_pillar_column(out, align = "left", width = 5)
 }
@@ -2073,9 +2109,9 @@ print.sir <- function(x, ...) {
 #' @export
 as.double.sir <- function(x, ...) {
   dbls <- rep(NA_real_, length(x))
-  dbls[x == "S"] <- 1
-  dbls[x %in% c("SDD", "I")] <- 2
-  dbls[x == "R"] <- 3
+  dbls[x %in% c("S", "WT")] <- 1
+  dbls[x %in% c("I", "SDD")] <- 2
+  dbls[x %in% c("R", "NWT", "NS")] <- 3
   dbls
 }
 

@@ -41,7 +41,7 @@ sir_calc <- function(...,
                      as_percent = FALSE,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
-  meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1:5))
+  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = seq_along(VALID_SIR_LEVELS), is_in = VALID_SIR_LEVELS)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
@@ -117,6 +117,8 @@ sir_calc <- function(...,
   print_warning <- FALSE
 
   ab_result <- as.sir(ab_result)
+  denominator_vals <- levels(ab_result)
+  denominator_vals <- denominator_vals[denominator_vals != "NI"]
 
   if (is.data.frame(x)) {
     sir_integrity_check <- character(0)
@@ -148,7 +150,7 @@ sir_calc <- function(...,
       denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(anyNA(y))))
     } else {
       # may contain NAs in any column
-      other_values <- setdiff(c(NA, levels(ab_result)), ab_result)
+      other_values <- setdiff(c(NA, denominator_vals), ab_result)
       if ("SDD" %in% ab_result && "SDD" %in% unlist(x_transposed) && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
         message_("Note that `", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
       }
@@ -165,7 +167,7 @@ sir_calc <- function(...,
       message_("Note that `", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "()` will also include dose-dependent susceptibility, 'SDD'. This note will be shown once for this session.", as_note = FALSE)
     }
     numerator <- sum(x %in% ab_result, na.rm = TRUE)
-    denominator <- sum(x %in% levels(ab_result), na.rm = TRUE)
+    denominator <- sum(x %in% denominator_vals, na.rm = TRUE)
   }
 
   if (print_warning == TRUE) {
@@ -259,13 +261,13 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   for (i in seq_len(ncol(data))) {
     # transform SIR columns
     if (is.sir(data[, i, drop = TRUE])) {
-      data[, i] <- as.character(data[, i, drop = TRUE])
+      data[, i] <- as.character(as.sir(data[, i, drop = TRUE]))
+      data[which(data[, i, drop = TRUE] %in% c("S", "SDD", "WT")), i] <- "S"
+      data[which(data[, i, drop = TRUE] %in% c("R", "NWT", "NS")), i] <- "R"
       if (isTRUE(combine_SI)) {
-        if ("SDD" %in% data[, i, drop = TRUE] && message_not_thrown_before("sir_calc_df", combine_SI, entire_session = TRUE)) {
-          message_("Note that `sir_calc_df()` will also count dose-dependent susceptibility, 'SDD', as 'SI' when `combine_SI = TRUE`. This note will be shown once for this session.", as_note = FALSE)
-        }
-        data[, i] <- gsub("(I|S|SDD)", "SI", data[, i, drop = TRUE])
+        data[which(data[, i, drop = TRUE] %in% c("I", "S")), i] <- "SI"
       }
+      data[which(!data[, i, drop = TRUE] %in% c("S", "SI", "I", "R")), i] <- NA_character_
     }
   }
 

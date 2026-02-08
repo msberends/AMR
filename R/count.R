@@ -122,7 +122,7 @@
 count_resistant <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = "R",
+      ab_result = c("R", "NWT", "NS"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -135,7 +135,7 @@ count_resistant <- function(..., only_all_tested = FALSE) {
 count_susceptible <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I"),
+      ab_result = c("S", "SDD", "I", "WT"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -161,7 +161,7 @@ count_S <- function(..., only_all_tested = FALSE) {
 count_SI <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I"),
+      ab_result = c("S", "SDD", "I", "WT"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -187,7 +187,7 @@ count_I <- function(..., only_all_tested = FALSE) {
 count_IR <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("I", "SDD", "R"),
+      ab_result = c("I", "SDD", "R", "NWT"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -200,7 +200,7 @@ count_IR <- function(..., only_all_tested = FALSE) {
 count_R <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = "R",
+      ab_result = c("R", "NWT", "NS"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -213,7 +213,7 @@ count_R <- function(..., only_all_tested = FALSE) {
 count_all <- function(..., only_all_tested = FALSE) {
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I", "R", "NI"),
+      ab_result = VALID_SIR_LEVELS,
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),

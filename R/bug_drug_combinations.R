@@ -43,7 +43,7 @@
 #' @details The function [format()] calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S. This table can also directly be used in R Markdown / Quarto without the need for e.g. [knitr::kable()].
 #' @export
 #' @rdname bug_drug_combinations
-#' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "SDD", "I", "R", and "total".
+#' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "SDD", "I", "R", "WT, "NWT", and "total".
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
@@ -111,6 +111,8 @@ bug_drug_combinations <- function(x,
       SDD = integer(0),
       I = integer(0),
       R = integer(0),
+      WT = integer(0),
+      NWT = integer(0),
       total = integer(0),
       total_rows = integer(0),
       stringsAsFactors = FALSE
@@ -133,6 +135,9 @@ bug_drug_combinations <- function(x,
           I = m["I", ],
           R = m["R", ],
           NI = m["NI", ],
+          WT = m["WT", ],
+          NWT = m["NWT", ],
+          NS = m["NS", ],
           na = m[which(is.na(rownames(m))), ],
           stringsAsFactors = FALSE
         )
@@ -146,8 +151,11 @@ bug_drug_combinations <- function(x,
         I = merged$I,
         R = merged$R,
         NI = merged$NI,
-        total = merged$S + merged$SDD + merged$I + merged$R + merged$NI,
-        total_rows = merged$S + merged$SDD + merged$I + merged$R + merged$NI + merged$na,
+        WT = merged$WT,
+        NWT = merged$NWT,
+        NS = merged$NS,
+        total = merged$S + merged$SDD + merged$I + merged$R + merged$NI + merged$WT + merged$NWT + merged$NS,
+        total_rows = merged$S + merged$SDD + merged$I + merged$R + merged$NI + merged$WT + merged$NWT + merged$NS + merged$na,
         stringsAsFactors = FALSE
       )
       if (data_has_groups) {
@@ -229,12 +237,17 @@ format.bug_drug_combinations <- function(x,
       I = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$I[i], na.rm = TRUE)),
       R = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
       NI = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$NI[i], na.rm = TRUE)),
+      WT = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$WT[i], na.rm = TRUE)),
+      NWT = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$NWT[i], na.rm = TRUE)),
+      NS = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$NS[i], na.rm = TRUE)),
       total = vapply(FUN.VALUE = double(1), idx, function(i) {
         sum(x$S[i], na.rm = TRUE) +
           sum(x$SDD[i], na.rm = TRUE) +
           sum(x$I[i], na.rm = TRUE) +
           sum(x$R[i], na.rm = TRUE) +
-          sum(x$NI[i], na.rm = TRUE)
+          sum(x$WT[i], na.rm = TRUE) +
+          sum(x$NWT[i], na.rm = TRUE) +
+          sum(x$NS[i], na.rm = TRUE)
       }),
       stringsAsFactors = FALSE
     )
@@ -246,10 +259,10 @@ format.bug_drug_combinations <- function(x,
   if (remove_intrinsic_resistant == TRUE) {
     x <- subset(x, R != total)
   }
+
+  x$isolates <- x$R + x$NWT
   if (combine_SI == TRUE) {
-    x$isolates <- x$R
-  } else {
-    x$isolates <- x$R + x$I + x$SDD
+    x$isolates <- x$isolates + x$I + x$SDD
   }
 
   give_ab_name <- function(ab, format, language) {

@@ -560,12 +560,11 @@ antibiogram.default <- function(x,
         next
       } else {
         # determine whether this new column should contain S, I, R, or NA
+        S_values <- c("S", "WT")
         if (isTRUE(combine_SI)) {
-          S_values <- c("S", "SDD", "I")
-        } else {
-          S_values <- "S"
+          S_values <- c(S_values, "SDD", "I")
         }
-        other_values <- setdiff(c("S", "SDD", "I", "R"), S_values)
+        other_values <- setdiff(c("S", "SDD", "I", "R", "WT", "NWT", "NS"), S_values)
         x_transposed <- as.list(as.data.frame(t(x[, abx, drop = FALSE]), stringsAsFactors = FALSE))
         if (isTRUE(only_all_tested)) {
           x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(anyNA(x), NA_character_, ifelse(any(x %in% S_values), "S", "R")), USE.NAMES = FALSE))
@@ -615,10 +614,9 @@ antibiogram.default <- function(x,
 
   counts <- out
 
+  out$n_susceptible <- out$S + out$WT
   if (isTRUE(combine_SI)) {
-    out$n_susceptible <- out$S + out$I + out$SDD
-  } else {
-    out$n_susceptible <- out$S
+    out$n_susceptible <- out$n_susceptible + out$I + out$SDD
   }
   if (all(out$n_tested < minimum, na.rm = TRUE) && wisca == FALSE) {
     warning_("All combinations had less than `minimum = ", minimum, "` results, returning an empty antibiogram")

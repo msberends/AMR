@@ -53,15 +53,21 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
   vector_and(txt, quotes = FALSE)
 }
 
-#' Apply EUCAST Rules
+#' Apply Interpretive Rules
 #'
 #' @description
-#' Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
+#' **WORK IN PROGRESS**
 #'
-#' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
+# TODO Remove this remark before next release
+#' **The `interpretive_rules()` function is new, to allow CLSI 'rules' too. The old `eucast_rules()` function will stay as a wrapper, but we need to generalise more parts of the underlying code to allow more than just EUCAST.**
+#'
+#' Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by e.g. the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
+#'
+#' To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive rules are applied, some AMR-specific rules can be applied at default, see *Details*.
 #' @param x A data set with antimicrobials columns, such as `amox`, `AMX` and `AMC`.
 #' @param info A [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.
-#' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_eucastrules`][AMR-options]: `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
+#' @param guideline A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option [`AMR_guideline`][AMR-options].
+#' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_interpretive_rules`][AMR-options]: `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints The version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
@@ -100,9 +106,9 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #' Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 #'
-#' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `eucast_rules(..., rules = "all")`. You can also set the package option [`AMR_eucastrules`][AMR-options], i.e. run `options(AMR_eucastrules = "all")`.
+#' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `eucast_rules(..., rules = "all")`. You can also set the package option [`AMR_interpretive_rules`][AMR-options], i.e. run `options(AMR_interpretive_rules = "all")`.
 #' @aliases EUCAST
-#' @rdname eucast_rules
+#' @rdname interpretive_rules
 #' @export
 #' @return The input of `x`, possibly with edited values of antimicrobials. Or, if `verbose = TRUE`, a [data.frame] with all original and new values of the affected bug-drug combinations.
 #' @source
@@ -156,21 +162,23 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' eucast_dosage(c("tobra", "genta", "cipro"), "iv")
 #'
 #' eucast_dosage(c("tobra", "genta", "cipro"), "iv", version_breakpoints = 10)
-eucast_rules <- function(x,
-                         col_mo = NULL,
-                         info = interactive(),
-                         rules = getOption("AMR_eucastrules", default = c("breakpoints", "expected_phenotypes")),
-                         verbose = FALSE,
-                         version_breakpoints = 15.0,
-                         version_expected_phenotypes = 1.2,
-                         version_expertrules = 3.3,
-                         ampc_cephalosporin_resistance = NA,
-                         only_sir_columns = any(is.sir(x)),
-                         custom_rules = NULL,
-                         overwrite = FALSE,
-                         ...) {
+interpretive_rules <- function(x,
+                               col_mo = NULL,
+                               guideline = getOption("AMR_guideline", "EUCAST"),
+                               info = interactive(),
+                               rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
+                               verbose = FALSE,
+                               version_breakpoints = 15.0,
+                               version_expected_phenotypes = 1.2,
+                               version_expertrules = 3.3,
+                               ampc_cephalosporin_resistance = NA,
+                               only_sir_columns = any(is.sir(x)),
+                               custom_rules = NULL,
+                               overwrite = FALSE,
+                               ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
+  meet_criteria(guideline, allow_class = "character", has_length = 1, is_in = c("EUCAST", "CLSI"))
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(rules, allow_class = "character", has_length = c(1, 2, 3, 4, 5, 6), is_in = c("breakpoints", "expected_phenotypes", "expert", "other", "all", "custom"))
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
@@ -1092,6 +1100,25 @@ eucast_rules <- function(x,
   }
 }
 
+#' @rdname interpretive_rules
+#' @export
+eucast_rules <- function(x,
+                         rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
+                         ...) {
+  if (!is.null(getOption("AMR_eucastrules", default = NULL))) {
+    warning_("The global option `AMR_eucastrules` that you have set is now invalid was ignored - set `AMR_interpretive_rules` instead. See `?AMR-options`.")
+  }
+  interpretive_rules(x = x, guideline = "EUCAST", rules = rules, ...)
+}
+
+#' @rdname interpretive_rules
+#' @export
+clsi_rules <- function(x,
+                       rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
+                       ...) {
+  interpretive_rules(x = x, guideline = "CLSI", rules = rules, ...)
+}
+
 # helper function for editing the table ----
 edit_sir <- function(x,
                      to,
@@ -1131,7 +1158,7 @@ edit_sir <- function(x,
       track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
     isNA <- is.na(new_edits[rows, cols])
-    isSIR <- !isNA & (new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI")
+    isSIR <- !isNA & (new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI" | new_edits[rows, cols] == "WT" | new_edits[rows, cols] == "NWT" | new_edits[rows, cols] == "NS")
     non_SIR <- !isSIR
     if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
       warning_("Some values had SIR values and were not overwritten, since `overwrite = FALSE`.")
@@ -1230,7 +1257,7 @@ edit_sir <- function(x,
   return(track_changes)
 }
 
-#' @rdname eucast_rules
+#' @rdname interpretive_rules
 #' @export
 eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 15) {
   meet_criteria(ab, allow_class = c("character", "numeric", "integer", "factor"))

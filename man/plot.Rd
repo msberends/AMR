@@ -181,7 +181,7 @@ When manually added though, they allow to rescale the MIC range with an 'inside'
 
 \subsection{The \verb{scale_*_sir()} Functions}{
 
-The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI).
+The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI < WT < NWT < NS).
 
 There is normally no need to add these scale functions to your plot, as they are applied automatically when plotting values of class \link[=as.sir]{sir}.
 

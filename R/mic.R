@@ -63,6 +63,7 @@ COMMON_MIC_VALUES <- c(
 #' @param x A [character] or [numeric] vector.
 #' @param na.rm A [logical] indicating whether missing values should be removed.
 #' @param keep_operators A [character] specifying how to handle operators (such as `>` and `<=`) in the input. Accepts one of three values: `"all"` (or `TRUE`) to keep all operators, `"none"` (or `FALSE`) to remove all operators, or `"edges"` to keep operators only at both ends of the range.
+#' @param round_to_next_log2 A [logical] to round up all values to the next log2 level, that are not either `r vector_or(COMMON_MIC_VALUES, quotes = F)`. Values that are already in this list (with or without operators), are left unchanged (including any operators).
 #' @param ... Arguments passed on to methods.
 #' @details To interpret MIC values as SIR values, use [as.sir()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
@@ -157,10 +158,12 @@ COMMON_MIC_VALUES <- c(
 #' if (require("ggplot2")) {
 #'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
 #' }
-as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
+as.mic <- function(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 = FALSE) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   meet_criteria(keep_operators, allow_class = c("character", "logical"), is_in = c("all", "none", "edges", FALSE, TRUE), has_length = 1)
+  meet_criteria(round_to_next_log2, allow_class = "logical", has_length = 1)
+
   if (isTRUE(keep_operators)) {
     keep_operators <- "all"
   } else if (isFALSE(keep_operators)) {
@@ -168,6 +171,9 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
   }
 
   if (is.mic(x) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
+    if (isTRUE(round_to_next_log2)) {
+      x <- roundup_to_nearest_log2(x)
+    }
     if (!identical(levels(x), VALID_MIC_LEVELS)) {
       # might be from an older AMR version - just update MIC factor levels
       x <- set_clean_class(factor(as.character(x), levels = VALID_MIC_LEVELS, ordered = TRUE),
@@ -279,6 +285,10 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all") {
     x[!x %in% keep] <- gsub("[>=<]", "", x[!x %in% keep])
   }
 
+  if (isTRUE(round_to_next_log2)) {
+    x <- roundup_to_nearest_log2(x)
+  }
+
   set_clean_class(factor(x, levels = VALID_MIC_LEVELS, ordered = TRUE),
     new_class = c("mic", "ordered", "factor")
   )
@@ -305,7 +315,7 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 #' @rdname as.mic
 #' @param mic_range A manual range to rescale the MIC values, e.g., `mic_range = c(0.001, 32)`. Use `NA` to prevent rescaling on one side, e.g., `mic_range = c(NA, 32)`.
 #' @export
-rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
+rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE, round_to_next_log2 = FALSE) {
   meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
   if (is.numeric(mic_range)) {
     mic_range <- trimws(format(mic_range, scientific = FALSE))
@@ -336,7 +346,7 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE) {
     x[x > max_mic] <- max_mic
   }
 
-  x <- as.mic(x, keep_operators = ifelse(keep_operators == "edges", "none", keep_operators))
+  x <- as.mic(x, keep_operators = ifelse(keep_operators == "edges", "none", keep_operators), round_to_next_log2 = round_to_next_log2)
 
   if (isTRUE(as.mic)) {
     if (keep_operators == "edges" && length(unique(x)) > 1) {
@@ -603,6 +613,24 @@ get_skimmers.mic <- function(column) {
     p100 = ~ stats::quantile(column, probs = 1, na.rm = TRUE, names = FALSE),
     hist = ~ skimr::inline_hist(log2(stats::na.omit(column)), 10)
   )
+}
+
+
+roundup_to_nearest_log2 <- function(x) {
+  x_dbl <- suppressWarnings(as.double(gsub("[>=<]", "", x)))
+  x_new <- vapply(
+    FUN.VALUE = double(1),
+    x_dbl,
+    function(val) {
+      if (is.na(val)) {
+        NA_real_
+      } else {
+        COMMON_MIC_VALUES[which(COMMON_MIC_VALUES >= val)][1]
+      }
+    }
+  )
+  x[!x_dbl %in% COMMON_MIC_VALUES] <- x_new[!x_dbl %in% COMMON_MIC_VALUES]
+  x
 }
 
 # Miscellaneous mathematical functions ------------------------------------

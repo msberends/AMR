@@ -399,7 +399,12 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
       args,
       list(
         aesthetics = aesthetics,
-        values = c(colours_SIR, NI = "grey30")
+        values = c(colours_SIR,
+          NI = "grey30",
+          WT = unname(colours_SIR[1]),
+          NWT = unname(colours_SIR[4]),
+          NS = unname(colours_SIR[4])
+        )
       )
     )
   }
@@ -424,6 +429,9 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
       x[x == "SI"] <- "(S/I) Susceptible"
       x[x == "IR"] <- "(I/R) Non-susceptible"
       x[x == "NI"] <- "(NI) Non-interpretable"
+      x[x == "WT"] <- "(WT) Wildtype"
+      x[x == "NWT"] <- "(NWT) Non-wildtype"
+      x[x == "NS"] <- "(NS) Non-susceptible"
       x <- translate_AMR(x, language = language)
     }
     x
@@ -537,10 +545,15 @@ plot.mic <- function(x,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
+  meet_criteria(breakpoint_type, allow_class = "character", is_in = AMR::clinical_breakpoints$type, has_length = 1)
 
   x <- as.mic(x) # make sure that currently implemented MIC levels are used
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   colours_SIR <- expand_SIR_colours(colours_SIR)
+
+  # wildtype/Non-wildtype
+  is_wt_nwt <- identical(breakpoint_type, "ECOFF")
 
   x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
@@ -572,8 +585,12 @@ plot.mic <- function(x,
   if (any(colours_SIR %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
-    if (any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
+    if (!is_wt_nwt & any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, "(S) Susceptible")
+      legend_col <- colours_SIR[1]
+    }
+    if (is_wt_nwt & any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
+      legend_txt <- c(legend_txt, "(WT) Wildtype")
       legend_col <- colours_SIR[1]
     }
     if (any(cols_sub$cols == colours_SIR[2] & cols_sub$count > 0)) {
@@ -584,8 +601,12 @@ plot.mic <- function(x,
       legend_txt <- c(legend_txt, paste("(I)", plot_name_of_I(cols_sub$guideline)))
       legend_col <- c(legend_col, colours_SIR[3])
     }
-    if (any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
+    if (!is_wt_nwt & any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, "(R) Resistant")
+      legend_col <- c(legend_col, colours_SIR[4])
+    }
+    if (is_wt_nwt & any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
+      legend_txt <- c(legend_txt, "(NWT) Non-wildtype")
       legend_col <- c(legend_col, colours_SIR[4])
     }
 
@@ -680,6 +701,8 @@ autoplot.mic <- function(object,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
+  meet_criteria(breakpoint_type, allow_class = "character", is_in = AMR::clinical_breakpoints$type, has_length = 1)
 
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -689,6 +712,9 @@ autoplot.mic <- function(object,
   }
 
   colours_SIR <- expand_SIR_colours(colours_SIR)
+
+  # wildtype/Non-wildtype
+  is_wt_nwt <- identical(breakpoint_type, "ECOFF")
 
   object <- as.mic(object) # make sure that currently implemented MIC levels are used
   x <- plotrange_as_table(object, expand = expand)
@@ -708,17 +734,21 @@ autoplot.mic <- function(object,
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("mic", "count")
   df$cols <- cols_sub$cols
-  df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
+  df$cols[df$cols == colours_SIR[1] & !is_wt_nwt] <- "(S) Susceptible"
+  df$cols[df$cols == colours_SIR[1] & is_wt_nwt] <- "(WT) Wildtype"
   df$cols[df$cols == colours_SIR[2]] <- "(SDD) Susceptible dose-dependent"
   df$cols[df$cols == colours_SIR[3]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
-  df$cols[df$cols == colours_SIR[4]] <- "(R) Resistant"
+  df$cols[df$cols == colours_SIR[4] & !is_wt_nwt] <- "(R) Resistant"
+  df$cols[df$cols == colours_SIR[4] & is_wt_nwt] <- "(NWT) Non-wildtype"
   df$cols <- factor(translate_into_language(df$cols, language = language),
     levels = translate_into_language(
       c(
         "(S) Susceptible",
         "(SDD) Susceptible dose-dependent",
         paste("(I)", plot_name_of_I(cols_sub$guideline)),
-        "(R) Resistant"
+        "(R) Resistant",
+        "(WT) Wildtype",
+        "(NWT) Non-wildtype"
       ),
       language = language
     ),
@@ -733,7 +763,9 @@ autoplot.mic <- function(object,
       "(I) Susceptible, incr. exp." = colours_SIR[3],
       "(I) Intermediate" = colours_SIR[3],
       "(R) Resistant" = colours_SIR[4],
-      "(NI) Non-interpretable" = "grey30"
+      "(NI) Non-interpretable" = "grey30",
+      "(WT) Wildtype" = colours_SIR[1],
+      "(NWT) Non-wildtype" = colours_SIR[4]
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
@@ -797,9 +829,14 @@ plot.disk <- function(x,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
+  meet_criteria(breakpoint_type, allow_class = "character", is_in = AMR::clinical_breakpoints$type, has_length = 1)
 
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   colours_SIR <- expand_SIR_colours(colours_SIR)
+
+  # wildtype/Non-wildtype
+  is_wt_nwt <- identical(breakpoint_type, "ECOFF")
 
   x <- plotrange_as_table(x, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
@@ -832,8 +869,12 @@ plot.disk <- function(x,
   if (any(colours_SIR %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
-    if (any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
+    if (!is_wt_nwt & any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
       legend_txt <- "(R) Resistant"
+      legend_col <- colours_SIR[4]
+    }
+    if (is_wt_nwt & any(cols_sub$cols == colours_SIR[4] & cols_sub$count > 0)) {
+      legend_txt <- "(NWT) Non-wildtype"
       legend_col <- colours_SIR[4]
     }
     if (any(cols_sub$cols == colours_SIR[3] & cols_sub$count > 0)) {
@@ -844,8 +885,12 @@ plot.disk <- function(x,
       legend_txt <- c(legend_txt, "(SDD) Susceptible dose-dependent")
       legend_col <- c(legend_col, colours_SIR[2])
     }
-    if (any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
+    if (!is_wt_nwt & any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, "(S) Susceptible")
+      legend_col <- c(legend_col, colours_SIR[1])
+    }
+    if (is_wt_nwt & any(cols_sub$cols == colours_SIR[1] & cols_sub$count > 0)) {
+      legend_txt <- c(legend_txt, "(WT) Wildtype")
       legend_col <- c(legend_col, colours_SIR[1])
     }
     legend("top",
@@ -879,6 +924,8 @@ barplot.disk <- function(height,
                          ),
                          language = get_AMR_locale(),
                          expand = TRUE,
+                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
+                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                          ...) {
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
@@ -889,6 +936,8 @@ barplot.disk <- function(height,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
+  meet_criteria(breakpoint_type, allow_class = "character", is_in = AMR::clinical_breakpoints$type, has_length = 1)
 
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
@@ -901,6 +950,10 @@ barplot.disk <- function(height,
     ab = ab,
     guideline = guideline,
     colours_SIR = colours_SIR,
+    language = language,
+    expand = expand,
+    include_PKPD = include_PKPD,
+    breakpoint_type = breakpoint_type,
     ...
   )
 }
@@ -947,6 +1000,9 @@ autoplot.disk <- function(object,
 
   colours_SIR <- expand_SIR_colours(colours_SIR)
 
+  # wildtype/Non-wildtype
+  is_wt_nwt <- identical(breakpoint_type, "ECOFF")
+
   x <- plotrange_as_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(
     x = x,
@@ -964,23 +1020,26 @@ autoplot.disk <- function(object,
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("disk", "count")
   df$cols <- cols_sub$cols
-  df$cols[df$cols == colours_SIR[1]] <- "(S) Susceptible"
+  df$cols[df$cols == colours_SIR[1] & !is_wt_nwt] <- "(S) Susceptible"
+  df$cols[df$cols == colours_SIR[1] & is_wt_nwt] <- "(WT) Wildtype"
   df$cols[df$cols == colours_SIR[2]] <- "(SDD) Susceptible dose-dependent"
   df$cols[df$cols == colours_SIR[3]] <- paste("(I)", plot_name_of_I(cols_sub$guideline))
-  df$cols[df$cols == colours_SIR[4]] <- "(R) Resistant"
+  df$cols[df$cols == colours_SIR[4] & !is_wt_nwt] <- "(R) Resistant"
+  df$cols[df$cols == colours_SIR[4] & is_wt_nwt] <- "(NWT) Non-wildtype"
   df$cols <- factor(translate_into_language(df$cols, language = language),
     levels = translate_into_language(
       c(
         "(S) Susceptible",
         paste("(I)", plot_name_of_I(cols_sub$guideline)),
-        "(R) Resistant"
+        "(R) Resistant",
+        "(WT) Wildtype",
+        "(NWT) Non-wildtype"
       ),
       language = language
     ),
     ordered = TRUE
   )
   p <- ggplot2::ggplot(df)
-
   if (any(colours_SIR %in% cols_sub$cols)) {
     vals <- c(
       "(S) Susceptible" = colours_SIR[1],
@@ -988,7 +1047,9 @@ autoplot.disk <- function(object,
       "(I) Susceptible, incr. exp." = colours_SIR[3],
       "(I) Intermediate" = colours_SIR[3],
       "(R) Resistant" = colours_SIR[4],
-      "(NI) Non-interpretable" = "grey30"
+      "(NI) Non-interpretable" = "grey30",
+      "(WT) Wildtype" = colours_SIR[1],
+      "(NWT) Non-wildtype" = colours_SIR[4]
     )
     names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
@@ -1036,25 +1097,25 @@ plot.sir <- function(x,
   data <- as.data.frame(table(x), stringsAsFactors = FALSE)
   colnames(data) <- c("x", "n")
   data$s <- round((data$n / sum(data$n)) * 100, 1)
+  data <- data[which(data$n > 0), ]
 
-  if (!"S" %in% data$x) {
-    data <- rbind_AMR(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE))
-  }
-  if (!"SDD" %in% data$x) {
-    data <- rbind_AMR(data, data.frame(x = "SDD", n = 0, s = 0, stringsAsFactors = FALSE))
-  }
-  if (!"I" %in% data$x) {
-    data <- rbind_AMR(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE))
-  }
-  if (!"R" %in% data$x) {
-    data <- rbind_AMR(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE))
-  }
-  if (!"NI" %in% data$x) {
-    data <- rbind_AMR(data, data.frame(x = "NI", n = 0, s = 0, stringsAsFactors = FALSE))
+  if (!all(data$x %in% c("WT", "NWT"), na.rm = TRUE)) {
+    # # be sure to have at least S, I, and R
+    if (!"S" %in% data$x) {
+      data <- rbind_AMR(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE))
+    }
+    if (!"I" %in% data$x) {
+      data <- rbind_AMR(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE))
+    }
+    if (!"R" %in% data$x) {
+      data <- rbind_AMR(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE))
+    }
+    lvls <- VALID_SIR_LEVELS[VALID_SIR_LEVELS %in% c(data$x, c("S", "I", "R"))]
+  } else {
+    lvls <- c("WT", "NWT")
   }
 
-  data <- data[!(data$n == 0 & data$x %in% c("SDD", "I", "NI")), , drop = FALSE]
-  data$x <- factor(data$x, levels = intersect(unique(data$x), c("S", "SDD", "I", "R", "NI")), ordered = TRUE)
+  data$x <- factor(data$x, levels = lvls, ordered = TRUE)
 
   ymax <- pm_if_else(max(data$s) > 95, 105, 100)
 
@@ -1069,7 +1130,7 @@ plot.sir <- function(x,
     axes = FALSE
   )
   # x axis
-  axis(side = 1, at = 1:pm_n_distinct(data$x), labels = levels(data$x), lwd = 0)
+  axis(side = 1, at = seq_along(lvls), labels = lvls, lwd = 0)
   # y axis, 0-100%
   axis(side = 2, at = seq(0, 100, 5))
 
@@ -1112,9 +1173,14 @@ barplot.sir <- function(height,
   main <- gsub(" +", " ", paste0(main, collapse = " "))
 
   x <- table(height)
-  # remove missing I, SDD, and N
-  colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
-  x <- x[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
+  if (all(height %in% c("WT", "NWT"), na.rm = TRUE)) {
+    colours_SIR <- colours_SIR[c(1, 4)]
+    x <- x[names(x) %in% c("WT", "NWT")]
+  } else {
+    # remove missing I, SDD, and N
+    colours_SIR <- colours_SIR[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
+    x <- x[!(names(x) %in% c("SDD", "I", "NI") & x == 0)]
+  }
   # plot it
   barplot(x,
     col = colours_SIR,
@@ -1160,6 +1226,11 @@ autoplot.sir <- function(object,
   df <- as.data.frame(table(object), stringsAsFactors = TRUE)
   colnames(df) <- c("x", "n")
   df <- df[!(df$n == 0 & df$x %in% c("SDD", "I", "NI")), , drop = FALSE]
+  if (all(object %in% c("WT", "NWT"), na.rm = TRUE)) {
+    df <- df[which(df$x %in% c("WT", "NWT")), ]
+  } else {
+    df <- df[which(!df$x %in% c("WT", "NWT", "NS")), ]
+  }
   ggplot2::ggplot(df) +
     ggplot2::geom_col(ggplot2::aes(x = x, y = n, fill = x)) +
     # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
@@ -1169,7 +1240,9 @@ autoplot.sir <- function(object,
         "SDD" = colours_SIR[2],
         "I" = colours_SIR[3],
         "R" = colours_SIR[4],
-        "NI" = "grey30"
+        "NI" = "grey30",
+        "WT" = colours_SIR[1],
+        "NWT" = colours_SIR[4]
       ),
       limits = force
     ) +
@@ -1298,6 +1371,9 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     cols[sir == "I"] <- colours_SIR[3]
     cols[sir == "R"] <- colours_SIR[4]
     cols[sir == "NI"] <- "grey30"
+    cols[sir == "WT"] <- colours_SIR[1]
+    cols[sir == "NWT"] <- colours_SIR[4]
+    cols[sir == "NS"] <- colours_SIR[4]
     sub <- bquote(.(abname) ~ "-" ~ italic(.(moname)) ~ .(guideline_txt))
   } else {
     cols <- "#BEBEBE"
