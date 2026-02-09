@@ -21,19 +21,21 @@ Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility test
 }
 }
 \usage{
-interpretive_rules(x, col_mo = NULL, guideline = getOption("AMR_guideline",
-  "EUCAST"), info = interactive(),
+interpretive_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), verbose = FALSE, version_breakpoints = 15,
+  "expected_phenotypes")), guideline = getOption("AMR_guideline", "EUCAST"),
+  verbose = FALSE, version_breakpoints = 15,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
   custom_rules = NULL, overwrite = FALSE, ...)
 
-eucast_rules(x, rules = getOption("AMR_interpretive_rules", default =
-  c("breakpoints", "expected_phenotypes")), ...)
+eucast_rules(x, col_mo = NULL, info = interactive(),
+  rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
+  "expected_phenotypes")), ...)
 
-clsi_rules(x, rules = getOption("AMR_interpretive_rules", default =
-  c("breakpoints", "expected_phenotypes")), ...)
+clsi_rules(x, col_mo = NULL, info = interactive(),
+  rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
+  "expected_phenotypes")), ...)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 }
@@ -42,11 +44,11 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{guideline}{A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}.}
-
 \item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.}
 
 \item{rules}{A \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expected_phenotypes"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expected_phenotypes")}. The default value can be set to another value using the package option \code{\link[=AMR-options]{AMR_interpretive_rules}}: \code{options(AMR_interpretive_rules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
+
+\item{guideline}{A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}.}
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 

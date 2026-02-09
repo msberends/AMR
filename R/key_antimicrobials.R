@@ -314,7 +314,9 @@ antimicrobials_equal <- function(y,
 
   key2sir <- function(val) {
     val <- strsplit(val, "", fixed = TRUE)[[1L]]
-    as.double(as.sir(val))
+    val.int <- rep(NA_real_, length(val))
+    val.int[val %in% VALID_SIR_LEVELS] <- as.double(as.sir(val[val %in% VALID_SIR_LEVELS]))
+    val.int
   }
   # only run on uniques
   uniq <- unique(c(y, z))

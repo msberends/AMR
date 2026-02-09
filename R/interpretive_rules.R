@@ -164,9 +164,9 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' eucast_dosage(c("tobra", "genta", "cipro"), "iv", version_breakpoints = 10)
 interpretive_rules <- function(x,
                                col_mo = NULL,
-                               guideline = getOption("AMR_guideline", "EUCAST"),
                                info = interactive(),
                                rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
+                               guideline = getOption("AMR_guideline", "EUCAST"),
                                verbose = FALSE,
                                version_breakpoints = 15.0,
                                version_expected_phenotypes = 1.2,
@@ -189,6 +189,11 @@ interpretive_rules <- function(x,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
   meet_criteria(overwrite, allow_class = "logical", has_length = 1)
+
+  stop_if(
+    guideline == "CLSI",
+    "CLSI guideline is not yet supported."
+  )
 
   stop_if(
     !is.na(ampc_cephalosporin_resistance) && !any(c("expert", "all") %in% rules),
@@ -1103,20 +1108,24 @@ interpretive_rules <- function(x,
 #' @rdname interpretive_rules
 #' @export
 eucast_rules <- function(x,
+                         col_mo = NULL,
+                         info = interactive(),
                          rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
                          ...) {
   if (!is.null(getOption("AMR_eucastrules", default = NULL))) {
     warning_("The global option `AMR_eucastrules` that you have set is now invalid was ignored - set `AMR_interpretive_rules` instead. See `?AMR-options`.")
   }
-  interpretive_rules(x = x, guideline = "EUCAST", rules = rules, ...)
+  interpretive_rules(x = x, col_mo = col_mo, info = info, rules = rules, guideline = "EUCAST", ...)
 }
 
 #' @rdname interpretive_rules
 #' @export
 clsi_rules <- function(x,
+                       col_mo = NULL,
+                       info = interactive(),
                        rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
                        ...) {
-  interpretive_rules(x = x, guideline = "CLSI", rules = rules, ...)
+  interpretive_rules(x = x, col_mo = col_mo, info = info, rules = rules, guideline = "CLSI", ...)
 }
 
 # helper function for editing the table ----

@@ -354,11 +354,11 @@ test_that("test-sir.R", {
     mo = mo_name(rep(c("B_ESCHR_COLI", "B_PSTRL_MLTC", "B_MNNHM_HMLY"), 4)[-1])
   )
 
-  out_vet <- as.sir(vet, host = vet$animal, guideline = "CLSI 2023")
+  out_vet <- suppressWarnings(as.sir(vet, host = vet$animal, guideline = "CLSI 2023"))
   # give host column name instead of values
   expect_identical(
     out_vet,
-    as.sir(vet, host = "animal", guideline = "CLSI 2023")
+    suppressWarnings(as.sir(vet, host = "animal", guideline = "CLSI 2023"))
   )
 
   # check outcomes
@@ -384,8 +384,12 @@ test_that("test-sir.R", {
   # ECOFF -----------------------------------------------------------------
 
   expect_equal(
-    suppressMessages(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", breakpoint_type = "ECOFF")),
-    as.sir("S")
+    suppressMessages(as.sir(as.mic(c(2, 32)), "E. coli", "ampicillin", guideline = "EUCAST 2020", breakpoint_type = "ECOFF")),
+    as.sir(c("WT", "NWT")) # since ECOFF returns WT/NWT at default
+  )
+  expect_equal(
+    suppressMessages(as.sir(as.mic(c(2, 32)), "E. coli", "ampicillin", guideline = "EUCAST 2020", breakpoint_type = "ECOFF", as_wt_nwt = FALSE)),
+    as.sir(c("S", "R"))
   )
   # old method
   expect_warning(as.sir(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020", ecoff = TRUE))
@@ -397,10 +401,10 @@ test_that("test-sir.R", {
   out2 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "conservative")
   out3 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "standard")
   out4 <- as.sir(as.mic(c("0.125", "<0.125", ">0.125")), mo = "E. coli", ab = "Cipro", guideline = "EUCAST 2025", breakpoint_type = "ECOFF", capped_mic_handling = "lenient")
-  expect_equal(out1, as.sir(c("R", "R", "R")))
-  expect_equal(out2, as.sir(c("R", "NI", "R")))
-  expect_equal(out3, as.sir(c("R", "S", "R")))
-  expect_equal(out4, as.sir(c("R", "S", "R")))
+  expect_equal(out1, as.sir(c("NWT", "NWT", "NWT")))
+  expect_equal(out2, as.sir(c("NWT", "NI", "NWT")))
+  expect_equal(out3, as.sir(c("NWT", "WT", "NWT")))
+  expect_equal(out4, as.sir(c("NWT", "WT", "NWT")))
 
   # Parallel computing ----------------------------------------------------
 
