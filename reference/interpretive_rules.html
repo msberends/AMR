@@ -13,7 +13,7 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9020</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,19 +64,21 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">interpretive_rules</span><span class="op">(</span><span class="va">x</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>,</span>
-<span>  <span class="st">"EUCAST"</span><span class="op">)</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">interpretive_rules</span><span class="op">(</span><span class="va">x</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_interpretive_rules"</span>, default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>,</span>
-<span>  <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, version_breakpoints <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, version_breakpoints <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  version_expected_phenotypes <span class="op">=</span> <span class="fl">1.2</span>, version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,</span>
 <span>  ampc_cephalosporin_resistance <span class="op">=</span> <span class="cn">NA</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  custom_rules <span class="op">=</span> <span class="cn">NULL</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">eucast_rules</span><span class="op">(</span><span class="va">x</span>, rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_interpretive_rules"</span>, default <span class="op">=</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>, <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">eucast_rules</span><span class="op">(</span><span class="va">x</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_interpretive_rules"</span>, default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>,</span>
+<span>  <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">clsi_rules</span><span class="op">(</span><span class="va">x</span>, rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_interpretive_rules"</span>, default <span class="op">=</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>, <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">clsi_rules</span><span class="op">(</span><span class="va">x</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_interpretive_rules"</span>, default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>,</span>
+<span>  <span class="st">"expected_phenotypes"</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="va">ab</span>, administration <span class="op">=</span> <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -106,16 +108,16 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <dd><p>Column name of the names or codes of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>) - the default is the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
 
-<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>.</p></dd>
-
-
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.</p></dd>
 
 
 <dt id="arg-rules">rules<a class="anchor" aria-label="anchor" href="#arg-rules"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expected_phenotypes"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expected_phenotypes")</code>. The default value can be set to another value using the package option <code><a href="AMR-options.html">AMR_interpretive_rules</a></code>: <code>options(AMR_interpretive_rules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
+
+
+<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
+<dd><p>A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

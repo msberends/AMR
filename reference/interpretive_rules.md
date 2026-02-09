@@ -22,19 +22,21 @@ at default, see *Details*.
 ## Usage
 
 ``` r
-interpretive_rules(x, col_mo = NULL, guideline = getOption("AMR_guideline",
-  "EUCAST"), info = interactive(),
+interpretive_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), verbose = FALSE, version_breakpoints = 15,
+  "expected_phenotypes")), guideline = getOption("AMR_guideline", "EUCAST"),
+  verbose = FALSE, version_breakpoints = 15,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
   custom_rules = NULL, overwrite = FALSE, ...)
 
-eucast_rules(x, rules = getOption("AMR_interpretive_rules", default =
-  c("breakpoints", "expected_phenotypes")), ...)
+eucast_rules(x, col_mo = NULL, info = interactive(),
+  rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
+  "expected_phenotypes")), ...)
 
-clsi_rules(x, rules = getOption("AMR_interpretive_rules", default =
-  c("breakpoints", "expected_phenotypes")), ...)
+clsi_rules(x, col_mo = NULL, info = interactive(),
+  rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
+  "expected_phenotypes")), ...)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 ```
@@ -87,12 +89,6 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   [`mo`](https://amr-for-r.org/reference/as.mo.md). Values will be
   coerced using [`as.mo()`](https://amr-for-r.org/reference/as.mo.md).
 
-- guideline:
-
-  A guideline name, either "EUCAST" (default) or "CLSI". This can be set
-  with the package option
-  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md).
-
 - info:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
@@ -112,6 +108,12 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   sure to fill in argument `custom_rules` too. Custom rules can be
   created with
   [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md).
+
+- guideline:
+
+  A guideline name, either "EUCAST" (default) or "CLSI". This can be set
+  with the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md).
 
 - verbose:
 

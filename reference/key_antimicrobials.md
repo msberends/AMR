@@ -195,14 +195,10 @@ strainB <- "SSSIRSSSRSSS"
 
 # those strings can be compared with:
 antimicrobials_equal(strainA, strainB, type = "keyantimicrobials")
-#> Warning: in `as.sir()`: 4 results truncated (33%) that were invalid antimicrobial
-#> interpretations: "."
 #> [1] TRUE
 # TRUE, because I is ignored (as well as missing values)
 
 antimicrobials_equal(strainA, strainB, type = "keyantimicrobials", ignore_I = FALSE)
-#> Warning: in `as.sir()`: 4 results truncated (33%) that were invalid antimicrobial
-#> interpretations: "."
 #> [1] FALSE
 # FALSE, because I is not ignored and so the 4th [character] differs
 
@@ -222,14 +218,6 @@ if (require("dplyr")) {
   sum(my_patients$first_regular, na.rm = TRUE)
   sum(my_patients$first_weighted, na.rm = TRUE)
 }
-#> Warning: There were 823 warnings in `mutate()`.
-#> The first warning was:
-#> ℹ In argument: `first_weighted = first_isolate(col_keyantimicrobials =
-#>   "keyab")`.
-#> Caused by warning:
-#> ! in `as.sir()`: 1 result in column 'first_weighted' truncated (8%) that were
-#> invalid antimicrobial interpretations: "."
-#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 822 remaining warnings.
 #> [1] 1383
 # }
 ```

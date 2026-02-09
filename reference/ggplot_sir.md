@@ -267,13 +267,6 @@ if (require("ggplot2") && require("dplyr")) {
     select(age_group, CIP) %>%
     ggplot_sir(x = "age_group")
 }
-#> Warning: There were 1131 warnings in `mutate()`.
-#> The first warning was:
-#> ℹ In argument: `first_isolate = first_isolate()`.
-#> Caused by warning:
-#> ! in `as.sir()`: 7 results in column 'first_isolate' truncated (18%) that
-#> were invalid antimicrobial interpretations: "."
-#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 1130 remaining warnings.
 #> Warning: Removed 6 rows containing missing values or values outside the scale range
 #> (`geom_col()`).
 #> Warning: Removed 6 rows containing missing values or values outside the scale range
