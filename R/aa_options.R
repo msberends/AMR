@@ -29,8 +29,11 @@
 
 #' Options for the AMR package
 #'
-#' This is an overview of all the package-specific [options()] you can set in the `AMR` package.
-#' @section Options:
+#' @description
+#' This is an overview of all the package-specific options you can set in the `AMR` package. Set them using the [options()] function, e.g.:
+#'
+#' `options(AMR_guideline = "CLSI")`
+#' @section Options (alphabetical order):
 #' * `AMR_antibiogram_formatting_type` \cr A [numeric] (1-22) to use in [antibiogram()], to indicate which formatting type to use.
 #' * `AMR_breakpoint_type` \cr A [character] to use in [as.sir()], to indicate which breakpoint type to use. This must be either `r vector_or(clinical_breakpoints$type)`.
 #' * `AMR_capped_mic_handling` \cr A [character] to use in [as.sir()], to indicate how capped MIC values (`<`, `<=`, `>`, `>=`) should be interpreted. Must be one of `"none"`, `"conservative"`, `"standard"`, or `"lenient"` - the default is `"conservative"`.
@@ -38,6 +41,15 @@
 #' * `AMR_custom_ab` \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in [add_custom_antimicrobials()].
 #' * `AMR_custom_mo` \cr A file location to an RDS file, to use custom microorganisms with this package. This is explained in [add_custom_microorganisms()].
 #' * `AMR_eucastrules` \cr A [character] to set the default types of rules for [eucast_rules()] function, must be one or more of: `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`.
+#' * `AMR_guideline` \cr A [character] to set the default guideline used throughout the `AMR` package wherever a `guideline` argument is available. This option is used as the default in e.g. [as.sir()], [resistance()], [susceptibility()], [interpretive_rules()] and many plotting functions. **While unset**, the AMR package uses the latest implemented EUCAST guideline (currently `r AMR::clinical_breakpoints$guideline[1]`).
+#'
+#'   - For [as.sir()], this determines which clinical breakpoint guideline is used to interpret MIC values and disk diffusion diameters. It can be either the guideline name (e.g., `"CLSI"` or `"EUCAST"`) or the name including a year (e.g., `"CLSI 2019"`). Supported guidelines are EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` to `r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))` to `r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`.
+#'
+#'   - For [resistance()] and [susceptibility()], this setting determines how the `"I"` (Intermediate / Increased exposure) category is handled in calculations. Under CLSI, `"I"` is considered *resistant* in susceptibility calculations; under EUCAST, `"I"` is considered *susceptible* in susceptibility calculations. Explicitly setting this option ensures reproducible AMR proportion estimates.
+#'
+#'   - For [interpretive_rules()], this determines which guideline-specific interpretive (expert) rules are applied to antimicrobial test results, either EUCAST or CLSI.
+#'
+#'   - For many plotting functions (e.g., for MIC or disk diffusion values), supplying `mo` and `ab` enables automatic SIR-based interpretative colouring. These colours are derived from [as.sir()] in the background and therefore depend on the active `guideline` setting, which again uses `r AMR::clinical_breakpoints$guideline[1]` if not set explicitly.
 #' * `AMR_guideline` \cr A [character] to set the default guideline for interpreting MIC values and disk diffusion diameters with [as.sir()]. Can be only the guideline name (e.g., `"CLSI"`) or the name with a year (e.g. `"CLSI 2019"`). The default to the latest implemented EUCAST guideline, currently \code{"`r clinical_breakpoints$guideline[1]`"}. Supported guideline are currently EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #' * `AMR_ignore_pattern` \cr A [regular expression][base::regex] to ignore (i.e., make `NA`) any match given in [as.mo()] and all [`mo_*`][mo_property()] functions.
 #' * `AMR_include_PKPD` \cr A [logical] to use in [as.sir()], to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`.
@@ -63,9 +75,9 @@
 #'
 #' ...to add Portuguese language support of antimicrobials, and allow PK/PD rules when interpreting MIC values with [as.sir()].
 #'
-#' ### Share Options Within Team
+#' ## Share Options Within Team
 #'
-#' For a more global approach, e.g. within a (data) team, save an options file to a remote file location, such as a shared network drive, and have each user read in this file automatically at start-up. This would work in this way:
+#' For a more collaborative approach, e.g. within a (data) team, save an options file to a remote file location, such as a shared network drive, and have each user read in this file automatically at start-up. This would work in this way:
 #'
 #' 1. Save a plain text file to e.g. "X:/team_folder/R_options.R" and fill it with preferred settings.
 #'

@@ -1,4 +1,4 @@
-# AMR 3.0.1.9020
+# AMR 3.0.1.9021
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -18,13 +18,14 @@
 
 ### Fixes
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
-* Fixed a bug in `as.sir()` where for numeric input the arguments `S`,  `i`,  and `R` would not be considered (#244)
+* Fixed a bug in `as.sir()` where for numeric input the arguments `S`,  `I`,  and `R` would not be considered (#244)
 * Fixed some foreign translations of antimicrobial drugs
 * Fixed a bug for printing column names to the console when using `mutate_at(vars(...), as.mic)` (#249)
 * Fixed a bug to disregard `NI` for susceptibility proportion functions
 * Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo and CoPS to Stafilococco coagulasi-positivo (#256)
 
 ### Updates
+* `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.
 * `as.mic()` and `rescale_mic()` gained the argument `round_to_next_log2`, which can be set to `TRUE` to round all values up to the nearest next log2 level (#255)
 * `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)
 * `ab_group()` gained an argument `all_groups` to return all groups the antimicrobial drug is in (#246)

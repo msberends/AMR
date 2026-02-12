@@ -247,9 +247,9 @@ Regarding choice of veterinary guidelines, these might be the best options to se
 
 \subsection{After Interpretation}{
 
-After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=eucast_rules]{eucast_rules()}} defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+After using \code{\link[=as.sir]{as.sir()}}, you can use the \code{\link[=interpretive_rules]{interpretive_rules()}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 
-To determine which isolates are multi-drug resistant, be sure to run \code{\link[=mdro]{mdro()}} (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about \link[=mdro]{interpreting multidrug-resistant organisms here}.
+To determine which isolates are multi-drug resistant, be sure to run \code{\link[=mdro]{mdro()}} (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about \link[=mdro]{detecting multidrug-resistant organisms here}.
 }
 
 \subsection{Other}{

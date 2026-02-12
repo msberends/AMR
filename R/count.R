@@ -33,13 +33,16 @@
 #'
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
 #' @param ... One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed.
+#' @param guideline Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category will be considered as susceptible (see [EUCAST website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)), but with with CLSI, it will be considered resistant. Therefore:
+#'   * EUCAST: [count_susceptible()] \eqn{= N_{S} + N_{I}}, [count_resistant()] \eqn{= N_{R}}
+#'   * CLSI: [count_susceptible()] \eqn{= N_{S} + N_{SDD}}, [count_resistant()] \eqn{= N_{I} + N_{R}}
+#'
+#' You can also use e.g. [count_R()] or [count_S()] instead, to be explicit.
 #' @inheritParams proportion
 #' @inheritSection as.sir Interpretation of SIR
 #' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.
 #'
-#' The function [count_resistant()] is equal to the function [count_R()]. The function [count_susceptible()] is equal to the function [count_SI()].
-#'
-#' The function [n_sir()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
+#' The function [n_sir()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to `dplyr`'s `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
 #' The function [count_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [sir_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
 #' @inheritSection proportion Combination Therapy
@@ -119,10 +122,21 @@
 #'     count_df(translate = FALSE)
 #' }
 #' }
-count_resistant <- function(..., only_all_tested = FALSE) {
+count_resistant <- function(...,
+                            only_all_tested = FALSE,
+                            guideline = getOption("AMR_guideline", "EUCAST")) {
+  # other arguments for meet_criteria are handled by sir_calc()
+  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
+  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("count_resistant", "eucast_default", entire_session = TRUE)) {
+    message_("`count_resistant()` assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the `guideline` argument or the `AMR_guideline` option to either \"CLSI\" or \"EUCAST\", see `?AMR-options`.")
+    message_("This message will be shown once per session.")
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = c("R", "NWT", "NS"),
+      ab_result = c(
+        "R", "NWT", "NS",
+        if (identical(guideline, "CLSI")) "I"
+      ),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
@@ -132,10 +146,21 @@ count_resistant <- function(..., only_all_tested = FALSE) {
 
 #' @rdname count
 #' @export
-count_susceptible <- function(..., only_all_tested = FALSE) {
+count_susceptible <- function(...,
+                              only_all_tested = FALSE,
+                              guideline = getOption("AMR_guideline", "EUCAST")) {
+  # other arguments for meet_criteria are handled by sir_calc()
+  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
+  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("count_susceptible", "eucast_default", entire_session = TRUE)) {
+    message_("`count_susceptible()` assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the `guideline` argument or the `AMR_guideline` option to either \"CLSI\" or \"EUCAST\", see `?AMR-options`.")
+    message_("This message will be shown once per session.")
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I", "WT"),
+      ab_result = c(
+        "S", "SDD", "WT",
+        if (identical(guideline, "EUCAST")) "I"
+      ),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),

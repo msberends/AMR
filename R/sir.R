@@ -156,9 +156,9 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #'
 #' ### After Interpretation
 #'
-#' After using [as.sir()], you can use the [eucast_rules()] defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+#' After using [as.sir()], you can use the [interpretive_rules()] to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'
-#' To determine which isolates are multi-drug resistant, be sure to run [mdro()] (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about [interpreting multidrug-resistant organisms here][mdro()].
+#' To determine which isolates are multi-drug resistant, be sure to run [mdro()] (which applies the MDR/PDR/XDR guideline from 2012 at default) on a data set that contains S/I/R values. Read more about [detecting multidrug-resistant organisms here][mdro()].
 #'
 #' ### Other
 #'

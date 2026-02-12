@@ -14,9 +14,11 @@
 \alias{count_df}
 \title{Count Available Isolates}
 \usage{
-count_resistant(..., only_all_tested = FALSE)
+count_resistant(..., only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST"))
 
-count_susceptible(..., only_all_tested = FALSE)
+count_susceptible(..., only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST"))
 
 count_S(..., only_all_tested = FALSE)
 
@@ -40,6 +42,14 @@ count_df(data, translate_ab = "name", language = get_AMR_locale(),
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below.}
 
+\item{guideline}{Either \code{"EUCAST"} (default) or \code{"CLSI"}. With EUCAST, the 'I' category will be considered as susceptible (see \href{https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/}{EUCAST website}), but with with CLSI, it will be considered resistant. Therefore:
+\itemize{
+\item EUCAST: \code{\link[=count_susceptible]{count_susceptible()}} \eqn{= N_{S} + N_{I}}, \code{\link[=count_resistant]{count_resistant()}} \eqn{= N_{R}}
+\item CLSI: \code{\link[=count_susceptible]{count_susceptible()}} \eqn{= N_{S} + N_{SDD}}, \code{\link[=count_resistant]{count_resistant()}} \eqn{= N_{I} + N_{R}}
+}
+
+You can also use e.g. \code{\link[=count_R]{count_R()}} or \code{\link[=count_S]{count_S()}} instead, to be explicit.}
+
 \item{data}{A \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}).}
 
 \item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
@@ -59,9 +69,7 @@ These functions can be used to count resistant/susceptible microbial isolates. A
 \details{
 These functions are meant to count isolates. Use the \code{\link[=resistance]{resistance()}}/\code{\link[=susceptibility]{susceptibility()}} functions to calculate microbial resistance/susceptibility.
 
-The function \code{\link[=count_resistant]{count_resistant()}} is equal to the function \code{\link[=count_R]{count_R()}}. The function \code{\link[=count_susceptible]{count_susceptible()}} is equal to the function \code{\link[=count_SI]{count_SI()}}.
-
-The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
+The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to \code{dplyr}'s \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
 The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=sir_df]{sir_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }

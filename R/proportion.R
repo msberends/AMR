@@ -38,6 +38,11 @@
 #' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antimicrobials, see section *Combination Therapy* below.
 #' @param data A [data.frame] containing columns with class [`sir`] (see [as.sir()]).
 #' @param translate_ab A column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()].
+#' @param guideline Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category will be considered as susceptible (see [EUCAST website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)), but with with CLSI, it will be considered resistant. Therefore:
+#'   * EUCAST: [susceptibility()] \eqn{= \%S + \%I}, [resistance()] \eqn{= \%R}
+#'   * CLSI: [susceptibility()] \eqn{= \%S + \%SDD}, [resistance()] \eqn{= \%I + \%R}
+#'
+#' You can also use e.g. [proportion_R()] or [proportion_S()] instead, to be explicit.
 #' @inheritParams ab_property
 #' @param combine_SI A [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is `TRUE`.
 #' @param ab_result Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R".
@@ -228,10 +233,20 @@
 resistance <- function(...,
                        minimum = 30,
                        as_percent = FALSE,
-                       only_all_tested = FALSE) {
+                       only_all_tested = FALSE,
+                       guideline = getOption("AMR_guideline", "EUCAST")) {
+  # other arguments for meet_criteria are handled by sir_calc()
+  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
+  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("resistance", "eucast_default", entire_session = TRUE)) {
+    message_("`resistance()` assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the `guideline` argument or the `AMR_guideline` option to either \"CLSI\" or \"EUCAST\", see `?AMR-options`.")
+    message_("This message will be shown once per session.")
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = c("R", "NWT", "NS"),
+      ab_result = c(
+        "R", "NWT", "NS",
+        if (identical(guideline, "CLSI")) "I"
+      ),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
@@ -246,10 +261,20 @@ resistance <- function(...,
 susceptibility <- function(...,
                            minimum = 30,
                            as_percent = FALSE,
-                           only_all_tested = FALSE) {
+                           only_all_tested = FALSE,
+                           guideline = getOption("AMR_guideline", "EUCAST")) {
+  # other arguments for meet_criteria are handled by sir_calc()
+  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
+  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("susceptibility", "eucast_default", entire_session = TRUE)) {
+    message_("`susceptibility()` assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the `guideline` argument or the `AMR_guideline` option to either \"CLSI\" or \"EUCAST\", see `?AMR-options`.")
+    message_("This message will be shown once per session.")
+  }
   tryCatch(
     sir_calc(...,
-      ab_result = c("S", "SDD", "I", "WT"),
+      ab_result = c(
+        "S", "SDD", "WT",
+        if (identical(guideline, "EUCAST")) "I"
+      ),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,

@@ -30,8 +30,10 @@
 test_that("test-count.R", {
   skip_on_cran()
 
-  expect_equal(count_resistant(example_isolates$AMX), count_R(example_isolates$AMX))
-  expect_equal(count_susceptible(example_isolates$AMX), count_SI(example_isolates$AMX))
+  expect_equal(count_R(example_isolates$AMX), count_resistant(example_isolates$AMX))
+  expect_equal(count_SI(example_isolates$AMX), count_susceptible(example_isolates$AMX))
+  expect_equal(count_IR(example_isolates$AMX), count_resistant(example_isolates$AMX, guideline = "CLSI"))
+  expect_equal(count_S(example_isolates$AMX), count_susceptible(example_isolates$AMX, guideline = "CLSI"))
   expect_equal(count_all(example_isolates$AMX), n_sir(example_isolates$AMX))
 
   # AMX resistance in `example_isolates`

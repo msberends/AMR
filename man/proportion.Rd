@@ -19,10 +19,12 @@
 }
 \usage{
 resistance(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
+  "EUCAST"))
 
 susceptibility(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
+  "EUCAST"))
 
 sir_confidence_interval(..., ab_result = "R", minimum = 30,
   as_percent = FALSE, only_all_tested = FALSE, confidence_level = 0.95,
@@ -59,6 +61,14 @@ sir_df(data, translate_ab = "name", language = get_AMR_locale(),
 \item{as_percent}{A \link{logical} to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see section \emph{Combination Therapy} below.}
+
+\item{guideline}{Either \code{"EUCAST"} (default) or \code{"CLSI"}. With EUCAST, the 'I' category will be considered as susceptible (see \href{https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/}{EUCAST website}), but with with CLSI, it will be considered resistant. Therefore:
+\itemize{
+\item EUCAST: \code{\link[=susceptibility]{susceptibility()}} \eqn{= \%S + \%I}, \code{\link[=resistance]{resistance()}} \eqn{= \%R}
+\item CLSI: \code{\link[=susceptibility]{susceptibility()}} \eqn{= \%S + \%SDD}, \code{\link[=resistance]{resistance()}} \eqn{= \%I + \%R}
+}
+
+You can also use e.g. \code{\link[=proportion_R]{proportion_R()}} or \code{\link[=proportion_S]{proportion_S()}} instead, to be explicit.}
 
 \item{ab_result}{Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R".}
 

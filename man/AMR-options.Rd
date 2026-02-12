@@ -4,9 +4,11 @@
 \alias{AMR-options}
 \title{Options for the AMR package}
 \description{
-This is an overview of all the package-specific \code{\link[=options]{options()}} you can set in the \code{AMR} package.
+This is an overview of all the package-specific options you can set in the \code{AMR} package. Set them using the \code{\link[=options]{options()}} function, e.g.:
+
+\code{options(AMR_guideline = "CLSI")}
 }
-\section{Options}{
+\section{Options (alphabetical order)}{
 
 \itemize{
 \item \code{AMR_antibiogram_formatting_type} \cr A \link{numeric} (1-22) to use in \code{\link[=antibiogram]{antibiogram()}}, to indicate which formatting type to use.
@@ -16,6 +18,13 @@ This is an overview of all the package-specific \code{\link[=options]{options()}
 \item \code{AMR_custom_ab} \cr A file location to an RDS file, to use custom antimicrobial drugs with this package. This is explained in \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
 \item \code{AMR_custom_mo} \cr A file location to an RDS file, to use custom microorganisms with this package. This is explained in \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}}.
 \item \code{AMR_eucastrules} \cr A \link{character} to set the default types of rules for \code{\link[=eucast_rules]{eucast_rules()}} function, must be one or more of: \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}.
+\item \code{AMR_guideline} \cr A \link{character} to set the default guideline used throughout the \code{AMR} package wherever a \code{guideline} argument is available. This option is used as the default in e.g. \code{\link[=as.sir]{as.sir()}}, \code{\link[=resistance]{resistance()}}, \code{\link[=susceptibility]{susceptibility()}}, \code{\link[=interpretive_rules]{interpretive_rules()}} and many plotting functions. \strong{While unset}, the AMR package uses the latest implemented EUCAST guideline (currently EUCAST 2025).
+\itemize{
+\item For \code{\link[=as.sir]{as.sir()}}, this determines which clinical breakpoint guideline is used to interpret MIC values and disk diffusion diameters. It can be either the guideline name (e.g., \code{"CLSI"} or \code{"EUCAST"}) or the name including a year (e.g., \code{"CLSI 2019"}). Supported guidelines are EUCAST 2011 to 2025, and CLSI 2011 to 2025.
+\item For \code{\link[=resistance]{resistance()}} and \code{\link[=susceptibility]{susceptibility()}}, this setting determines how the \code{"I"} (Intermediate / Increased exposure) category is handled in calculations. Under CLSI, \code{"I"} is considered \emph{resistant} in susceptibility calculations; under EUCAST, \code{"I"} is considered \emph{susceptible} in susceptibility calculations. Explicitly setting this option ensures reproducible AMR proportion estimates.
+\item For \code{\link[=interpretive_rules]{interpretive_rules()}}, this determines which guideline-specific interpretive (expert) rules are applied to antimicrobial test results, either EUCAST or CLSI.
+\item For many plotting functions (e.g., for MIC or disk diffusion values), supplying \code{mo} and \code{ab} enables automatic SIR-based interpretative colouring. These colours are derived from \code{\link[=as.sir]{as.sir()}} in the background and therefore depend on the active \code{guideline} setting, which again uses EUCAST 2025 if not set explicitly.
+}
 \item \code{AMR_guideline} \cr A \link{character} to set the default guideline for interpreting MIC values and disk diffusion diameters with \code{\link[=as.sir]{as.sir()}}. Can be only the guideline name (e.g., \code{"CLSI"}) or the name with a year (e.g. \code{"CLSI 2019"}). The default to the latest implemented EUCAST guideline, currently \code{"EUCAST 2025"}. Supported guideline are currently EUCAST (2011-2025) and CLSI (2011-2025).
 \item \code{AMR_ignore_pattern} \cr A \link[base:regex]{regular expression} to ignore (i.e., make \code{NA}) any match given in \code{\link[=as.mo]{as.mo()}} and all \code{\link[=mo_property]{mo_*}} functions.
 \item \code{AMR_include_PKPD} \cr A \link{logical} to use in \code{\link[=as.sir]{as.sir()}}, to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}.
@@ -43,7 +52,7 @@ In this file, you can set options such as...
 ...to add Portuguese language support of antimicrobials, and allow PK/PD rules when interpreting MIC values with \code{\link[=as.sir]{as.sir()}}.
 \subsection{Share Options Within Team}{
 
-For a more global approach, e.g. within a (data) team, save an options file to a remote file location, such as a shared network drive, and have each user read in this file automatically at start-up. This would work in this way:
+For a more collaborative approach, e.g. within a (data) team, save an options file to a remote file location, such as a shared network drive, and have each user read in this file automatically at start-up. This would work in this way:
 \enumerate{
 \item Save a plain text file to e.g. "X:/team_folder/R_options.R" and fill it with preferred settings.
 \item For each user, open the \code{.Rprofile} file using \code{utils::file.edit("~/.Rprofile")} and put in there:

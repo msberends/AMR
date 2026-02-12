@@ -32,6 +32,8 @@ test_that("test-proportion.R", {
 
   expect_equal(proportion_R(example_isolates$AMX), resistance(example_isolates$AMX))
   expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX))
+  expect_equal(proportion_IR(example_isolates$AMX), resistance(example_isolates$AMX, guideline = "CLSI"))
+  expect_equal(proportion_S(example_isolates$AMX), susceptibility(example_isolates$AMX, guideline = "CLSI"))
   # AMX resistance in `example_isolates`
   expect_equal(proportion_R(example_isolates$AMX), 0.5955556, tolerance = 0.0001)
   expect_equal(proportion_I(example_isolates$AMX), 0.002222222, tolerance = 0.0001)
