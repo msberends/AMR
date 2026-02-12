@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9021</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -738,6 +738,10 @@ into a structured time-series format.</p>
 <span>            .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">res_AMX</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">res_AMC</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">res_CIP</span><span class="op">)</span><span class="op">)</span> <span class="co"># Drop missing values</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">ℹ Using column '</span><span style="color: #0000BB; font-weight: bold;">mo</span><span style="color: #0000BB;">' as input for </span><span style="color: #0000BB; background-color: #444444;">`col_mo`</span><span style="color: #0000BB;">.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ </span><span style="color: #0000BB; background-color: #444444;">`resistance()`</span><span style="color: #0000BB;"> assumes the EUCAST guideline and thus considers the 'I'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   category susceptible. Set the </span><span style="color: #0000BB; background-color: #444444;">`guideline`</span><span style="color: #0000BB;"> argument or the </span><span style="color: #0000BB; background-color: #444444;">`AMR_guideline`</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   option to either "CLSI" or "EUCAST", see </span><span style="color: #0000BB; background-color: #444444;">`?AMR-options`</span><span style="color: #0000BB;">.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ This message will be shown once per session.</span></span></span>
 <span></span>
 <span><span class="va">data_time</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 5</span></span></span>

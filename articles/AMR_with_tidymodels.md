@@ -636,6 +636,10 @@ data_time <- example_isolates %>%
             .groups = "drop") %>% 
   filter(!is.na(res_AMX) & !is.na(res_AMC) & !is.na(res_CIP)) # Drop missing values
 #> ℹ Using column 'mo' as input for `col_mo`.
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 
 data_time
 #> # A tibble: 32 × 5

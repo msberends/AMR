@@ -1,10 +1,12 @@
 # Options for the AMR package
 
-This is an overview of all the package-specific
-[`options()`](https://rdrr.io/r/base/options.html) you can set in the
-`AMR` package.
+This is an overview of all the package-specific options you can set in
+the `AMR` package. Set them using the
+[`options()`](https://rdrr.io/r/base/options.html) function, e.g.:
 
-## Options
+`options(AMR_guideline = "CLSI")`
+
+## Options (alphabetical order)
 
 - `AMR_antibiogram_formatting_type`  
   A [numeric](https://rdrr.io/r/base/numeric.html) (1-22) to use in
@@ -51,6 +53,46 @@ This is an overview of all the package-specific
   function, must be one or more of: `"breakpoints"`, `"expert"`,
   `"other"`, `"custom"`, `"all"`, and defaults to
   `c("breakpoints", "expert")`.
+
+- `AMR_guideline`  
+  A [character](https://rdrr.io/r/base/character.html) to set the
+  default guideline used throughout the `AMR` package wherever a
+  `guideline` argument is available. This option is used as the default
+  in e.g. [`as.sir()`](https://amr-for-r.org/reference/as.sir.md),
+  [`resistance()`](https://amr-for-r.org/reference/proportion.md),
+  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+  [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  and many plotting functions. **While unset**, the AMR package uses the
+  latest implemented EUCAST guideline (currently EUCAST 2025).
+
+  - For [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), this
+    determines which clinical breakpoint guideline is used to interpret
+    MIC values and disk diffusion diameters. It can be either the
+    guideline name (e.g., `"CLSI"` or `"EUCAST"`) or the name including
+    a year (e.g., `"CLSI 2019"`). Supported guidelines are EUCAST 2011
+    to 2025, and CLSI 2011 to 2025.
+
+  - For [`resistance()`](https://amr-for-r.org/reference/proportion.md)
+    and
+    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+    this setting determines how the `"I"` (Intermediate / Increased
+    exposure) category is handled in calculations. Under CLSI, `"I"` is
+    considered *resistant* in susceptibility calculations; under EUCAST,
+    `"I"` is considered *susceptible* in susceptibility calculations.
+    Explicitly setting this option ensures reproducible AMR proportion
+    estimates.
+
+  - For
+    [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+    this determines which guideline-specific interpretive (expert) rules
+    are applied to antimicrobial test results, either EUCAST or CLSI.
+
+  - For many plotting functions (e.g., for MIC or disk diffusion
+    values), supplying `mo` and `ab` enables automatic SIR-based
+    interpretative colouring. These colours are derived from
+    [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) in the
+    background and therefore depend on the active `guideline` setting,
+    which again uses EUCAST 2025 if not set explicitly.
 
 - `AMR_guideline`  
   A [character](https://rdrr.io/r/base/character.html) to set the
@@ -132,10 +174,10 @@ rules when interpreting MIC values with
 
 ### Share Options Within Team
 
-For a more global approach, e.g. within a (data) team, save an options
-file to a remote file location, such as a shared network drive, and have
-each user read in this file automatically at start-up. This would work
-in this way:
+For a more collaborative approach, e.g. within a (data) team, save an
+options file to a remote file location, such as a shared network drive,
+and have each user read in this file automatically at start-up. This
+would work in this way:
 
 1.  Save a plain text file to e.g. "X:/team_folder/R_options.R" and fill
     it with preferred settings.

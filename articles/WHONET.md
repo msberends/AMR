@@ -101,6 +101,10 @@ Longest: 40
 # our transformed antibiotic columns
 # amoxicillin/clavulanic acid (J01CR02) as an example
 data %>% freq(AMC_ND2)
+#> ℹ `susceptibility()` assumes the EUCAST guideline and thus considers the
+#>   'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 ```
 
 **Frequency table**

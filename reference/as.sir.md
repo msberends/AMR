@@ -504,16 +504,16 @@ options to set before analysis:
 ### After Interpretation
 
 After using `as.sir()`, you can use the
-[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
-defined by EUCAST to (1) apply inferred susceptibility and resistance
-based on results of other antimicrobials and (2) apply intrinsic
-resistance based on taxonomic properties of a microorganism.
+[`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+to (1) apply inferred susceptibility and resistance based on results of
+other antimicrobials and (2) apply intrinsic resistance based on
+taxonomic properties of a microorganism.
 
 To determine which isolates are multi-drug resistant, be sure to run
 [`mdro()`](https://amr-for-r.org/reference/mdro.md) (which applies the
 MDR/PDR/XDR guideline from 2012 at default) on a data set that contains
-S/I/R values. Read more about [interpreting multidrug-resistant
-organisms here](https://amr-for-r.org/reference/mdro.md).
+S/I/R values. Read more about [detecting multidrug-resistant organisms
+here](https://amr-for-r.org/reference/mdro.md).
 
 ### Other
 
@@ -660,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-02-09 12:50:16     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-02-09 12:50:17     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-02-09 12:50:17     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-02-09 12:50:17     1 DISK   genta       Escherich… human      18         
+#> 1 2026-02-12 19:41:27     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-02-12 19:41:27     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-02-12 19:41:28     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-02-12 19:41:28     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

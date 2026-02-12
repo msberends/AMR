@@ -211,7 +211,7 @@ if (require("dplyr")) {
 #> Warning: There were 73 warnings in `summarise()`.
 #> The first warning was:
 #> ℹ In argument: `PEN = (function (..., minimum = 30, as_percent = FALSE,
-#>   only_all_tested = FALSE) ...`.
+#>   only_all_tested = FALSE, ...`.
 #> ℹ In group 5: `order = "Lactobacillales"`, `genus = "Enterococcus"`.
 #> Caused by warning:
 #> ! Introducing NA: only 14 results available for PEN in group: order =

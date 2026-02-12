@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9021</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 09 February 2026.</p>
+generated on 12 February 2026.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -147,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2026-02-09</td>
+<td align="center">2026-02-12</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2026-02-09</td>
+<td align="center">2026-02-12</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2026-02-09</td>
+<td align="center">2026-02-12</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -1285,6 +1285,10 @@ I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equa
 own:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ </span><span style="color: #0000BB; background-color: #444444;">`resistance()`</span><span style="color: #0000BB;"> assumes the EUCAST guideline and thus considers the 'I'</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   category susceptible. Set the </span><span style="color: #0000BB; background-color: #444444;">`guideline`</span><span style="color: #0000BB;"> argument or the </span><span style="color: #0000BB; background-color: #444444;">`AMR_guideline`</span></span></span>
+<span><span class="co"><span style="color: #0000BB;">#&gt;   option to either "CLSI" or "EUCAST", see </span><span style="color: #0000BB; background-color: #444444;">`?AMR-options`</span><span style="color: #0000BB;">.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ This message will be shown once per session.</span></span></span>
 <span><span class="co">#&gt; [1] 0.4294272</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>

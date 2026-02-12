@@ -9,7 +9,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9021</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +58,11 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">count_resistant</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">count_resistant</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">count_S</span><span class="op">(</span><span class="va">...</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -92,6 +94,12 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <dd><p>(for combination therapies, i.e. using more than one variable for <code>...</code>): a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that isolates must be tested for all antimicrobials, see section <em>Combination Therapy</em> below.</p></dd>
 
 
+<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
+<dd><p>Either <code>"EUCAST"</code> (default) or <code>"CLSI"</code>. With EUCAST, the 'I' category will be considered as susceptible (see <a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">EUCAST website</a>), but with with CLSI, it will be considered resistant. Therefore:</p><ul><li><p>EUCAST: <code>count_susceptible()</code> \(= N_{S} + N_{I}\), <code>count_resistant()</code> \(= N_{R}\)</p></li>
+<li><p>CLSI: <code>count_susceptible()</code> \(= N_{S} + N_{SDD}\), <code>count_resistant()</code> \(= N_{I} + N_{R}\)</p></li>
+</ul><p>You can also use e.g. <code>count_R()</code> or <code>count_S()</code> instead, to be explicit.</p></dd>
+
+
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns with class <code><a href="as.sir.html">sir</a></code> (see <code><a href="as.sir.html">as.sir()</a></code>).</p></dd>
 
@@ -115,8 +123,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions are meant to count isolates. Use the <code><a href="proportion.html">resistance()</a></code>/<code><a href="proportion.html">susceptibility()</a></code> functions to calculate microbial resistance/susceptibility.</p>
-<p>The function <code>count_resistant()</code> is equal to the function <code>count_R()</code>. The function <code>count_susceptible()</code> is equal to the function <code>count_SI()</code>.</p>
-<p>The function <code>n_sir()</code> is an alias of <code>count_all()</code>. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
+<p>The function <code>n_sir()</code> is an alias of <code>count_all()</code>. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to <code>dplyr</code>'s <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
 <p>The function <code>count_df()</code> takes any variable from <code>data</code> that has an <code><a href="as.sir.html">sir</a></code> class (created with <code><a href="as.sir.html">as.sir()</a></code>) and counts the number of S's, I's and R's. It also supports grouped variables. The function <code><a href="proportion.html">sir_df()</a></code> works exactly like <code>count_df()</code>, but adds the percentage of S, I and R.</p>
     </div>
     <div class="section level2">
@@ -167,8 +174,16 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># base R ------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="fu">count_resistant</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># counts "R"</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ </span><span style="color: #0000BB; background-color: #444444;">`count_resistant()`</span><span style="color: #0000BB;"> assumes the EUCAST guideline and thus considers the</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  'I' category susceptible. Set the </span><span style="color: #0000BB; background-color: #444444;">`guideline`</span><span style="color: #0000BB;"> argument or the</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  </span><span style="color: #0000BB; background-color: #444444;">`AMR_guideline`</span><span style="color: #0000BB;"> option to either "CLSI" or "EUCAST", see </span><span style="color: #0000BB; background-color: #444444;">`?AMR-options`</span><span style="color: #0000BB;">.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ This message will be shown once per session.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 804</span>
 <span class="r-in"><span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># counts "S" and "I"</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ </span><span style="color: #0000BB; background-color: #444444;">`count_susceptible()`</span><span style="color: #0000BB;"> assumes the EUCAST guideline and thus considers the</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  'I' category susceptible. Set the </span><span style="color: #0000BB; background-color: #444444;">`guideline`</span><span style="color: #0000BB;"> argument or the</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  </span><span style="color: #0000BB; background-color: #444444;">`AMR_guideline`</span><span style="color: #0000BB;"> option to either "CLSI" or "EUCAST", see </span><span style="color: #0000BB; background-color: #444444;">`?AMR-options`</span><span style="color: #0000BB;">.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ This message will be shown once per session.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span><span class="fu">count_all</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># counts "S", "I" and "R"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1350</span>
@@ -198,6 +213,10 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span class="r-in"><span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span><span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="op">*</span> <span class="fu">n_sir</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ </span><span style="color: #0000BB; background-color: #444444;">`susceptibility()`</span><span style="color: #0000BB;"> assumes the EUCAST guideline and thus considers the</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  'I' category susceptible. Set the </span><span style="color: #0000BB; background-color: #444444;">`guideline`</span><span style="color: #0000BB;"> argument or the</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">  </span><span style="color: #0000BB; background-color: #444444;">`AMR_guideline`</span><span style="color: #0000BB;"> option to either "CLSI" or "EUCAST", see </span><span style="color: #0000BB; background-color: #444444;">`?AMR-options`</span><span style="color: #0000BB;">.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ This message will be shown once per session.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># dplyr -------------------------------------------------------------</span></span></span>

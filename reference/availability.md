@@ -41,6 +41,10 @@ calculated with
 
 ``` r
 availability(example_isolates)
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 #>         count available     visual_availabilty resistant      visual_resistance
 #> date     2000    100.0% |####################|                                 
 #> patient  2000    100.0% |####################|                                 

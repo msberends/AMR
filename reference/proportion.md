@@ -14,10 +14,12 @@ from the `dplyr` package and also support grouped variables, see
 
 ``` r
 resistance(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
+  "EUCAST"))
 
 susceptibility(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
+  "EUCAST"))
 
 sir_confidence_interval(..., ab_result = "R", minimum = 30,
   as_percent = FALSE, only_all_tested = FALSE, confidence_level = 0.95,
@@ -84,6 +86,21 @@ Standards Institute (CLSI)*.
   `...`): a [logical](https://rdrr.io/r/base/logical.html) to indicate
   that isolates must be tested for all antimicrobials, see section
   *Combination Therapy* below.
+
+- guideline:
+
+  Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category
+  will be considered as susceptible (see [EUCAST
+  website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)),
+  but with with CLSI, it will be considered resistant. Therefore:
+
+  - EUCAST: `susceptibility()` \\= \\S + \\I\\, `resistance()` \\= \\R\\
+
+  - CLSI: `susceptibility()` \\= \\S + \\SDD\\, `resistance()` \\= \\I +
+    \\R\\
+
+  You can also use e.g. `proportion_R()` or `proportion_S()` instead, to
+  be explicit.
 
 - ab_result:
 
@@ -360,7 +377,7 @@ if (require("dplyr")) {
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `KAN = (function (..., minimum = 30, as_percent = FALSE,
-#>   only_all_tested = FALSE) ...`.
+#>   only_all_tested = FALSE, ...`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
 #> ! Introducing NA: only 23 results available for KAN in group: ward =

@@ -12,9 +12,11 @@ from the `dplyr` package and also support grouped variables, see
 ## Usage
 
 ``` r
-count_resistant(..., only_all_tested = FALSE)
+count_resistant(..., only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST"))
 
-count_susceptible(..., only_all_tested = FALSE)
+count_susceptible(..., only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST"))
 
 count_S(..., only_all_tested = FALSE)
 
@@ -48,6 +50,22 @@ count_df(data, translate_ab = "name", language = get_AMR_locale(),
   `...`): a [logical](https://rdrr.io/r/base/logical.html) to indicate
   that isolates must be tested for all antimicrobials, see section
   *Combination Therapy* below.
+
+- guideline:
+
+  Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category
+  will be considered as susceptible (see [EUCAST
+  website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)),
+  but with with CLSI, it will be considered resistant. Therefore:
+
+  - EUCAST: `count_susceptible()` \\= N\_{S} + N\_{I}\\,
+    `count_resistant()` \\= N\_{R}\\
+
+  - CLSI: `count_susceptible()` \\= N\_{S} + N\_{SDD}\\,
+    `count_resistant()` \\= N\_{I} + N\_{R}\\
+
+  You can also use e.g. `count_R()` or `count_S()` instead, to be
+  explicit.
 
 - data:
 
@@ -88,13 +106,9 @@ These functions are meant to count isolates. Use the
 [`resistance()`](https://amr-for-r.org/reference/proportion.md)/[`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
 functions to calculate microbial resistance/susceptibility.
 
-The function `count_resistant()` is equal to the function `count_R()`.
-The function `count_susceptible()` is equal to the function
-`count_SI()`.
-
 The function `n_sir()` is an alias of `count_all()`. They can be used to
 count all available isolates, i.e. where all input antimicrobials have
-an available result (S, I or R). Their use is equal to
+an available result (S, I or R). Their use is equal to `dplyr`'s
 [`n_distinct()`](https://dplyr.tidyverse.org/reference/n_distinct.html).
 Their function is equal to
 `count_susceptible(...) + count_resistant(...)`.
@@ -174,8 +188,16 @@ calculate microbial resistance and susceptibility.
 
 # base R ------------------------------------------------------------
 count_resistant(example_isolates$AMX) # counts "R"
+#> ℹ `count_resistant()` assumes the EUCAST guideline and thus considers the
+#>   'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 #> [1] 804
 count_susceptible(example_isolates$AMX) # counts "S" and "I"
+#> ℹ `count_susceptible()` assumes the EUCAST guideline and thus considers the
+#>   'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 #> [1] 546
 count_all(example_isolates$AMX) # counts "S", "I" and "R"
 #> [1] 1350
@@ -205,6 +227,10 @@ n_sir(example_isolates$AMX)
 count_susceptible(example_isolates$AMX)
 #> [1] 546
 susceptibility(example_isolates$AMX) * n_sir(example_isolates$AMX)
+#> ℹ `susceptibility()` assumes the EUCAST guideline and thus considers the
+#>   'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 #> [1] 546
 
 # dplyr -------------------------------------------------------------

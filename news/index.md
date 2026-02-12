@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9020
+## AMR 3.0.1.9021
 
 #### New
 
@@ -45,7 +45,7 @@
   [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) for
   when no antimicrobials are set
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
-  where for numeric input the arguments `S`, `i`, and `R` would not be
+  where for numeric input the arguments `S`, `I`, and `R` would not be
   considered ([\#244](https://github.com/msberends/AMR/issues/244))
 - Fixed some foreign translations of antimicrobial drugs
 - Fixed a bug for printing column names to the console when using
@@ -58,6 +58,10 @@
 
 #### Updates
 
+- [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+  and [`resistance()`](https://amr-for-r.org/reference/proportion.md)
+  gained the argument `guideline`, which defaults to EUCAST, for
+  interpreting the ‘I’ category correctly.
 - [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) and
   [`rescale_mic()`](https://amr-for-r.org/reference/as.mic.md) gained
   the argument `round_to_next_log2`, which can be set to `TRUE` to round
