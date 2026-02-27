@@ -146,6 +146,22 @@ Version format: `major.minor.patch.dev` (e.g., `3.0.1.9021`)
 - Stable CRAN releases drop the dev suffix (e.g., `3.0.1`)
 - `NEWS.md` uses sections **New**, **Fixes**, **Updates** with GitHub issue references (`#NNN`)
 
+### Version bump required for every PR
+
+Before opening a pull request, always increment the four-digit dev counter by 1 in **both** of these files:
+
+1. **`DESCRIPTION`** — the `Version:` field:
+   ```
+   Version: 3.0.1.9021  →  Version: 3.0.1.9022
+   ```
+
+2. **`NEWS.md`** — the top-level heading:
+   ```
+   # AMR 3.0.1.9021  →  # AMR 3.0.1.9022
+   ```
+
+Read the current version from `DESCRIPTION`, add 1 to the last numeric component, and write the new version to both files in the same commit as the rest of the PR changes.
+
 ## Internal State
 
 The package uses a private `AMR_env` environment (created in `aa_globals.R`) for caching expensive lookups (e.g., microorganism matching scores, breakpoint tables). This avoids re-computation within a session.
