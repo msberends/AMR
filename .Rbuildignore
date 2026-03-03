@@ -9,6 +9,7 @@
 ^_pkgdown\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
+^CLAUDE\.md$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^\.github$
