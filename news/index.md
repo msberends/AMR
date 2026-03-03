@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9021
+## AMR 3.0.1.9022
 
 #### New
 
@@ -19,9 +19,13 @@
       [`all_disk_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
 - Data set `esbl_isolates` to practise with AMR modelling
 - AMR selectors
+  [`peptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   and
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+- Antimicrobials in the `antimicrobials` data set: ceftibuten/avibactam
+  (`CTA`), kasugamycin (`KAS`), ostreogrycin (`OST`), thiostrepton
+  (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 - Support for Wildtype (WT) / Non-wildtype (NWT) in
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), all plotting
   functions, and all susceptibility/resistance functions.

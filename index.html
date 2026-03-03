@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -404,6 +404,10 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">GEN</span>, <span class="va">TOB</span><span class="op">)</span>,</span>
 <span>                   <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>total_R <span class="op">=</span> <span class="va">resistance</span>,</span>
 <span>                        conf_int <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/proportion.html">sir_confidence_interval</a></span><span class="op">(</span><span class="va">x</span>, collapse <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'</span></span>
+<span><span class="co">#&gt;   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span></span>
+<span><span class="co">#&gt;   option to either "CLSI" or "EUCAST", see `?AMR-options`.</span></span>
+<span><span class="co">#&gt; ℹ This message will be shown once per session.</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 5</span></span>
 <span><span class="co">#&gt;   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;       </span></span>

@@ -91,7 +91,7 @@ First 6 rows when filtering on genus *Escherichia*:
 
 ## `antimicrobials`: Antibiotic and Antifungal Drugs
 
-A data set with 498 rows and 14 columns, containing the following column
+A data set with 504 rows and 14 columns, containing the following column
 names:  
 *ab*, *cid*, *name*, *group*, *atc*, *atc_group1*, *atc_group2*,
 *abbreviations*, *synonyms*, *oral_ddd*, *oral_units*, *iv_ddd*,
@@ -100,8 +100,8 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 16 January 2026 09:57:03 UTC. Find more info
-about the contents, (scientific) source, and structure of this [data set
+It was last updated on 3 March 2026 14:41:08 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
 **Direct download links:**
@@ -114,7 +114,7 @@ here](https://amr-for-r.org/reference/antimicrobials.html).
   (0.1 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.xlsx)
-  (78 kB)  
+  (79 kB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.feather)
   (0.1 MB)  

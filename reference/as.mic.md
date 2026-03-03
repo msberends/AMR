@@ -197,7 +197,7 @@ as.mic("<=0.002; S")
 #> Class 'mic'
 #> [1] <=0.002
 
-# mathematical processing treats MICs as numeric values
+# mathematical processing treats MICs as, and returns, numeric values
 fivenum(mic_data)
 #> [1]  0.128  1.000  8.000 16.000 32.000
 quantile(mic_data)
@@ -210,6 +210,13 @@ all(mic_data < 512)
 rescale_mic(mic_data, mic_range = c(4, 16))
 #> Class 'mic'
 #> [1] >=16 <=4  <=4  <=4  8    <=4  8    >=16 >=16
+
+# round up to nearest log2 level, e.g. for CLSI breakpoint interpretation:
+c(1:8)
+#> [1] 1 2 3 4 5 6 7 8
+as.mic(c(1:8), round_to_next_log2 = TRUE)
+#> Class 'mic'
+#> [1] 1 2 4 4 8 8 8 8
 
 # interpret MIC values
 as.sir(

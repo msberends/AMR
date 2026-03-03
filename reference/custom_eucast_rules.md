@@ -135,14 +135,14 @@ TZP (piperacillin/tazobactam) is "R":
     #>   1. If TZP is "R" then set to "R":
     #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 
-These 38 antimicrobial groups are allowed in the rules
+These 42 antimicrobial groups are allowed in the rules
 (case-insensitive) and can be used in any combination:
 
 - aminoglycosides  
   (amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin,
   bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high,
   habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high,
-  kanamycin/cephalexin, micronomicin, neomycin, netilmicin,
+  kanamycin/cephalexin, kasugamycin, micronomicin, neomycin, netilmicin,
   pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin,
   streptoduocin, streptomycin, streptomycin-high, tobramycin, and
   tobramycin-high)
@@ -177,11 +177,12 @@ These 38 antimicrobial groups are allowed in the rules
   aztreonam/nacubactam, cefepime/enmetazobactam, cefepime/nacubactam,
   cefepime/taniborbactam, cefepime/tazobactam, cefepime/zidebactam,
   cefoperazone/sulbactam, cefotaxime/sulbactam, ceftaroline/avibactam,
-  ceftazidime/avibactam, ceftolozane/tazobactam, imipenem/relebactam,
-  meropenem/nacubactam, meropenem/vaborbactam, mezlocillin/sulbactam,
-  nacubactam, penicillin/sulbactam, piperacillin/sulbactam,
-  piperacillin/tazobactam, sulbactam, sultamicillin, taniborbactam,
-  tazobactam, ticarcillin/clavulanic acid, and zidebactam)
+  ceftazidime/avibactam, ceftibuten/avibactam, ceftolozane/tazobactam,
+  imipenem/relebactam, meropenem/nacubactam, meropenem/vaborbactam,
+  mezlocillin/sulbactam, nacubactam, penicillin/sulbactam,
+  piperacillin/sulbactam, piperacillin/tazobactam, sulbactam,
+  sultamicillin, taniborbactam, tazobactam, ticarcillin/clavulanic acid,
+  xeruborbactam, and zidebactam)
 
 - betalactams  
   (amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam,
@@ -206,12 +207,12 @@ These 38 antimicrobial groups are allowed in the rules
   cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline,
   ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam,
   ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole,
-  ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil,
-  ceftobiprole, ceftobiprole medocaril, ceftolozane/tazobactam,
-  ceftriaxone, ceftriaxone/beta-lactamase inhibitor, cefuroxime,
-  cefuroxime axetil, cephradine, ciclacillin, clometocillin,
-  cloxacillin, dicloxacillin, doripenem, epicillin, ertapenem,
-  flucloxacillin, hetacillin, imipenem, imipenem/EDTA,
+  ceftibuten, ceftibuten/avibactam, ceftiofur, ceftizoxime, ceftizoxime
+  alapivoxil, ceftobiprole, ceftobiprole medocaril,
+  ceftolozane/tazobactam, ceftriaxone, ceftriaxone/beta-lactamase
+  inhibitor, cefuroxime, cefuroxime axetil, cephradine, ciclacillin,
+  clometocillin, cloxacillin, dicloxacillin, doripenem, epicillin,
+  ertapenem, flucloxacillin, hetacillin, imipenem, imipenem/EDTA,
   imipenem/relebactam, latamoxef, lenampicillin, loracarbef, mecillinam,
   meropenem, meropenem/nacubactam, meropenem/vaborbactam, metampicillin,
   meticillin, mezlocillin, mezlocillin/sulbactam, nafcillin, oxacillin,
@@ -232,11 +233,11 @@ These 38 antimicrobial groups are allowed in the rules
   cefepime/zidebactam, cefoperazone/sulbactam, cefotaxime/clavulanic
   acid, cefotaxime/sulbactam, cefpodoxime/clavulanic acid,
   ceftaroline/avibactam, ceftazidime/avibactam, ceftazidime/clavulanic
-  acid, ceftolozane/tazobactam, ceftriaxone/beta-lactamase inhibitor,
-  imipenem/relebactam, meropenem/nacubactam, meropenem/vaborbactam,
-  mezlocillin/sulbactam, penicillin/novobiocin, penicillin/sulbactam,
-  piperacillin/sulbactam, piperacillin/tazobactam, and
-  ticarcillin/clavulanic acid)
+  acid, ceftibuten/avibactam, ceftolozane/tazobactam,
+  ceftriaxone/beta-lactamase inhibitor, imipenem/relebactam,
+  meropenem/nacubactam, meropenem/vaborbactam, mezlocillin/sulbactam,
+  penicillin/novobiocin, penicillin/sulbactam, piperacillin/sulbactam,
+  piperacillin/tazobactam, and ticarcillin/clavulanic acid)
 
 - carbapenems  
   (biapenem, doripenem, ertapenem, imipenem, imipenem/EDTA,
@@ -261,11 +262,11 @@ These 38 antimicrobial groups are allowed in the rules
   cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide,
   ceftaroline, ceftaroline/avibactam, ceftazidime,
   ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram
-  pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime
-  alapivoxil, ceftobiprole, ceftobiprole medocaril,
-  ceftolozane/tazobactam, ceftriaxone, ceftriaxone/beta-lactamase
-  inhibitor, cefuroxime, cefuroxime axetil, cephradine, latamoxef, and
-  loracarbef)
+  pivoxil, ceftezole, ceftibuten, ceftibuten/avibactam, ceftiofur,
+  ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole
+  medocaril, ceftolozane/tazobactam, ceftriaxone,
+  ceftriaxone/beta-lactamase inhibitor, cefuroxime, cefuroxime axetil,
+  cephradine, latamoxef, and loracarbef)
 
 - cephalosporins_1st  
   (cefacetrile, cefadroxil, cefalexin, cefaloridine, cefalotin,
@@ -286,8 +287,8 @@ These 38 antimicrobial groups are allowed in the rules
   cefpiramide, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic
   acid, cefsulodin, ceftazidime, ceftazidime/avibactam,
   ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftibuten,
-  ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftriaxone,
-  ceftriaxone/beta-lactamase inhibitor, and latamoxef)
+  ceftibuten/avibactam, ceftiofur, ceftizoxime, ceftizoxime alapivoxil,
+  ceftriaxone, ceftriaxone/beta-lactamase inhibitor, and latamoxef)
 
 - cephalosporins_4th  
   (cefepime, cefepime/amikacin, cefepime/clavulanic acid,
@@ -316,10 +317,11 @@ These 38 antimicrobial groups are allowed in the rules
   cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide,
   ceftaroline, ceftaroline/avibactam, ceftazidime/avibactam,
   ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole,
-  ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil,
-  ceftobiprole, ceftobiprole medocaril, ceftolozane/tazobactam,
-  ceftriaxone, ceftriaxone/beta-lactamase inhibitor, cefuroxime,
-  cefuroxime axetil, cephradine, latamoxef, and loracarbef)
+  ceftibuten, ceftibuten/avibactam, ceftiofur, ceftizoxime, ceftizoxime
+  alapivoxil, ceftobiprole, ceftobiprole medocaril,
+  ceftolozane/tazobactam, ceftriaxone, ceftriaxone/beta-lactamase
+  inhibitor, cefuroxime, cefuroxime axetil, cephradine, latamoxef, and
+  loracarbef)
 
 - fluoroquinolones  
   (besifloxacin, ciprofloxacin, ciprofloxacin/metronidazole,
@@ -336,14 +338,21 @@ These 38 antimicrobial groups are allowed in the rules
   sparfloxacin, temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and
   trovafloxacin)
 
+- fusidanes  
+  (fusidic acid)
+
 - glycopeptides  
   (avoparcin, bleomycin, dalbavancin, norvancomycin, oritavancin,
   ramoplanin, teicoplanin, teicoplanin-macromethod, telavancin,
-  vancomycin, and vancomycin-macromethod)
+  vancomycin, vancomycin-macromethod, and zorbamycin)
 
 - glycopeptides_except_lipo  
   (avoparcin, bleomycin, norvancomycin, ramoplanin, teicoplanin,
-  teicoplanin-macromethod, vancomycin, and vancomycin-macromethod)
+  teicoplanin-macromethod, vancomycin, vancomycin-macromethod, and
+  zorbamycin)
+
+- ionophores  
+  (lasalocid, monensin sodium, narasin, nystatin, and salinomycin)
 
 - isoxazolylpenicillins  
   (cloxacillin, dicloxacillin, flucloxacillin, meticillin, oxacillin,
@@ -393,11 +402,20 @@ These 38 antimicrobial groups are allowed in the rules
   talampicillin, temocillin, ticarcillin, and ticarcillin/clavulanic
   acid)
 
+- peptides  
+  (avoparcin, bacitracin, bleomycin, dalbavancin, daptomycin,
+  norvancomycin, oritavancin, ramoplanin, teicoplanin,
+  teicoplanin-macromethod, telavancin, thiostrepton, vancomycin,
+  vancomycin-macromethod, and zorbamycin)
+
 - phenicols  
   (chloramphenicol, florfenicol, and thiamphenicol)
 
 - phosphonics  
   (amikacin/fosfomycin and fosfomycin)
+
+- pleuromutilins  
+  (retapamulin and tiamulin)
 
 - polymyxins  
   (colistin, polymyxin B, and polymyxin B/polysorbate 80)
@@ -428,7 +446,8 @@ These 38 antimicrobial groups are allowed in the rules
   (zoliflodacin)
 
 - streptogramins  
-  (pristinamycin and quinupristin/dalfopristin)
+  (ostreogrycin, pristinamycin, quinupristin/dalfopristin, and
+  virginiamycine)
 
 - sulfonamides  
   (isoniazid/sulfamethoxazole/trimethoprim/pyridoxine,

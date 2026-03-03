@@ -73,6 +73,8 @@ oxazolidinones(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 penicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
+peptides(only_sir_columns = FALSE, return_all = TRUE, ...)
+
 phenicols(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 phosphonics(only_sir_columns = FALSE, return_all = TRUE, ...)
@@ -244,11 +246,11 @@ quite slow in terms of performance.
   (ARB), astromicin (AST), bekanamycin (BEK), dibekacin (DKB),
   framycetin (FRM), gentamicin (GEN), gentamicin-high (GEH), habekacin
   (HAB), hygromycin (HYG), isepamicin (ISE), kanamycin (KAN),
-  kanamycin-high (KAH), kanamycin/cephalexin (KAC), micronomicin (MCR),
-  neomycin (NEO), netilmicin (NET), pentisomicin (PIM), plazomicin
-  (PLZ), propikacin (PKA), ribostamycin (RST), sisomicin (SIS),
-  streptoduocin (STR), streptomycin (STR1), streptomycin-high (STH),
-  tobramycin (TOB), and tobramycin-high (TOH)
+  kanamycin-high (KAH), kanamycin/cephalexin (KAC), kasugamycin (KAS),
+  micronomicin (MCR), neomycin (NEO), netilmicin (NET), pentisomicin
+  (PIM), plazomicin (PLZ), propikacin (PKA), ribostamycin (RST),
+  sisomicin (SIS), streptoduocin (STR), streptomycin (STR1),
+  streptomycin-high (STH), tobramycin (TOB), and tobramycin-high (TOH)
 
 - `aminopenicillins()` can select:  
   amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), and ampicillin
@@ -312,22 +314,23 @@ quite slow in terms of performance.
   cefsulodin (CFS), cefsumide (CSU), ceftaroline (CPT),
   ceftaroline/avibactam (CPA), ceftazidime (CAZ), ceftazidime/avibactam
   (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram
-  pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftiofur (TIO),
-  ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftobiprole (BPR),
-  ceftobiprole medocaril (CFM1), ceftolozane/tazobactam (CZT),
-  ceftriaxone (CRO), ceftriaxone/beta-lactamase inhibitor (CEB),
-  cefuroxime (CXM), cefuroxime axetil (CXA), cephradine (CED),
-  ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO),
-  dicloxacillin (DIC), doripenem (DOR), epicillin (EPC), ertapenem
-  (ETP), flucloxacillin (FLC), hetacillin (HET), imipenem (IPM),
-  imipenem/EDTA (IPE), imipenem/relebactam (IMR), latamoxef (LTM),
-  lenampicillin (LEN), loracarbef (LOR), mecillinam (MEC), meropenem
-  (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV),
-  metampicillin (MTM), meticillin (MET), mezlocillin (MEZ),
-  mezlocillin/sulbactam (MSU), nafcillin (NAF), oxacillin (OXA),
-  oxacillin screening test (OXA-S), panipenem (PAN), penamecillin (PNM),
-  penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), pheneticillin
-  (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP),
+  pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftibuten/avibactam
+  (CTA), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil
+  (CZP), ceftobiprole (BPR), ceftobiprole medocaril (CFM1),
+  ceftolozane/tazobactam (CZT), ceftriaxone (CRO),
+  ceftriaxone/beta-lactamase inhibitor (CEB), cefuroxime (CXM),
+  cefuroxime axetil (CXA), cephradine (CED), ciclacillin (CIC),
+  clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), doripenem
+  (DOR), epicillin (EPC), ertapenem (ETP), flucloxacillin (FLC),
+  hetacillin (HET), imipenem (IPM), imipenem/EDTA (IPE),
+  imipenem/relebactam (IMR), latamoxef (LTM), lenampicillin (LEN),
+  loracarbef (LOR), mecillinam (MEC), meropenem (MEM),
+  meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), metampicillin
+  (MTM), meticillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam
+  (MSU), nafcillin (NAF), oxacillin (OXA), oxacillin screening test
+  (OXA-S), panipenem (PAN), penamecillin (PNM), penicillin/novobiocin
+  (PNO), penicillin/sulbactam (PSU), pheneticillin (PHE),
+  phenoxymethylpenicillin (PHN), piperacillin (PIP),
   piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP),
   piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine
   benzylpenicillin (PRB), propicillin (PRP), razupenem (RZM), ritipenem
@@ -346,12 +349,13 @@ quite slow in terms of performance.
   cefoperazone/sulbactam (CSL), cefotaxime/clavulanic acid (CTC),
   cefotaxime/sulbactam (CTS), cefpodoxime/clavulanic acid (CDC),
   ceftaroline/avibactam (CPA), ceftazidime/avibactam (CZA),
-  ceftazidime/clavulanic acid (CCV), ceftolozane/tazobactam (CZT),
-  ceftriaxone/beta-lactamase inhibitor (CEB), imipenem/relebactam (IMR),
-  meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV),
-  mezlocillin/sulbactam (MSU), penicillin/novobiocin (PNO),
-  penicillin/sulbactam (PSU), piperacillin/sulbactam (PIS),
-  piperacillin/tazobactam (TZP), and ticarcillin/clavulanic acid (TCC)
+  ceftazidime/clavulanic acid (CCV), ceftibuten/avibactam (CTA),
+  ceftolozane/tazobactam (CZT), ceftriaxone/beta-lactamase inhibitor
+  (CEB), imipenem/relebactam (IMR), meropenem/nacubactam (MNC),
+  meropenem/vaborbactam (MEV), mezlocillin/sulbactam (MSU),
+  penicillin/novobiocin (PNO), penicillin/sulbactam (PSU),
+  piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), and
+  ticarcillin/clavulanic acid (TCC)
 
 - `carbapenems()` can select:  
   biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM),
@@ -383,12 +387,13 @@ quite slow in terms of performance.
   cefsulodin (CFS), cefsumide (CSU), ceftaroline (CPT),
   ceftaroline/avibactam (CPA), ceftazidime (CAZ), ceftazidime/avibactam
   (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram
-  pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftiofur (TIO),
-  ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftobiprole (BPR),
-  ceftobiprole medocaril (CFM1), ceftolozane/tazobactam (CZT),
-  ceftriaxone (CRO), ceftriaxone/beta-lactamase inhibitor (CEB),
-  cefuroxime (CXM), cefuroxime axetil (CXA), cephradine (CED), latamoxef
-  (LTM), and loracarbef (LOR)
+  pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftibuten/avibactam
+  (CTA), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil
+  (CZP), ceftobiprole (BPR), ceftobiprole medocaril (CFM1),
+  ceftolozane/tazobactam (CZT), ceftriaxone (CRO),
+  ceftriaxone/beta-lactamase inhibitor (CEB), cefuroxime (CXM),
+  cefuroxime axetil (CXA), cephradine (CED), latamoxef (LTM), and
+  loracarbef (LOR)
 
 - `cephalosporins_1st()` can select:  
   cefacetrile (CAC), cefadroxil (CFR), cefalexin (LEX), cefaloridine
@@ -413,9 +418,9 @@ quite slow in terms of performance.
   proxetil (CPX), cefpodoxime/clavulanic acid (CDC), cefsulodin (CFS),
   ceftazidime (CAZ), ceftazidime/avibactam (CZA), ceftazidime/clavulanic
   acid (CCV), cefteram (CEM), cefteram pivoxil (CPL), ceftibuten (CTB),
-  ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil (CZP),
-  ceftriaxone (CRO), ceftriaxone/beta-lactamase inhibitor (CEB), and
-  latamoxef (LTM)
+  ceftibuten/avibactam (CTA), ceftiofur (TIO), ceftizoxime (CZX),
+  ceftizoxime alapivoxil (CZP), ceftriaxone (CRO),
+  ceftriaxone/beta-lactamase inhibitor (CEB), and latamoxef (LTM)
 
 - `cephalosporins_4th()` can select:  
   cefepime (FEP), cefepime/amikacin (CFA), cefepime/clavulanic acid
@@ -451,8 +456,8 @@ quite slow in terms of performance.
 - `glycopeptides()` can select:  
   avoparcin (AVO), bleomycin (BLM), dalbavancin (DAL), norvancomycin
   (NVA), oritavancin (ORI), ramoplanin (RAM), teicoplanin (TEC),
-  teicoplanin-macromethod (TCM), telavancin (TLV), vancomycin (VAN), and
-  vancomycin-macromethod (VAM)
+  teicoplanin-macromethod (TCM), telavancin (TLV), vancomycin (VAN),
+  vancomycin-macromethod (VAM), and zorbamycin (ZOR)
 
 - `isoxazolylpenicillins()` can select:  
   cloxacillin (CLO), dicloxacillin (DIC), flucloxacillin (FLC),
@@ -512,6 +517,13 @@ quite slow in terms of performance.
   temocillin (TEM), ticarcillin (TIC), and ticarcillin/clavulanic acid
   (TCC)
 
+- `peptides()` can select:  
+  avoparcin (AVO), bacitracin (BAC), bleomycin (BLM), dalbavancin (DAL),
+  daptomycin (DAP), norvancomycin (NVA), oritavancin (ORI), ramoplanin
+  (RAM), teicoplanin (TEC), teicoplanin-macromethod (TCM), telavancin
+  (TLV), thiostrepton (THS), vancomycin (VAN), vancomycin-macromethod
+  (VAM), and zorbamycin (ZOR)
+
 - `phenicols()` can select:  
   chloramphenicol (CHL), florfenicol (FLR), and thiamphenicol (THI)
 
@@ -556,7 +568,8 @@ quite slow in terms of performance.
   zoliflodacin (ZFD)
 
 - `streptogramins()` can select:  
-  pristinamycin (PRI) and quinupristin/dalfopristin (QDA)
+  ostreogrycin (OST), pristinamycin (PRI), quinupristin/dalfopristin
+  (QDA), and virginiamycine (VIR)
 
 - `sulfonamides()` can select:  
   isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST),

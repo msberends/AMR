@@ -1,4 +1,4 @@
-# Data Sets with 618 Antimicrobial Drugs
+# Data Sets with 624 Antimicrobial Drugs
 
 Two data sets containing all antimicrobials and antivirals. Use
 [`as.ab()`](https://amr-for-r.org/reference/as.ab.md) or one of the
@@ -25,7 +25,7 @@ antivirals
 
 ## Format
 
-### For the antimicrobials data set: a [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 498 observations and 14 variables:
+### For the antimicrobials data set: a [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 504 observations and 14 variables:
 
 - `ab`  
   antimicrobial ID as used in this package (such as `AMC`), using the
@@ -138,7 +138,7 @@ LOINC:
   [`av_property()`](https://amr-for-r.org/reference/av_property.md).
 
 An object of class `deprecated_amr_dataset` (inherits from `tbl_df`,
-`tbl`, `data.frame`) with 498 rows and 14 columns.
+`tbl`, `data.frame`) with 504 rows and 14 columns.
 
 An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with 120
 rows and 11 columns.
@@ -219,7 +219,7 @@ unlike any other info from this package.** See
 
 ``` r
 antimicrobials
-#> # A tibble: 498 × 14
+#> # A tibble: 504 × 14
 #>    ab        cid name   group atc   atc_group1 atc_group2 abbreviations synonyms
 #>    <ab>    <dbl> <chr>  <lis> <lis> <chr>      <chr>      <list>        <named >
 #>  1 AMA      4649 4-ami… <chr> <chr> Drugs for… Aminosali… <chr [1]>     <chr>   
@@ -232,7 +232,7 @@ antimicrobials
 #>  8 AMX     33613 Amoxi… <chr> <chr> Beta-lact… Penicilli… <chr [4]>     <chr>   
 #>  9 AMC  23665637 Amoxi… <chr> <chr> Beta-lact… Combinati… <chr [6]>     <chr>   
 #> 10 AXS    465441 Amoxi… <chr> <chr> NA         NA         <chr [1]>     <chr>   
-#> # ℹ 488 more rows
+#> # ℹ 494 more rows
 #> # ℹ 5 more variables: oral_ddd <dbl>, oral_units <chr>, iv_ddd <dbl>,
 #> #   iv_units <chr>, loinc <list>
 antivirals

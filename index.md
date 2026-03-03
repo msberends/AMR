@@ -266,6 +266,10 @@ example_isolates %>%
   summarise(across(c(GEN, TOB),
                    list(total_R = resistance,
                         conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ This message will be shown once per session.
 #> # A tibble: 3 × 5
 #>   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int
 #>   <chr>            <dbl> <chr>              <dbl> <chr>       

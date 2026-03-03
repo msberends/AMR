@@ -660,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-02-27 16:22:03     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-02-27 16:22:03     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-02-27 16:22:03     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-02-27 16:22:03     1 DISK   genta       Escherich… human      18         
+#> 1 2026-03-03 14:48:38     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-03-03 14:48:39     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-03-03 14:48:39     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-03-03 14:48:39     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
@@ -819,10 +819,11 @@ if (require("dplyr")) {
 #> Caused by warning:
 #> ! Some MICs were converted to the nearest higher log2 level, following the
 #> CLSI interpretation guideline.
-#> Interpreting MIC values: 'antibiotic' (ASP, acetylspiramycin), CLSI 2025...
-#> Interpreting disk diffusion zones: 'antibiotic' (ASP, acetylspiramycin),
+#> Interpreting MIC values: 'antibiotic' (TESTAB, test Antibiotic), CLSI
+#> 2025...
+#> Interpreting disk diffusion zones: 'antibiotic' (TESTAB, test Antibiotic),
 #> CLSI 2025...
-#> Interpreting disk diffusion zones: 'antibiotic' (ASP, acetylspiramycin),
+#> Interpreting disk diffusion zones: 'antibiotic' (TESTAB, test Antibiotic),
 #> CLSI 2025...
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `cipro = (function (x, ...) ...`.

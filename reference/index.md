@@ -258,6 +258,7 @@ or determine multi-drug resistant microorganisms (MDRO,
   [`nitrofurans()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`oxazolidinones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`penicillins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  [`peptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`phenicols()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   [`polymyxins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
@@ -390,7 +391,7 @@ information about how to work with functions in this package.
 - [`antimicrobials`](https://amr-for-r.org/reference/antimicrobials.md)
   [`antibiotics`](https://amr-for-r.org/reference/antimicrobials.md)
   [`antivirals`](https://amr-for-r.org/reference/antimicrobials.md) :
-  Data Sets with 618 Antimicrobial Drugs
+  Data Sets with 624 Antimicrobial Drugs
 - [`clinical_breakpoints`](https://amr-for-r.org/reference/clinical_breakpoints.md)
   : Data Set with Clinical Breakpoints for SIR Interpretation
 - [`example_isolates`](https://amr-for-r.org/reference/example_isolates.md)

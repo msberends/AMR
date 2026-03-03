@@ -126,14 +126,14 @@ antimicrobial group:
       all(glycopeptides() == "R")      ~ "My MDRO #3"
     )
 
-All 38 antimicrobial selectors are supported for use in the rules:
+All 42 antimicrobial selectors are supported for use in the rules:
 
 - [`aminoglycosides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
   amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin,
   bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high,
   habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high,
-  kanamycin/cephalexin, micronomicin, neomycin, netilmicin,
+  kanamycin/cephalexin, kasugamycin, micronomicin, neomycin, netilmicin,
   pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin,
   streptoduocin, streptomycin, streptomycin-high, tobramycin, and
   tobramycin-high
@@ -189,12 +189,12 @@ All 38 antimicrobial selectors are supported for use in the rules:
   cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline,
   ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam,
   ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole,
-  ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil,
-  ceftobiprole, ceftobiprole medocaril, ceftolozane/tazobactam,
-  ceftriaxone, ceftriaxone/beta-lactamase inhibitor, cefuroxime,
-  cefuroxime axetil, cephradine, ciclacillin, clometocillin,
-  cloxacillin, dicloxacillin, doripenem, epicillin, ertapenem,
-  flucloxacillin, hetacillin, imipenem, imipenem/EDTA,
+  ceftibuten, ceftibuten/avibactam, ceftiofur, ceftizoxime, ceftizoxime
+  alapivoxil, ceftobiprole, ceftobiprole medocaril,
+  ceftolozane/tazobactam, ceftriaxone, ceftriaxone/beta-lactamase
+  inhibitor, cefuroxime, cefuroxime axetil, cephradine, ciclacillin,
+  clometocillin, cloxacillin, dicloxacillin, doripenem, epicillin,
+  ertapenem, flucloxacillin, hetacillin, imipenem, imipenem/EDTA,
   imipenem/relebactam, latamoxef, lenampicillin, loracarbef, mecillinam,
   meropenem, meropenem/nacubactam, meropenem/vaborbactam, metampicillin,
   meticillin, mezlocillin, mezlocillin/sulbactam, nafcillin, oxacillin,
@@ -216,11 +216,11 @@ All 38 antimicrobial selectors are supported for use in the rules:
   cefepime/zidebactam, cefoperazone/sulbactam, cefotaxime/clavulanic
   acid, cefotaxime/sulbactam, cefpodoxime/clavulanic acid,
   ceftaroline/avibactam, ceftazidime/avibactam, ceftazidime/clavulanic
-  acid, ceftolozane/tazobactam, ceftriaxone/beta-lactamase inhibitor,
-  imipenem/relebactam, meropenem/nacubactam, meropenem/vaborbactam,
-  mezlocillin/sulbactam, penicillin/novobiocin, penicillin/sulbactam,
-  piperacillin/sulbactam, piperacillin/tazobactam, and
-  ticarcillin/clavulanic acid
+  acid, ceftibuten/avibactam, ceftolozane/tazobactam,
+  ceftriaxone/beta-lactamase inhibitor, imipenem/relebactam,
+  meropenem/nacubactam, meropenem/vaborbactam, mezlocillin/sulbactam,
+  penicillin/novobiocin, penicillin/sulbactam, piperacillin/sulbactam,
+  piperacillin/tazobactam, and ticarcillin/clavulanic acid
 
 - [`carbapenems()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -247,10 +247,11 @@ All 38 antimicrobial selectors are supported for use in the rules:
   cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline,
   ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam,
   ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole,
-  ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil,
-  ceftobiprole, ceftobiprole medocaril, ceftolozane/tazobactam,
-  ceftriaxone, ceftriaxone/beta-lactamase inhibitor, cefuroxime,
-  cefuroxime axetil, cephradine, latamoxef, and loracarbef
+  ceftibuten, ceftibuten/avibactam, ceftiofur, ceftizoxime, ceftizoxime
+  alapivoxil, ceftobiprole, ceftobiprole medocaril,
+  ceftolozane/tazobactam, ceftriaxone, ceftriaxone/beta-lactamase
+  inhibitor, cefuroxime, cefuroxime axetil, cephradine, latamoxef, and
+  loracarbef
 
 - [`cephalosporins_1st()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -274,8 +275,8 @@ All 38 antimicrobial selectors are supported for use in the rules:
   cefpiramide, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic
   acid, cefsulodin, ceftazidime, ceftazidime/avibactam,
   ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftibuten,
-  ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftriaxone,
-  ceftriaxone/beta-lactamase inhibitor, and latamoxef
+  ceftibuten/avibactam, ceftiofur, ceftizoxime, ceftizoxime alapivoxil,
+  ceftriaxone, ceftriaxone/beta-lactamase inhibitor, and latamoxef
 
 - [`cephalosporins_4th()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -309,7 +310,7 @@ All 38 antimicrobial selectors are supported for use in the rules:
   can select:  
   avoparcin, bleomycin, dalbavancin, norvancomycin, oritavancin,
   ramoplanin, teicoplanin, teicoplanin-macromethod, telavancin,
-  vancomycin, and vancomycin-macromethod
+  vancomycin, vancomycin-macromethod, and zorbamycin
 
 - [`isoxazolylpenicillins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -367,6 +368,13 @@ All 38 antimicrobial selectors are supported for use in the rules:
   talampicillin, temocillin, ticarcillin, and ticarcillin/clavulanic
   acid
 
+- [`peptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  can select:  
+  avoparcin, bacitracin, bleomycin, dalbavancin, daptomycin,
+  norvancomycin, oritavancin, ramoplanin, teicoplanin,
+  teicoplanin-macromethod, telavancin, thiostrepton, vancomycin,
+  vancomycin-macromethod, and zorbamycin
+
 - [`phenicols()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
   chloramphenicol, florfenicol, and thiamphenicol
@@ -409,7 +417,8 @@ All 38 antimicrobial selectors are supported for use in the rules:
 
 - [`streptogramins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
-  pristinamycin and quinupristin/dalfopristin
+  ostreogrycin, pristinamycin, quinupristin/dalfopristin, and
+  virginiamycine
 
 - [`sulfonamides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
