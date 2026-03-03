@@ -931,6 +931,46 @@ antimicrobials <- antimicrobials |>
              abbreviations = list("VNRX-5133"))
   )
 
+antimicrobials <- antimicrobials |>
+  mutate(ab = as.character(ab)) |>
+  bind_rows(
+    antimicrobials |>
+      filter(ab == "CTB") |>
+      mutate(ab = "CTA",
+             cid = NA_real_,
+             name = "Ceftibuten/avibactam") |>
+      select(1:4),
+    antimicrobials |>
+      filter(ab == "KAC") |>
+      mutate(ab = "KAS",
+             cid = NA_real_,
+             name = "Kasugamycin") |>
+      select(1:4),
+    antimicrobials |>
+      filter(ab == "PRI") |>
+      mutate(ab = "OST",
+             cid = NA_real_,
+             name = "Ostreogrycin") |>
+      select(1:4),
+    antimicrobials |>
+      filter(ab == "PRI") |>
+      mutate(ab = "THS",
+             cid = NA_real_,
+             name = "Thiostrepton") |>
+      select(1, 3),
+    antimicrobials |>
+      filter(ab == "CLA1") |>
+      mutate(ab = "XER",
+             cid = NA_real_,
+             name = "Xeruborbactam") |>
+      select(1:4),
+    antimicrobials |>
+      filter(ab == "BLM") |>
+      mutate(ab = "ZOR",
+             cid = NA_real_,
+             name = "Zorbamycin") |>
+      select(1:4),
+  )
 
 # update ATC codes from WHOCC website -------------------------------------
 
@@ -1107,13 +1147,14 @@ for (i in 1:nrow(antimicrobials)) {
   syn <- as.character(sort(unique(tolower(unname(unlist(antimicrobials[i, "synonyms", drop = TRUE]))))))
   syn <- gsub("[^a-z]", "", syn)
   syn <- gsub(" +", " ", syn)
-  pharm_terms <- "(pa?ediatric|injection|oral|inhale|otic|sulfate|sulphate|sodium|base|anhydrous|anhydrate|stearate|syrup|natrium|hydrate|x?hcl|gsalt|vet[.]?)"
+  pharm_terms <- "(antibiotic|pa?ediatric|injection|oral|inhale|otic|sulfate|sulphate|sodium|base|anhydrous|anhydrate|stearate|syrup|natrium|hydrate|x?hcl|gsalt|vet[.]?)"
   syn <- gsub(paste0(" ", pharm_terms, "$"), "", syn)
   syn <- gsub(paste0("^", pharm_terms, " "), "", syn)
   syn <- trimws(syn)
   syn <- gsub(" [a-z]{1,3}$", "", syn, perl = TRUE)
   syn <- trimws(syn)
   syn <- syn[syn != "" & syn %unlike% ":" & !syn %in% tolower(antimicrobials$name)]
+  syn <- syn[!syn %in% c("antibiotic", "antimicrobial")]
   # remove synonyms that are names in the data set
   syn <- syn[!sapply(syn, function(s) any(grepl(transform_syn(s), antimicrobials$name)))]
   syn <- unique(syn)

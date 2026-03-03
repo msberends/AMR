@@ -1,4 +1,4 @@
-# AMR 3.0.1.9021
+# AMR 3.0.1.9022
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -8,7 +8,8 @@
     - `all_mic()`, `all_mic_predictors()`
     - `all_disk()`, `all_disk_predictors()`
 * Data set `esbl_isolates` to practise with AMR modelling
-* AMR selectors `phosphonics()` and `spiropyrimidinetriones()`
+* AMR selectors `peptides()`, `phosphonics()` and `spiropyrimidinetriones()`
+* Antimicrobials in the `antimicrobials` data set: ceftibuten/avibactam (`CTA`), kasugamycin (`KAS`), ostreogrycin (`OST`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 * Support for Wildtype (WT) / Non-wildtype (NWT) in `as.sir()`, all plotting functions, and all susceptibility/resistance functions.
   - `as.sir()` gained an argument `as_wt_nwt`, which defaults to `TRUE` only when `breakpoint_type = "ECOFF"` (#254)
   - This transforms the output from S/R to WT/NWT

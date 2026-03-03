@@ -118,17 +118,11 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
   if (interactive() && is.null(getOption("AMR_guideline"))) {
     packageStartupMessage(
       word_wrap(
-        "Welcome to AMR v", format(utils::packageVersion("AMR")), ". ",
-        "You have not set the 'AMR_guideline' option to either \"CLSI\" or \"EUCAST\". ",
-        "You can set it using either:\n",
-        "  options(AMR_guideline = \"CLSI\")\n",
-        "  options(AMR_guideline = \"EUCAST\")\n",
-        "See `?AMR-options`. While unset, the AMR package uses the current default guideline: ", AMR::clinical_breakpoints$guideline[1], ".",
+        "Assuming ", AMR::clinical_breakpoints$guideline[1], " as the default AMR guideline, see `?AMR-options` to change this.",
         add_fn = NULL
       )
     )
   }
-
 
   # if custom ab option is available, load it
   if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {

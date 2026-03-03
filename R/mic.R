@@ -126,13 +126,17 @@ COMMON_MIC_VALUES <- c(
 #' # this can also coerce combined MIC/SIR values:
 #' as.mic("<=0.002; S")
 #'
-#' # mathematical processing treats MICs as numeric values
+#' # mathematical processing treats MICs as, and returns, numeric values
 #' fivenum(mic_data)
 #' quantile(mic_data)
 #' all(mic_data < 512)
 #'
 #' # rescale MICs using rescale_mic()
 #' rescale_mic(mic_data, mic_range = c(4, 16))
+#'
+#' # round up to nearest log2 level, e.g. for CLSI breakpoint interpretation:
+#' c(1:8)
+#' as.mic(c(1:8), round_to_next_log2 = TRUE)
 #'
 #' # interpret MIC values
 #' as.sir(
