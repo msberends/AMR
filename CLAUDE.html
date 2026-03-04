@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9023</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -217,7 +217,7 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <li>
 <code>NEWS.md</code> uses sections <strong>New</strong>, <strong>Fixes</strong>, <strong>Updates</strong> with GitHub issue references (<code>#NNN</code>)</li>
 </ul><div class="section level3">
-<h3 id="version-bump-required-for-every-pr">Version bump required for every PR<a class="anchor" aria-label="anchor" href="#version-bump-required-for-every-pr"></a></h3>
+<h3 id="version-and-date-bump-required-for-every-pr">Version and date bump required for every PR<a class="anchor" aria-label="anchor" href="#version-and-date-bump-required-for-every-pr"></a></h3>
 <p>Before opening a pull request, always increment the four-digit dev counter by 1 in <strong>both</strong> of these files:</p>
 <ol style="list-style-type: decimal"><li>
 <p><strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field:</p>
@@ -228,6 +228,8 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <pre><code><span><span class="co"># AMR 3.0.1.9021  →  # AMR 3.0.1.9022</span></span></code></pre>
 </li>
 </ol><p>Read the current version from <code>DESCRIPTION</code>, add 1 to the last numeric component, and write the new version to both files in the same commit as the rest of the PR changes.</p>
+<p>Also bump the date to the current date in <strong><code>DESCRIPTION</code></strong>, where it’s in the <code>Date:</code> field in ISO format:</p>
+<pre><code><span><span class="va">Date</span><span class="op">:</span> <span class="fl">2025</span><span class="op">-</span><span class="fl">12</span><span class="op">-</span><span class="fl">31</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">

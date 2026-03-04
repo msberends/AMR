@@ -161,7 +161,7 @@ Version format: `major.minor.patch.dev` (e.g., `3.0.1.9021`)
 - `NEWS.md` uses sections **New**, **Fixes**, **Updates** with GitHub
   issue references (`#NNN`)
 
-### Version bump required for every PR
+### Version and date bump required for every PR
 
 Before opening a pull request, always increment the four-digit dev
 counter by 1 in **both** of these files:
@@ -177,6 +177,11 @@ counter by 1 in **both** of these files:
 Read the current version from `DESCRIPTION`, add 1 to the last numeric
 component, and write the new version to both files in the same commit as
 the rest of the PR changes.
+
+Also bump the date to the current date in **`DESCRIPTION`**, where it’s
+in the `Date:` field in ISO format:
+
+    Date: 2025-12-31
 
 ## Internal State
 

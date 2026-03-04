@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9022
+## AMR 3.0.1.9023
 
 #### New
 
@@ -45,6 +45,11 @@
 
 #### Fixes
 
+- Fixed a bug in [`as.ab()`](https://amr-for-r.org/reference/as.ab.md)
+  where certain AB codes containing “PH” or “TH” (such as `ETH`, `MTH`,
+  `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when
+  combined in a vector with any untranslatable value
+  ([\#245](https://github.com/msberends/AMR/issues/245))
 - Fixed a bug in
   [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) for
   when no antimicrobials are set
