@@ -125,8 +125,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     # mangles short valid AB codes (e.g. "ETH"->"ET", "PHN"->"FN", "STH"->"ST")
     # making them unrecognisable in the lookup. Restore any values that were
     # already valid AB codes before generalisation (#245).
-    is_valid_ab_code <- x_bak_clean_before_gen %in% AMR_env$AB_lookup$ab
-    x_bak_clean[is_valid_ab_code] <- x_bak_clean_before_gen[is_valid_ab_code]
+    is_valid_ab_code <- toupper(x_bak_clean_before_gen) %in% AMR_env$AB_lookup$ab
+    x_bak_clean[is_valid_ab_code] <- toupper(x_bak_clean_before_gen)[is_valid_ab_code]
   }
 
   x <- unique(x_bak_clean) # this means that every x is in fact generalise_antibiotic_name(x)
