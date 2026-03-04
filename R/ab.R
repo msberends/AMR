@@ -119,7 +119,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x[x %like_case% "^PENICILLIN" & x %unlike_case% "[ /+-]"] <- "benzylpenicillin"
   x_bak_clean <- x
   if (already_regex == FALSE) {
+    x_bak_clean_before_gen <- x_bak_clean
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
+    # generalise_antibiotic_name() rewrites "PH"->"F" and "TH"->"T", which
+    # mangles short valid AB codes (e.g. "ETH"->"ET", "PHN"->"FN", "STH"->"ST")
+    # making them unrecognisable in the lookup. Restore any values that were
+    # already valid AB codes before generalisation (#245).
+    is_valid_ab_code <- x_bak_clean_before_gen %in% AMR_env$AB_lookup$ab
+    x_bak_clean[is_valid_ab_code] <- x_bak_clean_before_gen[is_valid_ab_code]
   }
 
   x <- unique(x_bak_clean) # this means that every x is in fact generalise_antibiotic_name(x)
