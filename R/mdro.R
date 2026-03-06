@@ -480,6 +480,50 @@ mdro <- function(x = NULL,
   }
   cols_ab <- cols_ab[!duplicated(cols_ab)]
 
+  # Infer resistance for missing base drugs from available drug+inhibitor combination columns.
+  # Clinical principle: resistance in drug+inhibitor (e.g., piperacillin/tazobactam = R)
+  # always implies resistance in the base drug (e.g., piperacillin = R), because the
+  # enzyme inhibitor adds nothing when the organism is truly resistant to the base drug.
+  # NOTE: susceptibility in a combination does NOT imply susceptibility in the base drug
+  # (the inhibitor may be responsible), so synthetic proxy columns only propagate R, not S/I.
+  .combos_in_data <- AB_BETALACTAMS_WITH_INHIBITOR[AB_BETALACTAMS_WITH_INHIBITOR %in% names(cols_ab)]
+  if (length(.combos_in_data) > 0) {
+    .base_drugs <- suppressMessages(
+      as.ab(gsub("/.*", "", ab_name(as.character(.combos_in_data), language = NULL)))
+    )
+    .unique_bases <- unique(.base_drugs[!is.na(.base_drugs)])
+    for (.base in .unique_bases) {
+      .base_code <- as.character(.base)
+      if (!.base_code %in% names(cols_ab)) {
+        # Base drug column absent; find all available combo columns for this base drug
+        .combos <- .combos_in_data[!is.na(.base_drugs) & as.character(.base_drugs) == .base_code]
+        .combo_cols <- unname(cols_ab[as.character(.combos)])
+        .combo_cols <- .combo_cols[!is.na(.combo_cols)]
+        if (length(.combo_cols) > 0) {
+          # Vectorised: if ANY combination is R, infer base drug as R; otherwise NA
+          .sir_chars <- as.data.frame(
+            lapply(x[, .combo_cols, drop = FALSE], function(col) as.character(as.sir(col))),
+            stringsAsFactors = FALSE
+          )
+          .new_col <- paste0(".sir_proxy_", .base_code)
+          x[[.new_col]] <- ifelse(rowSums(.sir_chars == "R", na.rm = TRUE) > 0L, "R", NA_character_)
+          cols_ab <- c(cols_ab, setNames(.new_col, .base_code))
+          if (isTRUE(verbose)) {
+            message_(
+              "Inferring resistance for ", ab_name(.base_code, language = NULL),
+              " from available drug+inhibitor combination(s): ",
+              paste(ab_name(as.character(.combos), language = NULL), collapse = ", "),
+              " (resistance in a combination always implies resistance in the base drug)",
+              add_fn = font_blue
+            )
+          }
+        }
+      }
+    }
+    cols_ab <- cols_ab[!duplicated(names(cols_ab))]
+  }
+  rm(list = intersect(ls(), c(".combos_in_data", ".base_drugs", ".unique_bases", ".base", ".base_code", ".combos", ".combo_cols", ".sir_chars", ".new_col")))
+
   # nolint start
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
@@ -672,6 +716,16 @@ mdro <- function(x = NULL,
   NA_as_FALSE <- function(x) {
     x[is.na(x)] <- FALSE
     x
+  }
+
+  ab_without_inhibitor <- function(ab_codes) {
+    # Get the base drug AB code from a drug+inhibitor combination.
+    # e.g., AMC (amoxicillin/clavulanic acid)  -> AMX (amoxicillin)
+    #        TZP (piperacillin/tazobactam)      -> PIP (piperacillin)
+    #        SAM (ampicillin/sulbactam)          -> AMP (ampicillin)
+    combo_names <- ab_name(ab_codes, language = NULL)
+    base_names <- gsub("/.*", "", combo_names)
+    suppressMessages(as.ab(base_names))
   }
 
   # antimicrobial classes

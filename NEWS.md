@@ -1,4 +1,4 @@
-# AMR 3.0.1.9028
+# AMR 3.0.1.9029
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -18,6 +18,7 @@
 * Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 ### Fixes
+* `mdro()`: when a base beta-lactam drug column is missing but a corresponding drug+inhibitor combination is present in the data and resistant (e.g., piperacillin/tazobactam = R while piperacillin is absent), the base drug is now correctly inferred as resistant. This ensures MDRO classification is not missed due to test-ordering differences in the laboratory. The reverse direction is also valid: susceptibility in a combination does not imply susceptibility in the base drug (the inhibitor may be responsible), so only resistance is propagated. Closes #209
 * Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
 * Fixed a bug in `as.sir()` where for numeric input the arguments `S`,  `I`,  and `R` would not be considered (#244)
