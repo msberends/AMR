@@ -1,4 +1,4 @@
-# AMR 3.0.1.9023
+# AMR 3.0.1.9026
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -9,13 +9,13 @@
     - `all_disk()`, `all_disk_predictors()`
 * Data set `esbl_isolates` to practise with AMR modelling
 * AMR selectors `peptides()`, `phosphonics()` and `spiropyrimidinetriones()`
-* Antimicrobials in the `antimicrobials` data set: ceftibuten/avibactam (`CTA`), kasugamycin (`KAS`), ostreogrycin (`OST`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 * Support for Wildtype (WT) / Non-wildtype (NWT) in `as.sir()`, all plotting functions, and all susceptibility/resistance functions.
   - `as.sir()` gained an argument `as_wt_nwt`, which defaults to `TRUE` only when `breakpoint_type = "ECOFF"` (#254)
   - This transforms the output from S/R to WT/NWT
   - Functions such as `susceptibility()` count WT as S and NWT as R
 * `interpretive_rules()`, which allows future implementation of CLSI interpretive rules (#235)
-  - `eucast_rules()` has become a wrapper around that function.
+  - `eucast_rules()` has become a wrapper around that function
+* Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 ### Fixes
 * Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
@@ -31,7 +31,7 @@
 * `as.mic()` and `rescale_mic()` gained the argument `round_to_next_log2`, which can be set to `TRUE` to round all values up to the nearest next log2 level (#255)
 * `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)
 * `ab_group()` gained an argument `all_groups` to return all groups the antimicrobial drug is in (#246)
-* Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the `antimicrobials` data set
+* Added to the `antimicrobials` data set: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)
 * Added explaining message to `as.sir()` when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (#244)
 * Updated handling of capped MIC values (`<`, `<=`, `>`, `>=`) in `as.sir()` in the argument `capped_mic_handling`: (#243)
   * Introduced four clearly defined options: `"none"`, `"conservative"` (default), `"standard"`, and `"lenient"`

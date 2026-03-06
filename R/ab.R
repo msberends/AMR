@@ -514,6 +514,14 @@ ab_reset_session <- function() {
   }
 }
 
+#' @rdname as.ab
+#' @details `NA_ab_` is a missing value of the new `ab` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
+#' @format NULL
+#' @export
+NA_ab_ <- set_clean_class(NA_character_,
+  new_class = c("ab", "character")
+)
+
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, ab)
 pillar_shaft.ab <- function(x, ...) {

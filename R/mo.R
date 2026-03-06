@@ -623,6 +623,14 @@ mo_cleaning_regex <- function() {
   )
 }
 
+#' @rdname as.mo
+#' @details `NA_mo_` is a missing value of the new `mo` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
+#' @format NULL
+#' @export
+NA_mo_ <- set_clean_class(NA_character_,
+  new_class = c("mo", "character")
+)
+
 # UNDOCUMENTED METHODS ----------------------------------------------------
 
 # this prevents the requirement for putting the dependency in Imports:

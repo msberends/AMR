@@ -172,6 +172,9 @@ ab_group <- function(x, language = get_AMR_locale(), all_groups = FALSE, ...) {
 
   grps <- ab_validate(x = x, property = "group", ...)
   for (i in seq_along(grps)) {
+    if (is.null(grps[[i]]) || all(is.na(grps[[i]]))) {
+      grps[[i]] <- NA_character_
+    }
     if (all_groups == FALSE) {
       # take the first match based on ABX_PRIORITY_LIST
       grps[[i]] <- grps[[i]][1]
