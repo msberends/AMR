@@ -65,6 +65,7 @@
 #' ab_synonyms("AMX")
 #' ab_tradenames("AMX")
 #' ab_group("AMX")
+#' ab_group("AMX", all_groups = TRUE) # most specific to most general
 #' ab_atc_group1("AMX")
 #' ab_atc_group2("AMX")
 #' ab_url("AMX")
@@ -163,7 +164,7 @@ ab_tradenames <- function(x, ...) {
 }
 
 #' @rdname ab_property
-#' @param all_groups A [logical] to indicate whether all antimicrobial groups must be return as a vector for each input value. For example, an antibiotic in the "aminopenicillins" group, is also in the "penicillins" and "beta-lactams" groups. Setting `all_groups = TRUE` would return all three for such an antibiotic, while `all_groups = FALSE` (default) only returns the most distinctive group name.
+#' @param all_groups A [logical] to indicate whether all antimicrobial groups must be return as a vector for each input value. For example, an antibiotic in the "aminopenicillins" group, is also in the "penicillins" and "beta-lactams" groups. Setting `all_groups = TRUE` would return all three for such an antibiotic, while `all_groups = FALSE` (default) only returns the most specific group name.
 #' @export
 ab_group <- function(x, language = get_AMR_locale(), all_groups = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
