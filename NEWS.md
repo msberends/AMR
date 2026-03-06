@@ -1,4 +1,4 @@
-# AMR 3.0.1.9026
+# AMR 3.0.1.9027
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -25,6 +25,7 @@
 * Fixed a bug for printing column names to the console when using `mutate_at(vars(...), as.mic)` (#249)
 * Fixed a bug to disregard `NI` for susceptibility proportion functions
 * Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo and CoPS to Stafilococco coagulasi-positivo (#256)
+* Fixed SIR and MIC coercion of combined values, e.g. `as.sir("<= 0.002; S") ` or `as.mic("S; 0.002")` (#252)
 
 ### Updates
 * `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.

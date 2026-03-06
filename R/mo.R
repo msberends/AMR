@@ -38,13 +38,15 @@
 #'
 #' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
 #' @param minimum_matching_score A numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()].
-#' @param keep_synonyms A [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE`, which will return a note if old taxonomic names were processed. The default can be set with the package option [`AMR_keep_synonyms`][AMR-options], i.e. `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
+#' @param keep_synonyms A [logical] to indicate if outdated, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. Do note that the term "synonym" is in this case jargon from the field of microbial taxonomy - it is not in place to denote that e.g. "Streptococcus Group A" is a synonym of *S. pyogenes*. Though this is practically the case, taxonomically it is not as "Streptococcus Group A" is not even a valid taxonomic name.
+#'
+#' The default is `FALSE`, which will return a note if outdated taxonomic names were processed. The default can be set with the package option [`AMR_keep_synonyms`][AMR-options], i.e. `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
 #' @param reference_df A [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern A Perl-compatible [regular expression][base::regex] (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the package option [`AMR_ignore_pattern`][AMR-options], e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param cleaning_regex A Perl-compatible [regular expression][base::regex] (case-insensitive) to clean the input of `x`. Every matched part in `x` will be removed. At default, this is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option [`AMR_cleaning_regex`][AMR-options].
 #' @param only_fungi A [logical] to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for [all microorganism functions][mo_property()] with the package option [`AMR_only_fungi`][AMR-options], i.e. `options(AMR_only_fungi = TRUE)`.
 #' @param language Language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()]).
-#' @param info A [logical] to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is `TRUE` only in interactive mode.
+#' @param info A [logical] to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with outdated taxonomic names. The default is `TRUE` only in interactive mode.
 #' @param ... Other arguments passed on to functions.
 #' @rdname as.mo
 #' @aliases mo
@@ -82,7 +84,7 @@
 #' There are three helper functions that can be run after using the [as.mo()] function:
 #' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
 #' - Use [mo_failures()] to get a [character] [vector] with all values that could not be coerced to a valid value.
-#' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
+#' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on outdated, previously accepted taxonomic names.
 #'
 #' ### For Mycologists
 #'
@@ -476,7 +478,7 @@ as.mo <- function(x,
     }
   } else if (is.null(getOption("AMR_keep_synonyms")) && length(AMR_env$mo_renamed$old) > 0 && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
     # keep synonyms is TRUE, so check if any do have synonyms
-    warning_("Function `as.mo()` returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " old taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.", call = FALSE)
+    warning_("Function `as.mo()` returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " outdated taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.", call = FALSE)
   }
 
   # Apply Becker ----

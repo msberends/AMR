@@ -568,6 +568,7 @@ as.sir.default <- function(x,
     x[x %like% "dose"] <- "SDD"
     mtch <- grepl(paste0("(", S, "|", I, "|", R, "|", NI, "|", SDD, "|", WT, "|", NWT, "|", NS, "|[A-Z]+)"), x, perl = TRUE)
     x[!mtch] <- ""
+    x[mtch] <- trimws2(gsub("[^\\p{L}]", "", x[mtch], perl = TRUE)) # \p{L} is the Unicode category for all letters, including those with diacritics
     # apply regexes set by user
     x[x %like% S] <- "S"
     x[x %like% I] <- "I"

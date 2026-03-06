@@ -49,7 +49,9 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{minimum_matching_score}{A numeric value to set as the lower limit for the \link[=mo_matching_score]{MO matching score}. When left blank, this will be determined automatically based on the character length of \code{x}, its \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity}.}
 
-\item{keep_synonyms}{A \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with the package option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
+\item{keep_synonyms}{A \link{logical} to indicate if outdated, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. Do note that the term "synonym" is in this case jargon from the field of microbial taxonomy - it is not in place to denote that e.g. "Streptococcus Group A" is a synonym of \emph{S. pyogenes}. Though this is practically the case, taxonomically it is not as "Streptococcus Group A" is not even a valid taxonomic name.
+
+The default is \code{FALSE}, which will return a note if outdated taxonomic names were processed. The default can be set with the package option \code{\link[=AMR-options]{AMR_keep_synonyms}}, i.e. \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
 \item{reference_df}{A \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
@@ -61,7 +63,7 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{language}{Language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
-\item{info}{A \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is \code{TRUE} only in interactive mode.}
+\item{info}{A \link{logical} to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with outdated taxonomic names. The default is \code{TRUE} only in interactive mode.}
 
 \item{...}{Other arguments passed on to functions.}
 }
@@ -104,7 +106,7 @@ There are three helper functions that can be run after using the \code{\link[=as
 \itemize{
 \item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \link{data.frame} that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see \emph{Matching Score for Microorganisms} below).
 \item Use \code{\link[=mo_failures]{mo_failures()}} to get a \link{character} \link{vector} with all values that could not be coerced to a valid value.
-\item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \link{data.frame} with all values that could be coerced based on old, previously accepted taxonomic names.
+\item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \link{data.frame} with all values that could be coerced based on outdated, previously accepted taxonomic names.
 }
 }
 
