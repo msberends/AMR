@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9023
+## AMR 3.0.1.9026
 
 #### New
 
@@ -23,9 +23,6 @@
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   and
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
-- Antimicrobials in the `antimicrobials` data set: ceftibuten/avibactam
-  (`CTA`), kasugamycin (`KAS`), ostreogrycin (`OST`), thiostrepton
-  (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 - Support for Wildtype (WT) / Non-wildtype (NWT) in
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), all plotting
   functions, and all susceptibility/resistance functions.
@@ -41,7 +38,10 @@
   which allows future implementation of CLSI interpretive rules
   ([\#235](https://github.com/msberends/AMR/issues/235))
   - [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
-    has become a wrapper around that function.
+    has become a wrapper around that function
+- Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R’s
+  `NA_character_` and `NA_integer_`, for use in pipelines that require
+  typed missing values
 
 #### Fixes
 
@@ -82,8 +82,10 @@
 - [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
   an argument `all_groups` to return all groups the antimicrobial drug
   is in ([\#246](https://github.com/msberends/AMR/issues/246))
-- Added taniborbactam (`TAN`) and cefepime/taniborbactam (`FTA`) to the
-  `antimicrobials` data set
+- Added to the `antimicrobials` data set: cefepime/taniborbactam
+  (`FTA`), ceftibuten/avibactam (`CTA`), kasugamycin (`KAS`),
+  ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`),
+  xeruborbactam (`XER`), and zorbamycin (`ZOR`)
 - Added explaining message to
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) when
   interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R)

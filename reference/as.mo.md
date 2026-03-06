@@ -32,6 +32,8 @@ mo_failures()
 mo_reset_session()
 
 mo_cleaning_regex()
+
+NA_mo_
 ```
 
 ## Arguments
@@ -337,6 +339,9 @@ This is based on:
 - Lancefield RC (1933). **A serological differentiation of human and
   other groups of hemolytic streptococci.** *J Exp Med.* 57(4): 571-95;
   [doi:10.1084/jem.57.4.571](https://doi.org/10.1084/jem.57.4.571)
+
+`NA_mo_` is a missing value of the new `mo` class, analogous to e.g.
+base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).
 
 ## Source
 

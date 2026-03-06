@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9023</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9026</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,9 @@
 <span></span>
 <span><span class="fu">is.ab</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ab_reset_session</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">ab_reset_session</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">NA_ab_</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -101,6 +103,7 @@
 </ul><p>Use the <code><a href="ab_property.html">ab_*</a></code> functions to get properties based on the returned antibiotic ID, see <em>Examples</em>.</p>
 <p>Note: the <code>as.ab()</code> and <code><a href="ab_property.html">ab_*</a></code> functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.</p>
 <p>You can add your own manual codes to be considered by <code>as.ab()</code> and all <code><a href="ab_property.html">ab_*</a></code> functions, see <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code>.</p>
+<p><code>NA_ab_</code> is a missing value of the new <code>ab</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>

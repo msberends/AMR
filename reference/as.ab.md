@@ -15,6 +15,8 @@ as.ab(x, flag_multiple_results = TRUE, language = get_AMR_locale(),
 is.ab(x)
 
 ab_reset_session()
+
+NA_ab_
 ```
 
 ## Arguments
@@ -90,6 +92,9 @@ drugs. This may fail on some systems.
 You can add your own manual codes to be considered by `as.ab()` and all
 [`ab_*`](https://amr-for-r.org/reference/ab_property.md) functions, see
 [`add_custom_antimicrobials()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md).
+
+`NA_ab_` is a missing value of the new `ab` class, analogous to e.g.
+base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).
 
 ## Source
 

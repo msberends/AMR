@@ -501,8 +501,9 @@ to add your own custom microorganisms to this package.
   [`mo_renamed()`](https://amr-for-r.org/reference/as.mo.md)
   [`mo_failures()`](https://amr-for-r.org/reference/as.mo.md)
   [`mo_reset_session()`](https://amr-for-r.org/reference/as.mo.md)
-  [`mo_cleaning_regex()`](https://amr-for-r.org/reference/as.mo.md) :
-  Transform Arbitrary Input to Valid Microbial Taxonomy
+  [`mo_cleaning_regex()`](https://amr-for-r.org/reference/as.mo.md)
+  [`NA_mo_`](https://amr-for-r.org/reference/as.mo.md) : Transform
+  Arbitrary Input to Valid Microbial Taxonomy
 - [`mo_name()`](https://amr-for-r.org/reference/mo_property.md)
   [`mo_fullname()`](https://amr-for-r.org/reference/mo_property.md)
   [`mo_shortname()`](https://amr-for-r.org/reference/mo_property.md)
@@ -557,8 +558,9 @@ from clinical text records, using
 
 - [`as.ab()`](https://amr-for-r.org/reference/as.ab.md)
   [`is.ab()`](https://amr-for-r.org/reference/as.ab.md)
-  [`ab_reset_session()`](https://amr-for-r.org/reference/as.ab.md) :
-  Transform Input to an Antibiotic ID
+  [`ab_reset_session()`](https://amr-for-r.org/reference/as.ab.md)
+  [`NA_ab_`](https://amr-for-r.org/reference/as.ab.md) : Transform Input
+  to an Antibiotic ID
 - [`ab_name()`](https://amr-for-r.org/reference/ab_property.md)
   [`ab_cid()`](https://amr-for-r.org/reference/ab_property.md)
   [`ab_synonyms()`](https://amr-for-r.org/reference/ab_property.md)
