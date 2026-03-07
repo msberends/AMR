@@ -316,8 +316,9 @@ test_that("test-mdro.R", {
     stringsAsFactors = FALSE
   )
   # With TZP=R, PIP should be inferred R; result should be XDR or PDR (integer > 2)
+  # mdro() with verbose=FALSE returns an atomic factor, not a data.frame
   result_no_pip <- suppressMessages(suppressWarnings(mdro(pseud_no_pip, guideline = "EUCAST", info = FALSE)))
-  expect_true(as.integer(result_no_pip$MDRO) > 1L)
+  expect_true(as.integer(result_no_pip) > 1L)
 
   # Susceptibility in combination must NOT be propagated to base drug
   # (the inhibitor may be responsible; we cannot conclude PIP=S from TZP=S)
@@ -325,7 +326,7 @@ test_that("test-mdro.R", {
   pseud_tzp_s$TZP <- as.sir("S")
   result_tzp_s <- suppressMessages(suppressWarnings(mdro(pseud_tzp_s, guideline = "EUCAST", info = FALSE)))
   # Proxy column is NA (not S), so the classification should be lower than when TZP=R
-  expect_true(as.integer(result_tzp_s$MDRO) < as.integer(result_no_pip$MDRO))
+  expect_true(as.integer(result_tzp_s) < as.integer(result_no_pip))
 
   # verbose mode should emit an inference message when a proxy column is created
   expect_output(
@@ -343,6 +344,6 @@ test_that("test-mdro.R", {
     DAP = as.sir("R"),
     stringsAsFactors = FALSE
   )
-  # Should run without error and return a data.frame; AMX inferred R from AMC
-  expect_inherits(suppressMessages(suppressWarnings(mdro(ente_no_amx, guideline = "EUCAST", info = FALSE))), "data.frame")
+  # Should run without error and return an ordered factor; AMX inferred R from AMC
+  expect_inherits(suppressMessages(suppressWarnings(mdro(ente_no_amx, guideline = "EUCAST", info = FALSE))), c("factor", "ordered"))
 })
