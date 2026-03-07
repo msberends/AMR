@@ -302,7 +302,7 @@ test_that("test-mdro.R", {
   # MRGN guideline is used because it explicitly requires PIP=R (not PIP OR TZP)
   # for Pseudomonas aeruginosa 4MRGN, making the proxy effect directly testable.
   pseud_no_pip <- data.frame(
-    mo  = as.mo("Pseudomonas aeruginosa"),
+    mo = as.mo("Pseudomonas aeruginosa"),
     TZP = as.sir("R"), # piperacillin/tazobactam; no PIP column
     CAZ = as.sir("R"),
     IPM = as.sir("R"),
@@ -332,7 +332,7 @@ test_that("test-mdro.R", {
 
   # Multiple combos for the same base drug: AMX can come from AMC (amoxicillin/clavulanic acid)
   ente_no_amx <- data.frame(
-    mo  = as.mo("Enterococcus faecium"),
+    mo = as.mo("Enterococcus faecium"),
     AMC = as.sir("R"), # amoxicillin/clavulanic acid; no AMX column
     VAN = as.sir("R"),
     TEC = as.sir("R"),

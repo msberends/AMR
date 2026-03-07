@@ -35,7 +35,10 @@ test_that("test-data.R", {
   expect_identical(class(microorganisms$mo), c("mo", "character"))
   expect_identical(nrow(antimicrobials), length(unique(AMR::antimicrobials$ab)))
   expect_identical(class(AMR::antimicrobials$ab), c("ab", "character"))
-  expect_identical(nrow(antimicrobials[!is.na(antimicrobials$cid), ]), length(unique(AMR::antimicrobials$cid[!is.na(antimicrobials$cid)])), label = "nr of rows with CIDs", expected.label = "unique nr of CIDs")
+  expect_identical(
+    nrow(antimicrobials[!is.na(antimicrobials$cid), ]),
+    length(unique(AMR::antimicrobials$cid[!is.na(antimicrobials$cid)]))
+  )
 
   # check cross table reference
   expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
