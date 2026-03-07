@@ -298,41 +298,37 @@ test_that("test-mdro.R", {
   }
 
   # drug+inhibitor inference for missing base drug columns (issue #209) -------
-  # Resistance in drug+inhibitor always implies resistance in the base drug.
-  # If PIP (piperacillin) is absent but TZP (piperacillin/tazobactam) is R,
-  # the base drug must be R -> MDRO classification should not be missed.
+  # Resistance in drug+inhibitor implies resistance in the base drug.
+  # MRGN guideline is used because it explicitly requires PIP=R (not PIP OR TZP)
+  # for Pseudomonas aeruginosa 4MRGN, making the proxy effect directly testable.
   pseud_no_pip <- data.frame(
     mo  = as.mo("Pseudomonas aeruginosa"),
-    TZP = as.sir("R"), # piperacillin/tazobactam present; no PIP column
+    TZP = as.sir("R"), # piperacillin/tazobactam; no PIP column
+    CAZ = as.sir("R"),
     IPM = as.sir("R"),
     MEM = as.sir("R"),
-    CAZ = as.sir("R"),
-    FEP = as.sir("R"),
     CIP = as.sir("R"),
-    GEN = as.sir("R"),
-    TOB = as.sir("R"),
-    AMK = as.sir("R"),
-    COL = as.sir("S"),
     stringsAsFactors = FALSE
   )
-  # With TZP=R, PIP should be inferred R; result should be XDR or PDR (integer > 2)
-  # mdro() with verbose=FALSE returns an atomic factor, not a data.frame
-  result_no_pip <- suppressMessages(suppressWarnings(mdro(pseud_no_pip, guideline = "EUCAST", info = FALSE)))
+  # Inference message goes to message() / stderr, not stdout
+  # -> must use expect_message(), NOT expect_output()
+  expect_message(
+    suppressWarnings(mdro(pseud_no_pip, guideline = "mrgn", info = FALSE, verbose = TRUE)),
+    "Inferring resistance"
+  )
+  # With TZP=R, PIP is inferred R -> 4MRGN criteria met -> level 3 (> 1)
+  result_no_pip <- suppressMessages(suppressWarnings(
+    mdro(pseud_no_pip, guideline = "mrgn", info = FALSE)
+  ))
   expect_true(as.integer(result_no_pip) > 1L)
-
-  # Susceptibility in combination must NOT be propagated to base drug
-  # (the inhibitor may be responsible; we cannot conclude PIP=S from TZP=S)
+  # Susceptibility in combo does NOT propagate: proxy = NA, not S
+  # -> 4MRGN criteria no longer met -> lower level than when TZP=R
   pseud_tzp_s <- pseud_no_pip
   pseud_tzp_s$TZP <- as.sir("S")
-  result_tzp_s <- suppressMessages(suppressWarnings(mdro(pseud_tzp_s, guideline = "EUCAST", info = FALSE)))
-  # Proxy column is NA (not S), so the classification should be lower than when TZP=R
+  result_tzp_s <- suppressMessages(suppressWarnings(
+    mdro(pseud_tzp_s, guideline = "mrgn", info = FALSE)
+  ))
   expect_true(as.integer(result_tzp_s) < as.integer(result_no_pip))
-
-  # verbose mode should emit an inference message when a proxy column is created
-  expect_output(
-    suppressMessages(suppressWarnings(mdro(pseud_no_pip, guideline = "EUCAST", info = FALSE, verbose = TRUE))),
-    regexp = "Inferring resistance"
-  )
 
   # Multiple combos for the same base drug: AMX can come from AMC (amoxicillin/clavulanic acid)
   ente_no_amx <- data.frame(
