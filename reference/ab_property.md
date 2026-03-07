@@ -79,7 +79,7 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
   value. For example, an antibiotic in the "aminopenicillins" group, is
   also in the "penicillins" and "beta-lactams" groups. Setting
   `all_groups = TRUE` would return all three for such an antibiotic,
-  while `all_groups = FALSE` (default) only returns the most distinctive
+  while `all_groups = FALSE` (default) only returns the most specific
   group name.
 
 - only_first:
@@ -239,6 +239,8 @@ ab_tradenames("AMX")
 #> [93] "zimox"          
 ab_group("AMX")
 #> [1] "Aminopenicillins"
+ab_group("AMX", all_groups = TRUE) # most specific to most general
+#> [1] "Aminopenicillins" "Penicillins"      "Beta-lactams"    
 ab_atc_group1("AMX")
 #> [1] "Beta-lactam antibacterials, penicillins"
 ab_atc_group2("AMX")

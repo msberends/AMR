@@ -178,28 +178,27 @@ x
 df <- example_isolates[sample(seq_len(2000), size = 100), ]
 
 get_episode(df$date, episode_days = 60) # indices
-#>   [1] 29 42  9  7 14 28 39 48 29 19 27 10 43 18 22 41 12  8 35 13  3 45  5  4 34
-#>  [26] 37 16 22 23 16 10 41 13  2 44 18 19 38 32 22 35 39 44 38 39 11 23 25 38 26
-#>  [51] 23 25 12 17 23 30 30 33 16 21 36 39 26 11  7  4 16 42 22 46 36 38 31 25 40
-#>  [76]  1 44 38 23 32 44 20 22 15 14 13 42  9 37 29  6 47 24 21 23 43 19 31  1  3
+#>   [1] 21  7  4 46 15  6 11 27 44 25 20  8 30 25 43 33 13 46  2 44 40 15 33 46  2
+#>  [26] 32  4 19 22 45 23 45  9 44 39 16  7 46 10 34 37 45  4 20 11 14  5 19  7 40
+#>  [51]  6 47 31  4 31 42  7 13 29 38 31 18 28  9 43 17 23 41 12  8 35 13  2 45  4
+#>  [76]  3 34 36 15 23 24 15  9 41 12  1 44 17 18 37 32 23 35 38 44 37 38 10 24 26
 is_new_episode(df$date, episode_days = 60) # TRUE/FALSE
-#>   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-#>  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-#>  [25]  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
-#>  [37] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
-#>  [49] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
-#>  [61]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-#>  [73]  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
-#>  [85] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
-#>  [97] FALSE FALSE FALSE FALSE
+#>   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+#>  [13]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+#>  [25] FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+#>  [37] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+#>  [49] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+#>  [61] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE
+#>  [73] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
+#>  [85] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#>  [97] FALSE FALSE FALSE  TRUE
 
 # filter on results from the third 60-day episode only, using base R
 df[which(get_episode(df$date, 60) == 3), ]
-#> # A tibble: 2 × 46
-#>   date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
-#>   <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
-#> 1 2002-11-04 304347     62 M      Clinical B_STRPT_PNMN   S     NA    NA    S  
-#> 2 2002-10-18 E55128     57 F      ICU      B_STPHY_AURS   R     NA    S     R  
+#> # A tibble: 1 × 46
+#>   date       patient   age gender ward  mo           PEN   OXA   FLC   AMX  
+#>   <date>     <chr>   <dbl> <chr>  <chr> <mo>         <sir> <sir> <sir> <sir>
+#> 1 2003-01-06 894506     83 M      ICU   B_STRPT_PNMN   S     NA    NA    S  
 #> # ℹ 36 more variables: AMC <sir>, AMP <sir>, TZP <sir>, CZO <sir>, FEP <sir>,
 #> #   CXM <sir>, FOX <sir>, CTX <sir>, CAZ <sir>, CRO <sir>, GEN <sir>,
 #> #   TOB <sir>, AMK <sir>, KAN <sir>, TMP <sir>, SXT <sir>, NIT <sir>,
@@ -233,19 +232,19 @@ if (require("dplyr")) {
     arrange(patient, condition, date)
 }
 #> # A tibble: 100 × 4
-#> # Groups:   patient, condition [96]
+#> # Groups:   patient, condition [94]
 #>    patient date       condition new_episode
 #>    <chr>   <date>     <chr>     <lgl>      
-#>  1 022060  2004-05-04 A         TRUE       
-#>  2 060287  2007-03-11 A         TRUE       
-#>  3 0E2483  2007-04-06 C         TRUE       
-#>  4 101305  2006-12-13 A         TRUE       
-#>  5 141061  2014-10-22 A         TRUE       
-#>  6 146F70  2009-08-14 A         TRUE       
-#>  7 15D386  2004-08-01 B         TRUE       
-#>  8 187841  2008-04-22 C         TRUE       
-#>  9 195736  2008-08-29 C         TRUE       
-#> 10 195736  2008-08-29 C         FALSE      
+#>  1 060287  2007-03-11 A         TRUE       
+#>  2 0E2483  2007-11-10 A         TRUE       
+#>  3 101305  2006-12-13 A         TRUE       
+#>  4 141061  2014-10-22 A         TRUE       
+#>  5 151041  2006-02-10 A         TRUE       
+#>  6 15D386  2004-08-01 B         TRUE       
+#>  7 187841  2008-04-22 A         TRUE       
+#>  8 189363  2004-06-22 C         TRUE       
+#>  9 208305  2015-09-14 A         TRUE       
+#> 10 257844  2011-05-22 A         TRUE       
 #> # ℹ 90 more rows
 
 if (require("dplyr")) {
@@ -259,19 +258,19 @@ if (require("dplyr")) {
     arrange(patient, ward, date)
 }
 #> # A tibble: 100 × 5
-#> # Groups:   ward, patient [91]
+#> # Groups:   ward, patient [89]
 #>    ward     date       patient new_index new_logical
 #>    <chr>    <date>     <chr>       <int> <lgl>      
-#>  1 ICU      2004-05-04 022060          1 TRUE       
-#>  2 Clinical 2007-03-11 060287          1 TRUE       
-#>  3 Clinical 2007-04-06 0E2483          1 TRUE       
-#>  4 Clinical 2006-12-13 101305          1 TRUE       
-#>  5 Clinical 2014-10-22 141061          1 TRUE       
-#>  6 Clinical 2009-08-14 146F70          1 TRUE       
-#>  7 ICU      2004-08-01 15D386          1 TRUE       
-#>  8 Clinical 2008-04-22 187841          1 TRUE       
-#>  9 Clinical 2008-08-29 195736          1 TRUE       
-#> 10 Clinical 2008-08-29 195736          1 FALSE      
+#>  1 Clinical 2007-03-11 060287          1 TRUE       
+#>  2 Clinical 2007-11-10 0E2483          1 TRUE       
+#>  3 Clinical 2006-12-13 101305          1 TRUE       
+#>  4 Clinical 2014-10-22 141061          1 TRUE       
+#>  5 Clinical 2006-02-10 151041          1 TRUE       
+#>  6 ICU      2004-08-01 15D386          1 TRUE       
+#>  7 Clinical 2008-04-22 187841          1 TRUE       
+#>  8 Clinical 2004-06-22 189363          1 TRUE       
+#>  9 Clinical 2015-09-14 208305          1 TRUE       
+#> 10 Clinical 2011-05-22 257844          1 TRUE       
 #> # ℹ 90 more rows
 
 if (require("dplyr")) {
@@ -287,9 +286,9 @@ if (require("dplyr")) {
 #> # A tibble: 3 × 5
 #>   ward       n_patients n_episodes_365 n_episodes_60 n_episodes_30
 #>   <chr>           <int>          <int>         <int>         <int>
-#> 1 Clinical           58             13            37            44
-#> 2 ICU                26              7            20            23
-#> 3 Outpatient          7              4             6             7
+#> 1 Clinical           55             12            34            39
+#> 2 ICU                28             10            25            26
+#> 3 Outpatient          6              5             6             6
 
 # grouping on patients and microorganisms leads to the same
 # results as first_isolate() when using 'episode-based':
@@ -318,19 +317,19 @@ if (require("dplyr")) {
     select(group_vars(.), flag_episode)
 }
 #> # A tibble: 100 × 4
-#> # Groups:   patient, mo, ward [96]
-#>    patient mo            ward     flag_episode
-#>    <chr>   <mo>          <chr>    <lgl>       
-#>  1 473F39  B_ESCHR_COLI  Clinical TRUE        
-#>  2 917895  B_STPHY_CPTS  ICU      TRUE        
-#>  3 022060  B_ENTRBC_CLOC ICU      TRUE        
-#>  4 C36883  B_ESCHR_COLI  Clinical TRUE        
-#>  5 5DF436  B_STPHY_AURS  ICU      TRUE        
-#>  6 971739  B_STPHY_CONS  Clinical TRUE        
-#>  7 488175  B_ESCHR_COLI  Clinical TRUE        
-#>  8 5DB1C8  B_STPHY_CPTS  Clinical TRUE        
-#>  9 BC9909  B_ENTRBC_CLOC Clinical TRUE        
-#> 10 5B78D5  B_STPHY_AURS  Clinical TRUE        
+#> # Groups:   patient, mo, ward [93]
+#>    patient mo            ward       flag_episode
+#>    <chr>   <mo>          <chr>      <lgl>       
+#>  1 0E2483  B_ESCHR_COLI  Clinical   TRUE        
+#>  2 F24801  B_STRPT_AGLC  ICU        TRUE        
+#>  3 A26548  B_STPHY_CONS  ICU        TRUE        
+#>  4 422833  B_ENTRC_FCLS  Clinical   TRUE        
+#>  5 AFD3B1    UNKNOWN     Clinical   TRUE        
+#>  6 F35553  B_ENTRBC_CLOC ICU        TRUE        
+#>  7 316893  B_STPHY_CONS  Clinical   TRUE        
+#>  8 B54813  B_ENTRC       ICU        TRUE        
+#>  9 E06844  B_STPHY_AURS  Outpatient TRUE        
+#> 10 B65162  B_STRPT_PNMN  Clinical   TRUE        
 #> # ℹ 90 more rows
 # }
 ```

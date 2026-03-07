@@ -660,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-03-06 11:51:54     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-03-06 11:51:54     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-03-06 11:51:55     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-03-06 11:51:55     1 DISK   genta       Escherich… human      18         
+#> 1 2026-03-07 17:11:21     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-03-07 17:11:21     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-03-07 17:11:22     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-03-07 17:11:22     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
@@ -870,10 +870,8 @@ as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
 #> Class 'sir'
 #> [1] S    SDD  I    R    NI   <NA> <NA> <NA>
 as.sir("<= 0.002; S") # will return "S"
-#> Warning: in `as.sir()`: 1 result truncated (100%) that were invalid antimicrobial
-#> interpretations: "<= 0.002; S"
 #> Class 'sir'
-#> [1] <NA>
+#> [1] S
 
 as.sir(c(1, 2, 3))
 #> ℹ in `as.sir()`: Interpreting input value 1 as "S", 2 as "I", and 3 as "R"

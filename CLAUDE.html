@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9026</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -218,18 +218,29 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <code>NEWS.md</code> uses sections <strong>New</strong>, <strong>Fixes</strong>, <strong>Updates</strong> with GitHub issue references (<code>#NNN</code>)</li>
 </ul><div class="section level3">
 <h3 id="version-and-date-bump-required-for-every-pr">Version and date bump required for every PR<a class="anchor" aria-label="anchor" href="#version-and-date-bump-required-for-every-pr"></a></h3>
-<p>Before opening a pull request, always increment the four-digit dev counter by 1 in <strong>both</strong> of these files:</p>
+<p>All PRs are <strong>squash-merged</strong>, so each PR lands as exactly <strong>one commit</strong> on the default branch. Version numbers are kept in sync with the cumulative commit count since the last released tag. Therefore <strong>exactly one version bump is allowed per PR</strong>, regardless of how many intermediate commits are made on the branch.</p>
+<div class="section level4">
+<h4 id="computing-the-correct-version-number">Computing the correct version number<a class="anchor" aria-label="anchor" href="#computing-the-correct-version-number"></a></h4>
+<p>Run the following from the repo root to determine the version string to use:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="va">currenttag</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/v//'</span><span class="va">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="va">currenttagfull</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0<span class="va">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="va">defaultbranch</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> branch <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c</span> 3- <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">'^master$|^main$'</span><span class="va">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="va">currentcommit</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> rev-list <span class="at">--count</span> <span class="va">${currenttagfull}</span>..<span class="va">${defaultbranch})</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$currentversion</span><span class="st">"</span></span></code></pre></div>
+<p>The <code>+ 1</code> accounts for the fact that this PR’s squash commit is not yet on the default branch. Set <strong>both</strong> of these files to the resulting version string (and only once per PR, even across multiple commits):</p>
 <ol style="list-style-type: decimal"><li>
-<p><strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field:</p>
-<pre><code>Version: 3.0.1.9021  →  Version: 3.0.1.9022</code></pre>
-</li>
+<strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</li>
 <li>
-<p><strong><code>NEWS.md</code></strong> — the top-level heading:</p>
-<pre><code><span><span class="co"># AMR 3.0.1.9021  →  # AMR 3.0.1.9022</span></span></code></pre>
+<strong><code>NEWS.md</code></strong> — the top-level heading <code># AMR &lt;version&gt;</code>
 </li>
-</ol><p>Read the current version from <code>DESCRIPTION</code>, add 1 to the last numeric component, and write the new version to both files in the same commit as the rest of the PR changes.</p>
-<p>Also bump the date to the current date in <strong><code>DESCRIPTION</code></strong>, where it’s in the <code>Date:</code> field in ISO format:</p>
-<pre><code><span><span class="va">Date</span><span class="op">:</span> <span class="fl">2025</span><span class="op">-</span><span class="fl">12</span><span class="op">-</span><span class="fl">31</span></span></code></pre>
+</ol><p>If <code>git describe</code> fails (e.g. no tags exist in the environment), fall back to reading the current version from <code>DESCRIPTION</code> and adding 1 to the last numeric component — but only if no bump has already been made in this PR.</p>
+</div>
+<div class="section level4">
+<h4 id="date-field">Date field<a class="anchor" aria-label="anchor" href="#date-field"></a></h4>
+<p>The <code>Date:</code> field in <code>DESCRIPTION</code> must reflect the date of the <strong>last commit to the PR</strong> (not the first), in ISO format. Update it with every commit so it is always current:</p>
+<pre><code><span><span class="va">Date</span><span class="op">:</span> <span class="fl">2026</span><span class="op">-</span><span class="fl">03</span><span class="op">-</span><span class="fl">07</span></span></code></pre>
+</div>
 </div>
 </div>
 <div class="section level2">

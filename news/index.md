@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9026
+## AMR 3.0.1.9030
 
 #### New
 
@@ -45,6 +45,24 @@
 
 #### Fixes
 
+- [`mdro()`](https://amr-for-r.org/reference/mdro.md): when a base
+  beta-lactam drug column is missing but a corresponding drug+inhibitor
+  combination is present in the data and resistant (e.g.,
+  piperacillin/tazobactam = R while piperacillin is absent), the base
+  drug is now correctly inferred as resistant. This ensures MDRO
+  classification is not missed due to test-ordering differences in the
+  laboratory. The reverse direction is also valid: susceptibility in a
+  combination does not imply susceptibility in the base drug (the
+  inhibitor may be responsible), so only resistance is propagated.
+  Closes [\#209](https://github.com/msberends/AMR/issues/209)
+- Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
+  where values that were purely numeric (e.g., `"1"`) and matched the
+  broad SIR-matching regex would be incorrectly stripped of all content
+  by the Unicode letter filter
+- Fixed a bug in [`as.mic()`](https://amr-for-r.org/reference/as.mic.md)
+  where MIC values in scientific notation (e.g., `"1e-3"`) were
+  incorrectly handled because the letter `e` was removed along with
+  other Unicode letters; scientific notation `e` is now preserved
 - Fixed a bug in [`as.ab()`](https://amr-for-r.org/reference/as.ab.md)
   where certain AB codes containing “PH” or “TH” (such as `ETH`, `MTH`,
   `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when
@@ -64,6 +82,9 @@
 - Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo
   and CoPS to Stafilococco coagulasi-positivo
   ([\#256](https://github.com/msberends/AMR/issues/256))
+- Fixed SIR and MIC coercion of combined values,
+  e.g. `as.sir("<= 0.002; S")` or `as.mic("S; 0.002")`
+  ([\#252](https://github.com/msberends/AMR/issues/252))
 
 #### Updates
 

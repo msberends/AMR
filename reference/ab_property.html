@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9026</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,7 @@
 
 
 <dt id="arg-all-groups">all_groups<a class="anchor" aria-label="anchor" href="#arg-all-groups"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all antimicrobial groups must be return as a vector for each input value. For example, an antibiotic in the "aminopenicillins" group, is also in the "penicillins" and "beta-lactams" groups. Setting <code>all_groups = TRUE</code> would return all three for such an antibiotic, while <code>all_groups = FALSE</code> (default) only returns the most distinctive group name.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all antimicrobial groups must be return as a vector for each input value. For example, an antibiotic in the "aminopenicillins" group, is also in the "penicillins" and "beta-lactams" groups. Setting <code>all_groups = TRUE</code> would return all three for such an antibiotic, while <code>all_groups = FALSE</code> (default) only returns the most specific group name.</p></dd>
 
 
 <dt id="arg-only-first">only_first<a class="anchor" aria-label="anchor" href="#arg-only-first"></a></dt>
@@ -231,6 +231,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [93] "zimox"          </span>
 <span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Aminopenicillins"</span>
+<span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"AMX"</span>, all_groups <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># most specific to most general</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Aminopenicillins" "Penicillins"      "Beta-lactams"    </span>
 <span class="r-in"><span><span class="fu">ab_atc_group1</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactam antibacterials, penicillins"</span>
 <span class="r-in"><span><span class="fu">ab_atc_group2</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span></span></span>

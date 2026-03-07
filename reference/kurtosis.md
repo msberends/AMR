@@ -45,7 +45,7 @@ kurtosis(x, na.rm = FALSE, excess = FALSE)
 
 ``` r
 kurtosis(rnorm(10000))
-#> [1] 2.985485
+#> [1] 2.985614
 kurtosis(rnorm(10000), excess = TRUE)
-#> [1] 0.01413942
+#> [1] 0.01547453
 ```

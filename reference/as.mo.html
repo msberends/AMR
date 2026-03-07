@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9026</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,7 +102,8 @@
 
 
 <dt id="arg-keep-synonyms">keep_synonyms<a class="anchor" aria-label="anchor" href="#arg-keep-synonyms"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if outdated, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. Do note that the term "synonym" is in this case jargon from the field of microbial taxonomy - it is not in place to denote that e.g. "Streptococcus Group A" is a synonym of <em>S. pyogenes</em>. Though this is practically the case, taxonomically it is not as "Streptococcus Group A" is not even a valid taxonomic name.</p>
+<p>The default is <code>FALSE</code>, which will return a note if outdated taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
 
 
 <dt id="arg-reference-df">reference_df<a class="anchor" aria-label="anchor" href="#arg-reference-df"></a></dt>
@@ -126,7 +127,7 @@
 
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with old taxonomic names. The default is <code>TRUE</code> only in interactive mode.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with outdated taxonomic names. The default is <code>TRUE</code> only in interactive mode.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -164,7 +165,7 @@
 <p>To increase the quality of matching, the <code>cleaning_regex</code> argument is used to clean the input. This must be a <a href="https://rdrr.io/r/base/regex.html" class="external-link">regular expression</a> that matches parts of the input that should be removed before the input is matched against the <a href="microorganisms.html">available microbial taxonomy</a>. It will be matched Perl-compatible and case-insensitive. The default value of <code>cleaning_regex</code> is the outcome of the helper function <code>mo_cleaning_regex()</code>.</p>
 <p>There are three helper functions that can be run after using the <code>as.mo()</code> function:</p><ul><li><p>Use <code>mo_uncertainties()</code> to get a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see <em>Matching Score for Microorganisms</em> below).</p></li>
 <li><p>Use <code>mo_failures()</code> to get a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> with all values that could not be coerced to a valid value.</p></li>
-<li><p>Use <code>mo_renamed()</code> to get a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with all values that could be coerced based on old, previously accepted taxonomic names.</p></li>
+<li><p>Use <code>mo_renamed()</code> to get a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with all values that could be coerced based on outdated, previously accepted taxonomic names.</p></li>
 </ul></div>
 
 <div class="section">

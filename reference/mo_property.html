@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9026</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,7 +179,8 @@
 
 
 <dt id="arg-keep-synonyms">keep_synonyms<a class="anchor" aria-label="anchor" href="#arg-keep-synonyms"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is <code>FALSE</code>, which will return a note if old taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if outdated, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. Do note that the term "synonym" is in this case jargon from the field of microbial taxonomy - it is not in place to denote that e.g. "Streptococcus Group A" is a synonym of <em>S. pyogenes</em>. Though this is practically the case, taxonomically it is not as "Streptococcus Group A" is not even a valid taxonomic name.</p>
+<p>The default is <code>FALSE</code>, which will return a note if outdated taxonomic names were processed. The default can be set with the package option <code><a href="AMR-options.html">AMR_keep_synonyms</a></code>, i.e. <code>options(AMR_keep_synonyms = TRUE)</code> or <code>options(AMR_keep_synonyms = FALSE)</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -367,7 +368,7 @@
 <span class="r-in"><span><span class="fu">mo_mycobank</span><span class="op">(</span><span class="st">"Candida krusei"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "337013"</span>
 <span class="r-in"><span><span class="fu">mo_mycobank</span><span class="op">(</span><span class="st">"Candida krusei"</span>, keep_synonyms <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function <span style="background-color: #444444;">`as.mo()`</span> returned one old taxonomic name. Use <span style="background-color: #444444;">`as.mo(...,</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function <span style="background-color: #444444;">`as.mo()`</span> returned one outdated taxonomic name. Use <span style="background-color: #444444;">`as.mo(...,</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="background-color: #444444;">keep_synonyms = FALSE)`</span> to clean the input to currently accepted taxonomic</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> names, or set the R option <span style="background-color: #444444;">`AMR_keep_synonyms`</span> to <span style="background-color: #444444;">`FALSE`</span>. This warning</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> will be shown once per session.</span>

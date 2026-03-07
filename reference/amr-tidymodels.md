@@ -182,11 +182,11 @@ if (require("tidymodels")) {
 #> # A tibble: 7 × 3
 #>   .metric     .estimator .estimate
 #>   <chr>       <chr>          <dbl>
-#> 1 accuracy    binary         0.936
-#> 2 recall      binary         0.954
-#> 3 precision   binary         0.925
-#> 4 sensitivity binary         0.954
-#> 5 specificity binary         0.917
-#> 6 ppv         binary         0.925
-#> 7 npv         binary         0.948
+#> 1 accuracy    binary         0.912
+#> 2 recall      binary         0.902
+#> 3 precision   binary         0.917
+#> 4 sensitivity binary         0.902
+#> 5 specificity binary         0.922
+#> 6 ppv         binary         0.917
+#> 7 npv         binary         0.908
 ```

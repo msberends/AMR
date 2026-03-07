@@ -139,11 +139,17 @@ mo_property(x, property = "fullname", language = get_AMR_locale(),
 
 - keep_synonyms:
 
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate if old,
-  previously valid taxonomic names must be preserved and not be
-  corrected to currently accepted names. The default is `FALSE`, which
-  will return a note if old taxonomic names were processed. The default
-  can be set with the package option
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate if
+  outdated, previously valid taxonomic names must be preserved and not
+  be corrected to currently accepted names. Do note that the term
+  "synonym" is in this case jargon from the field of microbial
+  taxonomy - it is not in place to denote that e.g. "Streptococcus Group
+  A" is a synonym of *S. pyogenes*. Though this is practically the case,
+  taxonomically it is not as "Streptococcus Group A" is not even a valid
+  taxonomic name.
+
+  The default is `FALSE`, which will return a note if outdated taxonomic
+  names were processed. The default can be set with the package option
   [`AMR_keep_synonyms`](https://amr-for-r.org/reference/AMR-options.md),
   i.e. `options(AMR_keep_synonyms = TRUE)` or
   `options(AMR_keep_synonyms = FALSE)`.
@@ -479,7 +485,7 @@ mo_mycobank("Candida albicans")
 mo_mycobank("Candida krusei")
 #> [1] "337013"
 mo_mycobank("Candida krusei", keep_synonyms = TRUE)
-#> Warning: Function `as.mo()` returned one old taxonomic name. Use `as.mo(...,
+#> Warning: Function `as.mo()` returned one outdated taxonomic name. Use `as.mo(...,
 #> keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic
 #> names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning
 #> will be shown once per session.

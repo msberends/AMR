@@ -777,9 +777,9 @@ antibiogram(example_isolates,
 #> # Type:           WISCA with 95% CI
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          73.5% (68.1-78.6%)        92.3% (90.8-93.8%)                
-#> 2 ICU               57.3% (49.8-64.9%)        84.8% (82-87.7%)                  
-#> 3 Outpatient        56.8% (47-67%)            74.4% (68.6-79.7%)                
+#> 1 Clinical          73.4% (68.3-78.6%)        92.3% (90.7-93.7%)                
+#> 2 ICU               57.4% (49.7-65.4%)        84.9% (82.1-87.6%)                
+#> 3 Outpatient        57% (47.4-66.7%)          74.6% (68.8-79.8%)                
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -804,9 +804,9 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |73.6% (68.5-78.7%)      |
-#> |ICU             |57.4% (49.3-65.8%)      |
-#> |Outpatient      |57% (47.1-67.3%)        |
+#> |Clinical        |73.5% (68-79%)          |
+#> |ICU             |57.7% (49.9-65.3%)      |
+#> |Outpatient      |56.9% (46.5-66.8%)      |
 
 
 # Generate plots with ggplot2 or base R --------------------------------

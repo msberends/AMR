@@ -163,25 +163,45 @@ Version format: `major.minor.patch.dev` (e.g., `3.0.1.9021`)
 
 ### Version and date bump required for every PR
 
-Before opening a pull request, always increment the four-digit dev
-counter by 1 in **both** of these files:
+All PRs are **squash-merged**, so each PR lands as exactly **one
+commit** on the default branch. Version numbers are kept in sync with
+the cumulative commit count since the last released tag. Therefore
+**exactly one version bump is allowed per PR**, regardless of how many
+intermediate commits are made on the branch.
 
-1.  **`DESCRIPTION`** — the `Version:` field:
+#### Computing the correct version number
 
-        Version: 3.0.1.9021  →  Version: 3.0.1.9022
+Run the following from the repo root to determine the version string to
+use:
 
-2.  **`NEWS.md`** — the top-level heading:
+``` bash
+currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
+currenttagfull=$(git describe --tags --abbrev=0)
+defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
+currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
+currentversion="${currenttag}.$((currentcommit + 9001 + 1))"
+echo "$currentversion"
+```
 
-        # AMR 3.0.1.9021  →  # AMR 3.0.1.9022
+The `+ 1` accounts for the fact that this PR’s squash commit is not yet
+on the default branch. Set **both** of these files to the resulting
+version string (and only once per PR, even across multiple commits):
 
-Read the current version from `DESCRIPTION`, add 1 to the last numeric
-component, and write the new version to both files in the same commit as
-the rest of the PR changes.
+1.  **`DESCRIPTION`** — the `Version:` field
+2.  **`NEWS.md`** — the top-level heading `# AMR <version>`
 
-Also bump the date to the current date in **`DESCRIPTION`**, where it’s
-in the `Date:` field in ISO format:
+If `git describe` fails (e.g. no tags exist in the environment), fall
+back to reading the current version from `DESCRIPTION` and adding 1 to
+the last numeric component — but only if no bump has already been made
+in this PR.
 
-    Date: 2025-12-31
+#### Date field
+
+The `Date:` field in `DESCRIPTION` must reflect the date of the **last
+commit to the PR** (not the first), in ISO format. Update it with every
+commit so it is always current:
+
+    Date: 2026-03-07
 
 ## Internal State
 
