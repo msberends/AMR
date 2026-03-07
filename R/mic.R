@@ -217,9 +217,9 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 
     warning_("Some MICs were combined values, only the first values are kept")
     x[x %like% "[0-9]/.*[0-9]"] <- gsub("/.*", "", x[x %like% "[0-9]/.*[0-9]"])
   }
-  x <- trimws2(gsub("[\\p{L}]", "", x, perl = TRUE)) # \p{L} is the Unicode category for all letters, including those with diacritics
+  x <- trimws2(gsub("[^e\\P{L}]", "", x, perl = TRUE)) # \p{L} is the Unicode category for all letters, including those with diacritics
   # remove other invalid characters
-  x <- gsub("[^0-9.><= -]+", "", x, perl = TRUE)
+  x <- gsub("[^0-9e.><= -]+", "", x, perl = TRUE)
   # transform => to >= and =< to <=
   x <- gsub("=<", "<=", x, fixed = TRUE)
   x <- gsub("=>", ">=", x, fixed = TRUE)

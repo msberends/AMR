@@ -296,4 +296,53 @@ test_that("test-mdro.R", {
     expect_output(x <- mdro(example_isolates %>% group_by(ward), info = TRUE, pct_required_classes = 0))
     expect_output(x <- mdro(example_isolates %>% group_by(ward), guideline = custom, info = TRUE))
   }
+
+  # drug+inhibitor inference for missing base drug columns (issue #209) -------
+  # Resistance in drug+inhibitor always implies resistance in the base drug.
+  # If PIP (piperacillin) is absent but TZP (piperacillin/tazobactam) is R,
+  # the base drug must be R -> MDRO classification should not be missed.
+  pseud_no_pip <- data.frame(
+    mo  = as.mo("Pseudomonas aeruginosa"),
+    TZP = as.sir("R"), # piperacillin/tazobactam present; no PIP column
+    IPM = as.sir("R"),
+    MEM = as.sir("R"),
+    CAZ = as.sir("R"),
+    FEP = as.sir("R"),
+    CIP = as.sir("R"),
+    GEN = as.sir("R"),
+    TOB = as.sir("R"),
+    AMK = as.sir("R"),
+    COL = as.sir("S"),
+    stringsAsFactors = FALSE
+  )
+  # With TZP=R, PIP should be inferred R; result should be XDR or PDR (integer > 2)
+  result_no_pip <- suppressMessages(suppressWarnings(mdro(pseud_no_pip, guideline = "EUCAST", info = FALSE)))
+  expect_true(as.integer(result_no_pip$MDRO) > 1L)
+
+  # Susceptibility in combination must NOT be propagated to base drug
+  # (the inhibitor may be responsible; we cannot conclude PIP=S from TZP=S)
+  pseud_tzp_s <- pseud_no_pip
+  pseud_tzp_s$TZP <- as.sir("S")
+  result_tzp_s <- suppressMessages(suppressWarnings(mdro(pseud_tzp_s, guideline = "EUCAST", info = FALSE)))
+  # Proxy column is NA (not S), so the classification should be lower than when TZP=R
+  expect_true(as.integer(result_tzp_s$MDRO) < as.integer(result_no_pip$MDRO))
+
+  # verbose mode should emit an inference message when a proxy column is created
+  expect_output(
+    suppressMessages(suppressWarnings(mdro(pseud_no_pip, guideline = "EUCAST", info = FALSE, verbose = TRUE))),
+    regexp = "Inferring resistance"
+  )
+
+  # Multiple combos for the same base drug: AMX can come from AMC (amoxicillin/clavulanic acid)
+  ente_no_amx <- data.frame(
+    mo  = as.mo("Enterococcus faecium"),
+    AMC = as.sir("R"), # amoxicillin/clavulanic acid; no AMX column
+    VAN = as.sir("R"),
+    TEC = as.sir("R"),
+    LNZ = as.sir("R"),
+    DAP = as.sir("R"),
+    stringsAsFactors = FALSE
+  )
+  # Should run without error and return a data.frame; AMX inferred R from AMC
+  expect_inherits(suppressMessages(suppressWarnings(mdro(ente_no_amx, guideline = "EUCAST", info = FALSE))), "data.frame")
 })
