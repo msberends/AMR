@@ -9,7 +9,8 @@ according to international, national, or custom guidelines.
 mdro(x = NULL, guideline = "CMI 2012", col_mo = NULL, esbl = NA,
   carbapenemase = NA, mecA = NA, mecC = NA, vanA = NA, vanB = NA,
   info = interactive(), pct_required_classes = 0.5, combine_SI = TRUE,
-  verbose = FALSE, only_sir_columns = any(is.sir(x)), ...)
+  verbose = FALSE, only_sir_columns = any(is.sir(x)),
+  infer_from_combinations = TRUE, ...)
 
 brmo(x = NULL, only_sir_columns = any(is.sir(x)), ...)
 
@@ -34,8 +35,8 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
 
 - guideline:
 
-  A specific guideline to follow, see sections *Supported international
-  / national guidelines* and *Using Custom Guidelines* below. When left
+  A specific guideline to follow, see sections *Supported International
+  / National Guidelines* and *Using Custom Guidelines* below. When left
   empty, the publication by Magiorakos *et al.* (see below) will be
   followed.
 
@@ -124,6 +125,18 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
   class [sir](https://amr-for-r.org/reference/as.sir.md) on beforehand.
   Defaults to `FALSE` if no columns of `x` have a class
   [sir](https://amr-for-r.org/reference/as.sir.md).
+
+- infer_from_combinations:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
+  resistance for a missing base beta-lactam drug should be inferred from
+  an available drug+inhibitor combination (e.g., piperacillin from
+  piperacillin/tazobactam). The clinical basis is that resistance in a
+  combination always implies resistance in the base drug, since the
+  enzyme inhibitor provides no benefit when the organism is truly
+  resistant. Only resistance is inferred; susceptibility in a
+  combination does **not** imply susceptibility in the base drug (the
+  inhibitor may be responsible). Defaults to `TRUE`.
 
 - ...:
 

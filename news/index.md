@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9030
+## AMR 3.0.1.9031
 
 #### New
 
@@ -45,16 +45,6 @@
 
 #### Fixes
 
-- [`mdro()`](https://amr-for-r.org/reference/mdro.md): when a base
-  beta-lactam drug column is missing but a corresponding drug+inhibitor
-  combination is present in the data and resistant (e.g.,
-  piperacillin/tazobactam = R while piperacillin is absent), the base
-  drug is now correctly inferred as resistant. This ensures MDRO
-  classification is not missed due to test-ordering differences in the
-  laboratory. The reverse direction is also valid: susceptibility in a
-  combination does not imply susceptibility in the base drug (the
-  inhibitor may be responsible), so only resistance is propagated.
-  Closes [\#209](https://github.com/msberends/AMR/issues/209)
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   where values that were purely numeric (e.g., `"1"`) and matched the
   broad SIR-matching regex would be incorrectly stripped of all content
@@ -88,6 +78,15 @@
 
 #### Updates
 
+- [`mdro()`](https://amr-for-r.org/reference/mdro.md) now infers
+  resistance for a *missing* base drug column from an *available*
+  corresponding drug+inhibitor combination showing resistance (e.g.,
+  piperacillin is absent but required, while piperacillin/tazobactam
+  available and resistant). Can be set with the new argument
+  `infer_from_combinations`, which defaults to `TRUE`
+  ([\#209](https://github.com/msberends/AMR/issues/209)). Note that this
+  can yield a higher MDRO detection (which is a good thing as it has
+  become more reliable).
 - [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
   and [`resistance()`](https://amr-for-r.org/reference/proportion.md)
   gained the argument `guideline`, which defaults to EUCAST, for

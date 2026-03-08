@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9031</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mdro</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, guideline <span class="op">=</span> <span class="st">"CMI 2012"</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, esbl <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  carbapenemase <span class="op">=</span> <span class="cn">NA</span>, mecA <span class="op">=</span> <span class="cn">NA</span>, mecC <span class="op">=</span> <span class="cn">NA</span>, vanA <span class="op">=</span> <span class="cn">NA</span>, vanB <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, pct_required_classes <span class="op">=</span> <span class="fl">0.5</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  infer_from_combinations <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">brmo</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_sir_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="as.sir.html">is.sir</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -82,7 +83,7 @@
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>A specific guideline to follow, see sections <em>Supported international / national guidelines</em> and <em>Using Custom Guidelines</em> below. When left empty, the publication by Magiorakos <em>et al.</em> (see below) will be followed.</p></dd>
+<dd><p>A specific guideline to follow, see sections <em>Supported International / National Guidelines</em> and <em>Using Custom Guidelines</em> below. When left empty, the publication by Magiorakos <em>et al.</em> (see below) will be followed.</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
@@ -131,6 +132,10 @@
 
 <dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only antimicrobial columns must be included that were transformed to class <a href="as.sir.html">sir</a> on beforehand. Defaults to <code>FALSE</code> if no columns of <code>x</code> have a class <a href="as.sir.html">sir</a>.</p></dd>
+
+
+<dt id="arg-infer-from-combinations">infer_from_combinations<a class="anchor" aria-label="anchor" href="#arg-infer-from-combinations"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether resistance for a missing base beta-lactam drug should be inferred from an available drug+inhibitor combination (e.g., piperacillin from piperacillin/tazobactam). The clinical basis is that resistance in a combination always implies resistance in the base drug, since the enzyme inhibitor provides no benefit when the organism is truly resistant. Only resistance is inferred; susceptibility in a combination does <strong>not</strong> imply susceptibility in the base drug (the inhibitor may be responsible). Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
