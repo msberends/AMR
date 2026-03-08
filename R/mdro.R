@@ -31,7 +31,7 @@
 #'
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national, or custom guidelines.
 #' @param x A [data.frame] with antimicrobials columns, like `AMX` or `amox`. Can be left blank for automatic determination.
-#' @param guideline A specific guideline to follow, see sections *Supported international / national guidelines* and *Using Custom Guidelines* below. When left empty, the publication by Magiorakos *et al.* (see below) will be followed.
+#' @param guideline A specific guideline to follow, see sections *Supported International / National Guidelines* and *Using Custom Guidelines* below. When left empty, the publication by Magiorakos *et al.* (see below) will be followed.
 #' @param esbl [logical] values, or a column name containing logical values, indicating the presence of an ESBL gene (or production of its proteins).
 #' @param carbapenemase [logical] values, or a column name containing logical values, indicating the presence of a carbapenemase gene (or production of its proteins).
 #' @param mecA [logical] values, or a column name containing logical values, indicating the presence of a *mecA* gene (or production of its proteins).
@@ -42,6 +42,7 @@
 #' @param pct_required_classes Minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI A [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function returns a data set with the MDRO results in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
+#' @param infer_from_combinations A [logical] to indicate whether resistance for a missing base beta-lactam drug should be inferred from an available drug+inhibitor combination (e.g., piperacillin from piperacillin/tazobactam). The clinical basis is that resistance in a combination always implies resistance in the base drug, since the enzyme inhibitor provides no benefit when the organism is truly resistant. Only resistance is inferred; susceptibility in a combination does **not** imply susceptibility in the base drug (the inhibitor may be responsible). Defaults to `TRUE`.
 #' @details
 #' These functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
 #'
@@ -143,6 +144,7 @@ mdro <- function(x = NULL,
                  combine_SI = TRUE,
                  verbose = FALSE,
                  only_sir_columns = any(is.sir(x)),
+                 infer_from_combinations = TRUE,
                  ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() searches underlying data within call)
@@ -165,7 +167,7 @@ mdro <- function(x = NULL,
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-
+  meet_criteria(infer_from_combinations, allow_class = "logical", has_length = 1)
 
   if (isTRUE(only_sir_columns) && !any(is.sir(x))) {
     stop_("There were no SIR columns found in the data set, despite `only_sir_columns` being `TRUE`. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
@@ -480,49 +482,51 @@ mdro <- function(x = NULL,
   }
   cols_ab <- cols_ab[!duplicated(cols_ab)]
 
-  # Infer resistance for missing base drugs from available drug+inhibitor combination columns.
-  # Clinical principle: resistance in drug+inhibitor (e.g., piperacillin/tazobactam = R)
-  # always implies resistance in the base drug (e.g., piperacillin = R), because the
-  # enzyme inhibitor adds nothing when the organism is truly resistant to the base drug.
-  # NOTE: susceptibility in a combination does NOT imply susceptibility in the base drug
-  # (the inhibitor may be responsible), so synthetic proxy columns only propagate R, not S/I.
-  .combos_in_data <- AB_BETALACTAMS_WITH_INHIBITOR[AB_BETALACTAMS_WITH_INHIBITOR %in% names(cols_ab)]
-  if (length(.combos_in_data) > 0) {
-    .base_drugs <- suppressMessages(
-      as.ab(gsub("/.*", "", ab_name(as.character(.combos_in_data), language = NULL)))
-    )
-    .unique_bases <- unique(.base_drugs[!is.na(.base_drugs)])
-    for (.base in .unique_bases) {
-      .base_code <- as.character(.base)
-      if (!.base_code %in% names(cols_ab)) {
-        # Base drug column absent; find all available combo columns for this base drug
-        .combos <- .combos_in_data[!is.na(.base_drugs) & as.character(.base_drugs) == .base_code]
-        .combo_cols <- unname(cols_ab[as.character(.combos)])
-        .combo_cols <- .combo_cols[!is.na(.combo_cols)]
-        if (length(.combo_cols) > 0) {
-          # Vectorised: if ANY combination is R, infer base drug as R; otherwise NA
-          .sir_chars <- as.data.frame(
-            lapply(x[, .combo_cols, drop = FALSE], function(col) as.character(as.sir(col))),
-            stringsAsFactors = FALSE
-          )
-          .new_col <- paste0(".sir_proxy_", .base_code)
-          x[[.new_col]] <- ifelse(rowSums(.sir_chars == "R", na.rm = TRUE) > 0L, "R", NA_character_)
-          cols_ab <- c(cols_ab, stats::setNames(.new_col, .base_code))
-          if (isTRUE(verbose)) {
-            message_(
-              "Inferring resistance for ", ab_name(.base_code, language = NULL),
-              " from available drug+inhibitor combination(s): ",
-              paste(ab_name(as.character(.combos), language = NULL), collapse = ", "),
-              " (resistance in a combination always implies resistance in the base drug)",
-              add_fn = font_blue
+  # Infer resistance for missing base drugs ----
+  if (isTRUE(infer_from_combinations)) {
+    .combos_in_data <- AB_BETALACTAMS_WITH_INHIBITOR[AB_BETALACTAMS_WITH_INHIBITOR %in% names(cols_ab)]
+    if (length(.combos_in_data) > 0) {
+      .base_drugs <- suppressMessages(
+        as.ab(gsub("/.*", "", ab_name(as.character(.combos_in_data), language = NULL)))
+      )
+      .unique_bases <- unique(.base_drugs[!is.na(.base_drugs)])
+      for (.base in .unique_bases) {
+        .base_code <- as.character(.base)
+        if (!.base_code %in% names(cols_ab)) {
+          # Base drug column absent; find all available combo columns for this base drug
+          .combos <- .combos_in_data[!is.na(.base_drugs) & as.character(.base_drugs) == .base_code]
+          .combo_cols <- unname(cols_ab[as.character(.combos)])
+          .combo_cols <- .combo_cols[!is.na(.combo_cols)]
+          if (length(.combo_cols) > 0) {
+            # Vectorised: if ANY combination is R, infer base drug as R; otherwise NA
+            .sir_chars <- as.data.frame(
+              lapply(x[, .combo_cols, drop = FALSE], function(col) as.character(as.sir(col))),
+              stringsAsFactors = FALSE
             )
+            .new_col <- paste0(.base_code, ".inferred_sir_proxy_from#", paste0(.combos, collapse = "/"), "#")
+            x[[.new_col]] <- ifelse(rowSums(.sir_chars == "R", na.rm = TRUE) > 0L, "R", NA_character_)
+            cols_ab <- c(cols_ab, stats::setNames(.new_col, .base_code))
+            if (info == TRUE) {
+              message_(
+                "Inferring resistance for ",
+                ab_name(.base_code, language = NULL, tolower = TRUE),
+                " (", font_bold(.base_code, collapse = NULL), ", ", font_italic("missing"), ") from ",
+                vector_or(
+                  quotes = FALSE,
+                  last_sep = " and/or ",
+                  paste0(
+                    ab_name(.combos, language = NULL, tolower = TRUE),
+                    " (", font_bold(.combos, collapse = NULL), ", ", font_italic("available"), ")"
+                  )
+                )
+              )
+            }
           }
         }
       }
+      cols_ab <- cols_ab[!duplicated(names(cols_ab))]
     }
-    cols_ab <- cols_ab[!duplicated(names(cols_ab))]
   }
-  rm(list = intersect(ls(), c(".combos_in_data", ".base_drugs", ".unique_bases", ".base", ".base_code", ".combos", ".combo_cols", ".sir_chars", ".new_col")))
 
   # nolint start
   AMC <- cols_ab["AMC"]
@@ -1937,7 +1941,8 @@ mdro <- function(x = NULL,
     # format data set
     colnames(x)[colnames(x) == col_mo] <- "microorganism"
     x$microorganism <- mo_name(x$microorganism, language = NULL)
-    x$guideline <- paste0(guideline$author, " - ", guideline$name, ", ", guideline$version, ")")
+    x$guideline <- paste0(guideline$author, " - ", guideline$name, ifelse(is.na(guideline$version), "", paste0(" (", guideline$version, ")")))
+    x$all_nonsusceptible_columns <- gsub(".inferred_sir_proxy_from#(.*?)#", " (inferred from \\1)", x$all_nonsusceptible_columns, perl = TRUE)
     x[, c(
       "row_number",
       "microorganism",

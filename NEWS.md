@@ -1,4 +1,4 @@
-# AMR 3.0.1.9030
+# AMR 3.0.1.9031
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -18,7 +18,6 @@
 * Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 ### Fixes
-* `mdro()`: when a base beta-lactam drug column is missing but a corresponding drug+inhibitor combination is present in the data and resistant (e.g., piperacillin/tazobactam = R while piperacillin is absent), the base drug is now correctly inferred as resistant. This ensures MDRO classification is not missed due to test-ordering differences in the laboratory. The reverse direction is also valid: susceptibility in a combination does not imply susceptibility in the base drug (the inhibitor may be responsible), so only resistance is propagated. Closes #209
 * Fixed a bug in `as.sir()` where values that were purely numeric (e.g., `"1"`) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter
 * Fixed a bug in `as.mic()` where MIC values in scientific notation (e.g., `"1e-3"`) were incorrectly handled because the letter `e` was removed along with other Unicode letters; scientific notation `e` is now preserved
 * Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
@@ -31,6 +30,7 @@
 * Fixed SIR and MIC coercion of combined values, e.g. `as.sir("<= 0.002; S") ` or `as.mic("S; 0.002")` (#252)
 
 ### Updates
+* `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
 * `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.
 * `as.mic()` and `rescale_mic()` gained the argument `round_to_next_log2`, which can be set to `TRUE` to round all values up to the nearest next log2 level (#255)
 * `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)

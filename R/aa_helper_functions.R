@@ -387,6 +387,10 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)
   }
+  if (pkg == "rstudioapi" && tryCatch(!rstudioapi::isAvailable(), error = function(e) TRUE)) {
+    # only allow rstudioapi to be imported if RStudio is available
+    return(NULL)
+  }
   tryCatch(
     # don't use get() to avoid fetching non-API functions
     getExportedValue(name = name, ns = asNamespace(pkg)),
@@ -1220,10 +1224,14 @@ try_colour <- function(..., before, after, collapse = " ") {
   }
 }
 is_dark <- function() {
-  AMR_env$current_theme <- tryCatch(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$editor, error = function(e) NULL)
+  AMR_env$current_theme <- NULL
+  current_theme_fn <- import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)
+  if (!is.null(current_theme_fn)) {
+    AMR_env$current_theme <- current_theme_fn()$editor
+  }
   if (!identical(AMR_env$current_theme, AMR_env$former_theme) || is.null(AMR_env$is_dark_theme)) {
     AMR_env$former_theme <- AMR_env$current_theme
-    AMR_env$is_dark_theme <- !has_colour() || tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) TRUE)
+    AMR_env$is_dark_theme <- !has_colour() || tryCatch(isTRUE(current_theme_fn()$dark), error = function(e) TRUE)
   }
   isTRUE(AMR_env$is_dark_theme)
 }

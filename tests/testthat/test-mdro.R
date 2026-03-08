@@ -313,14 +313,14 @@ test_that("test-mdro.R", {
   # Inference message goes to message() / stderr, not stdout
   # -> must use expect_message(), NOT expect_output()
   expect_message(
-    suppressWarnings(mdro(pseud_no_pip, guideline = "mrgn", info = FALSE, verbose = TRUE)),
+    suppressWarnings(mdro(pseud_no_pip, guideline = "mrgn", info = TRUE)),
     "Inferring resistance"
   )
-  # With TZP=R, PIP is inferred R -> 4MRGN criteria met -> level 3 (> 1)
-  result_no_pip <- suppressMessages(suppressWarnings(
-    mdro(pseud_no_pip, guideline = "mrgn", info = FALSE)
-  ))
-  expect_true(as.integer(result_no_pip) > 1L)
+  inferred <- suppressWarnings(mdro(pseud_no_pip, guideline = "mrgn", info = FALSE))
+  not_inferred <- suppressWarnings(mdro(pseud_no_pip, guideline = "mrgn", info = FALSE, infer_from_combinations = FALSE))
+  expect_equal(as.character(inferred), "4MRGN")
+  expect_equal(as.character(not_inferred), "Negative")
+
   # Susceptibility in combo does NOT propagate: proxy = NA, not S
   # -> 4MRGN criteria no longer met -> lower level than when TZP=R
   pseud_tzp_s <- pseud_no_pip
@@ -328,18 +328,23 @@ test_that("test-mdro.R", {
   result_tzp_s <- suppressMessages(suppressWarnings(
     mdro(pseud_tzp_s, guideline = "mrgn", info = FALSE)
   ))
-  expect_true(as.integer(result_tzp_s) < as.integer(result_no_pip))
+  expect_true(as.integer(result_tzp_s) < as.integer(inferred))
 
-  # Multiple combos for the same base drug: AMX can come from AMC (amoxicillin/clavulanic acid)
+  # Multiple combos for the same base drug: AMX can come from AMC (amoxi/clavulanic acid) and AXS (amoxi/sulbactam)
   ente_no_amx <- data.frame(
     mo = as.mo("Enterococcus faecium"),
-    AMC = as.sir("R"), # amoxicillin/clavulanic acid; no AMX column
+    AMC = as.sir("R"), # amoxicillin/clavulanic acid
+    AXS = as.sir("R"), # amoxicillin/sulbactam
     VAN = as.sir("R"),
     TEC = as.sir("R"),
     LNZ = as.sir("R"),
     DAP = as.sir("R"),
     stringsAsFactors = FALSE
   )
-  # Should run without error and return an ordered factor; AMX inferred R from AMC
-  expect_inherits(suppressMessages(suppressWarnings(mdro(ente_no_amx, guideline = "EUCAST", info = FALSE))), c("factor", "ordered"))
+  # Should have multiple columns in the verbose explanation
+  out <- mdro(ente_no_amx, guideline = "EUCAST 3.3", info = FALSE, verbose = TRUE)
+  expect_identical(
+    out$all_nonsusceptible_columns,
+    "AMC, AMX (inferred from AMC/AXS), AXS, DAP, LNZ, TEC, VAN"
+  )
 })

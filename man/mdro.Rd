@@ -18,7 +18,8 @@
 mdro(x = NULL, guideline = "CMI 2012", col_mo = NULL, esbl = NA,
   carbapenemase = NA, mecA = NA, mecC = NA, vanA = NA, vanB = NA,
   info = interactive(), pct_required_classes = 0.5, combine_SI = TRUE,
-  verbose = FALSE, only_sir_columns = any(is.sir(x)), ...)
+  verbose = FALSE, only_sir_columns = any(is.sir(x)),
+  infer_from_combinations = TRUE, ...)
 
 brmo(x = NULL, only_sir_columns = any(is.sir(x)), ...)
 
@@ -35,7 +36,7 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
 \arguments{
 \item{x}{A \link{data.frame} with antimicrobials columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}
 
-\item{guideline}{A specific guideline to follow, see sections \emph{Supported international / national guidelines} and \emph{Using Custom Guidelines} below. When left empty, the publication by Magiorakos \emph{et al.} (see below) will be followed.}
+\item{guideline}{A specific guideline to follow, see sections \emph{Supported International / National Guidelines} and \emph{Using Custom Guidelines} below. When left empty, the publication by Magiorakos \emph{et al.} (see below) will be followed.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -60,6 +61,8 @@ eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function returns a data set with the MDRO results in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
 \item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE} if no columns of \code{x} have a class \link[=as.sir]{sir}.}
+
+\item{infer_from_combinations}{A \link{logical} to indicate whether resistance for a missing base beta-lactam drug should be inferred from an available drug+inhibitor combination (e.g., piperacillin from piperacillin/tazobactam). The clinical basis is that resistance in a combination always implies resistance in the base drug, since the enzyme inhibitor provides no benefit when the organism is truly resistant. Only resistance is inferred; susceptibility in a combination does \strong{not} imply susceptibility in the base drug (the inhibitor may be responsible). Defaults to \code{TRUE}.}
 
 \item{...}{Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; \code{\link[=guess_ab_col]{guess_ab_col()}} will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.}
 }
