@@ -506,7 +506,7 @@ mdro <- function(x = NULL,
             .new_col <- paste0(.base_code, ".inferred_sir_proxy_from#", paste0(.combos, collapse = "/"), "#")
             x[[.new_col]] <- ifelse(rowSums(.sir_chars == "R", na.rm = TRUE) > 0L, "R", NA_character_)
             cols_ab <- c(cols_ab, stats::setNames(.new_col, .base_code))
-            if (info == TRUE) {
+            if (isTRUE(info.bak)) {
               message_(
                 "Inferring resistance for ",
                 ab_name(.base_code, language = NULL, tolower = TRUE),

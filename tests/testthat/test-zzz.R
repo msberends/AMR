@@ -178,9 +178,15 @@ test_that("test-zzz.R", {
       also_load = FALSE,
       min_version = if (pkg == "dplyr") "1.0.0" else NULL
     )) {
-      expect_true(!is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
-        info = paste0("Function does not exist (anymore): function `", pkg, "::", fn, "()`")
-      )
+      if (pkg == "rstudioapi") {
+        expect_true(is.function(tryCatch(get(fn, envir = asNamespace(pkg)), error = function(e) NULL)),
+          info = paste0("Function does not exist (anymore): function `", pkg, "::", fn, "()`")
+        )
+      } else {
+        expect_true(!is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
+          info = paste0("Function does not exist (anymore): function `", pkg, "::", fn, "()`")
+        )
+      }
     } else if (pkg != "rstudioapi") {
       warning("Package '", pkg, "' not available")
     }
