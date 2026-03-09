@@ -74,6 +74,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
 #' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
 #' @param overwrite A [logical] indicating whether to overwrite existing SIR values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
+#' @param add_if_missing A [logical] indicating whether rules should also be applied to missing (`NA`) values (default: `TRUE`). When `FALSE`, rules are only applied to cells that already contain an SIR value; cells with `NA` are left untouched. This is particularly useful when using `overwrite = TRUE` with custom rules and you want to update reported results without imputing values for untested drugs.
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC or disk values to SIR values. Use [as.sir()] for that. \cr
@@ -170,6 +171,7 @@ interpretive_rules <- function(x,
                                only_sir_columns = any(is.sir(x)),
                                custom_rules = NULL,
                                overwrite = FALSE,
+                               add_if_missing = TRUE,
                                ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -184,6 +186,7 @@ interpretive_rules <- function(x,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
   meet_criteria(overwrite, allow_class = "logical", has_length = 1)
+  meet_criteria(add_if_missing, allow_class = "logical", has_length = 1)
 
   stop_if(
     guideline == "CLSI",
@@ -533,7 +536,8 @@ interpretive_rules <- function(x,
           warned = warned,
           info = info,
           verbose = verbose,
-          overwrite = overwrite
+          overwrite = overwrite,
+          add_if_missing = add_if_missing
         )
         n_added <- n_added + run_changes$added
         n_changed <- n_changed + run_changes$changed
@@ -575,7 +579,8 @@ interpretive_rules <- function(x,
           warned = warned,
           info = info,
           verbose = verbose,
-          overwrite = overwrite
+          overwrite = overwrite,
+          add_if_missing = add_if_missing
         )
         n_added <- n_added + run_changes$added
         n_changed <- n_changed + run_changes$changed
@@ -862,7 +867,8 @@ interpretive_rules <- function(x,
       warned = warned,
       info = info,
       verbose = verbose,
-      overwrite = overwrite
+      overwrite = overwrite,
+      add_if_missing = add_if_missing
     )
     n_added <- n_added + run_changes$added
     n_changed <- n_changed + run_changes$changed
@@ -932,7 +938,8 @@ interpretive_rules <- function(x,
         warned = warned,
         info = info,
         verbose = verbose,
-        overwrite = overwrite
+        overwrite = overwrite,
+        add_if_missing = add_if_missing
       )
       n_added <- n_added + run_changes$added
       n_changed <- n_changed + run_changes$changed
@@ -1124,7 +1131,8 @@ edit_sir <- function(x,
                      warned,
                      info,
                      verbose,
-                     overwrite) {
+                     overwrite,
+                     add_if_missing) {
   cols <- unique(cols[!is.na(cols) & !is.null(cols)])
 
   # for Verbose Mode, keep track of all changes and return them
@@ -1157,13 +1165,15 @@ edit_sir <- function(x,
     if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
       warning_("Some values had SIR values and were not overwritten, since {.code overwrite = FALSE}.")
     }
+    # determine which cells to modify based on overwrite and add_if_missing
+    apply_mask <- if (isTRUE(overwrite)) {
+      if (isFALSE(add_if_missing)) !isNA else rep(TRUE, length(isNA))
+    } else {
+      if (isFALSE(add_if_missing)) isSIR else non_SIR
+    }
     tryCatch(
       # insert into original table
-      if (isTRUE(overwrite)) {
-        new_edits[rows, cols] <- to
-      } else {
-        new_edits[rows, cols][non_SIR] <- to
-      },
+      new_edits[rows, cols][apply_mask] <- to,
       warning = function(w) {
         if (w$message %like% "invalid factor level") {
           xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
@@ -1173,11 +1183,7 @@ edit_sir <- function(x,
             )
             TRUE
           })
-          if (isTRUE(overwrite)) {
-            suppressWarnings(new_edits[rows, cols] <<- to)
-          } else {
-            suppressWarnings(new_edits[rows, cols][non_SIR] <<- to)
-          }
+          suppressWarnings(new_edits[rows, cols][apply_mask] <<- to)
           warning_(
             "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: value \"", to, "\" added to the factor levels of column",
             ifelse(length(cols) == 1, "", "s"),
