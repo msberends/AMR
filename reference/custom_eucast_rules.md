@@ -135,8 +135,11 @@ TZP (piperacillin/tazobactam) is "R":
     #>   1. If TZP is "R" then set to "R":
     #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 
-These 42 antimicrobial groups are allowed in the rules
+These 43 antimicrobial groups are allowed in the rules
 (case-insensitive) and can be used in any combination:
+
+- aminocoumarins  
+  (clorobiocin, novobiocin, and penicillin/novobiocin)
 
 - aminoglycosides  
   (amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin,

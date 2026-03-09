@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9032
+## AMR 3.0.1.9033
 
 #### New
 
@@ -19,6 +19,7 @@
       [`all_disk_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
 - Data set `esbl_isolates` to practise with AMR modelling
 - AMR selectors
+  [`ionophores()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`peptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   and
@@ -91,6 +92,10 @@
   and [`resistance()`](https://amr-for-r.org/reference/proportion.md)
   gained the argument `guideline`, which defaults to EUCAST, for
   interpreting the ‘I’ category correctly.
+- Added to the `antimicrobials` data set: cefepime/taniborbactam
+  (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`),
+  kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`),
+  thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)
 - [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) and
   [`rescale_mic()`](https://amr-for-r.org/reference/as.mic.md) gained
   the argument `round_to_next_log2`, which can be set to `TRUE` to round
@@ -102,10 +107,6 @@
 - [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
   an argument `all_groups` to return all groups the antimicrobial drug
   is in ([\#246](https://github.com/msberends/AMR/issues/246))
-- Added to the `antimicrobials` data set: cefepime/taniborbactam
-  (`FTA`), ceftibuten/avibactam (`CTA`), kasugamycin (`KAS`),
-  ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`),
-  xeruborbactam (`XER`), and zorbamycin (`ZOR`)
 - Added explaining message to
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) when
   interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R)

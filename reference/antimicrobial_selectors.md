@@ -55,6 +55,8 @@ fluoroquinolones(only_sir_columns = FALSE, only_treatable = TRUE,
 
 glycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
+ionophores(only_sir_columns = FALSE, return_all = TRUE, ...)
+
 isoxazolylpenicillins(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
@@ -458,6 +460,10 @@ quite slow in terms of performance.
   (NVA), oritavancin (ORI), ramoplanin (RAM), teicoplanin (TEC),
   teicoplanin-macromethod (TCM), telavancin (TLV), vancomycin (VAN),
   vancomycin-macromethod (VAM), and zorbamycin (ZOR)
+
+- `ionophores()` can select:  
+  lasalocid (LAS), monensin sodium (MON), narasin (NAR), nystatin (NYS),
+  and salinomycin (SAL)
 
 - `isoxazolylpenicillins()` can select:  
   cloxacillin (CLO), dicloxacillin (DIC), flucloxacillin (FLC),

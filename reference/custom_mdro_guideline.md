@@ -126,7 +126,7 @@ antimicrobial group:
       all(glycopeptides() == "R")      ~ "My MDRO #3"
     )
 
-All 42 antimicrobial selectors are supported for use in the rules:
+All 43 antimicrobial selectors are supported for use in the rules:
 
 - [`aminoglycosides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  
@@ -311,6 +311,10 @@ All 42 antimicrobial selectors are supported for use in the rules:
   avoparcin, bleomycin, dalbavancin, norvancomycin, oritavancin,
   ramoplanin, teicoplanin, teicoplanin-macromethod, telavancin,
   vancomycin, vancomycin-macromethod, and zorbamycin
+
+- [`ionophores()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+  can select:  
+  lasalocid, monensin sodium, narasin, nystatin, and salinomycin
 
 - [`isoxazolylpenicillins()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
   can select:  

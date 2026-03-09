@@ -91,7 +91,7 @@ First 6 rows when filtering on genus *Escherichia*:
 
 ## `antimicrobials`: Antibiotic and Antifungal Drugs
 
-A data set with 504 rows and 14 columns, containing the following column
+A data set with 505 rows and 14 columns, containing the following column
 names:  
 *ab*, *cid*, *name*, *group*, *atc*, *atc_group1*, *atc_group2*,
 *abbreviations*, *synonyms*, *oral_ddd*, *oral_units*, *iv_ddd*,
@@ -100,7 +100,7 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 6 March 2026 17:53:42 UTC. Find more info about
+It was last updated on 9 March 2026 10:57:36 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
@@ -108,7 +108,7 @@ here](https://amr-for-r.org/reference/antimicrobials.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.rds)
-  (46 kB)  
+  (44 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.txt)
   (0.1 MB)  
@@ -120,7 +120,7 @@ here](https://amr-for-r.org/reference/antimicrobials.html).
   (0.1 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.parquet)
-  (0.1 MB)  
+  (94 kB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/antimicrobials.sav)
   (0.4 MB)  

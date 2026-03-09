@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9033</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9032" id="amr-3019032">AMR 3.0.1.9032<a class="anchor" aria-label="anchor" href="#amr-3019032"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9033" id="amr-3019033">AMR 3.0.1.9033<a class="anchor" aria-label="anchor" href="#amr-3019033"></a></h2>
 <div class="section level4">
-<h4 id="new-3-0-1-9032">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9032"></a></h4>
+<h4 id="new-3-0-1-9033">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9033"></a></h4>
 <ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
 <ul><li>
 <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
@@ -68,7 +68,7 @@
 </ul></li>
 </ul></li>
 <li>Data set <code>esbl_isolates</code> to practise with AMR modelling</li>
-<li>AMR selectors <code><a href="../reference/antimicrobial_selectors.html">peptides()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">phosphonics()</a></code> and <code><a href="../reference/antimicrobial_selectors.html">spiropyrimidinetriones()</a></code>
+<li>AMR selectors <code><a href="../reference/antimicrobial_selectors.html">ionophores()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">peptides()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">phosphonics()</a></code> and <code><a href="../reference/antimicrobial_selectors.html">spiropyrimidinetriones()</a></code>
 </li>
 <li>Support for Wildtype (WT) / Non-wildtype (NWT) in <code><a href="../reference/as.sir.html">as.sir()</a></code>, all plotting functions, and all susceptibility/resistance functions.
 <ul><li>
@@ -84,7 +84,7 @@
 <li>Two new <code>NA</code> objects, <code>NA_ab_</code> and <code>NA_mo_</code>, analogous to base R’s <code>NA_character_</code> and <code>NA_integer_</code>, for use in pipelines that require typed missing values</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixes-3-0-1-9032">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9032"></a></h4>
+<h4 id="fixes-3-0-1-9033">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9033"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where values that were purely numeric (e.g., <code>"1"</code>) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter</li>
 <li>Fixed a bug in <code><a href="../reference/as.mic.html">as.mic()</a></code> where MIC values in scientific notation (e.g., <code>"1e-3"</code>) were incorrectly handled because the letter <code>e</code> was removed along with other Unicode letters; scientific notation <code>e</code> is now preserved</li>
 <li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> where certain AB codes containing “PH” or “TH” (such as <code>ETH</code>, <code>MTH</code>, <code>PHE</code>, <code>PHN</code>, <code>STH</code>, <code>THA</code>, <code>THI1</code>) would incorrectly return <code>NA</code> when combined in a vector with any untranslatable value (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
@@ -97,18 +97,18 @@
 <li>Fixed SIR and MIC coercion of combined values, e.g. <code>as.sir("&lt;= 0.002; S")</code> or <code>as.mic("S; 0.002")</code> (<a href="https://github.com/msberends/AMR/issues/252" class="external-link">#252</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updates-3-0-1-9032">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9032"></a></h4>
+<h4 id="updates-3-0-1-9033">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9033"></a></h4>
 <ul><li>
 <code><a href="../reference/mdro.html">mdro()</a></code> now infers resistance for a <em>missing</em> base drug column from an <em>available</em> corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument <code>infer_from_combinations</code>, which defaults to <code>TRUE</code> (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).</li>
 <li>
 <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> gained the argument <code>guideline</code>, which defaults to EUCAST, for interpreting the ‘I’ category correctly.</li>
+<li>Added to the <code>antimicrobials</code> data set: cefepime/taniborbactam (<code>FTA</code>), ceftibuten/avibactam (<code>CTA</code>), clorobiocin (<code>CLB</code>), kasugamycin (<code>KAS</code>), ostreogrycin (<code>OST</code>), taniborbactam (<code>TAN</code>), thiostrepton (<code>THS</code>), xeruborbactam (<code>XER</code>), and zorbamycin (<code>ZOR</code>)</li>
 <li>
 <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.mic.html">rescale_mic()</a></code> gained the argument <code>round_to_next_log2</code>, which can be set to <code>TRUE</code> to round all values up to the nearest next log2 level (<a href="https://github.com/msberends/AMR/issues/255" class="external-link">#255</a>)</li>
 <li>
 <code>antimicrobials$group</code> is now a <code>list</code> instead of a <code>character</code>, to contain any group the drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
 <li>
 <code><a href="../reference/ab_property.html">ab_group()</a></code> gained an argument <code>all_groups</code> to return all groups the antimicrobial drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
-<li>Added to the <code>antimicrobials</code> data set: cefepime/taniborbactam (<code>FTA</code>), ceftibuten/avibactam (<code>CTA</code>), kasugamycin (<code>KAS</code>), ostreogrycin (<code>OST</code>), taniborbactam (<code>TAN</code>), thiostrepton (<code>THS</code>), xeruborbactam (<code>XER</code>), and zorbamycin (<code>ZOR</code>)</li>
 <li>Added explaining message to <code><a href="../reference/as.sir.html">as.sir()</a></code> when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
 <li>Updated handling of capped MIC values (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in <code><a href="../reference/as.sir.html">as.sir()</a></code> in the argument <code>capped_mic_handling</code>: (<a href="https://github.com/msberends/AMR/issues/243" class="external-link">#243</a>)
 <ul><li>Introduced four clearly defined options: <code>"none"</code>, <code>"conservative"</code> (default), <code>"standard"</code>, and <code>"lenient"</code>
