@@ -1,4 +1,4 @@
-# AMR 3.0.1.9032
+# AMR 3.0.1.9033
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -8,7 +8,7 @@
     - `all_mic()`, `all_mic_predictors()`
     - `all_disk()`, `all_disk_predictors()`
 * Data set `esbl_isolates` to practise with AMR modelling
-* AMR selectors `peptides()`, `phosphonics()` and `spiropyrimidinetriones()`
+* AMR selectors `ionophores()`, `peptides()`, `phosphonics()` and `spiropyrimidinetriones()`
 * Support for Wildtype (WT) / Non-wildtype (NWT) in `as.sir()`, all plotting functions, and all susceptibility/resistance functions.
   - `as.sir()` gained an argument `as_wt_nwt`, which defaults to `TRUE` only when `breakpoint_type = "ECOFF"` (#254)
   - This transforms the output from S/R to WT/NWT
@@ -32,10 +32,10 @@
 ### Updates
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
 * `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.
+* Added to the `antimicrobials` data set: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)
 * `as.mic()` and `rescale_mic()` gained the argument `round_to_next_log2`, which can be set to `TRUE` to round all values up to the nearest next log2 level (#255)
 * `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)
 * `ab_group()` gained an argument `all_groups` to return all groups the antimicrobial drug is in (#246)
-* Added to the `antimicrobials` data set: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)
 * Added explaining message to `as.sir()` when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (#244)
 * Updated handling of capped MIC values (`<`, `<=`, `>`, `>=`) in `as.sir()` in the argument `capped_mic_handling`: (#243)
   * Introduced four clearly defined options: `"none"`, `"conservative"` (default), `"standard"`, and `"lenient"`

@@ -369,6 +369,9 @@ pre_commit_lst$AB_AMINOGLYCOSIDES <- antimicrobials %>%
   filter(group %like% "aminoglycoside|paromomycin|spectinomycin") %>%
   pull(ab)
 pre_commit_lst$AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX", "AMC"))
+pre_commit_lst$AB_AMINOCOUMARINS <- antimicrobials %>%
+  filter(name %like% "novobiocin|clorobiocin") %>%
+  pull(ab)
 pre_commit_lst$AB_ANTIFUNGALS <- antimicrobials %>%
   filter(group %like% "antifungal") %>%
   pull(ab)
@@ -486,6 +489,18 @@ pre_commit_lst$AB_BETALACTAMS_WITH_INHIBITOR <- antimicrobials %>%
 # this will be used for documentation:
 pre_commit_lst$DEFINED_AB_GROUPS <- sort(names(pre_commit_lst)[names(pre_commit_lst) %like% "^AB_" & names(pre_commit_lst) != "AB_LOOKUP"])
 
+# Check that all AB_* groups with >= 4 members have a corresponding function
+for (grp in pre_commit_lst$DEFINED_AB_GROUPS[pre_commit_lst$DEFINED_AB_GROUPS %unlike% "BETALACTAMASE_INHIBITORS|EXCEPT"]) {
+  if (length(pre_commit_lst[[grp]]) >= 4) {
+    fn_name <- tolower(gsub("^AB_", "", grp))
+    if (!fn_name %in% ls(envir = asNamespace("AMR"))) {
+      stop("Group '", grp, "' has ", length(pre_commit_lst[[grp]]),
+           " members (", toString(ab_name(pre_commit_lst[[grp]], tolower = T)), ") but no corresponding function '", fn_name, "()' exists in the AMR namespace.",
+           call. = FALSE)
+    }
+  }
+}
+
 # Update the antimicrobials$group column
 usethis::ui_info("Updating 'group' column in antimicrobials data set from AB_* vectors")
 prettify_group_name <- function(name) {
@@ -557,6 +572,7 @@ pre_commit_lst$ABX_PRIORITY_LIST <- c("Aminopenicillins",
                                       "Beta-lactams",
                                       "Beta-lactamase inhibitors",
                                       "Pleuromutilins",
+                                      "Aminocoumarins",
                                       "Other")
 if (!all(unlist(antimicrobials$group) %in% pre_commit_lst$ABX_PRIORITY_LIST)) {
   stop("Missing group(s) in priority list: ", paste(setdiff(unlist(antimicrobials$group), pre_commit_lst$ABX_PRIORITY_LIST), collapse = ", "))

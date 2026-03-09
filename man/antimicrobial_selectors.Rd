@@ -17,6 +17,7 @@
 \alias{cephalosporins_5th}
 \alias{fluoroquinolones}
 \alias{glycopeptides}
+\alias{ionophores}
 \alias{isoxazolylpenicillins}
 \alias{lincosamides}
 \alias{lipoglycopeptides}
@@ -80,6 +81,8 @@ fluoroquinolones(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
 
 glycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
+
+ionophores(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 isoxazolylpenicillins(only_sir_columns = FALSE, only_treatable = TRUE,
   return_all = TRUE, ...)
@@ -202,6 +205,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 \item \code{\link[=cephalosporins_5th]{cephalosporins_5th()}} can select: \cr ceftaroline (CPT), ceftaroline/avibactam (CPA), ceftobiprole (BPR), ceftobiprole medocaril (CFM1), and ceftolozane/tazobactam (CZT)
 \item \code{\link[=fluoroquinolones]{fluoroquinolones()}} can select: \cr besifloxacin (BES), ciprofloxacin (CIP), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), lascufloxacin (LSC), levofloxacin (LVX), levofloxacin/ornidazole (LEO), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nemonoxacin (NEM), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), norfloxacin screening test (NOR-S), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin (OFX), ofloxacin/ornidazole (OOR), orbifloxacin (ORB), pazufloxacin (PAZ), pefloxacin (PEF), pefloxacin screening test (PEF-S), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX), and trovafloxacin (TVA)
 \item \code{\link[=glycopeptides]{glycopeptides()}} can select: \cr avoparcin (AVO), bleomycin (BLM), dalbavancin (DAL), norvancomycin (NVA), oritavancin (ORI), ramoplanin (RAM), teicoplanin (TEC), teicoplanin-macromethod (TCM), telavancin (TLV), vancomycin (VAN), vancomycin-macromethod (VAM), and zorbamycin (ZOR)
+\item \code{\link[=ionophores]{ionophores()}} can select: \cr lasalocid (LAS), monensin sodium (MON), narasin (NAR), nystatin (NYS), and salinomycin (SAL)
 \item \code{\link[=isoxazolylpenicillins]{isoxazolylpenicillins()}} can select: \cr cloxacillin (CLO), dicloxacillin (DIC), flucloxacillin (FLC), meticillin (MET), oxacillin (OXA), and oxacillin screening test (OXA-S)
 \item \code{\link[=lincosamides]{lincosamides()}} can select: \cr clindamycin (CLI), clindamycin inducible screening test (CLI-S), lincomycin (LIN), and pirlimycin (PRL)
 \item \code{\link[=lipoglycopeptides]{lipoglycopeptides()}} can select: \cr dalbavancin (DAL), oritavancin (ORI), and telavancin (TLV)

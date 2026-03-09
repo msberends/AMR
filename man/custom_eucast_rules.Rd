@@ -98,8 +98,9 @@ x
 #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
 }\if{html}{\out{</div>}}
 
-These 42 antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
+These 43 antimicrobial groups are allowed in the rules (case-insensitive) and can be used in any combination:
 \itemize{
+\item aminocoumarins\cr(clorobiocin, novobiocin, and penicillin/novobiocin)
 \item aminoglycosides\cr(amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, kasugamycin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, and tobramycin-high)
 \item aminopenicillins\cr(amoxicillin, amoxicillin/clavulanic acid, and ampicillin)
 \item antifungals\cr(amorolfine, amphotericin B, amphotericin B-high, anidulafungin, butoconazole, caspofungin, ciclopirox, clotrimazole, econazole, fluconazole, flucytosine, fosfluconazole, griseofulvin, hachimycin, ibrexafungerp, isavuconazole, isoconazole, itraconazole, ketoconazole, manogepix, micafungin, miconazole, nystatin, oteseconazole, pimaricin, posaconazole, rezafungin, ribociclib, sulconazole, terbinafine, terconazole, and voriconazole)

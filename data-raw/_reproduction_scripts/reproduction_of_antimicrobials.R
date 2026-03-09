@@ -972,6 +972,17 @@ antimicrobials <- antimicrobials |>
       select(1:4),
   )
 
+antimicrobials <- antimicrobials |>
+  mutate(ab = as.character(ab)) |>
+  bind_rows(
+    antimicrobials |>
+      filter(ab == "NOV") |>
+      mutate(ab = "CLB",
+             cid = 54706138,
+             name = "Clorobiocin") |>
+      select(1:4),
+  )
+
 # update ATC codes from WHOCC website -------------------------------------
 
 library(rvest)
@@ -1171,6 +1182,11 @@ for (i in 1:nrow(antimicrobials)) {
     antimicrobials[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(NA_character_), list(loinc))
   }
 }
+antimicrobials$group <- unname(antimicrobials$group)
+antimicrobials$atc <- unname(antimicrobials$atc)
+antimicrobials$abbreviations <- unname(antimicrobials$abbreviations)
+antimicrobials$synonyms <- unname(antimicrobials$synonyms)
+antimicrobials$loinc <- unname(antimicrobials$loinc)
 
 
 usethis::use_data(antimicrobials, overwrite = TRUE, version = 2, compress = "xz")

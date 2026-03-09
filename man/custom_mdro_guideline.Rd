@@ -94,7 +94,7 @@ You can define antimicrobial groups instead of single antimicrobials for the rul
 )
 }\if{html}{\out{</div>}}
 
-All 42 antimicrobial selectors are supported for use in the rules:
+All 43 antimicrobial selectors are supported for use in the rules:
 \itemize{
 \item \code{\link[=aminoglycosides]{aminoglycosides()}} can select: \cr amikacin, amikacin/fosfomycin, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, kasugamycin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, and tobramycin-high
 \item \code{\link[=aminopenicillins]{aminopenicillins()}} can select: \cr amoxicillin, amoxicillin/clavulanic acid, and ampicillin
@@ -111,6 +111,7 @@ All 42 antimicrobial selectors are supported for use in the rules:
 \item \code{\link[=cephalosporins_5th]{cephalosporins_5th()}} can select: \cr ceftaroline, ceftaroline/avibactam, ceftobiprole, ceftobiprole medocaril, and ceftolozane/tazobactam
 \item \code{\link[=fluoroquinolones]{fluoroquinolones()}} can select: \cr besifloxacin, ciprofloxacin, ciprofloxacin/metronidazole, ciprofloxacin/ornidazole, ciprofloxacin/tinidazole, clinafloxacin, danofloxacin, delafloxacin, difloxacin, enoxacin, enrofloxacin, finafloxacin, fleroxacin, garenoxacin, gatifloxacin, gemifloxacin, grepafloxacin, lascufloxacin, levofloxacin, levofloxacin/ornidazole, levonadifloxacin, lomefloxacin, marbofloxacin, metioxate, miloxacin, moxifloxacin, nadifloxacin, nemonoxacin, nifuroquine, nitroxoline, norfloxacin, norfloxacin screening test, norfloxacin/metronidazole, norfloxacin/tinidazole, ofloxacin, ofloxacin/ornidazole, orbifloxacin, pazufloxacin, pefloxacin, pefloxacin screening test, pradofloxacin, premafloxacin, prulifloxacin, rufloxacin, sarafloxacin, sitafloxacin, sparfloxacin, temafloxacin, tilbroquinol, tioxacin, tosufloxacin, and trovafloxacin
 \item \code{\link[=glycopeptides]{glycopeptides()}} can select: \cr avoparcin, bleomycin, dalbavancin, norvancomycin, oritavancin, ramoplanin, teicoplanin, teicoplanin-macromethod, telavancin, vancomycin, vancomycin-macromethod, and zorbamycin
+\item \code{\link[=ionophores]{ionophores()}} can select: \cr lasalocid, monensin sodium, narasin, nystatin, and salinomycin
 \item \code{\link[=isoxazolylpenicillins]{isoxazolylpenicillins()}} can select: \cr cloxacillin, dicloxacillin, flucloxacillin, meticillin, oxacillin, and oxacillin screening test
 \item \code{\link[=lincosamides]{lincosamides()}} can select: \cr clindamycin, clindamycin inducible screening test, lincomycin, and pirlimycin
 \item \code{\link[=lipoglycopeptides]{lipoglycopeptides()}} can select: \cr dalbavancin, oritavancin, and telavancin
