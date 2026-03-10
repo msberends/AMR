@@ -1,4 +1,4 @@
-# AMR 3.0.1.9033
+# AMR 3.0.1.9034
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -15,6 +15,7 @@
   - Functions such as `susceptibility()` count WT as S and NWT as R
 * `interpretive_rules()`, which allows future implementation of CLSI interpretive rules (#235)
   - `eucast_rules()` has become a wrapper around that function
+* `eucast_rules()` / `interpretive_rules()` gained argument `add_if_missing` (default: `TRUE`). When set to `FALSE`, rules are only applied to cells that already contain an SIR value; `NA` cells are left untouched. This is useful with `overwrite = TRUE` to update reported results without imputing values for drugs that were not tested (#259)
 * Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 ### Fixes
