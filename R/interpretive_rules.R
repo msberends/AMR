@@ -56,11 +56,6 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply Interpretive Rules
 #'
 #' @description
-#' **WORK IN PROGRESS**
-#'
-# TODO Remove this remark before next release
-#' **The `interpretive_rules()` function is new, to allow CLSI 'rules' too. The old `eucast_rules()` function will stay as a wrapper, but we need to generalise more parts of the underlying code to allow more than just EUCAST.**
-#'
 #' Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by e.g. the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #'
 #' To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive rules are applied, some AMR-specific rules can be applied at default, see *Details*.

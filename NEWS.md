@@ -1,4 +1,4 @@
-# AMR 3.0.1.9033
+# AMR 3.0.1.9034
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -13,9 +13,9 @@
   - `as.sir()` gained an argument `as_wt_nwt`, which defaults to `TRUE` only when `breakpoint_type = "ECOFF"` (#254)
   - This transforms the output from S/R to WT/NWT
   - Functions such as `susceptibility()` count WT as S and NWT as R
-* `interpretive_rules()`, which allows future implementation of CLSI interpretive rules (#235)
+* Function `interpretive_rules()`, which allows future implementation of CLSI interpretive rules (#235)
   - `eucast_rules()` has become a wrapper around that function
-* Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
+* Function `amr_course()`, which allows for automated download and unpacking of a GitHub repository for e.g. webinar use
 
 ### Fixes
 * Fixed a bug in `as.sir()` where values that were purely numeric (e.g., `"1"`) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter
@@ -43,6 +43,7 @@
   * This results in more reliable behaviour compared to previous versions for capped MIC values
   * Removed the `"inverse"` option, which has now become redundant
 * `ab_group()` now returns values consist with the AMR selectors (#246)
+* Added two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 
 # AMR 3.0.1

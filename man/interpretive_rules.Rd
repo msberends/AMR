@@ -76,10 +76,6 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 The input of \code{x}, possibly with edited values of antimicrobials. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
-\strong{WORK IN PROGRESS}
-
-\strong{The \code{interpretive_rules()} function is new, to allow CLSI 'rules' too. The old \code{eucast_rules()} function will stay as a wrapper, but we need to generalise more parts of the underlying code to allow more than just EUCAST.}
-
 Apply rules from clinical breakpoints notes and expected resistant phenotypes as defined by e.g. the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{https://www.eucast.org}), see \emph{Source}. Use \code{\link[=eucast_dosage]{eucast_dosage()}} to get a \link{data.frame} with advised dosages of a certain bug-drug combination, which is based on the \link{dosage} data set.
 
 To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive rules are applied, some AMR-specific rules can be applied at default, see \emph{Details}.

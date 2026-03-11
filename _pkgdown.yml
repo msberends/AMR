@@ -245,12 +245,14 @@ reference:
 
   - title: "Other: miscellaneous functions"
     desc: >
-      These functions are mostly for internal use, but some of
-      them may also be suitable for your analysis. Especially the
-      'like' function can be useful: `if (x %like% y) {...}`.
+      Miscellaneous functions that support various parts of an AMR analysis,
+      such as working with ages, joining tables, principal component analysis,
+      and other utilities. Especially the 'like' function can be useful:
+      `if (x %like% y) {...}`.
     contents:
     - "`age_groups`"
     - "`age`"
+    - "`amr_course`"
     - "`export_ncbi_biosample`"
     - "`availability`"
     - "`get_AMR_locale`"
