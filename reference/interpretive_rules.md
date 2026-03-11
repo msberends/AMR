@@ -1,12 +1,5 @@
 # Apply Interpretive Rules
 
-**WORK IN PROGRESS**
-
-**The `interpretive_rules()` function is new, to allow CLSI 'rules' too.
-The old `eucast_rules()` function will stay as a wrapper, but we need to
-generalise more parts of the underlying code to allow more than just
-EUCAST.**
-
 Apply rules from clinical breakpoints notes and expected resistant
 phenotypes as defined by e.g. the European Committee on Antimicrobial
 Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*.

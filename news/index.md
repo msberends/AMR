@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9033
+## AMR 3.0.1.9034
 
 #### New
 
@@ -35,14 +35,16 @@
   - Functions such as
     [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
     count WT as S and NWT as R
-- [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+- Function
+  [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
   which allows future implementation of CLSI interpretive rules
   ([\#235](https://github.com/msberends/AMR/issues/235))
   - [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
     has become a wrapper around that function
-- Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R’s
-  `NA_character_` and `NA_integer_`, for use in pipelines that require
-  typed missing values
+- Function
+  [`amr_course()`](https://amr-for-r.org/reference/amr_course.md), which
+  allows for automated download and unpacking of a GitHub repository for
+  e.g. webinar use
 
 #### Fixes
 
@@ -126,6 +128,9 @@
 - [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) now
   returns values consist with the AMR selectors
   ([\#246](https://github.com/msberends/AMR/issues/246))
+- Added two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base
+  R’s `NA_character_` and `NA_integer_`, for use in pipelines that
+  require typed missing values
 
 ## AMR 3.0.1
 

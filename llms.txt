@@ -890,14 +890,17 @@ information about how to work with functions in this package.
 
 ## Other: miscellaneous functions
 
-These functions are mostly for internal use, but some of them may also
-be suitable for your analysis. Especially the ‘like’ function can be
-useful: `if (x %like% y) {...}`.
+Miscellaneous functions that support various parts of an AMR analysis,
+such as working with ages, joining tables, principal component analysis,
+and other utilities. Especially the ‘like’ function can be useful:
+`if (x %like% y) {...}`.
 
 - [`age_groups()`](https://amr-for-r.org/reference/age_groups.md) :
   Split Ages into Age Groups
 - [`age()`](https://amr-for-r.org/reference/age.md) : Age in Years of
   Individuals
+- [`amr_course()`](https://amr-for-r.org/reference/amr_course.md) :
+  Download and Unpack an AMR Course Repository
 - [`export_ncbi_biosample()`](https://amr-for-r.org/reference/export_ncbi_biosample.md)
   : Export Data Set as NCBI BioSample Antibiogram
 - [`availability()`](https://amr-for-r.org/reference/availability.md) :
