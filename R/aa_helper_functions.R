@@ -487,7 +487,7 @@ word_wrap <- function(...,
                       as_note = FALSE,
                       width = 0.95 * getOption("width"),
                       extra_indent = 0) {
-  if (pkg_is_available("cli")) {
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
     return(paste0(c(...), collapse = ""))
   }
   msg <- paste0(c(...), collapse = "")
@@ -524,7 +524,7 @@ word_wrap <- function(...,
 message_ <- function(...,
                      appendLF = TRUE,
                      as_note = TRUE) {
-  if (pkg_is_available("cli")) {
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
     msg <- paste0(c(...), collapse = "")
     if (isTRUE(as_note)) {
       cli::cli_inform(c("i" = msg), .envir = parent.frame())
@@ -540,7 +540,7 @@ message_ <- function(...,
 warning_ <- function(...,
                      immediate = FALSE,
                      call = FALSE) {
-  if (pkg_is_available("cli")) {
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
     msg <- paste0(c(...), collapse = "")
     cli::cli_warn(msg, .envir = parent.frame())
   } else {
@@ -554,7 +554,7 @@ warning_ <- function(...,
 # - wraps text to never break lines within words (plain-text fallback)
 stop_ <- function(..., call = TRUE) {
   msg <- paste0(c(...), collapse = "")
-  if (pkg_is_available("cli")) {
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
     if (isTRUE(call)) {
       call_obj <- sys.call(-1)
     } else if (!isFALSE(call)) {
