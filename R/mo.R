@@ -483,7 +483,7 @@ as.mo <- function(x,
     }
   } else if (is.null(getOption("AMR_keep_synonyms")) && length(AMR_env$mo_renamed$old) > 0 && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
     # keep synonyms is TRUE, so check if any do have synonyms
-    warning_("{.help AMR::as.mo}() returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " outdated taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use ", highlight_code("as.mo(..., keep_synonyms = FALSE)"), " to clean the input to currently accepted taxonomic names, or set the R option {.code AMR_keep_synonyms} to {.code FALSE}. This warning will be shown once per session.", call = FALSE)
+    warning_("{.help [{.fun as.mo}](AMR::as.mo)} returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " outdated taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use ", highlight_code("as.mo(..., keep_synonyms = FALSE)"), " to clean the input to currently accepted taxonomic names, or set the R option {.code AMR_keep_synonyms} to {.code FALSE}. This warning will be shown once per session.", call = FALSE)
   }
 
   # Apply Becker ----
@@ -907,14 +907,14 @@ rep.mo <- function(x, ...) {
 print.mo_uncertainties <- function(x, n = 10, ...) {
   more_than_50 <- FALSE
   if (NROW(x) == 0) {
-    cat(font_blue(word_wrap("No uncertainties to show. Only uncertainties of the last call to {.help AMR::as.mo}() or any mo_*() function are stored.\n\n")))
+    cat(font_blue(word_wrap("No uncertainties to show. Only uncertainties of the last call to {.help [{.fun as.mo}](AMR::as.mo)} or any mo_*() function are stored.\n\n")))
     return(invisible(NULL))
   } else if (NROW(x) > 50) {
     more_than_50 <- TRUE
     x <- x[1:50, , drop = FALSE]
   }
 
-  cat(font_blue(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See {.help AMR::mo_matching_score}().\n\n")))
+  cat(font_blue(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See {.help [{.fun mo_matching_score}](AMR::mo_matching_score)}.\n\n")))
 
   add_MO_lookup_to_AMR_env()
 
@@ -1032,7 +1032,7 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
 #' @noRd
 print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
   if (NROW(x) == 0) {
-    cat(font_blue(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of {.help AMR::as.mo}() or any mo_*() function are stored.\n")))
+    cat(font_blue(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of {.help [{.fun as.mo}](AMR::as.mo)} or any mo_*() function are stored.\n")))
     return(invisible(NULL))
   }
 

@@ -837,7 +837,7 @@ amr_select_exec <- function(function_name,
 #' @export
 #' @noRd
 print.amr_selector <- function(x, ...) {
-  warning_("It should never be needed to print an antimicrobial selector class. Are you using {.pkg data.table}? Then add the argument {.code with = FALSE}, see our examples at {.help AMR::amr_selector}().",
+  warning_("It should never be needed to print an antimicrobial selector class. Are you using {.pkg data.table}? Then add the argument {.code with = FALSE}, see our examples at {.help [{.fun amr_selector}](AMR::amr_selector)}.",
     immediate = TRUE
   )
   cat("Class 'amr_selector'\n")
@@ -1062,7 +1062,7 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
   if (message_not_thrown_before(function_name, sort(agents))) {
     if (length(agents) == 0) {
       if (is.null(ab_group)) {
-        message_("For {.help AMR::", function_name, "}() no antimicrobial drugs found", examples, ".")
+        message_("For {.help [{.fun ", function_name, "}](AMR::", function_name, ")} no antimicrobial drugs found", examples, ".")
       } else if (ab_group == "administrable_per_os") {
         message_("No orally administrable drugs found", examples, ".")
       } else if (ab_group == "administrable_iv") {

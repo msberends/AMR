@@ -1043,7 +1043,7 @@ find_mo_col <- function(fn) {
   )
   if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
     if (message_not_thrown_before(fn = fn)) {
-      message_("Using column '", font_bold(mo), "' as input for {.help AMR::", fn, "}()")
+      message_("Using column '", font_bold(mo), "' as input for {.help [{.fun ", fn, "}](AMR::", fn, ")}")
     }
     return(df[, mo, drop = TRUE])
   } else {

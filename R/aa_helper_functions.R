@@ -460,7 +460,11 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
   msg <- apply_sub(msg, "\\{\\.pkg (\\{[^}]+\\}|[^}]+)\\}",    function(c) resolve(c))
   msg <- apply_sub(msg, "\\{\\.strong (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
   msg <- apply_sub(msg, "\\{\\.emph (\\{[^}]+\\}|[^}]+)\\}",   function(c) paste0("*", resolve(c), "*"))
-  msg <- apply_sub(msg, "\\{\\.help (\\{[^}]+\\}|[^}]+)\\}",   function(c) paste0("`", resolve(c), "`"))
+  msg <- apply_sub(msg, "\\{\\.help ([^}]+)\\}", function(c) {
+    # Handle [display text](topic) markdown link format: extract just the display text
+    m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c, perl = TRUE))[[1L]]
+    if (length(m) >= 2L) m[2L] else paste0("`", resolve(c), "`")
+  })
   msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}",    function(c) resolve(c))
   msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}",                function(c) strsplit(resolve(c), " ", fixed = TRUE)[[1L]][1L])
 
@@ -936,7 +940,7 @@ ascertain_sir_classes <- function(x, obj_name) {
     warning_(
       "the data provided in argument `", obj_name,
       "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
-      "See {.help AMR::as.sir}().",
+      "See {.help [{.fun as.sir}](AMR::as.sir)}.",
       immediate = TRUE
     )
     sirs_eligible <- is_sir_eligible(x)
