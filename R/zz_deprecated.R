@@ -124,7 +124,7 @@ deprecation_warning <- function(old = NULL, new = NULL, fn = NULL, extra_msg = N
           ". The old name will be removed in future version, so please update your code.",
           ifelse(type == "argument",
             ". While the old argument still works, it will be removed in a future version, so please update your code.",
-            " and will be removed in a future version, see `?AMR-deprecated`."
+            " and will be removed in a future version, see {.topic AMR-deprecated}."
           )
         ),
         ifelse(!is.null(extra_msg),

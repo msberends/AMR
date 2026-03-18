@@ -465,6 +465,11 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
     m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c, perl = TRUE))[[1L]]
     if (length(m) >= 2L) m[2L] else paste0("`", resolve(c), "`")
   })
+  msg <- apply_sub(msg, "\\{\\.topic ([^}]+)\\}", function(c) {
+    # Handle [display text](topic) markdown link format: extract just the display text
+    m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c, perl = TRUE))[[1L]]
+    if (length(m) >= 2L) m[2L] else paste0("?", resolve(c))
+  })
   msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}",    function(c) resolve(c))
   msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}",                function(c) strsplit(resolve(c), " ", fixed = TRUE)[[1L]][1L])
 

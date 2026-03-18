@@ -1097,7 +1097,7 @@ eucast_rules <- function(x,
                          rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
                          ...) {
   if (!is.null(getOption("AMR_eucastrules", default = NULL))) {
-    warning_("The global option {.code AMR_eucastrules} that you have set is now invalid was ignored - set {.code AMR_interpretive_rules} instead. See {.code ?AMR-options}.")
+    warning_("The global option {.code AMR_eucastrules} that you have set is now invalid was ignored - set {.code AMR_interpretive_rules} instead. See {.topic AMR-options}.")
   }
   interpretive_rules(x = x, col_mo = col_mo, info = info, rules = rules, guideline = "EUCAST", ...)
 }
