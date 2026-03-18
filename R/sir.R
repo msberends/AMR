@@ -529,10 +529,10 @@ as.sir.default <- function(x,
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE) && !all(x %in% c(1, 2, 3, 4, 5), na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
-        warning_("in {.help as.sir}: input values were guessed to be MIC values - preferably transform them with {.help as.mic} before running {.help as.sir}.")
+        warning_("in {.help AMR::as.sir}(): input values were guessed to be MIC values - preferably transform them with {.help AMR::as.mic}() before running {.help AMR::as.sir}().")
         return(as.sir(as.mic(x), ...))
       } else if (all_valid_disks(x)) {
-        warning_("in {.help as.sir}: input values were guessed to be disk diffusion values - preferably transform them with {.help as.disk} before running {.help as.sir}.")
+        warning_("in {.help AMR::as.sir}(): input values were guessed to be disk diffusion values - preferably transform them with {.help AMR::as.disk}() before running {.help AMR::as.sir}().")
         return(as.sir(as.disk(x), ...))
       }
     }
@@ -601,7 +601,7 @@ as.sir.default <- function(x,
           ifelse(length(out7) > 0, paste0("7 as \"", out7, "\""), NA_character_),
           ifelse(length(out8) > 0, paste0("8 as \"", out8, "\""), NA_character_)
         )
-        message_("in {.help as.sir}: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
+        message_("in {.help AMR::as.sir}(): Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
       }
 
       if (na_before != na_after) {
@@ -610,7 +610,7 @@ as.sir.default <- function(x,
           sort() %pm>%
           vector_and(quotes = TRUE)
         cur_col <- get_current_column()
-        warning_("in {.help as.sir}: ", na_after - na_before, " result",
+        warning_("in {.help AMR::as.sir}(): ", na_after - na_before, " result",
           ifelse(na_after - na_before > 1, "s", ""),
           ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
           " truncated (",
@@ -1029,7 +1029,7 @@ as.sir.data.frame <- function(x,
     if (isTRUE(info)) {
       message_(font_green_bg(" DONE "), as_note = FALSE)
       message()
-      message_("Run {.help sir_interpretation_history} to retrieve a logbook with all details of the breakpoint interpretations.")
+      message_("Run {.help AMR::sir_interpretation_history}() to retrieve a logbook with all details of the breakpoint interpretations.")
     }
   } else {
     # sequential mode (non-parallel)
@@ -1168,13 +1168,13 @@ as_sir_method <- function(method_short,
   dots <- list(...)
   dots <- dots[which(!names(dots) %in% c("warn", "mo.bak", "is_data.frame"))]
   if (length(dots) != 0) {
-    warning_("These arguments in {.help as.sir} are no longer used: ", vector_and(names(dots), quotes = "`"), ".", call = FALSE)
+    warning_("These arguments in {.help AMR::as.sir}() are no longer used: ", vector_and(names(dots), quotes = "`"), ".", call = FALSE)
   }
 
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
-    message_("Run {.help sir_interpretation_history} afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n")
+    message_("Run {.help AMR::sir_interpretation_history}() afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n")
   }
 
   current_df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
@@ -1276,7 +1276,7 @@ as_sir_method <- function(method_short,
     mo_var_found <- ""
   }
   if (is.null(mo)) {
-    stop_("No information was supplied about the microorganisms (missing argument {.arg mo} and no column of class 'mo' found). See {.help as.sir}.\n\n",
+    stop_("No information was supplied about the microorganisms (missing argument {.arg mo} and no column of class 'mo' found). See {.help AMR::as.sir}().\n\n",
       "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.sir, mo = x))`, where x is your column with microorganisms.\n",
       "To transform all ", method_long, " in a data set, use `data %>% as.sir()` or `data %>% mutate_if(is.", method_short, ", as.sir)`.",
       call = FALSE
@@ -1312,7 +1312,7 @@ as_sir_method <- function(method_short,
 
 
   if (length(ab) == 1 && ab %like% paste0("as.", method_short)) {
-    stop_("No unambiguous name was supplied about the antibiotic (argument {.arg ab}). See {.help as.sir}.", call = FALSE)
+    stop_("No unambiguous name was supplied about the antibiotic (argument {.arg ab}). See {.help AMR::as.sir}().", call = FALSE)
   }
 
   ab.bak <- trimws2(ab)
@@ -1328,7 +1328,7 @@ as_sir_method <- function(method_short,
   if (all(is.na(ab))) {
     if (isTRUE(info)) {
       message_("Returning NAs for unknown antibiotic: ", vector_and(ab.bak, sort = FALSE, quotes = TRUE),
-        ". Rename this column to a valid name or code, and check the output with {.help as.ab}.",
+        ". Rename this column to a valid name or code, and check the output with {.help AMR::as.ab}().",
         as_note = FALSE
       )
     }
@@ -1352,7 +1352,7 @@ as_sir_method <- function(method_short,
   }
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (isTRUE(info) && message_not_thrown_before("as.sir", "intrinsic")) {
-      message_("in {.help as.sir}: using {.arg add_intrinsic_resistance} is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
+      message_("in {.help AMR::as.sir}(): using {.arg add_intrinsic_resistance} is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
     }
   }
 
@@ -1721,7 +1721,7 @@ as_sir_method <- function(method_short,
         pm_filter(uti == FALSE)
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`.")
+        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See {.help AMR::as.sir}().")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
@@ -1988,7 +1988,7 @@ sir_interpretation_history <- function(clean = FALSE) {
 #' @noRd
 print.sir_log <- function(x, ...) {
   if (NROW(x) == 0) {
-    message_("No results to print. First run {.help as.sir} on MIC values or disk diffusion zones (or on a {.cls data.frame} containing any of these) to print a 'logbook' data set here.")
+    message_("No results to print. First run {.help AMR::as.sir}() on MIC values or disk diffusion zones (or on a {.cls data.frame} containing any of these) to print a 'logbook' data set here.")
     return(invisible(NULL))
   }
   class(x) <- class(x)[class(x) != "sir_log"]

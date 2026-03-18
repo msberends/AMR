@@ -928,7 +928,7 @@ ascertain_sir_classes <- function(x, obj_name) {
     warning_(
       "the data provided in argument `", obj_name,
       "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
-      "See `?as.sir`.",
+      "See {.help AMR::as.sir}().",
       immediate = TRUE
     )
     sirs_eligible <- is_sir_eligible(x)

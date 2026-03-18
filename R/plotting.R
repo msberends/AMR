@@ -412,7 +412,7 @@ create_scale_sir <- function(aesthetics, colours_SIR, language, eucast_I, ...) {
 
   scale$labels <- function(x) {
     stop_ifnot(all(x %in% c(levels(NA_sir_), "SI", "IR", NA)),
-      "Apply `scale_", aesthetics[1], "_sir()` to a variable of class 'sir', see `?as.sir`.",
+      "Apply `scale_", aesthetics[1], "_sir()` to a variable of class 'sir', see {.help AMR::as.sir}().",
       call = FALSE
     )
     x <- as.character(x)

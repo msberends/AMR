@@ -210,7 +210,7 @@ get_column_abx <- function(x,
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (anyNA(newnames)) {
       if (isTRUE(info)) {
-        message_("WARNING: some columns returned NA for {.help as.ab}", as_note = FALSE)
+        message_("WARNING: some columns returned NA for {.help AMR::as.ab}()", as_note = FALSE)
       }
       warning_("Invalid antibiotic reference(s): ", vector_and(names(dots)[is.na(newnames)], quotes = FALSE),
         call = FALSE,
@@ -267,7 +267,7 @@ get_column_abx <- function(x,
       if (all_okay == TRUE) {
         message_(" OK.", as_note = FALSE)
       } else if (!isFALSE(dups)) {
-        message_("WARNING: some results from {.help as.ab} are duplicated: ", vector_and(dups, quotes = "`"), as_note = FALSE)
+        message_("WARNING: some results from {.help AMR::as.ab}() are duplicated: ", vector_and(dups, quotes = "`"), as_note = FALSE)
       } else {
         message_(" WARNING.", as_note = FALSE)
       }

@@ -238,7 +238,7 @@ resistance_predict <- function(x,
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
   } else {
-    stop("no valid model selected. See `?resistance_predict`.")
+    stop("no valid model selected. See {.help AMR::resistance_predict}().")
   }
 
   # prepare the output dataframe

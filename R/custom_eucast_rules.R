@@ -150,15 +150,15 @@ custom_eucast_rules <- function(...) {
   )
   stop_if(
     identical(dots, "error"),
-    "rules must be a valid formula inputs (e.g., using '~'), see `?custom_eucast_rules`"
+    "rules must be a valid formula inputs (e.g., using '~'), see {.help AMR::custom_eucast_rules}()"
   )
   n_dots <- length(dots)
-  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using `?custom_eucast_rules`.")
+  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using {.help AMR::custom_eucast_rules}().")
   out <- vector("list", n_dots)
   for (i in seq_len(n_dots)) {
     stop_ifnot(
       inherits(dots[[i]], "formula"),
-      "rule ", i, " must be a valid formula input (e.g., using '~'), see `?custom_eucast_rules`"
+      "rule ", i, " must be a valid formula input (e.g., using '~'), see {.help AMR::custom_eucast_rules}()"
     )
 
     # Query
@@ -180,7 +180,7 @@ custom_eucast_rules <- function(...) {
     result <- dots[[i]][[3]]
     stop_ifnot(
       deparse(result) %like% "==",
-      "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see `?custom_eucast_rules`"
+      "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see {.help AMR::custom_eucast_rules}()"
     )
     result_group <- as.character(result)[[2]]
     result_group <- as.character(str2lang(result_group))

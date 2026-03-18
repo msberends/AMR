@@ -914,7 +914,7 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
     x <- x[1:50, , drop = FALSE]
   }
 
-  cat(font_blue(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n")))
+  cat(font_blue(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See {.help AMR::mo_matching_score}().\n\n")))
 
   add_MO_lookup_to_AMR_env()
 
