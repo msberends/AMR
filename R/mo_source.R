@@ -289,7 +289,7 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
   }
   if (!"mo" %in% colnames(x)) {
     if (stop_on_error == TRUE) {
-      stop_(refer_to_name, " must contain a column 'mo'", call = FALSE)
+      stop_(refer_to_name, " must contain a column {.field mo}", call = FALSE)
     } else {
       return(FALSE)
     }

@@ -985,7 +985,7 @@ as.sir.data.frame <- function(x,
       } else if (!is.sir(x.bak[, ab, drop = TRUE])) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
+          message_("Assigning class {.cls sir} to already clean column '", font_bold(ab), "' (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, language = NULL, info = info), ")... ",
             appendLF = FALSE,
@@ -1276,7 +1276,7 @@ as_sir_method <- function(method_short,
     mo_var_found <- ""
   }
   if (is.null(mo)) {
-    stop_("No information was supplied about the microorganisms (missing argument {.arg mo} and no column of class 'mo' found). See {.help [{.fun as.sir}](AMR::as.sir)}.\n\n",
+    stop_("No information was supplied about the microorganisms (missing argument {.arg mo} and no column of class {.cls mo} found). See {.help [{.fun as.sir}](AMR::as.sir)}.\n\n",
       "To transform certain columns with e.g. mutate(), use ", highlight_code("data %>% mutate(across(..., as.sir, mo = x))"), ", where x is your column with microorganisms.\n",
       "To transform all ", method_long, " in a data set, use ", highlight_code("data %>% as.sir()"), " or ", highlight_code(paste0("data %>% mutate_if(is.", method_short, ", as.sir)")), ".",
       call = FALSE
@@ -1988,7 +1988,7 @@ sir_interpretation_history <- function(clean = FALSE) {
 #' @noRd
 print.sir_log <- function(x, ...) {
   if (NROW(x) == 0) {
-    message_("No results to print. First run {.help [{.fun as.sir}](AMR::as.sir)} on MIC values or disk diffusion zones (or on a {.cls data.frame} containing any of these) to print a 'logbook' data set here.")
+    message_("No results to print. First run {.help [{.fun as.sir}](AMR::as.sir)} on MIC values or disk diffusion zones (or on a {.cls data.frame} containing any of these) to print a {.val logbook} data set here.")
     return(invisible(NULL))
   }
   class(x) <- class(x)[class(x) != "sir_log"]
@@ -2227,10 +2227,10 @@ check_reference_data <- function(reference_data, .call_depth) {
     class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
     class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_sir) == names(class_ref))) {
-      stop_("{.arg reference_data} must have the same column names as the 'clinical_breakpoints' data set.", call = .call_depth)
+      stop_("{.arg reference_data} must have the same column names as the {.code clinical_breakpoints} data set.", call = .call_depth)
     }
     if (!all(class_sir == class_ref)) {
-      stop_("{.arg reference_data} must be the same structure as the 'clinical_breakpoints' data set. Column '", names(class_ref[class_sir != class_ref][1]), "' is of class ", class_ref[class_sir != class_ref][1], ", but should be of class ", class_sir[class_sir != class_ref][1], ".", call = .call_depth)
+      stop_("{.arg reference_data} must be the same structure as the {.code clinical_breakpoints} data set. Column '", names(class_ref[class_sir != class_ref][1]), "' is of class ", class_ref[class_sir != class_ref][1], ", but should be of class ", class_sir[class_sir != class_ref][1], ".", call = .call_depth)
     }
   }
 }

@@ -48,6 +48,7 @@
 * New internal `cli_to_plain()` converts `cli` markup to plain text for non-cli path
 * All internal call sites updated to `cli` glue syntax
 * CI dev-version and old-tinytest workflows now only run on `main` branch pushes
+* Single-quoted literal values in messaging calls replaced with `{.val}`, `{.cls}`, `{.field}`, or `{.code}` markup throughout
 
 
 # AMR 3.0.1
