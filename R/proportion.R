@@ -238,7 +238,7 @@ resistance <- function(...,
   # other arguments for meet_criteria are handled by sir_calc()
   meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
   if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("resistance", "eucast_default", entire_session = TRUE)) {
-    message_("{.help [{.fun resistance}](AMR::resistance)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic AMR-options}.")
+    message_("{.help [{.fun resistance}](AMR::resistance)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
     message_("This message will be shown once per session.")
   }
   tryCatch(
@@ -266,7 +266,7 @@ susceptibility <- function(...,
   # other arguments for meet_criteria are handled by sir_calc()
   meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
   if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("susceptibility", "eucast_default", entire_session = TRUE)) {
-    message_("{.help [{.fun susceptibility}](AMR::susceptibility)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic AMR-options}.")
+    message_("{.help [{.fun susceptibility}](AMR::susceptibility)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
     message_("This message will be shown once per session.")
   }
   tryCatch(
