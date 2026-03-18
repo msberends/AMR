@@ -433,7 +433,7 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
 
   apply_sub <- function(msg, pattern, formatter) {
     while (grepl(pattern, msg, perl = TRUE)) {
-      m <- regexec(pattern, msg, perl = TRUE)
+      m <- regexec(pattern, msg)
       matches <- regmatches(msg, m)[[1]]
       if (length(matches) < 2L) break
       full_match <- matches[1L]
@@ -462,12 +462,12 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
   msg <- apply_sub(msg, "\\{\\.emph (\\{[^}]+\\}|[^}]+)\\}",   function(c) paste0("*", resolve(c), "*"))
   msg <- apply_sub(msg, "\\{\\.help ([^}]+)\\}", function(c) {
     # Handle [display text](topic) markdown link format: extract just the display text
-    m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c, perl = TRUE))[[1L]]
+    m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c))[[1L]]
     if (length(m) >= 2L) m[2L] else paste0("`", resolve(c), "`")
   })
   msg <- apply_sub(msg, "\\{\\.topic ([^}]+)\\}", function(c) {
     # Handle [display text](topic) markdown link format: extract just the display text
-    m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c, perl = TRUE))[[1L]]
+    m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c))[[1L]]
     if (length(m) >= 2L) m[2L] else paste0("?", resolve(c))
   })
   msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}",    function(c) resolve(c))
@@ -475,7 +475,7 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
 
   # bare {variable} or {expression} -> evaluate in caller's environment
   while (grepl("\\{[^{}]+\\}", msg)) {
-    m <- regexec("\\{([^{}]+)\\}", msg, perl = TRUE)
+    m <- regexec("\\{([^{}]+)\\}", msg)
     matches <- regmatches(msg, m)[[1]]
     if (length(matches) < 2L) break
     full_match <- matches[1L]
