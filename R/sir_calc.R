@@ -173,7 +173,7 @@ sir_calc <- function(...,
   if (print_warning == TRUE) {
     if (message_not_thrown_before("sir_calc")) {
       warning_("Increase speed by transforming to class 'sir' on beforehand:\n",
-        "  your_data %>% mutate_if(is_sir_eligible, as.sir)",
+        highlight_code("  your_data %>% mutate_if(is_sir_eligible, as.sir)"),
         call = FALSE
       )
     }

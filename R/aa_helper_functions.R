@@ -382,6 +382,14 @@ pkg_is_available <- function(pkg, also_load = FALSE, min_version = NULL) {
   isTRUE(out)
 }
 
+highlight_code <- function(code) {
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
+    cli::code_highlight(code)
+  } else {
+    code
+  }
+}
+
 import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)
@@ -396,7 +404,7 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     getExportedValue(name = name, ns = asNamespace(pkg)),
     error = function(e) {
       if (isTRUE(error_on_fail)) {
-        stop_("function `", name, "()` is not an exported object from package '", pkg,
+        stop_("function {.code ", name, "()} is not an exported object from package '", pkg,
           "'. Please create an issue at https://github.com/msberends/AMR/issues. Many thanks!",
           call = FALSE
         )

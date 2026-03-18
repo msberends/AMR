@@ -155,7 +155,7 @@ add_custom_antimicrobials <- function(x) {
 
   AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% c(x$ab, x$generalised_name) & !AMR_env$ab_previously_coerced$x %in% c(x$ab, x$generalised_name)), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
-  message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antimicrobials` data set.")
+  message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal {.code antimicrobials} data set.")
 }
 
 #' @rdname add_custom_antimicrobials

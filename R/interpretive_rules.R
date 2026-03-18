@@ -1050,9 +1050,9 @@ interpretive_rules <- function(x,
     cat(paste0(font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
 
     if (isFALSE(verbose) && total_n_added + total_n_changed > 0) {
-      cat("\n", word_wrap("Use `eucast_rules(..., verbose = TRUE)` (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
+      cat("\n", word_wrap("Use ", highlight_code("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
     } else if (isTRUE(verbose)) {
-      cat("\n", word_wrap("Used 'Verbose mode' (`verbose = TRUE`), which returns a data.frame with all specified edits.\nUse `verbose = FALSE` to apply the rules on your data."), "\n\n", sep = "")
+      cat("\n", word_wrap("Used 'Verbose mode' ({.code verbose = TRUE}), which returns a data.frame with all specified edits.\nUse {.code verbose = FALSE} to apply the rules on your data."), "\n\n", sep = "")
     }
   }
 
@@ -1063,12 +1063,12 @@ interpretive_rules <- function(x,
     warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
       "in {.help AMR::eucast_rules}(): not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
-      "  - ", x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
+      "  - ", highlight_code(paste0(x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
         warn_lacking_sir_class,
         paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])
-      ), ")\n",
-      "  - ", x_deparsed, " %>% mutate_if(is_sir_eligible, as.sir)\n",
-      "  - ", x_deparsed, " %>% mutate(across(where(is_sir_eligible), as.sir))"
+      ), ")")), "\n",
+      "  - ", highlight_code(paste0(x_deparsed, " %>% mutate_if(is_sir_eligible, as.sir)")), "\n",
+      "  - ", highlight_code(paste0(x_deparsed, " %>% mutate(across(where(is_sir_eligible), as.sir))"))
     )
   }
 

@@ -1277,8 +1277,8 @@ as_sir_method <- function(method_short,
   }
   if (is.null(mo)) {
     stop_("No information was supplied about the microorganisms (missing argument {.arg mo} and no column of class 'mo' found). See {.help AMR::as.sir}().\n\n",
-      "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.sir, mo = x))`, where x is your column with microorganisms.\n",
-      "To transform all ", method_long, " in a data set, use `data %>% as.sir()` or `data %>% mutate_if(is.", method_short, ", as.sir)`.",
+      "To transform certain columns with e.g. mutate(), use ", highlight_code("data %>% mutate(across(..., as.sir, mo = x))"), ", where x is your column with microorganisms.\n",
+      "To transform all ", method_long, " in a data set, use ", highlight_code("data %>% as.sir()"), " or ", highlight_code(paste0("data %>% mutate_if(is.", method_short, ", as.sir)")), ".",
       call = FALSE
     )
   }

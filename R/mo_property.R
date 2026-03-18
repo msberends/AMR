@@ -1043,10 +1043,10 @@ find_mo_col <- function(fn) {
   )
   if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
     if (message_not_thrown_before(fn = fn)) {
-      message_("Using column '", font_bold(mo), "' as input for `", fn, "()`")
+      message_("Using column '", font_bold(mo), "' as input for {.help AMR::", fn, "}()")
     }
     return(df[, mo, drop = TRUE])
   } else {
-    stop_("argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
+    stop_("argument {.arg x} is missing and no column with info about microorganisms could be found.", call = -2)
   }
 }
