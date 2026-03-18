@@ -29,8 +29,8 @@
 
 on:
   push:
-     # only run after a git push on any branch in this repo
-    branches: '**'
+     # only run after a git push on the main branch
+    branches: [main]
 
 name: check-old
 

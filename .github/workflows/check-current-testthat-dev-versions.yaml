@@ -29,7 +29,7 @@
 
 on:
   push:
-    branches: '**'
+    branches: [main]
   schedule:
     # also run a schedule everyday at 1 AM.
     # this is to check that all dependencies are still available (see R/zzz.R)
