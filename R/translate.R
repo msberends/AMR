@@ -249,7 +249,7 @@ translate_into_language <- function(from,
   any_form_in_patterns <- tryCatch(
     any(from_unique %like% paste0("(", paste(gsub(" +\\(.*", "", df_trans$pattern), collapse = "|"), ")")),
     error = function(e) {
-      warning_("Translation not possible. Please create an issue at ", font_url("https://github.com/msberends/AMR/issues"), ". Many thanks!")
+      warning_("Translation not possible. Please create an issue at {.url https://github.com/msberends/AMR/issues}. Many thanks!")
       return(FALSE)
     }
   )
@@ -293,11 +293,11 @@ translate_into_language <- function(from,
   out <- from_unique_translated[match(from.bak, from_unique)]
 
   if (!identical(from.bak, out) && get_AMR_locale() == lang && is.null(getOption("AMR_locale", default = NULL)) && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
-    message(word_wrap(
+    message(font_blue(word_wrap(
       "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
       LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this once-per-session note.",
-      add_fn = list(font_blue), as_note = TRUE
-    ))
+      as_note = TRUE
+    )))
   }
 
   out

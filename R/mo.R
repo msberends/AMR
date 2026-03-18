@@ -402,7 +402,12 @@ as.mo <- function(x,
 
       top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
       if (length(top_hits) == 0) {
-        warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.", call = FALSE)
+        warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ",
+          ifelse(is.null(minimum_matching_score),
+            paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"),
+            minimum_matching_score
+          ),
+          ". Try setting this value lower or even to 0.", call = FALSE)
         result_mo <- NA_character_
       } else {
         result_mo <- MO_lookup_current$mo[match(top_hits[1], MO_lookup_current$fullname)]
@@ -902,14 +907,14 @@ rep.mo <- function(x, ...) {
 print.mo_uncertainties <- function(x, n = 10, ...) {
   more_than_50 <- FALSE
   if (NROW(x) == 0) {
-    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call to `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
+    cat(font_blue(word_wrap("No uncertainties to show. Only uncertainties of the last call to `as.mo()` or any `mo_*()` function are stored.\n\n")))
     return(invisible(NULL))
   } else if (NROW(x) > 50) {
     more_than_50 <- TRUE
     x <- x[1:50, , drop = FALSE]
   }
 
-  cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
+  cat(font_blue(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n")))
 
   add_MO_lookup_to_AMR_env()
 
@@ -919,13 +924,12 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
   col_green <- function(x) font_green_bg(x, collapse = NULL)
 
   if (has_colour()) {
-    cat(word_wrap("Colour keys: ",
+    cat(font_blue(word_wrap("Colour keys: ",
       col_red(" 0.000-0.549 "),
       col_orange(" 0.550-0.649 "),
       col_yellow(" 0.650-0.749 "),
-      col_green(" 0.750-1.000"),
-      add_fn = font_blue
-    ), font_green_bg(" "), "\n", sep = "")
+      col_green(" 0.750-1.000")
+    )), font_green_bg(" "), "\n", sep = "")
   }
 
   score_set_colour <- function(text, scores) {
@@ -1028,7 +1032,7 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
 #' @noRd
 print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
   if (NROW(x) == 0) {
-    cat(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of `as.mo()` or any `mo_*()` function are stored.\n", add_fn = font_blue))
+    cat(font_blue(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of `as.mo()` or any `mo_*()` function are stored.\n")))
     return(invisible(NULL))
   }
 

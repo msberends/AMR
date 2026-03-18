@@ -445,7 +445,7 @@ antibiogram.default <- function(x,
   meet_criteria(wisca, allow_class = "logical", has_length = 1)
   if (isTRUE(wisca)) {
     if (!is.null(mo_transform) && !missing(mo_transform)) {
-      warning_("WISCA must be based on the species level as WISCA parameters are based on this. For that reason, `mo_transform` will be ignored.")
+      warning_("WISCA must be based on the species level as WISCA parameters are based on this. For that reason, {.arg mo_transform} will be ignored.")
     }
     mo_transform <- function(x) suppressMessages(suppressWarnings(paste(mo_genus(x, keep_synonyms = TRUE, language = NULL), mo_species(x, keep_synonyms = TRUE, language = NULL))))
   }
@@ -482,7 +482,7 @@ antibiogram.default <- function(x,
   # try to find columns based on type
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
-    stop_if(is.null(col_mo), "`col_mo` must be set")
+    stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   }
   # transform MOs
   x$`.mo` <- x[, col_mo, drop = TRUE]
@@ -523,7 +523,7 @@ antibiogram.default <- function(x,
     ab_trycatch <- tryCatch(colnames(dplyr::select(x, {{ antimicrobials }})), error = function(e) NULL)
   }
   if (is.null(ab_trycatch)) {
-    stop_ifnot(is.character(suppressMessages(antimicrobials)), "`antimicrobials` must be an antimicrobial selector, or a character vector.")
+    stop_ifnot(is.character(suppressMessages(antimicrobials)), "{.arg antimicrobials} must be an antimicrobial selector, or a character vector.")
     antimicrobials.bak <- antimicrobials
     # split antimicrobials on separator and make it a list
     antimicrobials <- strsplit(gsub(" ", "", antimicrobials), "+", fixed = TRUE)
@@ -619,7 +619,7 @@ antibiogram.default <- function(x,
     out$n_susceptible <- out$n_susceptible + out$I + out$SDD
   }
   if (all(out$n_tested < minimum, na.rm = TRUE) && wisca == FALSE) {
-    warning_("All combinations had less than `minimum = ", minimum, "` results, returning an empty antibiogram")
+    warning_("All combinations had less than {.arg minimum} = {minimum} results, returning an empty antibiogram")
     return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
   } else if (any(out$n_tested < minimum, na.rm = TRUE)) {
     mins <- sum(out$n_tested < minimum, na.rm = TRUE)
@@ -627,7 +627,7 @@ antibiogram.default <- function(x,
       out <- out %pm>%
         subset(n_tested >= minimum)
       if (isTRUE(info) && mins > 0) {
-        message_("NOTE: ", mins, " combinations had less than `minimum = ", minimum, "` results and were ignored", add_fn = font_red)
+        message_("NOTE: {mins} combinations had less than {.arg minimum} = {minimum} results and were ignored")
       }
     }
   }
@@ -812,7 +812,7 @@ antibiogram.default <- function(x,
   # 21. 5 (4-6,N=15/300)
   # 22. 5% (4-6%,N=15/300)
   if (wisca == TRUE && !formatting_type %in% c(1, 2, 13, 14) && info == TRUE && message_not_thrown_before("antibiogram", wisca, formatting_type)) {
-    message_("Using WISCA with a `formatting_type` that includes the denominator is not useful")
+    message_("Using WISCA with a {.arg formatting_type} that includes the denominator is not useful")
   }
   out$digits <- digits # since pm_sumarise() cannot work with an object outside the current frame
   if (formatting_type == 1) out <- out %pm>% pm_summarise(out_value = round(coverage * 100, digits = digits))
@@ -998,8 +998,8 @@ antibiogram.grouped_df <- function(x,
                                    interval_side = "two-tailed",
                                    info = interactive(),
                                    ...) {
-  stop_ifnot(is.null(mo_transform), "`mo_transform` must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, which could include the pathogen information (though not necessary). Nonetheless, this makes `mo_transform` redundant.", call = FALSE)
-  stop_ifnot(is.null(syndromic_group), "`syndromic_group` must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, making `syndromic_groups` redundant.", call = FALSE)
+  stop_ifnot(is.null(mo_transform), "{.arg mo_transform} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, which could include the pathogen information (though not necessary). Nonetheless, this makes {.arg mo_transform} redundant.", call = FALSE)
+  stop_ifnot(is.null(syndromic_group), "{.arg syndromic_group} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, making {.arg syndromic_group} redundant.", call = FALSE)
   groups <- attributes(x)$groups
   n_groups <- NROW(groups)
   progress <- progress_ticker(
@@ -1198,7 +1198,7 @@ simulate_coverage <- function(params) {
 #' @param wisca_model The outcome of [wisca()] or [`antibiogram(..., wisca = TRUE)`][antibiogram()].
 #' @rdname antibiogram
 retrieve_wisca_parameters <- function(wisca_model, ...) {
-  stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use `wisca()` or `antibiogram(..., wisca = TRUE)` to create a WISCA model.")
+  stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use {.fun wisca} or {.fun antibiogram} (with {.code wisca = TRUE}) to create a WISCA model.")
   attributes(wisca_model)$wisca_parameters
 }
 

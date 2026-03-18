@@ -1,3 +1,11 @@
+# AMR 3.0.1.9036
+
+### Updates
+* Modernised messaging infrastructure: `message_()`, `warning_()`, and `stop_()` now use `cli` for rich formatting (colours, inline markup, hyperlinks) when the `cli` package is installed, with a fully functional plain-text fallback when `cli` is absent
+* Removed `add_fn` parameter from `message_()`, `warning_()`, and `word_wrap()` — styling is now handled by `cli` markup or dropped from the plain-text path
+* New internal helper `cli_to_plain()` converts cli inline markup (`{.fun}`, `{.arg}`, `{.val}`, etc.) to plain-text equivalents for the non-cli fallback path
+* Call sites across all R source files updated from `paste0()`-based string construction to cli glue syntax (e.g. `{.fun as.mo}`, `{.arg col_mo}`, `{n} results`)
+
 # AMR 3.0.1.9035
 
 ### New

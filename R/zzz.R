@@ -118,8 +118,7 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
   if (interactive() && is.null(getOption("AMR_guideline"))) {
     packageStartupMessage(
       word_wrap(
-        "Assuming ", AMR::clinical_breakpoints$guideline[1], " as the default AMR guideline, see `?AMR-options` to change this.",
-        add_fn = NULL
+        "Assuming ", AMR::clinical_breakpoints$guideline[1], " as the default AMR guideline, see `?AMR-options` to change this."
       )
     )
   }

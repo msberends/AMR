@@ -192,19 +192,19 @@ interpretive_rules <- function(x,
 
   stop_if(
     !is.na(ampc_cephalosporin_resistance) && !any(c("expert", "all") %in% rules),
-    "For the `ampc_cephalosporin_resistance` argument to work, the `rules` argument must contain `\"expert\"` or `\"all\"`."
+    "For the {.arg ampc_cephalosporin_resistance} argument to work, the {.arg rules} argument must contain {.code \"expert\"} or {.code \"all\"}."
   )
 
   add_MO_lookup_to_AMR_env()
 
   if ("custom" %in% rules && is.null(custom_rules)) {
-    warning_("in `eucast_rules()`: no custom rules were set with the `custom_rules` argument",
+    warning_("in {.fun eucast_rules}: no custom rules were set with the {.arg custom_rules} argument",
       immediate = TRUE
     )
     rules <- rules[rules != "custom"]
     if (length(rules) == 0) {
       if (isTRUE(info)) {
-        message_("No other rules were set, returning original data", add_fn = font_red, as_note = FALSE)
+        message_("No other rules were set, returning original data", as_note = FALSE)
       }
       return(x)
     }
@@ -232,7 +232,7 @@ interpretive_rules <- function(x,
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
     if (q_continue %in% c(FALSE, 2)) {
-      message_("Cancelled, returning original data", add_fn = font_red, as_note = FALSE)
+      message_("Cancelled, returning original data", as_note = FALSE)
       return(x)
     }
   }
@@ -241,7 +241,7 @@ interpretive_rules <- function(x,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
-    stop_if(is.null(col_mo), "`col_mo` must be set")
+    stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   }
 
   decimal.mark <- getOption("OutDec")
@@ -459,7 +459,7 @@ interpretive_rules <- function(x,
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL, info = FALSE)
   x$genus_species <- trimws(paste(x$genus, x$species))
   if (isTRUE(info) && NROW(x.bak) > 10000) {
-    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    message_("OK.", as_note = FALSE)
   }
 
   n_added <- 0
@@ -595,23 +595,13 @@ interpretive_rules <- function(x,
   } else {
     if (isTRUE(info)) {
       cat("\n")
-      message_(paste0(
-        font_red("Skipping inhibitor-inheritance rules defined by this AMR package: setting "),
-        font_green_bg(" S "),
-        font_red(" to drug+inhibitor where drug is "),
-        font_green_bg(" S "),
-        font_red(", and setting "),
-        font_rose_bg(" R "),
-        font_red(" to drug where drug+inhibitor is "),
-        font_rose_bg(" R "),
-        font_red(". Add \"other\" or \"all\" to the `rules` argument to apply those rules.")
-      ))
+      message_("Skipping inhibitor-inheritance rules defined by this AMR package: setting S to drug+inhibitor where drug is S, and setting R to drug where drug+inhibitor is R. Add \"other\" or \"all\" to the {.arg rules} argument to apply those rules.")
     }
   }
 
   if (!any(c("all", "custom") %in% rules) && !is.null(custom_rules)) {
     if (isTRUE(info)) {
-      message_("Skipping custom EUCAST rules, since the `rules` argument does not contain \"custom\".")
+      message_("Skipping custom EUCAST rules, since the {.arg rules} argument does not contain {.code \"custom\"}.")
     }
     custom_rules <- NULL
   }
@@ -673,8 +663,7 @@ interpretive_rules <- function(x,
       if (isTRUE(info)) {
         message_("Using column '", cols_ab[names(cols_ab) == ab],
           "' as ", ab_name(ab_s, language = NULL, tolower = TRUE),
-          " since a column '", ab_s, "' is missing but required for the chosen rules",
-          add_fn = font_red
+          " since a column '", ab_s, "' is missing but required for the chosen rules"
         )
       }
       cols_ab <- c(cols_ab, stats::setNames(unname(cols_ab[names(cols_ab) == ab]), ab_s))
@@ -898,7 +887,7 @@ interpretive_rules <- function(x,
     for (i in seq_len(length(custom_rules))) {
       rule <- custom_rules[[i]]
       rows <- tryCatch(which(eval(parse(text = rule$query), envir = x)),
-        error = function(e) stop_(paste0(conditionMessage(e), font_red(" (check available data and compare with the custom rules set)")), call = FALSE)
+        error = function(e) stop_(conditionMessage(e), " (check available data and compare with the custom rules set)", call = FALSE)
       )
       cols <- as.character(rule$result_group)
       cols <- c(
@@ -1073,7 +1062,7 @@ interpretive_rules <- function(x,
     warn_lacking_sir_class <- warn_lacking_sir_class[order(colnames(x.bak))]
     warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
-      "in `eucast_rules()`: not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
+      "in {.fun eucast_rules}: not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
       "  - ", x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
         warn_lacking_sir_class,
         paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])
@@ -1108,7 +1097,7 @@ eucast_rules <- function(x,
                          rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
                          ...) {
   if (!is.null(getOption("AMR_eucastrules", default = NULL))) {
-    warning_("The global option `AMR_eucastrules` that you have set is now invalid was ignored - set `AMR_interpretive_rules` instead. See `?AMR-options`.")
+    warning_("The global option {.code AMR_eucastrules} that you have set is now invalid was ignored - set {.code AMR_interpretive_rules} instead. See {.code ?AMR-options}.")
   }
   interpretive_rules(x = x, col_mo = col_mo, info = info, rules = rules, guideline = "EUCAST", ...)
 }
@@ -1165,7 +1154,7 @@ edit_sir <- function(x,
     isSIR <- !isNA & (new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI" | new_edits[rows, cols] == "WT" | new_edits[rows, cols] == "NWT" | new_edits[rows, cols] == "NS")
     non_SIR <- !isSIR
     if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
-      warning_("Some values had SIR values and were not overwritten, since `overwrite = FALSE`.")
+      warning_("Some values had SIR values and were not overwritten, since {.code overwrite = FALSE}.")
     }
     tryCatch(
       # insert into original table
@@ -1189,7 +1178,7 @@ edit_sir <- function(x,
             suppressWarnings(new_edits[rows, cols][non_SIR] <<- to)
           }
           warning_(
-            "in `eucast_rules()`: value \"", to, "\" added to the factor levels of column",
+            "in {.fun eucast_rules}: value \"", to, "\" added to the factor levels of column",
             ifelse(length(cols) == 1, "", "s"),
             " ", vector_and(cols, quotes = "`", sort = FALSE),
             " because this value was not an existing factor level."
@@ -1197,7 +1186,7 @@ edit_sir <- function(x,
           txt_warning()
           warned <- FALSE
         } else {
-          warning_("in `eucast_rules()`: ", w$message)
+          warning_("in {.fun eucast_rules}: ", w$message)
           txt_warning()
         }
       },
