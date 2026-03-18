@@ -387,10 +387,11 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)
   }
-  if (pkg == "rstudioapi" && tryCatch(!rstudioapi::isAvailable(), error = function(e) TRUE)) {
-    # only allow rstudioapi to be imported if RStudio is available
+  if (pkg == "rstudioapi" && !in_rstudio()) {
+    # only allow rstudioapi to be imported if we're in RStudio
     return(NULL)
   }
+
   tryCatch(
     # don't use get() to avoid fetching non-API functions
     getExportedValue(name = name, ns = asNamespace(pkg)),
@@ -514,7 +515,7 @@ word_wrap <- function(...,
     )
     msg <- paste0(parts, collapse = "`")
   }
-  msg <- gsub("`(.+?)`", font_grey_bg("`\\1`"), msg)
+  # msg <- gsub("`(.+?)`", font_grey_bg("`\\1`"), msg)
 
   # clean introduced whitespace in between fullstops
   msg <- gsub("[.] +[.]", "..", msg)
