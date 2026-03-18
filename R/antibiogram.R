@@ -1198,7 +1198,7 @@ simulate_coverage <- function(params) {
 #' @param wisca_model The outcome of [wisca()] or [`antibiogram(..., wisca = TRUE)`][antibiogram()].
 #' @rdname antibiogram
 retrieve_wisca_parameters <- function(wisca_model, ...) {
-  stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use {.fun wisca} or {.fun antibiogram} (with {.code wisca = TRUE}) to create a WISCA model.")
+  stop_ifnot(isTRUE(attributes(wisca_model)$wisca), "This function only applies to WISCA models. Use {.help wisca} or {.help antibiogram} (with {.code wisca = TRUE}) to create a WISCA model.")
   attributes(wisca_model)$wisca_parameters
 }
 

@@ -145,15 +145,15 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
   )
   stop_if(
     identical(dots, "error"),
-    "rules must be a valid formula inputs (e.g., using '~'), see {.fun mdro}"
+    "rules must be a valid formula inputs (e.g., using '~'), see {.help mdro}"
   )
   n_dots <- length(dots)
-  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using {.fun mdro}.")
+  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using {.help mdro}.")
   out <- vector("list", n_dots)
   for (i in seq_len(n_dots)) {
     stop_ifnot(
       inherits(dots[[i]], "formula"),
-      "rule ", i, " must be a valid formula input (e.g., using '~'), see {.fun mdro}"
+      "rule ", i, " must be a valid formula input (e.g., using '~'), see {.help mdro}"
     )
 
     # Query
@@ -202,7 +202,7 @@ c.custom_mdro_guideline <- function(x, ..., as_factor = NULL) {
   }
   for (g in list(...)) {
     stop_ifnot(inherits(g, "custom_mdro_guideline"),
-      "for combining custom MDRO guidelines, all rules must be created with {.fun custom_mdro_guideline}",
+      "for combining custom MDRO guidelines, all rules must be created with {.help custom_mdro_guideline}",
       call = FALSE
     )
     vals <- attributes(x)$values
@@ -259,14 +259,14 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
       }
     )
     if (identical(qry, "error")) {
-      warning_("in {.fun custom_mdro_guideline}: rule ", i,
+      warning_("in {.help custom_mdro_guideline}: rule ", i,
         " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
         AMR_env$err_msg,
         call = FALSE
       )
       next
     }
-    stop_ifnot(is.logical(qry), "in {.fun custom_mdro_guideline}: rule ", i, " (`", guideline[[i]]$query,
+    stop_ifnot(is.logical(qry), "in {.help custom_mdro_guideline}: rule ", i, " (`", guideline[[i]]$query,
       "`) must return {.code TRUE} or {.code FALSE}, not ",
       format_class(class(qry), plural = FALSE),
       call = FALSE

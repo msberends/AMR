@@ -198,7 +198,7 @@ interpretive_rules <- function(x,
   add_MO_lookup_to_AMR_env()
 
   if ("custom" %in% rules && is.null(custom_rules)) {
-    warning_("in {.fun eucast_rules}: no custom rules were set with the {.arg custom_rules} argument",
+    warning_("in {.help eucast_rules}: no custom rules were set with the {.arg custom_rules} argument",
       immediate = TRUE
     )
     rules <- rules[rules != "custom"]
@@ -1062,7 +1062,7 @@ interpretive_rules <- function(x,
     warn_lacking_sir_class <- warn_lacking_sir_class[order(colnames(x.bak))]
     warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
-      "in {.fun eucast_rules}: not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
+      "in {.help eucast_rules}: not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
       "  - ", x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
         warn_lacking_sir_class,
         paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])
@@ -1178,7 +1178,7 @@ edit_sir <- function(x,
             suppressWarnings(new_edits[rows, cols][non_SIR] <<- to)
           }
           warning_(
-            "in {.fun eucast_rules}: value \"", to, "\" added to the factor levels of column",
+            "in {.help eucast_rules}: value \"", to, "\" added to the factor levels of column",
             ifelse(length(cols) == 1, "", "s"),
             " ", vector_and(cols, quotes = "`", sort = FALSE),
             " because this value was not an existing factor level."
@@ -1186,7 +1186,7 @@ edit_sir <- function(x,
           txt_warning()
           warned <- FALSE
         } else {
-          warning_("in {.fun eucast_rules}: ", w$message)
+          warning_("in {.help eucast_rules}: ", w$message)
           txt_warning()
         }
       },

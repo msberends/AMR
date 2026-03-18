@@ -170,9 +170,9 @@ mdro <- function(x = NULL,
   meet_criteria(infer_from_combinations, allow_class = "logical", has_length = 1)
 
   if (isTRUE(only_sir_columns) && !any(is.sir(x))) {
-    stop_("There were no SIR columns found in the data set, despite {.arg only_sir_columns} being {.code TRUE}. Transform columns with {.fun as.sir} for valid antimicrobial interpretations.")
+    stop_("There were no SIR columns found in the data set, despite {.arg only_sir_columns} being {.code TRUE}. Transform columns with {.help as.sir} for valid antimicrobial interpretations.")
   } else if (!isTRUE(only_sir_columns) && !any(is.sir(x)) && !any(is_sir_eligible(x))) {
-    stop_("There were no eligible SIR columns found in the data set. Transform columns with {.fun as.sir} for valid antimicrobial interpretations.")
+    stop_("There were no eligible SIR columns found in the data set. Transform columns with {.help as.sir} for valid antimicrobial interpretations.")
   }
 
   # get gene values as TRUE/FALSE
@@ -251,7 +251,7 @@ mdro <- function(x = NULL,
   guideline.bak <- guideline
   if (is.list(guideline)) {
     # Custom MDRO guideline ---------------------------------------------------
-    stop_ifnot(inherits(guideline, "custom_mdro_guideline"), "use {.fun custom_mdro_guideline} to create custom guidelines")
+    stop_ifnot(inherits(guideline, "custom_mdro_guideline"), "use {.help custom_mdro_guideline} to create custom guidelines")
     if (isTRUE(info)) {
       txt <- paste0(
         "Determining MDROs based on custom rules",

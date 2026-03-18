@@ -249,7 +249,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     current_ext <- regexpr("\\.([[:alnum:]]+)$", destination)
     current_ext <- ifelse(current_ext > -1L, substring(destination, current_ext + 1L), "")
     vowel <- ifelse(current_ext %like% "^[AEFHILMNORSX]", "n", "")
-    stop_("The AMR mo source must be an RDS file, not a{vowel} {toupper(current_ext)} file. If \"{basename(destination)}\" was meant as your input file, use {.fun set_mo_source} on this file. In any case, the option {.code AMR_mo_source} must be set to another path.")
+    stop_("The AMR mo source must be an RDS file, not a{vowel} {toupper(current_ext)} file. If \"{basename(destination)}\" was meant as your input file, use {.help set_mo_source} on this file. In any case, the option {.code AMR_mo_source} must be set to another path.")
   }
   if (is.null(AMR_env$mo_source)) {
     AMR_env$mo_source <- readRDS_AMR(path.expand(destination))
