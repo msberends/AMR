@@ -341,12 +341,12 @@ ab_url <- function(x, open = FALSE, ...) {
 
   NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(atcs)]
   if (length(NAs) > 0) {
-    warning_("in `ab_url()`: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
+    warning_("in {.fun ab_url}: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
 
   if (open == TRUE) {
     if (length(u) > 1 && !is.na(u[1L])) {
-      warning_("in `ab_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in {.fun ab_url}: only the first URL will be opened, as {.fun browseURL} only suports one string.")
     }
     if (!is.na(u[1L])) {
       utils::browseURL(u[1L])
@@ -397,7 +397,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
     }
     vars <- get_column_abx(df, info = FALSE, only_sir_columns = FALSE, sort = FALSE, fn = "set_ab_names")
     if (length(vars) == 0) {
-      message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
+      message_("No columns with antibiotic results found for {.fun set_ab_names}, leaving names unchanged.")
       return(data)
     }
   } else {

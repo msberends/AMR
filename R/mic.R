@@ -269,7 +269,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 
       sort() %pm>%
       vector_and(quotes = TRUE)
     cur_col <- get_current_column()
-    warning_("in `as.mic()`: ", na_after - na_before, " result",
+    warning_("in {.fun as.mic}: ", na_after - na_before, " result",
       ifelse(na_after - na_before > 1, "s", ""),
       ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
       " truncated (",
@@ -441,7 +441,7 @@ all_valid_mics <- function(x) {
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, mic)
 pillar_shaft.mic <- function(x, ...) {
   if (!identical(levels(x), VALID_MIC_LEVELS) && message_not_thrown_before("pillar_shaft.mic")) {
-    warning_(AMR_env$sup_1_icon, " These columns contain an outdated or altered structure - convert with `as.mic()` to update",
+    warning_(AMR_env$sup_1_icon, " These columns contain an outdated or altered structure - convert with {.fun as.mic} to update",
       call = FALSE
     )
   }
@@ -508,7 +508,7 @@ as.vector.mic <- function(x, mode = "numneric", ...) {
   y <- as.mic(y)
   calls <- unlist(lapply(sys.calls(), as.character))
   if (any(calls %in% c("rbind", "cbind")) && message_not_thrown_before("as.vector.mic")) {
-    warning_("Functions `rbind()` and `cbind()` cannot preserve the structure of MIC values. Use dplyr's `bind_rows()` or `bind_cols()` instead.", call = FALSE)
+    warning_("Functions {.fun rbind} and {.fun cbind} cannot preserve the structure of MIC values. Use {.pkg dplyr}'s {.fun bind_rows} or {.fun bind_cols} instead.", call = FALSE)
   }
   y
 }
@@ -601,7 +601,7 @@ sort.mic <- function(x, decreasing = FALSE, ...) {
 #' @export
 #' @noRd
 hist.mic <- function(x, ...) {
-  warning_("in `hist()`: use `plot()` or ggplot2's `autoplot()` for optimal plotting of MIC values")
+  warning_("in {.fun hist}: use {.fun plot} or {.pkg ggplot2}'s {.fun autoplot} for optimal plotting of MIC values")
   hist(log2(x))
 }
 

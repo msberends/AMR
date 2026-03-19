@@ -304,8 +304,8 @@ search_type_in_df <- function(x, type, info = TRUE, add_col_prefix = TRUE) {
     if (!is.null(found)) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
-        message_("Column '", font_bold(found), "' found as input for `", ifelse(add_col_prefix, "col_", ""), type,
-          "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored."
+        message_("Column '", font_bold(found), "' found as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type,
+          "}, but this column does not contain {.code TRUE}/{.code FALSE} values and was ignored."
         )
         found <- NULL
       }
@@ -771,7 +771,7 @@ format_class <- function(class, plural = FALSE) {
     ifelse(plural, "s", "")
   )
   # exceptions
-  class[class == "logical"] <- ifelse(plural, "a vector of `TRUE`/`FALSE`", "`TRUE` or `FALSE`")
+  class[class == "logical"] <- ifelse(plural, "a vector of {.code TRUE}/{.code FALSE}", "{.code TRUE} or {.code FALSE}")
   class[class == "data.frame"] <- "a data set"
   if ("list" %in% class) {
     class <- "a list"
@@ -780,12 +780,12 @@ format_class <- function(class, plural = FALSE) {
     class <- "a matrix"
   }
   if ("custom_eucast_rules" %in% class) {
-    class <- "input created with `custom_eucast_rules()`"
+    class <- "input created with {.fun custom_eucast_rules}"
   }
   if (any(c("mo", "ab", "sir") %in% class)) {
-    class <- paste0("of class '", class[1L], "'")
+    class <- paste0("of class {.cls ", class[1L], "}")
   }
-  class[class == class.bak] <- paste0("of class '", class[class == class.bak], "'")
+  class[class == class.bak] <- paste0("of class {.cls ", class[class == class.bak], "}")
   # output
   vector_or(class, quotes = FALSE, sort = FALSE)
 }
@@ -820,11 +820,11 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
   AMR_env$meet_criteria_error_txt <- NULL
 
   if (is.null(object)) {
-    stop_if(allow_NULL == FALSE, "argument `", obj_name, "` must not be NULL", call = call_depth)
+    stop_if(allow_NULL == FALSE, "argument {.arg ", obj_name, "} must not be NULL", call = call_depth)
     return(invisible())
   }
   if (is.null(dim(object)) && length(object) == 1 && suppressWarnings(is.na(object))) { # suppressWarnings for functions
-    stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
+    stop_if(allow_NA == FALSE, "argument {.arg ", obj_name, "} must not be NA", call = call_depth)
     return(invisible())
   }
 
@@ -834,32 +834,32 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
   }
 
   if (!is.null(allow_class) && !(suppressWarnings(all(is.na(object))) && allow_NA == TRUE)) {
-    stop_ifnot(inherits(object, allow_class), "argument `", obj_name,
-      "` must be ", format_class(allow_class, plural = isTRUE(has_length > 1)),
+    stop_ifnot(inherits(object, allow_class), "argument {.arg ", obj_name,
+      "} must be ", format_class(allow_class, plural = isTRUE(has_length > 1)),
       ", i.e. not be ", format_class(class(object), plural = isTRUE(has_length > 1)),
       call = call_depth
     )
     # check data.frames for data
     if (inherits(object, "data.frame")) {
       stop_if(any(dim(object) == 0),
-        "the data provided in argument `", obj_name,
-        "` must contain rows and columns (current dimensions: ",
+        "the data provided in argument {.arg ", obj_name,
+        "} must contain rows and columns (current dimensions: ",
         paste(dim(object), collapse = "x"), ")",
         call = call_depth
       )
     }
   }
   if (!is.null(has_length)) {
-    stop_ifnot(length(object) %in% has_length, "argument `", obj_name,
-      "` must ", # ifelse(allow_NULL, "be NULL or must ", ""),
+    stop_ifnot(length(object) %in% has_length, "argument {.arg ", obj_name,
+      "} must ", # ifelse(allow_NULL, "be NULL or must ", ""),
       "be of length ", vector_or(has_length, quotes = FALSE),
       ", not ", length(object),
       call = call_depth
     )
   }
   if (!is.null(looks_like)) {
-    stop_ifnot(object %like% looks_like, "argument `", obj_name,
-      "` must ", # ifelse(allow_NULL, "be NULL or must ", ""),
+    stop_ifnot(object %like% looks_like, "argument {.arg ", obj_name,
+      "} must ", # ifelse(allow_NULL, "be NULL or must ", ""),
       "resemble the regular expression \"", looks_like, "\"",
       call = call_depth
     )
@@ -877,7 +877,7 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     if ("logical" %in% allow_class) {
       or_values <- paste0(or_values, ", or TRUE or FALSE")
     }
-    stop_ifnot(all(object %in% is_in.bak, na.rm = TRUE), "argument `", obj_name, "` ",
+    stop_ifnot(all(object %in% is_in.bak, na.rm = TRUE), "argument {.arg ", obj_name, "} ",
       ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
         "must be either ",
         "must only contain values "
@@ -888,8 +888,8 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     )
   }
   if (isTRUE(is_positive)) {
-    stop_if(is.numeric(object) && !all(object > 0, na.rm = TRUE), "argument `", obj_name,
-      "` must ",
+    stop_if(is.numeric(object) && !all(object > 0, na.rm = TRUE), "argument {.arg ", obj_name,
+      "} must ",
       ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
         "be a number higher than zero",
         "all be numbers higher than zero"
@@ -898,8 +898,8 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     )
   }
   if (isTRUE(is_positive_or_zero)) {
-    stop_if(is.numeric(object) && !all(object >= 0, na.rm = TRUE), "argument `", obj_name,
-      "` must ",
+    stop_if(is.numeric(object) && !all(object >= 0, na.rm = TRUE), "argument {.arg ", obj_name,
+      "} must ",
       ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
         "be zero or a positive number",
         "all be zero or numbers higher than zero"
@@ -908,8 +908,8 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     )
   }
   if (isTRUE(is_finite)) {
-    stop_if(is.numeric(object) && !all(is.finite(object[!is.na(object)]), na.rm = TRUE), "argument `", obj_name,
-      "` must ",
+    stop_if(is.numeric(object) && !all(is.finite(object[!is.na(object)]), na.rm = TRUE), "argument {.arg ", obj_name,
+      "} must ",
       ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
         "be a finite number",
         "all be finite numbers"
@@ -943,8 +943,8 @@ ascertain_sir_classes <- function(x, obj_name) {
   sirs <- vapply(FUN.VALUE = logical(1), x, is.sir)
   if (!any(sirs, na.rm = TRUE)) {
     warning_(
-      "the data provided in argument `", obj_name,
-      "` should contain at least one column of class 'sir'. Eligible SIR column were now guessed. ",
+      "the data provided in argument {.arg ", obj_name,
+      "} should contain at least one column of class {.cls sir}. Eligible SIR columns were now guessed. ",
       "See {.help [{.fun as.sir}](AMR::as.sir)}.",
       immediate = TRUE
     )
@@ -1047,13 +1047,13 @@ get_current_data <- function(arg_name, call) {
     } else {
       examples <- ""
     }
-    stop_("this function must be used inside a `dplyr` verb or `data.frame` call",
+    stop_("this function must be used inside a {.pkg dplyr} verb or {.code data.frame} call",
       examples,
       call = call
     )
   } else {
     # mimic a base R error that the argument is missing
-    stop_("argument `", arg_name, "` is missing with no default", call = call)
+    stop_("argument {.arg ", arg_name, "} is missing with no default", call = call)
   }
 }
 
@@ -1647,7 +1647,7 @@ if (!is.null(import_fn("where", "tidyselect", error_on_fail = FALSE))) {
   where <- function(fn) {
     # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
     if (!is.function(fn)) {
-      stop_("`", deparse(substitute(fn)), "()` is not a valid predicate function.")
+      stop_("{.fun ", deparse(substitute(fn)), "} is not a valid predicate function.")
     }
     df <- pm_select_env$.data
     cols <- pm_select_env$get_colnames()
@@ -1662,7 +1662,7 @@ if (!is.null(import_fn("where", "tidyselect", error_on_fail = FALSE))) {
       },
       fn
     ))
-    if (!is.logical(preds)) stop_("`where()` must be used with functions that return `TRUE` or `FALSE`.")
+    if (!is.logical(preds)) stop_("{.fun where} must be used with functions that return {.code TRUE} or {.code FALSE}.")
     data_cols <- cols
     cols <- data_cols[preds]
     which(data_cols %in% cols)

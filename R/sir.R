@@ -816,7 +816,7 @@ as.sir.data.frame <- function(x,
       # column found, transform to logical
       stop_if(
         length(col_uti) != 1 | !col_uti %in% colnames(x),
-        "argument `uti` must be a [logical] vector, of must be a single column name of `x`"
+        "argument {.arg uti} must be a [logical] vector, or must be a single column name of {.arg x}"
       )
       uti <- as.logical(x[, col_uti, drop = TRUE])
     }
@@ -1720,7 +1720,7 @@ as_sir_method <- function(method_short,
         pm_filter(uti == FALSE)
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See {.help [{.fun as.sir}](AMR::as.sir)}.")
+        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument {.arg uti} to set which isolates are from urine. See {.help [{.fun as.sir}](AMR::as.sir)}.")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
@@ -1943,7 +1943,7 @@ as_sir_method <- function(method_short,
       # if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
       if (isTRUE(verbose)) {
         for (i in seq_along(notes)) {
-          message(word_wrap("  ", AMR_env$bullet_icon, " ", notes[i]))
+          message_(notes[i], as_note = FALSE)
         }
       } else {
         # message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))

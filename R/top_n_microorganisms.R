@@ -62,7 +62,7 @@ top_n_microorganisms <- function(x, n, property = "species", n_for_each = NULL, 
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = TRUE)
-    stop_if(is.null(col_mo), "`col_mo` must be set")
+    stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   }
 
   x.bak <- x

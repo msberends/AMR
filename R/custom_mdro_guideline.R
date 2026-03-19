@@ -266,8 +266,8 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
       )
       next
     }
-    stop_ifnot(is.logical(qry), "in {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)}: rule ", i, " (`", guideline[[i]]$query,
-      "`) must return {.code TRUE} or {.code FALSE}, not ",
+    stop_ifnot(is.logical(qry), "in {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)}: rule ", i, " ({.code ", guideline[[i]]$query,
+      "}) must return {.code TRUE} or {.code FALSE}, not ",
       format_class(class(qry), plural = FALSE),
       call = FALSE
     )

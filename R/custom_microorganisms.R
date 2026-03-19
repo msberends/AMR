@@ -128,7 +128,7 @@
 #' }
 add_custom_microorganisms <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
-  stop_ifnot("genus" %in% tolower(colnames(x)), paste0("`x` must contain column 'genus'."))
+  stop_ifnot("genus" %in% tolower(colnames(x)), "{.arg x} must contain column 'genus'.")
 
   add_MO_lookup_to_AMR_env()
 

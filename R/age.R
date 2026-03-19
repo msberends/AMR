@@ -67,7 +67,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
     } else if (length(reference) == 1) {
       reference <- rep(reference, length(x))
     } else {
-      stop_("`x` and `reference` must be of same length, or `reference` must be of length 1.")
+      stop_("{.arg x} and {.arg reference} must be of same length, or {.arg reference} must be of length 1.")
     }
   }
   x <- as.POSIXlt(x, ...)
@@ -109,10 +109,10 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 
   if (any(ages < 0, na.rm = TRUE)) {
     ages[!is.na(ages) & ages < 0] <- NA
-    warning_("in `age()`: NAs introduced for ages below 0.")
+    warning_("in {.fun age}: NAs introduced for ages below 0.")
   }
   if (any(ages > 120, na.rm = TRUE)) {
-    warning_("in `age()`: some ages are above 120.")
+    warning_("in {.fun age}: some ages are above 120.")
   }
 
   if (isTRUE(na.rm)) {
@@ -191,7 +191,7 @@ age_groups <- function(x, split_at = c(0, 12, 25, 55, 75), names = NULL, na.rm =
 
   if (any(x < 0, na.rm = TRUE)) {
     x[x < 0] <- NA
-    warning_("in `age_groups()`: NAs introduced for ages below 0.")
+    warning_("in {.fun age_groups}: NAs introduced for ages below 0.")
   }
   if (is.character(split_at)) {
     split_at <- split_at[1L]
@@ -211,7 +211,7 @@ age_groups <- function(x, split_at = c(0, 12, 25, 55, 75), names = NULL, na.rm =
     split_at <- c(0, split_at)
   }
   split_at <- split_at[!is.na(split_at)]
-  stop_if(length(split_at) == 1, "invalid value for `split_at`.") # only 0 is available
+  stop_if(length(split_at) == 1, "invalid value for {.arg split_at}.") # only 0 is available
 
   # turn input values to 'split_at' indices
   y <- x
@@ -228,7 +228,7 @@ age_groups <- function(x, split_at = c(0, 12, 25, 55, 75), names = NULL, na.rm =
   agegroups <- factor(lbls[y], levels = lbls, ordered = TRUE)
 
   if (!is.null(names)) {
-    stop_ifnot(length(names) == length(levels(agegroups)), "`names` must have the same length as the number of age groups (", length(levels(agegroups)), ").")
+    stop_ifnot(length(names) == length(levels(agegroups)), "{.arg names} must have the same length as the number of age groups (", length(levels(agegroups)), ").")
     levels(agegroups) <- names
   }
 

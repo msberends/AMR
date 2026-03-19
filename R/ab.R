@@ -551,14 +551,28 @@ type_sum.ab <- function(x, ...) {
 print.ab <- function(x, ...) {
   if (!is.null(attributes(x)$amr_selector)) {
     function_name <- attributes(x)$amr_selector
-    message_(
-      "This 'ab' vector was retrieved using `", function_name, "()`, which should normally be used inside a `dplyr` verb or `data.frame` call, e.g.:\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
-      "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
-      "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
-    )
+    if (pkg_is_available("cli", min_version = "3.0.0")) {
+      cli::cli_inform(
+        c(
+          "i" = "This {.cls ab} vector was retrieved using {.fun {function_name}}, which should normally be used inside a {.pkg dplyr} verb or {.code data.frame} call, e.g.:",
+          "*" = "{.code your_data %>% select({function_name}())}",
+          "*" = "{.code your_data %>% select(column_a, column_b, {function_name}())}",
+          "*" = "{.code your_data %>% filter(any({function_name}() == \"R\"))}",
+          "*" = "{.code your_data[, {function_name}()]}",
+          "*" = "{.code your_data[, c(\"column_a\", \"column_b\", {function_name}())]}"
+        ),
+        .envir = environment()
+      )
+    } else {
+      message(word_wrap(paste0(
+        "This 'ab' vector was retrieved using `", function_name, "()`, which should normally be used inside a dplyr verb or data.frame call, e.g.:\n",
+        "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
+        "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
+        "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
+        "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
+        "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
+      ), as_note = TRUE))
+    }
   }
   cat("Class 'ab'\n")
   print(as.character(x), quote = FALSE)
@@ -704,8 +718,8 @@ get_translate_ab <- function(translate_ab) {
   } else {
     translate_ab <- tolower(translate_ab)
     stop_ifnot(translate_ab %in% colnames(AMR::antimicrobials),
-      "invalid value for 'translate_ab', this must be a column name of the `antimicrobials` data set\n",
-      "or `TRUE` (equals 'name') or `FALSE` to not translate at all.",
+      "invalid value for {.arg translate_ab}, this must be a column name of the {.topic [antimicrobials](AMR::antimicrobials)} data set\n",
+      "or {.code TRUE} (equals {.val name}) or {.code FALSE} to not translate at all.",
       call = FALSE
     )
     translate_ab

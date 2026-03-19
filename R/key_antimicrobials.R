@@ -159,7 +159,7 @@ key_antimicrobials <- function(x = NULL,
     col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
   }
   if (is.null(col_mo)) {
-    warning_("in `key_antimicrobials()`: no column found for `col_mo`, ignoring antibiotics set in `gram_negative` and `gram_positive`, and antimycotics set in `antifungal`")
+    warning_("in {.fun key_antimicrobials}: no column found for {.arg col_mo}, ignoring antibiotics set in {.arg gram_negative} and {.arg gram_positive}, and antimycotics set in {.arg antifungal}")
     gramstain <- NA_character_
     kingdom <- NA_character_
   } else {
@@ -237,7 +237,7 @@ key_antimicrobials <- function(x = NULL,
   )
 
   if (length(unique(key_ab)) == 1) {
-    warning_("in `key_antimicrobials()`: no distinct key antibiotics determined.")
+    warning_("in {.fun key_antimicrobials}: no distinct key antibiotics determined.")
   }
 
   key_ab
@@ -310,7 +310,7 @@ antimicrobials_equal <- function(y,
   meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("points", "keyantimicrobials"))
   meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
-  stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
+  stop_ifnot(length(y) == length(z), "length of {.arg y} and {.arg z} must be equal")
 
   key2sir <- function(val) {
     val <- strsplit(val, "", fixed = TRUE)[[1L]]

@@ -1062,7 +1062,7 @@ interpretive_rules <- function(x,
     warn_lacking_sir_class <- warn_lacking_sir_class[order(colnames(x.bak))]
     warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
-      "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: not all columns with antimicrobial results are of class 'sir'. Transform them on beforehand, with e.g.:\n",
+      "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: not all columns with antimicrobial results are of class {.cls sir}. Transform them on beforehand, e.g.:\n",
       "  - ", highlight_code(paste0(x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
         warn_lacking_sir_class,
         paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])

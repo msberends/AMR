@@ -258,11 +258,11 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       } else if (any(other_x %in% colnames(df))) {
         aest_val <- intersect(other_x, colnames(df))[1]
       } else {
-        stop_("No support for plotting df with `scale_", aest, "_mic()` with columns ", vector_and(colnames(df), sort = FALSE))
+        stop_("No support for plotting df with {.fun scale_", aest, "_mic} with columns ", vector_and(colnames(df), sort = FALSE))
       }
       mics <- rescale_mic(x = as.double(as.mic(df[[aest_val]])), keep_operators = "none", mic_range = NULL, as.mic = TRUE)
       if (!is.null(self$mic_values_rescaled) && any(mics < min(self$mic_values_rescaled, na.rm = TRUE) | mics > max(self$mic_values_rescaled, na.rm = TRUE), na.rm = TRUE)) {
-        warning_("The value for `", aest_val, "` is outside the plotted MIC range, consider using/updating the `mic_range` argument in `scale_", aest, "_mic()`.")
+        warning_("The value for {.field ", aest_val, "} is outside the plotted MIC range, consider using/updating the {.arg mic_range} argument in {.fun scale_", aest, "_mic}.")
       }
       out[[aest_val]] <- log2(as.double(mics))
     } else {
@@ -1443,10 +1443,10 @@ scale_sir_colours <- function(...,
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
 
   if ("fill" %in% aesthetics && message_not_thrown_before("scale_sir_colours", "fill", entire_session = TRUE)) {
-    warning_("Using `scale_sir_colours()` for the `fill` aesthetic has been superseded by `scale_fill_sir()`, please use that instead. This warning will be shown once per session.")
+    warning_("Using {.fun scale_sir_colours} for the {.code fill} aesthetic has been superseded by {.fun scale_fill_sir}, please use that instead. This warning will be shown once per session.")
   }
   if (any(c("colour", "color") %in% aesthetics) && message_not_thrown_before("scale_sir_colours", "colour", entire_session = TRUE)) {
-    warning_("Using `scale_sir_colours()` for the `colour` aesthetic has been superseded by `scale_colour_sir()`, please use that instead. This warning will be shown once per session.")
+    warning_("Using {.fun scale_sir_colours} for the {.code colour} aesthetic has been superseded by {.fun scale_colour_sir}, please use that instead. This warning will be shown once per session.")
   }
 
   if ("colours" %in% names(list(...))) {

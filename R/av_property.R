@@ -233,12 +233,12 @@ av_url <- function(x, open = FALSE, ...) {
 
   NAs <- av_name(av, tolower = TRUE, language = NULL)[!is.na(av) & is.na(atcs)]
   if (length(NAs) > 0) {
-    warning_("in `av_url()`: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
+    warning_("in {.fun av_url}: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
 
   if (open == TRUE) {
     if (length(u) > 1 && !is.na(u[1L])) {
-      warning_("in `av_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in {.fun av_url}: only the first URL will be opened, as {.fun browseURL} only suports one string.")
     }
     if (!is.na(u[1L])) {
       utils::browseURL(u[1L])

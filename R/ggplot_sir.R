@@ -295,7 +295,7 @@ geom_sir <- function(position = NULL,
                      ...) {
   x <- x[1]
   stop_ifnot_installed("ggplot2")
-  stop_if(is.data.frame(position), "`position` is invalid. Did you accidentally use '%>%' instead of '+'?")
+  stop_if(is.data.frame(position), "{.arg position} is invalid. Did you accidentally use {.code %>%} instead of {.code +}?")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)

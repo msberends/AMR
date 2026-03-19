@@ -267,7 +267,7 @@ get_column_abx <- function(x,
       if (all_okay == TRUE) {
         message_(" OK.", as_note = FALSE)
       } else if (!isFALSE(dups)) {
-        message_("WARNING: some results from {.help [{.fun as.ab}](AMR::as.ab)} are duplicated: ", vector_and(dups, quotes = "`"), as_note = FALSE)
+        message_("WARNING: some results from {.help [{.fun as.ab}](AMR::as.ab)} are duplicated: ", vector_and(dups, quotes = FALSE), as_note = FALSE)
       } else {
         message_(" WARNING.", as_note = FALSE)
       }

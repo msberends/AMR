@@ -144,7 +144,7 @@ sir_calc <- function(...,
         FUN = min
       )
       if ("SDD" %in% ab_result && "SDD" %in% y && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
-        message_("Note that `", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "()` will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
+        message_("Note that {.fun ", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "} will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
       }
       numerator <- sum(!is.na(y) & y %in% as.double(ab_result), na.rm = TRUE)
       denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(anyNA(y))))
@@ -152,7 +152,7 @@ sir_calc <- function(...,
       # may contain NAs in any column
       other_values <- setdiff(c(NA, denominator_vals), ab_result)
       if ("SDD" %in% ab_result && "SDD" %in% unlist(x_transposed) && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
-        message_("Note that `", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "()` will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
+        message_("Note that {.fun ", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "} will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
       }
       numerator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
       denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(all(y %in% other_values) & anyNA(y))))

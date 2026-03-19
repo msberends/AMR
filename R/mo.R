@@ -500,7 +500,7 @@ as.mo <- function(x,
     )
     if (any(out %in% AMR_env$MO_lookup$mo[match(post_Becker, AMR_env$MO_lookup$fullname)])) {
       if (message_not_thrown_before("as.mo", "becker")) {
-        warning_("in `as.mo()`: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
+        warning_("in {.fun as.mo}: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
           vector_and(font_italic(gsub("Staphylococcus", "S.", post_Becker, fixed = TRUE), collapse = NULL), quotes = FALSE),
           ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
           immediate = TRUE, call = FALSE
@@ -545,7 +545,7 @@ as.mo <- function(x,
   out[is.na(out) & !is.na(x)] <- "UNKNOWN"
   AMR_env$mo_failures <- unique(x[out == "UNKNOWN" & !toupper(x) %in% c("UNKNOWN", "CON", "UNK") & !x %like_case% "^[(]unknown [a-z]+[)]$" & !is.na(x)])
   if (length(AMR_env$mo_failures) > 0) {
-    warning_("The following input could not be coerced and was returned as \"UNKNOWN\": ", vector_and(AMR_env$mo_failures, quotes = TRUE), ".\nYou can retrieve this list with `mo_failures()`.", call = FALSE)
+    warning_("The following input could not be coerced and was returned as \"UNKNOWN\": ", vector_and(AMR_env$mo_failures, quotes = TRUE), ".\nYou can retrieve this list with {.fun mo_failures}.", call = FALSE)
   }
 
   # Return class ----
@@ -1049,7 +1049,7 @@ print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
       "  ->  ", font_italic(x$new[rows], collapse = NULL), x$ref_new[rows],
       collapse = "\n"
     ),
-    ifelse(NROW(x) > n, paste0("\n\nOnly the first ", n, " (out of ", NROW(x), ") are shown. Run `print(mo_renamed(), n = ...)` to view more entries (might be slow), or save `mo_renamed()` to an object."), "")
+    ifelse(NROW(x) > n, paste0("\n\nOnly the first ", n, " (out of ", NROW(x), ") are shown. Run {.code print(mo_renamed(), n = ...)} to view more entries (might be slow), or save {.fun mo_renamed} to an object."), "")
   )
 }
 

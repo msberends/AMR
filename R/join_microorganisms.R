@@ -185,7 +185,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   }
 
   if (type %like% "full|left|right|inner" && NROW(joined) > NROW(x)) {
-    warning_("in `{type}_microorganisms()`: the newly joined data set contains {nrow(joined) - nrow(x)} rows more than the number of rows of {.arg x}.")
+    warning_("in {.fun {type}_microorganisms}: the newly joined data set contains {nrow(joined) - nrow(x)} rows more than the number of rows of {.arg x}.")
   }
 
   as_original_data_class(joined, class(x.bak)) # will remove tibble groups
