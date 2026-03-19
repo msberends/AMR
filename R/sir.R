@@ -835,8 +835,7 @@ as.sir.data.frame <- function(x,
         message_(
           "Assuming value", plural[1], " ",
           vector_and(col_values, quotes = TRUE),
-          " in column '", font_bold(col_specimen),
-          "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+          " in column {.field {col_specimen}} reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
           ".\n  Use `as.sir(uti = FALSE)` to prevent this."
         )
       }
@@ -975,7 +974,7 @@ as.sir.data.frame <- function(x,
       if (!all(x[, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Cleaning values in column '", font_bold(ab), "' (",
+          message_("Cleaning values in column {.field {ab}} (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, info = info), ")... ",
             appendLF = FALSE,
@@ -985,7 +984,7 @@ as.sir.data.frame <- function(x,
       } else if (!is.sir(x.bak[, ab, drop = TRUE])) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Assigning class {.cls sir} to already clean column '", font_bold(ab), "' (",
+          message_("Assigning class {.cls sir} to already clean column {.field {ab}} (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, language = NULL, info = info), ")... ",
             appendLF = FALSE,
@@ -2227,10 +2226,13 @@ check_reference_data <- function(reference_data, .call_depth) {
     class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
     class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_sir) == names(class_ref))) {
-      stop_("{.arg reference_data} must have the same column names as the {.code clinical_breakpoints} data set.", call = .call_depth)
+      stop_("{.arg reference_data} must have the same column names as the {.topic [clinical_breakpoints](AMR::clinical_breakpoints)} data set.", call = .call_depth)
     }
     if (!all(class_sir == class_ref)) {
-      stop_("{.arg reference_data} must be the same structure as the {.code clinical_breakpoints} data set. Column '", names(class_ref[class_sir != class_ref][1]), "' is of class ", class_ref[class_sir != class_ref][1], ", but should be of class ", class_sir[class_sir != class_ref][1], ".", call = .call_depth)
+      bad_col <- names(class_ref[class_sir != class_ref][1])
+      bad_cls <- gsub("<|>", "", class_ref[class_sir != class_ref][1])
+      exp_cls <- gsub("<|>", "", class_sir[class_sir != class_ref][1])
+      stop_("{.arg reference_data} must be the same structure as the {.topic [clinical_breakpoints](AMR::clinical_breakpoints)} data set. Column {.field {bad_col}} is of class {.cls {bad_cls}}, but should be of class {.cls {exp_cls}}", call = .call_depth)
     }
   }
 }
