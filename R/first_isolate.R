@@ -373,7 +373,7 @@ first_isolate <- function(x = NULL,
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
     if (isTRUE(info) && message_not_thrown_before("first_isolate", "excludingspecimen")) {
-      message_("Excluding other than specimen group '{specimen_group}'")
+      message_("Excluding other than specimen group '", specimen_group, "'")
     }
   }
   if (!is.null(col_keyantimicrobials)) {
@@ -430,7 +430,8 @@ first_isolate <- function(x = NULL,
   }
   if (length(c(row.start:row.end)) == pm_n_distinct(x[c(row.start:row.end), col_mo, drop = TRUE])) {
     if (isTRUE(info)) {
-      message_("=> Found {.strong {length(c(row.start:row.end))} first isolates}, as all isolates were different microbial species",
+      n_rows <- length(c(row.start:row.end))
+      message_("=> Found {.strong ", n_rows, " first isolates}, as all isolates were different microbial species",
         as_note = FALSE
       )
     }
@@ -537,7 +538,7 @@ first_isolate <- function(x = NULL,
             paste0('"', x, '"')
           }
         })
-        message_("\nGroup: {toString(paste0(names(group), ' = ', group))}\n",
+        message_("\nGroup: ", toString(paste0(names(group), " = ", group)), "\n",
           as_note = FALSE
         )
       }

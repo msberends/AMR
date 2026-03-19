@@ -116,42 +116,40 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
 .onAttach <- function(libname, pkgname) {
   if (interactive() && is.null(getOption("AMR_guideline"))) {
-    packageStartupMessage(
-      word_wrap(
-        "Assuming ", AMR::clinical_breakpoints$guideline[1], " as the default AMR guideline, see `?AMR-options` to change this."
-      )
-    )
+    packageStartupMessage(format_inline_(
+      "Assuming ", AMR::clinical_breakpoints$guideline[1], " as the default AMR guideline, see {.topic [AMR-options](AMR::AMR-options)} to change this."
+    ))
   }
 
   # if custom ab option is available, load it
   if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {
     if (getOption("AMR_custom_ab") %unlike% "[.]rds$") {
-      packageStartupMessage("The file with custom antimicrobials must be an RDS file. Set the option `AMR_custom_ab` to another path.")
+      packageStartupMessage(format_inline_("The file with custom antimicrobials must be an RDS file. Set the option {.code AMR_custom_ab} to another path."))
     } else {
-      packageStartupMessage("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'...", appendLF = FALSE)
+      packageStartupMessage(format_inline_("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'..."), appendLF = FALSE)
       x <- readRDS_AMR(getOption("AMR_custom_ab"))
       tryCatch(
         {
           suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
           packageStartupMessage("OK.")
         },
-        error = function(e) packageStartupMessage("Failed: ", conditionMessage(e))
+        error = function(e) packageStartupMessage(format_inline_("Failed: ", conditionMessage(e)))
       )
     }
   }
   # if custom mo option is available, load it
   if (!is.null(getOption("AMR_custom_mo")) && file.exists(getOption("AMR_custom_mo", default = ""))) {
     if (getOption("AMR_custom_mo") %unlike% "[.]rds$") {
-      packageStartupMessage("The file with custom microorganisms must be an RDS file. Set the option `AMR_custom_mo` to another path.")
+      packageStartupMessage(format_inline_("The file with custom microorganisms must be an RDS file. Set the option {.code AMR_custom_mo} to another path."))
     } else {
-      packageStartupMessage("Adding custom microorganisms from '", getOption("AMR_custom_mo"), "'...", appendLF = FALSE)
+      packageStartupMessage(format_inline_("Adding custom microorganisms from '", getOption("AMR_custom_mo"), "'..."), appendLF = FALSE)
       x <- readRDS_AMR(getOption("AMR_custom_mo"))
       tryCatch(
         {
           suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
           packageStartupMessage("OK.")
         },
-        error = function(e) packageStartupMessage("Failed: ", conditionMessage(e))
+        error = function(e) packageStartupMessage(format_inline_("Failed: ", conditionMessage(e)))
       )
     }
   }

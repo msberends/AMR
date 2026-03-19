@@ -390,6 +390,19 @@ highlight_code <- function(code) {
   }
 }
 
+# Format a cli-markup string for output, with a plain-text fallback when cli is
+# unavailable. Unlike message_() / warning_() / stop_(), this function returns
+# the formatted string rather than emitting it, so it can be passed to any
+# output function (e.g. packageStartupMessage()).
+format_inline_ <- function(...) {
+  msg <- paste0(c(...), collapse = "")
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
+    cli::format_inline(msg)
+  } else {
+    cli_to_plain(msg, envir = parent.frame())
+  }
+}
+
 import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)

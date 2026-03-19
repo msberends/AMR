@@ -619,7 +619,7 @@ antibiogram.default <- function(x,
     out$n_susceptible <- out$n_susceptible + out$I + out$SDD
   }
   if (all(out$n_tested < minimum, na.rm = TRUE) && wisca == FALSE) {
-    warning_("All combinations had less than {.arg minimum} = {minimum} results, returning an empty antibiogram")
+    warning_("All combinations had less than {.arg minimum} = ", minimum, " results, returning an empty antibiogram")
     return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
   } else if (any(out$n_tested < minimum, na.rm = TRUE)) {
     mins <- sum(out$n_tested < minimum, na.rm = TRUE)
@@ -627,7 +627,7 @@ antibiogram.default <- function(x,
       out <- out %pm>%
         subset(n_tested >= minimum)
       if (isTRUE(info) && mins > 0) {
-        message_("NOTE: {mins} combinations had less than {.arg minimum} = {minimum} results and were ignored")
+        message_("NOTE: ", mins, " combinations had less than {.arg minimum} = ", minimum, " results and were ignored")
       }
     }
   }

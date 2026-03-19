@@ -552,17 +552,14 @@ print.ab <- function(x, ...) {
   if (!is.null(attributes(x)$amr_selector)) {
     function_name <- attributes(x)$amr_selector
     if (pkg_is_available("cli", min_version = "3.0.0")) {
-      cli::cli_inform(
-        c(
-          "i" = "This {.cls ab} vector was retrieved using {.fun {function_name}}, which should normally be used inside a {.pkg dplyr} verb or {.code data.frame} call, e.g.:",
-          "*" = "{.code your_data %>% select({function_name}())}",
-          "*" = "{.code your_data %>% select(column_a, column_b, {function_name}())}",
-          "*" = "{.code your_data %>% filter(any({function_name}() == \"R\"))}",
-          "*" = "{.code your_data[, {function_name}()]}",
-          "*" = "{.code your_data[, c(\"column_a\", \"column_b\", {function_name}())]}"
-        ),
-        .envir = environment()
-      )
+      cli::cli_inform(c(
+        "i" = paste0("This {.cls ab} vector was retrieved using {.fun ", function_name, "}, which should normally be used inside a {.pkg dplyr} verb or {.code data.frame} call, e.g.:"),
+        "*" = highlight_code(paste0("your_data %>% select(", function_name, "()")),
+        "*" = highlight_code(paste0("your_data %>% select(column_a, column_b, ", function_name, "()")),
+        "*" = highlight_code(paste0("your_data %>% filter(any(", function_name, "() == \"R\"))")),
+        "*" = highlight_code(paste0("your_data[, ", function_name, "()]")),
+        "*" = highlight_code(paste0("your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"))
+      ))
     } else {
       message(word_wrap(paste0(
         "This 'ab' vector was retrieved using `", function_name, "()`, which should normally be used inside a dplyr verb or data.frame call, e.g.:\n",
