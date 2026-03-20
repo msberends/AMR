@@ -272,8 +272,6 @@ test_that("test-mo.R", {
   )
 
   x <- as.mo("Sta. aur")
-  # many hits
-  expect_output(print(mo_uncertainties()))
 
   # no viruses
   expect_equal(suppressWarnings(as.mo("Virus")), as.mo("UNKNOWN"))

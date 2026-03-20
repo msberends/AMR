@@ -484,7 +484,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       }
       message_(
         "Antimicrobial translation was uncertain for ", examples,
-        ". If required, use `add_custom_antimicrobials()` to add custom entries."
+        ". If required, use {.help [{.fun add_custom_antimicrobials}](AMR::add_custom_antimicrobials)} to add custom entries."
       )
     }
   }
@@ -556,21 +556,21 @@ print.ab <- function(x, ...) {
     function_name <- attributes(x)$amr_selector
     if (pkg_is_available("cli", min_version = "3.0.0")) {
       cli::cli_inform(c(
-        "i" = paste0("This {.cls ab} vector was retrieved using {.fun ", function_name, "}, which should normally be used inside a {.pkg dplyr} verb or {.code data.frame} call, e.g.:"),
-        "*" = highlight_code(paste0("your_data %>% select(", function_name, "()")),
-        "*" = highlight_code(paste0("your_data %>% select(column_a, column_b, ", function_name, "()")),
-        "*" = highlight_code(paste0("your_data %>% filter(any(", function_name, "() == \"R\"))")),
-        "*" = highlight_code(paste0("your_data[, ", function_name, "()]")),
-        "*" = highlight_code(paste0("your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"))
+        "i" = paste0("This {.cls ab} vector was retrieved using {.fun ", function_name, "}, which should normally be used inside a {.pkg dplyr} verb or {.cls data.frame} call, e.g.:"),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% select(", function_name, "())"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% select(column_a, column_b, ", function_name, "())"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% filter(any(", function_name, "() == \"R\"))"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data[, ", function_name, "()]"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]")))
       ))
     } else {
       message(word_wrap(paste0(
         "This 'ab' vector was retrieved using `", function_name, "()`, which should normally be used inside a dplyr verb or data.frame call, e.g.:\n",
-        "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
-        "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
-        "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
-        "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
-        "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
       ), as_note = TRUE))
     }
   }

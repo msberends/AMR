@@ -722,7 +722,7 @@ amr_select_exec <- function(function_name,
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "amr_class", "untreatable")) {
         warning_(
-          "in `", function_name, "()`: some drugs were ignored since they cannot be used for treatment: ",
+          "in {.help [{.fun ", function_name, "}](AMR::", function_name, ")}: some drugs were ignored since they cannot be used for treatment: ",
           vector_and(
             ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
               language = NULL,
@@ -797,7 +797,7 @@ amr_select_exec <- function(function_name,
     if (only_treatable == TRUE) {
       if (message_not_thrown_before(function_name, "amr_class", "untreatable")) {
         message_(
-          "in `", function_name, "()`: ",
+          "in {.help [{.fun ", function_name, "}](AMR::", function_name, ")}: ",
           vector_and(
             paste0(
               ab_name(abx[abx %in% untreatable],

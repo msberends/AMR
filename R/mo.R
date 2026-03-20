@@ -977,8 +977,8 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
 
     out <- paste0(
       paste0(
-        "", strrep(font_grey("-"), times = getOption("width", 100)), "\n",
-        '"', x[i, ]$original_input, '"',
+        "", strrep(font_grey("-"), times = getOption("width", 100) - 1), "\n",
+        "{.val ", x[i, ]$original_input, "}",
         " -> ",
         paste0(
           font_bold(italicise(x[i, ]$fullname)),

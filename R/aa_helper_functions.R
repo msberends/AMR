@@ -1061,7 +1061,7 @@ get_current_data <- function(arg_name, call) {
     } else {
       examples <- ""
     }
-    stop_("this function must be used inside a {.pkg dplyr} verb or {.code data.frame} call",
+    stop_("this function must be used inside a {.pkg dplyr} verb or {.cls data.frame} call",
       examples,
       call = call
     )

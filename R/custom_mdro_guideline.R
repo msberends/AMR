@@ -235,9 +235,9 @@ print.custom_mdro_guideline <- function(x, ...) {
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
     rule$query <- format_custom_query_rule(rule$query)
-    cat("  ", i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then: "), font_red(rule$value), "\n", sep = "")
+    cat("\u00a0\u00a0", i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then: "), font_red(rule$value), "\n", sep = "")
   }
-  cat("  ", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
+  cat("\u00a0\u00a0", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
   cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
   if (isTRUE(attributes(x)$as_factor)) {
     cat("Results will be of class 'factor', with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")

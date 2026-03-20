@@ -1946,7 +1946,7 @@ as_sir_method <- function(method_short,
           message_(notes[i], as_note = FALSE)
         }
       } else {
-        # message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
+        # message(word_wrap("\u00a0\u00a0", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
       }
     } else {
       message(font_green_bg(" OK "))
