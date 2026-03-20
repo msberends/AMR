@@ -129,7 +129,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 
   meet_criteria(path, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(destination, allow_class = "character", has_length = 1)
-  stop_ifnot(destination %like% "[.]rds$", "the `destination` must be a file location with file extension .rds.")
+  stop_ifnot(destination %like% "[.]rds$", "the {.arg destination} must be a file location with file extension .rds.")
   mo_source_destination <- path.expand(destination)
 
   if (is.null(path) || path %in% c(FALSE, "")) {
@@ -137,7 +137,6 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
     if (file.exists(mo_source_destination)) {
       unlink(mo_source_destination)
       message_("Removed mo_source file '", font_bold(mo_source_destination), "'",
-        add_fn = font_red,
         as_note = FALSE
       )
     }
@@ -250,7 +249,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     current_ext <- regexpr("\\.([[:alnum:]]+)$", destination)
     current_ext <- ifelse(current_ext > -1L, substring(destination, current_ext + 1L), "")
     vowel <- ifelse(current_ext %like% "^[AEFHILMNORSX]", "n", "")
-    stop_("The AMR mo source must be an RDS file, not a", vowel, " ", toupper(current_ext), " file. If `\"", basename(destination), "\"` was meant as your input file, use `set_mo_source()` on this file. In any case, the option `AMR_mo_source` must be set to another path.")
+    stop_("The AMR mo source must be an RDS file, not a", vowel, " ", toupper(current_ext), " file. If \"", basename(destination), "\" was meant as your input file, use {.help [{.fun set_mo_source}](AMR::set_mo_source)} on this file. In any case, the option {.code AMR_mo_source} must be set to another path.")
   }
   if (is.null(AMR_env$mo_source)) {
     AMR_env$mo_source <- readRDS_AMR(path.expand(destination))
@@ -290,7 +289,7 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
   }
   if (!"mo" %in% colnames(x)) {
     if (stop_on_error == TRUE) {
-      stop_(refer_to_name, " must contain a column 'mo'", call = FALSE)
+      stop_(refer_to_name, " must contain a column {.field mo}", call = FALSE)
     } else {
       return(FALSE)
     }

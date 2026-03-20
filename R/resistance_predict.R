@@ -138,7 +138,7 @@ resistance_predict <- function(x,
     extra_msg = paste0("Use the tidymodels framework instead, for which we have written a basic and short introduction on our website: ", font_url("https://amr-for-r.org/articles/AMR_with_tidymodels.html", txt = font_bold("AMR with tidymodels")))
   )
 
-  stop_if(is.null(model), 'choose a regression model with the `model` argument, e.g. resistance_predict(..., model = "binomial")')
+  stop_if(is.null(model), 'choose a regression model with the {.arg model} argument, e.g. {.code resistance_predict(..., model = "binomial")}')
 
   x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -146,7 +146,7 @@ resistance_predict <- function(x,
   # -- date
   if (is.null(col_date)) {
     col_date <- search_type_in_df(x = x, type = "date")
-    stop_if(is.null(col_date), "`col_date` must be set")
+    stop_if(is.null(col_date), "{.arg col_date} must be set")
   }
   stop_ifnot(
     col_date %in% colnames(x),
@@ -238,7 +238,7 @@ resistance_predict <- function(x,
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
   } else {
-    stop("no valid model selected. See `?resistance_predict`.")
+    stop("no valid model selected. See {.help [{.fun resistance_predict}](AMR::resistance_predict)}.")
   }
 
   # prepare the output dataframe
@@ -357,7 +357,7 @@ ggplot_sir_predict <- function(x,
   meet_criteria(ribbon, allow_class = "logical", has_length = 1)
 
   stop_ifnot_installed("ggplot2")
-  stop_ifnot(inherits(x, "resistance_predict"), "`x` must be a resistance prediction model created with resistance_predict()")
+  stop_ifnot(inherits(x, "resistance_predict"), "{.arg x} must be a resistance prediction model created with {.fun resistance_predict}")
 
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"

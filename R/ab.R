@@ -191,12 +191,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
   previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
   x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
-  previously_coerced_mention <- x %in% AMR_env$ab_previously_coerced$x & !x %in% AMR_env$AB_lookup$ab & !x %in% AMR_env$AB_lookup$generalised_name
+  previously_coerced_mention <- !is.na(x) & x %in% AMR_env$ab_previously_coerced$x & !x %in% AMR_env$AB_lookup$ab & !x %in% AMR_env$AB_lookup$generalised_name
   if (any(previously_coerced_mention) && isTRUE(info) && message_not_thrown_before("as.ab", entire_session = TRUE)) {
+    only_one <- length(unique(which(x[which(previously_coerced)] %in% x_bak_clean))) == 1
     message_(
-      "Returning previously coerced ",
-      ifelse(length(unique(which(x[which(previously_coerced)] %in% x_bak_clean))) > 1, "value for an antimicrobial", "values for various antimicrobials"),
-      ". Run `ab_reset_session()` to reset this. This note will be shown once per session."
+      "Returning ", ifelse(only_one, "a ", ""), "previously coerced ",
+      ifelse(only_one, "value for an antimicrobial", "values for various antimicrobials"),
+      ". Run {.help [{.fun ab_reset_session}](AMR::ab_reset_session)} to reset this. This note will be shown once per session."
     )
   }
 
@@ -210,7 +211,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
     if (any(x_new[!already_known & !is.na(x_new)] %in% unlist(AMR_env$AV_lookup$generalised_all, use.names = FALSE), na.rm = TRUE)) {
-      warning_("in `as.ab()`: some input seems to resemble antiviral drugs - use `as.av()` or e.g. `av_name()` for these, not `as.ab()` or e.g. `ab_name()`.")
+      warning_("in {.help [{.fun as.ab}](AMR::as.ab)}: some input seems to resemble antiviral drugs - use {.help [{.fun as.av}](AMR::as.av)} or e.g. {.help [{.fun av_name}](AMR::av_name)} for these, not {.help [{.fun as.ab}](AMR::as.ab)} or e.g. {.help [{.fun ab_name}](AMR::ab_name)}.")
     }
   }
 
@@ -444,7 +445,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: these ATC codes are not (yet) in the antimicrobials data set: ",
+      "in {.help [{.fun as.ab}](AMR::as.ab)}: these ATC codes are not (yet) in the antimicrobials data set: ",
       vector_and(x_unknown_ATCs), "."
     )
   }
@@ -458,12 +459,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_unknown <- x_unknown[!x_unknown %in% c("", NA)]
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: ", ifelse(length(unique(x_unknown)) == 1, "this value", "these values"), " could not be coerced to a valid antimicrobial ID: ",
+      "in {.help [{.fun as.ab}](AMR::as.ab)}: ", ifelse(length(unique(x_unknown)) == 1, "this value", "these values"), " could not be coerced to a valid antimicrobial ID: ",
       vector_and(x_unknown), "."
     )
   }
 
   # Throw note about uncertainties
+  x_uncertain <- x_uncertain[!is.na(x_uncertain)]
+  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[!is.na(AMR_env$ab_previously_coerced$x), ]
   if (isTRUE(info) && length(x_uncertain) > 0 && fast_mode == FALSE) {
     x_uncertain <- unique(x_uncertain)
     if (message_not_thrown_before("as.ab", "uncertainties", x_bak)) {
@@ -481,7 +484,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
       }
       message_(
         "Antimicrobial translation was uncertain for ", examples,
-        ". If required, use `add_custom_antimicrobials()` to add custom entries."
+        ". If required, use {.help [{.fun add_custom_antimicrobials}](AMR::add_custom_antimicrobials)} to add custom entries."
       )
     }
   }
@@ -551,14 +554,25 @@ type_sum.ab <- function(x, ...) {
 print.ab <- function(x, ...) {
   if (!is.null(attributes(x)$amr_selector)) {
     function_name <- attributes(x)$amr_selector
-    message_(
-      "This 'ab' vector was retrieved using `", function_name, "()`, which should normally be used inside a `dplyr` verb or `data.frame` call, e.g.:\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
-      "  ", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
-      "  ", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
-      "  ", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
-    )
+    if (pkg_is_available("cli", min_version = "3.0.0")) {
+      cli::cli_inform(c(
+        "i" = paste0("This {.cls ab} vector was retrieved using {.fun ", function_name, "}, which should normally be used inside a {.pkg dplyr} verb or {.cls data.frame} call, e.g.:"),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% select(", function_name, "())"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% select(column_a, column_b, ", function_name, "())"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% filter(any(", function_name, "() == \"R\"))"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data[, ", function_name, "()]"))),
+        paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]")))
+      ))
+    } else {
+      message(word_wrap(paste0(
+        "This 'ab' vector was retrieved using `", function_name, "()`, which should normally be used inside a dplyr verb or data.frame call, e.g.:\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data %>% select(", function_name, "())\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data %>% select(column_a, column_b, ", function_name, "())\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data %>% filter(any(", function_name, "() == \"R\"))\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data[, ", function_name, "()]\n",
+        "\u00a0\u00a0", AMR_env$bullet_icon, " your_data[, c(\"column_a\", \"column_b\", ", function_name, "())]"
+      ), as_note = TRUE))
+    }
   }
   cat("Class 'ab'\n")
   print(as.character(x), quote = FALSE)
@@ -704,8 +718,8 @@ get_translate_ab <- function(translate_ab) {
   } else {
     translate_ab <- tolower(translate_ab)
     stop_ifnot(translate_ab %in% colnames(AMR::antimicrobials),
-      "invalid value for 'translate_ab', this must be a column name of the `antimicrobials` data set\n",
-      "or `TRUE` (equals 'name') or `FALSE` to not translate at all.",
+      "invalid value for {.arg translate_ab}, this must be a column name of the {.topic [antimicrobials](AMR::antimicrobials)} data set\n",
+      "or {.code TRUE} (equals {.val name}) or {.code FALSE} to not translate at all.",
       call = FALSE
     )
     translate_ab

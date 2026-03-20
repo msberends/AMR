@@ -265,7 +265,7 @@ ab_ddd <- function(x, administration = "oral", ...) {
 
   if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `ab_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun ab_ddd}](AMR::ab_ddd)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -285,7 +285,7 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
 
   if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `ab_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun ab_ddd_units}](AMR::ab_ddd_units)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -341,12 +341,12 @@ ab_url <- function(x, open = FALSE, ...) {
 
   NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(atcs)]
   if (length(NAs) > 0) {
-    warning_("in `ab_url()`: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
+    warning_("in {.fun ab_url}: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
 
   if (open == TRUE) {
     if (length(u) > 1 && !is.na(u[1L])) {
-      warning_("in `ab_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in {.fun ab_url}: only the first URL will be opened, as {.fun browseURL} only suports one string.")
     }
     if (!is.na(u[1L])) {
       utils::browseURL(u[1L])
@@ -397,7 +397,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
     }
     vars <- get_column_abx(df, info = FALSE, only_sir_columns = FALSE, sort = FALSE, fn = "set_ab_names")
     if (length(vars) == 0) {
-      message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
+      message_("No columns with antibiotic results found for {.fun set_ab_names}, leaving names unchanged.")
       return(data)
     }
   } else {
@@ -424,7 +424,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
   )
   if (any(x %in% c("", NA))) {
     warning_(
-      "in `set_ab_names()`: no ", property, " found for column(s): ",
+      "in {.help [{.fun set_ab_names}](AMR::set_ab_names)}: no ", property, " found for column(s): ",
       vector_and(vars[x %in% c("", NA)], sort = FALSE)
     )
     x[x %in% c("", NA)] <- vars[x %in% c("", NA)]

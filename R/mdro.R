@@ -170,9 +170,9 @@ mdro <- function(x = NULL,
   meet_criteria(infer_from_combinations, allow_class = "logical", has_length = 1)
 
   if (isTRUE(only_sir_columns) && !any(is.sir(x))) {
-    stop_("There were no SIR columns found in the data set, despite `only_sir_columns` being `TRUE`. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
+    stop_("There were no SIR columns found in the data set, despite {.arg only_sir_columns} being {.code TRUE}. Transform columns with {.help [{.fun as.sir}](AMR::as.sir)} for valid antimicrobial interpretations.")
   } else if (!isTRUE(only_sir_columns) && !any(is.sir(x)) && !any(is_sir_eligible(x))) {
-    stop_("There were no eligible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
+    stop_("There were no eligible SIR columns found in the data set. Transform columns with {.help [{.fun as.sir}](AMR::as.sir)} for valid antimicrobial interpretations.")
   }
 
   # get gene values as TRUE/FALSE
@@ -213,7 +213,7 @@ mdro <- function(x = NULL,
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
     if (q_continue %in% c(FALSE, 2)) {
-      message_("Cancelled, returning original data", add_fn = font_red, as_note = FALSE)
+      message_("Cancelled, returning original data", as_note = FALSE)
       return(x)
     }
   }
@@ -251,7 +251,7 @@ mdro <- function(x = NULL,
   guideline.bak <- guideline
   if (is.list(guideline)) {
     # Custom MDRO guideline ---------------------------------------------------
-    stop_ifnot(inherits(guideline, "custom_mdro_guideline"), "use `custom_mdro_guideline()` to create custom guidelines")
+    stop_ifnot(inherits(guideline, "custom_mdro_guideline"), "use {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)} to create custom guidelines")
     if (isTRUE(info)) {
       txt <- paste0(
         "Determining MDROs based on custom rules",
@@ -328,13 +328,13 @@ mdro <- function(x = NULL,
   }
   if (is.null(col_mo) && guideline$code == "tb") {
     message_(
-      "No column found as input for `col_mo`, ",
+      "No column found as input for {.arg col_mo}, ",
       font_bold(paste0("assuming all rows contain ", font_italic("Mycobacterium tuberculosis"), "."))
     )
     x$mo <- as.mo("Mycobacterium tuberculosis", keep_synonyms = TRUE)
     col_mo <- "mo"
   }
-  stop_if(is.null(col_mo), "`col_mo` must be set")
+  stop_if(is.null(col_mo), "{.arg col_mo} must be set")
 
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
@@ -476,7 +476,7 @@ mdro <- function(x = NULL,
   if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
     if (isTRUE(info)) {
-      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many MDRO rules depend on it.", add_fn = font_red)
+      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many MDRO rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
@@ -875,7 +875,7 @@ mdro <- function(x = NULL,
     }
 
     if (isTRUE(info)) {
-      message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+      message_(" OK.", as_note = FALSE)
     }
   }
 
@@ -1888,8 +1888,8 @@ mdro <- function(x = NULL,
     if (any(x$MDRO == -1, na.rm = TRUE)) {
       if (message_not_thrown_before("mdro", "availability")) {
         warning_(
-          "in `mdro()`: NA introduced for isolates where the available percentage of antimicrobial classes was below ",
-          percentage(pct_required_classes), " (set with `pct_required_classes`)"
+          "in {.help [{.fun mdro}](AMR::mdro)}: NA introduced for isolates where the available percentage of antimicrobial classes was below ",
+          percentage(pct_required_classes), " (set with {.arg pct_required_classes})"
         )
       }
       # set these -1s to NA
@@ -1965,7 +1965,7 @@ brmo <- function(x = NULL, only_sir_columns = any(is.sir(x)), ...) {
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
-    "argument `guideline` must not be set since this is a guideline-specific function"
+    "argument {.arg guideline} must not be set since this is a guideline-specific function"
   )
   mdro(x = x, only_sir_columns = only_sir_columns, guideline = "BRMO", ...)
 }
@@ -1978,7 +1978,7 @@ mrgn <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, .
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
-    "argument `guideline` must not be set since this is a guideline-specific function"
+    "argument {.arg guideline} must not be set since this is a guideline-specific function"
   )
   mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "MRGN", ...)
 }
@@ -1990,7 +1990,7 @@ mdr_tb <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
-    "argument `guideline` must not be set since this is a guideline-specific function"
+    "argument {.arg guideline} must not be set since this is a guideline-specific function"
   )
   mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "TB", ...)
 }
@@ -2002,7 +2002,7 @@ mdr_cmi2012 <- function(x = NULL, only_sir_columns = any(is.sir(x)), verbose = F
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
-    "argument `guideline` must not be set since this is a guideline-specific function"
+    "argument {.arg guideline} must not be set since this is a guideline-specific function"
   )
   mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "CMI 2012", ...)
 }
@@ -2014,7 +2014,7 @@ eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = any(is.si
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
-    "argument `guideline` must not be set since this is a guideline-specific function"
+    "argument {.arg guideline} must not be set since this is a guideline-specific function"
   )
   mdro(x = x, only_sir_columns = only_sir_columns, verbose = verbose, guideline = "EUCAST", ...)
 }

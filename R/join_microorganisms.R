@@ -143,9 +143,9 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     if (is.null(by) && NCOL(x) == 1) {
       by <- colnames(x)[1L]
     } else {
-      stop_if(is.null(by), "no column with microorganism names or codes found, set this column with `by`", call = -2)
+      stop_if(is.null(by), "no column with microorganism names or codes found, set this column with {.arg by}", call = -2)
     }
-    message_('Joining, by = "', by, '"', add_fn = font_black, as_note = FALSE) # message same as dplyr::join functions
+    message_("Joining, by = \"", by, "\"", as_note = FALSE) # message same as dplyr::join functions
   }
   if (!all(x[, by, drop = TRUE] %in% AMR_env$MO_lookup$mo, na.rm = TRUE)) {
     x$join.mo <- as.mo(x[, by, drop = TRUE])
@@ -185,7 +185,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   }
 
   if (type %like% "full|left|right|inner" && NROW(joined) > NROW(x)) {
-    warning_("in `", type, "_microorganisms()`: the newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.")
+    warning_("in {.fun ", type, "_microorganisms}: the newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of {.arg x}.")
   }
 
   as_original_data_class(joined, class(x.bak)) # will remove tibble groups

@@ -128,7 +128,7 @@
 #' }
 add_custom_microorganisms <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
-  stop_ifnot("genus" %in% tolower(colnames(x)), paste0("`x` must contain column 'genus'."))
+  stop_ifnot("genus" %in% tolower(colnames(x)), "{.arg x} must contain column 'genus'.")
 
   add_MO_lookup_to_AMR_env()
 
@@ -281,9 +281,9 @@ add_custom_microorganisms <- function(x) {
   AMR_env$MO_lookup <- unique(rbind_AMR(AMR_env$MO_lookup, new_df))
   class(AMR_env$MO_lookup$mo) <- c("mo", "character")
   if (nrow(x) <= 3) {
-    message_("Added ", vector_and(italicise(x$fullname), quotes = FALSE), " to the internal `microorganisms` data set.")
+    message_("Added ", vector_and(italicise(x$fullname), quotes = FALSE), " to the internal {.code microorganisms} data set.")
   } else {
-    message_("Added ", nr2char(nrow(x)), " records to the internal `microorganisms` data set.")
+    message_("Added ", nr2char(nrow(x)), " records to the internal {.code microorganisms} data set.")
   }
 }
 
@@ -303,7 +303,7 @@ clear_custom_microorganisms <- function() {
   AMR_env$custom_mo_codes <- character(0)
   AMR_env$mo_previously_coerced <- AMR_env$mo_previously_coerced[which(AMR_env$mo_previously_coerced$mo %in% AMR_env$MO_lookup$mo), , drop = FALSE]
   AMR_env$mo_uncertainties <- AMR_env$mo_uncertainties[0, , drop = FALSE]
-  message_("Cleared ", nr2char(n - n2), " custom record", ifelse(n - n2 > 1, "s", ""), " from the internal `microorganisms` data set.")
+  message_("Cleared ", nr2char(n - n2), " custom record", ifelse(n - n2 > 1, "s", ""), " from the internal {.code microorganisms} data set.")
 }
 
 abbreviate_mo <- function(x, minlength = 5, prefix = "", hyphen_as_space = FALSE, ...) {

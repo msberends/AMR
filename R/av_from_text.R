@@ -168,7 +168,7 @@ av_from_text <- function(text,
       }
     })
   } else {
-    stop_("`type` must be either 'drug', 'dose' or 'administration'")
+    stop_("{.arg type} must be either {.val drug}, {.val dose} or {.val administration}")
   }
 
   # collapse text if needed

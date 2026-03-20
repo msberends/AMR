@@ -584,7 +584,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_s
     ab <- rep(ab, length(x))
   }
   if (length(x) != length(ab)) {
-    stop_("length of `x` and `ab` must be equal, or one of them must be of length 1.")
+    stop_("length of {.arg x} and {.arg ab} must be equal, or one of them must be of length 1.")
   }
 
   # show used version number once per session (AMR_env will reload every session)
@@ -943,7 +943,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
 
   if (isTRUE(open)) {
     if (length(u) > 1) {
-      warning_("in `mo_url()`: only the first URL will be opened, as R's built-in function `browseURL()` only suports one string.")
+      warning_("in {.fun mo_url}: only the first URL will be opened, as R's built-in function {.fun browseURL} only suports one string.")
     }
     utils::browseURL(u[1L])
   }
@@ -1043,10 +1043,10 @@ find_mo_col <- function(fn) {
   )
   if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
     if (message_not_thrown_before(fn = fn)) {
-      message_("Using column '", font_bold(mo), "' as input for `", fn, "()`")
+      message_("Using column '", font_bold(mo), "' as input for {.help [{.fun ", fn, "}](AMR::", fn, ")}")
     }
     return(df[, mo, drop = TRUE])
   } else {
-    stop_("argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
+    stop_("argument {.arg x} is missing and no column with info about microorganisms could be found.", call = -2)
   }
 }

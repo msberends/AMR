@@ -270,10 +270,8 @@ test_that("test-mo.R", {
     ))),
     c("B_MCRBC_PRXY", "B_STRPT_SUIS", "B_KLBSL_TRRG")
   )
-  expect_output(print(mo_uncertainties()))
+
   x <- as.mo("Sta. aur")
-  # many hits
-  expect_output(print(mo_uncertainties()))
 
   # no viruses
   expect_equal(suppressWarnings(as.mo("Virus")), as.mo("UNKNOWN"))

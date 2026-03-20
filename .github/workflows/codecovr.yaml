@@ -28,10 +28,12 @@
 # ==================================================================== #
 
 on:
-  push:
-    branches: '**'
   pull_request:
+    # run on every PR update (once per push)
     branches: '**'
+  push:
+    # only on main; PR pushes are already covered by pull_request above
+    branches: [main]
 
 name: code-coverage
 

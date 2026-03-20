@@ -1,6 +1,6 @@
 Package: AMR
-Version: 3.0.1.9035
-Date: 2026-03-18
+Version: 3.0.1.9036
+Date: 2026-03-19
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
   data analysis and to work with microbial and antimicrobial properties by
@@ -63,7 +63,8 @@ Suggests:
   tidyselect,
   tinytest,
   vctrs,
-  xml2
+  xml2,
+  usethis
 VignetteBuilder: knitr,rmarkdown
 URL: https://amr-for-r.org, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues

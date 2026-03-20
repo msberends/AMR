@@ -145,15 +145,15 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
   )
   stop_if(
     identical(dots, "error"),
-    "rules must be a valid formula inputs (e.g., using '~'), see `?mdro`"
+    "rules must be a valid formula inputs (e.g., using '~'), see {.help [{.fun mdro}](AMR::mdro)}"
   )
   n_dots <- length(dots)
-  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using `?mdro`.")
+  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using {.help [{.fun mdro}](AMR::mdro)}.")
   out <- vector("list", n_dots)
   for (i in seq_len(n_dots)) {
     stop_ifnot(
       inherits(dots[[i]], "formula"),
-      "rule ", i, " must be a valid formula input (e.g., using '~'), see `?mdro`"
+      "rule ", i, " must be a valid formula input (e.g., using '~'), see {.help [{.fun mdro}](AMR::mdro)}"
     )
 
     # Query
@@ -202,7 +202,7 @@ c.custom_mdro_guideline <- function(x, ..., as_factor = NULL) {
   }
   for (g in list(...)) {
     stop_ifnot(inherits(g, "custom_mdro_guideline"),
-      "for combining custom MDRO guidelines, all rules must be created with `custom_mdro_guideline()`",
+      "for combining custom MDRO guidelines, all rules must be created with {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)}",
       call = FALSE
     )
     vals <- attributes(x)$values
@@ -235,9 +235,9 @@ print.custom_mdro_guideline <- function(x, ...) {
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
     rule$query <- format_custom_query_rule(rule$query)
-    cat("  ", i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then: "), font_red(rule$value), "\n", sep = "")
+    cat("\u00a0\u00a0", i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then: "), font_red(rule$value), "\n", sep = "")
   }
-  cat("  ", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
+  cat("\u00a0\u00a0", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
   cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
   if (isTRUE(attributes(x)$as_factor)) {
     cat("Results will be of class 'factor', with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")
@@ -259,16 +259,15 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
       }
     )
     if (identical(qry, "error")) {
-      warning_("in `custom_mdro_guideline()`: rule ", i,
+      warning_("in {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)}: rule ", i,
         " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
         AMR_env$err_msg,
-        call = FALSE,
-        add_fn = font_red
+        call = FALSE
       )
       next
     }
-    stop_ifnot(is.logical(qry), "in custom_mdro_guideline(): rule ", i, " (`", guideline[[i]]$query,
-      "`) must return `TRUE` or `FALSE`, not ",
+    stop_ifnot(is.logical(qry), "in {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)}: rule ", i, " ({.code ", guideline[[i]]$query,
+      "}) must return {.code TRUE} or {.code FALSE}, not ",
       format_class(class(qry), plural = FALSE),
       call = FALSE
     )

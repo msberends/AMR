@@ -263,8 +263,7 @@ first_isolate <- function(x = NULL,
           ),
           ""
         )
-      ),
-      add_fn = font_red
+      )
     )
   }
 
@@ -272,7 +271,7 @@ first_isolate <- function(x = NULL,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
-    stop_if(is.null(col_mo), "`col_mo` must be set")
+    stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   }
 
   # methods ----
@@ -309,7 +308,7 @@ first_isolate <- function(x = NULL,
   # -- date
   if (is.null(col_date)) {
     col_date <- search_type_in_df(x = x, type = "date", info = info)
-    stop_if(is.null(col_date), "`col_date` must be set")
+    stop_if(is.null(col_date), "{.arg col_date} must be set")
   }
 
   # -- patient id
@@ -318,11 +317,11 @@ first_isolate <- function(x = NULL,
       # WHONET support
       x$patient_id <- paste(x$`First name`, x$`Last name`, x$Sex)
       col_patient_id <- "patient_id"
-      message_("Using combined columns '", font_bold("First name"), "', '", font_bold("Last name"), "' and '", font_bold("Sex"), "' as input for `col_patient_id`")
+      message_("Using combined columns '", font_bold("First name"), "', '", font_bold("Last name"), "' and '", font_bold("Sex"), "' as input for {.arg col_patient_id}")
     } else {
       col_patient_id <- search_type_in_df(x = x, type = "patient_id", info = info)
     }
-    stop_if(is.null(col_patient_id), "`col_patient_id` must be set")
+    stop_if(is.null(col_patient_id), "{.arg col_patient_id} must be set")
   }
 
   # -- specimen
@@ -334,7 +333,7 @@ first_isolate <- function(x = NULL,
   check_columns_existance <- function(column, tblname = x) {
     if (!is.null(column)) {
       stop_ifnot(column %in% colnames(tblname),
-        "Column '", column, "' not found.",
+        "Column '{column}' not found.",
         call = FALSE
       )
     }
@@ -363,9 +362,7 @@ first_isolate <- function(x = NULL,
   }
   # remove testcodes
   if (!is.null(testcodes_exclude) && isTRUE(info) && message_not_thrown_before("first_isolate", "excludingtestcodes")) {
-    message_("Excluding test codes: ", vector_and(testcodes_exclude, quotes = TRUE),
-      add_fn = font_red
-    )
+    message_("Excluding test codes: ", vector_and(testcodes_exclude, quotes = TRUE))
   }
 
   if (is.null(col_specimen)) {
@@ -376,9 +373,7 @@ first_isolate <- function(x = NULL,
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
     if (isTRUE(info) && message_not_thrown_before("first_isolate", "excludingspecimen")) {
-      message_("Excluding other than specimen group '", specimen_group, "'",
-        add_fn = font_red
-      )
+      message_("Excluding other than specimen group '", specimen_group, "'")
     }
   }
   if (!is.null(col_keyantimicrobials)) {
@@ -420,7 +415,6 @@ first_isolate <- function(x = NULL,
   if (abs(row.start) == Inf || abs(row.end) == Inf) {
     if (isTRUE(info)) {
       message_("=> Found ", font_bold("no isolates"),
-        add_fn = font_black,
         as_note = FALSE
       )
     }
@@ -429,7 +423,6 @@ first_isolate <- function(x = NULL,
   if (row.start == row.end) {
     if (isTRUE(info)) {
       message_("=> Found ", font_bold("1 first isolate"), ", as the data only contained 1 row",
-        add_fn = font_black,
         as_note = FALSE
       )
     }
@@ -437,9 +430,8 @@ first_isolate <- function(x = NULL,
   }
   if (length(c(row.start:row.end)) == pm_n_distinct(x[c(row.start:row.end), col_mo, drop = TRUE])) {
     if (isTRUE(info)) {
-      message_("=> Found ", font_bold(paste(length(c(row.start:row.end)), "first isolates")),
-        ", as all isolates were different microbial species",
-        add_fn = font_black,
+      n_rows <- length(c(row.start:row.end))
+      message_("=> Found {.strong ", n_rows, " first isolates}, as all isolates were different microbial species",
         as_note = FALSE
       )
     }
@@ -456,16 +448,16 @@ first_isolate <- function(x = NULL,
   if (!is.null(col_keyantimicrobials)) {
     if (isTRUE(info) && message_not_thrown_before("first_isolate", "type")) {
       if (type == "keyantimicrobials") {
-        message_("Basing inclusion on key antimicrobials, ",
+        message_(
+          "Basing inclusion on key antimicrobials, ",
           ifelse(ignore_I == FALSE, "not ", ""),
-          "ignoring I",
-          add_fn = font_red
+          "ignoring I"
         )
       }
       if (type == "points") {
-        message_("Basing inclusion on all antimicrobial results, using a points threshold of ",
-          points_threshold,
-          add_fn = font_red
+        message_(
+          "Basing inclusion on all antimicrobial results, using a points threshold of ",
+          points_threshold
         )
       }
     }
@@ -524,9 +516,7 @@ first_isolate <- function(x = NULL,
   if (any(!is.na(x$newvar_is_icu)) && any(x$newvar_is_icu == TRUE, na.rm = TRUE)) {
     if (icu_exclude == TRUE) {
       if (isTRUE(info)) {
-        message_("Excluding ", format(sum(x$newvar_is_icu, na.rm = TRUE), decimal.mark = decimal.mark, big.mark = big.mark), " isolates from ICU.",
-          add_fn = font_red
-        )
+        message_("Excluding ", format(sum(x$newvar_is_icu, na.rm = TRUE), decimal.mark = decimal.mark, big.mark = big.mark), " isolates from ICU.")
       }
       x[which(x$newvar_is_icu), "newvar_first_isolate"] <- FALSE
     } else if (isTRUE(info)) {
@@ -550,9 +540,8 @@ first_isolate <- function(x = NULL,
             paste0('"', x, '"')
           }
         })
-        message_("\nGroup: ", paste0(names(group), " = ", group, collapse = ", "), "\n",
-          as_note = FALSE,
-          add_fn = font_red
+        message_("\nGroup: ", toString(paste0(names(group), " = ", group)), "\n",
+          as_note = FALSE
         )
       }
     }
@@ -565,8 +554,7 @@ first_isolate <- function(x = NULL,
       format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
       ),
-      " isolates with a microbial ID 'UNKNOWN' (in column '", font_bold(col_mo), "')",
-      add_fn = font_red
+      " isolates with a microbial ID 'UNKNOWN' (in column '", font_bold(col_mo), "')"
     )
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
@@ -577,8 +565,7 @@ first_isolate <- function(x = NULL,
       "Excluding ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
       ),
-      " isolates with a microbial ID `NA` (in column '", font_bold(col_mo), "')",
-      add_fn = font_red
+      " isolates with a microbial ID `NA` (in column '", font_bold(col_mo), "')"
     )
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
@@ -624,7 +611,7 @@ first_isolate <- function(x = NULL,
         ),
         p_found_total, " of total where a microbial ID was available)"
       ),
-      add_fn = font_black, as_note = FALSE
+      as_note = FALSE
     )
   }
 

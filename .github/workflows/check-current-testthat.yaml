@@ -29,10 +29,11 @@
 
 on:
   pull_request:
-    # run in each PR in this repo
+    # run in each PR in this repo (1 worker, see matrix logic below)
     branches: '**'
   push:
-    branches: '**'
+    # only on main; pushing to a PR branch is already covered by pull_request above
+    branches: [main]
   schedule:
     # also run a schedule everyday at 1 AM.
     # this is to check that all dependencies are still available (see R/zzz.R)
@@ -41,7 +42,22 @@ on:
 name: check-recent
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo 'matrix={"config":[{"os":"ubuntu-latest","r":"release","allowfail":false}]}' >> "$GITHUB_OUTPUT"
+          else
+            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false}]}' >> "$GITHUB_OUTPUT"
+          fi
+
   R-code-check:
+    needs: setup
     runs-on: ${{ matrix.config.os }}
 
     continue-on-error: ${{ matrix.config.allowfail }}
@@ -50,23 +66,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        config:
-          # current development version, check all major OSes:
-          # - {os: macOS-latest,   r: 'devel', allowfail: true}
-          - {os: windows-latest, r: 'devel', allowfail: false}
-          - {os: ubuntu-latest,  r: 'devel', allowfail: false, http-user-agent: 'release'}
-
-          # current 'release' version, check all major OSes:
-          - {os: macOS-latest,   r: 'release', allowfail: true}
-          - {os: windows-latest, r: 'release', allowfail: false}
-          - {os: ubuntu-latest,  r: 'release', allowfail: false}
-
-          # older versions (see also check-old-tinytest.yaml for even older versions):
-          - {os: ubuntu-latest, r: 'oldrel-1', allowfail: false}
-          - {os: ubuntu-latest, r: 'oldrel-2', allowfail: false}
-          - {os: ubuntu-latest, r: 'oldrel-3', allowfail: false}
-          - {os: ubuntu-latest, r: 'oldrel-4', allowfail: false}
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

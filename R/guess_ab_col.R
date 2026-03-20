@@ -79,7 +79,6 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_s
     if (isTRUE(verbose)) {
       message_("No column found as input for ", search_string,
         " (", ab_name(search_string, language = NULL, tolower = TRUE), ").",
-        add_fn = font_black,
         as_note = FALSE
       )
     }
@@ -211,7 +210,7 @@ get_column_abx <- function(x,
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (anyNA(newnames)) {
       if (isTRUE(info)) {
-        message_(paste0(font_yellow(font_bold(" WARNING: ")), "some columns returned `NA` for `as.ab()`"), as_note = FALSE)
+        message_("WARNING: some columns returned NA for {.help [{.fun as.ab}](AMR::as.ab)}", as_note = FALSE)
       }
       warning_("Invalid antibiotic reference(s): ", vector_and(names(dots)[is.na(newnames)], quotes = FALSE),
         call = FALSE,
@@ -222,7 +221,7 @@ get_column_abx <- function(x,
     unexisting_cols <- which(!vapply(FUN.VALUE = logical(1), dots, function(col) all(col %in% x_columns)))
     if (length(unexisting_cols) > 0) {
       if (isTRUE(info)) {
-        message_(" ERROR", add_fn = list(font_red, font_bold), as_note = FALSE)
+        message_(" ERROR", as_note = FALSE)
       }
       stop_("Column(s) not found: ", vector_and(unlist(dots[[unexisting_cols]]), quotes = FALSE),
         call = FALSE
@@ -266,11 +265,11 @@ get_column_abx <- function(x,
 
     if (isTRUE(info)) {
       if (all_okay == TRUE) {
-        message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+        message_(" OK.", as_note = FALSE)
       } else if (!isFALSE(dups)) {
-        message_(paste0(font_yellow(font_bold(" WARNING: ")), "some results from `as.ab()` are duplicated: ", vector_and(dups, quotes = "`")), as_note = FALSE)
+        message_("WARNING: some results from {.help [{.fun as.ab}](AMR::as.ab)} are duplicated: ", vector_and(dups, quotes = FALSE), as_note = FALSE)
       } else {
-        message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+        message_(" WARNING.", as_note = FALSE)
       }
 
       for (i in seq_len(length(out))) {
@@ -288,8 +287,7 @@ get_column_abx <- function(x,
                 "Column '", font_bold(out[i]), "' will not be used for ",
                 names(out)[i], " (", suppressMessages(ab_name(names(out)[i], tolower = TRUE, language = NULL, fast_mode = TRUE)), ")",
                 ", as this antimicrobial has already been set."
-              ),
-              add_fn = font_red
+              )
             )
           }
         }

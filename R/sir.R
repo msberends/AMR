@@ -441,7 +441,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
     return(unname(vapply(FUN.VALUE = logical(1), x, is_sir_eligible)))
   }
 
-  stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
+  stop_if(NCOL(x) > 1, "{.arg x} must be a one-dimensional vector.")
   if (any(c(
     "numeric",
     "integer",
@@ -529,10 +529,10 @@ as.sir.default <- function(x,
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE) && !all(x %in% c(1, 2, 3, 4, 5), na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
-        warning_("in `as.sir()`: input values were guessed to be MIC values - preferably transform them with `as.mic()` before running `as.sir()`.")
+        warning_("in {.help [{.fun as.sir}](AMR::as.sir)}: input values were guessed to be MIC values - preferably transform them with {.help [{.fun as.mic}](AMR::as.mic)} before running {.help [{.fun as.sir}](AMR::as.sir)}.")
         return(as.sir(as.mic(x), ...))
       } else if (all_valid_disks(x)) {
-        warning_("in `as.sir()`: input values were guessed to be disk diffusion values - preferably transform them with `as.disk()` before running `as.sir()`.")
+        warning_("in {.help [{.fun as.sir}](AMR::as.sir)}: input values were guessed to be disk diffusion values - preferably transform them with {.help [{.fun as.disk}](AMR::as.disk)} before running {.help [{.fun as.sir}](AMR::as.sir)}.")
         return(as.sir(as.disk(x), ...))
       }
     }
@@ -601,7 +601,7 @@ as.sir.default <- function(x,
           ifelse(length(out7) > 0, paste0("7 as \"", out7, "\""), NA_character_),
           ifelse(length(out8) > 0, paste0("8 as \"", out8, "\""), NA_character_)
         )
-        message_("in `as.sir()`: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
+        message_("in {.help [{.fun as.sir}](AMR::as.sir)}: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
       }
 
       if (na_before != na_after) {
@@ -610,7 +610,7 @@ as.sir.default <- function(x,
           sort() %pm>%
           vector_and(quotes = TRUE)
         cur_col <- get_current_column()
-        warning_("in `as.sir()`: ", na_after - na_before, " result",
+        warning_("in {.help [{.fun as.sir}](AMR::as.sir)}: ", na_after - na_before, " result",
           ifelse(na_after - na_before > 1, "s", ""),
           ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
           " truncated (",
@@ -783,10 +783,10 @@ as.sir.data.frame <- function(x,
 
   # -- host
   if (missing(breakpoint_type) && any(host %in% clinical_breakpoints$host[!clinical_breakpoints$host %in% c("human", "ECOFF")], na.rm = TRUE)) {
-    if (isTRUE(info)) message_("Assuming `breakpoint_type = \"animal\"` since `host` contains animal species.")
+    if (isTRUE(info)) message_("Assuming {.code breakpoint_type = \"animal\"} since {.arg host} contains animal species.")
     breakpoint_type <- "animal"
   } else if (any(!suppressMessages(convert_host(host, lang = language)) %in% c("human", "ECOFF"), na.rm = TRUE)) {
-    if (isTRUE(info)) message_("Assuming `breakpoint_type = \"animal\"`.")
+    if (isTRUE(info)) message_("Assuming {.code breakpoint_type = \"animal\"}.")
     breakpoint_type <- "animal"
   }
   if (breakpoint_type == "animal") {
@@ -816,7 +816,7 @@ as.sir.data.frame <- function(x,
       # column found, transform to logical
       stop_if(
         length(col_uti) != 1 | !col_uti %in% colnames(x),
-        "argument `uti` must be a [logical] vector, of must be a single column name of `x`"
+        "argument {.arg uti} must be a [logical] vector, or must be a single column name of {.arg x}"
       )
       uti <- as.logical(x[, col_uti, drop = TRUE])
     }
@@ -835,8 +835,7 @@ as.sir.data.frame <- function(x,
         message_(
           "Assuming value", plural[1], " ",
           vector_and(col_values, quotes = TRUE),
-          " in column '", font_bold(col_specimen),
-          "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+          " in column ", paste0("{.field ", col_specimen, "}"), " reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
           ".\n  Use `as.sir(uti = FALSE)` to prevent this."
         )
       }
@@ -883,7 +882,7 @@ as.sir.data.frame <- function(x,
   types[types == "" & !vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.sir)] <- "sir"
   if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
     # now we need an mo column
-    stop_if(is.null(col_mo), "`col_mo` must be set")
+    stop_if(is.null(col_mo), "{.arg col_mo} must be set")
     # if not null, we already found it, now find again so a message will show
     if (is.null(col_mo.bak)) {
       col_mo <- search_type_in_df(x = x, type = "mo", info = info)
@@ -898,7 +897,7 @@ as.sir.data.frame <- function(x,
     cl <- tryCatch(parallel::makeCluster(n_cores, type = "PSOCK"),
       error = function(e) {
         if (isTRUE(info)) {
-          message_("Could not create parallel cluster, using single-core computation. Error message: ", conditionMessage(e), add_fn = font_red)
+          message_("Could not create parallel cluster, using single-core computation. Error message: ", conditionMessage(e))
         }
         return(NULL)
       }
@@ -975,7 +974,7 @@ as.sir.data.frame <- function(x,
       if (!all(x[, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Cleaning values in column '", font_bold(ab), "' (",
+          message_("Cleaning values in column ", paste0("{.field ", ab, "}"), " (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, info = info), ")... ",
             appendLF = FALSE,
@@ -985,7 +984,7 @@ as.sir.data.frame <- function(x,
       } else if (!is.sir(x.bak[, ab, drop = TRUE])) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Assigning class 'sir' to already clean column '", font_bold(ab), "' (",
+          message_("Assigning class {.cls sir} to already clean column ", paste0("{.field ", ab, "}"), " (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, language = NULL, info = info), ")... ",
             appendLF = FALSE,
@@ -1029,14 +1028,14 @@ as.sir.data.frame <- function(x,
     if (isTRUE(info)) {
       message_(font_green_bg(" DONE "), as_note = FALSE)
       message()
-      message_("Run `sir_interpretation_history()` to retrieve a logbook with all details of the breakpoint interpretations.", add_fn = font_green)
+      message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} to retrieve a logbook with all details of the breakpoint interpretations.")
     }
   } else {
     # sequential mode (non-parallel)
     if (isTRUE(info) && n_cores > 1 && NROW(x) * NCOL(x) > 10000) {
       # give a note that parallel mode might be better
       message()
-      message_("Running in sequential mode. Consider setting `parallel = TRUE` to speed up processing on multiple cores.\n", add_fn = font_red)
+      message_("Running in sequential mode. Consider setting {.arg parallel} to {.code TRUE} to speed up processing on multiple cores.\n")
     }
     # this will contain a progress bar already
     result_list <- lapply(seq_along(ab_cols), run_as_sir_column)
@@ -1168,13 +1167,13 @@ as_sir_method <- function(method_short,
   dots <- list(...)
   dots <- dots[which(!names(dots) %in% c("warn", "mo.bak", "is_data.frame"))]
   if (length(dots) != 0) {
-    warning_("These arguments in `as.sir()` are no longer used: ", vector_and(names(dots), quotes = "`"), ".", call = FALSE)
+    warning_("These arguments in {.help [{.fun as.sir}](AMR::as.sir)} are no longer used: ", vector_and(names(dots), quotes = "`"), ".", call = FALSE)
   }
 
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
-    message_("Run `sir_interpretation_history()` afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n", add_fn = font_green)
+    message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n")
   }
 
   current_df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
@@ -1190,13 +1189,13 @@ as_sir_method <- function(method_short,
     if (is.null(host)) {
       host <- "dogs"
       if (isTRUE(info) && message_not_thrown_before("as.sir", "host_missing")) {
-        message_("Animal hosts not set in `host`, assuming `host = \"dogs\"`, since these have the highest breakpoint availability.\n\n")
+        message_("Animal hosts not set in {.arg host}, assuming {.code host = \"dogs\"}, since these have the highest breakpoint availability.\n\n")
       }
     }
   } else {
     if (!is.null(host) && !all(toupper(as.character(host)) %in% c("HUMAN", "ECOFF"))) {
       if (isTRUE(info) && message_not_thrown_before("as.sir", "assumed_breakpoint_animal")) {
-        message_("Assuming `breakpoint_type = \"animal\"`, since `host` is set.", ifelse(guideline_coerced %like% "EUCAST", " Do you also need to set `guideline = \"CLSI\"`?", ""), "\n\n")
+        message_("Assuming {.code breakpoint_type = \"animal\"}, since {.arg host} is set.", ifelse(guideline_coerced %like% "EUCAST", " Do you also need to set {.code guideline = \"CLSI\"}?", ""), "\n\n")
       }
       breakpoint_type <- "animal"
     } else {
@@ -1276,9 +1275,9 @@ as_sir_method <- function(method_short,
     mo_var_found <- ""
   }
   if (is.null(mo)) {
-    stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class 'mo' found). See ?as.sir.\n\n",
-      "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.sir, mo = x))`, where x is your column with microorganisms.\n",
-      "To transform all ", method_long, " in a data set, use `data %>% as.sir()` or `data %>% mutate_if(is.", method_short, ", as.sir)`.",
+    stop_("No information was supplied about the microorganisms (missing argument {.arg mo} and no column of class {.cls mo} found). See {.help [{.fun as.sir}](AMR::as.sir)}.\n\n",
+      "To transform certain columns with e.g. mutate(), use ", highlight_code("data %>% mutate(across(..., as.sir, mo = x))"), ", where x is your column with microorganisms.\n",
+      "To transform all ", method_long, " in a data set, use ", highlight_code("data %>% as.sir()"), " or ", highlight_code(paste0("data %>% mutate_if(is.", method_short, ", as.sir)")), ".",
       call = FALSE
     )
   }
@@ -1312,7 +1311,7 @@ as_sir_method <- function(method_short,
 
 
   if (length(ab) == 1 && ab %like% paste0("as.", method_short)) {
-    stop_("No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.sir.", call = FALSE)
+    stop_("No unambiguous name was supplied about the antibiotic (argument {.arg ab}). See {.help [{.fun as.sir}](AMR::as.sir)}.", call = FALSE)
   }
 
   ab.bak <- trimws2(ab)
@@ -1328,8 +1327,7 @@ as_sir_method <- function(method_short,
   if (all(is.na(ab))) {
     if (isTRUE(info)) {
       message_("Returning NAs for unknown antibiotic: ", vector_and(ab.bak, sort = FALSE, quotes = TRUE),
-        ". Rename this column to a valid name or code, and check the output with `as.ab()`.",
-        add_fn = font_red,
+        ". Rename this column to a valid name or code, and check the output with {.help [{.fun as.ab}](AMR::as.ab)}.",
         as_note = FALSE
       )
     }
@@ -1353,9 +1351,7 @@ as_sir_method <- function(method_short,
   }
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (isTRUE(info) && message_not_thrown_before("as.sir", "intrinsic")) {
-      message_("in `as.sir()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.",
-        add_fn = font_red
-      )
+      message_("in {.help [{.fun as.sir}](AMR::as.sir)}: using {.arg add_intrinsic_resistance} is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
     }
   }
 
@@ -1724,7 +1720,7 @@ as_sir_method <- function(method_short,
         pm_filter(uti == FALSE)
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`.")
+        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument {.arg uti} to set which isolates are from urine. See {.help [{.fun as.sir}](AMR::as.sir)}.")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
@@ -1947,10 +1943,10 @@ as_sir_method <- function(method_short,
       # if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
       if (isTRUE(verbose)) {
         for (i in seq_along(notes)) {
-          message(word_wrap("  ", AMR_env$bullet_icon, " ", notes[i], add_fn = font_black))
+          message_(notes[i], as_note = FALSE)
         }
       } else {
-        # message(word_wrap("  ", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
+        # message(word_wrap("\u00a0\u00a0", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
       }
     } else {
       message(font_green_bg(" OK "))
@@ -1991,7 +1987,7 @@ sir_interpretation_history <- function(clean = FALSE) {
 #' @noRd
 print.sir_log <- function(x, ...) {
   if (NROW(x) == 0) {
-    message_("No results to print. First run `as.sir()` on MIC values or disk diffusion zones (or on a `data.frame` containing any of these) to print a 'logbook' data set here.")
+    message_("No results to print. First run {.help [{.fun as.sir}](AMR::as.sir)} on MIC values or disk diffusion zones (or on a {.cls data.frame} containing any of these) to print a {.val logbook} data set here.")
     return(invisible(NULL))
   }
   class(x) <- class(x)[class(x) != "sir_log"]
@@ -2230,10 +2226,13 @@ check_reference_data <- function(reference_data, .call_depth) {
     class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
     class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_sir) == names(class_ref))) {
-      stop_("`reference_data` must have the same column names as the 'clinical_breakpoints' data set.", call = .call_depth)
+      stop_("{.arg reference_data} must have the same column names as the {.topic [clinical_breakpoints](AMR::clinical_breakpoints)} data set.", call = .call_depth)
     }
     if (!all(class_sir == class_ref)) {
-      stop_("`reference_data` must be the same structure as the 'clinical_breakpoints' data set. Column '", names(class_ref[class_sir != class_ref][1]), "' is of class ", class_ref[class_sir != class_ref][1], ", but should be of class ", class_sir[class_sir != class_ref][1], ".", call = .call_depth)
+      bad_col <- names(class_ref[class_sir != class_ref][1])
+      bad_cls <- gsub("<|>", "", class_ref[class_sir != class_ref][1])
+      exp_cls <- gsub("<|>", "", class_sir[class_sir != class_ref][1])
+      stop_("{.arg reference_data} must be the same structure as the {.topic [clinical_breakpoints](AMR::clinical_breakpoints)} data set. Column ", paste0("{.field ", bad_col, "}"), " is of class ", paste0("{.cls ", bad_cls, "}"), ", but should be of class ", paste0("{.cls ", exp_cls, "}"), call = .call_depth)
     }
   }
 }

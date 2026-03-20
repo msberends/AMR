@@ -162,7 +162,7 @@ av_ddd <- function(x, administration = "oral", ...) {
 
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `av_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun av_ddd}](AMR::av_ddd)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -182,7 +182,7 @@ av_ddd_units <- function(x, administration = "oral", ...) {
 
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `av_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun av_ddd_units}](AMR::av_ddd_units)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -233,12 +233,12 @@ av_url <- function(x, open = FALSE, ...) {
 
   NAs <- av_name(av, tolower = TRUE, language = NULL)[!is.na(av) & is.na(atcs)]
   if (length(NAs) > 0) {
-    warning_("in `av_url()`: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
+    warning_("in {.fun av_url}: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
 
   if (open == TRUE) {
     if (length(u) > 1 && !is.na(u[1L])) {
-      warning_("in `av_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in {.fun av_url}: only the first URL will be opened, as {.fun browseURL} only suports one string.")
     }
     if (!is.na(u[1L])) {
       utils::browseURL(u[1L])

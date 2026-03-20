@@ -82,9 +82,9 @@ bug_drug_combinations <- function(x,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
-    stop_if(is.null(col_mo), "`col_mo` must be set")
+    stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   } else {
-    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
+    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' ({.arg col_mo}) not found")
   }
 
   x.bak <- x
@@ -226,7 +226,7 @@ format.bug_drug_combinations <- function(x,
   x.bak <- x
   if (inherits(x, "grouped")) {
     # bug_drug_combinations() has been run on groups, so de-group here
-    warning_("in `format()`: formatting the output of `bug_drug_combinations()` does not support grouped variables, they were ignored")
+    warning_("in {.fun format}: formatting the output of {.fun bug_drug_combinations} does not support grouped variables, they were ignored")
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     idx <- split(seq_len(nrow(x)), paste0(x$mo, "%%", x$ab))
     x <- data.frame(

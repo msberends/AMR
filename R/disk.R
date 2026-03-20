@@ -119,7 +119,7 @@ as.disk <- function(x, na.rm = FALSE) {
         sort() %pm>%
         vector_and(quotes = TRUE)
       cur_col <- get_current_column()
-      warning_("in `as.disk()`: ", na_after - na_before, " result",
+      warning_("in {.fun as.disk}: ", na_after - na_before, " result",
         ifelse(na_after - na_before > 1, "s", ""),
         ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
         " truncated (",

@@ -105,7 +105,6 @@ atc_online_property <- function(atc_code,
 
   if (!has_internet()) {
     message_("There appears to be no internet connection, returning NA.",
-      add_fn = font_red,
       as_note = FALSE
     )
     return(rep(NA, length(atc_code)))
@@ -181,7 +180,7 @@ atc_online_property <- function(atc_code,
       colnames(out) <- gsub("^atc.*", "atc", tolower(colnames(out)))
 
       if (length(out) == 0) {
-        message_("in `atc_online_property()`: no properties found for ATC ", atc_code[i], ". Please check ", font_url(atc_url, "this WHOCC webpage"), ".")
+        message_("in {.help [{.fun atc_online_property}](AMR::atc_online_property)}: no properties found for ATC ", atc_code[i], ". Please check {.href ", atc_url, " this WHOCC webpage}.")
         returnvalue[i] <- NA
         next
       }
