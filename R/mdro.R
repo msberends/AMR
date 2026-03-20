@@ -1888,8 +1888,8 @@ mdro <- function(x = NULL,
     if (any(x$MDRO == -1, na.rm = TRUE)) {
       if (message_not_thrown_before("mdro", "availability")) {
         warning_(
-          "in `mdro()`: NA introduced for isolates where the available percentage of antimicrobial classes was below ",
-          percentage(pct_required_classes), " (set with `pct_required_classes`)"
+          "in {.help [{.fun mdro}](AMR::mdro)}: NA introduced for isolates where the available percentage of antimicrobial classes was below ",
+          percentage(pct_required_classes), " (set with {.arg pct_required_classes})"
         )
       }
       # set these -1s to NA

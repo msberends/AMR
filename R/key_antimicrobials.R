@@ -182,7 +182,7 @@ key_antimicrobials <- function(x = NULL,
       any(filter, na.rm = TRUE) &&
       message_not_thrown_before("key_antimicrobials", name)) {
       warning_(
-        "in `key_antimicrobials()`: ",
+        "in {.help [{.fun key_antimicrobials}](AMR::key_antimicrobials)}: ",
         ifelse(values_new_length == 0,
           "No columns available ",
           paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")

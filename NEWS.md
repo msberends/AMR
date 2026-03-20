@@ -1,4 +1,4 @@
-# AMR 3.0.1.9038
+# AMR 3.0.1.9039
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -32,7 +32,8 @@
 ### Updates
 * Replaced all bare backtick-quoted text in `message_()`, `warning_()`, and `stop_()` calls with proper cli inline markup (`{.arg}`, `{.cls}`, `{.fun}`, `{.pkg}`, `{.code}`); rewrote `print.ab` to use a cli named-vector with `*` bullets and code highlighting when cli is available
 * Added `format_inline_()` helper that formats a cli-markup string and returns it (rather than emitting it), using `cli::format_inline()` when available and `cli_to_plain()` otherwise; used this in `.onAttach` to replace the duplicated cli/non-cli startup message pattern
-* All inline `{variable}` / `{expression}` in messaging calls are now pre-evaluated via `paste0()`, so users without cli or glue never see raw template syntax
+* All inline `{variable}` / `{expression}` in messaging calls are now pre-evaluated via `paste0()`, so users without cli or glue never see raw template syntax 
+* All `"in `funcname()`:"` patterns in `warning_()`/`message_()`/`stop_()` replaced with `{.help [{.fun funcname}](AMR::funcname)}` for clickable help links
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
 * `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.
 * Added to the `antimicrobials` data set: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)

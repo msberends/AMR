@@ -583,9 +583,9 @@ antibiogram.default <- function(x,
     if (length(existing_ab_combined_cols) > 0 && !is.null(ab_transform)) {
       ab_transform <- NULL
       warning_(
-        "Detected column name(s) containing the '+' character, which conflicts with the expected syntax in `antibiogram()`: the '+' is used to combine separate antimicrobial drug columns (e.g., \"AMP+GEN\").\n\n",
-        "To avoid incorrectly guessing which antimicrobials this represents, `ab_transform` was automatically set to `NULL`.\n\n",
-        "If this is unintended, please rename the column(s) to avoid using '+' in the name, or set `ab_transform = NULL` explicitly to suppress this message."
+        "Detected column name(s) containing the '+' character, which conflicts with the expected syntax in {.help [{.fun antibiogram}](AMR::antibiogram)}: the '+' is used to combine separate antimicrobial drug columns (e.g., \"AMP+GEN\").\n\n",
+        "To avoid incorrectly guessing which antimicrobials this represents, {.arg ab_transform} was automatically set to {.code NULL}.\n\n",
+        "If this is unintended, please rename the column(s) to avoid using '+' in the name, or set {.code ab_transform = NULL} explicitly to suppress this message."
       )
     }
     antimicrobials <- ab_trycatch

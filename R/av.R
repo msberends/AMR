@@ -475,7 +475,7 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.av()`: these ATC codes are not (yet) in the antivirals data set: ",
+      "in {.help [{.fun as.av}](AMR::as.av)}: these ATC codes are not (yet) in the antivirals data set: ",
       vector_and(x_unknown_ATCs), "."
     )
   }
@@ -486,7 +486,7 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   )
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.av()`: these values could not be coerced to a valid antiviral drug ID: ",
+      "in {.help [{.fun as.av}](AMR::as.av)}: these values could not be coerced to a valid antiviral drug ID: ",
       vector_and(x_unknown), "."
     )
   }

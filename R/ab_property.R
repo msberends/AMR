@@ -265,7 +265,7 @@ ab_ddd <- function(x, administration = "oral", ...) {
 
   if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `ab_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun ab_ddd}](AMR::ab_ddd)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -285,7 +285,7 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
 
   if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `ab_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun ab_ddd_units}](AMR::ab_ddd_units)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -424,7 +424,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
   )
   if (any(x %in% c("", NA))) {
     warning_(
-      "in `set_ab_names()`: no ", property, " found for column(s): ",
+      "in {.help [{.fun set_ab_names}](AMR::set_ab_names)}: no ", property, " found for column(s): ",
       vector_and(vars[x %in% c("", NA)], sort = FALSE)
     )
     x[x %in% c("", NA)] <- vars[x %in% c("", NA)]

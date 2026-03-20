@@ -1256,14 +1256,14 @@ replace_old_mo_codes <- function(x, property) {
     }
     if (property != "mo") {
       warning_(
-        "in `mo_", property, "()`: the input contained ", n_matched,
+        "in {.help [{.fun mo_", property, "}](AMR::mo_", property, ")}: the input contained ", n_matched,
         " old MO code", ifelse(n_matched == 1, "", "s"),
         " (", n_unique, "from a previous AMR package version). ",
-        "Please update your MO codes with `as.mo()` to increase speed."
+        "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)} to increase speed."
       )
     } else {
       warning_(
-        "in `as.mo()`: the input contained ", n_matched,
+        "in {.help [{.fun as.mo}](AMR::as.mo)}: the input contained ", n_matched,
         " old MO code", ifelse(n_matched == 1, "", "s"),
         " (", n_unique, "from a previous AMR package version). ",
         n_solved, " old MO code", ifelse(n_solved == 1, "", "s"),

@@ -331,7 +331,7 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE, r
   }
   stop_ifnot(
     all(mic_range %in% c(VALID_MIC_LEVELS, NA)),
-    "Values in `mic_range` must be valid MIC values. ",
+    "Values in {.arg mic_range} must be valid MIC values. ",
     "The allowed range is ", format(as.double(as.mic(VALID_MIC_LEVELS)[1]), scientific = FALSE), " to ", format(as.double(as.mic(VALID_MIC_LEVELS)[length(VALID_MIC_LEVELS)]), scientific = FALSE), ". ",
     "Unvalid: ", vector_and(mic_range[!mic_range %in% c(VALID_MIC_LEVELS, NA)], quotes = FALSE), "."
   )

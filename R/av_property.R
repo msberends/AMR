@@ -162,7 +162,7 @@ av_ddd <- function(x, administration = "oral", ...) {
 
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `av_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun av_ddd}](AMR::av_ddd)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )
@@ -182,7 +182,7 @@ av_ddd_units <- function(x, administration = "oral", ...) {
 
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `av_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in {.help [{.fun av_ddd_units}](AMR::av_ddd_units)}: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "atcddd.fhi.no/ddd/list_of_ddds_combined_products/"
     )

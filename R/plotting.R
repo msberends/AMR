@@ -1590,7 +1590,7 @@ expand_SIR_colours <- function(colours_SIR, unname = TRUE) {
     # named input: match and reorder
     stop_ifnot(
       all(names(colours_SIR) %in% sir_order),
-      "Unknown names in `colours_SIR`. Expected any of: ", vector_or(levels(NA_sir_), quotes = FALSE, sort = FALSE), "."
+      "Unknown names in {.arg colours_SIR}. Expected any of: ", vector_or(levels(NA_sir_), quotes = FALSE, sort = FALSE), "."
     )
     if (length(colours_SIR) == 4) {
       # add colours for SI (same as S) and IR (same as R)

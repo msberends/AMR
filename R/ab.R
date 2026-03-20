@@ -445,7 +445,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: these ATC codes are not (yet) in the antimicrobials data set: ",
+      "in {.help [{.fun as.ab}](AMR::as.ab)}: these ATC codes are not (yet) in the antimicrobials data set: ",
       vector_and(x_unknown_ATCs), "."
     )
   }
@@ -459,7 +459,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_unknown <- x_unknown[!x_unknown %in% c("", NA)]
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: ", ifelse(length(unique(x_unknown)) == 1, "this value", "these values"), " could not be coerced to a valid antimicrobial ID: ",
+      "in {.help [{.fun as.ab}](AMR::as.ab)}: ", ifelse(length(unique(x_unknown)) == 1, "this value", "these values"), " could not be coerced to a valid antimicrobial ID: ",
       vector_and(x_unknown), "."
     )
   }
