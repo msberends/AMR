@@ -661,7 +661,8 @@ interpretive_rules <- function(x,
     ab <- gsub("-S$", "", ab_s)
     if (ab %in% names(cols_ab) && !ab_s %in% names(cols_ab)) {
       if (isTRUE(info)) {
-        message_("Using column '", cols_ab[names(cols_ab) == ab],
+        message_(
+          "Using column '", cols_ab[names(cols_ab) == ab],
           "' as ", ab_name(ab_s, language = NULL, tolower = TRUE),
           " since a column '", ab_s, "' is missing but required for the chosen rules"
         )

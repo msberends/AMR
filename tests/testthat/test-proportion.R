@@ -138,7 +138,6 @@ test_that("test-proportion.R", {
   expect_error(proportion_I("test", as_percent = "test"))
   expect_error(proportion_S("test", minimum = "test"))
   expect_error(proportion_S("test", as_percent = "test"))
-  expect_error(proportion_S("test", also_single_tested = TRUE))
 
   # check too low amount of isolates
   expect_identical(

@@ -448,13 +448,15 @@ first_isolate <- function(x = NULL,
   if (!is.null(col_keyantimicrobials)) {
     if (isTRUE(info) && message_not_thrown_before("first_isolate", "type")) {
       if (type == "keyantimicrobials") {
-        message_("Basing inclusion on key antimicrobials, ",
+        message_(
+          "Basing inclusion on key antimicrobials, ",
           ifelse(ignore_I == FALSE, "not ", ""),
           "ignoring I"
         )
       }
       if (type == "points") {
-        message_("Basing inclusion on all antimicrobial results, using a points threshold of ",
+        message_(
+          "Basing inclusion on all antimicrobial results, using a points threshold of ",
           points_threshold
         )
       }

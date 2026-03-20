@@ -267,7 +267,7 @@ as.mo <- function(x,
   if (isTRUE(info) && message_not_thrown_before("as.mo", old, new, entire_session = TRUE) && any(is.na(old) & !is.na(new), na.rm = TRUE)) {
     message_(
       "Returning previously coerced value", ifelse(sum(is.na(old) & !is.na(new)) > 1, "s", ""),
-      " for ", vector_and(x[is.na(old) & !is.na(new)]), ". Run `mo_reset_session()` to reset this. This note will be shown once per session for this input."
+      " for ", vector_and(x[is.na(old) & !is.na(new)]), ". Run {.help [{.fun mo_reset_session}](AMR::mo_reset_session)} to reset this. This note will be shown once per session for this input."
     )
   }
 
@@ -407,7 +407,9 @@ as.mo <- function(x,
             paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"),
             minimum_matching_score
           ),
-          ". Try setting this value lower or even to 0.", call = FALSE)
+          ". Try setting this value lower or even to 0.",
+          call = FALSE
+        )
         result_mo <- NA_character_
       } else {
         result_mo <- MO_lookup_current$mo[match(top_hits[1], MO_lookup_current$fullname)]
@@ -453,8 +455,8 @@ as.mo <- function(x,
         if (length(AMR_env$mo_uncertainties$original_input) <= 3) {
           examples <- vector_and(
             paste0(
-              '"', AMR_env$mo_uncertainties$original_input,
-              '" (assumed ', italicise(AMR_env$mo_uncertainties$fullname), ")"
+              "{.val ", AMR_env$mo_uncertainties$original_input,
+              "} (assumed ", italicise(AMR_env$mo_uncertainties$fullname), ")"
             ),
             quotes = FALSE
           )
@@ -463,7 +465,7 @@ as.mo <- function(x,
         }
         msg <- c(msg, paste0(
           "Microorganism translation was uncertain for ", examples,
-          ". Run `mo_uncertainties()` to review ", plural[2], ", or use `add_custom_microorganisms()` to add custom entries."
+          ". Run {.help [{.fun mo_uncertainties}](AMR::mo_uncertainties)} to review ", plural[2], ", or use {.help [{.fun add_custom_microorganisms}](AMR::add_custom_microorganisms)} to add custom entries."
         ))
 
         for (m in msg) {
@@ -479,11 +481,11 @@ as.mo <- function(x,
   if (isFALSE(keep_synonyms)) {
     out[!is.na(out_current)] <- out_current[!is.na(out_current)]
     if (isTRUE(info) && length(AMR_env$mo_renamed$old) > 0) {
-      print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
+      print(mo_renamed(), extra_txt = " (use {.arg keep_synonyms = TRUE} to leave uncorrected)")
     }
   } else if (is.null(getOption("AMR_keep_synonyms")) && length(AMR_env$mo_renamed$old) > 0 && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
     # keep synonyms is TRUE, so check if any do have synonyms
-    warning_("{.help [{.fun as.mo}](AMR::as.mo)} returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " outdated taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use ", highlight_code("as.mo(..., keep_synonyms = FALSE)"), " to clean the input to currently accepted taxonomic names, or set the R option {.code AMR_keep_synonyms} to {.code FALSE}. This warning will be shown once per session.", call = FALSE)
+    warning_("{.help [{.fun as.mo}](AMR::as.mo)} returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " outdated taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use {.arg keep_synonyms = FALSE} to clean the input to currently accepted taxonomic names, or set the R option {.code AMR_keep_synonyms} to {.code FALSE}. This warning will be shown once per session.", call = FALSE)
   }
 
   # Apply Becker ----
@@ -907,14 +909,16 @@ rep.mo <- function(x, ...) {
 print.mo_uncertainties <- function(x, n = 10, ...) {
   more_than_50 <- FALSE
   if (NROW(x) == 0) {
-    cat(font_blue(word_wrap("No uncertainties to show. Only uncertainties of the last call to {.help [{.fun as.mo}](AMR::as.mo)} or any mo_*() function are stored.\n\n")))
+    message_("No uncertainties to show. Only uncertainties of the last call to {.help [{.fun as.mo}](AMR::as.mo)} or any {.help [{.fun mo_*}](AMR::mo_property)} function are stored.")
     return(invisible(NULL))
   } else if (NROW(x) > 50) {
     more_than_50 <- TRUE
     x <- x[1:50, , drop = FALSE]
   }
 
-  cat(font_blue(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See {.help [{.fun mo_matching_score}](AMR::mo_matching_score)}.\n\n")))
+  message_("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See {.help [{.fun mo_matching_score}](AMR::mo_matching_score)}.",
+    as_note = FALSE
+  )
 
   add_MO_lookup_to_AMR_env()
 
@@ -924,12 +928,13 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
   col_green <- function(x) font_green_bg(x, collapse = NULL)
 
   if (has_colour()) {
-    cat(font_blue(word_wrap("Colour keys: ",
+    cat(word_wrap(
+      "Colour keys: ",
       col_red(" 0.000-0.549 "),
       col_orange(" 0.550-0.649 "),
       col_yellow(" 0.650-0.749 "),
       col_green(" 0.750-1.000")
-    )), font_green_bg(" "), "\n", sep = "")
+    ), font_green_bg(" "), "\n", sep = "")
   }
 
   score_set_colour <- function(text, scores) {
@@ -960,21 +965,6 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
       # sort on descending scores
       candidates_formatted <- candidates_formatted[order(1 - scores)]
       scores_formatted <- scores_formatted[order(1 - scores)]
-
-      candidates <- word_wrap(
-        paste0(
-          "Also matched: ",
-          vector_and(
-            paste0(
-              candidates_formatted,
-              font_blue(paste0(" (", scores_formatted, ")"), collapse = NULL)
-            ),
-            quotes = FALSE, sort = FALSE
-          )
-        ),
-        extra_indent = nchar("Also matched: "),
-        width = 0.9 * getOption("width", 100)
-      )
     } else {
       candidates <- ""
     }
@@ -984,46 +974,54 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
       n = x[i, ]$fullname
     )
     score_formatted <- trimws(formatC(round(score, 3), format = "f", digits = 3))
-    txt <- paste(txt,
+
+    out <- paste0(
       paste0(
+        "", strrep(font_grey("-"), times = getOption("width", 100)), "\n",
+        '"', x[i, ]$original_input, '"',
+        " -> ",
         paste0(
-          "", strrep(font_grey("-"), times = getOption("width", 100)), "\n",
-          '"', x[i, ]$original_input, '"',
-          " -> ",
-          paste0(
-            font_bold(italicise(x[i, ]$fullname)),
-            " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
-          )
-        ),
-        collapse = "\n"
+          font_bold(italicise(x[i, ]$fullname)),
+          " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
+        )
       ),
-      ifelse(x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")],
-        paste0(
-          strrep(" ", nchar(x[i, ]$original_input) + 6),
-          ifelse(x[i, ]$keep_synonyms == FALSE,
-            # Add note if result was coerced to accepted taxonomic name
-            font_red(paste0("This outdated taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL),
-            # Or add note if result is currently another taxonomic name
-            font_red(paste0(font_bold("Note: "), "The current name is ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", AMR_env$MO_lookup$ref[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], ")."), collapse = NULL)
-          )
-        ),
-        ""
-      ),
-      candidates,
-      sep = "\n"
+      collapse = "\n"
     )
-    txt <- gsub("[\n]+", "\n", txt)
-    # remove first and last break
-    txt <- gsub("(^[\n]|[\n]$)", "", txt)
-    txt <- paste0("\n", txt, "\n")
+    message_(out, as_note = FALSE)
+
+    if (x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")]) {
+      out2 <- paste0(
+        strrep(" ", nchar(x[i, ]$original_input) + 6),
+        ifelse(x[i, ]$keep_synonyms == FALSE,
+          # Add note if result was coerced to accepted taxonomic name
+          font_red(paste0("This outdated taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL),
+          # Or add note if result is currently another taxonomic name
+          font_red(paste0(font_bold("Note: "), "The current name is ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", AMR_env$MO_lookup$ref[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], ")."), collapse = NULL)
+        )
+      )
+      message_(out2, as_note = FALSE)
+    }
+
+    other_matches <- paste0(
+      "Also matched: ",
+      vector_and(
+        paste0(
+          candidates_formatted,
+          font_blue(paste0(" (", scores_formatted, ")"), collapse = NULL)
+        ),
+        quotes = FALSE, sort = FALSE
+      )
+    )
+    message_(other_matches, as_note = FALSE)
   }
 
-  cat(txt)
   if (isTRUE(any_maxed_out)) {
-    cat(font_blue(word_wrap("\nOnly the first ", n, " other matches of each record are shown. Run `print(mo_uncertainties(), n = ...)` to view more entries, or save `mo_uncertainties()` to an object.")))
+    cat("\n")
+    message_("Only the first ", n, " other matches of each record are shown. Run {.help [`print(mo_uncertainties(), n = ...)`](AMR::mo_uncertainties)} to view more entries, or save {.help [{.fun mo_uncertainties}](AMR::mo_uncertainties)} to an object.")
   }
   if (isTRUE(more_than_50)) {
-    cat(font_blue(word_wrap("\nOnly the first 50 uncertainties are shown. Run `View(mo_uncertainties())` to view all entries, or save `mo_uncertainties()` to an object.")))
+    cat("\n")
+    message_("Only the first 50 uncertainties are shown. Run {.help [`View(mo_uncertainties())`](AMR::mo_uncertainties)} to view all entries, or save {.help [{.fun mo_uncertainties}](AMR::mo_uncertainties)} to an object.")
   }
 }
 
@@ -1032,7 +1030,7 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
 #' @noRd
 print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
   if (NROW(x) == 0) {
-    cat(font_blue(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of {.help [{.fun as.mo}](AMR::as.mo)} or any mo_*() function are stored.\n")))
+    message_("No renamed taxonomy to show. Only renamed taxonomy of the last call of {.help [{.fun as.mo}](AMR::as.mo)} or any {.help [{.fun mo_*}](AMR::mo_property)} function are stored.")
     return(invisible(NULL))
   }
 
@@ -1043,14 +1041,17 @@ print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
 
   rows <- seq_len(min(NROW(x), n))
 
-  message_(
-    "The following microorganism", ifelse(NROW(x) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":\n",
-    paste0("  ", AMR_env$bullet_icon, " ", font_italic(x$old[rows], collapse = NULL), x$ref_old[rows],
-      "  ->  ", font_italic(x$new[rows], collapse = NULL), x$ref_new[rows],
-      collapse = "\n"
-    ),
-    ifelse(NROW(x) > n, paste0("\n\nOnly the first ", n, " (out of ", NROW(x), ") are shown. Run {.code print(mo_renamed(), n = ...)} to view more entries (might be slow), or save {.fun mo_renamed} to an object."), "")
-  )
+  message_("The following microorganism", ifelse(NROW(x) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":")
+  old_format <- format(paste0(font_italic(x$old[rows], collapse = NULL), x$ref_old[rows])) # format() will set trailing spaces for textual alignment
+  old_format <- gsub(" ", "\u00a0", old_format, fixed = TRUE)
+  for (old_tax in rows) {
+    message_("\u00a0\u00a0", AMR_env$bullet_icon, " ", old_format[old_tax], " -> ", font_italic(x$new[old_tax]), x$ref_new[old_tax], as_note = FALSE)
+  }
+  if (NROW(x) > n) {
+    message_("\u00a0\u00a0Only the first ", n, " (out of ", NROW(x), ") are shown. Run {.code print(mo_renamed(), n = ...)} to view more entries (might be slow), or save {.fun mo_renamed} to an object.",
+      as_note = FALSE
+    )
+  }
 }
 
 # UNDOCUMENTED HELPER FUNCTIONS -------------------------------------------

@@ -304,7 +304,8 @@ search_type_in_df <- function(x, type, info = TRUE, add_col_prefix = TRUE) {
     if (!is.null(found)) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
-        message_("Column '", font_bold(found), "' found as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type,
+        message_(
+          "Column '", font_bold(found), "' found as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type,
           "}, but this column does not contain {.code TRUE}/{.code FALSE} values and was ignored."
         )
         found <- NULL
@@ -407,7 +408,7 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)
   }
-  if (pkg == "rstudioapi" && !in_rstudio()) {
+  if (pkg == "rstudioapi" && (!in_rstudio() || !interactive())) {
     # only allow rstudioapi to be imported if we're in RStudio
     return(NULL)
   }
@@ -464,15 +465,15 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
   }
 
   # cli inline markup -> plain-text equivalents (one level of glue nesting allowed)
-  msg <- apply_sub(msg, "\\{\\.fun (\\{[^}]+\\}|[^}]+)\\}",    function(c) paste0("`", resolve(c), "()`"))
-  msg <- apply_sub(msg, "\\{\\.arg (\\{[^}]+\\}|[^}]+)\\}",    function(c) paste0("`", resolve(c), "`"))
-  msg <- apply_sub(msg, "\\{\\.code (\\{[^}]+\\}|[^}]+)\\}",   function(c) paste0("`", resolve(c), "`"))
-  msg <- apply_sub(msg, "\\{\\.val (\\{[^}]+\\}|[^}]+)\\}",    function(c) paste0('"', resolve(c), '"'))
-  msg <- apply_sub(msg, "\\{\\.field (\\{[^}]+\\}|[^}]+)\\}",  function(c) paste0('"', resolve(c), '"'))
-  msg <- apply_sub(msg, "\\{\\.cls (\\{[^}]+\\}|[^}]+)\\}",    function(c) paste0("<", resolve(c), ">"))
-  msg <- apply_sub(msg, "\\{\\.pkg (\\{[^}]+\\}|[^}]+)\\}",    function(c) resolve(c))
+  msg <- apply_sub(msg, "\\{\\.fun (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "()`"))
+  msg <- apply_sub(msg, "\\{\\.arg (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "`"))
+  msg <- apply_sub(msg, "\\{\\.code (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "`"))
+  msg <- apply_sub(msg, "\\{\\.val (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0('"', resolve(c), '"'))
+  msg <- apply_sub(msg, "\\{\\.field (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0('"', resolve(c), '"'))
+  msg <- apply_sub(msg, "\\{\\.cls (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("<", resolve(c), ">"))
+  msg <- apply_sub(msg, "\\{\\.pkg (\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
   msg <- apply_sub(msg, "\\{\\.strong (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
-  msg <- apply_sub(msg, "\\{\\.emph (\\{[^}]+\\}|[^}]+)\\}",   function(c) paste0("*", resolve(c), "*"))
+  msg <- apply_sub(msg, "\\{\\.emph (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
   msg <- apply_sub(msg, "\\{\\.help ([^}]+)\\}", function(c) {
     # Handle [display text](topic) markdown link format: extract just the display text
     m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c))[[1L]]
@@ -483,8 +484,8 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
     m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c))[[1L]]
     if (length(m) >= 2L) m[2L] else paste0("?", resolve(c))
   })
-  msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}",    function(c) resolve(c))
-  msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}",                function(c) strsplit(resolve(c), " ", fixed = TRUE)[[1L]][1L])
+  msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
+  msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}", function(c) strsplit(resolve(c), " ", fixed = TRUE)[[1L]][1L])
 
   # bare {variable} or {expression} -> evaluate in caller's environment
   while (grepl("\\{[^{}]+\\}", msg)) {

@@ -60,11 +60,6 @@ sir_calc <- function(...,
   dots <- eval(substitute(alist(...)))
   stop_if(length(dots) == 0, "no variables selected", call = -2)
 
-  stop_if("also_single_tested" %in% names(dots),
-    "`also_single_tested` was replaced by `only_all_tested`.\n",
-    "Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.",
-    call = -2
-  )
   ndots <- length(dots)
 
   if (is.data.frame(dots_df)) {

@@ -191,12 +191,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
   previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
   x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
-  previously_coerced_mention <- x %in% AMR_env$ab_previously_coerced$x & !x %in% AMR_env$AB_lookup$ab & !x %in% AMR_env$AB_lookup$generalised_name
+  previously_coerced_mention <- !is.na(x) & x %in% AMR_env$ab_previously_coerced$x & !x %in% AMR_env$AB_lookup$ab & !x %in% AMR_env$AB_lookup$generalised_name
   if (any(previously_coerced_mention) && isTRUE(info) && message_not_thrown_before("as.ab", entire_session = TRUE)) {
+    only_one <- length(unique(which(x[which(previously_coerced)] %in% x_bak_clean))) == 1
     message_(
-      "Returning previously coerced ",
-      ifelse(length(unique(which(x[which(previously_coerced)] %in% x_bak_clean))) > 1, "value for an antimicrobial", "values for various antimicrobials"),
-      ". Run `ab_reset_session()` to reset this. This note will be shown once per session."
+      "Returning ", ifelse(only_one, "a ", ""), "previously coerced ",
+      ifelse(only_one, "value for an antimicrobial", "values for various antimicrobials"),
+      ". Run {.help [{.fun ab_reset_session}](AMR::ab_reset_session)} to reset this. This note will be shown once per session."
     )
   }
 
@@ -464,6 +465,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   }
 
   # Throw note about uncertainties
+  x_uncertain <- x_uncertain[!is.na(x_uncertain)]
+  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[!is.na(AMR_env$ab_previously_coerced$x), ]
   if (isTRUE(info) && length(x_uncertain) > 0 && fast_mode == FALSE) {
     x_uncertain <- unique(x_uncertain)
     if (message_not_thrown_before("as.ab", "uncertainties", x_bak)) {
