@@ -1,4 +1,4 @@
-# AMR 3.0.1.9039
+# AMR 3.0.1.9036
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -45,11 +45,6 @@
   * Removed the `"inverse"` option, which has now become redundant
 * `ab_group()` now returns values consist with the AMR selectors (#246)
 * Added two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
-* `message_()`, `warning_()`, `stop_()` now use `cli` markup when available, with plain-text fallback; removed `add_fn` parameter from `message_()`, `warning_()`, `word_wrap()`
-* New internal `cli_to_plain()` converts `cli` markup to plain text for non-cli path
-* All internal call sites updated to `cli` glue syntax
-* CI dev-version and old-tinytest workflows now only run on `main` branch pushes
-* Single-quoted literal values in messaging calls replaced with `{.val}`, `{.cls}`, `{.field}`, or `{.code}` markup throughout
 
 
 # AMR 3.0.1
