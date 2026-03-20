@@ -546,9 +546,5 @@ x2
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
 #>   3. If TZP is  R  then set to  R :
-#>      biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM),
-#>      imipenem/EDTA (IPE), imipenem/relebactam (IMR), meropenem (MEM),
-#>      meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), panipenem (PAN),
-#>      razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA), taniborbactam
-#>      (TAN), tebipenem (TBP)
+#>      biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM), imipenem/EDTA (IPE), imipenem/relebactam (IMR), meropenem (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), panipenem (PAN), razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA), taniborbactam (TAN), tebipenem (TBP)
 ```

@@ -296,6 +296,7 @@ if (require("ggplot2") && require("dplyr")) {
     )
 }
 #> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
+#>   (`?AMR::mo_is_gram_negative()`)
 
 # }
 ```

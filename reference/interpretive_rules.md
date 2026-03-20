@@ -306,11 +306,10 @@ head(a)
 
 # apply EUCAST rules: some results wil be changed
 b <- eucast_rules(a, overwrite = TRUE)
-#> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of
-#> class 'sir'. Transform them on beforehand, with e.g.:
-#>   - x %>% as.sir(CXM:AMX)
-#>   - x %>% mutate_if(is_sir_eligible, as.sir)
-#>   - x %>% mutate(across(where(is_sir_eligible), as.sir))
+#> Warning: in `eucast_rules()` (`?AMR::eucast_rules()`): not all columns with
+#> antimicrobial results are of class <sir>. Transform them on beforehand, e.g.: -
+#> x %>% as.sir(CXM:AMX) - x %>% mutate_if(is_sir_eligible, as.sir) - x %>%
+#> mutate(across(where(is_sir_eligible), as.sir))
 
 head(b)
 #>                       mo VAN AMX COL CAZ CXM PEN FOX
@@ -324,11 +323,10 @@ head(b)
 # do not apply EUCAST rules, but rather get a data.frame
 # containing all details about the transformations:
 c <- eucast_rules(a, overwrite = TRUE, verbose = TRUE)
-#> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of
-#> class 'sir'. Transform them on beforehand, with e.g.:
-#>   - x %>% as.sir(CXM:AMX)
-#>   - x %>% mutate_if(is_sir_eligible, as.sir)
-#>   - x %>% mutate(across(where(is_sir_eligible), as.sir))
+#> Warning: in `eucast_rules()` (`?AMR::eucast_rules()`): not all columns with
+#> antimicrobial results are of class <sir>. Transform them on beforehand, e.g.: -
+#> x %>% as.sir(CXM:AMX) - x %>% mutate_if(is_sir_eligible, as.sir) - x %>%
+#> mutate(across(where(is_sir_eligible), as.sir))
 head(c)
 #>   row col           mo_fullname old new rule          rule_group
 #> 1   1 AMX Staphylococcus aureus   -   S              Breakpoints

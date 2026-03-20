@@ -669,10 +669,10 @@ example_isolates
 
 # you can use the selectors separately to retrieve all possible antimicrobials:
 carbapenems()
-#> ℹ in `carbapenems()`: Imipenem/EDTA (`IPE`) and meropenem/nacubactam
-#>   (`MNC`) are not included since `only_treatable = TRUE`.
-#> ℹ This 'ab' vector was retrieved using `carbapenems()`, which should
-#>   normally be used inside a `dplyr` verb or `data.frame` call, e.g.:
+#> ℹ in `carbapenems()` (`?AMR::carbapenems()`): Imipenem/EDTA (`IPE`) and
+#>   meropenem/nacubactam (`MNC`) are not included since `only_treatable = TRUE`.
+#> ℹ This <ab> vector was retrieved using `carbapenems()`, which should normally
+#>   be used inside a dplyr verb or <data.frame> call, e.g.:
 #>   • your_data %>% select(carbapenems())
 #>   • your_data %>% select(column_a, column_b, carbapenems())
 #>   • your_data %>% filter(any(carbapenems() == "R"))
@@ -795,8 +795,8 @@ example_isolates[, carbapenems()]
 
 # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
 example_isolates[, c("mo", aminoglycosides())]
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> # A tibble: 2,000 × 5
 #>    mo           GEN   TOB   AMK   KAN  
 #>    <mo>         <sir> <sir> <sir> <sir>
@@ -818,11 +818,10 @@ example_isolates[, administrable_per_os()]
 #>   (flucloxacillin), 'AMX' (amoxicillin), 'AMC' (amoxicillin/clavulanic acid),
 #>   'AMP' (ampicillin), 'CXM' (cefuroxime), 'KAN' (kanamycin), 'TMP'
 #>   (trimethoprim), 'NIT' (nitrofurantoin), 'FOS' (fosfomycin), 'LNZ'
-#>   (linezolid), 'CIP' (ciprofloxacin), 'MFX' (moxifloxacin), 'VAN'
-#>   (vancomycin), 'TCY' (tetracycline), 'DOX' (doxycycline), 'ERY'
-#>   (erythromycin), 'CLI' (clindamycin), 'AZM' (azithromycin), 'MTR'
-#>   (metronidazole), 'CHL' (chloramphenicol), 'COL' (colistin), and 'RIF'
-#>   (rifampicin)
+#>   (linezolid), 'CIP' (ciprofloxacin), 'MFX' (moxifloxacin), 'VAN' (vancomycin),
+#>   'TCY' (tetracycline), 'DOX' (doxycycline), 'ERY' (erythromycin), 'CLI'
+#>   (clindamycin), 'AZM' (azithromycin), 'MTR' (metronidazole), 'CHL'
+#>   (chloramphenicol), 'COL' (colistin), and 'RIF' (rifampicin)
 #> # A tibble: 2,000 × 23
 #>    OXA   FLC   AMX   AMC   AMP   CXM   KAN   TMP   NIT   FOS   LNZ   CIP   MFX  
 #>    <sir> <sir> <sir> <sir> <sir> <sir> <sir> <sir> <sir> <sir> <sir> <sir> <sir>
@@ -937,8 +936,8 @@ example_isolates[all(carbapenems()), ]
 # filter with multiple antimicrobial selectors using c()
 example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> # A tibble: 26 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -996,11 +995,10 @@ example_isolates[, penicillins() & administrable_per_os()]
 #>   (flucloxacillin), 'AMX' (amoxicillin), 'AMC' (amoxicillin/clavulanic acid),
 #>   'AMP' (ampicillin), 'CXM' (cefuroxime), 'KAN' (kanamycin), 'TMP'
 #>   (trimethoprim), 'NIT' (nitrofurantoin), 'FOS' (fosfomycin), 'LNZ'
-#>   (linezolid), 'CIP' (ciprofloxacin), 'MFX' (moxifloxacin), 'VAN'
-#>   (vancomycin), 'TCY' (tetracycline), 'DOX' (doxycycline), 'ERY'
-#>   (erythromycin), 'CLI' (clindamycin), 'AZM' (azithromycin), 'MTR'
-#>   (metronidazole), 'CHL' (chloramphenicol), 'COL' (colistin), and 'RIF'
-#>   (rifampicin)
+#>   (linezolid), 'CIP' (ciprofloxacin), 'MFX' (moxifloxacin), 'VAN' (vancomycin),
+#>   'TCY' (tetracycline), 'DOX' (doxycycline), 'ERY' (erythromycin), 'CLI'
+#>   (clindamycin), 'AZM' (azithromycin), 'MTR' (metronidazole), 'CHL'
+#>   (chloramphenicol), 'COL' (colistin), and 'RIF' (rifampicin)
 #> # A tibble: 2,000 × 5
 #>    OXA   FLC   AMX   AMC   AMP  
 #>    <sir> <sir> <sir> <sir> <sir>
@@ -1067,7 +1065,7 @@ if (require("data.table")) {
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> Warning: It should never be needed to print an antimicrobial selector class. Are you
 #> using data.table? Then add the argument `with = FALSE`, see our examples at
-#> `?amr_selector`.
+#> `amr_selector()` (`?AMR::amr_selector()`).
 #> Class 'amr_selector'
 #> [1] IPM MEM
 if (require("data.table")) {
@@ -1093,8 +1091,8 @@ if (require("data.table")) {
 if (require("data.table")) {
   dt[, c("mo", aminoglycosides())]
 }
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #>                 mo   GEN   TOB   AMK   KAN
 #>               <mo> <sir> <sir> <sir> <sir>
 #>    1: B_ESCHR_COLI  <NA>  <NA>  <NA>  <NA>
@@ -1112,8 +1110,8 @@ if (require("data.table")) {
   dt[, c(carbapenems(), aminoglycosides())]
 }
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #>         IPM   MEM   GEN   TOB   AMK   KAN
 #>       <sir> <sir> <sir> <sir> <sir> <sir>
 #>    1:  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>

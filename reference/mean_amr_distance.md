@@ -131,8 +131,8 @@ y
 #> 9   I    R   28   16    2
 #> 10  J    S   22   16    4
 mean_amr_distance(y)
-#> ℹ Calculating mean AMR distance based on columns "amox", "cipr", "gent",
-#>   and "tobr"
+#> ℹ Calculating mean AMR distance based on columns "amox", "cipr", "gent", and
+#>   "tobr"
 #>  [1]  0.52677313  0.16501937  0.34372779 -0.05155946 -0.97765805  0.26901032
 #>  [7]  0.30452889 -0.58337098  0.36899264 -0.36546366
 y$amr_distance <- mean_amr_distance(y, is.mic(y))
@@ -158,8 +158,8 @@ if (require("dplyr")) {
     ) %>%
     arrange(check_id_C)
 }
-#> ℹ Calculating mean AMR distance based on columns "amox", "cipr", "gent",
-#>   and "tobr"
+#> ℹ Calculating mean AMR distance based on columns "amox", "cipr", "gent", and
+#>   "tobr"
 #>    id amox cipr gent tobr amr_distance check_id_C
 #> 1   C    S   27   16   32   0.34372779 0.00000000
 #> 2   I    R   28   16    2   0.36899264 0.02526485
@@ -180,8 +180,8 @@ if (require("dplyr")) {
     mutate(dist = mean_amr_distance(.)) %>%
     arrange(mo, dist)
 }
-#> ℹ Using column 'mo' as input for `mo_genus()`
-#> ℹ Using column 'mo' as input for `mo_species()`
+#> ℹ Using column 'mo' as input for `mo_genus()` (`?AMR::mo_genus()`)
+#> ℹ Using column 'mo' as input for `mo_species()` (`?AMR::mo_species()`)
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> ℹ Calculating mean AMR distance based on columns "TCY", "IPM", and "MEM"
 #> # A tibble: 63 × 5

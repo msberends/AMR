@@ -193,8 +193,7 @@ add_custom_microorganisms(
     SPECIES = "SPECIES"
   )
 )
-#> ℹ Added Bacteroides/Parabacteroides to the internal `microorganisms` data
-#>   set.
+#> ℹ Added Bacteroides/Parabacteroides to the internal `microorganisms` data set.
 mo_name("BACTEROIDES / PARABACTEROIDES")
 #> [1] "Bacteroides/Parabacteroides"
 mo_rank("BACTEROIDES / PARABACTEROIDES")

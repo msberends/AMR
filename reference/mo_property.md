@@ -485,10 +485,10 @@ mo_mycobank("Candida albicans")
 mo_mycobank("Candida krusei")
 #> [1] "337013"
 mo_mycobank("Candida krusei", keep_synonyms = TRUE)
-#> Warning: Function `as.mo()` returned one outdated taxonomic name. Use `as.mo(...,
-#> keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic
-#> names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning
-#> will be shown once per session.
+#> Warning: `as.mo()` (`?AMR::as.mo()`) returned one outdated taxonomic name. Use
+#> `keep_synonyms = FALSE` to clean the input to currently accepted taxonomic
+#> names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be
+#> shown once per session.
 #> [1] "268707"
 
 
@@ -581,7 +581,8 @@ if (require("dplyr")) {
     count(mo_genus(), sort = TRUE)
 }
 #> ℹ Using column 'mo' as input for `mo_is_gram_positive()`
-#> ℹ Using column 'mo' as input for `mo_genus()`
+#>   (`?AMR::mo_is_gram_positive()`)
+#> ℹ Using column 'mo' as input for `mo_genus()` (`?AMR::mo_genus()`)
 #> # A tibble: 18 × 2
 #>    `mo_genus()`        n
 #>    <chr>           <int>
@@ -609,7 +610,8 @@ if (require("dplyr")) {
     count(mo_genus(), sort = TRUE)
 }
 #> ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`
-#> ℹ Using column 'mo' as input for `mo_genus()`
+#>   (`?AMR::mo_is_intrinsic_resistant()`)
+#> ℹ Using column 'mo' as input for `mo_genus()` (`?AMR::mo_genus()`)
 #> # A tibble: 19 × 2
 #>    `mo_genus()`         n
 #>    <chr>            <int>

@@ -117,12 +117,14 @@ if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("x
   atc_online_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
 }
 #> Loading required namespace: rvest
-#> ℹ in `atc_online_property()`: no properties found for ATC QG51AA03. Please
-#>   check
-#>   https://atcddd.fhi.no/atcvet/atcvet_index/?code=QG51AA03&showdescription=no.
-#> ℹ in `atc_online_property()`: no properties found for ATC QJ01CA04. Please
-#>   check
-#>   https://atcddd.fhi.no/atcvet/atcvet_index/?code=QJ01CA04&showdescription=no.
+#> ℹ in `atc_online_property()` (`?AMR::atc_online_property()`): no properties
+#>   found for ATC QG51AA03. Please check
+#>   <https://atcddd.fhi.no/atcvet/atcvet_index/?code=QG51AA03&showdescription=no
+#>   this WHOCC webpage>.
+#> ℹ in `atc_online_property()` (`?AMR::atc_online_property()`): no properties
+#>   found for ATC QJ01CA04. Please check
+#>   <https://atcddd.fhi.no/atcvet/atcvet_index/?code=QJ01CA04&showdescription=no
+#>   this WHOCC webpage>.
 #> [1] "ANTIINFECTIVES FOR SYSTEMIC USE"        
 #> [2] "ANTIBACTERIALS FOR SYSTEMIC USE"        
 #> [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"

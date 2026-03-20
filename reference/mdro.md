@@ -297,8 +297,9 @@ susceptible isolates.
 
 ``` r
 out <- mdro(example_isolates)
-#> Warning: in `mdro()`: NA introduced for isolates where the available percentage of
-#> antimicrobial classes was below 50% (set with `pct_required_classes`)
+#> Warning: in `mdro()` (`?AMR::mdro()`): NA introduced for isolates where the available
+#> percentage of antimicrobial classes was below 50% (set with
+#> `pct_required_classes`)
 str(out)
 #>  Ord.factor w/ 4 levels "Negative"<"Multi-drug-resistant (MDR)"<..: NA NA 1 1 1 1 NA NA 1 1 ...
 table(out)
@@ -324,8 +325,9 @@ if (require("dplyr")) {
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `MDRO = mdro()`.
 #> Caused by warning:
-#> ! in `mdro()`: NA introduced for isolates where the available percentage of
-#> antimicrobial classes was below 50% (set with `pct_required_classes`)
+#> ! in `mdro()` (`?AMR::mdro()`): NA introduced for isolates where the available
+#> percentage of antimicrobial classes was below 50% (set with
+#> `pct_required_classes`)
 #> # A tibble: 3 × 2
 #>   MDRO                           n
 #>   <ord>                      <int>

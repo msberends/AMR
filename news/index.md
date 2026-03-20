@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9035
+## AMR 3.0.1.9036
 
 #### New
 
@@ -81,6 +81,10 @@
 
 #### Updates
 
+- Extensive `cli` integration for better message handling and clickable
+  links in messages and warnings
+  ([\#191](https://github.com/msberends/AMR/issues/191),
+  [\#265](https://github.com/msberends/AMR/issues/265))
 - [`mdro()`](https://amr-for-r.org/reference/mdro.md) now infers
   resistance for a *missing* base drug column from an *available*
   corresponding drug+inhibitor combination showing resistance (e.g.,

@@ -473,9 +473,9 @@ x <- custom_mdro_guideline(
 )
 x
 #> A set of custom MDRO rules:
-#>   1. If CIP is  R  and age is higher than 60 then: Elderly Type A
-#>   2. If ERY is  R  and age is higher than 60 then: Elderly Type B
-#>   3. Otherwise: Negative
+#>   1. If CIP is  R  and age is higher than 60 then: Elderly Type A
+#>   2. If ERY is  R  and age is higher than 60 then: Elderly Type B
+#>   3. Otherwise: Negative
 #> 
 #> Unmatched rows will return NA.
 #> Results will be of class 'factor', with ordered levels: Negative < Elderly Type A < Elderly Type B
@@ -518,9 +518,9 @@ my_guideline <- custom_mdro_guideline(
 )
 my_guideline
 #> A set of custom MDRO rules:
-#>   1. If AMX is  R  then: Custom MDRO 1
-#>   2. If all of cephalosporins_2nd() is  R  then: Custom MDRO 2
-#>   3. Otherwise: Negative
+#>   1. If AMX is  R  then: Custom MDRO 1
+#>   2. If all of cephalosporins_2nd() is  R  then: Custom MDRO 2
+#>   3. Otherwise: Negative
 #> 
 #> Unmatched rows will return NA.
 #> Results will be of class 'factor', with ordered levels: Negative < Custom MDRO 1 < Custom MDRO 2
@@ -528,8 +528,8 @@ my_guideline
 out <- mdro(example_isolates, guideline = my_guideline)
 #> ℹ For `cephalosporins_2nd()` using columns 'CXM' (cefuroxime) and 'FOX'
 #>   (cefoxitin)
-#> ℹ Assuming a filter on all 2 cephalosporins_2nd. Wrap around `all()` or
-#>   `any()` to prevent this note.
+#> ℹ Assuming a filter on all 2 cephalosporins_2nd. Wrap around `all()` or `any()`
+#>   to prevent this note.
 table(out)
 #> out
 #>      Negative Custom MDRO 1 Custom MDRO 2 

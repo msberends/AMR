@@ -598,8 +598,8 @@ example_isolates
 antibiogram(example_isolates,
   antimicrobials = c(aminoglycosides(), carbapenems())
 )
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> # An Antibiogram: 10 × 7
 #> # Type:           Non-WISCA with 95% CI
@@ -623,8 +623,8 @@ antibiogram(example_isolates,
   ab_transform = "atc",
   mo_transform = "gramstain"
 )
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> # An Antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  
@@ -714,8 +714,8 @@ antibiogram(example_isolates,
   antimicrobials = c(aminoglycosides(), carbapenems()),
   syndromic_group = "ward"
 )
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 #> # An Antibiogram: 14 × 8
 #> # Type:           Non-WISCA with 95% CI
@@ -741,7 +741,7 @@ antibiogram(example_isolates,
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
-#> ℹ Using column 'mo' as input for `mo_genus()`
+#> ℹ Using column 'mo' as input for `mo_genus()` (`?AMR::mo_genus()`)
 
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Spanish on Spanish systems)
@@ -753,8 +753,8 @@ antibiogram(ex1,
   ),
   language = "es"
 )
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> # An Antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
 #>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina

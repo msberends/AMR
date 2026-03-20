@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 18 March 2026.
+methodology remains unchanged. This page was generated on 20 March 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-03-18 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-03-18 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-03-18 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-03-20 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-03-20 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-03-20 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -169,8 +169,9 @@ our_data$bacteria <- as.mo(our_data$bacteria, info = TRUE)
 #> ℹ Retrieved values from the `microorganisms.codes` data set for "ESCCOL",
 #>   "KLEPNE", "STAAUR", and "STRPNE".
 #> ℹ Microorganism translation was uncertain for four microorganisms. Run
-#>   `mo_uncertainties()` to review these uncertainties, or use
-#>   `add_custom_microorganisms()` to add custom entries.
+#>   `mo_uncertainties()` (`?AMR::mo_uncertainties()`) to review these
+#>   uncertainties, or use `add_custom_microorganisms()`
+#>   (`?AMR::add_custom_microorganisms()`) to add custom entries.
 ```
 
 Apparently, there was some uncertainty about the translation to
@@ -179,46 +180,43 @@ taxonomic codes. Let’s check this:
 ``` r
 mo_uncertainties()
 #> Matching scores are based on the resemblance between the input and the full
-#> taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.
+#> taxonomic name, and the pathogenicity in humans. See `mo_matching_score()`
+#> (`?AMR::mo_matching_score()`).
 #> Colour keys:  0.000-0.549  0.550-0.649  0.650-0.749  0.750-1.000 
-#> 
-#> --------------------------------------------------------------------------------
+#> -------------------------------------------------------------------------------
 #> "E. coli" -> Escherichia coli (B_ESCHR_COLI, 0.688)
-#> Also matched: Enterococcus crotali (0.650), Escherichia coli coli
-#>               (0.643), Escherichia coli expressing (0.611), Enterobacter cowanii
-#>               (0.600), Enterococcus columbae (0.595), Enterococcus camelliae (0.591),
-#>               Enterococcus casseliflavus (0.577), Enterobacter cloacae cloacae
-#>               (0.571), Enterobacter cloacae complex (0.571), and Enterobacter cloacae
-#>               dissolvens (0.565)
-#> --------------------------------------------------------------------------------
+#> Also matched: Enterococcus crotali (0.650), Escherichia coli coli (0.643),
+#> Escherichia coli expressing (0.611), Enterobacter cowanii (0.600), Enterococcus
+#> columbae (0.595), Enterococcus camelliae (0.591), Enterococcus casseliflavus
+#> (0.577), Enterobacter cloacae cloacae (0.571), Enterobacter cloacae complex
+#> (0.571), and Enterobacter cloacae dissolvens (0.565)
+#> -------------------------------------------------------------------------------
 #> "K. pneumoniae" -> Klebsiella pneumoniae (B_KLBSL_PNMN, 0.786)
-#> Also matched: Klebsiella pneumoniae complex (0.707), Klebsiella
-#>               pneumoniae ozaenae (0.707), Klebsiella pneumoniae pneumoniae (0.688),
-#>               Klebsiella pneumoniae rhinoscleromatis (0.658), Klebsiella pasteurii
-#>               (0.500), Klebsiella planticola (0.500), Kingella potus (0.400),
-#>               Kluyveromyces pseudotropicale (0.386), Kluyveromyces pseudotropicalis
-#>               (0.363), and Kosakonia pseudosacchari (0.361)
-#> --------------------------------------------------------------------------------
+#> Also matched: Klebsiella pneumoniae complex (0.707), Klebsiella pneumoniae
+#> ozaenae (0.707), Klebsiella pneumoniae pneumoniae (0.688), Klebsiella
+#> pneumoniae rhinoscleromatis (0.658), Klebsiella pasteurii (0.500), Klebsiella
+#> planticola (0.500), Kingella potus (0.400), Kluyveromyces pseudotropicale
+#> (0.386), Kluyveromyces pseudotropicalis (0.363), and Kosakonia pseudosacchari
+#> (0.361)
+#> -------------------------------------------------------------------------------
 #> "S. aureus" -> Staphylococcus aureus (B_STPHY_AURS, 0.690)
-#> Also matched: Staphylococcus aureus aureus (0.643), Staphylococcus
-#>               argenteus (0.625), Staphylococcus aureus anaerobius (0.625),
-#>               Staphylococcus auricularis (0.615), Salmonella Aurelianis (0.595),
-#>               Salmonella Aarhus (0.588), Salmonella Amounderness (0.587),
-#>               Staphylococcus argensis (0.587), Streptococcus australis (0.587), and
-#>               Salmonella choleraesuis arizonae (0.562)
-#> --------------------------------------------------------------------------------
+#> Also matched: Staphylococcus aureus aureus (0.643), Staphylococcus argenteus
+#> (0.625), Staphylococcus aureus anaerobius (0.625), Staphylococcus auricularis
+#> (0.615), Salmonella Aurelianis (0.595), Salmonella Aarhus (0.588), Salmonella
+#> Amounderness (0.587), Staphylococcus argensis (0.587), Streptococcus australis
+#> (0.587), and Salmonella choleraesuis arizonae (0.562)
+#> -------------------------------------------------------------------------------
 #> "S. pneumoniae" -> Streptococcus pneumoniae (B_STRPT_PNMN, 0.750)
-#> Also matched: Streptococcus pseudopneumoniae (0.700), Streptococcus
-#>               phocae salmonis (0.552), Serratia proteamaculans quinovora (0.545),
-#>               Streptococcus pseudoporcinus (0.536), Staphylococcus piscifermentans
-#>               (0.533), Staphylococcus pseudintermedius (0.532), Serratia
-#>               proteamaculans proteamaculans (0.526), Streptococcus gallolyticus
-#>               pasteurianus (0.526), Salmonella Portanigra (0.524), and Streptococcus
-#>               periodonticum (0.519)
-#> 
-#> Only the first 10 other matches of each record are shown. Run
-#> `print(mo_uncertainties(), n = ...)` to view more entries, or save
-#> `mo_uncertainties()` to an object.
+#> Also matched: Streptococcus pseudopneumoniae (0.700), Streptococcus phocae
+#> salmonis (0.552), Serratia proteamaculans quinovora (0.545), Streptococcus
+#> pseudoporcinus (0.536), Staphylococcus piscifermentans (0.533), Staphylococcus
+#> pseudintermedius (0.532), Serratia proteamaculans proteamaculans (0.526),
+#> Streptococcus gallolyticus pasteurianus (0.526), Salmonella Portanigra (0.524),
+#> and Streptococcus periodonticum (0.519)
+#> ℹ Only the first 10 other matches of each record are shown. Run
+#>   `print(mo_uncertainties(), n = ...)` (`?AMR::mo_uncertainties()`) to view
+#>   more entries, or save `mo_uncertainties()` (`?AMR::mo_uncertainties()`) to an
+#>   object.
 ```
 
 That’s all good.
@@ -317,14 +315,13 @@ our_data <- our_data %>%
   mutate(first = first_isolate(info = TRUE))
 #> ℹ Determining first isolates using an episode length of 365 days
 #> ℹ Using column 'bacteria' as input for `col_mo`.
-#> ℹ Column 'first' is SIR eligible (despite only having empty values), since
-#>   it seems to be cefozopran (ZOP)
+#> ℹ Column 'first' is SIR eligible (despite only having empty values), since it
+#>   seems to be cefozopran (ZOP)
 #> ℹ Using column 'date' as input for `col_date`.
 #> ℹ Using column 'patient_id' as input for `col_patient_id`.
-#> ℹ Basing inclusion on all antimicrobial results, using a points threshold
-#>   of 2
+#> ℹ Basing inclusion on all antimicrobial results, using a points threshold of 2
 #> => Found 2,724 'phenotype-based' first isolates (90.8% of total where a
-#>    microbial ID was available)
+#> microbial ID was available)
 ```
 
 So only 91% is suitable for resistance analysis! We can now filter on it
@@ -628,8 +625,8 @@ antibiotic class selectors:
 ``` r
 antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()))
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 
@@ -667,8 +664,8 @@ antibiogram(example_isolates,
             antibiotics = aminoglycosides(),
             ab_transform = "name",
             language = "es")
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 ```
 
 | Patógeno      | Amikacina          | Gentamicina         | Kanamicina      | Tobramicina        |
@@ -711,8 +708,8 @@ on certain columns:
 antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()),
             syndromic_group = "ward")
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 
@@ -844,9 +841,10 @@ These functions can be used on their own:
 
 ``` r
 our_data_1st %>% resistance(AMX)
-#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
-#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ `resistance()` (`?AMR::resistance()`) assumes the EUCAST guideline and thus
+#>   considers the 'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options
+#>   (`?AMR::AMR-options`).
 #> ℹ This message will be shown once per session.
 #> [1] 0.4203377
 ```

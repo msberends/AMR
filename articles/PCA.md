@@ -78,9 +78,10 @@ resistance_data <- example_isolates %>%
     order, genus, AMC, CXM, CTX,
     CAZ, GEN, TOB, TMP, SXT
   ) # and select only relevant columns
-#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
-#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ `resistance()` (`?AMR::resistance()`) assumes the EUCAST guideline and thus
+#>   considers the 'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options
+#>   (`?AMR::AMR-options`).
 #> ℹ This message will be shown once per session.
 
 head(resistance_data)
@@ -104,8 +105,8 @@ variables, so we now only need to do:
 
 ``` r
 pca_result <- pca(resistance_data)
-#> ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT",
-#>   "TMP", and "TOB". Total observations available: 7.
+#> ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP",
+#>   and "TOB". Total observations available: 7.
 ```
 
 The result can be reviewed with the good old

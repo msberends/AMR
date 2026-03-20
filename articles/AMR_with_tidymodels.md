@@ -94,8 +94,8 @@ data <- example_isolates %>%
           mo = as.factor(mo_gramstain(mo))) %>%
   # drop NAs - the ones without a Gramstain (fungi, etc.)
   drop_na()
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For `betalactams()` using columns 'PEN' (benzylpenicillin), 'OXA'
 #>   (oxacillin), 'FLC' (flucloxacillin), 'AMX' (amoxicillin), 'AMC'
 #>   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), 'TZP'
@@ -144,8 +144,8 @@ a training set using `prep()`:
 
 ``` r
 prep(resistance_recipe)
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
+#>   'AMK' (amikacin), and 'KAN' (kanamycin)
 #> ℹ For `betalactams()` using columns 'PEN' (benzylpenicillin), 'OXA'
 #>   (oxacillin), 'FLC' (flucloxacillin), 'AMX' (amoxicillin), 'AMC'
 #>   (amoxicillin/clavulanic acid), 'AMP' (ampicillin), 'TZP'
@@ -153,17 +153,28 @@ prep(resistance_recipe)
 #>   (cefuroxime), 'FOX' (cefoxitin), 'CTX' (cefotaxime), 'CAZ' (ceftazidime),
 #>   'CRO' (ceftriaxone), 'IPM' (imipenem), and 'MEM' (meropenem)
 #> 
+#> 
 #> ── Recipe ──────────────────────────────────────────────────────────────────────
 #> 
-#> ── Inputs
+#> 
+#> 
+#> ── Inputs 
+#> 
 #> Number of variables by role
+#> 
 #> outcome:    1
 #> predictor: 20
 #> 
-#> ── Training information
+#> 
+#> 
+#> ── Training information 
+#> 
 #> Training data contained 1968 data points and no incomplete rows.
 #> 
-#> ── Operations
+#> 
+#> 
+#> ── Operations 
+#> 
 #> • Correlation filter on: AMX CTX | Trained
 ```
 
@@ -636,9 +647,10 @@ data_time <- example_isolates %>%
             .groups = "drop") %>% 
   filter(!is.na(res_AMX) & !is.na(res_AMC) & !is.na(res_CIP)) # Drop missing values
 #> ℹ Using column 'mo' as input for `col_mo`.
-#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
-#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ `resistance()` (`?AMR::resistance()`) assumes the EUCAST guideline and thus
+#>   considers the 'I' category susceptible. Set the `guideline` argument or the
+#>   `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options
+#>   (`?AMR::AMR-options`).
 #> ℹ This message will be shown once per session.
 
 data_time

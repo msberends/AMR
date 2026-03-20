@@ -660,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-03-18 09:41:20     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-03-18 09:41:20     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-03-18 09:41:21     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-03-18 09:41:21     1 DISK   genta       Escherich… human      18         
+#> 1 2026-03-20 16:07:38     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-03-20 16:07:38     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-03-20 16:07:39     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-03-20 16:07:39     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
@@ -671,17 +671,16 @@ sir_interpretation_history()
 # \donttest{
 # using parallel computing, which is available in base R:
 as.sir(df_wide, parallel = TRUE, info = TRUE)
-#> ℹ Returning previously coerced values for various antimicrobials. Run
-#>   `ab_reset_session()` to reset this. This note will be shown once per
-#>   session.
+#> ℹ Returning a previously coerced value for an antimicrobial. Run
+#>   `ab_reset_session()` (`?AMR::ab_reset_session()`) to reset this. This note
+#>   will be shown once per session.
 #> 
 #> Running in parallel mode using 3 out of 4 cores, on columns 'amoxicillin',
 #> 'cipro', 'tobra', 'genta', and 'ERY'...
-#>  DONE
+#> DONE
 #> 
-#> 
-#> ℹ Run `sir_interpretation_history()` to retrieve a logbook with all details
-#>   of the breakpoint interpretations.
+#> ℹ Run `sir_interpretation_history()` (`?AMR::sir_interpretation_history()`) to
+#>   retrieve a logbook with all details of the breakpoint interpretations.
 #>      microorganism amoxicillin cipro tobra genta ERY
 #> 1 Escherichia coli           S     I     S     S   R
 
@@ -797,44 +796,43 @@ if (require("dplyr")) {
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `across(...)`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `cipro = (function (x, ...) ...`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `across(...)`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `mics = (function (x, ...) ...`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `across(...)`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
-#> Interpreting MIC values: 'antibiotic' (TESTAB, test Antibiotic), CLSI
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
+#> Interpreting MIC values: 'antibiotic' (TESTAB, test Antibiotic), CLSI 2025...
+#> Interpreting disk diffusion zones: 'antibiotic' (TESTAB, test Antibiotic), CLSI
 #> 2025...
-#> Interpreting disk diffusion zones: 'antibiotic' (TESTAB, test Antibiotic),
-#> CLSI 2025...
-#> Interpreting disk diffusion zones: 'antibiotic' (TESTAB, test Antibiotic),
-#> CLSI 2025...
+#> Interpreting disk diffusion zones: 'antibiotic' (TESTAB, test Antibiotic), CLSI
+#> 2025...
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `cipro = (function (x, ...) ...`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `across(...)`.
 #> Caused by warning:
-#> ! Some MICs were converted to the nearest higher log2 level, following the
-#> CLSI interpretation guideline.
+#> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
+#> interpretation guideline.
 #>      microorganism amoxicillin cipro tobra genta ERY
 #> 1 Escherichia coli           8  <NA>     S     S   R
 
@@ -865,8 +863,8 @@ as.sir(
 # For CLEANING existing SIR values -------------------------------------
 
 as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
-#> Warning: in `as.sir()`: 3 results truncated (38%) that were invalid antimicrobial
-#> interpretations: "A", "B", and "C"
+#> Warning: in `as.sir()` (`?AMR::as.sir()`): 3 results truncated (38%) that were invalid
+#> antimicrobial interpretations: "A", "B", and "C"
 #> Class 'sir'
 #> [1] S    SDD  I    R    NI   <NA> <NA> <NA>
 as.sir("<= 0.002; S") # will return "S"
@@ -874,11 +872,13 @@ as.sir("<= 0.002; S") # will return "S"
 #> [1] S
 
 as.sir(c(1, 2, 3))
-#> ℹ in `as.sir()`: Interpreting input value 1 as "S", 2 as "I", and 3 as "R"
+#> ℹ in `as.sir()` (`?AMR::as.sir()`): Interpreting input value 1 as "S", 2 as
+#>   "I", and 3 as "R"
 #> Class 'sir'
 #> [1] S I R
 as.sir(c(1, 2, 3), S = 3, I = 2, R = 1)
-#> ℹ in `as.sir()`: Interpreting input value 1 as "R", 2 as "I", and 3 as "S"
+#> ℹ in `as.sir()` (`?AMR::as.sir()`): Interpreting input value 1 as "R", 2 as
+#>   "I", and 3 as "S"
 #> Class 'sir'
 #> [1] R I S
 

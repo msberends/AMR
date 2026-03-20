@@ -116,8 +116,8 @@ if (require("dplyr")) {
 #> ! Introducing NA: only 14 results available for PEN in group: order =
 #> "Lactobacillales", genus = "Enterococcus" (`minimum` = 30).
 #> ℹ Run `dplyr::last_dplyr_warnings()` to see the 72 remaining warnings.
-#> ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT",
-#>   "TMP", and "TOB". Total observations available: 7.
+#> ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP",
+#>   and "TOB". Total observations available: 7.
 #> Groups (n=4, named as 'order'):
 #> [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales" 
 #> 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9035</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Code coverage report</span></span>
-<span><span class="fu">covr</span><span class="fu">::</span><span class="fu">package_coverage</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">package_coverage</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>From the shell:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># CRAN check from parent directory</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">R</span> CMD check AMR</span></code></pre></div>
@@ -229,11 +229,14 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$currentversion</span><span class="st">"</span></span></code></pre></div>
 <p>The <code>+ 1</code> accounts for the fact that this PR’s squash commit is not yet on the default branch. Set <strong>both</strong> of these files to the resulting version string (and only once per PR, even across multiple commits):</p>
-<ol style="list-style-type: decimal"><li>
-<strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</li>
+<ol style="list-style-type: decimal"><li><p><strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</p></li>
 <li>
-<strong><code>NEWS.md</code></strong> — the top-level heading <code># AMR &lt;version&gt;</code>
-</li>
+<p><strong><code>NEWS.md</code></strong> — <strong>only replace line 1</strong> (the <code># AMR &lt;version&gt;</code> heading) with the new version number; do <strong>not</strong> create a new section. <code>NEWS.md</code> is a <strong>continuous log</strong> for the entire current <code>x.y.z.9nnn</code> development series: all changes since the last stable release accumulate under that single heading. After updating line 1, append the new change as a bullet under the appropriate sub-heading (<code>### New</code>, <code>### Fixes</code>, or <code>### Updates</code>).</p>
+<p>Style rules for <code>NEWS.md</code> entries:</p>
+<ul><li>Be <strong>extremely concise</strong> — one short line per item</li>
+<li>Do <strong>not</strong> end with a full stop (period)</li>
+<li>No verbose explanations; just the essential fact</li>
+</ul></li>
 </ol><p>If <code>git describe</code> fails (e.g. no tags exist in the environment), fall back to reading the current version from <code>DESCRIPTION</code> and adding 1 to the last numeric component — but only if no bump has already been made in this PR.</p>
 </div>
 <div class="section level4">

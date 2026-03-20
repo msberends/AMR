@@ -188,7 +188,20 @@ on the default branch. Set **both** of these files to the resulting
 version string (and only once per PR, even across multiple commits):
 
 1.  **`DESCRIPTION`** — the `Version:` field
-2.  **`NEWS.md`** — the top-level heading `# AMR <version>`
+
+2.  **`NEWS.md`** — **only replace line 1** (the `# AMR <version>`
+    heading) with the new version number; do **not** create a new
+    section. `NEWS.md` is a **continuous log** for the entire current
+    `x.y.z.9nnn` development series: all changes since the last stable
+    release accumulate under that single heading. After updating line 1,
+    append the new change as a bullet under the appropriate sub-heading
+    (`### New`, `### Fixes`, or `### Updates`).
+
+    Style rules for `NEWS.md` entries:
+
+    - Be **extremely concise** — one short line per item
+    - Do **not** end with a full stop (period)
+    - No verbose explanations; just the essential fact
 
 If `git describe` fails (e.g. no tags exist in the environment), fall
 back to reading the current version from `DESCRIPTION` and adding 1 to

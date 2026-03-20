@@ -125,8 +125,7 @@ ab_name("amox/clav")
 
 # reset to system default
 reset_AMR_locale()
-#> ℹ Using the English language (English) for the AMR package for this
-#>   session.
+#> ℹ Using the English language (English) for the AMR package for this session.
 ab_name("amox/clav")
 #> [1] "Amoxicillin/clavulanic acid"
 ```
