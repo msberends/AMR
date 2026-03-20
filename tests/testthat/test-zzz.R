@@ -36,6 +36,7 @@ test_that("test-zzz.R", {
   # functions used by import_fn()
   import_functions <- c(
     "%chin%" = "data.table",
+    "ansi_has_hyperlink_support" = "cli",
     "anti_join" = "dplyr",
     "as.data.table" = "data.table",
     "as_tibble" = "tibble",
@@ -79,6 +80,11 @@ test_that("test-zzz.R", {
     "freq.default" = "cleaner",
     "percentage" = "cleaner",
     # cli
+    "cli_abort" = "cli",
+    "cli_inform" = "cli",
+    "cli_warn" = "cli",
+    "code_highlight" = "cli",
+    "format_inline" = "cli",
     "symbol" = "cli",
     # curl
     "has_internet" = "curl",
@@ -161,7 +167,9 @@ test_that("test-zzz.R", {
     "vec_math" = "vctrs",
     "vec_ptype2" = "vctrs",
     "vec_ptype_abbr" = "vctrs",
-    "vec_ptype_full" = "vctrs"
+    "vec_ptype_full" = "vctrs",
+    # usethis
+    "use_course" = "usethis"
   )
 
   import_functions <- c(import_functions, call_functions)

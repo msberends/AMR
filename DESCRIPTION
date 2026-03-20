@@ -63,7 +63,8 @@ Suggests:
   tidyselect,
   tinytest,
   vctrs,
-  xml2
+  xml2,
+  usethis
 VignetteBuilder: knitr,rmarkdown
 URL: https://amr-for-r.org, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
