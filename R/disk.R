@@ -170,7 +170,7 @@ pillar_shaft.disk <- function(x, ...) {
 #' @export
 #' @noRd
 print.disk <- function(x, ...) {
-  cat("Class 'disk'\n")
+  cat(format_inline_("Class {.cls disk}\n"))
   print(as.integer(x), quote = FALSE)
 }
 

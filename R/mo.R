@@ -783,7 +783,7 @@ get_skimmers.mo <- function(column) {
 #' @noRd
 print.mo <- function(x, print.shortnames = FALSE, ...) {
   add_MO_lookup_to_AMR_env()
-  cat("Class 'mo'\n")
+  cat(format_inline_("Class {.cls mo}\n"))
   x_names <- names(x)
   if (is.null(x_names) & print.shortnames == TRUE) {
     x_names <- tryCatch(mo_shortname(x, ...), error = function(e) NULL)

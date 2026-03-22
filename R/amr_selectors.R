@@ -804,7 +804,7 @@ amr_select_exec <- function(function_name,
                 language = NULL,
                 tolower = TRUE
               ),
-              " (`", abx[abx %in% untreatable], "`)"
+              " ({.field ", abx[abx %in% untreatable], "})"
             ),
             quotes = FALSE,
             sort = TRUE,
@@ -837,10 +837,10 @@ amr_select_exec <- function(function_name,
 #' @export
 #' @noRd
 print.amr_selector <- function(x, ...) {
-  warning_("It should never be needed to print an antimicrobial selector class. Are you using {.pkg data.table}? Then add the argument {.code with = FALSE}, see our examples at {.help [{.fun amr_selector}](AMR::amr_selector)}.",
+  warning_("It should never be needed to print an antimicrobial selector class. Are you using {.pkg data.table}? Then add the argument {.arg with = FALSE}, see our examples at {.help [{.fun amr_selector}](AMR::amr_selector)}.",
     immediate = TRUE
   )
-  cat("Class 'amr_selector'\n")
+  cat(format_inline_("Class {.cls amr_selector}\n"))
   print(as.character(x), quote = FALSE)
 }
 
@@ -937,7 +937,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
     if (length(e1) > 1) {
       message_(
         "Assuming a filter on ", type, " ", length(e1), " ", gsub("[\\(\\)]", "", fn_name),
-        ". Wrap around `all()` or `any()` to prevent this note."
+        ". Wrap around {.fun all} or {.fun any} to prevent this note."
       )
     }
   }
@@ -962,7 +962,7 @@ any.amr_selector_any_all <- function(..., na.rm = FALSE) {
     if (length(e1) > 1) {
       message_(
         "Assuming a filter on ", type, " ", length(e1), " ", gsub("[\\(\\)]", "", fn_name),
-        ". Wrap around `all()` or `any()` to prevent this note."
+        ". Wrap around {.fun all} or {.fun any} to prevent this note."
       )
     }
   }
@@ -1071,12 +1071,12 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
         message_("No antimicrobial drugs of class '", ab_group, "' found", examples, ".")
       }
     } else {
-      agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
+      agents_formatted <- paste0("{.field ", font_bold(agents, collapse = NULL), "}")
       agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
       need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
       agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
       message_(
-        "For `", function_name, "(",
+        "For {.help [", function_name, "(",
         ifelse(function_name == "amr_class",
           paste0("\"", amr_class_args, "\""),
           ifelse(!is.null(call),
@@ -1084,7 +1084,7 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
             ""
           )
         ),
-        ")` using ",
+        ")](AMR::", function_name, ")} using ",
         ifelse(length(agents) == 1, "column ", "columns "),
         vector_and(agents_formatted, quotes = FALSE, sort = FALSE)
       )

@@ -346,7 +346,7 @@ sir_confidence_interval <- function(...,
   if (n < minimum) {
     warning_("Introducing NA: ",
       ifelse(n == 0, "no", paste("only", n)),
-      " results available for `sir_confidence_interval()` (`minimum` = ", minimum, ").",
+      " results available for {.help [{.fun sir_confidence_interval}](AMR::sir_confidence_interval)} (whilst {.arg minimum = ", minimum, "}).",
       call = FALSE
     )
     if (is.character(out)) {

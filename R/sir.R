@@ -601,7 +601,7 @@ as.sir.default <- function(x,
           ifelse(length(out7) > 0, paste0("7 as \"", out7, "\""), NA_character_),
           ifelse(length(out8) > 0, paste0("8 as \"", out8, "\""), NA_character_)
         )
-        message_("in {.help [{.fun as.sir}](AMR::as.sir)}: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
+        message_("{.help [{.fun as.sir}](AMR::as.sir)}: Interpreting input value ", vector_and(out[!is.na(out)], quotes = FALSE, sort = FALSE))
       }
 
       if (na_before != na_after) {
@@ -1351,7 +1351,7 @@ as_sir_method <- function(method_short,
   }
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (isTRUE(info) && message_not_thrown_before("as.sir", "intrinsic")) {
-      message_("in {.help [{.fun as.sir}](AMR::as.sir)}: using {.arg add_intrinsic_resistance} is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
+      message_("{.help [{.fun as.sir}](AMR::as.sir)}: using {.arg add_intrinsic_resistance} is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
     }
   }
 
@@ -2087,7 +2087,7 @@ get_skimmers.sir <- function(column) {
 #' @noRd
 print.sir <- function(x, ...) {
   x_name <- deparse(substitute(x))
-  cat("Class 'sir'\n")
+  cat(format_inline_("Class {.cls sir}\n"))
   # TODO for #170
   # if (!is.null(attributes(x)$guideline) && !all(is.na(attributes(x)$guideline))) {
   #   cat(font_blue(word_wrap("These values were interpreted using ",

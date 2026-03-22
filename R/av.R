@@ -526,7 +526,7 @@ type_sum.av <- function(x, ...) {
 #' @export
 #' @noRd
 print.av <- function(x, ...) {
-  cat("Class 'av'\n")
+  cat(format_inline_("Class {.cls av}\n"))
   print(as.character(x), quote = FALSE)
 }
 

@@ -72,7 +72,7 @@ COMMON_MIC_VALUES <- c(
 #' ```
 #' x <- random_mic(10)
 #' x
-#' #> Class 'mic'
+#' #> Class <mic>
 #' #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
 #'
 #' is.factor(x)
@@ -89,7 +89,7 @@ COMMON_MIC_VALUES <- c(
 #'
 #' ```
 #' x[x > 4]
-#' #> Class 'mic'
+#' #> Class <mic>
 #' #> [1] 16    8     8     64    >=128 32    32    16
 #'
 #' df <- data.frame(x, hospital = "A")
@@ -475,7 +475,7 @@ type_sum.mic <- function(x, ...) {
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
-  cat("Class 'mic'")
+  cat(format_inline_("Class {.cls mic}"))
   if (!identical(levels(x), VALID_MIC_LEVELS)) {
     cat(font_red(" with an outdated or altered structure - convert with `as.mic()` to update"))
   }

@@ -510,8 +510,8 @@ interpretive_rules <- function(x,
 
         ## Set base to R where base + enzyme inhibitor is R ----
         rule_current <- paste0(
-          ab_enzyme$base_name[i], " (`", col_base, "`) = R if ",
-          tolower(ab_enzyme$enzyme_name[i]), " (`", col_enzyme, "`) = R"
+          ab_enzyme$base_name[i], " ({.field ", col_base, "}) = R if ",
+          tolower(ab_enzyme$enzyme_name[i]), " ({.field ", col_enzyme, "}) = R"
         )
         if (isTRUE(info)) {
           cat(word_wrap(rule_current,
@@ -551,8 +551,8 @@ interpretive_rules <- function(x,
 
         ## Set base + enzyme inhibitor to S where base is S ----
         rule_current <- paste0(
-          ab_enzyme$enzyme_name[i], " (`", col_enzyme, "`) = S if ",
-          tolower(ab_enzyme$base_name[i]), " (`", col_base, "`) = S"
+          ab_enzyme$enzyme_name[i], " ({.field ", col_enzyme, "}) = S if ",
+          tolower(ab_enzyme$base_name[i]), " ({.field ", col_base, "}) = S"
         )
 
         if (isTRUE(info)) {

@@ -574,7 +574,7 @@ print.ab <- function(x, ...) {
       ), as_note = TRUE))
     }
   }
-  cat("Class 'ab'\n")
+  cat(format_inline_("Class {.cls ab}\n"))
   print(as.character(x), quote = FALSE)
 }
 

@@ -204,7 +204,7 @@ sir_calc <- function(...,
       ifelse(denominator == 0, "no", paste("only", denominator)),
       " results available",
       data_vars,
-      " (`minimum` = ", minimum, ").",
+      " (whilst {.arg minimum = ", minimum, "}).",
       call = FALSE
     )
     fraction <- NA_real_

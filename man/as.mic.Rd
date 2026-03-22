@@ -56,7 +56,7 @@ This class for MIC values is a quite a special data type: formally it is an orde
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{x <- random_mic(10)
 x
-#> Class 'mic'
+#> Class <mic>
 #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
 
 is.factor(x)
@@ -72,7 +72,7 @@ median(x)
 This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using \link{numeric} values in data analysis, e.g.:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{x[x > 4]
-#> Class 'mic'
+#> Class <mic>
 #> [1] 16    8     8     64    >=128 32    32    16
 
 df <- data.frame(x, hospital = "A")

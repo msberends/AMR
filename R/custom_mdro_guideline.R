@@ -260,7 +260,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     )
     if (identical(qry, "error")) {
       warning_("in {.help [{.fun custom_mdro_guideline}](AMR::custom_mdro_guideline)}: rule ", i,
-        " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
+        " ({.code ", as.character(guideline[[i]]$query), "}) was ignored because of this error message: ",
         AMR_env$err_msg,
         call = FALSE
       )

@@ -80,6 +80,7 @@ test_that("test-zzz.R", {
     "freq.default" = "cleaner",
     "percentage" = "cleaner",
     # cli
+    "ansi_has_hyperlink_support" = "cli",
     "cli_abort" = "cli",
     "cli_inform" = "cli",
     "cli_warn" = "cli",

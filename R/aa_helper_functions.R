@@ -383,27 +383,6 @@ pkg_is_available <- function(pkg, also_load = FALSE, min_version = NULL) {
   isTRUE(out)
 }
 
-highlight_code <- function(code) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
-    cli::code_highlight(code)
-  } else {
-    code
-  }
-}
-
-# Format a cli-markup string for output, with a plain-text fallback when cli is
-# unavailable. Unlike message_() / warning_() / stop_(), this function returns
-# the formatted string rather than emitting it, so it can be passed to any
-# output function (e.g. packageStartupMessage()).
-format_inline_ <- function(...) {
-  msg <- paste0(c(...), collapse = "")
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
-    cli::format_inline(msg)
-  } else {
-    cli_to_plain(msg, envir = parent.frame())
-  }
-}
-
 import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)
@@ -427,6 +406,27 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
       }
     }
   )
+}
+
+highlight_code <- function(code) {
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
+    cli::code_highlight(code)
+  } else {
+    code
+  }
+}
+
+# Format a cli-markup string for output, with a plain-text fallback when cli is
+# unavailable. Unlike message_() / warning_() / stop_(), this function returns
+# the formatted string rather than emitting it, so it can be passed to any
+# output function (e.g. packageStartupMessage()).
+format_inline_ <- function(...) {
+  msg <- paste0(c(...), collapse = "")
+  if (pkg_is_available("cli", min_version = "3.0.0")) {
+    cli::format_inline(msg)
+  } else {
+    cli_to_plain(msg, envir = parent.frame())
+  }
 }
 
 # Convert cli glue markup to plain text for the non-cli fallback path.
@@ -552,11 +552,39 @@ word_wrap <- function(...,
   gsub("(\n| )+$", "", wrapped)
 }
 
+simplify_help_markup <- function(msg) {
+  # {.help [{.fun fn}](pkg::fn)} -> {.code ?fn()}
+  # {.help [display](topic)}     -> {.code ?display}
+  msg <- gsub(
+    "\\{\\.help \\[\\{\\.fun ([^}]+)\\}\\]\\([^)]+\\)\\}",
+    "{.code ?\\1()}",
+    msg,
+    perl = TRUE
+  )
+  msg <- gsub(
+    "\\{\\.help \\[([^]]+)\\]\\([^)]+\\)\\}",
+    "{.code ?\\1}",
+    msg,
+    perl = TRUE
+  )
+  # {.topic [display](topic)} -> display (plain text)
+  msg <- gsub(
+    "\\{\\.topic \\[([^]]+)\\]\\([^)]+\\)\\}",
+    "\\1",
+    msg,
+    perl = TRUE
+  )
+  msg
+}
+
 message_ <- function(...,
                      appendLF = TRUE,
                      as_note = TRUE) {
   if (pkg_is_available("cli", min_version = "3.0.0")) {
     msg <- paste0(c(...), collapse = "")
+    if (!cli::ansi_has_hyperlink_support()) {
+      msg <- simplify_help_markup(msg)
+    }
     if (isTRUE(as_note)) {
       cli::cli_inform(c("i" = msg), .envir = parent.frame())
     } else {
@@ -573,6 +601,9 @@ warning_ <- function(...,
                      call = FALSE) {
   if (pkg_is_available("cli", min_version = "3.0.0")) {
     msg <- paste0(c(...), collapse = "")
+    if (!cli::ansi_has_hyperlink_support()) {
+      msg <- simplify_help_markup(msg)
+    }
     cli::cli_warn(msg, .envir = parent.frame())
   } else {
     plain_msg <- cli_to_plain(paste0(c(...), collapse = ""), envir = parent.frame())
@@ -585,6 +616,9 @@ warning_ <- function(...,
 # - wraps text to never break lines within words (plain-text fallback)
 stop_ <- function(..., call = TRUE) {
   msg <- paste0(c(...), collapse = "")
+  if (!cli::ansi_has_hyperlink_support()) {
+    msg <- simplify_help_markup(msg)
+  }
   if (pkg_is_available("cli", min_version = "3.0.0")) {
     if (isTRUE(call)) {
       call_obj <- sys.call(-1)

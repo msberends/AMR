@@ -180,7 +180,7 @@ atc_online_property <- function(atc_code,
       colnames(out) <- gsub("^atc.*", "atc", tolower(colnames(out)))
 
       if (length(out) == 0) {
-        message_("in {.help [{.fun atc_online_property}](AMR::atc_online_property)}: no properties found for ATC ", atc_code[i], ". Please check {.href ", atc_url, " this WHOCC webpage}.")
+        message_("{.help [{.fun atc_online_property}](AMR::atc_online_property)}: no properties found for ATC ", atc_code[i], ". Please check {.href ", atc_url, " this WHOCC webpage}.")
         returnvalue[i] <- NA
         next
       }
