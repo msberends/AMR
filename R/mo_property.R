@@ -270,7 +270,6 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
 }
 
 
-
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {

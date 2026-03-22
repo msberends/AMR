@@ -219,7 +219,6 @@ test_that("test-eucast_rules.R", {
   expect_inherits(eucast_dosage(c("tobra", "genta", "cipro")), "data.frame")
 
 
-
   x <- custom_eucast_rules(
     AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
     AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I",

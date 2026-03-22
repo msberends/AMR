@@ -423,6 +423,9 @@ highlight_code <- function(code) {
 format_inline_ <- function(...) {
   msg <- paste0(c(...), collapse = "")
   if (pkg_is_available("cli", min_version = "3.0.0")) {
+    if (!cli::ansi_has_hyperlink_support()) {
+      msg <- simplify_help_markup(msg)
+    }
     cli::format_inline(msg)
   } else {
     cli_to_plain(msg, envir = parent.frame())
