@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -424,10 +424,10 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-03-20 <span style="color: #949494;">16:07:38</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-03-20 <span style="color: #949494;">16:07:38</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-03-20 <span style="color: #949494;">16:07:39</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-03-20 <span style="color: #949494;">16:07:39</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-03-22 <span style="color: #949494;">19:51:52</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-03-22 <span style="color: #949494;">19:51:52</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-03-22 <span style="color: #949494;">19:51:52</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-03-22 <span style="color: #949494;">19:51:53</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
@@ -436,15 +436,15 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span><span class="co"># using parallel computing, which is available in base R:</span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Returning a previously coerced value for an antimicrobial. Run</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `ab_reset_session()` (`?AMR::ab_reset_session()`) to reset this. This note</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   will be shown once per session.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `?ab_reset_session()` to reset this. This note will be shown once per</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   session.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running in parallel mode using 3 out of 4 cores, on columns '<span style="font-weight: bold;">amoxicillin</span>',</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> '<span style="font-weight: bold;">cipro</span>', '<span style="font-weight: bold;">tobra</span>', '<span style="font-weight: bold;">genta</span>', and '<span style="font-weight: bold;">ERY</span>'...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;">DONE</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `sir_interpretation_history()` (`?AMR::sir_interpretation_history()`) to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   retrieve a logbook with all details of the breakpoint interpretations.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `?sir_interpretation_history()` to retrieve a logbook with all details of</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   the breakpoint interpretations.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism amoxicillin cipro tobra genta ERY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           S     I     S     S   R</span>
 <span class="r-in"><span></span></span>
@@ -556,7 +556,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span>  <span class="va">df_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">cipro</span><span class="op">:</span><span class="va">genta</span><span class="op">)</span>, <span class="va">as.sir</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminopenicillins()` using column '<span style="font-weight: bold;">amoxicillin</span>'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `?aminopenicillins()` using column <span style="color: #00BB00; font-weight: bold;">amoxicillin</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `mutate()`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning:</span>
@@ -611,7 +611,7 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"AMP"</span>,</span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span></span></span>
@@ -620,30 +620,28 @@ Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, 
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For CLEANING existing SIR values -------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"SDD"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"NI"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.sir()` (`?AMR::as.sir()`): 3 results truncated (38%) that were invalid</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B", and "C"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `?as.sir()`: 3 results truncated (38%) that were invalid antimicrobial</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> interpretations: "A", "B", and "C"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    SDD  I    R    NI   &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="st">"&lt;= 0.002; S"</span><span class="op">)</span> <span class="co"># will return "S"</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> in `as.sir()` (`?AMR::as.sir()`): Interpreting input value 1 as "S", 2 as</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   "I", and 3 as "R"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `?as.sir()`: Interpreting input value 1 as "S", 2 as "I", and 3 as "R"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S I R</span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, S <span class="op">=</span> <span class="fl">3</span>, I <span class="op">=</span> <span class="fl">2</span>, R <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> in `as.sir()` (`?AMR::as.sir()`): Interpreting input value 1 as "R", 2 as</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   "I", and 3 as "S"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'sir'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `?as.sir()`: Interpreting input value 1 as "R", 2 as "I", and 3 as "S"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R I S</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sir_data</span> <span class="op">&lt;-</span> <span class="fu">as.sir</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="fl">474</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">36</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"R"</span>, <span class="fl">370</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>

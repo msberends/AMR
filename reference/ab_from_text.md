@@ -123,13 +123,13 @@ With using `collapse`, this function will return a
 # straight from a true health care record:
 ab_from_text("28/03/2020 regular amoxicilliin 500mg po tid")
 #> [[1]]
-#> Class 'ab'
+#> Class <ab>
 #> [1] AMX
 #> 
 
 ab_from_text("500 mg amoxi po and 400mg cipro iv")
 #> [[1]]
-#> Class 'ab'
+#> Class <ab>
 #> [1] AMX CIP
 #> 
 ab_from_text("500 mg amoxi po and 400mg cipro iv", type = "dose")

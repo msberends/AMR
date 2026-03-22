@@ -372,16 +372,16 @@ if (require("dplyr")) {
       resistance
     )
 }
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
-#>   'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
+#>   AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `KAN = (function (..., minimum = 30, as_percent = FALSE,
 #>   only_all_tested = FALSE, ...`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
 #> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient"
-#> (`minimum` = 30).
+#> (whilst `minimum = 30`).
 #> # A tibble: 3 × 7
 #>   ward         GEN   TOB   AMK   KAN    IPM    MEM
 #>   <chr>      <dbl> <dbl> <dbl> <dbl>  <dbl>  <dbl>

@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,9 +228,9 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># apply EUCAST rules: some results wil be changed</span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `eucast_rules()` (`?AMR::eucast_rules()`): not all columns with</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial results are of class <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.: -</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> x <span style="color: #D7AF00;">%&gt;%</span> <span style="font-weight: bold;">as.sir</span><span style="color: #D7AF00;">(</span>CXM<span style="color: #D7AF00;">:</span>AMX<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span> <span style="font-weight: bold;">mutate_if</span><span style="color: #D7AF00;">(</span>is_sir_eligible, as.sir<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `?eucast_rules()`: not all columns with antimicrobial results are of class</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.: - x <span style="color: #D7AF00;">%&gt;%</span> <span style="font-weight: bold;">as.sir</span><span style="color: #D7AF00;">(</span>CXM<span style="color: #D7AF00;">:</span>AMX<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">mutate_if</span><span style="color: #D7AF00;">(</span>is_sir_eligible, as.sir<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">mutate</span><span style="color: #D7AF00;">(</span><span style="font-weight: bold;">across</span><span style="color: #BBBB00;">(</span><span style="font-weight: bold;">where</span><span style="color: #0000BB;">(</span>is_sir_eligible<span style="color: #0000BB;">)</span>, as.sir<span style="color: #BBBB00;">)</span><span style="color: #D7AF00;">)</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
@@ -245,9 +245,9 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="co"># do not apply EUCAST rules, but rather get a data.frame</span></span></span>
 <span class="r-in"><span><span class="co"># containing all details about the transformations:</span></span></span>
 <span class="r-in"><span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `eucast_rules()` (`?AMR::eucast_rules()`): not all columns with</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial results are of class <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.: -</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> x <span style="color: #D7AF00;">%&gt;%</span> <span style="font-weight: bold;">as.sir</span><span style="color: #D7AF00;">(</span>CXM<span style="color: #D7AF00;">:</span>AMX<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span> <span style="font-weight: bold;">mutate_if</span><span style="color: #D7AF00;">(</span>is_sir_eligible, as.sir<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `?eucast_rules()`: not all columns with antimicrobial results are of class</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.: - x <span style="color: #D7AF00;">%&gt;%</span> <span style="font-weight: bold;">as.sir</span><span style="color: #D7AF00;">(</span>CXM<span style="color: #D7AF00;">:</span>AMX<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">mutate_if</span><span style="color: #D7AF00;">(</span>is_sir_eligible, as.sir<span style="color: #D7AF00;">)</span> - x <span style="color: #D7AF00;">%&gt;%</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">mutate</span><span style="color: #D7AF00;">(</span><span style="font-weight: bold;">across</span><span style="color: #BBBB00;">(</span><span style="font-weight: bold;">where</span><span style="color: #0000BB;">(</span>is_sir_eligible<span style="color: #0000BB;">)</span>, as.sir<span style="color: #BBBB00;">)</span><span style="color: #D7AF00;">)</span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   row col           mo_fullname old new rule          rule_group</span>

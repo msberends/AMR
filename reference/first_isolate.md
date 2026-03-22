@@ -359,8 +359,7 @@ example_isolates[first_isolate(info = TRUE), ]
 # \donttest{
 # get all first Gram-negatives
 example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
-#> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
-#>   (`?AMR::mo_is_gram_negative()`)
+#> ℹ Using column 'mo' as input for `?mo_is_gram_negative()`
 #> # A tibble: 441 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>

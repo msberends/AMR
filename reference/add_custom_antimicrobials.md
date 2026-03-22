@@ -85,7 +85,7 @@ to add custom microorganisms.
 # \donttest{
 # returns a wildly guessed result:
 as.ab("testab")
-#> Class 'ab'
+#> Class <ab>
 #> [1] THA
 
 # now add a custom entry - it will be considered by as.ab() and
@@ -103,7 +103,7 @@ add_custom_antimicrobials(
 
 # "testab" is now a new antibiotic:
 as.ab("testab")
-#> Class 'ab'
+#> Class <ab>
 #> [1] TESTAB
 ab_name("testab")
 #> [1] "Test Antibiotic"
@@ -185,7 +185,7 @@ x
 #>   random_column coflu ampicillin
 #> 1    some value     S          R
 x[, betalactams()]
-#> ℹ For `betalactams()` using columns 'coflu' (co-fluampicil) and 'ampicillin'
+#> ℹ For `?betalactams()` using columns coflu (co-fluampicil) and ampicillin
 #>   coflu ampicillin
 #> 1     S          R
 # }

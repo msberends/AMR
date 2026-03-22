@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -255,10 +255,9 @@ Longest: 40</p>
 <code class="sourceCode R"><span><span class="co"># our transformed antibiotic columns</span></span>
 <span><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://msberends.github.io/cleaner/reference/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">AMC_ND2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `susceptibility()` (`?AMR::susceptibility()`) assumes the EUCAST guideline</span></span>
-<span><span class="co">#&gt;   and thus considers the 'I' category susceptible. Set the `guideline` argument</span></span>
-<span><span class="co">#&gt;   or the `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options</span></span>
-<span><span class="co">#&gt;   (`?AMR::AMR-options`).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `?susceptibility()` assumes the EUCAST guideline and thus considers the 'I'</span></span>
+<span><span class="co">#&gt;   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span></span>
+<span><span class="co">#&gt;   option to either "CLSI" or "EUCAST", see AMR-options.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> This message will be shown once per session.</span></span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered &gt; sir (numeric)<br>

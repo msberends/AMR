@@ -559,7 +559,7 @@ as.mo(c(
   "VRSA", # Vancomycin Resistant S. aureus
   115329001 # SNOMED CT code
 ))
-#> Class 'mo'
+#> Class <mo>
 #>  [1] B_STPHY_AURS B_STPHY_AURS B_STPHY_AURS B_STPHY_AURS B_STPHY_AURS
 #>  [6] B_STPHY_AURS B_STPHY_AURS B_STPHY_AURS B_STPHY_AURS B_STPHY_AURS
 #> [11] B_STPHY_AURS B_STPHY_AURS
@@ -571,7 +571,7 @@ as.mo(c(
   "Ureaplasmium urealytica",
   "Ureaplazma urealitycium"
 ))
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_URPLS_URLY B_URPLS_URLY B_URPLS_URLY B_URPLS_URLY
 
 # input will get cleaned up with the input given in the `cleaning_regex` argument,
@@ -580,21 +580,21 @@ cat(mo_cleaning_regex(), "\n")
 #> ([^A-Za-z- \(\)\[\]{}]+|([({]|\[).+([})]|\])|(^| )( ?[a-z-]+[-](resistant|susceptible) ?|e?spp([^a-z]+|$)|e?ssp([^a-z]+|$)|serogr.?up[a-z]*|e?ss([^a-z]+|$)|e?sp([^a-z]+|$)|var([^a-z]+|$)|serovar[a-z]*|sube?species|biovar[a-z]*|e?species|Ig[ADEGM]|e?subsp|biotype|titer|dummy)) 
 
 as.mo("Streptococcus group A")
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_STRPT_GRPA
 
 as.mo("S. epidermidis") # will remain species: B_STPHY_EPDR
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_STPHY_EPDR
 as.mo("S. epidermidis", Becker = TRUE) # will not remain species: B_STPHY_CONS
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_STPHY_CONS
 
 as.mo("S. pyogenes") # will remain species: B_STRPT_PYGN
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_STRPT_PYGN
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):

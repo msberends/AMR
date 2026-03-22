@@ -120,7 +120,7 @@ With using `collapse`, this function will return a
 ``` r
 av_from_text("28/03/2020 valaciclovir po tid")
 #> [[1]]
-#> Class 'av'
+#> Class <av>
 #> [1] VALA
 #> 
 av_from_text("28/03/2020 valaciclovir po tid", type = "admin")

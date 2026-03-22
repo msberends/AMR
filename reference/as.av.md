@@ -137,35 +137,35 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 ``` r
 # these examples all return "ACI", the ID of aciclovir:
 as.av("J05AB01")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("J 05 AB 01")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("Aciclovir")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("aciclo")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("   aciclo 123")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("ACICL")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("ACI")
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("Virorax") # trade name
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 as.av("Zovirax") # trade name
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 
 as.av("acyklofir") # severe spelling error, yet works
-#> Class 'av'
+#> Class <av>
 #> [1] ACI
 
 # use av_* functions to get a specific properties (see ?av_property);

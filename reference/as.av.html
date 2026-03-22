@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,35 +130,35 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># these examples all return "ACI", the ID of aciclovir:</span></span></span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"J05AB01"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"J 05 AB 01"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"Aciclovir"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"aciclo"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"   aciclo 123"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"ACICL"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"ACI"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"Virorax"</span><span class="op">)</span> <span class="co"># trade name</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"Zovirax"</span><span class="op">)</span> <span class="co"># trade name</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.av</span><span class="op">(</span><span class="st">"acyklofir"</span><span class="op">)</span> <span class="co"># severe spelling error, yet works</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'av'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;av&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ACI</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use av_* functions to get a specific properties (see ?av_property);</span></span></span>

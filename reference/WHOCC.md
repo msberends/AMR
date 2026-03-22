@@ -29,7 +29,7 @@ unlike any other info from this package.** See
 
 ``` r
 as.ab("meropenem")
-#> Class 'ab'
+#> Class <ab>
 #> [1] MEM
 ab_name("J01DH02")
 #> [1] "Meropenem"

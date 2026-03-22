@@ -86,7 +86,7 @@ as.sir(
   ab = "ampicillin", # and `ab` with as.ab()
   guideline = "EUCAST"
 )
-#> Class 'sir'
+#> Class <sir>
 #> [1] R
 
 # interpret whole data set, pretend to be all from urinary tract infections:

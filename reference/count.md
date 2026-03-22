@@ -188,17 +188,15 @@ calculate microbial resistance and susceptibility.
 
 # base R ------------------------------------------------------------
 count_resistant(example_isolates$AMX) # counts "R"
-#> ℹ `count_resistant()` (`?AMR::count_resistant()`) assumes the EUCAST guideline
-#>   and thus considers the 'I' category susceptible. Set the `guideline` argument
-#>   or the `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options
-#>   (`?AMR::AMR-options`).
+#> ℹ `?count_resistant()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see AMR-options.
 #> ℹ This message will be shown once per session.
 #> [1] 804
 count_susceptible(example_isolates$AMX) # counts "S" and "I"
-#> ℹ `count_susceptible()` (`?AMR::count_susceptible()`) assumes the EUCAST
-#>   guideline and thus considers the 'I' category susceptible. Set the
-#>   `guideline` argument or the `AMR_guideline` option to either "CLSI" or
-#>   "EUCAST", see AMR-options (`?AMR::AMR-options`).
+#> ℹ `?count_susceptible()` assumes the EUCAST guideline and thus considers the
+#>   'I' category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see AMR-options.
 #> ℹ This message will be shown once per session.
 #> [1] 546
 count_all(example_isolates$AMX) # counts "S", "I" and "R"
@@ -229,10 +227,9 @@ n_sir(example_isolates$AMX)
 count_susceptible(example_isolates$AMX)
 #> [1] 546
 susceptibility(example_isolates$AMX) * n_sir(example_isolates$AMX)
-#> ℹ `susceptibility()` (`?AMR::susceptibility()`) assumes the EUCAST guideline
-#>   and thus considers the 'I' category susceptible. Set the `guideline` argument
-#>   or the `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options
-#>   (`?AMR::AMR-options`).
+#> ℹ `?susceptibility()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see AMR-options.
 #> ℹ This message will be shown once per session.
 #> [1] 546
 
@@ -279,8 +276,8 @@ if (require("dplyr")) {
     group_by(ward) %>%
     count_df(translate = FALSE)
 }
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB' (tobramycin),
-#>   'AMK' (amikacin), and 'KAN' (kanamycin)
+#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
+#>   AMK (amikacin), and KAN (kanamycin)
 #> # A tibble: 12 × 4
 #>    ward       antibiotic interpretation value
 #>    <chr>      <chr>      <ord>          <int>

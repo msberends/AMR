@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,14 +179,13 @@ package.</p>
 <span>          mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># drop NAs - the ones without a Gramstain (fungi, etc.)</span></span>
 <span>  <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns '<span style="font-weight: bold;">GEN</span>' (gentamicin), '<span style="font-weight: bold;">TOB</span>' (tobramycin),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">AMK</span>' (amikacin), and '<span style="font-weight: bold;">KAN</span>' (kanamycin)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `betalactams()` using columns '<span style="font-weight: bold;">PEN</span>' (benzylpenicillin), '<span style="font-weight: bold;">OXA</span>'</span></span>
-<span><span class="co">#&gt;   (oxacillin), '<span style="font-weight: bold;">FLC</span>' (flucloxacillin), '<span style="font-weight: bold;">AMX</span>' (amoxicillin), '<span style="font-weight: bold;">AMC</span>'</span></span>
-<span><span class="co">#&gt;   (amoxicillin/clavulanic acid), '<span style="font-weight: bold;">AMP</span>' (ampicillin), '<span style="font-weight: bold;">TZP</span>'</span></span>
-<span><span class="co">#&gt;   (piperacillin/tazobactam), '<span style="font-weight: bold;">CZO</span>' (cefazolin), '<span style="font-weight: bold;">FEP</span>' (cefepime), '<span style="font-weight: bold;">CXM</span>'</span></span>
-<span><span class="co">#&gt;   (cefuroxime), '<span style="font-weight: bold;">FOX</span>' (cefoxitin), '<span style="font-weight: bold;">CTX</span>' (cefotaxime), '<span style="font-weight: bold;">CAZ</span>' (ceftazidime),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">CRO</span>' (ceftriaxone), '<span style="font-weight: bold;">IPM</span>' (imipenem), and '<span style="font-weight: bold;">MEM</span>' (meropenem)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMK</span> (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?betalactams()` using columns <span style="color: #00BB00; font-weight: bold;">PEN</span> (benzylpenicillin), <span style="color: #00BB00; font-weight: bold;">OXA</span> (oxacillin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">FLC</span> (flucloxacillin), <span style="color: #00BB00; font-weight: bold;">AMX</span> (amoxicillin), <span style="color: #00BB00; font-weight: bold;">AMC</span> (amoxicillin/clavulanic acid),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMP</span> (ampicillin), <span style="color: #00BB00; font-weight: bold;">TZP</span> (piperacillin/tazobactam), <span style="color: #00BB00; font-weight: bold;">CZO</span> (cefazolin), <span style="color: #00BB00; font-weight: bold;">FEP</span></span></span>
+<span><span class="co">#&gt;   (cefepime), <span style="color: #00BB00; font-weight: bold;">CXM</span> (cefuroxime), <span style="color: #00BB00; font-weight: bold;">FOX</span> (cefoxitin), <span style="color: #00BB00; font-weight: bold;">CTX</span> (cefotaxime), <span style="color: #00BB00; font-weight: bold;">CAZ</span></span></span>
+<span><span class="co">#&gt;   (ceftazidime), <span style="color: #00BB00; font-weight: bold;">CRO</span> (ceftriaxone), <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem), and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span></span></code></pre></div>
 <p><strong>Explanation:</strong></p>
 <ul>
 <li>
@@ -227,14 +226,13 @@ we have with <code>step_corr()</code>, the necessary parameters can be
 estimated from a training set using <code>prep()</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">prep</span><span class="op">(</span><span class="va">resistance_recipe</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns '<span style="font-weight: bold;">GEN</span>' (gentamicin), '<span style="font-weight: bold;">TOB</span>' (tobramycin),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">AMK</span>' (amikacin), and '<span style="font-weight: bold;">KAN</span>' (kanamycin)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `betalactams()` using columns '<span style="font-weight: bold;">PEN</span>' (benzylpenicillin), '<span style="font-weight: bold;">OXA</span>'</span></span>
-<span><span class="co">#&gt;   (oxacillin), '<span style="font-weight: bold;">FLC</span>' (flucloxacillin), '<span style="font-weight: bold;">AMX</span>' (amoxicillin), '<span style="font-weight: bold;">AMC</span>'</span></span>
-<span><span class="co">#&gt;   (amoxicillin/clavulanic acid), '<span style="font-weight: bold;">AMP</span>' (ampicillin), '<span style="font-weight: bold;">TZP</span>'</span></span>
-<span><span class="co">#&gt;   (piperacillin/tazobactam), '<span style="font-weight: bold;">CZO</span>' (cefazolin), '<span style="font-weight: bold;">FEP</span>' (cefepime), '<span style="font-weight: bold;">CXM</span>'</span></span>
-<span><span class="co">#&gt;   (cefuroxime), '<span style="font-weight: bold;">FOX</span>' (cefoxitin), '<span style="font-weight: bold;">CTX</span>' (cefotaxime), '<span style="font-weight: bold;">CAZ</span>' (ceftazidime),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">CRO</span>' (ceftriaxone), '<span style="font-weight: bold;">IPM</span>' (imipenem), and '<span style="font-weight: bold;">MEM</span>' (meropenem)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMK</span> (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?betalactams()` using columns <span style="color: #00BB00; font-weight: bold;">PEN</span> (benzylpenicillin), <span style="color: #00BB00; font-weight: bold;">OXA</span> (oxacillin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">FLC</span> (flucloxacillin), <span style="color: #00BB00; font-weight: bold;">AMX</span> (amoxicillin), <span style="color: #00BB00; font-weight: bold;">AMC</span> (amoxicillin/clavulanic acid),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMP</span> (ampicillin), <span style="color: #00BB00; font-weight: bold;">TZP</span> (piperacillin/tazobactam), <span style="color: #00BB00; font-weight: bold;">CZO</span> (cefazolin), <span style="color: #00BB00; font-weight: bold;">FEP</span></span></span>
+<span><span class="co">#&gt;   (cefepime), <span style="color: #00BB00; font-weight: bold;">CXM</span> (cefuroxime), <span style="color: #00BB00; font-weight: bold;">FOX</span> (cefoxitin), <span style="color: #00BB00; font-weight: bold;">CTX</span> (cefotaxime), <span style="color: #00BB00; font-weight: bold;">CAZ</span></span></span>
+<span><span class="co">#&gt;   (ceftazidime), <span style="color: #00BB00; font-weight: bold;">CRO</span> (ceftriaxone), <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem), and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────────────────</span></span></span>
@@ -749,10 +747,9 @@ into a structured time-series format.</p>
 <span>            .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">res_AMX</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">res_AMC</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">res_CIP</span><span class="op">)</span><span class="op">)</span> <span class="co"># Drop missing values</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Using column '<span style="font-weight: bold;">mo</span>' as input for `col_mo`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `resistance()` (`?AMR::resistance()`) assumes the EUCAST guideline and thus</span></span>
-<span><span class="co">#&gt;   considers the 'I' category susceptible. Set the `guideline` argument or the</span></span>
-<span><span class="co">#&gt;   `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options</span></span>
-<span><span class="co">#&gt;   (`?AMR::AMR-options`).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `?resistance()` assumes the EUCAST guideline and thus considers the 'I'</span></span>
+<span><span class="co">#&gt;   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span></span>
+<span><span class="co">#&gt;   option to either "CLSI" or "EUCAST", see AMR-options.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> This message will be shown once per session.</span></span>
 <span></span>
 <span><span class="va">data_time</span></span>

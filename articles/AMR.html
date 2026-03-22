@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 20 March 2026.</p>
+generated on 22 March 2026.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -147,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2026-03-20</td>
+<td align="center">2026-03-22</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2026-03-20</td>
+<td align="center">2026-03-22</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2026-03-20</td>
+<td align="center">2026-03-22</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -224,16 +224,16 @@ short, but still human readable. More importantly, <code><a href="../reference/a
 supports all kinds of input:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Class 'mo'</span></span>
+<span><span class="co">#&gt; Class <span style="color: #0000BB;">&lt;mo&gt;</span></span></span>
 <span><span class="co">#&gt; [1] B_KLBSL_PNMN</span></span>
 <span><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"K. pneumoniae"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Class 'mo'</span></span>
+<span><span class="co">#&gt; Class <span style="color: #0000BB;">&lt;mo&gt;</span></span></span>
 <span><span class="co">#&gt; [1] B_KLBSL_PNMN</span></span>
 <span><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"KLEPNE"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Class 'mo'</span></span>
+<span><span class="co">#&gt; Class <span style="color: #0000BB;">&lt;mo&gt;</span></span></span>
 <span><span class="co">#&gt; [1] B_KLBSL_PNMN</span></span>
 <span><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"KLPN"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Class 'mo'</span></span>
+<span><span class="co">#&gt; Class <span style="color: #0000BB;">&lt;mo&gt;</span></span></span>
 <span><span class="co">#&gt; [1] B_KLBSL_PNMN</span></span></code></pre></div>
 <p>The first character in above codes denote their taxonomic kingdom,
 such as Bacteria (B), Fungi (F), and Protozoa (P).</p>
@@ -266,16 +266,14 @@ user input can be used:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Retrieved values from the `microorganisms.codes` data set for "ESCCOL",</span></span>
 <span><span class="co">#&gt;   "KLEPNE", "STAAUR", and "STRPNE".</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Microorganism translation was uncertain for four microorganisms. Run</span></span>
-<span><span class="co">#&gt;   `mo_uncertainties()` (`?AMR::mo_uncertainties()`) to review these</span></span>
-<span><span class="co">#&gt;   uncertainties, or use `add_custom_microorganisms()`</span></span>
-<span><span class="co">#&gt;   (`?AMR::add_custom_microorganisms()`) to add custom entries.</span></span></code></pre></div>
+<span><span class="co">#&gt;   `?mo_uncertainties()` to review these uncertainties, or use</span></span>
+<span><span class="co">#&gt;   `?add_custom_microorganisms()` to add custom entries.</span></span></code></pre></div>
 <p>Apparently, there was some uncertainty about the translation to
 taxonomic codes. Let’s check this:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as.mo.html">mo_uncertainties</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Matching scores are based on the resemblance between the input and the full</span></span>
-<span><span class="co">#&gt; taxonomic name, and the pathogenicity in humans. See `mo_matching_score()`</span></span>
-<span><span class="co">#&gt; (`?AMR::mo_matching_score()`).</span></span>
+<span><span class="co">#&gt; taxonomic name, and the pathogenicity in humans. See `?mo_matching_score()`.</span></span>
 <span><span class="co">#&gt; Colour keys: <span style="color: #080808; background-color: #FF5F5F;"> 0.000-0.549 </span><span style="color: #080808; background-color: #FFD787;"> 0.550-0.649 </span><span style="color: #080808; background-color: #FFFF87;"> 0.650-0.749 </span><span style="color: #080808; background-color: #5FD7AF;"> 0.750-1.000 </span></span></span>
 <span><span class="co">#&gt; <span style="color: #B2B2B2;">-------------------------------------------------------------------------------</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">"E. coli"</span> -&gt; <span style="font-weight: bold; font-style: italic;">Escherichia coli</span> (B_ESCHR_COLI, <span style="color: #080808; background-color: #FFFF87;">0.688</span>)</span></span>
@@ -307,10 +305,9 @@ taxonomic codes. Let’s check this:</p>
 <span><span class="co">#&gt; <span style="font-style: italic;">pseudintermedius</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.532</span>), <span style="font-style: italic;">Serratia proteamaculans proteamaculans</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.526</span>),</span></span>
 <span><span class="co">#&gt; <span style="font-style: italic;">Streptococcus gallolyticus pasteurianus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.526</span>), <span style="font-style: italic;">Salmonella</span> Portanigra<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.524</span>),</span></span>
 <span><span class="co">#&gt; and <span style="font-style: italic;">Streptococcus periodonticum</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.519</span>)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Only the first 10 other matches of each record are shown. Run</span></span>
-<span><span class="co">#&gt;   `print(mo_uncertainties(), n = ...)` (`?AMR::mo_uncertainties()`) to view</span></span>
-<span><span class="co">#&gt;   more entries, or save `mo_uncertainties()` (`?AMR::mo_uncertainties()`) to an</span></span>
-<span><span class="co">#&gt;   object.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Only the first 10 other matches of each record are shown. Run ``</span></span>
+<span><span class="co">#&gt;   ?`print(mo_uncertainties(), n = ...)` `` to view more entries, or save</span></span>
+<span><span class="co">#&gt;   `?mo_uncertainties()` to an object.</span></span></code></pre></div>
 <p>That’s all good.</p>
 </div>
 <div class="section level3">
@@ -522,7 +519,8 @@ in:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using column '<span style="font-weight: bold;">GEN</span>' (gentamicin)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using column <span style="color: #00BB00; font-weight: bold;">GEN</span></span></span>
+<span><span class="co">#&gt; (gentamicin)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,724 × 2</span></span></span>
 <span><span class="co">#&gt;    date       GEN  </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
@@ -540,7 +538,7 @@ in:</p>
 <span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `betalactams()` using columns '<span style="font-weight: bold;">AMX</span>' (amoxicillin) and '<span style="font-weight: bold;">AMC</span>'</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?betalactams()` using columns <span style="color: #00BB00; font-weight: bold;">AMX</span> (amoxicillin) and <span style="color: #00BB00; font-weight: bold;">AMC</span></span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,724 × 3</span></span></span>
 <span><span class="co">#&gt;    bacteria     AMX   AMC  </span></span>
@@ -577,7 +575,8 @@ in:</p>
 <span><span class="co"># filtering using AB selectors is also possible:</span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using column '<span style="font-weight: bold;">GEN</span>' (gentamicin)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using column <span style="color: #00BB00; font-weight: bold;">GEN</span></span></span>
+<span><span class="co">#&gt; (gentamicin)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 981 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span></span></span>
@@ -595,7 +594,7 @@ in:</p>
 <span></span>
 <span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `betalactams()` using columns '<span style="font-weight: bold;">AMX</span>' (amoxicillin) and '<span style="font-weight: bold;">AMC</span>'</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?betalactams()` using columns <span style="color: #00BB00; font-weight: bold;">AMX</span> (amoxicillin) and <span style="color: #00BB00; font-weight: bold;">AMC</span></span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 462 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
@@ -614,7 +613,7 @@ in:</p>
 <span></span>
 <span><span class="co"># even works in base R (since R 3.0):</span></span>
 <span><span class="va">our_data_1st</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">betalactams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `betalactams()` using columns '<span style="font-weight: bold;">AMX</span>' (amoxicillin) and '<span style="font-weight: bold;">AMC</span>'</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?betalactams()` using columns <span style="color: #00BB00; font-weight: bold;">AMX</span> (amoxicillin) and <span style="color: #00BB00; font-weight: bold;">AMC</span></span></span>
 <span><span class="co">#&gt;   (amoxicillin/clavulanic acid)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 462 × 9</span></span></span>
 <span><span class="co">#&gt;    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first</span></span>
@@ -696,9 +695,9 @@ previously mentioned antibiotic class selectors:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns '<span style="font-weight: bold;">GEN</span>' (gentamicin), '<span style="font-weight: bold;">TOB</span>' (tobramycin),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">AMK</span>' (amikacin), and '<span style="font-weight: bold;">KAN</span>' (kanamycin)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns '<span style="font-weight: bold;">IPM</span>' (imipenem) and '<span style="font-weight: bold;">MEM</span>' (meropenem)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMK</span> (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -827,8 +826,8 @@ language to be Spanish using the <code>language</code> argument:</p>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>            ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>            language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns '<span style="font-weight: bold;">GEN</span>' (gentamicin), '<span style="font-weight: bold;">TOB</span>' (tobramycin),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">AMK</span>' (amikacin), and '<span style="font-weight: bold;">KAN</span>' (kanamycin)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMK</span> (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="15%">
@@ -953,9 +952,9 @@ argument must be used. This can be any column in the data, or e.g. an
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            syndromic_group <span class="op">=</span> <span class="st">"ward"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns '<span style="font-weight: bold;">GEN</span>' (gentamicin), '<span style="font-weight: bold;">TOB</span>' (tobramycin),</span></span>
-<span><span class="co">#&gt;   '<span style="font-weight: bold;">AMK</span>' (amikacin), and '<span style="font-weight: bold;">KAN</span>' (kanamycin)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns '<span style="font-weight: bold;">IPM</span>' (imipenem) and '<span style="font-weight: bold;">MEM</span>' (meropenem)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin),</span></span>
+<span><span class="co">#&gt;   <span style="color: #00BB00; font-weight: bold;">AMK</span> (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For `?carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="10%">
@@ -1282,10 +1281,9 @@ I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equa
 own:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `resistance()` (`?AMR::resistance()`) assumes the EUCAST guideline and thus</span></span>
-<span><span class="co">#&gt;   considers the 'I' category susceptible. Set the `guideline` argument or the</span></span>
-<span><span class="co">#&gt;   `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options</span></span>
-<span><span class="co">#&gt;   (`?AMR::AMR-options`).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `?resistance()` assumes the EUCAST guideline and thus considers the 'I'</span></span>
+<span><span class="co">#&gt;   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span></span>
+<span><span class="co">#&gt;   option to either "CLSI" or "EUCAST", see AMR-options.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> This message will be shown once per session.</span></span>
 <span><span class="co">#&gt; [1] 0.4203377</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and

@@ -87,16 +87,16 @@ the `skew` and `severity` arguments:
 
 ``` r
 random_mic(25)
-#> Class 'mic'
+#> Class <mic>
 #>  [1] 0.008    0.125    4        32       1        0.004    0.008    0.0002  
 #>  [9] 0.125    2        0.008    0.008    0.016    0.125    0.064    <=0.0001
 #> [17] 0.0005   0.0002   0.5      0.002    0.002    0.25     16       <=0.0001
 #> [25] 0.002   
 random_disk(25)
-#> Class 'disk'
+#> Class <disk>
 #>  [1] 25 47 24 47 38 28 36 33 31 50 41 29 40 31 44 45 37 40 44 49  9 48 20 37 47
 random_sir(25)
-#> Class 'sir'
+#> Class <sir>
 #>  [1] S S R R S S I S I S S I S R I I I I S I R I I I I
 
 # add more skewedness, make more realistic by setting a bug and/or drug:
@@ -109,29 +109,29 @@ plot(disks, mo = "Escherichia coli", ab = "CIP", guideline = "CLSI 2025")
 
 # \donttest{
 random_mic(25, "Klebsiella pneumoniae") # range 0.0625-64
-#> Class 'mic'
+#> Class <mic>
 #>  [1] 2      0.001  4      0.008  0.0005 0.0005 0.0005 0.0002 0.0002 >=64  
 #> [11] 0.0002 1      0.5    0.002  0.5    0.002  0.001  0.032  0.008  0.004 
 #> [21] 0.032  0.0002 0.0005 0.002  0.001 
 random_mic(25, "Klebsiella pneumoniae", "meropenem") # range 0.0625-16
-#> Class 'mic'
+#> Class <mic>
 #>  [1] <=0.5 <=0.5 2     <=0.5 1     <=0.5 <=0.5 <=0.5 <=0.5 1     <=0.5 <=0.5
 #> [13] <=0.5 1     <=0.5 1     <=0.5 <=0.5 <=0.5 <=0.5 <=0.5 <=0.5 2     1    
 #> [25] 2    
 random_mic(25, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
-#> Class 'mic'
+#> Class <mic>
 #>  [1] 0.125 0.125 1     0.25  0.5   0.125 0.125 0.125 0.125 0.125 0.125 0.125
 #> [13] 1     0.125 0.5   1     0.125 0.25  0.5   0.25  0.5   0.5   0.5   0.125
 #> [25] 0.25 
 
 random_disk(25, "Klebsiella pneumoniae") # range 8-50
-#> Class 'disk'
+#> Class <disk>
 #>  [1] 32 21 23 21 14 22 25 29 29 28 34 34 34 33 13 28 33 34 32 25 18 26 13 21 33
 random_disk(25, "Klebsiella pneumoniae", "ampicillin") # range 11-17
-#> Class 'disk'
+#> Class <disk>
 #>  [1] 20 21 15 22 16 22 16 14 21 17 15 19 20 17 18 21 16 20 11 22 19 18 19 11 21
 random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
-#> Class 'disk'
+#> Class <disk>
 #>  [1] 29 25 31 17 29 21 31 34 33 31 29 30 23 20 33 20 34 32 35 26 26 26 34 30 33
 # }
 ```

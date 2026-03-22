@@ -107,7 +107,7 @@ mo_name("Enterobacter asburiae/cloacae")
 
 # its code:
 as.mo("Enterobacter asburiae/cloacae")
-#> Class 'mo'
+#> Class <mo>
 #> [1] CUSTOM1_ENTRB_ASB/
 
 # all internal algorithms will work as well:

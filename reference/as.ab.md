@@ -156,28 +156,28 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 ``` r
 # these examples all return "ERY", the ID of erythromycin:
 as.ab("J01FA01")
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("J 01 FA 01")
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("Erythromycin")
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("eryt")
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("ERYT")
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("ERY")
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("eritromicine") # spelled wrong, yet works
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 as.ab("Erythrocin") # trade name
-#> Class 'ab'
+#> Class <ab>
 #> [1] ERY
 
 # spelling from different languages and dyslexia are no problem

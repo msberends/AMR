@@ -96,7 +96,7 @@ operation it acts as decimal numbers:
 
     x <- random_mic(10)
     x
-    #> Class 'mic'
+    #> Class <mic>
     #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
 
     is.factor(x)
@@ -114,7 +114,7 @@ values, such "\>=" and "\<=", even when filtering using
 e.g.:
 
     x[x > 4]
-    #> Class 'mic'
+    #> Class <mic>
     #> [1] 16    8     8     64    >=128 32    32    16
 
     df <- data.frame(x, hospital = "A")
@@ -187,14 +187,14 @@ MIC values. They return 'normal'
 ``` r
 mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 mic_data
-#> Class 'mic'
+#> Class <mic>
 #> [1] >=32    1       1       1       8       <=0.128 8       16      16     
 is.mic(mic_data)
 #> [1] TRUE
 
 # this can also coerce combined MIC/SIR values:
 as.mic("<=0.002; S")
-#> Class 'mic'
+#> Class <mic>
 #> [1] <=0.002
 
 # mathematical processing treats MICs as, and returns, numeric values
@@ -208,14 +208,14 @@ all(mic_data < 512)
 
 # rescale MICs using rescale_mic()
 rescale_mic(mic_data, mic_range = c(4, 16))
-#> Class 'mic'
+#> Class <mic>
 #> [1] >=16 <=4  <=4  <=4  8    <=4  8    >=16 >=16
 
 # round up to nearest log2 level, e.g. for CLSI breakpoint interpretation:
 c(1:8)
 #> [1] 1 2 3 4 5 6 7 8
 as.mic(c(1:8), round_to_next_log2 = TRUE)
-#> Class 'mic'
+#> Class <mic>
 #> [1] 1 2 4 4 8 8 8 8
 
 # interpret MIC values
@@ -225,7 +225,7 @@ as.sir(
   ab = "AMX",
   guideline = "EUCAST"
 )
-#> Class 'sir'
+#> Class <sir>
 #> [1] R
 as.sir(
   x = as.mic(c(0.01, 2, 4, 8)),
@@ -233,7 +233,7 @@ as.sir(
   ab = "AMX",
   guideline = "EUCAST"
 )
-#> Class 'sir'
+#> Class <sir>
 #> [1] S R R R
 
 # plot MIC values, see ?plot

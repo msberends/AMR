@@ -84,7 +84,7 @@ suspicious.
 ``` r
 sir <- random_sir(10)
 sir
-#> Class 'sir'
+#> Class <sir>
 #>  [1] S R S R I I R R R S
 mean_amr_distance(sir)
 #>  [1] -0.9486833  0.9486833 -0.9486833  0.9486833 -0.9486833 -0.9486833
@@ -92,7 +92,7 @@ mean_amr_distance(sir)
 
 mic <- random_mic(10)
 mic
-#> Class 'mic'
+#> Class <mic>
 #>  [1] 0.5      <=0.0001 0.25     0.0005   0.001    0.0002   8        <=0.0001
 #>  [9] <=0.0001 0.004   
 mean_amr_distance(mic)
@@ -105,7 +105,7 @@ mean_amr_distance(mic)
 
 disk <- random_disk(10)
 disk
-#> Class 'disk'
+#> Class <disk>
 #>  [1] 20 45 31 26 23 38 44 41 20 49
 mean_amr_distance(disk)
 #>  [1] -1.2414143  1.0239402 -0.2446583 -0.6977292 -0.9695717  0.3896410
@@ -180,9 +180,9 @@ if (require("dplyr")) {
     mutate(dist = mean_amr_distance(.)) %>%
     arrange(mo, dist)
 }
-#> ℹ Using column 'mo' as input for `mo_genus()` (`?AMR::mo_genus()`)
-#> ℹ Using column 'mo' as input for `mo_species()` (`?AMR::mo_species()`)
-#> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ Using column 'mo' as input for `?mo_genus()`
+#> ℹ Using column 'mo' as input for `?mo_species()`
+#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> ℹ Calculating mean AMR distance based on columns "TCY", "IPM", and "MEM"
 #> # A tibble: 63 × 5
 #> # Groups:   mo [4]

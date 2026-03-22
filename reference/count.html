@@ -9,7 +9,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,17 +174,15 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># base R ------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="fu">count_resistant</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># counts "R"</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `count_resistant()` (`?AMR::count_resistant()`) assumes the EUCAST guideline</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   and thus considers the 'I' category susceptible. Set the `guideline` argument</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   or the `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (`?AMR::AMR-options`).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `?count_resistant()` assumes the EUCAST guideline and thus considers the 'I'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   option to either "CLSI" or "EUCAST", see AMR-options.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> This message will be shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 804</span>
 <span class="r-in"><span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># counts "S" and "I"</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `count_susceptible()` (`?AMR::count_susceptible()`) assumes the EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   guideline and thus considers the 'I' category susceptible. Set the</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `guideline` argument or the `AMR_guideline` option to either "CLSI" or</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   "EUCAST", see AMR-options (`?AMR::AMR-options`).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `?count_susceptible()` assumes the EUCAST guideline and thus considers the</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   'I' category susceptible. Set the `guideline` argument or the `AMR_guideline`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   option to either "CLSI" or "EUCAST", see AMR-options.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> This message will be shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span><span class="fu">count_all</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># counts "S", "I" and "R"</span></span></span>
@@ -215,10 +213,9 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span class="r-in"><span><span class="fu">count_susceptible</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span><span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="op">*</span> <span class="fu">n_sir</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `susceptibility()` (`?AMR::susceptibility()`) assumes the EUCAST guideline</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   and thus considers the 'I' category susceptible. Set the `guideline` argument</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   or the `AMR_guideline` option to either "CLSI" or "EUCAST", see AMR-options</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   (`?AMR::AMR-options`).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `?susceptibility()` assumes the EUCAST guideline and thus considers the 'I'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   option to either "CLSI" or "EUCAST", see AMR-options.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> This message will be shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 546</span>
 <span class="r-in"><span></span></span>
@@ -265,8 +262,8 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">count_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns '<span style="font-weight: bold;">GEN</span>' (gentamicin), '<span style="font-weight: bold;">TOB</span>' (tobramycin),</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   '<span style="font-weight: bold;">AMK</span>' (amikacin), and '<span style="font-weight: bold;">KAN</span>' (kanamycin)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `?aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin),</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #00BB00; font-weight: bold;">AMK</span> (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ward       antibiotic interpretation value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>

@@ -186,12 +186,11 @@ mo_reset_session()
 #> ℹ Reset 17 previously matched input values.
 
 as.mo("E. coli")
-#> Class 'mo'
+#> Class <mo>
 #> [1] B_ESCHR_COLI
 mo_uncertainties()
 #> Matching scores are based on the resemblance between the input and the full
-#> taxonomic name, and the pathogenicity in humans. See `mo_matching_score()`
-#> (`?AMR::mo_matching_score()`).
+#> taxonomic name, and the pathogenicity in humans. See `?mo_matching_score()`.
 #> Colour keys:  0.000-0.549  0.550-0.649  0.650-0.749  0.750-1.000 
 #> -------------------------------------------------------------------------------
 #> "E. coli" -> Escherichia coli (B_ESCHR_COLI, 0.688)
@@ -201,10 +200,9 @@ mo_uncertainties()
 #> (0.577), Enterobacter cloacae cloacae (0.571), Enterobacter cloacae complex
 #> (0.571), and Enterobacter cloacae dissolvens (0.565)
 #> 
-#> ℹ Only the first 10 other matches of each record are shown. Run
-#>   `print(mo_uncertainties(), n = ...)` (`?AMR::mo_uncertainties()`) to view
-#>   more entries, or save `mo_uncertainties()` (`?AMR::mo_uncertainties()`) to an
-#>   object.
+#> ℹ Only the first 10 other matches of each record are shown. Run ``
+#>   ?`print(mo_uncertainties(), n = ...)` `` to view more entries, or save
+#>   `?mo_uncertainties()` to an object.
 
 mo_matching_score(
   x = "E. coli",

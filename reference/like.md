@@ -114,7 +114,7 @@ a %like% b[1]
 # \donttest{
 # get isolates whose name start with 'Entero' (case-insensitive)
 example_isolates[which(mo_name() %like% "^entero"), ]
-#> ℹ Using column 'mo' as input for `mo_name()` (`?AMR::mo_name()`)
+#> ℹ Using column 'mo' as input for `?mo_name()`
 #> # A tibble: 106 × 46
 #>    date       patient   age gender ward    mo            PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>   <mo>          <sir> <sir> <sir> <sir>
@@ -140,7 +140,7 @@ if (require("dplyr")) {
   example_isolates %>%
     filter(mo_name() %like% "^ent")
 }
-#> ℹ Using column 'mo' as input for `mo_name()` (`?AMR::mo_name()`)
+#> ℹ Using column 'mo' as input for `?mo_name()`
 #> # A tibble: 106 × 46
 #>    date       patient   age gender ward    mo            PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>   <mo>          <sir> <sir> <sir> <sir>
