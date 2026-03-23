@@ -84,7 +84,7 @@ bug_drug_combinations <- function(x,
     col_mo <- search_type_in_df(x = x, type = "mo")
     stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   } else {
-    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' ({.arg col_mo}) not found")
+    stop_ifnot(col_mo %in% colnames(x), "column {.field ", font_bold(col_mo), "} ({.arg col_mo}) not found")
   }
 
   x.bak <- x

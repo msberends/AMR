@@ -86,7 +86,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_s
   } else {
     if (isTRUE(verbose)) {
       message_(
-        "Using column '", font_bold(ab_result), "' as input for ", search_string,
+        "Using column {.field ", font_bold(ab_result), "} as input for ", search_string,
         " (", ab_name(search_string, language = NULL, tolower = TRUE), ")."
       )
     }
@@ -275,7 +275,7 @@ get_column_abx <- function(x,
       for (i in seq_len(length(out))) {
         if (isTRUE(verbose) && !out[i] %in% duplicates) {
           message_(
-            "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
+            "Using column {.field ", font_bold(out[i]), "} as input for ", names(out)[i],
             " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
           )
         }
@@ -284,7 +284,7 @@ get_column_abx <- function(x,
           if (names(out)[i] != already_set_as) {
             message_(
               paste0(
-                "Column '", font_bold(out[i]), "' will not be used for ",
+                "Column {.field ", font_bold(out[i]), "} will not be used for ",
                 names(out)[i], " (", suppressMessages(ab_name(names(out)[i], tolower = TRUE, language = NULL, fast_mode = TRUE)), ")",
                 ", as this antimicrobial has already been set."
               )

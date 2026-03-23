@@ -269,9 +269,9 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 
       sort() %pm>%
       vector_and(quotes = TRUE)
     cur_col <- get_current_column()
-    warning_("in {.fun as.mic}: ", na_after - na_before, " result",
+    warning_("in {.help [{.fun as.mic}](AMR::as.mic)}: ", na_after - na_before, " result",
       ifelse(na_after - na_before > 1, "s", ""),
-      ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+      ifelse(is.null(cur_col), "", paste0(" in column {.field ", font_bold(cur_col, collapse = NULL), "}")),
       " truncated (",
       round(((na_after - na_before) / length(x)) * 100),
       "%) that were invalid MICs: ",

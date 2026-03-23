@@ -150,7 +150,7 @@ resistance_predict <- function(x,
   }
   stop_ifnot(
     col_date %in% colnames(x),
-    "column '", col_date, "' not found"
+    "column {.code ", col_date, "} not found"
   )
 
   year <- function(x) {

@@ -333,7 +333,7 @@ first_isolate <- function(x = NULL,
   check_columns_existance <- function(column, tblname = x) {
     if (!is.null(column)) {
       stop_ifnot(column %in% colnames(tblname),
-        "Column '{column}' not found.",
+        "Column {.code ", column, "} not found.",
         call = FALSE
       )
     }
@@ -554,7 +554,7 @@ first_isolate <- function(x = NULL,
       format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
       ),
-      " isolates with a microbial ID 'UNKNOWN' (in column '", font_bold(col_mo), "')"
+      " isolates with a microbial ID 'UNKNOWN' (in column {.field ", font_bold(col_mo), "})"
     )
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
@@ -565,7 +565,7 @@ first_isolate <- function(x = NULL,
       "Excluding ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
       ),
-      " isolates with a microbial ID `NA` (in column '", font_bold(col_mo), "')"
+      " isolates with a microbial ID `NA` (in column {.field ", font_bold(col_mo), "})"
     )
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE

@@ -289,7 +289,7 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
   }
   if (!"mo" %in% colnames(x)) {
     if (stop_on_error == TRUE) {
-      stop_(refer_to_name, " must contain a column {.field mo}", call = FALSE)
+      stop_(refer_to_name, " must contain a column {.code mo}", call = FALSE)
     } else {
       return(FALSE)
     }
@@ -313,14 +313,14 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
   }
   if (colnames(x)[1] != "mo" && nrow(x) > length(unique(x[, 1, drop = TRUE]))) {
     if (stop_on_error == TRUE) {
-      stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[1], "'", call = FALSE)
+      stop_(refer_to_name, " contains duplicate values in column {.field ", font_bold(colnames(x)[1]), "}", call = FALSE)
     } else {
       return(FALSE)
     }
   }
   if (colnames(x)[2] != "mo" && nrow(x) > length(unique(x[, 2, drop = TRUE]))) {
     if (stop_on_error == TRUE) {
-      stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[2], "'", call = FALSE)
+      stop_(refer_to_name, " contains duplicate values in column {.field ", font_bold(colnames(x)[2]), "}", call = FALSE)
     } else {
       return(FALSE)
     }

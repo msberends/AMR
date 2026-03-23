@@ -476,7 +476,7 @@ mdro <- function(x = NULL,
   if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
     if (isTRUE(info)) {
-      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many MDRO rules depend on it.")
+      message_("Using column {.field ", font_bold(cols_ab[names(cols_ab) == "AMX"]), "} as input for ampicillin since many MDRO rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }

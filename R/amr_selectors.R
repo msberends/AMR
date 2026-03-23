@@ -678,7 +678,7 @@ not_intrinsic_resistant <- function(only_sir_columns = FALSE, col_mo = NULL, ver
   agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]
   if (length(agents) > 0 &&
     message_not_thrown_before("not_intrinsic_resistant", sort(agents))) {
-    agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
+    agents_formatted <- paste0("{.field ", font_bold(agents, collapse = NULL), "}")
     agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
     need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
     agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
@@ -804,7 +804,7 @@ amr_select_exec <- function(function_name,
                 language = NULL,
                 tolower = TRUE
               ),
-              " ({.field ", abx[abx %in% untreatable], "})"
+              " ({.field ", font_bold(abx[abx %in% untreatable], collapse = NULL), "})"
             ),
             quotes = FALSE,
             sort = TRUE,

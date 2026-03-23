@@ -253,12 +253,9 @@ search_type_in_df <- function(x, type, info = TRUE, add_col_prefix = TRUE) {
       # WHONET support
       found <- sort(colnames(x)[colnames_formatted %like_case% "^(specimen date|specimen_date|spec_date)"])
       if (!inherits(pm_pull(x, found), c("Date", "POSIXct"))) {
-        stop(
-          font_red(paste0(
-            "Found column '", font_bold(found), "' to be used as input for `", ifelse(add_col_prefix, "col_", ""), type,
-            "`, but this column contains no valid dates. Transform its values to valid dates first."
-          )),
-          call. = FALSE
+        stop_("Found column {.field ", font_bold(found), "} to be used as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type,
+          "}, but this column contains no valid dates. Transform its values to valid dates first.",
+          call = FALSE
         )
       }
     } else if (any(vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct"))))) {
@@ -305,7 +302,7 @@ search_type_in_df <- function(x, type, info = TRUE, add_col_prefix = TRUE) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
         message_(
-          "Column '", font_bold(found), "' found as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type,
+          "Column {.field ", font_bold(found), "} found as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type,
           "}, but this column does not contain {.code TRUE}/{.code FALSE} values and was ignored."
         )
         found <- NULL
@@ -317,9 +314,9 @@ search_type_in_df <- function(x, type, info = TRUE, add_col_prefix = TRUE) {
 
   if (!is.null(found) && isTRUE(info)) {
     if (message_not_thrown_before("search_in_type", type)) {
-      msg <- paste0("Using column '", font_bold(found), "' as input for `", ifelse(add_col_prefix, "col_", ""), type, "`.")
+      msg <- paste0("Using column {.field ", font_bold(found), "} as input for {.arg ", ifelse(add_col_prefix, "col_", ""), type, "}.")
       if (type %in% c("keyantibiotics", "keyantimicrobials", "specimen")) {
-        msg <- paste(msg, "Use", font_bold(paste0(ifelse(add_col_prefix, "col_", ""), type), "= FALSE"), "to prevent this.")
+        msg <- paste(msg, "Use {.arg ", paste0(ifelse(add_col_prefix, "col_", ""), type), "= FALSE} to prevent this.")
       }
       message_(msg)
     }
@@ -556,24 +553,24 @@ word_wrap <- function(...,
 }
 
 simplify_help_markup <- function(msg) {
-  # {.help [{.fun fn}](pkg::fn)} -> {.code ?fn()}
-  # {.help [display](topic)}     -> {.code ?display}
+  # {.help [{.fun fn}](pkg::fn)} -> {.code fn()}
+  # {.help [display](topic)}     -> {.code display}
   msg <- gsub(
     "\\{\\.help \\[\\{\\.fun ([^}]+)\\}\\]\\([^)]+\\)\\}",
-    "{.code ?\\1()}",
+    "{.code \\1()}",
     msg,
     perl = TRUE
   )
   msg <- gsub(
     "\\{\\.help \\[([^]]+)\\]\\([^)]+\\)\\}",
-    "{.code ?\\1}",
+    "{.code \\1}",
     msg,
     perl = TRUE
   )
-  # {.topic [display](topic)} -> display (plain text)
+  # {.topic [display](topic)} -> {.code ?display}
   msg <- gsub(
     "\\{\\.topic \\[([^]]+)\\]\\([^)]+\\)\\}",
-    "\\1",
+    "{.code ?\\1}",
     msg,
     perl = TRUE
   )
@@ -590,8 +587,11 @@ message_ <- function(...,
     }
     if (isTRUE(as_note)) {
       cli::cli_inform(c("i" = msg), .envir = parent.frame())
-    } else {
+    } else if (isTRUE(appendLF)) {
       cli::cli_inform(msg, .envir = parent.frame())
+    } else {
+      # This mirrors what rlang::inform() does internally (cat() to stderr), so it behaves consistently with cli_inform() output
+      cat(format_inline_(msg), file = stderr())
     }
   } else {
     plain_msg <- cli_to_plain(paste0(c(...), collapse = ""), envir = parent.frame())

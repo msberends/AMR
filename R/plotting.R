@@ -262,7 +262,7 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       }
       mics <- rescale_mic(x = as.double(as.mic(df[[aest_val]])), keep_operators = "none", mic_range = NULL, as.mic = TRUE)
       if (!is.null(self$mic_values_rescaled) && any(mics < min(self$mic_values_rescaled, na.rm = TRUE) | mics > max(self$mic_values_rescaled, na.rm = TRUE), na.rm = TRUE)) {
-        warning_("The value for {.field ", aest_val, "} is outside the plotted MIC range, consider using/updating the {.arg mic_range} argument in {.fun scale_", aest, "_mic}.")
+        warning_("The value for {.field ", font_bold(aest_val), "} is outside the plotted MIC range, consider using/updating the {.arg mic_range} argument in {.fun scale_", aest, "_mic}.")
       }
       out[[aest_val]] <- log2(as.double(mics))
     } else {

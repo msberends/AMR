@@ -502,7 +502,7 @@ as.mo <- function(x,
     )
     if (any(out %in% AMR_env$MO_lookup$mo[match(post_Becker, AMR_env$MO_lookup$fullname)])) {
       if (message_not_thrown_before("as.mo", "becker")) {
-        warning_("in {.fun as.mo}: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
+        warning_("in {.help [{.fun as.mo}](AMR::as.mo)}: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
           vector_and(font_italic(gsub("Staphylococcus", "S.", post_Becker, fixed = TRUE), collapse = NULL), quotes = FALSE),
           ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
           immediate = TRUE, call = FALSE
@@ -680,7 +680,7 @@ pillar_shaft.mo <- function(x, ...) {
     )
     # throw a warning with the affected column name(s)
     if (!is.null(mo_cols)) {
-      col <- paste0("Column ", vector_or(colnames(df)[mo_cols], quotes = TRUE, sort = FALSE))
+      col <- paste0("Column ", vector_or(paste0("{.field ", font_bold(colnames(df)[mo_cols], collapse = NULL), "}"), quotes = TRUE, sort = FALSE))
     } else {
       col <- "The data"
     }

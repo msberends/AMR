@@ -329,7 +329,7 @@ interpretive_rules <- function(x,
   if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
     if (isTRUE(info)) {
-      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many EUCAST rules depend on it.")
+      message_("Using column {.field ", font_bold(cols_ab[names(cols_ab) == "AMX"]), "} as input for ampicillin since many EUCAST rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
@@ -510,8 +510,8 @@ interpretive_rules <- function(x,
 
         ## Set base to R where base + enzyme inhibitor is R ----
         rule_current <- paste0(
-          ab_enzyme$base_name[i], " ({.field ", col_base, "}) = R if ",
-          tolower(ab_enzyme$enzyme_name[i]), " ({.field ", col_enzyme, "}) = R"
+          ab_enzyme$base_name[i], " ({.field ", font_bold(col_base), "}) = R if ",
+          tolower(ab_enzyme$enzyme_name[i]), " ({.field ", font_bold(col_enzyme), "}) = R"
         )
         if (isTRUE(info)) {
           cat(word_wrap(rule_current,
@@ -551,8 +551,8 @@ interpretive_rules <- function(x,
 
         ## Set base + enzyme inhibitor to S where base is S ----
         rule_current <- paste0(
-          ab_enzyme$enzyme_name[i], " ({.field ", col_enzyme, "}) = S if ",
-          tolower(ab_enzyme$base_name[i]), " ({.field ", col_base, "}) = S"
+          ab_enzyme$enzyme_name[i], " ({.field ", font_bold(col_enzyme), "}) = S if ",
+          tolower(ab_enzyme$base_name[i]), " ({.field ", font_bold(col_base), "}) = S"
         )
 
         if (isTRUE(info)) {
@@ -662,9 +662,9 @@ interpretive_rules <- function(x,
     if (ab %in% names(cols_ab) && !ab_s %in% names(cols_ab)) {
       if (isTRUE(info)) {
         message_(
-          "Using column '", cols_ab[names(cols_ab) == ab],
-          "' as ", ab_name(ab_s, language = NULL, tolower = TRUE),
-          " since a column '", ab_s, "' is missing but required for the chosen rules"
+          "Using column {.field ", font_bold(cols_ab[names(cols_ab) == ab]),
+          "} as ", ab_name(ab_s, language = NULL, tolower = TRUE),
+          " since a column {.code ", ab_s, "} is missing but required for the chosen rules"
         )
       }
       cols_ab <- c(cols_ab, stats::setNames(unname(cols_ab[names(cols_ab) == ab]), ab_s))
@@ -806,7 +806,7 @@ interpretive_rules <- function(x,
         ")$"
       )
     } else if (like_is_one_of != "like") {
-      stop("invalid value for column 'like.is.one_of'", call. = FALSE)
+      stop("invalid value for column {.field like.is.one_of}", call. = FALSE)
     }
 
     if (is.na(source_antibiotics)) {

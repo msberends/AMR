@@ -471,7 +471,7 @@ is_sir_eligible <- function(x, threshold = 0.05) {
         if (!is.na(ab)) {
           # this is a valid antibiotic drug code
           message_(
-            "Column '", font_bold(cur_col), "' is SIR eligible (despite only having empty values), since it seems to be ",
+            "Column {.field ", font_bold(cur_col), "} is SIR eligible (despite only having empty values), since it seems to be ",
             ab_name(ab, language = NULL, tolower = TRUE), " (", ab, ")"
           )
           return(TRUE)
@@ -612,7 +612,7 @@ as.sir.default <- function(x,
         cur_col <- get_current_column()
         warning_("in {.help [{.fun as.sir}](AMR::as.sir)}: ", na_after - na_before, " result",
           ifelse(na_after - na_before > 1, "s", ""),
-          ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+          ifelse(is.null(cur_col), "", paste0(" in column {.field ", font_bold(cur_col, collapse = NULL), "}")),
           " truncated (",
           round(((na_after - na_before) / length(x)) * 100),
           "%) that were invalid antimicrobial interpretations: ",
@@ -759,6 +759,10 @@ as.sir.data.frame <- function(x,
   meet_criteria(max_cores, allow_class = c("numeric", "integer"), has_length = 1)
   x.bak <- x
 
+  if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
+    message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n")
+  }
+
   if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
     sel <- colnames(pm_select(x, ...))
   } else {
@@ -835,7 +839,7 @@ as.sir.data.frame <- function(x,
         message_(
           "Assuming value", plural[1], " ",
           vector_and(col_values, quotes = TRUE),
-          " in column ", paste0("{.field ", col_specimen, "}"), " reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+          " in column ", paste0("{.field ", font_bold(col_specimen), "}"), " reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
           ".\n  Use `as.sir(uti = FALSE)` to prevent this."
         )
       }
@@ -857,7 +861,7 @@ as.sir.data.frame <- function(x,
       return(FALSE)
     }
     if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
-      ab_coerced <- suppressWarnings(as.ab(ab, info = info))
+      ab_coerced <- suppressWarnings(as.ab(ab, info = FALSE))
       if (is.na(ab_coerced) || (length(sel) > 0 & !ab %in% sel)) {
         # not even a valid AB code
         return(FALSE)
@@ -905,6 +909,11 @@ as.sir.data.frame <- function(x,
     if (is.null(cl)) {
       n_cores <- 1
     }
+  }
+
+  if (isTRUE(info)) {
+    message_(as_note = FALSE) # empty line
+    message_("Processing columns:", as_note = FALSE)
   }
 
   run_as_sir_column <- function(i) {
@@ -969,12 +978,12 @@ as.sir.data.frame <- function(x,
       return(out)
     } else if (types[i] == "sir") {
       ab <- ab_col
-      ab_coerced <- suppressWarnings(as.ab(ab, info = info))
+      ab_coerced <- suppressWarnings(as.ab(ab, info = FALSE))
       show_message <- FALSE
       if (!all(x[, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Cleaning values in column ", paste0("{.field ", ab, "}"), " (",
+          message_("\u00a0\u00a0", AMR_env$bullet_icon, " Cleaning values in column ", paste0("{.field ", font_bold(ab), "}"), " (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, info = info), ")... ",
             appendLF = FALSE,
@@ -984,7 +993,7 @@ as.sir.data.frame <- function(x,
       } else if (!is.sir(x.bak[, ab, drop = TRUE])) {
         show_message <- TRUE
         if (isTRUE(info)) {
-          message_("Assigning class {.cls sir} to already clean column ", paste0("{.field ", ab, "}"), " (",
+          message_("\u00a0\u00a0", AMR_env$bullet_icon, " Assigning class {.cls sir} to already clean column ", paste0("{.field ", font_bold(ab), "}"), " (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
             ab_name(ab_coerced, tolower = TRUE, language = NULL, info = info), ")... ",
             appendLF = FALSE,
@@ -994,7 +1003,7 @@ as.sir.data.frame <- function(x,
       }
       result <- as.sir.default(x = as.character(x[, ab, drop = TRUE]))
       if (show_message == TRUE && isTRUE(info)) {
-        message(font_green_bg(" OK "))
+        message_(font_green_bg("\u00a0OK\u00a0"), as_note = FALSE)
       }
       out$result <- result
       out$log <- NULL
@@ -1006,7 +1015,7 @@ as.sir.data.frame <- function(x,
 
   if (isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1) {
     if (isTRUE(info)) {
-      message()
+      message_(as_note = FALSE)
       message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
     }
     if (.Platform$OS.type == "windows" || getRversion() < "4.0.0") {
@@ -1026,15 +1035,15 @@ as.sir.data.frame <- function(x,
       result_list <- parallel::mclapply(seq_along(ab_cols), run_as_sir_column, mc.cores = n_cores)
     }
     if (isTRUE(info)) {
-      message_(font_green_bg(" DONE "), as_note = FALSE)
-      message()
+      message_(font_green_bg("\u00aDONE\u00a"), as_note = FALSE)
+      message_(as_note = FALSE)
       message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} to retrieve a logbook with all details of the breakpoint interpretations.")
     }
   } else {
     # sequential mode (non-parallel)
     if (isTRUE(info) && n_cores > 1 && NROW(x) * NCOL(x) > 10000) {
       # give a note that parallel mode might be better
-      message()
+      message_(as_note = FALSE)
       message_("Running in sequential mode. Consider setting {.arg parallel} to {.code TRUE} to speed up processing on multiple cores.\n")
     }
     # this will contain a progress bar already
@@ -1221,7 +1230,7 @@ as_sir_method <- function(method_short,
   host <- convert_host(host, lang = language)
   if (any(is.na(host) & !is.na(host.bak)) && isTRUE(info) && message_not_thrown_before("as.sir", "missing_hosts")) {
     warning_("The following animal host(s) could not be coerced: ", vector_and(host.bak[is.na(host) & !is.na(host.bak)]), immediate = TRUE)
-    message() # new line
+    message_(as_note = FALSE) # new line
   }
   # TODO add a switch to turn this off? In interactive sessions perhaps ask the user. Default should be On.
   # if (breakpoint_type == "animal" && isTRUE(info) && message_not_thrown_before("as.sir", "host_missing_breakpoints")) {
@@ -1246,7 +1255,7 @@ as_sir_method <- function(method_short,
 
   # get mo
   if (!is.null(current_df) && length(mo) == 1 && mo %in% colnames(current_df)) {
-    mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
+    mo_var_found <- paste0(" based on column {.field ", font_bold(mo), "}")
     mo <- current_df[[mo]]
   } else if (length(mo) != length(x)) {
     mo_var_found <- ""
@@ -1262,7 +1271,7 @@ as_sir_method <- function(method_short,
             silent = TRUE
           )
           if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-            mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
+            mo_var_found <- paste0(" based on column {.field ", font_bold(mo), "}")
             mo <- df[, mo, drop = TRUE]
           }
         },
@@ -1315,7 +1324,7 @@ as_sir_method <- function(method_short,
   }
 
   ab.bak <- trimws2(ab)
-  ab <- suppressWarnings(as.ab(ab, info = info))
+  ab <- suppressWarnings(as.ab(ab, info = FALSE))
   if (!is.null(list(...)$mo.bak)) {
     mo.bak <- list(...)$mo.bak
   } else {
@@ -1356,7 +1365,7 @@ as_sir_method <- function(method_short,
   }
 
   # format agents ----
-  agent_formatted <- paste0("'", font_bold(ab.bak, collapse = NULL), "'")
+  agent_formatted <- paste0("{.field ", font_bold(ab.bak, collapse = NULL), "}")
   agent_name <- ab_name(ab, tolower = TRUE, language = NULL, info = info)
   same_ab <- generalise_antibiotic_name(ab) == generalise_antibiotic_name(agent_name)
   same_ab.bak <- generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)
@@ -1372,7 +1381,7 @@ as_sir_method <- function(method_short,
   )
   # this intro text will also be printed in the progress bar if the `progress` package is installed
   intro_txt <- paste0(
-    "Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
+    "\u00a0\u00a0", AMR_env$bullet_icon, " Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
     ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0(vector_and(agent_formatted, quotes = FALSE, sort = FALSE))),
     mo_var_found,
     ifelse(identical(reference_data, AMR::clinical_breakpoints),
@@ -1390,7 +1399,7 @@ as_sir_method <- function(method_short,
   rise_warning <- FALSE
   rise_notes <- FALSE
   method_coerced <- toupper(method)
-  ab_coerced <- as.ab(ab, info = info)
+  ab_coerced <- as.ab(ab, info = FALSE)
 
   if (identical(reference_data, AMR::clinical_breakpoints)) {
     breakpoints <- reference_data %pm>%
@@ -1487,14 +1496,14 @@ as_sir_method <- function(method_short,
     # only print intro under 10 items, otherwise progressbar will print this and then it will be printed double
     message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   }
-  p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = font_blue(intro_txt), only_bar_percent = TRUE)
+  p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = intro_txt, only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
 
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
     if (isTRUE(info)) {
-      message(font_grey_bg(font_black(" NO BREAKPOINTS ")))
+      message_(font_grey_bg(font_black(" NO BREAKPOINTS ")), as_note = FALSE)
     }
 
     load_mo_uncertainties(metadata_mo)
@@ -1910,7 +1919,7 @@ as_sir_method <- function(method_short,
         host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
         input = vectorise_log_entry(as.character(input_clean), length(rows)),
         outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
-        notes = font_stripstyle(notes_current), # vectorise_log_entry(paste0(font_stripstyle(notes_current), collapse = "\n"), length(rows)),
+        notes = cli_to_plain(font_stripstyle(notes_current)),
         guideline = vectorise_log_entry(guideline_current, length(rows)),
         ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
         uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
@@ -1935,9 +1944,9 @@ as_sir_method <- function(method_short,
     notes <- notes[!trimws2(notes) %in% c("", NA_character_)]
     if (length(notes) > 0) {
       if (isTRUE(rise_warning)) {
-        message(font_rose_bg(" WARNING "))
+        message_(font_rose_bg("\u00a0WARNING\u00a0"), as_note = FALSE)
       } else {
-        message(font_yellow_bg(" NOTE "))
+        message_(font_yellow_bg("\u00a0NOTE\u00a0"), as_note = FALSE)
       }
       notes <- unique(notes)
       # if (isTRUE(verbose) || length(notes) == 1 || NROW(AMR_env$sir_interpretation_history) == 0) {
@@ -1946,10 +1955,10 @@ as_sir_method <- function(method_short,
           message_(notes[i], as_note = FALSE)
         }
       } else {
-        # message(word_wrap("\u00a0\u00a0", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
+        # message_(word_wrap("\u00a0\u00a0", AMR_env$bullet_icon, " There were multiple notes. Print or View `sir_interpretation_history()` to examine them, or use `as.sir(..., verbose = TRUE)` next time to directly print them here.", add_fn = font_black))
       }
     } else {
-      message(font_green_bg(" OK "))
+      message_(font_green_bg("\u00a0OK\u00a0"), as_note = FALSE)
     }
   }
 
@@ -2226,13 +2235,13 @@ check_reference_data <- function(reference_data, .call_depth) {
     class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
     class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_sir) == names(class_ref))) {
-      stop_("{.arg reference_data} must have the same column names as the {.topic [clinical_breakpoints](AMR::clinical_breakpoints)} data set.", call = .call_depth)
+      stop_("{.arg reference_data} must have the same column names as the {.help [clinical_breakpoints](AMR::clinical_breakpoints)} data set.", call = .call_depth)
     }
     if (!all(class_sir == class_ref)) {
       bad_col <- names(class_ref[class_sir != class_ref][1])
       bad_cls <- gsub("<|>", "", class_ref[class_sir != class_ref][1])
       exp_cls <- gsub("<|>", "", class_sir[class_sir != class_ref][1])
-      stop_("{.arg reference_data} must be the same structure as the {.topic [clinical_breakpoints](AMR::clinical_breakpoints)} data set. Column ", paste0("{.field ", bad_col, "}"), " is of class ", paste0("{.cls ", bad_cls, "}"), ", but should be of class ", paste0("{.cls ", exp_cls, "}"), call = .call_depth)
+      stop_("{.arg reference_data} must be the same structure as the {.help [clinical_breakpoints](AMR::clinical_breakpoints)} data set. Column ", paste0("{.field ", font_bold(bad_col, collapse = NULL), "}"), " is of class ", paste0("{.cls ", bad_cls, "}"), ", but should be of class ", paste0("{.cls ", exp_cls, "}"), call = .call_depth)
     }
   }
 }

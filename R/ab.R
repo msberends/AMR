@@ -718,7 +718,7 @@ get_translate_ab <- function(translate_ab) {
   } else {
     translate_ab <- tolower(translate_ab)
     stop_ifnot(translate_ab %in% colnames(AMR::antimicrobials),
-      "invalid value for {.arg translate_ab}, this must be a column name of the {.topic [antimicrobials](AMR::antimicrobials)} data set\n",
+      "invalid value for {.arg translate_ab}, this must be a column name of the {.help [antimicrobials](AMR::antimicrobials)} data set\n",
       "or {.code TRUE} (equals {.val name}) or {.code FALSE} to not translate at all.",
       call = FALSE
     )
