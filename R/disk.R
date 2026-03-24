@@ -162,7 +162,7 @@ is.disk <- function(x) {
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, disk)
 pillar_shaft.disk <- function(x, ...) {
   out <- trimws(format(x))
-  out[is.na(x)] <- font_na(NA)
+  out[is.na(x)] <- pillar::style_na(NA)
   create_pillar_column(out, align = "right", width = 2)
 }
 

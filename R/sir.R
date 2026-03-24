@@ -1729,7 +1729,7 @@ as_sir_method <- function(method_short,
         pm_filter(uti == FALSE)
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument {.arg uti} to set which isolates are from urine. See {.help [{.fun as.sir}](AMR::as.sir)}.")
+        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`.")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available
@@ -1919,7 +1919,7 @@ as_sir_method <- function(method_short,
         host = vectorise_log_entry(breakpoints_current[, "host", drop = TRUE], length(rows)),
         input = vectorise_log_entry(as.character(input_clean), length(rows)),
         outcome = vectorise_log_entry(as.sir(new_sir), length(rows)),
-        notes = cli_to_plain(font_stripstyle(notes_current)),
+        notes = font_stripstyle(notes_current),
         guideline = vectorise_log_entry(guideline_current, length(rows)),
         ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
         uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
@@ -2010,15 +2010,19 @@ pillar_shaft.sir <- function(x, ...) {
   if (has_colour()) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
-    out[is.na(x)] <- font_grey("  NA")
-    out[x == "S"] <- font_green_bg("  S  ")
-    out[x == "SDD"] <- font_green_lighter_bg(" SDD ")
-    out[x == "I"] <- font_orange_bg("  I  ")
-    out[x == "R"] <- font_rose_bg("  R  ")
-    out[x == "NI"] <- font_grey_bg(font_black("  NI "))
-    out[x == "WT"] <- font_green_bg(font_black("  WT "))
-    out[x == "NWT"] <- font_rose_bg(font_black(" NWT "))
-    out[x == "NS"] <- font_rose_bg(font_black("  NS "))
+    out[is.na(x)] <- pillar::style_subtle("  NA")
+    out[x == "S"] <- font_green_bg("  S  ") # has font_black internally
+    out[x == "SDD"] <- font_green_lighter_bg(" SDD ") # has font_black internally
+    if (getOption("AMR_guideline", "EUCAST")[1] == "EUCAST") {
+      out[x == "I"] <- font_green_lighter_bg("  I  ") # has font_black internally
+    } else {
+      out[x == "I"] <- font_orange_bg("  I  ") # has font_black internally
+    }
+    out[x == "R"] <- font_rose_bg("  R  ") # has font_black internally
+    out[x == "NI"] <- font_grey_bg(font_black("  NI ", adapt = FALSE))
+    out[x == "WT"] <- font_green_bg("  WT ") # has font_black internally
+    out[x == "NWT"] <- font_rose_bg(" NWT ") # has font_black internally
+    out[x == "NS"] <- font_rose_bg("  NS ") # has font_black internally
   }
   create_pillar_column(out, align = "left", width = 5)
 }

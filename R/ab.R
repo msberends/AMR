@@ -529,7 +529,7 @@ NA_ab_ <- set_clean_class(NA_character_,
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, ab)
 pillar_shaft.ab <- function(x, ...) {
   out <- trimws(format(x))
-  out[is.na(x)] <- font_na(NA)
+  out[is.na(x)] <- pillar::style_na(NA)
 
   # add the names to the drugs as mouse-over!
   if (in_rstudio()) {

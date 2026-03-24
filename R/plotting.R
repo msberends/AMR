@@ -266,7 +266,7 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       }
       out[[aest_val]] <- log2(as.double(mics))
     } else {
-      self$mic_values_rescaled <- rescale_mic(x = as.double(as.mic(df[[aest]])), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
+      self$mic_values_rescaled <- rescale_mic(x = as.character(df[[aest]]), keep_operators = keep_operators, mic_range = mic_range, as.mic = TRUE)
       # create new breaks and labels here
       lims <- range(self$mic_values_rescaled, na.rm = TRUE)
       # support inner and outer 'mic_range' settings (e.g., the data ranges 0.5-8 and 'mic_range' is set to 0.025-32)
@@ -280,11 +280,21 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
       ind_max <- which(COMMON_MIC_VALUES >= lims[2])[which.min(abs(COMMON_MIC_VALUES[COMMON_MIC_VALUES >= lims[2]] - lims[2]))] # Closest index where COMMON_MIC_VALUES >= lims[2]
 
       self$mic_values_levels <- as.mic(COMMON_MIC_VALUES[ind_min:ind_max])
+      if (length(unique(self$mic_values_levels)) > 1) {
+        if (keep_operators == "all" && !all(self$mic_values_rescaled %in% self$mic_values_levels, na.rm = TRUE)) {
+          self$mic_values_levels <- unique(sort(c(self$mic_values_levels, self$mic_values_rescaled)))
 
-      if (keep_operators %in% c("edges", "all") && length(unique(self$mic_values_levels)) > 1) {
-        self$mic_values_levels[1] <- paste0("<=", self$mic_values_levels[1])
-        self$mic_values_levels[length(self$mic_values_levels)] <- paste0(">=", self$mic_values_levels[length(self$mic_values_levels)])
+          # collision = same log2 position, but different string labels
+          log_positions <- log2(as.double(self$mic_values_levels))
+          dup_positions <- log_positions[duplicated(log_positions) | duplicated(log_positions, fromLast = TRUE)]
+          colliding_labels <- as.character(self$mic_values_levels)[log_positions %in% dup_positions]
+          self$warn_keep_all_operators <- length(unique(colliding_labels)) > 1
+        } else if (keep_operators == "edges") {
+          self$mic_values_levels[1] <- paste0("<=", self$mic_values_levels[1])
+          self$mic_values_levels[length(self$mic_values_levels)] <- paste0(">=", self$mic_values_levels[length(self$mic_values_levels)])
+        }
       }
+
       self$mic_values_log <- log2(as.double(self$mic_values_rescaled))
 
       if (aest == "y" && "group" %in% colnames(df)) {
@@ -312,7 +322,26 @@ create_scale_mic <- function(aest, keep_operators, mic_range = NULL, ...) {
   }
   scale$labels <- function(..., self) {
     if (is.null(self$mic_breaks_set)) {
-      self$mic_values_levels
+      if (isTRUE(self$warn_keep_all_operators)) {
+        lookup <- tapply(
+          as.character(self$mic_values_rescaled),
+          self$mic_values_log,
+          function(x) paste(unique(x), collapse = ", ")
+        )
+        level_log <- as.character(log2(as.double(self$mic_values_levels)))
+
+        if (any(grepl(", ", lookup))) {
+          warning_("Using {.arg keep_operators = \"all\"} caused MIC values with different operators to share the same log2 position on the axis. These have been combined into a single label (e.g., {.val ", lookup[grepl(", ", lookup)][1], "}).", call = FALSE)
+        }
+
+        ifelse(
+          level_log %in% names(lookup),
+          lookup[level_log],
+          as.character(self$mic_values_levels)
+        )
+      } else {
+        self$mic_values_levels
+      }
     } else {
       breaks <- tryCatch(scale$breaks(), error = function(e) NULL)
       if (!is.null(breaks)) {

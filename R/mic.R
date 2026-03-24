@@ -322,6 +322,7 @@ NA_mic_ <- set_clean_class(factor(NA, levels = VALID_MIC_LEVELS, ordered = TRUE)
 #' @export
 rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE, round_to_next_log2 = FALSE) {
   meet_criteria(mic_range, allow_class = c("numeric", "integer", "logical", "mic"), has_length = 2, allow_NA = TRUE, allow_NULL = TRUE)
+
   if (is.numeric(mic_range)) {
     mic_range <- trimws(format(mic_range, scientific = FALSE))
     mic_range <- gsub("[.]0+$", "", mic_range)
@@ -448,16 +449,12 @@ pillar_shaft.mic <- function(x, ...) {
   crude_numbers <- as.double(x)
   operators <- gsub("[^<=>]+", "", as.character(x))
   # colourise operators
-  operators[!is.na(operators) & operators != ""] <- font_silver(operators[!is.na(operators) & operators != ""], collapse = NULL)
+  operators[!is.na(operators) & operators != ""] <- pillar::style_subtle(operators[!is.na(operators) & operators != ""])
   out <- trimws(paste0(operators, trimws(format(crude_numbers))))
-  out[is.na(x)] <- font_na(NA)
+  out[is.na(x)] <- pillar::style_na(NA)
   # make trailing zeroes less visible
-  if (is_dark()) {
-    fn <- font_silver
-  } else {
-    fn <- font_white
-  }
-  out[out %like% "[.]"] <- gsub("([.]?0+)$", fn("\\1"), out[out %like% "[.]"], perl = TRUE)
+  out[out %like% "[.]"] <- gsub("([.]?0+)$", pillar::style_subtle("\\1"), out[out %like% "[.]"], perl = TRUE)
+
   create_pillar_column(out, align = "right", width = max(nchar(font_stripstyle(out))))
 }
 

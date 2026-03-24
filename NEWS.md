@@ -1,4 +1,4 @@
-# AMR 3.0.1.9039
+# AMR 3.0.1.9040
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -23,6 +23,7 @@
 * Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
 * Fixed a bug in `antibiogram()` for when no antimicrobials are set
 * Fixed a bug in `as.sir()` where for numeric input the arguments `S`,  `I`,  and `R` would not be considered (#244)
+* Fixed a bug in plotting MIC values when `keep_operators = "all"`
 * Fixed some foreign translations of antimicrobial drugs
 * Fixed a bug for printing column names to the console when using `mutate_at(vars(...), as.mic)` (#249)
 * Fixed a bug to disregard `NI` for susceptibility proportion functions

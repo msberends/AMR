@@ -131,6 +131,8 @@ test_that("test-zzz.R", {
     "availableCores" = "parallelly",
     # pillar
     "pillar_shaft" = "pillar",
+    "style_na" = "pillar",
+    "style_subtle" = "pillar",
     "tbl_format_footer" = "pillar",
     "tbl_sum" = "pillar",
     "type_sum" = "pillar",

@@ -648,13 +648,13 @@ pillar_shaft.mo <- function(x, ...) {
   add_MO_lookup_to_AMR_env()
   out <- trimws(format(x))
   # grey out the kingdom (part until first "_")
-  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
+  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(pillar::style_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
   # and grey out every _
-  out[!is.na(x)] <- gsub("_", font_subtle("_"), out[!is.na(x)])
+  out[!is.na(x)] <- gsub("_", pillar::style_subtle("_"), out[!is.na(x)])
 
   # markup NA and UNKNOWN
-  out[is.na(x)] <- font_na("  NA")
-  out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
+  out[is.na(x)] <- pillar::style_na("  NA")
+  out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
 
   # markup manual codes
   out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo] <- font_blue(out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo], collapse = NULL)
@@ -673,7 +673,7 @@ pillar_shaft.mo <- function(x, ...) {
     (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
     out[!x %in% all_mos] <- font_italic(
-      font_na(x[!x %in% all_mos],
+      pillar::style_na(x[!x %in% all_mos],
         collapse = NULL
       ),
       collapse = NULL

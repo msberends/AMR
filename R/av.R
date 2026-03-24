@@ -511,8 +511,8 @@ is.av <- function(x) {
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::pillar_shaft, av)
 pillar_shaft.av <- function(x, ...) {
   out <- trimws(format(x))
-  out[!is.na(x)] <- gsub("+", font_subtle("+"), out[!is.na(x)], fixed = TRUE)
-  out[is.na(x)] <- font_na(NA)
+  out[!is.na(x)] <- gsub("+", pillar::style_subtle("+"), out[!is.na(x)], fixed = TRUE)
+  out[is.na(x)] <- pillar::style_na(NA)
   create_pillar_column(out, align = "left", min_width = 4)
 }
 
