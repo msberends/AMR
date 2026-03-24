@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9038
+## AMR 3.0.1.9040
 
 #### New
 
@@ -67,6 +67,7 @@
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   where for numeric input the arguments `S`, `I`, and `R` would not be
   considered ([\#244](https://github.com/msberends/AMR/issues/244))
+- Fixed a bug in plotting MIC values when `keep_operators = "all"`
 - Fixed some foreign translations of antimicrobial drugs
 - Fixed a bug for printing column names to the console when using
   `mutate_at(vars(...), as.mic)`

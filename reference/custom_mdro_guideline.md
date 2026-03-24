@@ -526,8 +526,7 @@ my_guideline
 #> Results will be of class 'factor', with ordered levels: Negative < Custom MDRO 1 < Custom MDRO 2
 
 out <- mdro(example_isolates, guideline = my_guideline)
-#> ℹ For `?cephalosporins_2nd()` using columns CXM (cefuroxime) and FOX
-#>   (cefoxitin)
+#> ℹ For `cephalosporins_2nd()` using columns CXM (cefuroxime) and FOX (cefoxitin)
 #> ℹ Assuming a filter on all 2 cephalosporins_2nd. Wrap around `all()` or `any()`
 #>   to prevent this note.
 table(out)

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9038</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9040</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9038" id="amr-3019038">AMR 3.0.1.9038<a class="anchor" aria-label="anchor" href="#amr-3019038"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9040" id="amr-3019040">AMR 3.0.1.9040<a class="anchor" aria-label="anchor" href="#amr-3019040"></a></h2>
 <div class="section level4">
-<h4 id="new-3-0-1-9038">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9038"></a></h4>
+<h4 id="new-3-0-1-9040">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9040"></a></h4>
 <ul><li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
 <ul><li>
 <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
@@ -83,12 +83,14 @@
 <li>Function <code><a href="../reference/amr_course.html">amr_course()</a></code>, which allows for automated download and unpacking of a GitHub repository for e.g. webinar use</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixes-3-0-1-9038">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9038"></a></h4>
+<h4 id="fixes-3-0-1-9040">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9040"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where values that were purely numeric (e.g., <code>"1"</code>) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter</li>
 <li>Fixed a bug in <code><a href="../reference/as.mic.html">as.mic()</a></code> where MIC values in scientific notation (e.g., <code>"1e-3"</code>) were incorrectly handled because the letter <code>e</code> was removed along with other Unicode letters; scientific notation <code>e</code> is now preserved</li>
 <li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> where certain AB codes containing “PH” or “TH” (such as <code>ETH</code>, <code>MTH</code>, <code>PHE</code>, <code>PHN</code>, <code>STH</code>, <code>THA</code>, <code>THI1</code>) would incorrectly return <code>NA</code> when combined in a vector with any untranslatable value (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
 <li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
 <li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where for numeric input the arguments <code>S</code>, <code>I</code>, and <code>R</code> would not be considered (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
+<li>Fixed a bug in plotting MIC values when <code>keep_operators = "all"</code>
+</li>
 <li>Fixed some foreign translations of antimicrobial drugs</li>
 <li>Fixed a bug for printing column names to the console when using <code>mutate_at(vars(...), as.mic)</code> (<a href="https://github.com/msberends/AMR/issues/249" class="external-link">#249</a>)</li>
 <li>Fixed a bug to disregard <code>NI</code> for susceptibility proportion functions</li>
@@ -96,7 +98,7 @@
 <li>Fixed SIR and MIC coercion of combined values, e.g. <code>as.sir("&lt;= 0.002; S")</code> or <code>as.mic("S; 0.002")</code> (<a href="https://github.com/msberends/AMR/issues/252" class="external-link">#252</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updates-3-0-1-9038">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9038"></a></h4>
+<h4 id="updates-3-0-1-9040">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9040"></a></h4>
 <ul><li>Extensive <code>cli</code> integration for better message handling and clickable links in messages and warnings (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 <li>
 <code><a href="../reference/mdro.html">mdro()</a></code> now infers resistance for a <em>missing</em> base drug column from an <em>available</em> corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument <code>infer_from_combinations</code>, which defaults to <code>TRUE</code> (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).</li>

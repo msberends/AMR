@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 22 March 2026.
+methodology remains unchanged. This page was generated on 24 March 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-03-22 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-03-22 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-03-22 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-03-24 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-03-24 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-03-24 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -169,8 +169,8 @@ our_data$bacteria <- as.mo(our_data$bacteria, info = TRUE)
 #> ℹ Retrieved values from the `microorganisms.codes` data set for "ESCCOL",
 #>   "KLEPNE", "STAAUR", and "STRPNE".
 #> ℹ Microorganism translation was uncertain for four microorganisms. Run
-#>   `?mo_uncertainties()` to review these uncertainties, or use
-#>   `?add_custom_microorganisms()` to add custom entries.
+#>   `mo_uncertainties()` to review these uncertainties, or use
+#>   `add_custom_microorganisms()` to add custom entries.
 ```
 
 Apparently, there was some uncertainty about the translation to
@@ -179,7 +179,7 @@ taxonomic codes. Let’s check this:
 ``` r
 mo_uncertainties()
 #> Matching scores are based on the resemblance between the input and the full
-#> taxonomic name, and the pathogenicity in humans. See `?mo_matching_score()`.
+#> taxonomic name, and the pathogenicity in humans. See `mo_matching_score()`.
 #> Colour keys:  0.000-0.549  0.550-0.649  0.650-0.749  0.750-1.000 
 #> -------------------------------------------------------------------------------
 #> "E. coli" -> Escherichia coli (B_ESCHR_COLI, 0.688)
@@ -212,8 +212,8 @@ mo_uncertainties()
 #> Streptococcus gallolyticus pasteurianus (0.526), Salmonella Portanigra (0.524),
 #> and Streptococcus periodonticum (0.519)
 #> ℹ Only the first 10 other matches of each record are shown. Run ``
-#>   ?`print(mo_uncertainties(), n = ...)` `` to view more entries, or save
-#>   `?mo_uncertainties()` to an object.
+#>   `print(mo_uncertainties(), n = ...)` `` to view more entries, or save
+#>   `mo_uncertainties()` to an object.
 ```
 
 That’s all good.
@@ -311,11 +311,11 @@ The outcome of the function can easily be added to our data:
 our_data <- our_data %>%
   mutate(first = first_isolate(info = TRUE))
 #> ℹ Determining first isolates using an episode length of 365 days
-#> ℹ Using column 'bacteria' as input for `col_mo`.
-#> ℹ Column 'first' is SIR eligible (despite only having empty values), since it
+#> ℹ Using column bacteria as input for `col_mo`.
+#> ℹ Column first is SIR eligible (despite only having empty values), since it
 #>   seems to be cefozopran (ZOP)
-#> ℹ Using column 'date' as input for `col_date`.
-#> ℹ Using column 'patient_id' as input for `col_patient_id`.
+#> ℹ Using column date as input for `col_date`.
+#> ℹ Using column patient_id as input for `col_patient_id`.
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold of 2
 #> => Found 2,724 'phenotype-based' first isolates (90.8% of total where a
 #> microbial ID was available)
@@ -447,7 +447,7 @@ in:
 ``` r
 our_data_1st %>%
   select(date, aminoglycosides())
-#> ℹ For `?aminoglycosides()` using column GEN
+#> ℹ For `aminoglycosides()` using column GEN
 #> (gentamicin)
 #> # A tibble: 2,724 × 2
 #>    date       GEN  
@@ -466,7 +466,7 @@ our_data_1st %>%
 
 our_data_1st %>%
   select(bacteria, betalactams())
-#> ℹ For `?betalactams()` using columns AMX (amoxicillin) and AMC
+#> ℹ For `betalactams()` using columns AMX (amoxicillin) and AMC
 #>   (amoxicillin/clavulanic acid)
 #> # A tibble: 2,724 × 3
 #>    bacteria     AMX   AMC  
@@ -503,7 +503,7 @@ our_data_1st %>%
 # filtering using AB selectors is also possible:
 our_data_1st %>%
   filter(any(aminoglycosides() == "R"))
-#> ℹ For `?aminoglycosides()` using column GEN
+#> ℹ For `aminoglycosides()` using column GEN
 #> (gentamicin)
 #> # A tibble: 981 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
@@ -522,7 +522,7 @@ our_data_1st %>%
 
 our_data_1st %>%
   filter(all(betalactams() == "R"))
-#> ℹ For `?betalactams()` using columns AMX (amoxicillin) and AMC
+#> ℹ For `betalactams()` using columns AMX (amoxicillin) and AMC
 #>   (amoxicillin/clavulanic acid)
 #> # A tibble: 462 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
@@ -541,7 +541,7 @@ our_data_1st %>%
 
 # even works in base R (since R 3.0):
 our_data_1st[all(betalactams() == "R"), ]
-#> ℹ For `?betalactams()` using columns AMX (amoxicillin) and AMC
+#> ℹ For `betalactams()` using columns AMX (amoxicillin) and AMC
 #>   (amoxicillin/clavulanic acid)
 #> # A tibble: 462 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
@@ -624,9 +624,9 @@ antibiotic class selectors:
 ``` r
 antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()))
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
 | Pathogen         | Amikacin             | Gentamicin          | Imipenem             | Kanamycin       | Meropenem            | Tobramycin          |
@@ -663,8 +663,8 @@ antibiogram(example_isolates,
             antibiotics = aminoglycosides(),
             ab_transform = "name",
             language = "es")
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
 ```
 
 | Patógeno      | Amikacina          | Gentamicina         | Kanamicina      | Tobramicina        |
@@ -707,9 +707,9 @@ on certain columns:
 antibiogram(example_isolates,
             antibiotics = c(aminoglycosides(), carbapenems()),
             syndromic_group = "ward")
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
 | Syndromic Group | Pathogen         | Amikacin             | Gentamicin          | Imipenem             | Kanamycin       | Meropenem            | Tobramycin          |
@@ -840,9 +840,9 @@ These functions can be used on their own:
 
 ``` r
 our_data_1st %>% resistance(AMX)
-#> ℹ `?resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
 #>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see AMR-options.
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
 #> ℹ This message will be shown once per session.
 #> [1] 0.4203377
 ```

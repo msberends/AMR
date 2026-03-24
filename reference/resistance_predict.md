@@ -192,8 +192,8 @@ x <- resistance_predict(example_isolates,
   model = "binomial"
 )
 #> Warning: The `resistance_predict()` function is deprecated and will be removed in a
-#> future version, see AMR-deprecated. Use the tidymodels framework instead, for
-#> which we have written a basic and short introduction on our website:
+#> future version, see `?AMR-deprecated`. Use the tidymodels framework instead,
+#> for which we have written a basic and short introduction on our website:
 #> https://amr-for-r.org/articles/AMR_with_tidymodels.html This warning will be
 #> shown once per session.
 plot(x)

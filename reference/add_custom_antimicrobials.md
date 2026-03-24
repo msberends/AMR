@@ -185,7 +185,7 @@ x
 #>   random_column coflu ampicillin
 #> 1    some value     S          R
 x[, betalactams()]
-#> ℹ For `?betalactams()` using columns coflu (co-fluampicil) and ampicillin
+#> ℹ For `betalactams()` using columns coflu (co-fluampicil) and ampicillin
 #>   coflu ampicillin
 #> 1     S          R
 # }

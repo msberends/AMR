@@ -295,7 +295,7 @@ if (require("ggplot2") && require("dplyr")) {
       datalabels = FALSE
     )
 }
-#> ℹ Using column 'mo' as input for `?mo_is_gram_negative()`
+#> ℹ Using column mo as input for `mo_is_gram_negative()`
 
 # }
 ```

@@ -61,12 +61,10 @@ guess_ab_col(df, "J01AA07") # ATC code of tetracycline
 #> [1] "tetr"
 
 guess_ab_col(df, "J01AA07", verbose = TRUE)
-#> Auto-guessing columns suitable for analysis
-#> ...
 #> OK.
-#> ℹ Using column 'amox' as input for AMX (amoxicillin).
-#> ℹ Using column 'tetr' as input for TCY (tetracycline).
-#> ℹ Using column 'tetr' as input for J01AA07 (tetracycline).
+#> ℹ Using column amox as input for AMX (amoxicillin).
+#> ℹ Using column tetr as input for TCY (tetracycline).
+#> ℹ Using column tetr as input for J01AA07 (tetracycline).
 #> [1] "tetr"
 
 # WHONET codes

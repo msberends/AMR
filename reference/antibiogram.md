@@ -598,9 +598,9 @@ example_isolates
 antibiogram(example_isolates,
   antimicrobials = c(aminoglycosides(), carbapenems())
 )
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> # An Antibiogram: 10 × 7
 #> # Type:           Non-WISCA with 95% CI
 #>    Pathogen       Amikacin    Gentamicin Imipenem Kanamycin Meropenem Tobramycin
@@ -623,8 +623,8 @@ antibiogram(example_isolates,
   ab_transform = "atc",
   mo_transform = "gramstain"
 )
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
 #> # An Antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  
@@ -639,7 +639,7 @@ antibiogram(example_isolates,
   ab_transform = "name",
   mo_transform = "name"
 )
-#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> # An Antibiogram: 5 × 3
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen                                 Imipenem             Meropenem       
@@ -677,7 +677,7 @@ antibiogram(example_isolates,
   antimicrobials = ureidopenicillins() + c("", "GEN", "tobra"),
   mo_transform = "gramstain"
 )
-#> ℹ For `?ureidopenicillins()` using column TZP (piperacillin/tazobactam)
+#> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
 #> # An Antibiogram: 2 × 4
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³
@@ -714,9 +714,9 @@ antibiogram(example_isolates,
   antimicrobials = c(aminoglycosides(), carbapenems()),
   syndromic_group = "ward"
 )
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> # An Antibiogram: 14 × 8
 #> # Type:           Non-WISCA with 95% CI
 #>    `Syndromic Group` Pathogen   Amikacin Gentamicin Imipenem Kanamycin Meropenem
@@ -741,7 +741,7 @@ antibiogram(example_isolates,
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
-#> ℹ Using column 'mo' as input for `?mo_genus()`
+#> ℹ Using column mo as input for `mo_genus()`
 
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Spanish on Spanish systems)
@@ -753,8 +753,8 @@ antibiogram(ex1,
   ),
   language = "es"
 )
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
 #> # An Antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
 #>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina
@@ -793,7 +793,7 @@ ureido <- antibiogram(example_isolates,
   syndromic_group = "ward",
   wisca = TRUE
 )
-#> ℹ For `?ureidopenicillins()` using column TZP (piperacillin/tazobactam)
+#> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:

@@ -78,9 +78,9 @@ resistance_data <- example_isolates %>%
     order, genus, AMC, CXM, CTX,
     CAZ, GEN, TOB, TMP, SXT
   ) # and select only relevant columns
-#> ℹ `?resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
 #>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see AMR-options.
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
 #> ℹ This message will be shown once per session.
 
 head(resistance_data)

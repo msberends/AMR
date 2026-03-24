@@ -180,9 +180,9 @@ if (require("dplyr")) {
     mutate(dist = mean_amr_distance(.)) %>%
     arrange(mo, dist)
 }
-#> ℹ Using column 'mo' as input for `?mo_genus()`
-#> ℹ Using column 'mo' as input for `?mo_species()`
-#> ℹ For `?carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ Using column mo as input for `mo_genus()`
+#> ℹ Using column mo as input for `mo_species()`
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> ℹ Calculating mean AMR distance based on columns "TCY", "IPM", and "MEM"
 #> # A tibble: 63 × 5
 #> # Groups:   mo [4]

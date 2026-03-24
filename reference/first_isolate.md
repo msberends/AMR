@@ -330,10 +330,10 @@ method is applied at default.
 
 example_isolates[first_isolate(info = TRUE), ]
 #> ℹ Determining first isolates using an episode length of 365 days
-#> ℹ Using column 'date' as input for `col_date`.
-#> ℹ Using column 'patient' as input for `col_patient_id`.
+#> ℹ Using column date as input for `col_date`.
+#> ℹ Using column patient as input for `col_patient_id`.
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold of 2
-#> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
+#> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column mo)
 #> => Found 1,387 'phenotype-based' first isolates (69.4% of total where a
 #> microbial ID was available)
 #> # A tibble: 1,387 × 46
@@ -359,7 +359,7 @@ example_isolates[first_isolate(info = TRUE), ]
 # \donttest{
 # get all first Gram-negatives
 example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
-#> ℹ Using column 'mo' as input for `?mo_is_gram_negative()`
+#> ℹ Using column mo as input for `mo_is_gram_negative()`
 #> # A tibble: 441 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -388,7 +388,7 @@ if (require("dplyr")) {
 }
 #> ℹ Determining first isolates using an episode length of 365 days
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold of 2
-#> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
+#> ℹ Excluding 16 isolates with a microbial ID 'UNKNOWN' (in column mo)
 #> => Found 1,387 'phenotype-based' first isolates (69.4% of total where a
 #> microbial ID was available)
 #> # A tibble: 1,387 × 46
@@ -446,15 +446,15 @@ if (require("dplyr")) {
 #> ℹ Determining first isolates using an episode length of 365 days
 #> ℹ Basing inclusion on all antimicrobial results, using a points threshold of 2
 #> Group: ward = "Clinical"
-#> ℹ Excluding 9 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
+#> ℹ Excluding 9 isolates with a microbial ID 'UNKNOWN' (in column mo)
 #> => Found 865 'phenotype-based' first isolates (70.1% of total where a microbial
 #> ID was available)
 #> Group: ward = "ICU"
-#> ℹ Excluding 6 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
+#> ℹ Excluding 6 isolates with a microbial ID 'UNKNOWN' (in column mo)
 #> => Found 452 'phenotype-based' first isolates (70.0% of total where a microbial
 #> ID was available)
 #> Group: ward = "Outpatient"
-#> ℹ Excluding 1 isolates with a microbial ID 'UNKNOWN' (in column 'mo')
+#> ℹ Excluding 1 isolates with a microbial ID 'UNKNOWN' (in column mo)
 #> => Found 99 'phenotype-based' first isolates (82.5% of total where a microbial
 #> ID was available)
 #> # A tibble: 2,000 × 5

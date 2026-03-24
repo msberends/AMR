@@ -94,9 +94,9 @@ data <- example_isolates %>%
           mo = as.factor(mo_gramstain(mo))) %>%
   # drop NAs - the ones without a Gramstain (fungi, etc.)
   drop_na()
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `?betalactams()` using columns PEN (benzylpenicillin), OXA (oxacillin),
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `betalactams()` using columns PEN (benzylpenicillin), OXA (oxacillin),
 #>   FLC (flucloxacillin), AMX (amoxicillin), AMC (amoxicillin/clavulanic acid),
 #>   AMP (ampicillin), TZP (piperacillin/tazobactam), CZO (cefazolin), FEP
 #>   (cefepime), CXM (cefuroxime), FOX (cefoxitin), CTX (cefotaxime), CAZ
@@ -143,9 +143,9 @@ a training set using `prep()`:
 
 ``` r
 prep(resistance_recipe)
-#> ℹ For `?aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin),
-#>   AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `?betalactams()` using columns PEN (benzylpenicillin), OXA (oxacillin),
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `betalactams()` using columns PEN (benzylpenicillin), OXA (oxacillin),
 #>   FLC (flucloxacillin), AMX (amoxicillin), AMC (amoxicillin/clavulanic acid),
 #>   AMP (ampicillin), TZP (piperacillin/tazobactam), CZO (cefazolin), FEP
 #>   (cefepime), CXM (cefuroxime), FOX (cefoxitin), CTX (cefotaxime), CAZ
@@ -644,10 +644,10 @@ data_time <- example_isolates %>%
                    .names = "res_{.col}"), 
             .groups = "drop") %>% 
   filter(!is.na(res_AMX) & !is.na(res_AMC) & !is.na(res_CIP)) # Drop missing values
-#> ℹ Using column 'mo' as input for `col_mo`.
-#> ℹ `?resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#> ℹ Using column mo as input for `col_mo`.
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
 #>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see AMR-options.
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
 #> ℹ This message will be shown once per session.
 
 data_time
