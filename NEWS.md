@@ -1,4 +1,4 @@
-# AMR 3.0.1.9040
+# AMR 3.0.1.9041
 
 ### New
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
@@ -31,6 +31,7 @@
 * Fixed SIR and MIC coercion of combined values, e.g. `as.sir("<= 0.002; S") ` or `as.mic("S; 0.002")` (#252)
 
 ### Updates
+* Reproduced `clinical_breakpoints`, `microorganisms.codes`, and `microorganisms.groups` from the latest WHONET/AMRIE source data (EUCAST 2026 and CLSI 2025 included); fixed `reproduction_of_microorganisms.groups.R` to use `dplyr::if_else()` instead of base `ifelse()` to preserve the `<mo>` class in `bind_rows()`
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
 * `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.

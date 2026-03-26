@@ -85,9 +85,9 @@ microorganisms.groups <- whonet_organisms %>%
                           "Mycobacterium canetti")) %>% 
   filter(!is.na(SPECIES_GROUP), SPECIES_GROUP != ORGANISM_CODE) %>%
   transmute(mo_group = as.mo(SPECIES_GROUP),
-            mo = ifelse(is.na(mo),
-                        as.character(as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0)),
-                        mo)) %>% 
+            mo = if_else(is.na(mo),
+                         as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0),
+                         mo)) %>%
   # add our own CoNS and CoPS, WHONET does not strictly follow Becker et al. (2014, 2019, 2020)
   filter(mo_group != as.mo("CoNS")) %>% 
   bind_rows(tibble(mo_group = as.mo("CoNS"), mo = MO_CONS)) %>% 
