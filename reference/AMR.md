@@ -29,7 +29,7 @@ June 2024) and all [**~620 antimicrobial and antiviral
 drugs**](https://amr-for-r.org/reference/antimicrobials.html) by name
 and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED
 CT), and knows all about valid SIR and MIC values. The integral clinical
-breakpoint guidelines from CLSI 2011-2025 and EUCAST 2011-2025 are
+breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are
 included, even with epidemiological cut-off (ECOFF) values. It supports
 and can read any data format, including WHONET data. This package works
 on Windows, macOS and Linux with all versions of R since R-3.0 (April

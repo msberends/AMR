@@ -85,7 +85,7 @@ the outcome of any mathematical operation on MICs will return a
 
 To interpret MIC values as SIR values, use
 [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) on MIC values.
-It supports guidelines from EUCAST (2011-2025) and CLSI (2011-2025).
+It supports guidelines from EUCAST (2011-2026) and CLSI (2011-2026).
 
 This class for MIC values is a quite a special data type: formally it is
 an ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with

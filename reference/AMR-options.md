@@ -63,14 +63,14 @@ the `AMR` package. Set them using the
   [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
   and many plotting functions. **While unset**, the AMR package uses the
-  latest implemented EUCAST guideline (currently EUCAST 2025).
+  latest implemented EUCAST guideline (currently EUCAST 2026).
 
   - For [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), this
     determines which clinical breakpoint guideline is used to interpret
     MIC values and disk diffusion diameters. It can be either the
     guideline name (e.g., `"CLSI"` or `"EUCAST"`) or the name including
     a year (e.g., `"CLSI 2019"`). Supported guidelines are EUCAST 2011
-    to 2025, and CLSI 2011 to 2025.
+    to 2026, and CLSI 2011 to 2026.
 
   - For [`resistance()`](https://amr-for-r.org/reference/proportion.md)
     and
@@ -92,7 +92,7 @@ the `AMR` package. Set them using the
     interpretative colouring. These colours are derived from
     [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) in the
     background and therefore depend on the active `guideline` setting,
-    which again uses EUCAST 2025 if not set explicitly.
+    which again uses EUCAST 2026 if not set explicitly.
 
 - `AMR_guideline`  
   A [character](https://rdrr.io/r/base/character.html) to set the
@@ -101,8 +101,8 @@ the `AMR` package. Set them using the
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md). Can be only
   the guideline name (e.g., `"CLSI"`) or the name with a year (e.g.
   `"CLSI 2019"`). The default to the latest implemented EUCAST
-  guideline, currently `"EUCAST 2025"`. Supported guideline are
-  currently EUCAST (2011-2025) and CLSI (2011-2025).
+  guideline, currently `"EUCAST 2026"`. Supported guideline are
+  currently EUCAST (2011-2026) and CLSI (2011-2026).
 
 - `AMR_ignore_pattern`  
   A [regular expression](https://rdrr.io/r/base/regex.html) to ignore

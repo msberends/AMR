@@ -402,7 +402,7 @@ information about how to work with functions in this package.
 - [`esbl_isolates`](https://amr-for-r.org/reference/esbl_isolates.md) :
   Data Set with 500 ESBL Isolates
 - [`microorganisms.codes`](https://amr-for-r.org/reference/microorganisms.codes.md)
-  : Data Set with 6 036 Common Microorganism Codes
+  : Data Set with 6 050 Common Microorganism Codes
 - [`microorganisms.groups`](https://amr-for-r.org/reference/microorganisms.groups.md)
   : Data Set with 534 Microorganisms In Species Groups
 - [`intrinsic_resistant`](https://amr-for-r.org/reference/intrinsic_resistant.md)

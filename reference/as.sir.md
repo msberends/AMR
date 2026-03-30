@@ -7,8 +7,8 @@ which is an ordered
 [factor](https://rdrr.io/pkg/data.table/man/fctr.html) containing the
 levels `S`, `SDD`, `I`, `R`, `NI`.
 
-Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI
-2011-2025, see *Details*. All breakpoints used for interpretation are
+Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI
+2011-2026, see *Details*. All breakpoints used for interpretation are
 available in our
 [clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
 data set.
@@ -80,29 +80,29 @@ For interpretations of minimum inhibitory concentration (MIC) values and
 disk diffusion diameters:
 
 - **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial
-  Susceptibility Test Data**, 2011-2025, *Clinical and Laboratory
+  Susceptibility Test Data**, 2011-2026, *Clinical and Laboratory
   Standards Institute* (CLSI).
   <https://clsi.org/standards/products/microbiology/documents/m39/>.
 
 - **CLSI M100: Performance Standard for Antimicrobial Susceptibility
-  Testing**, 2011-2025, *Clinical and Laboratory Standards Institute*
+  Testing**, 2011-2026, *Clinical and Laboratory Standards Institute*
   (CLSI).
   <https://clsi.org/standards/products/microbiology/documents/m100/>.
 
 - **CLSI VET01: Performance Standards for Antimicrobial Disk and
   Dilution Susceptibility Tests for Bacteria Isolated From Animals**,
-  2019-2025, *Clinical and Laboratory Standards Institute* (CLSI).
+  2019-2026, *Clinical and Laboratory Standards Institute* (CLSI).
   <https://clsi.org/standards/products/veterinary-medicine/documents/vet01/>.
 
 - **EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters**, 2011-2025, *European Committee on Antimicrobial
+  diameters**, 2011-2026, *European Committee on Antimicrobial
   Susceptibility Testing* (EUCAST).
   <https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/>.
 
 - **WHONET** as a source for machine-reading the clinical breakpoints
   ([read more
   here](https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet)),
-  1989-2025, *WHO Collaborating Centre for Surveillance of Antimicrobial
+  1989-2026, *WHO Collaborating Centre for Surveillance of Antimicrobial
   Resistance*. <https://whonet.org/>.
 
 ## Arguments
@@ -162,12 +162,12 @@ disk diffusion diameters:
 - guideline:
 
   A guideline name (or column name) to use for SIR interpretation.
-  Defaults to EUCAST 2025 (the latest implemented EUCAST guideline in
+  Defaults to EUCAST 2026 (the latest implemented EUCAST guideline in
   the
   [clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
   data set), but can be set with the package option
   [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md).
-  Currently supports EUCAST (2011-2025) and CLSI (2011-2025), see
+  Currently supports EUCAST (2011-2026) and CLSI (2011-2026), see
   *Details*. Using a column name allows for straightforward
   interpretation of historical data, which must be analysed in the
   context of, for example, different years.
@@ -457,15 +457,15 @@ interpretation, and the exact input and output values.
 For interpreting MIC values as well as disk diffusion diameters,
 currently implemented guidelines are:
 
-- For **clinical microbiology**: EUCAST 2011-2025 and CLSI 2011-2025;
+- For **clinical microbiology**: EUCAST 2011-2026 and CLSI 2011-2026;
 
-- For **veterinary microbiology**: EUCAST 2021-2025 and CLSI 2019-2025;
+- For **veterinary microbiology**: EUCAST 2021-2026 and CLSI 2019-2026;
 
-- For **ECOFFs** (Epidemiological Cut-off Values): EUCAST 2020-2025 and
-  CLSI 2022-2025.
+- For **ECOFFs** (Epidemiological Cut-off Values): EUCAST 2020-2026 and
+  CLSI 2022-2026.
 
-The `guideline` argument must be set to e.g., `"EUCAST 2025"` or
-`"CLSI 2025"`. By simply using `"EUCAST"` (the default) or `"CLSI"` as
+The `guideline` argument must be set to e.g., `"EUCAST 2026"` or
+`"CLSI 2026"`. By simply using `"EUCAST"` (the default) or `"CLSI"` as
 input, the latest included version of that guideline will automatically
 be selected. Importantly, using a column name of your data instead,
 allows for straightforward interpretation of historical data that must
@@ -660,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-03-24 12:30:17     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-03-24 12:30:17     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-03-24 12:30:18     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-03-24 12:30:18     1 DISK   genta       Escherich… human      18         
+#> 1 2026-03-30 08:14:10     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-03-30 08:14:10     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-03-30 08:14:10     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-03-30 08:14:11     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

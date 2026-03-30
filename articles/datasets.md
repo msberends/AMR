@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 40 217 rows and 14 columns, containing the following
+A data set with 45 797 rows and 14 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, and
@@ -156,7 +156,7 @@ column names:
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 20 April 2025 10:55:31 UTC. Find more info about
+It was last updated on 30 March 2026 08:01:49 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -164,36 +164,36 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.rds)
-  (88 kB)  
+  (92 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.txt)
-  (3.7 MB)  
+  (4.2 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.xlsx)
-  (2.4 MB)  
+  (2.7 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.feather)
-  (1.8 MB)  
+  (2 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet)
   (0.1 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
-  (6.6 MB)  
+  (7.5 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.dta)
-  (11.1 MB)
+  (12.6 MB)
 
 **Example content**
 
 |  guideline  | type  | host  | method | site |      mo       |          mo_name           | rank_index | ab  |            ab_name            |     ref_tbl     |   disk_dose    | breakpoint_S | breakpoint_R |  uti  | is_SDD |
 |:-----------:|:-----:|:-----:|:------:|:----:|:-------------:|:--------------------------:|:----------:|:---:|:-----------------------------:|:---------------:|:--------------:|:------------:|:------------:|:-----:|:------:|
-| EUCAST 2025 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | MEM |           Meropenem           | A. xylosoxidans |     10 mcg     |    26.000    |    20.000    | FALSE | FALSE  |
-| EUCAST 2025 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | MEM |           Meropenem           | A. xylosoxidans |                |    1.000     |    4.000     | FALSE | FALSE  |
-| EUCAST 2025 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans | 1.25/23.75 mcg |    26.000    |    26.000    | FALSE | FALSE  |
-| EUCAST 2025 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans |                |    0.125     |    0.125     | FALSE | FALSE  |
-| EUCAST 2025 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | TZP |    Piperacillin/tazobactam    | A. xylosoxidans |    30/6 mcg    |    26.000    |    26.000    | FALSE | FALSE  |
-| EUCAST 2025 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | TZP |    Piperacillin/tazobactam    | A. xylosoxidans |                |    4.000     |    4.000     | FALSE | FALSE  |
+| EUCAST 2026 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | MEM |           Meropenem           | A. xylosoxidans |     10 mcg     |    26.000    |    20.000    | FALSE | FALSE  |
+| EUCAST 2026 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | MEM |           Meropenem           | A. xylosoxidans |                |    1.000     |    4.000     | FALSE | FALSE  |
+| EUCAST 2026 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans | 1.25/23.75 mcg |    26.000    |    26.000    | FALSE | FALSE  |
+| EUCAST 2026 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans |                |    0.125     |    0.125     | FALSE | FALSE  |
+| EUCAST 2026 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | TZP |    Piperacillin/tazobactam    | A. xylosoxidans |    30/6 mcg    |    26.000    |    26.000    | FALSE | FALSE  |
+| EUCAST 2026 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | TZP |    Piperacillin/tazobactam    | A. xylosoxidans |                |    4.000     |    4.000     | FALSE | FALSE  |
 
 ------------------------------------------------------------------------
 
@@ -460,22 +460,22 @@ here](https://amr-for-r.org/reference/example_isolates_unclean.html).
 
 ## `microorganisms.codes`: Common Laboratory Codes
 
-A data set with 6 036 rows and 2 columns, containing the following
+A data set with 6 050 rows and 2 columns, containing the following
 column names:  
 *code* and *mo*.
 
 This data set is in R available as `microorganisms.codes`, after you
 load the `AMR` package.
 
-It was last updated on 4 May 2025 16:50:25 UTC. Find more info about the
-contents, (scientific) source, and structure of this [data set
+It was last updated on 30 March 2026 08:01:49 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.codes.html).
 
 **Direct download links:**
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.rds)
-  (27 kB)  
+  (28 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.txt)
   (0.1 MB)  
@@ -487,7 +487,7 @@ here](https://amr-for-r.org/reference/microorganisms.codes.html).
   (0.1 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.parquet)
-  (68 kB)  
+  (69 kB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.sav)
   (0.2 MB)  

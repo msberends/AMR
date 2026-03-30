@@ -7,12 +7,12 @@ ECOFFs.
 
 These breakpoints are currently implemented:
 
-- For **clinical microbiology**: EUCAST 2011-2025 and CLSI 2011-2025;
+- For **clinical microbiology**: EUCAST 2011-2026 and CLSI 2011-2026;
 
-- For **veterinary microbiology**: EUCAST 2021-2025 and CLSI 2019-2025;
+- For **veterinary microbiology**: EUCAST 2021-2026 and CLSI 2019-2026;
 
-- For **ECOFFs** (Epidemiological Cut-off Values): EUCAST 2020-2025 and
-  CLSI 2022-2025.
+- For **ECOFFs** (Epidemiological Cut-off Values): EUCAST 2020-2026 and
+  CLSI 2022-2026.
 
 Use [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) to transform
 MICs or disks measurements to SIR values.
@@ -25,8 +25,8 @@ clinical_breakpoints
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 40
-217 observations and 14 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 45
+797 observations and 14 variables:
 
 - `guideline`  
   Name of the guideline
@@ -80,7 +80,7 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 40
   A [logical](https://rdrr.io/r/base/logical.html) value
   (`TRUE`/`FALSE`) to indicate whether the intermediate range between
   "S" and "R" should be interpreted as "SDD", instead of "I". This
-  currently applies to 48 breakpoints.
+  currently applies to 72 breakpoints.
 
 ## Details
 
@@ -154,20 +154,20 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 40,217 × 14
+#> # A tibble: 45,797 × 14
 #>    guideline   type  host  method site    mo            rank_index ab   ref_tbl 
 #>    <chr>       <chr> <chr> <chr>  <chr>   <mo>               <dbl> <ab> <chr>   
-#>  1 EUCAST 2025 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
-#>  2 EUCAST 2025 human human MIC    NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
-#>  3 EUCAST 2025 human human DISK   NA      B_ACHRMB_XYLS          2 SXT  A. xylo…
-#>  4 EUCAST 2025 human human MIC    NA      B_ACHRMB_XYLS          2 SXT  A. xylo…
-#>  5 EUCAST 2025 human human DISK   NA      B_ACHRMB_XYLS          2 TZP  A. xylo…
-#>  6 EUCAST 2025 human human MIC    NA      B_ACHRMB_XYLS          2 TZP  A. xylo…
-#>  7 EUCAST 2025 human human DISK   NA      B_ACNTB                3 AMK  Acineto…
-#>  8 EUCAST 2025 human human DISK   Uncomp… B_ACNTB                3 AMK  Acineto…
-#>  9 EUCAST 2025 human human MIC    NA      B_ACNTB                3 AMK  Acineto…
-#> 10 EUCAST 2025 human human MIC    Uncomp… B_ACNTB                3 AMK  Acineto…
-#> # ℹ 40,207 more rows
+#>  1 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
+#>  2 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
+#>  3 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 SXT  A. xylo…
+#>  4 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 SXT  A. xylo…
+#>  5 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 TZP  A. xylo…
+#>  6 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 TZP  A. xylo…
+#>  7 EUCAST 2026 human human DISK   NA      B_ACNTB                3 AMK  Acineto…
+#>  8 EUCAST 2026 human human DISK   Uncomp… B_ACNTB                3 AMK  Acineto…
+#>  9 EUCAST 2026 human human MIC    NA      B_ACNTB                3 AMK  Acineto…
+#> 10 EUCAST 2026 human human MIC    Uncomp… B_ACNTB                3 AMK  Acineto…
+#> # ℹ 45,787 more rows
 #> # ℹ 5 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
 #> #   uti <lgl>, is_SDD <lgl>
 ```

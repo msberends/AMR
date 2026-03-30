@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9040</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9041</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 24 March 2026.</p>
+generated on 30 March 2026.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -147,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2026-03-24</td>
+<td align="center">2026-03-30</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2026-03-24</td>
+<td align="center">2026-03-30</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2026-03-24</td>
+<td align="center">2026-03-30</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -263,8 +263,8 @@ user input can be used:</p>
 <p>Now we can thus clean our data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="va">our_data</span><span class="op">$</span><span class="va">bacteria</span>, info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Retrieved values from the `microorganisms.codes` data set for "ESCCOL",</span></span>
-<span><span class="co">#&gt;   "KLEPNE", "STAAUR", and "STRPNE".</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Retrieved values from the `microorganisms.codes` data set for <span style="color: #0000BB;">"ESCCOL"</span>,</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">"KLEPNE"</span>, <span style="color: #0000BB;">"STAAUR"</span>, and <span style="color: #0000BB;">"STRPNE"</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Microorganism translation was uncertain for four microorganisms. Run</span></span>
 <span><span class="co">#&gt;   `mo_uncertainties()` to review these uncertainties, or use</span></span>
 <span><span class="co">#&gt;   `add_custom_microorganisms()` to add custom entries.</span></span></code></pre></div>

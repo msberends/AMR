@@ -336,7 +336,7 @@ EUCAST guidelines since 2019, and will be named "Intermediate" in all
 other cases.
 
 For interpreting MIC values as well as disk diffusion diameters, the
-default guideline is EUCAST 2025, unless the package option
+default guideline is EUCAST 2026, unless the package option
 [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md) is
 set. See [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for
 more information.
