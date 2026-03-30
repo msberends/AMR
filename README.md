@@ -15,7 +15,7 @@ Overview:
   even WISCA
 - Provides the **full microbiological taxonomy** of ~79 000 distinct
   species and extensive info of ~620 antimicrobial drugs
-- Applies **CLSI 2011-2025** and **EUCAST 2011-2025** clinical and
+- Applies **CLSI 2011-2026** and **EUCAST 2011-2026** clinical and
   veterinary breakpoints, and ECOFFs, for MIC and disk zone
   interpretation
 - Corrects for duplicate isolates, **calculates** and **predicts** AMR

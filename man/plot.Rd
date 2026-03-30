@@ -201,7 +201,7 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
-For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2025, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
+For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2026, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
 \examples{

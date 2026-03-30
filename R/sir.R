@@ -2080,10 +2080,10 @@ freq.sir <- function(x, ...) {
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, sir)
 get_skimmers.sir <- function(column) {
-  # TODO add here in AMR 3.1.0 details about guideline
+  # TODO #170 add here in AMR 3.1.0 details about guideline
   skimr::sfl(
     skim_type = "sir",
-    # guideline = function(x) "EUCAST 2025", # or "Multiple"
+    # guideline = function(x) "EUCAST 2026", # or "Multiple"
     # origin = function(x) "MIC", # or "Multiple"
     count_S = count_S,
     count_I = count_I,

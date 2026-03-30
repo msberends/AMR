@@ -16,11 +16,11 @@
 \source{
 For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 \itemize{
-\item \strong{CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2025, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-\item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2025, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
-\item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2025, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01/}.
-\item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2025, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/}.
-\item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2025, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
+\item \strong{CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
+\item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01/}.
+\item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2026, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/}.
+\item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2026, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
 }
 }
 \usage{
@@ -94,7 +94,7 @@ Otherwise: arguments passed on to methods.}
 
 \item{ab}{A vector (or column name) with \link{character}s that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{guideline}{A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2025 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2025) and CLSI (2011-2025), see \emph{Details}. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.}
+\item{guideline}{A guideline name (or column name) to use for SIR interpretation. Defaults to EUCAST 2026 (the latest implemented EUCAST guideline in the \link{clinical_breakpoints} data set), but can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}. Currently supports EUCAST (2011-2026) and CLSI (2011-2026), see \emph{Details}. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.}
 
 \item{uti}{(Urinary Tract Infection) a vector (or column name) with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.sir]{as.sir()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -162,7 +162,7 @@ Ordered \link{factor} with new class \code{sir}
 \description{
 Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} containing the levels \code{S}, \code{SDD}, \code{I}, \code{R}, \code{NI}.
 
-Breakpoints are currently implemented from EUCAST 2011-2025 and CLSI 2011-2025, see \emph{Details}. All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
+Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, see \emph{Details}. All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
 }
 \details{
 \emph{Note: The clinical breakpoints in this package were validated through, and imported from, \href{https://whonet.org}{WHONET}. The public use of this \code{AMR} package has been endorsed by both CLSI and EUCAST. See \link{clinical_breakpoints} for more information.}
@@ -215,12 +215,12 @@ as.sir(your_data, ..., parallel = TRUE)
 
 For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are:
 \itemize{
-\item For \strong{clinical microbiology}: EUCAST 2011-2025 and CLSI 2011-2025;
-\item For \strong{veterinary microbiology}: EUCAST 2021-2025 and CLSI 2019-2025;
-\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2025 and CLSI 2022-2025.
+\item For \strong{clinical microbiology}: EUCAST 2011-2026 and CLSI 2011-2026;
+\item For \strong{veterinary microbiology}: EUCAST 2021-2026 and CLSI 2019-2026;
+\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2026 and CLSI 2022-2026.
 }
 
-The \code{guideline} argument must be set to e.g., \code{"EUCAST 2025"} or \code{"CLSI 2025"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. Importantly, using a column name of your data instead, allows for straightforward interpretation of historical data that must be analysed in the context of, for example, different years.
+The \code{guideline} argument must be set to e.g., \code{"EUCAST 2026"} or \code{"CLSI 2026"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. Importantly, using a column name of your data instead, allows for straightforward interpretation of historical data that must be analysed in the context of, for example, different years.
 
 You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 

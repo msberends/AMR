@@ -174,7 +174,7 @@ as.mic <- function(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 
     keep_operators <- "none"
   }
 
-  if (is.mic(x) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
+  if (any(is.mic(x)) && (keep_operators == "all" || !any(x %like% "[>=<]", na.rm = TRUE))) {
     if (isTRUE(round_to_next_log2)) {
       x <- roundup_to_nearest_log2(x)
     }
@@ -327,7 +327,7 @@ rescale_mic <- function(x, mic_range, keep_operators = "edges", as.mic = TRUE, r
     mic_range <- trimws(format(mic_range, scientific = FALSE))
     mic_range <- gsub("[.]0+$", "", mic_range)
     mic_range[mic_range == "NA"] <- NA_character_
-  } else if (is.mic(mic_range)) {
+  } else if (any(is.mic(mic_range))) {
     mic_range <- as.character(mic_range)
   }
   stop_ifnot(
