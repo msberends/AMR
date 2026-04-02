@@ -249,7 +249,7 @@ as.mo <- function(x,
   if (length(which(ind)) > 0 && isTRUE(info) && message_not_thrown_before("as.mo_microorganisms.codes", is.na(out), toupper(x))) {
     message_(
       "Retrieved value", ifelse(sum(ind) > 1, "s", ""),
-      " from the {.help [microorganisms.codes](AMR::microorganisms.codes)} data set for ", vector_and(paste0("{.val ", toupper(x)[ind], "}"), quotes = FALSE), "."
+      " from the {.help [microorganisms.codes](AMR::microorganisms.codes)} data set for ", vector_and(toupper(x)[ind]), "."
     )
   }
   # From SNOMED ----

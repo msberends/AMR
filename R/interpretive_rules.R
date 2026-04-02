@@ -76,7 +76,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param overwrite A [logical] indicating whether to overwrite existing SIR values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
 #' @inheritParams first_isolate
 #' @details
-#' **Note:** This function does not translate MIC values to SIR values. Use [as.sir()] for that. \cr
+#' **Note:** This function does not translate MIC or disk values to SIR values. Use [as.sir()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 #'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The `AMR` package contains the full microbial taxonomy updated until `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`, see [microorganisms].
@@ -163,7 +163,7 @@ interpretive_rules <- function(x,
                                rules = getOption("AMR_interpretive_rules", default = c("breakpoints", "expected_phenotypes")),
                                guideline = getOption("AMR_guideline", "EUCAST"),
                                verbose = FALSE,
-                               version_breakpoints = 15.0,
+                               version_breakpoints = 16.0,
                                version_expected_phenotypes = 1.2,
                                version_expertrules = 3.3,
                                ampc_cephalosporin_resistance = NA,

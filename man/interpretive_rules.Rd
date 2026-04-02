@@ -24,7 +24,7 @@ Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility test
 interpretive_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
   "expected_phenotypes")), guideline = getOption("AMR_guideline", "EUCAST"),
-  verbose = FALSE, version_breakpoints = 15,
+  verbose = FALSE, version_breakpoints = 16,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
   custom_rules = NULL, overwrite = FALSE, ...)
@@ -52,11 +52,11 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be "15.0", "14.0", "13.1", "12.0", "11.0", or "10.0".}
+\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be {.val 16.0}, {.val 15.0}, {.val 14.0}, {.val 13.1}, {.val 12.0}, {.val 11.0}, or {.val 10.0}.}
 
-\item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be "1.2".}
+\item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be {.val 1.2}.}
 
-\item{version_expertrules}{The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be "3.3", "3.2", or "3.1".}
+\item{version_expertrules}{The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be {.val 3.3}, {.val 3.2}, or {.val 3.1}.}
 
 \item{ampc_cephalosporin_resistance}{(only applies when \code{rules} contains \code{"expert"} or \code{"all"}) a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2} and higher; these versions of '\emph{EUCAST Expert Rules on Enterobacterales}' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of \code{NA} (the default) for this argument will remove results for these three drugs, while e.g. a value of \code{"R"} will make the results for these drugs resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia}, and \emph{Serratia}.}
 
@@ -70,7 +70,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{administration}{Route of administration, either "", "im", "iv", "oral", or NA.}
+\item{administration}{Route of administration, either {.val }, {.val im}, {.val iv}, {.val oral}, or NA.}
 }
 \value{
 The input of \code{x}, possibly with edited values of antimicrobials. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.
@@ -81,7 +81,7 @@ Apply rules from clinical breakpoints notes and expected resistant phenotypes as
 To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive rules are applied, some AMR-specific rules can be applied at default, see \emph{Details}.
 }
 \details{
-\strong{Note:} This function does not translate MIC values to SIR values. Use \code{\link[=as.sir]{as.sir()}} for that. \cr
+\strong{Note:} This function does not translate MIC or disk values to SIR values. Use \code{\link[=as.sir]{as.sir()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 
 The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until June 24th, 2024, see \link{microorganisms}.

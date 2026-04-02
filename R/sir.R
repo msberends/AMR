@@ -1079,8 +1079,8 @@ get_guideline <- function(guideline, reference_data) {
   guideline_param[guideline_param %unlike% " "] <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param[guideline_param %unlike% " "], ignore.case = TRUE)
 
   stop_ifnot(guideline_param %in% reference_data$guideline,
-    "invalid guideline: '", guideline,
-    "'.\nValid guidelines are: ", vector_and(reference_data$guideline, quotes = TRUE, reverse = TRUE),
+    "invalid guideline: {.val ", guideline,
+    "}.\nValid guidelines are: ", vector_and(reference_data$guideline, reverse = TRUE),
     call = FALSE
   )
 

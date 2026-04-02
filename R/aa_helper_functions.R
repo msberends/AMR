@@ -359,9 +359,9 @@ stop_ifnot_installed <- function(package) {
   if (any(!installed) && any(package == "rstudioapi")) {
     stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
   } else if (any(!installed)) {
-    stop("This requires the ", vector_and(package[!installed]), " package.",
-      "\nTry to install with install.packages().",
-      call. = FALSE
+    stop_(
+      "This requires the ", vector_and(paste0("{.pkg ", package[!installed], "}"), quotes = FALSE), " package.",
+      "\nTry to install with {.fun install.packages}."
     )
   } else {
     return(invisible())
@@ -747,7 +747,7 @@ format_included_data_number <- function(data) {
   paste0(ifelse(rounder == 0, "", "~"), format(round(n, rounder), decimal.mark = ".", big.mark = " "))
 }
 
-vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ") {
+vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ", documentation = FALSE) {
   # makes unique and sorts, and this also removed NAs
   v <- unique(v)
   has_na <- anyNA(v)
@@ -761,17 +761,25 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     v <- rev(v)
   }
   if (isTRUE(quotes)) {
-    quotes <- '"'
+    if (isTRUE(documentation)) {
+      quotes <- '"'
+    } else {
+      # use cli to format as values
+      quotes <- c("{.val ", "}")
+    }
   } else if (isFALSE(quotes)) {
     quotes <- ""
   } else {
     quotes <- quotes[1L]
   }
+  if (length(quotes) == 1) {
+    quotes <- c(quotes, quotes)
+  }
   if (isTRUE(initial_captital)) {
     v[1] <- gsub("^([a-z])", "\\U\\1", v[1], perl = TRUE)
   }
   if (length(v) <= 1) {
-    return(paste0(quotes, v, quotes))
+    return(paste0(quotes[1], v, quotes[2]))
   }
   if (identical(v, c("I", "R", "S"))) {
     # class 'sir' should be sorted like this
@@ -790,7 +798,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   if (is.numeric(v)) {
     v <- trimws(vapply(FUN.VALUE = character(1), v, format, scientific = FALSE))
   }
-  quoted <- paste0(quotes, v, quotes)
+  quoted <- paste0(quotes[1], v, quotes[2])
   quoted[NAs] <- "NA"
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
   paste0(
@@ -799,10 +807,11 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   )
 }
 
-vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE) {
+vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, documentation = FALSE) {
   vector_or(
     v = v, quotes = quotes, reverse = reverse, sort = sort,
-    initial_captital = initial_captital, last_sep = " and "
+    initial_captital = initial_captital, documentation = documentation,
+    last_sep = " and "
   )
 }
 

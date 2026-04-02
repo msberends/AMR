@@ -386,18 +386,39 @@ breakpoints_new <- breakpoints_new |> filter(!wrong)
 # There's a problem with C. diff in EUCAST where breakpoint_R is missing - they are listed as normal human breakpoints but are ECOFF
 # 2025-04-20/ fixed now
 
-# determine rank again now that some changes were made on taxonomic level (genus -> species)
-breakpoints_new <- breakpoints_new |> 
-  mutate(rank_index = case_when(
-    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
-    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
-    mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
-    mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
-    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
-    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
-    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
-    TRUE ~ 7
-  ))
+# WHONET sets for EUCAST 2026 TMP breakpoints for all Klebsiella, but this is now only for non-aerogenes species
+kleb_spp <- microorganisms |> filter(rank == "species", genus == "Klebsiella", !species %in% c("", "aerogenes")) |> pull(mo)
+kleb_tmp_mic <- breakpoints_new |>
+  filter(guideline == "EUCAST 2026", method == "MIC", ab == "TMP", mo == as.mo("Klebsiella")) |>
+  uncount(length(kleb_spp)) |>
+  mutate(mo = kleb_spp)
+kleb_tmp_disk <- breakpoints_new |>
+  filter(guideline == "EUCAST 2026", method == "DISK", ab == "TMP", mo == as.mo("Klebsiella")) |>
+  uncount(length(kleb_spp)) |>
+  mutate(mo = kleb_spp)
+breakpoints_new <- breakpoints_new |>
+  filter(!(guideline == "EUCAST 2026" & method == "MIC" & ab == "TMP" & mo == as.mo("Klebsiella"))) |>
+  bind_rows(kleb_tmp_mic,
+            kleb_tmp_disk)
+
+# WHONET contains wrong EUCAST breakpoints for enterococci/SXT: disk should be 23/23, not 21/50, and MIC should be 1/1, not 0.032/1
+# applies to all previous years, since v11 (2011)
+breakpoints_new |> filter(guideline %like% "EUCAST", ab == "SXT", mo == as.mo("Enterococcus"), type == "human")
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 23
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 23
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+# Also wrong EUCAST breakpoints for enterococci/TMP: disk should be 21/21, not 21/50, and MIC should be 1/1, not 0.032/1
+breakpoints_new |> filter(guideline %like% "EUCAST", ab == "TMP", mo == as.mo("Enterococcus"), type == "human")
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 21
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 21
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+
+# WHONET still contains PK/PD rules for EUCAST >= 2024, but this was ended from v14 (2024) on
+breakpoints_new <- breakpoints_new |>
+  filter(!(guideline %like% "EUCAST (2024|2025|2026)" & ref_tbl == "PK/PD"))
+
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2023 guideline: S <= 8 and R > 8
@@ -418,6 +439,7 @@ breakpoints_new <- breakpoints_new |>
     breakpoint_R
   ))
 
+
 # check the strange duplicates
 breakpoints_new |> 
   mutate(id = paste(guideline, type, host, method, site, mo, ab, uti)) %>%
@@ -430,9 +452,8 @@ breakpoints_new <- breakpoints_new |>
   distinct(guideline, type, host, method, site, mo, ab, uti, .keep_all = TRUE)
 
 
-# CHECKS AND SAVE TO PACKAGE ----
+# CHECKS ----
 
-# check again
 breakpoints_new |> filter(guideline == "EUCAST 2026", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
 clinical_breakpoints |> filter(guideline == "EUCAST 2025", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
@@ -443,6 +464,24 @@ breakpoints_new |> filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCAS
 # check dimensions
 dim(breakpoints_new)
 dim(clinical_breakpoints)
+
+
+# SAVE TO PACKAGE ----
+
+# determine rank again now that some changes were made on taxonomic level (genus -> species)
+breakpoints_new <- breakpoints_new |> 
+  mutate(rank_index = case_when(
+    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
+    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
+    mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
+    mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
+    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
+    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
+    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
+    TRUE ~ 7
+  )) |>
+  # and arrange
+  arrange(desc(guideline), mo, ab, type, host, method)
 
 clinical_breakpoints <- breakpoints_new
 clinical_breakpoints <- clinical_breakpoints |> dataset_UTF8_to_ASCII()
