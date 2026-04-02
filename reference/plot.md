@@ -199,9 +199,9 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 - breakpoint_type:
 
-  The type of breakpoints to use, either "ECOFF", "animal", or "human".
-  ECOFF stands for Epidemiological Cut-Off values. The default is
-  `"human"`, which can also be set with the package option
+  The type of breakpoints to use, either .val ECOFF, .val animal, or
+  .val human. ECOFF stands for Epidemiological Cut-Off values. The
+  default is `"human"`, which can also be set with the package option
   [`AMR_breakpoint_type`](https://amr-for-r.org/reference/AMR-options.md).
   If `host` is set to values of veterinary species, this will
   automatically be set to `"animal"`.
@@ -493,6 +493,8 @@ plot(some_mic_values)
 
 # when providing the microorganism and antibiotic, colours will show interpretations:
 plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
+#> ℹ No EUCAST 2026 MIC interpretations found for ampicillin in Staphylococcus
+#>   aureus
 
 
 plot(some_disk_values)

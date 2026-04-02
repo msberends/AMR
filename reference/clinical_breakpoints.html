@@ -21,7 +21,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9041</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9042</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,10 +78,10 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 45 797 observations and 14 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
-<li><p><code>type</code><br> Breakpoint type, either "ECOFF", "animal", or "human"</p></li>
-<li><p><code>host</code><br> Host of infectious agent. This is mostly useful for veterinary breakpoints and is either "ECOFF", "aquatic", "cats", "cattle", "dogs", "horse", "human", "poultry", or "swine"</p></li>
-<li><p><code>method</code><br> Testing method, either "DISK" or "MIC"</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 45 730 observations and 14 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+<li><p><code>type</code><br> Breakpoint type, either .val ECOFF, .val animal, or .val human</p></li>
+<li><p><code>host</code><br> Host of infectious agent. This is mostly useful for veterinary breakpoints and is either .val ECOFF, .val aquatic, .val cats, .val cattle, .val dogs, .val horse, .val human, .val poultry, or .val swine</p></li>
+<li><p><code>method</code><br> Testing method, either .val DISK or .val MIC</p></li>
 <li><p><code>site</code><br> Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"</p></li>
 <li><p><code>mo</code><br> Microbial ID, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
 <li><p><code>rank_index</code><br> Taxonomic rank index of <code>mo</code> from 1 (subspecies/infraspecies) to 5 (unknown microorganism)</p></li>
@@ -143,7 +143,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">clinical_breakpoints</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 45,797 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 45,730 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    guideline   type  host  method site    mo            rank_index ab   ref_tbl </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 MEM  A. xylo…</span>
@@ -156,7 +156,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2026 human human DISK   Uncomp… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2026 human human MIC    Uncomp… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 45,787 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 45,720 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: disk_dose &lt;chr&gt;, breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   uti &lt;lgl&gt;, is_SDD &lt;lgl&gt;</span></span>
 </code></pre></div>

@@ -29,15 +29,16 @@ top_n_microorganisms(x, n, property = "species", n_for_each = NULL,
   A character string indicating the microorganism property to use for
   filtering. Must be one of the column names of the
   [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
-  data set: "mo", "fullname", "status", "kingdom", "phylum", "class",
-  "order", "family", "genus", "species", "subspecies", "rank", "ref",
-  "oxygen_tolerance", "source", "lpsn", "lpsn_parent",
-  "lpsn_renamed_to", "mycobank", "mycobank_parent",
-  "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to",
-  "prevalence", or "snomed". If `NULL`, the raw values from `col_mo`
-  will be used without transformation. When using `"species"` (default)
-  or `"subpecies"`, the genus will be added to make sure each
-  (sub)species still belongs to the right genus.
+  data set: .val mo, .val fullname, .val status, .val kingdom, .val
+  phylum, .val class, .val order, .val family, .val genus, .val species,
+  .val subspecies, .val rank, .val ref, .val oxygen_tolerance, .val
+  source, .val lpsn, .val lpsn_parent, .val lpsn_renamed_to, .val
+  mycobank, .val mycobank_parent, .val mycobank_renamed_to, .val gbif,
+  .val gbif_parent, .val gbif_renamed_to, .val prevalence, or .val
+  snomed. If `NULL`, the raw values from `col_mo` will be used without
+  transformation. When using `"species"` (default) or `"subpecies"`, the
+  genus will be added to make sure each (sub)species still belongs to
+  the right genus.
 
 - n_for_each:
 

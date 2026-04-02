@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9041</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9042</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,12 +156,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9   I    R   28   16    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10  J    S   22   16    4</span>
 <span class="r-in"><span><span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns "amox", "cipr", "gent", and</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   "tobr"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns <span style="color: #0000BB;">"amox"</span>, <span style="color: #0000BB;">"cipr"</span>, <span style="color: #0000BB;">"gent"</span>, and</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">"tobr"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.52677313  0.16501937  0.34372779 -0.05155946 -0.97765805  0.26901032</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  0.30452889 -0.58337098  0.36899264 -0.36546366</span>
 <span class="r-in"><span><span class="va">y</span><span class="op">$</span><span class="va">amr_distance</span> <span class="op">&lt;-</span> <span class="fu">mean_amr_distance</span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="as.mic.html">is.mic</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns "gent" and "tobr"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns <span style="color: #0000BB;">"gent"</span> and <span style="color: #0000BB;">"tobr"</span></span>
 <span class="r-in"><span><span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">y</span><span class="op">$</span><span class="va">amr_distance</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id amox cipr gent tobr amr_distance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8   H    I   31  &lt;=8  &lt;=1   -1.0808937</span>
@@ -183,8 +183,8 @@
 <span class="r-in"><span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">check_id_C</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns "amox", "cipr", "gent", and</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   "tobr"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns <span style="color: #0000BB;">"amox"</span>, <span style="color: #0000BB;">"cipr"</span>, <span style="color: #0000BB;">"gent"</span>, and</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">"tobr"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id amox cipr gent tobr amr_distance check_id_C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   C    S   27   16   32   0.34372779 0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   I    R   28   16    2   0.36899264 0.02526485</span>
@@ -208,7 +208,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using column <span style="color: #00BB00; font-weight: bold;">mo</span> as input for `mo_genus()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using column <span style="color: #00BB00; font-weight: bold;">mo</span> as input for `mo_species()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns "TCY", "IPM", and "MEM"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Calculating mean AMR distance based on columns <span style="color: #0000BB;">"TCY"</span>, <span style="color: #0000BB;">"IPM"</span>, and <span style="color: #0000BB;">"MEM"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 63 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   mo [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    mo           TCY   IPM   MEM     dist</span>

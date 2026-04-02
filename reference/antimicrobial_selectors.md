@@ -170,7 +170,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 - version_expected_phenotypes:
 
   The version number to use for the EUCAST Expected Phenotypes. Can be
-  "1.2".
+  .val 1.2.
 
 ## Value
 
@@ -887,7 +887,8 @@ subset(example_isolates, any(carbapenems() == "R"))
 # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
 example_isolates[any(carbapenems()), ]
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> ℹ Filtering any of columns 'IPM' and 'MEM' to contain value "S", "I" or "R"
+#> ℹ Filtering any of columns IPM and MEM to only contain values "S", "SDD", "I",
+#>   "R", "NI", "WT", "NWT", or "NS"
 #> # A tibble: 962 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -910,7 +911,8 @@ example_isolates[any(carbapenems()), ]
 #> #   IPM <sir>, MEM <sir>, MTR <sir>, CHL <sir>, COL <sir>, MUP <sir>, …
 example_isolates[all(carbapenems()), ]
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> ℹ Filtering all of columns 'IPM' and 'MEM' to contain value "S", "I" or "R"
+#> ℹ Filtering all of columns IPM and MEM to only contain values "S", "SDD", "I",
+#>   "R", "NI", "WT", "NWT", or "NS"
 #> # A tibble: 756 × 46
 #>    date       patient   age gender ward    mo            PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>   <mo>          <sir> <sir> <sir> <sir>

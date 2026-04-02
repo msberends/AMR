@@ -18,7 +18,7 @@ at default, see *Details*.
 interpretive_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
   "expected_phenotypes")), guideline = getOption("AMR_guideline", "EUCAST"),
-  verbose = FALSE, version_breakpoints = 15,
+  verbose = FALSE, version_breakpoints = 16,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
   custom_rules = NULL, overwrite = FALSE, ...)
@@ -119,17 +119,18 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 - version_breakpoints:
 
   The version number to use for the EUCAST Clinical Breakpoints
-  guideline. Can be "15.0", "14.0", "13.1", "12.0", "11.0", or "10.0".
+  guideline. Can be .val 16.0, .val 15.0, .val 14.0, .val 13.1, .val
+  12.0, .val 11.0, or .val 10.0.
 
 - version_expected_phenotypes:
 
   The version number to use for the EUCAST Expected Phenotypes. Can be
-  "1.2".
+  .val 1.2.
 
 - version_expertrules:
 
   The version number to use for the EUCAST Expert Rules and Intrinsic
-  Resistance guideline. Can be "3.3", "3.2", or "3.1".
+  Resistance guideline. Can be .val 3.3, .val 3.2, or .val 3.1.
 
 - ampc_cephalosporin_resistance:
 
@@ -196,7 +197,8 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 - administration:
 
-  Route of administration, either "", "im", "iv", "oral", or NA.
+  Route of administration, either .val , .val im, .val iv, .val oral, or
+  NA.
 
 ## Value
 
@@ -206,8 +208,9 @@ with all original and new values of the affected bug-drug combinations.
 
 ## Details
 
-**Note:** This function does not translate MIC values to SIR values. Use
-[`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for that.  
+**Note:** This function does not translate MIC or disk values to SIR
+values. Use [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for
+that.  
 **Note:** When ampicillin (AMP, J01CA01) is not available but
 amoxicillin (AMX, J01CA04) is, the latter will be used for all rules
 where there is a dependency on ampicillin. These drugs are
@@ -330,22 +333,22 @@ c <- eucast_rules(a, overwrite = TRUE, verbose = TRUE)
 head(c)
 #>   row col           mo_fullname old new rule          rule_group
 #> 1   1 AMX Staphylococcus aureus   -   S              Breakpoints
-#> 2   1 CXM Staphylococcus aureus   -   S              Breakpoints
-#> 3   1 CAZ Staphylococcus aureus   -   R      Expected phenotypes
-#> 4   1 COL Staphylococcus aureus   -   R      Expected phenotypes
-#> 5   2 CAZ Enterococcus faecalis   -   R      Expected phenotypes
-#> 6   2 COL Enterococcus faecalis   -   R      Expected phenotypes
+#> 2   1 CXM Staphylococcus aureus   -   I              Breakpoints
+#> 3   1 CXM Staphylococcus aureus   I   S              Breakpoints
+#> 4   1 CAZ Staphylococcus aureus   -   R      Expected phenotypes
+#> 5   1 COL Staphylococcus aureus   -   R      Expected phenotypes
+#> 6   2 CAZ Enterococcus faecalis   -   R      Expected phenotypes
 #>                                                         rule_name
 #> 1                                                  Staphylococcus
 #> 2                                                  Staphylococcus
-#> 3 Table 4: Expected resistant phenotype in gram-positive bacteria
+#> 3                                                  Staphylococcus
 #> 4 Table 4: Expected resistant phenotype in gram-positive bacteria
 #> 5 Table 4: Expected resistant phenotype in gram-positive bacteria
 #> 6 Table 4: Expected resistant phenotype in gram-positive bacteria
 #>                                         rule_source
-#> 1   'EUCAST Clinical Breakpoint Tables' v15.0, 2025
-#> 2   'EUCAST Clinical Breakpoint Tables' v15.0, 2025
-#> 3 'EUCAST Expected Resistant Phenotypes' v1.2, 2023
+#> 1   'EUCAST Clinical Breakpoint Tables' v16.0, 2026
+#> 2   'EUCAST Clinical Breakpoint Tables' v16.0, 2026
+#> 3   'EUCAST Clinical Breakpoint Tables' v16.0, 2026
 #> 4 'EUCAST Expected Resistant Phenotypes' v1.2, 2023
 #> 5 'EUCAST Expected Resistant Phenotypes' v1.2, 2023
 #> 6 'EUCAST Expected Resistant Phenotypes' v1.2, 2023

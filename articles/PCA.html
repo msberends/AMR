@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9041</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9042</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,8 +188,10 @@ that contain numeric values in all selected variables, so we now only
 need to do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pca_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pca.html">pca</a></span><span class="op">(</span><span class="va">resistance_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Columns selected for PCA: "<span style="font-weight: bold;">AMC</span>", "<span style="font-weight: bold;">CAZ</span>", "<span style="font-weight: bold;">CTX</span>", "<span style="font-weight: bold;">CXM</span>", "<span style="font-weight: bold;">GEN</span>", "<span style="font-weight: bold;">SXT</span>", "<span style="font-weight: bold;">TMP</span>",</span></span>
-<span><span class="co">#&gt;   and "<span style="font-weight: bold;">TOB</span>". Total observations available: 7.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Columns selected for PCA: <span style="color: #0000BB;">"\033[1mAMC\033[22m"</span>, <span style="color: #0000BB;">"\033[1mCAZ\033[22m"</span>,</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">"\033[1mCTX\033[22m"</span>, <span style="color: #0000BB;">"\033[1mCXM\033[22m"</span>, <span style="color: #0000BB;">"\033[1mGEN\033[22m"</span>,</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">"\033[1mSXT\033[22m"</span>, <span style="color: #0000BB;">"\033[1mTMP\033[22m"</span>, and <span style="color: #0000BB;">"\033[1mTOB\033[22m"</span>. Total</span></span>
+<span><span class="co">#&gt;   observations available: 7.</span></span></code></pre></div>
 <p>The result can be reviewed with the good old <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>
 function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">

@@ -104,8 +104,10 @@ variables, so we now only need to do:
 
 ``` r
 pca_result <- pca(resistance_data)
-#> ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP",
-#>   and "TOB". Total observations available: 7.
+#> ℹ Columns selected for PCA: "\033[1mAMC\033[22m", "\033[1mCAZ\033[22m",
+#>   "\033[1mCTX\033[22m", "\033[1mCXM\033[22m", "\033[1mGEN\033[22m",
+#>   "\033[1mSXT\033[22m", "\033[1mTMP\033[22m", and "\033[1mTOB\033[22m". Total
+#>   observations available: 7.
 ```
 
 The result can be reviewed with the good old

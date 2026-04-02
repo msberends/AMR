@@ -17,7 +17,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9041</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9042</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -200,7 +200,7 @@ my_data_with_all_these_columns %&amp;gt;%
 
 
 <dt id="arg-version-expected-phenotypes">version_expected_phenotypes<a class="anchor" aria-label="anchor" href="#arg-version-expected-phenotypes"></a></dt>
-<dd><p>The version number to use for the EUCAST Expected Phenotypes. Can be "1.2".</p></dd>
+<dd><p>The version number to use for the EUCAST Expected Phenotypes. Can be .val 1.2.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -514,7 +514,8 @@ my_data_with_all_these_columns %&amp;gt;%
 <span class="r-in"><span><span class="co"># filter on any or all results in the carbapenem columns (i.e., IPM, MEM):</span></span></span>
 <span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Filtering any of columns '<span style="font-weight: bold;">IPM</span>' and '<span style="font-weight: bold;">MEM</span>' to contain value "S", "I" or "R"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Filtering any of columns <span style="color: #00BB00; font-weight: bold;">IPM</span> and <span style="color: #00BB00; font-weight: bold;">MEM</span> to only contain values <span style="color: #0000BB;">"S"</span>, <span style="color: #0000BB;">"SDD"</span>, <span style="color: #0000BB;">"I"</span>,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">"R"</span>, <span style="color: #0000BB;">"NI"</span>, <span style="color: #0000BB;">"WT"</span>, <span style="color: #0000BB;">"NWT"</span>, or <span style="color: #0000BB;">"NS"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 962 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>
@@ -537,7 +538,8 @@ my_data_with_all_these_columns %&amp;gt;%
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
 <span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu">carbapenems</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Filtering all of columns '<span style="font-weight: bold;">IPM</span>' and '<span style="font-weight: bold;">MEM</span>' to contain value "S", "I" or "R"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Filtering all of columns <span style="color: #00BB00; font-weight: bold;">IPM</span> and <span style="color: #00BB00; font-weight: bold;">MEM</span> to only contain values <span style="color: #0000BB;">"S"</span>, <span style="color: #0000BB;">"SDD"</span>, <span style="color: #0000BB;">"I"</span>,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">"R"</span>, <span style="color: #0000BB;">"NI"</span>, <span style="color: #0000BB;">"WT"</span>, <span style="color: #0000BB;">"NWT"</span>, or <span style="color: #0000BB;">"NS"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 756 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward    mo            PEN   OXA   FLC   AMX  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span>

@@ -26,21 +26,21 @@ clinical_breakpoints
 ## Format
 
 A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 45
-797 observations and 14 variables:
+730 observations and 14 variables:
 
 - `guideline`  
   Name of the guideline
 
 - `type`  
-  Breakpoint type, either "ECOFF", "animal", or "human"
+  Breakpoint type, either .val ECOFF, .val animal, or .val human
 
 - `host`  
   Host of infectious agent. This is mostly useful for veterinary
-  breakpoints and is either "ECOFF", "aquatic", "cats", "cattle",
-  "dogs", "horse", "human", "poultry", or "swine"
+  breakpoints and is either .val ECOFF, .val aquatic, .val cats, .val
+  cattle, .val dogs, .val horse, .val human, .val poultry, or .val swine
 
 - `method`  
-  Testing method, either "DISK" or "MIC"
+  Testing method, either .val DISK or .val MIC
 
 - `site`  
   Body site for which the breakpoint must be applied, e.g. "Oral" or
@@ -154,7 +154,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 45,797 × 14
+#> # A tibble: 45,730 × 14
 #>    guideline   type  host  method site    mo            rank_index ab   ref_tbl 
 #>    <chr>       <chr> <chr> <chr>  <chr>   <mo>               <dbl> <ab> <chr>   
 #>  1 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
@@ -167,7 +167,7 @@ clinical_breakpoints
 #>  8 EUCAST 2026 human human DISK   Uncomp… B_ACNTB                3 AMK  Acineto…
 #>  9 EUCAST 2026 human human MIC    NA      B_ACNTB                3 AMK  Acineto…
 #> 10 EUCAST 2026 human human MIC    Uncomp… B_ACNTB                3 AMK  Acineto…
-#> # ℹ 45,787 more rows
+#> # ℹ 45,720 more rows
 #> # ℹ 5 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
 #> #   uti <lgl>, is_SDD <lgl>
 ```

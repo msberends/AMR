@@ -25,8 +25,8 @@ observations and 9 variables:
   the WHO
 
 - `type`  
-  Type of the dosage, either "high_dosage", "standard_dosage", or
-  "uncomplicated_uti"
+  Type of the dosage, either .val high_dosage, .val standard_dosage, or
+  .val uncomplicated_uti
 
 - `dose`  
   Dose, such as "2 g" or "25 mg/kg"
@@ -35,7 +35,8 @@ observations and 9 variables:
   Number of times a dose must be administered
 
 - `administration`  
-  Route of administration, either "", "im", "iv", "oral", or NA
+  Route of administration, either .val , .val im, .val iv, .val oral, or
+  NA
 
 - `notes`  
   Additional dosage notes

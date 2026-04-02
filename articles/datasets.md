@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 45 797 rows and 14 columns, containing the following
+A data set with 45 730 rows and 14 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, and
@@ -156,7 +156,7 @@ column names:
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 30 March 2026 08:01:49 UTC. Find more info about
+It was last updated on 2 April 2026 09:42:19 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -176,7 +176,7 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (2 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet)
-  (0.1 MB)  
+  (0.2 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
   (7.5 MB)  

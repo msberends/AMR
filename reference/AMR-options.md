@@ -16,8 +16,8 @@ the `AMR` package. Set them using the
 - `AMR_breakpoint_type`  
   A [character](https://rdrr.io/r/base/character.html) to use in
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), to indicate
-  which breakpoint type to use. This must be either "ECOFF", "animal",
-  or "human".
+  which breakpoint type to use. This must be either .val ECOFF, .val
+  animal, or .val human.
 
 - `AMR_capped_mic_handling`  
   A [character](https://rdrr.io/r/base/character.html) to use in

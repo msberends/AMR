@@ -27,11 +27,11 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 2
   Age of the patient
 
 - `gender`  
-  Gender of the patient, either "F" or "M"
+  Gender of the patient, either .val F or .val M
 
 - `ward`  
-  Ward type where the patient was admitted, either "Clinical", "ICU", or
-  "Outpatient"
+  Ward type where the patient was admitted, either .val Clinical, .val
+  ICU, or .val Outpatient
 
 - `mo`  
   ID of microorganism created with
