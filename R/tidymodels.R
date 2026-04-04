@@ -122,13 +122,14 @@ all_disk_predictors <- function() {
 #' @rdname amr-tidymodels
 #' @export
 step_mic_log2 <- function(
-    recipe,
-    ...,
-    role = NA,
-    trained = FALSE,
-    columns = NULL,
-    skip = FALSE,
-    id = recipes::rand_id("mic_log2")) {
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = recipes::rand_id("mic_log2")
+) {
   recipes::add_step(
     recipe,
     step_mic_log2_new(
@@ -197,13 +198,14 @@ tidy.step_mic_log2 <- function(x, ...) {
 #' @rdname amr-tidymodels
 #' @export
 step_sir_numeric <- function(
-    recipe,
-    ...,
-    role = NA,
-    trained = FALSE,
-    columns = NULL,
-    skip = FALSE,
-    id = recipes::rand_id("sir_numeric")) {
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = recipes::rand_id("sir_numeric")
+) {
   recipes::add_step(
     recipe,
     step_sir_numeric_new(

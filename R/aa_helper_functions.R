@@ -405,8 +405,12 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
   )
 }
 
+has_cli_rlang <- function() {
+  pkg_is_available("cli", min_version = "3.0.0") && pkg_is_available("rlang", min_version = "1.0.3")
+}
+
 highlight_code <- function(code) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     cli::code_highlight(code)
   } else {
     code
@@ -419,7 +423,7 @@ highlight_code <- function(code) {
 # output function (e.g. packageStartupMessage()).
 format_inline_ <- function(...) {
   msg <- paste0(c(...), collapse = "")
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
     }
@@ -518,7 +522,7 @@ word_wrap <- function(...,
                       as_note = FALSE,
                       width = 0.95 * getOption("width"),
                       extra_indent = 0) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     return(paste0(c(...), collapse = ""))
   }
   msg <- paste0(c(...), collapse = "")
@@ -580,7 +584,7 @@ simplify_help_markup <- function(msg) {
 message_ <- function(...,
                      appendLF = TRUE,
                      as_note = TRUE) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     msg <- paste0(c(...), collapse = "")
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
@@ -602,7 +606,7 @@ message_ <- function(...,
 warning_ <- function(...,
                      immediate = FALSE,
                      call = FALSE) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     msg <- paste0(c(...), collapse = "")
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
@@ -622,7 +626,7 @@ stop_ <- function(..., call = TRUE) {
   if (!cli::ansi_has_hyperlink_support()) {
     msg <- simplify_help_markup(msg)
   }
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     if (isTRUE(call)) {
       call_obj <- sys.call(-1)
     } else if (!isFALSE(call)) {

@@ -554,7 +554,7 @@ type_sum.ab <- function(x, ...) {
 print.ab <- function(x, ...) {
   if (!is.null(attributes(x)$amr_selector)) {
     function_name <- attributes(x)$amr_selector
-    if (pkg_is_available("cli", min_version = "3.0.0")) {
+    if (has_cli_rlang()) {
       cli::cli_inform(c(
         "i" = paste0("This {.cls ab} vector was retrieved using {.fun ", function_name, "}, which should normally be used inside a {.pkg dplyr} verb or {.cls data.frame} call, e.g.:"),
         paste0("\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0("your_data %>% select(", function_name, "())"))),
