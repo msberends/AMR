@@ -100,7 +100,7 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 23 March 2026 09:38:28 UTC. Find more info about
+It was last updated on 4 April 2026 09:51:50 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
