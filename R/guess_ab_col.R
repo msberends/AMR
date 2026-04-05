@@ -146,7 +146,7 @@ get_column_abx <- function(x,
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   meet_criteria(sort, allow_class = "logical", has_length = 1)
 
-  if (isTRUE(info)) {
+  if (isTRUE(info) && message_not_thrown_before("get_column_abx", colnames(x))) {
     message_("Auto-guessing columns suitable for analysis", appendLF = FALSE, as_note = FALSE)
   }
 

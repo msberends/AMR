@@ -5,12 +5,12 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 40 217 observations and 14 variables:
+A \link[tibble:tibble]{tibble} with 45 730 observations and 14 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
-\item \code{type}\cr Breakpoint type, either "ECOFF", "animal", or "human"
-\item \code{host}\cr Host of infectious agent. This is mostly useful for veterinary breakpoints and is either "ECOFF", "aquatic", "cats", "cattle", "dogs", "horse", "human", "poultry", or "swine"
-\item \code{method}\cr Testing method, either "DISK" or "MIC"
+\item \code{type}\cr Breakpoint type, either {.val ECOFF}, {.val animal}, or {.val human}
+\item \code{host}\cr Host of infectious agent. This is mostly useful for veterinary breakpoints and is either {.val ECOFF}, {.val aquatic}, {.val cats}, {.val cattle}, {.val dogs}, {.val horse}, {.val human}, {.val poultry}, or {.val swine}
+\item \code{method}\cr Testing method, either {.val DISK} or {.val MIC}
 \item \code{site}\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
 \item \code{rank_index}\cr Taxonomic rank index of \code{mo} from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
@@ -20,7 +20,7 @@ A \link[tibble:tibble]{tibble} with 40 217 observations and 14 variables:
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R", can be \code{NA}
 \item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
-\item \code{is_SDD}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 48 breakpoints.
+\item \code{is_SDD}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 72 breakpoints.
 }
 }
 \usage{
@@ -31,9 +31,9 @@ Data set containing clinical breakpoints to interpret MIC and disk diffusion to 
 
 These breakpoints are currently implemented:
 \itemize{
-\item For \strong{clinical microbiology}: EUCAST 2011-2025 and CLSI 2011-2025;
-\item For \strong{veterinary microbiology}: EUCAST 2021-2025 and CLSI 2019-2025;
-\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2025 and CLSI 2022-2025.
+\item For \strong{clinical microbiology}: EUCAST 2011-2026 and CLSI 2011-2026;
+\item For \strong{veterinary microbiology}: EUCAST 2021-2026 and CLSI 2019-2026;
+\item For \strong{ECOFFs} (Epidemiological Cut-off Values): EUCAST 2020-2026 and CLSI 2022-2026.
 }
 
 Use \code{\link[=as.sir]{as.sir()}} to transform MICs or disks measurements to SIR values.

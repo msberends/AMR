@@ -10,7 +10,7 @@
   even WISCA
 - Provides the **full microbiological taxonomy** of ~79 000 distinct
   species and extensive info of ~620 antimicrobial drugs
-- Applies **CLSI 2011-2025** and **EUCAST 2011-2025** clinical and
+- Applies **CLSI 2011-2026** and **EUCAST 2011-2026** clinical and
   veterinary breakpoints, and ECOFFs, for MIC and disk zone
   interpretation
 - Corrects for duplicate isolates, **calculates** and **predicts** AMR
@@ -68,7 +68,7 @@ species**](./reference/microorganisms.html) (updated June 2024) and all
 drugs**](./reference/antimicrobials.html) by name and code (including
 ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all
 about valid SIR and MIC values. The integral clinical breakpoint
-guidelines from CLSI 2011-2025 and EUCAST 2011-2025 are included, even
+guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even
 with epidemiological cut-off (ECOFF) values. It supports and can read
 any data format, including WHONET data. This package works on Windows,
 macOS and Linux with all versions of R since R-3.0 (April 2013). **It
@@ -171,14 +171,14 @@ example_isolates %>%
   select(bacteria,
          aminoglycosides(),
          carbapenems())
-#> ℹ Using column 'mo' as input for `mo_fullname()`
-#> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
-#> ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`
+#> ℹ Using column mo as input for `mo_fullname()`
+#> ℹ Using column mo as input for `mo_is_gram_negative()`
+#> ℹ Using column mo as input for `mo_is_intrinsic_resistant()`
 #> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
 #>   Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
 #>    <chr>                        <sir> <sir> <sir> <sir> <sir> <sir>
@@ -215,9 +215,9 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 ``` r
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For `carbapenems()` using columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
@@ -344,15 +344,15 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For `aminoglycosides()` using columns 'GEN' (gentamicin), 'TOB'
-#>   (tobramycin), 'AMK' (amikacin), and 'KAN' (kanamycin)
-#> ℹ For `polymyxins()` using column 'COL' (colistin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `polymyxins()` using column COL (colistin)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward =
-#> "Outpatient" (`minimum` = 30).
+#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient"
+#> (whilst `minimum = 30`).
 out
 #> # A tibble: 3 × 6
 #>   ward         GEN   TOB   AMK   KAN   COL

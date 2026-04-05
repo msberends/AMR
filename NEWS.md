@@ -1,6 +1,7 @@
-# AMR 3.0.1.9040
+# AMR 3.0.1.9044
 
 ### New
+* Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
 * Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
   - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
   - New `tidyselect` helpers:

@@ -359,9 +359,9 @@ stop_ifnot_installed <- function(package) {
   if (any(!installed) && any(package == "rstudioapi")) {
     stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
   } else if (any(!installed)) {
-    stop("This requires the ", vector_and(package[!installed]), " package.",
-      "\nTry to install with install.packages().",
-      call. = FALSE
+    stop_(
+      "This requires the ", vector_and(paste0("{.pkg ", package[!installed], "}"), quotes = FALSE), " package.",
+      "\nTry to install with {.fun install.packages}."
     )
   } else {
     return(invisible())
@@ -405,8 +405,12 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
   )
 }
 
+has_cli_rlang <- function() {
+  pkg_is_available("cli", min_version = "3.0.0") && pkg_is_available("rlang", min_version = "1.0.3")
+}
+
 highlight_code <- function(code) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     cli::code_highlight(code)
   } else {
     code
@@ -419,7 +423,7 @@ highlight_code <- function(code) {
 # output function (e.g. packageStartupMessage()).
 format_inline_ <- function(...) {
   msg <- paste0(c(...), collapse = "")
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
     }
@@ -518,7 +522,7 @@ word_wrap <- function(...,
                       as_note = FALSE,
                       width = 0.95 * getOption("width"),
                       extra_indent = 0) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     return(paste0(c(...), collapse = ""))
   }
   msg <- paste0(c(...), collapse = "")
@@ -580,7 +584,7 @@ simplify_help_markup <- function(msg) {
 message_ <- function(...,
                      appendLF = TRUE,
                      as_note = TRUE) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     msg <- paste0(c(...), collapse = "")
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
@@ -602,7 +606,7 @@ message_ <- function(...,
 warning_ <- function(...,
                      immediate = FALSE,
                      call = FALSE) {
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     msg <- paste0(c(...), collapse = "")
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
@@ -622,7 +626,7 @@ stop_ <- function(..., call = TRUE) {
   if (!cli::ansi_has_hyperlink_support()) {
     msg <- simplify_help_markup(msg)
   }
-  if (pkg_is_available("cli", min_version = "3.0.0")) {
+  if (has_cli_rlang()) {
     if (isTRUE(call)) {
       call_obj <- sys.call(-1)
     } else if (!isFALSE(call)) {
@@ -747,7 +751,7 @@ format_included_data_number <- function(data) {
   paste0(ifelse(rounder == 0, "", "~"), format(round(n, rounder), decimal.mark = ".", big.mark = " "))
 }
 
-vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ") {
+vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ", documentation = FALSE) {
   # makes unique and sorts, and this also removed NAs
   v <- unique(v)
   has_na <- anyNA(v)
@@ -761,17 +765,25 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     v <- rev(v)
   }
   if (isTRUE(quotes)) {
-    quotes <- '"'
+    if (isTRUE(documentation)) {
+      quotes <- '"'
+    } else {
+      # use cli to format as values
+      quotes <- c("{.val ", "}")
+    }
   } else if (isFALSE(quotes)) {
     quotes <- ""
   } else {
     quotes <- quotes[1L]
   }
+  if (length(quotes) == 1) {
+    quotes <- c(quotes, quotes)
+  }
   if (isTRUE(initial_captital)) {
     v[1] <- gsub("^([a-z])", "\\U\\1", v[1], perl = TRUE)
   }
   if (length(v) <= 1) {
-    return(paste0(quotes, v, quotes))
+    return(paste0(quotes[1], v, quotes[2]))
   }
   if (identical(v, c("I", "R", "S"))) {
     # class 'sir' should be sorted like this
@@ -790,7 +802,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   if (is.numeric(v)) {
     v <- trimws(vapply(FUN.VALUE = character(1), v, format, scientific = FALSE))
   }
-  quoted <- paste0(quotes, v, quotes)
+  quoted <- paste0(quotes[1], v, quotes[2])
   quoted[NAs] <- "NA"
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
   paste0(
@@ -799,10 +811,11 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   )
 }
 
-vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE) {
+vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, documentation = FALSE) {
   vector_or(
     v = v, quotes = quotes, reverse = reverse, sort = sort,
-    initial_captital = initial_captital, last_sep = " and "
+    initial_captital = initial_captital, documentation = documentation,
+    last_sep = " and "
   )
 }
 

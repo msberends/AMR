@@ -37,6 +37,11 @@ devtools::load_all()
 
 # BE SURE TO RUN data-raw/_reproduction_scripts/reproduction_of_microorganisms.groups.R FIRST TO GET THE GROUPS!
 
+# For non-interactive use
+if (!interactive()) {
+  View <- glimpse
+}
+
 # READ DATA ----
 
 # files are retrieved from https://github.com/AClark-WHONET/AMRIE
@@ -46,21 +51,21 @@ file_organisms <- file.path(github_repo, "Organisms.txt")
 file_breakpoints <- file.path(github_repo, "Breakpoints.txt")
 file_antibiotics <- file.path(github_repo, "Antibiotics.txt")
 
-whonet_organisms <- read_tsv(file_organisms, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
+whonet_organisms_raw <- read_tsv(file_organisms, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   # remove old taxonomic names
   filter(TAXONOMIC_STATUS == "C") |>
   mutate(ORGANISM_CODE = toupper(WHONET_ORG_CODE))
 
-whonet_breakpoints <- read_tsv(file_breakpoints, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
+whonet_breakpoints_raw <- read_tsv(file_breakpoints, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   filter(GUIDELINES %in% c("CLSI", "EUCAST"))
 
-whonet_antibiotics <- read_tsv(file_antibiotics, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
+whonet_antibiotics_raw <- read_tsv(file_antibiotics, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   arrange(WHONET_ABX_CODE) |>
   distinct(WHONET_ABX_CODE, .keep_all = TRUE)
 
 # MICROORGANISMS WHONET CODES ----
 
-whonet_organisms <- whonet_organisms |>
+whonet_organisms <- whonet_organisms_raw |>
   select(ORGANISM_CODE, ORGANISM, SPECIES_GROUP, GBIF_TAXON_ID) |>
   mutate(
     # this one was called Issatchenkia orientalis, but it should be:
@@ -110,6 +115,13 @@ organisms <- matched |> transmute(code = toupper(ORGANISM_CODE), group = SPECIES
   mutate(name = mo_name(mo, keep_synonyms = TRUE)) |> 
   arrange(code)
 
+# self-defined codes in the MO table must be retained
+existing_codes <- microorganisms$fullname[microorganisms$fullname %like% ".* \\("]
+existing_codes <- gsub(".*\\((.*)\\)", "\\1", existing_codes)
+
+organisms <- organisms |>
+  filter(!code %in% existing_codes)
+
 # some subspecies exist, while their upper species do not, add them as the species level:
 subspp <- organisms |>
   filter(mo_species(mo, keep_synonyms = TRUE) == mo_subspecies(mo, keep_synonyms = TRUE) &
@@ -139,9 +151,10 @@ organisms <- organisms |> filter(code != "XXX")
 # 2023-07-08 SGM is also Strep gamma in WHONET, must only be Slowly-growing Mycobacterium
 # 2024-06-14 still the case
 # 2025-04-20 still the case
+# 2026-03-27 still the case, but fixed using `existing_codes` above
 organisms |> filter(code == "SGM")
-organisms <- organisms |> 
-  filter(!(code == "SGM" & name %like% "Streptococcus"))
+# organisms <- organisms |> 
+#   filter(!(code == "SGM" & name %like% "Streptococcus"))
 # this must be empty:
 organisms$code[organisms$code |> duplicated()]
 
@@ -162,7 +175,7 @@ microorganisms.codes2 <- microorganisms.codes |>
 # new codes:
 microorganisms.codes2$code[which(!microorganisms.codes2$code %in% microorganisms.codes$code)]
 mo_name(microorganisms.codes2$mo[which(!microorganisms.codes2$code %in% microorganisms.codes$code)], keep_synonyms = TRUE)
-microorganisms.codes <- microorganisms.codes2
+microorganisms.codes <- microorganisms.codes2 |> distinct()
 
 # Run this part to update ASIARS-Net:
 # 2024-06-14: file not available anymore
@@ -201,8 +214,13 @@ devtools::load_all()
 
 # now that we have the correct MO codes, get the breakpoints and convert them
 
-whonet_breakpoints |> 
+whonet_breakpoints_raw |> 
   count(GUIDELINES, BREAKPOINT_TYPE) |> 
+  pivot_wider(names_from = BREAKPOINT_TYPE, values_from = n) |> 
+  janitor::adorn_totals(where = c("row", "col"))
+whonet_breakpoints_raw |> 
+  filter(YEAR == format(Sys.Date(), "%Y")) |>
+  count(GUIDELINES, YEAR, BREAKPOINT_TYPE) |> 
   pivot_wider(names_from = BREAKPOINT_TYPE, values_from = n) |> 
   janitor::adorn_totals(where = c("row", "col"))
 # compared to current
@@ -213,7 +231,7 @@ AMR::clinical_breakpoints |>
   as.data.frame() |>
   janitor::adorn_totals(where = c("row", "col"))
 
-breakpoints <- whonet_breakpoints |>
+breakpoints <- whonet_breakpoints_raw |>
   mutate(code = toupper(ORGANISM_CODE)) |>
   left_join(bind_rows(microorganisms.codes |> filter(!code %in% c("ALL", "GEN")),
                       # GEN (Generic) and ALL (All) are PK/PD codes
@@ -233,7 +251,7 @@ breakpoints <- breakpoints |>
 
 # and these ones have unknown antibiotics according to WHONET itself:
 breakpoints |> 
-  filter(!WHONET_ABX_CODE %in% whonet_antibiotics$WHONET_ABX_CODE) |> 
+  filter(!WHONET_ABX_CODE %in% whonet_antibiotics_raw$WHONET_ABX_CODE) |> 
   count(GUIDELINES, WHONET_ABX_CODE) |>
   mutate(ab = as.ab(WHONET_ABX_CODE, fast_mode = TRUE),
          ab_name = ab_name(ab))
@@ -296,7 +314,7 @@ breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.d
 # regarding animal breakpoints, CLSI has adults and foals for horses, but only for amikacin - only keep adult horses
 breakpoints_new |> 
   filter(host %like% "foal") |>
-  count(guideline, host)
+  count(guideline, host, ab)
 breakpoints_new <- breakpoints_new |> 
   filter(host %unlike% "foal") |> 
   mutate(host = ifelse(host %like% "horse", "horse", host))
@@ -304,7 +322,7 @@ breakpoints_new <- breakpoints_new |>
 # FIXES FOR WHONET ERRORS ----
 m <- unique(as.double(as.mic(levels(as.mic(1)))))
 
-# WHONET has no >1024 but instead uses 1025, 513, etc, so as.mic() cannot be used to clean.
+# WHONET has no >1024 but instead uses 1025, 513, and 129, so as.mic() cannot be used to clean.
 # instead, raise these one higher valid MIC factor level:
 breakpoints_new |> filter(method == "MIC" & (!breakpoint_S %in% c(m, NA))) |> distinct(breakpoint_S)
 breakpoints_new |> filter(method == "MIC" & (!breakpoint_R %in% c(m, NA))) |> distinct(breakpoint_R)
@@ -318,6 +336,7 @@ anyNA(breakpoints_new$breakpoint_S)
 
 # a lot of R breakpoints are missing, but for CLSI this is required and can be set using as.sir(..., substitute_missing_r_breakpoint = TRUE/FALSE, ...)
 # 2025-04-20/ For EUCAST, this should not be the case, only happens to old guideline now it seems
+# 2026-03-27/ Now 2026 is in it as well, but making R same to S is fine
 breakpoints_new |>
   filter(method == "MIC" & guideline %like% "EUCAST" & is.na(breakpoint_R)) |>
   count(guideline)
@@ -325,10 +344,15 @@ breakpoints_new[which(breakpoints_new$method == "MIC" & breakpoints_new$guidelin
 
 
 # fix streptococci in WHONET table of EUCAST: Strep A, B, C and G must only include these groups and not all streptococci:
-breakpoints_new$mo[breakpoints_new$mo == "B_STRPT" & breakpoints_new$ref_tbl %like% "^strep.* a.* b.*c.*g"] <- as.mo("B_STRPT_ABCG")
+# 2026-03-27/ Only erroneous in EUCAST until 2024, it's fixed for 2025 and 2026, but we need to fix this historically too
+breakpoints_new$mo[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$mo == "B_STRPT" & breakpoints_new$ref_tbl %like% "^strep.* a.* b.*c.*g"] <- as.mo("B_STRPT_ABCG")
 # Haemophilus same error (must only be H. influenzae)
-breakpoints_new$mo[breakpoints_new$mo == "B_HMPHL" & breakpoints_new$ref_tbl %like% "^h.* influenzae"] <- as.mo("B_HMPHL_INFL")
+# 2026-03-27/ Only erroneous in EUCAST until 2024, it's fixed for 2025 and 2026, but we need to fix this historically too
+breakpoints_new$mo[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$mo == "B_HMPHL" & breakpoints_new$ref_tbl %like% "^h.* influenzae"] <- as.mo("B_HMPHL_INFL")
 # EUCAST says that for H. parainfluenzae the H. influenza rules can be used, so add them
+breakpoints_new |>
+  filter(method == "MIC" & guideline %like% "EUCAST" & mo %like% as.mo("B_HMPHL")) |>
+  count(guideline, mo)
 breakpoints_new <- breakpoints_new |> 
   bind_rows(
     breakpoints_new |>
@@ -345,24 +369,56 @@ breakpoints_new |> filter(mo == as.mo("Streptococcus viridans") & ab == "GEH")
 breakpoints_new <- breakpoints_new |> filter(!(mo == as.mo("Streptococcus viridans") & ab == "GEN"))
 # Nitrofurantoin in Staph (EUCAST) only applies to S. saprophyticus, while WHONET has the DISK correct but the MIC on genus level
 breakpoints_new$mo[breakpoints_new$mo == "B_STPHY" & breakpoints_new$ab == "NIT" & breakpoints_new$guideline %like% "EUCAST"] <- as.mo("B_STPHY_SPRP")
+
+# WHONET contains breakpoint for EUCAST that are not actually in EUCAST:
+# IPM in M. morganii is not in it since v10
+wrong <- with(breakpoints_new, guideline %like% "EUCAST" & ab == "IPM" & mo == as.mo("M. morganii") & ref_tbl != "ECOFF")
+breakpoints_new |> filter(wrong)
+breakpoints_new <- breakpoints_new |> filter(!wrong)
+# Breakpoints for COPS were part of EUCAST until v11
+wrong <- with(breakpoints_new, guideline %like% "EUCAST" & mo == as.mo("CoPS") & ref_tbl != "ECOFF")
+breakpoints_new |> filter(wrong)
+breakpoints_new <- breakpoints_new |> filter(!wrong)
+
 # WHONET sets the 2023 breakpoints for SAM to MIC of 16/32 for Enterobacterales, should be MIC 8/32 like AMC (see issue #123 on github.com/msberends/AMR)
 # 2024-02-22/ fixed now
 
 # There's a problem with C. diff in EUCAST where breakpoint_R is missing - they are listed as normal human breakpoints but are ECOFF
 # 2025-04-20/ fixed now
 
-# determine rank again now that some changes were made on taxonomic level (genus -> species)
-breakpoints_new <- breakpoints_new |> 
-  mutate(rank_index = case_when(
-    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
-    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
-    mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
-    mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
-    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
-    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
-    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
-    TRUE ~ 7
-  ))
+# WHONET sets for EUCAST 2026 TMP breakpoints for all Klebsiella, but this is now only for non-aerogenes species
+kleb_spp <- microorganisms |> filter(rank == "species", genus == "Klebsiella", !species %in% c("", "aerogenes")) |> pull(mo)
+kleb_tmp_mic <- breakpoints_new |>
+  filter(guideline == "EUCAST 2026", method == "MIC", ab == "TMP", mo == as.mo("Klebsiella")) |>
+  uncount(length(kleb_spp)) |>
+  mutate(mo = kleb_spp)
+kleb_tmp_disk <- breakpoints_new |>
+  filter(guideline == "EUCAST 2026", method == "DISK", ab == "TMP", mo == as.mo("Klebsiella")) |>
+  uncount(length(kleb_spp)) |>
+  mutate(mo = kleb_spp)
+breakpoints_new <- breakpoints_new |>
+  filter(!(guideline == "EUCAST 2026" & method == "MIC" & ab == "TMP" & mo == as.mo("Klebsiella"))) |>
+  bind_rows(kleb_tmp_mic,
+            kleb_tmp_disk)
+
+# WHONET contains wrong EUCAST breakpoints for enterococci/SXT: disk should be 23/23, not 21/50, and MIC should be 1/1, not 0.032/1
+# applies to all previous years, since v11 (2011)
+breakpoints_new |> filter(guideline %like% "EUCAST", ab == "SXT", mo == as.mo("Enterococcus"), type == "human")
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 23
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 23
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "SXT" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+# Also wrong EUCAST breakpoints for enterococci/TMP: disk should be 21/21, not 21/50, and MIC should be 1/1, not 0.032/1
+breakpoints_new |> filter(guideline %like% "EUCAST", ab == "TMP", mo == as.mo("Enterococcus"), type == "human")
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 21
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "DISK"] <- 21
+breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
+
+# WHONET still contains PK/PD rules for EUCAST >= 2024, but this was ended from v14 (2024) on
+breakpoints_new <- breakpoints_new |>
+  filter(!(guideline %like% "EUCAST (2024|2025|2026)" & ref_tbl == "PK/PD"))
+
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2023 guideline: S <= 8 and R > 8
@@ -383,24 +439,24 @@ breakpoints_new <- breakpoints_new |>
     breakpoint_R
   ))
 
+
 # check the strange duplicates
 breakpoints_new |> 
   mutate(id = paste(guideline, type, host, method, site, mo, ab, uti)) %>%
   filter(id %in% .$id[which(duplicated(id))]) |> 
   arrange(desc(guideline)) |>
   View()
-# 2024-06-19/ mostly ECOFFs, but there's no explanation in the whonet_breakpoints file, we have to remove duplicates
+# 2024-06-19/ mostly ECOFFs, but there's no explanation in the whonet_breakpoints_raw df, we have to remove duplicates
 # 2025-04-20/ same, most important one seems M. tuberculosis in CLSI (also in 2025)
 breakpoints_new <- breakpoints_new |> 
   distinct(guideline, type, host, method, site, mo, ab, uti, .keep_all = TRUE)
 
 
-# CHECKS AND SAVE TO PACKAGE ----
+# CHECKS ----
 
-# check again
-breakpoints_new |> filter(guideline == "EUCAST 2025", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+breakpoints_new |> filter(guideline == "EUCAST 2026", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version
-clinical_breakpoints |> filter(guideline == "EUCAST 2024", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+clinical_breakpoints |> filter(guideline == "EUCAST 2025", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 
 # must have "human" and "ECOFF"
 breakpoints_new |> filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCAST 2020", method == "MIC")
@@ -408,6 +464,24 @@ breakpoints_new |> filter(mo == "B_STRPT_PNMN", ab == "AMP", guideline == "EUCAS
 # check dimensions
 dim(breakpoints_new)
 dim(clinical_breakpoints)
+
+
+# SAVE TO PACKAGE ----
+
+# determine rank again now that some changes were made on taxonomic level (genus -> species)
+breakpoints_new <- breakpoints_new |> 
+  mutate(rank_index = case_when(
+    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
+    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
+    mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
+    mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
+    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
+    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
+    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
+    TRUE ~ 7
+  )) |>
+  # and arrange
+  arrange(desc(guideline), mo, ab, type, host, method)
 
 clinical_breakpoints <- breakpoints_new
 clinical_breakpoints <- clinical_breakpoints |> dataset_UTF8_to_ASCII()

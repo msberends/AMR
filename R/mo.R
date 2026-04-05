@@ -249,7 +249,7 @@ as.mo <- function(x,
   if (length(which(ind)) > 0 && isTRUE(info) && message_not_thrown_before("as.mo_microorganisms.codes", is.na(out), toupper(x))) {
     message_(
       "Retrieved value", ifelse(sum(ind) > 1, "s", ""),
-      " from the `microorganisms.codes` data set for ", vector_and(toupper(x)[ind]), "."
+      " from the {.help [microorganisms.codes](AMR::microorganisms.codes)} data set for ", vector_and(toupper(x)[ind]), "."
     )
   }
   # From SNOMED ----
@@ -686,7 +686,7 @@ pillar_shaft.mo <- function(x, ...) {
     }
     warning_(
       col, " contains old MO codes (from a previous AMR package version). ",
-      "Please update your MO codes with `as.mo()`.",
+      "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.",
       call = FALSE
     )
   }
@@ -793,7 +793,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
       "Some MO codes are from a previous AMR package version. ",
-      "Please update the MO codes with `as.mo()`.",
+      "Please update the MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.",
       call = FALSE
     )
   }
@@ -827,7 +827,7 @@ as.data.frame.mo <- function(x, ...) {
   if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
       "The data contains old MO codes (from a previous AMR package version). ",
-      "Please update your MO codes with `as.mo()`."
+      "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}."
     )
   }
   nm <- deparse1(substitute(x))

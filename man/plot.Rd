@@ -137,7 +137,7 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 \item{include_PKPD}{A \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
-\item{breakpoint_type}{The type of breakpoints to use, either "ECOFF", "animal", or "human". ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
+\item{breakpoint_type}{The type of breakpoints to use, either {.val ECOFF}, {.val animal}, or {.val human}. ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
 \item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
 
@@ -201,7 +201,7 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
-For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2025, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
+For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2026, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
 }
 \examples{

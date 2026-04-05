@@ -32,15 +32,15 @@ test_that("test-eucast_rules.R", {
 
   # thoroughly check input table
   expect_equal(
-    colnames(AMR:::EUCAST_RULES_DF),
-    c(
+    sort(colnames(AMR:::EUCAST_RULES_DF)),
+    sort(c(
       "if_mo_property", "like.is.one_of", "this_value",
       "and_these_antibiotics", "have_these_values",
       "then_change_these_antibiotics", "to_value",
       "reference.rule", "reference.rule_group",
       "reference.version",
       "note"
-    )
+    ))
   )
   MOs_mentioned <- unique(AMR:::EUCAST_RULES_DF$this_value)
   MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))

@@ -857,7 +857,7 @@ all_any_amr_selector <- function(type, ..., na.rm = TRUE) {
   cols_ab <- c(...)
   result <- cols_ab[toupper(cols_ab) %in% VALID_SIR_LEVELS]
   if (length(result) == 0) {
-    message_("Filtering ", type, " of columns ", vector_and(font_bold(cols_ab, collapse = NULL), quotes = "'"), ' to contain value "S", "I" or "R"')
+    message_("Filtering ", type, " of columns ", vector_and(paste0("{.field ", font_bold(cols_ab, collapse = NULL), "}"), quotes = FALSE), " to only contain values ", vector_or(VALID_SIR_LEVELS))
     result <- VALID_SIR_LEVELS
   }
   cols_ab <- cols_ab[!cols_ab %in% result]

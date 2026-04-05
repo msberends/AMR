@@ -1079,8 +1079,8 @@ get_guideline <- function(guideline, reference_data) {
   guideline_param[guideline_param %unlike% " "] <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param[guideline_param %unlike% " "], ignore.case = TRUE)
 
   stop_ifnot(guideline_param %in% reference_data$guideline,
-    "invalid guideline: '", guideline,
-    "'.\nValid guidelines are: ", vector_and(reference_data$guideline, quotes = TRUE, reverse = TRUE),
+    "invalid guideline: {.val ", guideline,
+    "}.\nValid guidelines are: ", vector_and(reference_data$guideline, reverse = TRUE),
     call = FALSE
   )
 
@@ -2080,10 +2080,10 @@ freq.sir <- function(x, ...) {
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, sir)
 get_skimmers.sir <- function(column) {
-  # TODO add here in AMR 3.1.0 details about guideline
+  # TODO #170 add here in AMR 3.1.0 details about guideline
   skimr::sfl(
     skim_type = "sir",
-    # guideline = function(x) "EUCAST 2025", # or "Multiple"
+    # guideline = function(x) "EUCAST 2026", # or "Multiple"
     # origin = function(x) "MIC", # or "Multiple"
     count_S = count_S,
     count_I = count_I,
