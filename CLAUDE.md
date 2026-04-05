@@ -152,7 +152,16 @@ All PRs are **squash-merged**, so each PR lands as exactly **one commit** on the
 
 #### Computing the correct version number
 
-Run the following from the repo root to determine the version string to use:
+**First, ensure `git` and `gh` are installed** — both are required for the version computation and for pushing changes. Install them if missing before doing anything else:
+
+```bash
+which git || apt-get install -y git
+which gh   || apt-get install -y gh
+# Also ensure all tags are fetched so git describe works
+git fetch --tags
+```
+
+Then run the following from the repo root to determine the version string to use:
 
 ```bash
 currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
