@@ -1139,7 +1139,8 @@ edit_sir <- function(x,
                      overwrite,
                      add_if_missing) {
   cols <- unique(cols[!is.na(cols) & !is.null(cols)])
-
+  rows <- unique(rows)
+  
   # for Verbose Mode, keep track of all changes and return them
   track_changes <- list(
     added = 0,
@@ -1190,19 +1191,25 @@ edit_sir <- function(x,
       apply_mask <- !isSIR
     }
 
+    do_assign <- function() {
+      subset <- new_edits[rows, cols, drop = FALSE]
+      mask <- matrix(apply_mask, nrow = nrow(subset), ncol = ncol(subset))
+      subset[mask] <- to
+      new_edits[rows, cols] <<- subset
+    }
+
     tryCatch(
-      # insert into original table
-      new_edits[rows, cols][apply_mask] <- to,
+      do_assign(),
       warning = function(w) {
         if (w$message %like% "invalid factor level") {
-          xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
+          vapply(FUN.VALUE = logical(1), cols, function(col) {
             new_edits[, col] <<- factor(
               x = as.character(pm_pull(new_edits, col)),
               levels = unique(c(to, levels(pm_pull(new_edits, col))))
             )
             TRUE
           })
-          suppressWarnings(new_edits[rows, cols][apply_mask] <<- to)
+          suppressWarnings(do_assign())
           warning_(
             "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: value \"", to, "\" added to the factor levels of column",
             ifelse(length(cols) == 1, "", "s"),
@@ -1210,7 +1217,7 @@ edit_sir <- function(x,
             " because this value was not an existing factor level."
           )
           txt_warning()
-          warned <- FALSE
+          warned <<- FALSE
         } else {
           warning_("in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: ", w$message)
           txt_warning()
