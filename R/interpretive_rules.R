@@ -64,7 +64,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param guideline A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option [`AMR_guideline`][AMR-options].
 #' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_interpretive_rules`][AMR-options]: `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
-#' @param version_breakpoints The version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
+#' @param version_breakpoints The version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), documentation = TRUE, reverse = TRUE)`.
 #' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
 #' @param version_expertrules The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
@@ -187,6 +187,11 @@ interpretive_rules <- function(x,
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
   meet_criteria(overwrite, allow_class = "logical", has_length = 1)
   meet_criteria(add_if_missing, allow_class = "logical", has_length = 1)
+
+  stop_if(
+    !overwrite && !add_if_missing,
+    "Either set {.arg overwrite} or {.arg add_if_missing} to {.code TRUE}, or both."
+  )
 
   stop_if(
     guideline == "CLSI",
@@ -600,7 +605,7 @@ interpretive_rules <- function(x,
   } else {
     if (isTRUE(info)) {
       cat("\n")
-      message_("Skipping inhibitor-inheritance rules defined by this AMR package: setting S to drug+inhibitor where drug is S, and setting R to drug where drug+inhibitor is R. Add \"other\" or \"all\" to the {.arg rules} argument to apply those rules.")
+      message_("Skipping inhibitor-inheritance rules defined by this AMR package: setting S to drug+inhibitor where drug is S, and setting R to drug where drug+inhibitor is R. Add {.val other} or {.val all} to the {.arg rules} argument to apply those rules.")
     }
   }
 
@@ -1171,6 +1176,7 @@ edit_sir <- function(x,
     } else {
       if (isFALSE(add_if_missing)) isSIR else non_SIR
     }
+warning_("test", call = T) # aaaaaaa
     tryCatch(
       # insert into original table
       new_edits[rows, cols][apply_mask] <- to,

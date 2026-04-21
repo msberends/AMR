@@ -27,7 +27,7 @@ interpretive_rules(x, col_mo = NULL, info = interactive(),
   verbose = FALSE, version_breakpoints = 16,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
-  custom_rules = NULL, overwrite = FALSE, ...)
+  custom_rules = NULL, overwrite = FALSE, add_if_missing = TRUE, ...)
 
 eucast_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
@@ -52,7 +52,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be {.val 16.0}, {.val 15.0}, {.val 14.0}, {.val 13.1}, {.val 12.0}, {.val 11.0}, or {.val 10.0}.}
+\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be \code{"16.0"}, \code{"15.0"}, \code{"14.0"}, \code{"13.1"}, \code{"12.0"}, \code{"11.0"}, or \code{"10.0"}.}
 
 \item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be {.val 1.2}.}
 
@@ -65,6 +65,8 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 \item{custom_rules}{Custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
 \item{overwrite}{A \link{logical} indicating whether to overwrite existing SIR values (default: \code{FALSE}). When \code{FALSE}, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".}
+
+\item{add_if_missing}{A \link{logical} indicating whether rules should also be applied to missing (\code{NA}) values (default: \code{TRUE}). When \code{FALSE}, rules are only applied to cells that already contain an SIR value; cells with \code{NA} are left untouched. This is particularly useful when using \code{overwrite = TRUE} with custom rules and you want to update reported results without imputing values for untested drugs.}
 
 \item{...}{Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; \code{\link[=guess_ab_col]{guess_ab_col()}} will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.}
 

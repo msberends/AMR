@@ -61,7 +61,7 @@ eucast_rules(df,
 
 \subsection{Using taxonomic properties in rules}{
 
-There is one exception in columns used for the rules: all column names of the \link{microorganisms} data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", and "snomed". Thus, this next example will work as well, despite the fact that the \code{df} data set does not contain a column \code{genus}:
+There is one exception in columns used for the rules: all column names of the \link{microorganisms} data set can also be used, but do not have to exist in the data set. These column names are: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, and \code{"snomed"}. Thus, this next example will work as well, despite the fact that the \code{df} data set does not contain a column \code{genus}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- custom_eucast_rules(
   TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",

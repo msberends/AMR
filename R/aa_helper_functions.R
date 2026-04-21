@@ -766,7 +766,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   }
   if (isTRUE(quotes)) {
     if (isTRUE(documentation)) {
-      quotes <- '"'
+      quotes <- c("`\"", "\"`")
     } else {
       # use cli to format as values
       quotes <- c("{.val ", "}")

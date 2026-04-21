@@ -10,8 +10,8 @@ A \link[tibble:tibble]{tibble} with 2 000 observations and 46 variables:
 \item \code{date}\cr Date of receipt at the laboratory
 \item \code{patient}\cr ID of the patient
 \item \code{age}\cr Age of the patient
-\item \code{gender}\cr Gender of the patient, either {.val F} or {.val M}
-\item \code{ward}\cr Ward type where the patient was admitted, either {.val Clinical}, {.val ICU}, or {.val Outpatient}
+\item \code{gender}\cr Gender of the patient, either \code{"F"} or \code{"M"}
+\item \code{ward}\cr Ward type where the patient was admitted, either \code{"Clinical"}, \code{"ICU"}, or \code{"Outpatient"}
 \item \code{mo}\cr ID of microorganism created with \code{\link[=as.mo]{as.mo()}}, see also the \link{microorganisms} data set
 \item \code{PEN:RIF}\cr 40 different antimicrobials with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}}); these column names occur in the \link{antimicrobials} data set and can be translated with \code{\link[=set_ab_names]{set_ab_names()}} or \code{\link[=ab_name]{ab_name()}}
 }
