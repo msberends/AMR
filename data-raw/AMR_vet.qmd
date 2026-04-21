@@ -15,8 +15,10 @@ library(readr)
 library(tidyr)
 
 # WHONET version of 16th Feb 2024
-whonet_breakpoints <- read_tsv("WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"),
-                               show_col_types = FALSE, guess_max = Inf) %>%
+whonet_breakpoints <- read_tsv("WHONET/Resources/Breakpoints.txt",
+  na = c("", "NA", "-"),
+  show_col_types = FALSE, guess_max = Inf
+) %>%
   filter(GUIDELINES %in% c("CLSI", "EUCAST"))
 
 dim(whonet_breakpoints)
@@ -48,9 +50,9 @@ whonet_breakpoints |>
 
 ```{r}
 whonet_breakpoints |>
-  filter(HOST == "Cats", YEAR >= 2021) |> 
-  select(GUIDELINES, YEAR, TEST_METHOD, ORGANISM_CODE, R, S) |> 
-  mutate(MO_NAME = AMR::mo_shortname(ORGANISM_CODE), .before = R) |> 
+  filter(HOST == "Cats", YEAR >= 2021) |>
+  select(GUIDELINES, YEAR, TEST_METHOD, ORGANISM_CODE, R, S) |>
+  mutate(MO_NAME = AMR::mo_shortname(ORGANISM_CODE), .before = R) |>
   as.data.frame()
 ```
 
@@ -58,12 +60,14 @@ whonet_breakpoints |>
 
 ```{r}
 whonet_breakpoints |>
-  filter(HOST == "Cats", YEAR == 2023) |> 
-  mutate(MO = AMR::mo_shortname(ORGANISM_CODE),
-         AB = AMR::ab_name(WHONET_ABX_CODE),
-         SITE_OF_INFECTION = substr(SITE_OF_INFECTION, 1, 25)) |> 
-  arrange(MO, AB) |> 
-  select(MO, AB, SITE_OF_INFECTION) |> 
+  filter(HOST == "Cats", YEAR == 2023) |>
+  mutate(
+    MO = AMR::mo_shortname(ORGANISM_CODE),
+    AB = AMR::ab_name(WHONET_ABX_CODE),
+    SITE_OF_INFECTION = substr(SITE_OF_INFECTION, 1, 25)
+  ) |>
+  arrange(MO, AB) |>
+  select(MO, AB, SITE_OF_INFECTION) |>
   as.data.frame()
 ```
 

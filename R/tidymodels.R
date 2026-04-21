@@ -21,7 +21,6 @@
 #' @export
 #' @examples
 #' if (require("tidymodels")) {
-#'
 #'   # The below approach formed the basis for this paper: DOI 10.3389/fmicb.2025.1582703
 #'   # Presence of ESBL genes was predicted based on raw MIC values.
 #'
@@ -40,13 +39,10 @@
 #'
 #'   # Create and prep a recipe with MIC log2 transformation
 #'   mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
-#'
 #'     # Optionally remove non-predictive variables
 #'     remove_role(genus, old_role = "predictor") %>%
-#'
 #'     # Apply the log2 transformation to all MIC predictors
 #'     step_mic_log2(all_mic_predictors()) %>%
-#'
 #'     # And apply the preparation steps
 #'     prep()
 #'
@@ -67,13 +63,15 @@
 #'     bind_cols(out_testing)
 #'
 #'   # Evaluate predictions using standard classification metrics
-#'   our_metrics <- metric_set(accuracy,
-#'                             recall,
-#'                             precision,
-#'                             sensitivity,
-#'                             specificity,
-#'                             ppv,
-#'                             npv)
+#'   our_metrics <- metric_set(
+#'     accuracy,
+#'     recall,
+#'     precision,
+#'     sensitivity,
+#'     specificity,
+#'     ppv,
+#'     npv
+#'   )
 #'   metrics <- our_metrics(predictions, truth = esbl, estimate = .pred_class)
 #'
 #'   # Show performance

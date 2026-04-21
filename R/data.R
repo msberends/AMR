@@ -106,12 +106,12 @@
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms), big.mark = " ")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package. ***This is a unique identifier.***
 #' - `fullname`\cr Full name, like `"Escherichia coli"`. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. ***This is a unique identifier.***
-#' - `status` \cr Status of the taxon, either `r vector_or(microorganisms$status)`
+#' - `status` \cr Status of the taxon, either `r vector_or(microorganisms$status, documentation = TRUE)`
 #' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism. Note that for fungi, *phylum* is equal to their taxonomic *division*. Also, for fungi, *subkingdom* and *subdivision* were left out since they do not occur in the bacterial taxonomy.
 #' - `rank`\cr Text of the taxonomic rank of the microorganism, such as `"species"` or `"genus"`
 #' - `ref`\cr Author(s) and year of related scientific publication. This contains only the *first surname* and year of the *latest* authors, e.g. "Wallis *et al.* 2006 *emend.* Smith and Jones 2018" becomes "Smith *et al.*, 2018". This field is directly retrieved from the source specified in the column `source`. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.
-#' - `oxygen_tolerance` \cr Oxygen tolerance, either `r vector_or(microorganisms$oxygen_tolerance)`. These data were retrieved from BacDive (see *Source*). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently `r round(length(microorganisms$oxygen_tolerance[which(!is.na(microorganisms$oxygen_tolerance))]) / nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]) * 100, 1)`% of all `r format_included_data_number(nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]))` bacteria in the data set contain an oxygen tolerance.
-#' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
+#' - `oxygen_tolerance` \cr Oxygen tolerance, either `r vector_or(microorganisms$oxygen_tolerance, documentation = TRUE)`. These data were retrieved from BacDive (see *Source*). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently `r round(length(microorganisms$oxygen_tolerance[which(!is.na(microorganisms$oxygen_tolerance))]) / nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]) * 100, 1)`% of all `r format_included_data_number(nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]))` bacteria in the data set contain an oxygen tolerance.
+#' - `source`\cr Either `r vector_or(microorganisms$source, documentation = TRUE)` (see *Source*)
 #' - `lpsn`\cr Identifier ('Record number') of `r TAXONOMY_VERSION$LPSN$name`. This will be the first/highest LPSN identifier to keep one identifier per row. For example, *Acetobacter ascendens* has LPSN Record number 7864 and 11011. Only the first is available in the `microorganisms` data set. ***This is a unique identifier***, though available for only `r format_included_data_number(sum(!is.na(microorganisms$lpsn)))` records.
 #' - `lpsn_parent`\cr LPSN identifier of the parent taxon
 #' - `lpsn_renamed_to`\cr LPSN identifier of the currently valid taxon
@@ -222,8 +222,8 @@
 #' - `date`\cr Date of receipt at the laboratory
 #' - `patient`\cr ID of the patient
 #' - `age`\cr Age of the patient
-#' - `gender`\cr Gender of the patient, either `r vector_or(example_isolates$gender)`
-#' - `ward`\cr Ward type where the patient was admitted, either `r vector_or(example_isolates$ward)`
+#' - `gender`\cr Gender of the patient, either `r vector_or(example_isolates$gender, documentation = TRUE)`
+#' - `ward`\cr Ward type where the patient was admitted, either `r vector_or(example_isolates$ward, documentation = TRUE)`
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also the [microorganisms] data set
 #' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.sir))` different antimicrobials with class [`sir`] (see [as.sir()]); these column names occur in the [antimicrobials] data set and can be translated with [set_ab_names()] or [ab_name()]
 #' @inheritSection AMR Download Our Reference Data
@@ -292,9 +292,9 @@
 #' Use [as.sir()] to transform MICs or disks measurements to SIR values.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(clinical_breakpoints), big.mark = " ")` observations and `r ncol(clinical_breakpoints)` variables:
 #' - `guideline`\cr Name of the guideline
-#' - `type`\cr Breakpoint type, either `r vector_or(clinical_breakpoints$type)`
-#' - `host`\cr Host of infectious agent. This is mostly useful for veterinary breakpoints and is either `r vector_or(clinical_breakpoints$host)`
-#' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method)`
+#' - `type`\cr Breakpoint type, either `r vector_or(clinical_breakpoints$type, documentation = TRUE)`
+#' - `host`\cr Host of infectious agent. This is mostly useful for veterinary breakpoints and is either `r vector_or(clinical_breakpoints$host, documentation = TRUE)`
+#' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method, documentation = TRUE)`
 #' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
 #' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
@@ -307,7 +307,7 @@
 #' - `is_SDD`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to `r sum(clinical_breakpoints$is_SDD)` breakpoints.
 #' @details
 #' ### Different Types of Breakpoints
-#' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quote = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
+#' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quotes = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 #'
 #' The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. Use [`as.sir(..., breakpoint_type = ...)`][as.sir()] to interpret raw data using a specific breakpoint type, e.g. `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
 #'
@@ -350,10 +350,10 @@
 #' @format A [tibble][tibble::tibble] with `r format(nrow(dosage), big.mark = " ")` observations and `r ncol(dosage)` variables:
 #' - `ab`\cr Antimicrobial ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 #' - `name`\cr Official name of the antimicrobial drug as used by WHONET/EARS-Net or the WHO
-#' - `type`\cr Type of the dosage, either `r vector_or(dosage$type)`
+#' - `type`\cr Type of the dosage, either `r vector_or(dosage$type, documentation = TRUE)`
 #' - `dose`\cr Dose, such as "2 g" or "25 mg/kg"
 #' - `dose_times`\cr Number of times a dose must be administered
-#' - `administration`\cr Route of administration, either `r vector_or(dosage$administration)`
+#' - `administration`\cr Route of administration, either `r vector_or(dosage$administration, documentation = TRUE)`
 #' - `notes`\cr Additional dosage notes
 #' - `original_txt`\cr Original text in the PDF file of EUCAST
 #' - `eucast_version`\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply, either `r vector_or(dosage$eucast_version, quotes = FALSE, sort = TRUE, reverse = TRUE)`

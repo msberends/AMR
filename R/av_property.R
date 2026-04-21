@@ -32,7 +32,7 @@
 #' Use these functions to return a specific property of an antiviral drug from the [antivirals] data set. All input values will be evaluated internally with [as.av()].
 #' @param x Any (vector of) text that can be coerced to a valid antiviral drug code with [as.av()].
 #' @param tolower A [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character].
-#' @param property One of the column names of one of the [antivirals] data set: `vector_or(colnames(antivirals), sort = FALSE)`.
+#' @param property One of the column names of one of the [antivirals] data set: `r vector_or(colnames(antivirals), documentation = TRUE, sort = FALSE)`.
 #' @param language Language of the returned text - the default is system language (see [get_AMR_locale()]) and can also be set with the package option [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration Way of administration, either `"oral"` or `"iv"`.
 #' @param open Browse the URL using [utils::browseURL()].

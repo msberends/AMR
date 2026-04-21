@@ -9,10 +9,10 @@ A \link[tibble:tibble]{tibble} with 759 observations and 9 variables:
 \itemize{
 \item \code{ab}\cr Antimicrobial ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{name}\cr Official name of the antimicrobial drug as used by WHONET/EARS-Net or the WHO
-\item \code{type}\cr Type of the dosage, either {.val high_dosage}, {.val standard_dosage}, or {.val uncomplicated_uti}
+\item \code{type}\cr Type of the dosage, either \code{"high_dosage"}, \code{"standard_dosage"}, or \code{"uncomplicated_uti"}
 \item \code{dose}\cr Dose, such as "2 g" or "25 mg/kg"
 \item \code{dose_times}\cr Number of times a dose must be administered
-\item \code{administration}\cr Route of administration, either {.val }, {.val im}, {.val iv}, {.val oral}, or NA
+\item \code{administration}\cr Route of administration, either \code{""}, \code{"im"}, \code{"iv"}, \code{"oral"}, or NA
 \item \code{notes}\cr Additional dosage notes
 \item \code{original_txt}\cr Original text in the PDF file of EUCAST
 \item \code{eucast_version}\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply, either 15, 14, 13.1, 12, or 11

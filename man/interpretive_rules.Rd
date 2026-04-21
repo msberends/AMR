@@ -27,7 +27,7 @@ interpretive_rules(x, col_mo = NULL, info = interactive(),
   verbose = FALSE, version_breakpoints = 16,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
-  custom_rules = NULL, overwrite = FALSE, ...)
+  custom_rules = NULL, overwrite = FALSE, add_if_missing = TRUE, ...)
 
 eucast_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
@@ -52,11 +52,11 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{verbose}{A \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be {.val 16.0}, {.val 15.0}, {.val 14.0}, {.val 13.1}, {.val 12.0}, {.val 11.0}, or {.val 10.0}.}
+\item{version_breakpoints}{The version number to use for the EUCAST Clinical Breakpoints guideline. Can be \code{"16.0"}, \code{"15.0"}, \code{"14.0"}, \code{"13.1"}, \code{"12.0"}, \code{"11.0"}, or \code{"10.0"}.}
 
-\item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be {.val 1.2}.}
+\item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be \code{"1.2"}.}
 
-\item{version_expertrules}{The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be {.val 3.3}, {.val 3.2}, or {.val 3.1}.}
+\item{version_expertrules}{The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be \code{"3.3"}, \code{"3.2"}, or \code{"3.1"}.}
 
 \item{ampc_cephalosporin_resistance}{(only applies when \code{rules} contains \code{"expert"} or \code{"all"}) a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2} and higher; these versions of '\emph{EUCAST Expert Rules on Enterobacterales}' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of \code{NA} (the default) for this argument will remove results for these three drugs, while e.g. a value of \code{"R"} will make the results for these drugs resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia}, and \emph{Serratia}.}
 
@@ -66,11 +66,13 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{overwrite}{A \link{logical} indicating whether to overwrite existing SIR values (default: \code{FALSE}). When \code{FALSE}, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".}
 
+\item{add_if_missing}{A \link{logical} indicating whether rules should also be applied to missing (\code{NA}) values (default: \code{TRUE}). When \code{FALSE}, rules are only applied to cells that already contain an SIR value; cells with \code{NA} are left untouched. This is particularly useful when using \code{overwrite = TRUE} with custom rules and you want to update reported results without imputing values for untested drugs.}
+
 \item{...}{Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; \code{\link[=guess_ab_col]{guess_ab_col()}} will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. \code{AMX = "amoxicillin"}. To skip a specific antimicrobial, set it to \code{NULL}, e.g. \code{TIC = NULL} to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.}
 
 \item{ab}{Any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}.}
 
-\item{administration}{Route of administration, either {.val }, {.val im}, {.val iv}, {.val oral}, or NA.}
+\item{administration}{Route of administration, either \code{""}, \code{"im"}, \code{"iv"}, \code{"oral"}, or NA.}
 }
 \value{
 The input of \code{x}, possibly with edited values of antimicrobials. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.

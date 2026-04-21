@@ -147,31 +147,35 @@ data$syndrome <- ifelse(data$mo %like% "coli", "UTI", "No UTI")
 
 ```{r}
 wisca(data,
-      antimicrobials = c("AMC", "CIP", "GEN"))
+  antimicrobials = c("AMC", "CIP", "GEN")
+)
 ```
 
 ### Use combination regimens
 
 ```{r}
 wisca(data,
-      antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"))
+  antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN")
+)
 ```
 
 ### Stratify by syndrome
 
 ```{r}
 wisca(data,
-      antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
-      syndromic_group = "syndrome")
+  antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
+  syndromic_group = "syndrome"
+)
 ```
 
 The `AMR` package is available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages, which can all be used for the `wisca()` function too:
 
 ```{r}
 wisca(data,
-      antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
-      syndromic_group = gsub("UTI", "UCI", data$syndrome),
-      language = "Spanish")
+  antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
+  syndromic_group = gsub("UTI", "UCI", data$syndrome),
+  language = "Spanish"
+)
 ```
 
 

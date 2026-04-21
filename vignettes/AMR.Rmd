@@ -268,7 +268,8 @@ To create a traditional antibiogram, simply state which antibiotics should be us
 
 ```{r trad}
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()))
+  antibiotics = c(aminoglycosides(), carbapenems())
+)
 ```
 
 Notice that the `antibiogram()` function automatically prints in the right format when using Quarto or R Markdown (such as this page), and even applies italics for taxonomic names (by using `italicise_taxonomy()` internally).
@@ -277,10 +278,11 @@ It also uses the language of your OS if this is either `r AMR:::vector_or(vapply
 
 ```{r trad2}
 antibiogram(example_isolates,
-            mo_transform = "gramstain",
-            antibiotics = aminoglycosides(),
-            ab_transform = "name",
-            language = "es")
+  mo_transform = "gramstain",
+  antibiotics = aminoglycosides(),
+  ab_transform = "name",
+  language = "es"
+)
 ```
 
 ### Combined Antibiogram
@@ -289,8 +291,9 @@ To create a combined antibiogram, use antibiotic codes or names with a plus `+` 
 
 ```{r comb}
 combined_ab <- antibiogram(example_isolates,
-                           antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-                           ab_transform = NULL)
+  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  ab_transform = NULL
+)
 combined_ab
 ```
 
@@ -300,8 +303,9 @@ To create a syndromic antibiogram, the `syndromic_group` argument must be used. 
 
 ```{r synd}
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()),
-            syndromic_group = "ward")
+  antibiotics = c(aminoglycosides(), carbapenems()),
+  syndromic_group = "ward"
+)
 ```
 
 ### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
@@ -310,8 +314,10 @@ To create a **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**, si
 
 ```{r wisca}
 example_isolates %>%
-  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-        minimum = 10) # Recommended threshold: ≥30
+  wisca(
+    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+    minimum = 10
+  ) # Recommended threshold: ≥30
 ```
 
 WISCA uses a **Bayesian decision model** to integrate data from multiple pathogens, improving empirical therapy guidance, especially for low-incidence infections. It is **pathogen-agnostic**, meaning results are syndrome-based rather than stratified by microorganism.
@@ -323,8 +329,10 @@ For **patient- or syndrome-specific WISCA**, run the function on a grouped `tibb
 ```{r wisca_grouped}
 example_isolates %>%
   top_n_microorganisms(n = 10) %>%
-  group_by(age_group = age_groups(age, c(25, 50, 75)),
-           gender) %>%
+  group_by(
+    age_group = age_groups(age, c(25, 50, 75)),
+    gender
+  ) %>%
   wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
@@ -379,17 +387,21 @@ We can visualise MIC distributions and their SIR interpretations using `ggplot2`
 
 ```{r mic_plot}
 # add a group
-my_data$group <- rep(c("A", "B", "C", "D"), each = 25) 
+my_data$group <- rep(c("A", "B", "C", "D"), each = 25)
 
-ggplot(my_data,
-       aes(x = group, y = MIC, colour = SIR)) +
+ggplot(
+  my_data,
+  aes(x = group, y = MIC, colour = SIR)
+) +
   geom_jitter(width = 0.2, size = 2) +
   geom_boxplot(fill = NA, colour = "grey40") +
   scale_y_mic() +
   scale_colour_sir() +
-  labs(title = "MIC Distribution and SIR Interpretation",
-       x = "Sample Groups",
-       y = "MIC (mg/L)")
+  labs(
+    title = "MIC Distribution and SIR Interpretation",
+    x = "Sample Groups",
+    y = "MIC (mg/L)"
+  )
 ```
 
 This plot provides an intuitive way to assess susceptibility patterns across different groups while incorporating clinical breakpoints.  

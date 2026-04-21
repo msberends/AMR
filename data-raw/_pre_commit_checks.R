@@ -406,7 +406,7 @@ pre_commit_lst$AB_GLYCOPEPTIDES <- antimicrobials %>%
 pre_commit_lst$AB_FUSIDANES <- antimicrobials %>%
   filter(name %like% "fusi") %>%
   pull(ab)
-pre_commit_lst$AB_IONOPHORES<- antimicrobials %>%
+pre_commit_lst$AB_IONOPHORES <- antimicrobials %>%
   filter(name %like% "alamethicin|beauvericin|calcimycin|chloroquine|clioquinol|diiodohydroxyquinoline|dithiocarbamates|enniatin|epigallocatechin|gramicidin|hinokitiol|ionomycin|laidlomycin|lasalocid|maduramicin|monensin|narasin|nigericin|nonactin|nystatin|pyrazole|pyrithione|quercetin|salinomycin|semduramicin|valinomycin|zincophorin") %>%
   pull(ab)
 pre_commit_lst$AB_ISOXAZOLYLPENICILLINS <- antimicrobials %>%
@@ -478,7 +478,8 @@ pre_commit_lst$AB_BETALACTAMS <- sort(c(
   pre_commit_lst$AB_PENICILLINS,
   pre_commit_lst$AB_CEPHALOSPORINS,
   pre_commit_lst$AB_CARBAPENEMS,
-  pre_commit_lst$AB_MONOBACTAMS))
+  pre_commit_lst$AB_MONOBACTAMS
+))
 pre_commit_lst$AB_BETALACTAMASE_INHIBITORS <- antimicrobials %>%
   filter(atc_group2 %like% "Beta-lactamase inhibitors" | name %like% "bactam") %>%
   pull(ab)
@@ -495,8 +496,9 @@ for (grp in pre_commit_lst$DEFINED_AB_GROUPS[pre_commit_lst$DEFINED_AB_GROUPS %u
     fn_name <- tolower(gsub("^AB_", "", grp))
     if (!fn_name %in% ls(envir = asNamespace("AMR"))) {
       stop("Group '", grp, "' has ", length(pre_commit_lst[[grp]]),
-           " members (", toString(ab_name(pre_commit_lst[[grp]], tolower = T)), ") but no corresponding function '", fn_name, "()' exists in the AMR namespace.",
-           call. = FALSE)
+        " members (", toString(ab_name(pre_commit_lst[[grp]], tolower = T)), ") but no corresponding function '", fn_name, "()' exists in the AMR namespace.",
+        call. = FALSE
+      )
     }
   }
 }
@@ -534,46 +536,48 @@ for (i in seq_along(group_map)) {
 }
 
 # create priority list for ab_group()
-pre_commit_lst$ABX_PRIORITY_LIST <- c("Aminopenicillins",
-                                      "Isoxazolylpenicillins",
-                                      "Ureidopenicillins",
-                                      "Oxazolidinones",
-                                      "Carbapenems",
-                                      "Cephalosporins (1st gen.)",
-                                      "Cephalosporins (2nd gen.)",
-                                      "Cephalosporins (3rd gen.)",
-                                      "Cephalosporins (4th gen.)",
-                                      "Cephalosporins (5th gen.)",
-                                      "Cephalosporins",
-                                      "Penicillins",
-                                      "Monobactams",
-                                      "Aminoglycosides",
-                                      "Lipoglycopeptides",
-                                      "Glycopeptides",
-                                      "Peptides",
-                                      "Lincosamides",
-                                      "Streptogramins",
-                                      "Macrolides",
-                                      "Nitrofurans",
-                                      "Phenicols",
-                                      "Phosphonics",
-                                      "Polymyxins",
-                                      "Fluoroquinolones",
-                                      "Quinolones",
-                                      "Rifamycins",
-                                      "Spiropyrimidinetriones",
-                                      "Trimethoprims",
-                                      "Sulfonamides",
-                                      "Tetracyclines",
-                                      "Ionophores",
-                                      "Antifungals",
-                                      "Antimycobacterials",
-                                      "Fusidanes",
-                                      "Beta-lactams",
-                                      "Beta-lactamase inhibitors",
-                                      "Pleuromutilins",
-                                      "Aminocoumarins",
-                                      "Other")
+pre_commit_lst$ABX_PRIORITY_LIST <- c(
+  "Aminopenicillins",
+  "Isoxazolylpenicillins",
+  "Ureidopenicillins",
+  "Oxazolidinones",
+  "Carbapenems",
+  "Cephalosporins (1st gen.)",
+  "Cephalosporins (2nd gen.)",
+  "Cephalosporins (3rd gen.)",
+  "Cephalosporins (4th gen.)",
+  "Cephalosporins (5th gen.)",
+  "Cephalosporins",
+  "Penicillins",
+  "Monobactams",
+  "Aminoglycosides",
+  "Lipoglycopeptides",
+  "Glycopeptides",
+  "Peptides",
+  "Lincosamides",
+  "Streptogramins",
+  "Macrolides",
+  "Nitrofurans",
+  "Phenicols",
+  "Phosphonics",
+  "Polymyxins",
+  "Fluoroquinolones",
+  "Quinolones",
+  "Rifamycins",
+  "Spiropyrimidinetriones",
+  "Trimethoprims",
+  "Sulfonamides",
+  "Tetracyclines",
+  "Ionophores",
+  "Antifungals",
+  "Antimycobacterials",
+  "Fusidanes",
+  "Beta-lactams",
+  "Beta-lactamase inhibitors",
+  "Pleuromutilins",
+  "Aminocoumarins",
+  "Other"
+)
 if (!all(unlist(antimicrobials$group) %in% pre_commit_lst$ABX_PRIORITY_LIST)) {
   stop("Missing group(s) in priority list: ", paste(setdiff(unlist(antimicrobials$group), pre_commit_lst$ABX_PRIORITY_LIST), collapse = ", "))
 }
@@ -589,15 +593,15 @@ pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(antivirals)
 # Export to package as internal data ----
 # usethis::use_data() must receive unquoted object names, which is not flexible at all.
 # we'll use good old base::save() instead
-save(list = names(pre_commit_lst),
-     file = "R/sysdata.rda",
-     envir = as.environment(pre_commit_lst),
-     compress = "xz",
-     version = 2,
-     ascii = FALSE)
+save(
+  list = names(pre_commit_lst),
+  file = "R/sysdata.rda",
+  envir = as.environment(pre_commit_lst),
+  compress = "xz",
+  version = 2,
+  ascii = FALSE
+)
 usethis::ui_done("Saved to {usethis::ui_value('R/sysdata.rda')}")
-
-
 
 
 # Export data sets to the repository in different formats -----------------
@@ -621,7 +625,9 @@ write_md5 <- function(object) {
 }
 changed_md5 <- function(object) {
   path <- paste0("data-raw/", deparse(substitute(object)), ".md5")
-  if (!file.exists(path)) return(TRUE)
+  if (!file.exists(path)) {
+    return(TRUE)
+  }
   tryCatch(
     {
       conn <- file(path)
@@ -759,11 +765,14 @@ devtools::load_all(quiet = TRUE)
 suppressMessages(set_AMR_locale("English"))
 
 files_changed <- function(paths = "^(R|data)/") {
-  tryCatch({
-    changed_files <- system("git status", intern = TRUE)
-    changed_files <- unlist(strsplit(changed_files, " "))
-    any(changed_files %like% paths[paths != "R/sysdata.rda"])
-  }, error = function(e) TRUE)
+  tryCatch(
+    {
+      changed_files <- system("git status", intern = TRUE)
+      changed_files <- unlist(strsplit(changed_files, " "))
+      any(changed_files %like% paths[paths != "R/sysdata.rda"])
+    },
+    error = function(e) TRUE
+  )
 }
 
 # Update URLs -------------------------------------------------------------
@@ -801,8 +810,10 @@ if (files_changed()) {
 # Style pkg ---------------------------------------------------------------
 if (files_changed(paths = "^(R|tests)/")) {
   usethis::ui_info("Styling package")
-  styler::style_pkg(include_roxygen_examples = FALSE,
-                    exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")])
+  styler::style_pkg(
+    include_roxygen_examples = FALSE,
+    exclude_dirs = list.dirs(full.names = FALSE, recursive = FALSE)[!list.dirs(full.names = FALSE, recursive = FALSE) %in% c("R", "tests")]
+  )
 }
 
 # Document pkg ------------------------------------------------------------
@@ -813,13 +824,13 @@ if (files_changed()) {
 
 # Update index.md and README.md -------------------------------------------
 if (files_changed("README.Rmd") ||
-    files_changed("index.Rmd") ||
-    files_changed("man/microorganisms.Rd") ||
-    files_changed("man/antimicrobials.Rd") ||
-    files_changed("man/clinical_breakpoints.Rd") ||
-    files_changed("man/antibiogram.Rd") ||
-    files_changed("R/antibiogram.R") ||
-    files_changed("data-raw/translations.tsv")) {
+  files_changed("index.Rmd") ||
+  files_changed("man/microorganisms.Rd") ||
+  files_changed("man/antimicrobials.Rd") ||
+  files_changed("man/clinical_breakpoints.Rd") ||
+  files_changed("man/antibiogram.Rd") ||
+  files_changed("R/antibiogram.R") ||
+  files_changed("data-raw/translations.tsv")) {
   usethis::ui_info("Rendering {usethis::ui_field('index.md')} and {usethis::ui_field('README.md')}")
   suppressWarnings(rmarkdown::render("index.Rmd", quiet = TRUE))
   suppressWarnings(rmarkdown::render("README.Rmd", quiet = TRUE))

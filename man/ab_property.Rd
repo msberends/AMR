@@ -67,7 +67,7 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
 
 \item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}.}
 
-\item{property}{One of the column names of one of the \link{antimicrobials} data set: \code{vector_or(colnames(antimicrobials), sort = FALSE)}.}
+\item{property}{One of the column names of one of the \link{antimicrobials} data set: \code{"ab"}, \code{"cid"}, \code{"name"}, \code{"group"}, \code{"atc"}, \code{"atc_group1"}, \code{"atc_group2"}, \code{"abbreviations"}, \code{"synonyms"}, \code{"oral_ddd"}, \code{"oral_units"}, \code{"iv_ddd"}, \code{"iv_units"}, or \code{"loinc"}.}
 
 \item{data}{A \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names.}
 

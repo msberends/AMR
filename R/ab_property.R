@@ -32,7 +32,7 @@
 #' Use these functions to return a specific property of an antibiotic from the [antimicrobials] data set. All input values will be evaluated internally with [as.ab()].
 #' @param x Any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()].
 #' @param tolower A [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
-#' @param property One of the column names of one of the [antimicrobials] data set: `vector_or(colnames(antimicrobials), sort = FALSE)`.
+#' @param property One of the column names of one of the [antimicrobials] data set: `r vector_or(colnames(antimicrobials), documentation = TRUE, sort = FALSE)`.
 #' @param language Language of the returned text - the default is the current system language (see [get_AMR_locale()]) and can also be set with the package option [`AMR_locale`][AMR-options]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration Way of administration, either `"oral"` or `"iv"`.
 #' @param open Browse the URL using [utils::browseURL()].
