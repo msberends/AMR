@@ -132,25 +132,24 @@ knit_print(x, italicise = TRUE,
   `"shortname"` (default), `"gramstain"`, or one of the column names of
   the
   [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
-  data set: .val mo, .val fullname, .val status, .val kingdom, .val
-  phylum, .val class, .val order, .val family, .val genus, .val species,
-  .val subspecies, .val rank, .val ref, .val oxygen_tolerance, .val
-  source, .val lpsn, .val lpsn_parent, .val lpsn_renamed_to, .val
-  mycobank, .val mycobank_parent, .val mycobank_renamed_to, .val gbif,
-  .val gbif_parent, .val gbif_renamed_to, .val prevalence, or .val
-  snomed. Can also be `NULL` to not transform the input or `NA` to
-  consider all microorganisms 'unknown'.
+  data set: `"mo"`, `"fullname"`, `"status"`, `"kingdom"`, `"phylum"`,
+  `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`,
+  `"subspecies"`, `"rank"`, `"ref"`, `"oxygen_tolerance"`, `"source"`,
+  `"lpsn"`, `"lpsn_parent"`, `"lpsn_renamed_to"`, `"mycobank"`,
+  `"mycobank_parent"`, `"mycobank_renamed_to"`, `"gbif"`,
+  `"gbif_parent"`, `"gbif_renamed_to"`, `"prevalence"`, or `"snomed"`.
+  Can also be `NULL` to not transform the input or `NA` to consider all
+  microorganisms 'unknown'.
 
 - ab_transform:
 
   A character to transform antimicrobial input - must be one of the
   column names of the
   [antimicrobials](https://amr-for-r.org/reference/antimicrobials.md)
-  data set (defaults to `"name"`): .val ab, .val cid, .val name, .val
-  group, .val atc, .val atc_group1, .val atc_group2, .val abbreviations,
-  .val synonyms, .val oral_ddd, .val oral_units, .val iv_ddd, .val
-  iv_units, or .val loinc. Can also be `NULL` to not transform the
-  input.
+  data set (defaults to `"name"`): `"ab"`, `"cid"`, `"name"`, `"group"`,
+  `"atc"`, `"atc_group1"`, `"atc_group2"`, `"abbreviations"`,
+  `"synonyms"`, `"oral_ddd"`, `"oral_units"`, `"iv_ddd"`, `"iv_units"`,
+  or `"loinc"`. Can also be `NULL` to not transform the input.
 
 - syndromic_group:
 

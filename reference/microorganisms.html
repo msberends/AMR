@@ -9,7 +9,7 @@ This data set is carefully crafted, yet made 100% reproducible from public and a
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9045</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,12 +65,12 @@ This data set is carefully crafted, yet made 100% reproducible from public and a
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 78 679 observations and 26 variables:</p><ul><li><p><code>mo</code><br> ID of microorganism as used by this package. <em><strong>This is a unique identifier.</strong></em></p></li>
 <li><p><code>fullname</code><br> Full name, like <code>"Escherichia coli"</code>. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. <em><strong>This is a unique identifier.</strong></em></p></li>
-<li><p><code>status</code> <br> Status of the taxon, either .val accepted, .val not validly published, .val synonym, or .val unknown</p></li>
+<li><p><code>status</code> <br> Status of the taxon, either <code>"accepted"</code>, <code>"not validly published"</code>, <code>"synonym"</code>, or <code>"unknown"</code></p></li>
 <li><p><code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code><br> Taxonomic rank of the microorganism. Note that for fungi, <em>phylum</em> is equal to their taxonomic <em>division</em>. Also, for fungi, <em>subkingdom</em> and <em>subdivision</em> were left out since they do not occur in the bacterial taxonomy.</p></li>
 <li><p><code>rank</code><br> Text of the taxonomic rank of the microorganism, such as <code>"species"</code> or <code>"genus"</code></p></li>
 <li><p><code>ref</code><br> Author(s) and year of related scientific publication. This contains only the <em>first surname</em> and year of the <em>latest</em> authors, e.g. "Wallis <em>et al.</em> 2006 <em>emend.</em> Smith and Jones 2018" becomes "Smith <em>et al.</em>, 2018". This field is directly retrieved from the source specified in the column <code>source</code>. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.</p></li>
-<li><p><code>oxygen_tolerance</code> <br> Oxygen tolerance, either .val aerobe, .val anaerobe, .val anaerobe/microaerophile, .val facultative anaerobe, .val likely facultative anaerobe, .val microaerophile, or NA. These data were retrieved from BacDive (see <em>Source</em>). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 68.3% of all ~39 000 bacteria in the data set contain an oxygen tolerance.</p></li>
-<li><p><code>source</code><br> Either .val GBIF, .val LPSN, .val Manually added, .val MycoBank, or .val manually added (see <em>Source</em>)</p></li>
+<li><p><code>oxygen_tolerance</code> <br> Oxygen tolerance, either <code>"aerobe"</code>, <code>"anaerobe"</code>, <code>"anaerobe/microaerophile"</code>, <code>"facultative anaerobe"</code>, <code>"likely facultative anaerobe"</code>, <code>"microaerophile"</code>, or NA. These data were retrieved from BacDive (see <em>Source</em>). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 68.3% of all ~39 000 bacteria in the data set contain an oxygen tolerance.</p></li>
+<li><p><code>source</code><br> Either <code>"GBIF"</code>, <code>"LPSN"</code>, <code>"Manually added"</code>, <code>"MycoBank"</code>, or <code>"manually added"</code> (see <em>Source</em>)</p></li>
 <li><p><code>lpsn</code><br> Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, <em>Acetobacter ascendens</em> has LPSN Record number 7864 and 11011. Only the first is available in the <code>microorganisms</code> data set. <em><strong>This is a unique identifier</strong></em>, though available for only ~33 000 records.</p></li>
 <li><p><code>lpsn_parent</code><br> LPSN identifier of the parent taxon</p></li>
 <li><p><code>lpsn_renamed_to</code><br> LPSN identifier of the currently valid taxon</p></li>

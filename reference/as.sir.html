@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9045</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -203,7 +203,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
 
 <dt id="arg-breakpoint-type">breakpoint_type<a class="anchor" aria-label="anchor" href="#arg-breakpoint-type"></a></dt>
-<dd><p>The type of breakpoints to use, either .val ECOFF, .val animal, or .val human. ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
+<dd><p>The type of breakpoints to use, either <code>"ECOFF"</code>, <code>"animal"</code>, or <code>"human"</code>. ECOFF stands for Epidemiological Cut-Off values. The default is <code>"human"</code>, which can also be set with the package option <code><a href="AMR-options.html">AMR_breakpoint_type</a></code>. If <code>host</code> is set to values of veterinary species, this will automatically be set to <code>"animal"</code>.</p></dd>
 
 
 <dt id="arg-host">host<a class="anchor" aria-label="anchor" href="#arg-host"></a></dt>
@@ -424,10 +424,10 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-04-05 <span style="color: #949494;">15:32:33</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-04-05 <span style="color: #949494;">15:32:33</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-04-05 <span style="color: #949494;">15:32:33</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-04-05 <span style="color: #949494;">15:32:33</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-04-21 <span style="color: #949494;">19:59:41</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-04-21 <span style="color: #949494;">19:59:42</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-04-21 <span style="color: #949494;">19:59:42</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-04-21 <span style="color: #949494;">19:59:42</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>

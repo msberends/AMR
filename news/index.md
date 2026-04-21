@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9044
+## AMR 3.0.1.9045
 
 #### New
 
@@ -47,10 +47,19 @@
   ([\#235](https://github.com/msberends/AMR/issues/235))
   - [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
     has become a wrapper around that function
+  - Gained argument `add_if_missing` (default: `TRUE`). When set to
+    `FALSE`, rules are only applied to cells that already contain an SIR
+    value; `NA` cells are left untouched. This is useful with
+    `overwrite = TRUE` to update reported results without imputing
+    values for drugs that were not tested
+    ([\#259](https://github.com/msberends/AMR/issues/259))
 - Function
   [`amr_course()`](https://amr-for-r.org/reference/amr_course.md), which
   allows for automated download and unpacking of a GitHub repository for
   e.g. webinar use
+- Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R’s
+  `NA_character_` and `NA_integer_`, for use in pipelines that require
+  typed missing values
 
 #### Fixes
 

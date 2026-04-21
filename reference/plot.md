@@ -199,8 +199,8 @@ labels_sir_count(position = NULL, x = "antibiotic",
 
 - breakpoint_type:
 
-  The type of breakpoints to use, either .val ECOFF, .val animal, or
-  .val human. ECOFF stands for Epidemiological Cut-Off values. The
+  The type of breakpoints to use, either `"ECOFF"`, `"animal"`, or
+  `"human"`. ECOFF stands for Epidemiological Cut-Off values. The
   default is `"human"`, which can also be set with the package option
   [`AMR_breakpoint_type`](https://amr-for-r.org/reference/AMR-options.md).
   If `host` is set to values of veterinary species, this will

@@ -32,15 +32,15 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 45
   Name of the guideline
 
 - `type`  
-  Breakpoint type, either .val ECOFF, .val animal, or .val human
+  Breakpoint type, either `"ECOFF"`, `"animal"`, or `"human"`
 
 - `host`  
   Host of infectious agent. This is mostly useful for veterinary
-  breakpoints and is either .val ECOFF, .val aquatic, .val cats, .val
-  cattle, .val dogs, .val horse, .val human, .val poultry, or .val swine
+  breakpoints and is either `"ECOFF"`, `"aquatic"`, `"cats"`,
+  `"cattle"`, `"dogs"`, `"horse"`, `"human"`, `"poultry"`, or `"swine"`
 
 - `method`  
-  Testing method, either .val DISK or .val MIC
+  Testing method, either `"DISK"` or `"MIC"`
 
 - `site`  
   Body site for which the breakpoint must be applied, e.g. "Oral" or

@@ -85,13 +85,14 @@ There is one exception in columns used for the rules: all column names
 of the
 [microorganisms](https://amr-for-r.org/reference/microorganisms.md) data
 set can also be used, but do not have to exist in the data set. These
-column names are: "mo", "fullname", "status", "kingdom", "phylum",
-"class", "order", "family", "genus", "species", "subspecies", "rank",
-"ref", "oxygen_tolerance", "source", "lpsn", "lpsn_parent",
-"lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to",
-"gbif", "gbif_parent", "gbif_renamed_to", "prevalence", and "snomed".
-Thus, this next example will work as well, despite the fact that the
-`df` data set does not contain a column `genus`:
+column names are: `"mo"`, `"fullname"`, `"status"`, `"kingdom"`,
+`"phylum"`, `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`,
+`"subspecies"`, `"rank"`, `"ref"`, `"oxygen_tolerance"`, `"source"`,
+`"lpsn"`, `"lpsn_parent"`, `"lpsn_renamed_to"`, `"mycobank"`,
+`"mycobank_parent"`, `"mycobank_renamed_to"`, `"gbif"`, `"gbif_parent"`,
+`"gbif_renamed_to"`, `"prevalence"`, and `"snomed"`. Thus, this next
+example will work as well, despite the fact that the `df` data set does
+not contain a column `genus`:
 
     y <- custom_eucast_rules(
       TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",

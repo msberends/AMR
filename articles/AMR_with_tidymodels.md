@@ -50,8 +50,8 @@ We begin by loading the required libraries and preparing the
 
 ``` r
 # Load required libraries
-library(AMR)          # For AMR data analysis
-library(tidymodels)   # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
+library(AMR) # For AMR data analysis
+library(tidymodels) # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
 ```
 
 Prepare the data:
@@ -85,13 +85,19 @@ data <- example_isolates %>%
   # select AB results dynamically
   select(mo, aminoglycosides(), betalactams()) %>%
   # replace NAs with NI (not-interpretable)
-   mutate(across(where(is.sir),
-                 ~replace_na(.x, "NI")),
-          # make factors of SIR columns
-          across(where(is.sir),
-                 as.integer),
-          # get Gramstain of microorganisms
-          mo = as.factor(mo_gramstain(mo))) %>%
+  mutate(
+    across(
+      where(is.sir),
+      ~ replace_na(.x, "NI")
+    ),
+    # make factors of SIR columns
+    across(
+      where(is.sir),
+      as.integer
+    ),
+    # get Gramstain of microorganisms
+    mo = as.factor(mo_gramstain(mo))
+  ) %>%
   # drop NAs - the ones without a Gramstain (fungi, etc.)
   drop_na()
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
@@ -246,7 +252,7 @@ performance.
 set.seed(123) # For reproducibility
 data_split <- initial_split(data, prop = 0.8) # 80% training, 20% testing
 training_data <- training(data_split) # Training set
-testing_data <- testing(data_split)   # Testing set
+testing_data <- testing(data_split) # Testing set
 
 # Fit the workflow to the training data
 fitted_workflow <- resistance_workflow %>%
@@ -267,7 +273,7 @@ Next, we evaluate the model on the testing data.
 ``` r
 # Make predictions on the testing set
 predictions <- fitted_workflow %>%
-  predict(testing_data)                # Generate predictions
+  predict(testing_data) # Generate predictions
 probabilities <- fitted_workflow %>%
   predict(testing_data, type = "prob") # Generate probabilities
 
@@ -439,8 +445,8 @@ testing_data <- testing(split)
 
 # Define the recipe
 mic_recipe <- recipe(esbl ~ ., data = training_data) %>%
-  remove_role(genus, old_role = "predictor") %>%  # Remove non-informative variable
-  step_mic_log2(all_mic_predictors())             # Log2 transform all MIC predictors
+  remove_role(genus, old_role = "predictor") %>% # Remove non-informative variable
+  step_mic_log2(all_mic_predictors()) # Log2 transform all MIC predictors
 
 prep(mic_recipe)
 #> 
@@ -564,9 +570,11 @@ library(ggplot2)
 
 ggplot(predictions, aes(x = esbl, fill = .pred_class)) +
   geom_bar(position = "stack") +
-  labs(title = "Predicted vs Actual ESBL Status",
-       x = "Actual ESBL",
-       y = "Count") +
+  labs(
+    title = "Predicted vs Actual ESBL Status",
+    x = "Actual ESBL",
+    y = "Count"
+  ) +
   theme_minimal()
 ```
 
@@ -576,18 +584,27 @@ And plot the certainties too - how certain were the actual predictions?
 
 ``` r
 predictions %>%
-  mutate(certainty = ifelse(.pred_class == "FALSE",
-                            .pred_FALSE,
-                            .pred_TRUE),
-         correct = ifelse(esbl == .pred_class, "Right", "Wrong")) %>%
-  ggplot(aes(x = seq_len(nrow(predictions)),
-             y = certainty,
-             colour = correct)) +
-  scale_colour_manual(values = c(Right = "green3", Wrong = "red2"),
-                      name = "Correct?") +
+  mutate(
+    certainty = ifelse(.pred_class == "FALSE",
+      .pred_FALSE,
+      .pred_TRUE
+    ),
+    correct = ifelse(esbl == .pred_class, "Right", "Wrong")
+  ) %>%
+  ggplot(aes(
+    x = seq_len(nrow(predictions)),
+    y = certainty,
+    colour = correct
+  )) +
+  scale_colour_manual(
+    values = c(Right = "green3", Wrong = "red2"),
+    name = "Correct?"
+  ) +
   geom_point() +
-  scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
-                     limits = c(0.5, 1)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x * 100, "%"),
+    limits = c(0.5, 1)
+  ) +
   theme_minimal()
 ```
 
@@ -636,13 +653,18 @@ library(tidymodels)
 # Transform dataset
 data_time <- example_isolates %>%
   top_n_microorganisms(n = 10) %>% # Filter on the top #10 species
-  mutate(year = as.integer(format(date, "%Y")),  # Extract year from date
-         gramstain = mo_gramstain(mo)) %>% # Get taxonomic names
+  mutate(
+    year = as.integer(format(date, "%Y")), # Extract year from date
+    gramstain = mo_gramstain(mo)
+  ) %>% # Get taxonomic names
   group_by(year, gramstain) %>%
-  summarise(across(c(AMX, AMC, CIP), 
-                   function(x) resistance(x, minimum = 0),
-                   .names = "res_{.col}"), 
-            .groups = "drop") %>% 
+  summarise(
+    across(c(AMX, AMC, CIP),
+      function(x) resistance(x, minimum = 0),
+      .names = "res_{.col}"
+    ),
+    .groups = "drop"
+  ) %>%
   filter(!is.na(res_AMX) & !is.na(res_AMC) & !is.na(res_CIP)) # Drop missing values
 #> ℹ Using column mo as input for `col_mo`.
 #> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
@@ -686,9 +708,9 @@ step, a model specification, and the fitting process.
 ``` r
 # Define the recipe
 resistance_recipe_time <- recipe(res_AMX ~ year + gramstain, data = data_time) %>%
-  step_dummy(gramstain, one_hot = TRUE) %>%  # Convert categorical to numerical
-  step_normalize(year) %>%  # Normalise year for better model performance
-  step_nzv(all_predictors())  # Remove near-zero variance predictors
+  step_dummy(gramstain, one_hot = TRUE) %>% # Convert categorical to numerical
+  step_normalize(year) %>% # Normalise year for better model performance
+  step_nzv(all_predictors()) # Remove near-zero variance predictors
 
 resistance_recipe_time
 #> 
@@ -813,9 +835,11 @@ library(ggplot2)
 ggplot(predictions_time, aes(x = year)) +
   geom_point(aes(y = res_AMX, color = "Actual")) +
   geom_line(aes(y = .pred, color = "Predicted")) +
-  labs(title = "Predicted vs Actual AMX Resistance Over Time",
-       x = "Year",
-       y = "Resistance Proportion") +
+  labs(
+    title = "Predicted vs Actual AMX Resistance Over Time",
+    x = "Year",
+    y = "Resistance Proportion"
+  ) +
   theme_minimal()
 ```
 
@@ -827,13 +851,17 @@ directly add linear models there:
 ``` r
 ggplot(data_time, aes(x = year, y = res_AMX, color = gramstain)) +
   geom_line() +
-  labs(title = "AMX Resistance Trends",
-       x = "Year",
-       y = "Resistance Proportion") +
+  labs(
+    title = "AMX Resistance Trends",
+    x = "Year",
+    y = "Resistance Proportion"
+  ) +
   # add a linear model directly in ggplot2:
-  geom_smooth(method = "lm",
-              formula = y ~ x,
-              alpha = 0.25) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x,
+    alpha = 0.25
+  ) +
   theme_minimal()
 ```
 

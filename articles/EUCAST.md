@@ -97,7 +97,7 @@ data <- tibble::tibble(
   CAZ = "-", # Ceftazidime
   CXM = "-", # Cefuroxime
   PEN = "S", # Benzylenicillin
-  FOX = "S"  # Cefoxitin
+  FOX = "S" # Cefoxitin
 )
 ```
 

@@ -21,7 +21,7 @@ interpretive_rules(x, col_mo = NULL, info = interactive(),
   verbose = FALSE, version_breakpoints = 16,
   version_expected_phenotypes = 1.2, version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
-  custom_rules = NULL, overwrite = FALSE, ...)
+  custom_rules = NULL, overwrite = FALSE, add_if_missing = TRUE, ...)
 
 eucast_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
@@ -119,18 +119,18 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 - version_breakpoints:
 
   The version number to use for the EUCAST Clinical Breakpoints
-  guideline. Can be .val 16.0, .val 15.0, .val 14.0, .val 13.1, .val
-  12.0, .val 11.0, or .val 10.0.
+  guideline. Can be `"16.0"`, `"15.0"`, `"14.0"`, `"13.1"`, `"12.0"`,
+  `"11.0"`, or `"10.0"`.
 
 - version_expected_phenotypes:
 
   The version number to use for the EUCAST Expected Phenotypes. Can be
-  .val 1.2.
+  `"1.2"`.
 
 - version_expertrules:
 
   The version number to use for the EUCAST Expert Rules and Intrinsic
-  Resistance guideline. Can be .val 3.3, .val 3.2, or .val 3.1.
+  Resistance guideline. Can be `"3.3"`, `"3.2"`, or `"3.1"`.
 
 - ampc_cephalosporin_resistance:
 
@@ -178,6 +178,16 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   be tested for susceptibility to individual agents or be reported
   resistant".
 
+- add_if_missing:
+
+  A [logical](https://rdrr.io/r/base/logical.html) indicating whether
+  rules should also be applied to missing (`NA`) values (default:
+  `TRUE`). When `FALSE`, rules are only applied to cells that already
+  contain an SIR value; cells with `NA` are left untouched. This is
+  particularly useful when using `overwrite = TRUE` with custom rules
+  and you want to update reported results without imputing values for
+  untested drugs.
+
 - ...:
 
   Column names of antimicrobials. To automatically detect antimicrobial
@@ -197,8 +207,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 - administration:
 
-  Route of administration, either .val , .val im, .val iv, .val oral, or
-  NA.
+  Route of administration, either `""`, `"im"`, `"iv"`, `"oral"`, or NA.
 
 ## Value
 
@@ -310,9 +319,13 @@ head(a)
 # apply EUCAST rules: some results wil be changed
 b <- eucast_rules(a, overwrite = TRUE)
 #> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of class
-#> <sir>. Transform them on beforehand, e.g.: - x %>% as.sir(CXM:AMX) - x %>%
-#> mutate_if(is_sir_eligible, as.sir) - x %>%
-#> mutate(across(where(is_sir_eligible), as.sir))
+#> <sir>. Transform them on beforehand, e.g.:
+#> 
+#>   • x |> as.sir(CXM:AMX)
+#> 
+#>   • x |> mutate_if(is_sir_eligible, as.sir)
+#> 
+#>   • x |> mutate(across(where(is_sir_eligible), as.sir))
 
 head(b)
 #>                       mo VAN AMX COL CAZ CXM PEN FOX
@@ -327,9 +340,13 @@ head(b)
 # containing all details about the transformations:
 c <- eucast_rules(a, overwrite = TRUE, verbose = TRUE)
 #> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of class
-#> <sir>. Transform them on beforehand, e.g.: - x %>% as.sir(CXM:AMX) - x %>%
-#> mutate_if(is_sir_eligible, as.sir) - x %>%
-#> mutate(across(where(is_sir_eligible), as.sir))
+#> <sir>. Transform them on beforehand, e.g.:
+#> 
+#>   • x |> as.sir(CXM:AMX)
+#> 
+#>   • x |> mutate_if(is_sir_eligible, as.sir)
+#> 
+#>   • x |> mutate(across(where(is_sir_eligible), as.sir))
 head(c)
 #>   row col           mo_fullname old new rule          rule_group
 #> 1   1 AMX Staphylococcus aureus   -   S              Breakpoints

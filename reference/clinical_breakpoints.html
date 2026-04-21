@@ -21,7 +21,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9045</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,9 +79,9 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 45 730 observations and 14 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
-<li><p><code>type</code><br> Breakpoint type, either .val ECOFF, .val animal, or .val human</p></li>
-<li><p><code>host</code><br> Host of infectious agent. This is mostly useful for veterinary breakpoints and is either .val ECOFF, .val aquatic, .val cats, .val cattle, .val dogs, .val horse, .val human, .val poultry, or .val swine</p></li>
-<li><p><code>method</code><br> Testing method, either .val DISK or .val MIC</p></li>
+<li><p><code>type</code><br> Breakpoint type, either <code>"ECOFF"</code>, <code>"animal"</code>, or <code>"human"</code></p></li>
+<li><p><code>host</code><br> Host of infectious agent. This is mostly useful for veterinary breakpoints and is either <code>"ECOFF"</code>, <code>"aquatic"</code>, <code>"cats"</code>, <code>"cattle"</code>, <code>"dogs"</code>, <code>"horse"</code>, <code>"human"</code>, <code>"poultry"</code>, or <code>"swine"</code></p></li>
+<li><p><code>method</code><br> Testing method, either <code>"DISK"</code> or <code>"MIC"</code></p></li>
 <li><p><code>site</code><br> Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"</p></li>
 <li><p><code>mo</code><br> Microbial ID, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
 <li><p><code>rank_index</code><br> Taxonomic rank index of <code>mo</code> from 1 (subspecies/infraspecies) to 5 (unknown microorganism)</p></li>

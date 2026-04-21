@@ -101,7 +101,9 @@ set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
 
   One of the column names of one of the
   [antimicrobials](https://amr-for-r.org/reference/antimicrobials.md)
-  data set: `vector_or(colnames(antimicrobials), sort = FALSE)`.
+  data set: `"ab"`, `"cid"`, `"name"`, `"group"`, `"atc"`,
+  `"atc_group1"`, `"atc_group2"`, `"abbreviations"`, `"synonyms"`,
+  `"oral_ddd"`, `"oral_units"`, `"iv_ddd"`, `"iv_units"`, or `"loinc"`.
 
 - data:
 

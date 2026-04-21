@@ -170,7 +170,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 - version_expected_phenotypes:
 
   The version number to use for the EUCAST Expected Phenotypes. Can be
-  .val 1.2.
+  `"1.2"`.
 
 ## Value
 

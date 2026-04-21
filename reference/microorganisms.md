@@ -36,8 +36,8 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 78
   name of the taxon. ***This is a unique identifier.***
 
 - `status`  
-  Status of the taxon, either .val accepted, .val not validly published,
-  .val synonym, or .val unknown
+  Status of the taxon, either `"accepted"`, `"not validly published"`,
+  `"synonym"`, or `"unknown"`
 
 - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`,
   `subspecies`  
@@ -59,17 +59,18 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 78
   comply with CRAN that only allows ASCII characters.
 
 - `oxygen_tolerance`  
-  Oxygen tolerance, either .val aerobe, .val anaerobe, .val
-  anaerobe/microaerophile, .val facultative anaerobe, .val likely
-  facultative anaerobe, .val microaerophile, or NA. These data were
-  retrieved from BacDive (see *Source*). Items that contain "likely" are
-  missing from BacDive and were extrapolated from other species within
-  the same genus to guess the oxygen tolerance. Currently 68.3% of all
-  ~39 000 bacteria in the data set contain an oxygen tolerance.
+  Oxygen tolerance, either `"aerobe"`, `"anaerobe"`,
+  `"anaerobe/microaerophile"`, `"facultative anaerobe"`,
+  `"likely facultative anaerobe"`, `"microaerophile"`, or NA. These data
+  were retrieved from BacDive (see *Source*). Items that contain
+  "likely" are missing from BacDive and were extrapolated from other
+  species within the same genus to guess the oxygen tolerance. Currently
+  68.3% of all ~39 000 bacteria in the data set contain an oxygen
+  tolerance.
 
 - `source`  
-  Either .val GBIF, .val LPSN, .val Manually added, .val MycoBank, or
-  .val manually added (see *Source*)
+  Either `"GBIF"`, `"LPSN"`, `"Manually added"`, `"MycoBank"`, or
+  `"manually added"` (see *Source*)
 
 - `lpsn`  
   Identifier ('Record number') of List of Prokaryotic names with

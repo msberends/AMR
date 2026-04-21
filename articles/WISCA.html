@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9045</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,7 +279,8 @@ I (intermediate [CLSI], or susceptible, increased exposure
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">data</span>,</span>
-<span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"CIP"</span>, <span class="st">"GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"CIP"</span>, <span class="st">"GEN"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Amoxicillin/clavulanic acid</th>
@@ -298,7 +299,8 @@ I (intermediate [CLSI], or susceptible, increased exposure
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">data</span>,</span>
-<span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="24%">
@@ -322,8 +324,9 @@ I (intermediate [CLSI], or susceptible, increased exposure
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">data</span>,</span>
-<span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span>,</span>
-<span>      syndromic_group <span class="op">=</span> <span class="st">"syndrome"</span><span class="op">)</span></span></code></pre></div>
+<span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span>,</span>
+<span>  syndromic_group <span class="op">=</span> <span class="st">"syndrome"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -356,9 +359,10 @@ I (intermediate [CLSI], or susceptible, increased exposure
 all be used for the <code><a href="../reference/antibiogram.html">wisca()</a></code> function too:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">data</span>,</span>
-<span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span>,</span>
-<span>      syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"UTI"</span>, <span class="st">"UCI"</span>, <span class="va">data</span><span class="op">$</span><span class="va">syndrome</span><span class="op">)</span>,</span>
-<span>      language <span class="op">=</span> <span class="st">"Spanish"</span><span class="op">)</span></span></code></pre></div>
+<span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span>,</span>
+<span>  syndromic_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"UTI"</span>, <span class="st">"UCI"</span>, <span class="va">data</span><span class="op">$</span><span class="va">syndrome</span><span class="op">)</span>,</span>
+<span>  language <span class="op">=</span> <span class="st">"Spanish"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="12%">

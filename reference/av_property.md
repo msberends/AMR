@@ -73,7 +73,8 @@ av_property(x, property = "name", language = get_AMR_locale(), ...)
 
   One of the column names of one of the
   [antivirals](https://amr-for-r.org/reference/antimicrobials.md) data
-  set: `vector_or(colnames(antivirals), sort = FALSE)`.
+  set: `"av"`, `"name"`, `"atc"`, `"cid"`, `"atc_group"`, `"synonyms"`,
+  `"oral_ddd"`, `"oral_units"`, `"iv_ddd"`, `"iv_units"`, or `"loinc"`.
 
 ## Value
 

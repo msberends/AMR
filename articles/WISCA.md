@@ -165,7 +165,8 @@ data$syndrome <- ifelse(data$mo %like% "coli", "UTI", "No UTI")
 
 ``` r
 wisca(data,
-      antimicrobials = c("AMC", "CIP", "GEN"))
+  antimicrobials = c("AMC", "CIP", "GEN")
+)
 ```
 
 | Amoxicillin/clavulanic acid | Ciprofloxacin    | Gentamicin         |
@@ -176,7 +177,8 @@ wisca(data,
 
 ``` r
 wisca(data,
-      antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"))
+  antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN")
+)
 ```
 
 | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
@@ -187,8 +189,9 @@ wisca(data,
 
 ``` r
 wisca(data,
-      antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
-      syndromic_group = "syndrome")
+  antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
+  syndromic_group = "syndrome"
+)
 ```
 
 | Syndromic Group | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
@@ -202,9 +205,10 @@ function too:
 
 ``` r
 wisca(data,
-      antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
-      syndromic_group = gsub("UTI", "UCI", data$syndrome),
-      language = "Spanish")
+  antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
+  syndromic_group = gsub("UTI", "UCI", data$syndrome),
+  language = "Spanish"
+)
 ```
 
 | Grupo sindrómico | Amoxicilina/ácido clavulánico | Amoxicilina/ácido clavulánico + Ciprofloxacina | Amoxicilina/ácido clavulánico + Gentamicina |

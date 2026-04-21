@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 05 April 2026.
+methodology remains unchanged. This page was generated on 21 April 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-04-05 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-04-05 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-04-05 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-04-21 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-04-21 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-04-21 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -623,7 +623,8 @@ antibiotic class selectors:
 
 ``` r
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()))
+  antibiotics = c(aminoglycosides(), carbapenems())
+)
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
@@ -659,10 +660,11 @@ language to be Spanish using the `language` argument:
 
 ``` r
 antibiogram(example_isolates,
-            mo_transform = "gramstain",
-            antibiotics = aminoglycosides(),
-            ab_transform = "name",
-            language = "es")
+  mo_transform = "gramstain",
+  antibiotics = aminoglycosides(),
+  ab_transform = "name",
+  language = "es"
+)
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 ```
@@ -679,8 +681,9 @@ plus `+` character like this:
 
 ``` r
 combined_ab <- antibiogram(example_isolates,
-                           antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-                           ab_transform = NULL)
+  antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+  ab_transform = NULL
+)
 combined_ab
 ```
 
@@ -705,8 +708,9 @@ on certain columns:
 
 ``` r
 antibiogram(example_isolates,
-            antibiotics = c(aminoglycosides(), carbapenems()),
-            syndromic_group = "ward")
+  antibiotics = c(aminoglycosides(), carbapenems()),
+  syndromic_group = "ward"
+)
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
@@ -742,8 +746,10 @@ antimicrobial susceptibility patterns.
 
 ``` r
 example_isolates %>%
-  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-        minimum = 10) # Recommended threshold: ≥30
+  wisca(
+    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
+    minimum = 10
+  ) # Recommended threshold: ≥30
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -771,8 +777,10 @@ first:
 ``` r
 example_isolates %>%
   top_n_microorganisms(n = 10) %>%
-  group_by(age_group = age_groups(age, c(25, 50, 75)),
-           gender) %>%
+  group_by(
+    age_group = age_groups(age, c(25, 50, 75)),
+    gender
+  ) %>%
   wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
@@ -909,17 +917,21 @@ colour-code SIR categories.
 
 ``` r
 # add a group
-my_data$group <- rep(c("A", "B", "C", "D"), each = 25) 
+my_data$group <- rep(c("A", "B", "C", "D"), each = 25)
 
-ggplot(my_data,
-       aes(x = group, y = MIC, colour = SIR)) +
+ggplot(
+  my_data,
+  aes(x = group, y = MIC, colour = SIR)
+) +
   geom_jitter(width = 0.2, size = 2) +
   geom_boxplot(fill = NA, colour = "grey40") +
   scale_y_mic() +
   scale_colour_sir() +
-  labs(title = "MIC Distribution and SIR Interpretation",
-       x = "Sample Groups",
-       y = "MIC (mg/L)")
+  labs(
+    title = "MIC Distribution and SIR Interpretation",
+    x = "Sample Groups",
+    y = "MIC (mg/L)"
+  )
 ```
 
 ![](AMR_files/figure-html/mic_plot-1.png)
