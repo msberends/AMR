@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9045
+## AMR 3.0.1.9047
 
 #### New
 
@@ -94,6 +94,9 @@
 - Fixed SIR and MIC coercion of combined values,
   e.g. `as.sir("<= 0.002; S")` or `as.mic("S; 0.002")`
   ([\#252](https://github.com/msberends/AMR/issues/252))
+- Fixed translation of foreign languages in
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md)
+  ([\#272](https://github.com/msberends/AMR/issues/272))
 
 #### Updates
 

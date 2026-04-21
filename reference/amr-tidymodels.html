@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9045</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9047</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,6 @@ may affect the computations for subsequent operations.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://tidymodels.tidymodels.org" class="external-link">"tidymodels"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># The below approach formed the basis for this paper: DOI 10.3389/fmicb.2025.1582703</span></span></span>
 <span class="r-in"><span>  <span class="co"># Presence of ESBL genes was predicted based on raw MIC values.</span></span></span>
 <span class="r-in"><span></span></span>
@@ -146,13 +145,10 @@ may affect the computations for subsequent operations.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Create and prep a recipe with MIC log2 transformation</span></span></span>
 <span class="r-in"><span>  <span class="va">mic_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">esbl</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span>    <span class="co"># Optionally remove non-predictive variables</span></span></span>
 <span class="r-in"><span>    <span class="fu">remove_role</span><span class="op">(</span><span class="va">genus</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span>    <span class="co"># Apply the log2 transformation to all MIC predictors</span></span></span>
 <span class="r-in"><span>    <span class="fu">step_mic_log2</span><span class="op">(</span><span class="fu">all_mic_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span>    <span class="co"># And apply the preparation steps</span></span></span>
 <span class="r-in"><span>    <span class="fu">prep</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -173,13 +169,15 @@ may affect the computations for subsequent operations.</p></dd>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">out_testing</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Evaluate predictions using standard classification metrics</span></span></span>
-<span class="r-in"><span>  <span class="va">our_metrics</span> <span class="op">&lt;-</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">accuracy</span>,</span></span>
-<span class="r-in"><span>                            <span class="va">recall</span>,</span></span>
-<span class="r-in"><span>                            <span class="va">precision</span>,</span></span>
-<span class="r-in"><span>                            <span class="va">sensitivity</span>,</span></span>
-<span class="r-in"><span>                            <span class="va">specificity</span>,</span></span>
-<span class="r-in"><span>                            <span class="va">ppv</span>,</span></span>
-<span class="r-in"><span>                            <span class="va">npv</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">our_metrics</span> <span class="op">&lt;-</span> <span class="fu">metric_set</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">accuracy</span>,</span></span>
+<span class="r-in"><span>    <span class="va">recall</span>,</span></span>
+<span class="r-in"><span>    <span class="va">precision</span>,</span></span>
+<span class="r-in"><span>    <span class="va">sensitivity</span>,</span></span>
+<span class="r-in"><span>    <span class="va">specificity</span>,</span></span>
+<span class="r-in"><span>    <span class="va">ppv</span>,</span></span>
+<span class="r-in"><span>    <span class="va">npv</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu">our_metrics</span><span class="op">(</span><span class="va">predictions</span>, truth <span class="op">=</span> <span class="va">esbl</span>, estimate <span class="op">=</span> <span class="va">.pred_class</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Show performance</span></span></span>
