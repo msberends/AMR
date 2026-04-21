@@ -52,7 +52,7 @@ av_property(x, property = "name", language = get_AMR_locale(), ...)
 
 \item{open}{Browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}.}
 
-\item{property}{One of the column names of one of the \link{antivirals} data set: \code{vector_or(colnames(antivirals), sort = FALSE)}.}
+\item{property}{One of the column names of one of the \link{antivirals} data set: \code{"av"}, \code{"name"}, \code{"atc"}, \code{"cid"}, \code{"atc_group"}, \code{"synonyms"}, \code{"oral_ddd"}, \code{"oral_units"}, \code{"iv_ddd"}, \code{"iv_units"}, or \code{"loinc"}.}
 }
 \value{
 \itemize{

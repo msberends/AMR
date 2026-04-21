@@ -792,7 +792,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   names(x) <- x_names
   if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
-      "Some MO codes are from a previous AMR package version. ",
+      "Some MO codes are from another AMR package version. ",
       "Please update the MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.",
       call = FALSE
     )
@@ -826,7 +826,7 @@ as.data.frame.mo <- function(x, ...) {
   add_MO_lookup_to_AMR_env()
   if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
-      "The data contains old MO codes (from a previous AMR package version). ",
+      "The data contains old MO codes (from another AMR package version). ",
       "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}."
     )
   }

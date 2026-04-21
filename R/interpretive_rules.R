@@ -65,12 +65,12 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_interpretive_rules`][AMR-options]: `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints The version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), documentation = TRUE, reverse = TRUE)`.
-#' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), reverse = TRUE)`.
-#' @param version_expertrules The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
+#' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), documentation = TRUE, reverse = TRUE)`.
+#' @param version_expertrules The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), documentation = TRUE, reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; [guess_ab_col()] will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. `AMX = "amoxicillin"`. To skip a specific antimicrobial, set it to `NULL`, e.g. `TIC = NULL` to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
 #' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
-#' @param administration Route of administration, either `r vector_or(dosage$administration)`.
+#' @param administration Route of administration, either `r vector_or(dosage$administration, documentation = TRUE)`.
 #' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
 #' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
 #' @param overwrite A [logical] indicating whether to overwrite existing SIR values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
@@ -619,7 +619,7 @@ interpretive_rules <- function(x,
   # >>> Apply Official EUCAST rules <<< ---------------------------------------------------
   eucast_notification_shown <- FALSE
   if (!is.null(list(...)$eucast_rules_df)) {
-    # this allows: eucast_rules(x, eucast_rules_df = AMR:::EUCAST_RULES_DF %>% filter(is.na(have_these_values)))
+    # this allows: eucast_rules(x, eucast_rules_df = AMR:::EUCAST_RULES_DF |> filter(is.na(have_these_values)))
     eucast_rules_df_total <- list(...)$eucast_rules_df
   } else {
     # otherwise internal data file, created in data-raw/_pre_commit_checks.R
@@ -1075,13 +1075,13 @@ interpretive_rules <- function(x,
     warn_lacking_sir_class <- warn_lacking_sir_class[order(colnames(x.bak))]
     warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
-      "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: not all columns with antimicrobial results are of class {.cls sir}. Transform them on beforehand, e.g.:\n",
-      "  - ", highlight_code(paste0(x_deparsed, " %>% as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
+      "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: not all columns with antimicrobial results are of class {.cls sir}. Transform them on beforehand, e.g.:\n\n",
+      "\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0(x_deparsed, " |> as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
         warn_lacking_sir_class,
         paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])
-      ), ")")), "\n",
-      "  - ", highlight_code(paste0(x_deparsed, " %>% mutate_if(is_sir_eligible, as.sir)")), "\n",
-      "  - ", highlight_code(paste0(x_deparsed, " %>% mutate(across(where(is_sir_eligible), as.sir))"))
+      ), ")")), "\n\n",
+      "\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0(x_deparsed, " |> mutate_if(is_sir_eligible, as.sir)")), "\n\n",
+      "\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0(x_deparsed, " |> mutate(across(where(is_sir_eligible), as.sir))"))
     )
   }
 
@@ -1165,18 +1165,31 @@ edit_sir <- function(x,
       track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
     isNA <- is.na(new_edits[rows, cols])
-    isSIR <- !isNA & (new_edits[rows, cols] == "S" | new_edits[rows, cols] == "I" | new_edits[rows, cols] == "R" | new_edits[rows, cols] == "SDD" | new_edits[rows, cols] == "NI" | new_edits[rows, cols] == "WT" | new_edits[rows, cols] == "NWT" | new_edits[rows, cols] == "NS")
+    isSIR <- !isNA &
+      (new_edits[rows, cols] == "S" |
+        new_edits[rows, cols] == "I" |
+        new_edits[rows, cols] == "R" |
+        new_edits[rows, cols] == "SDD" |
+        new_edits[rows, cols] == "NI" |
+        new_edits[rows, cols] == "WT" |
+        new_edits[rows, cols] == "NWT" |
+        new_edits[rows, cols] == "NS")
     non_SIR <- !isSIR
     if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
-      warning_("Some values had SIR values and were not overwritten, since {.code overwrite = FALSE}.")
+      warning_("in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: some columns had SIR values which were not overwritten, since {.code overwrite = FALSE}.")
     }
     # determine which cells to modify based on overwrite and add_if_missing
-    apply_mask <- if (isTRUE(overwrite)) {
-      if (isFALSE(add_if_missing)) !isNA else rep(TRUE, length(isNA))
+    if (isTRUE(overwrite)) {
+      if (isTRUE(add_if_missing)) {
+        apply_mask <- rep(TRUE, length(isSIR))
+      } else {
+        apply_mask <- isSIR
+      }
     } else {
-      if (isFALSE(add_if_missing)) isSIR else non_SIR
+      # overwrite = FALSE, add_if_missing = TRUE: fill missing and placeholder cells only
+      apply_mask <- !isSIR
     }
-warning_("test", call = T) # aaaaaaa
+
     tryCatch(
       # insert into original table
       new_edits[rows, cols][apply_mask] <- to,

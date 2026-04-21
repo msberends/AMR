@@ -68,9 +68,11 @@ new_ab <- complete_tbl |>
   ) |>
   mutate(name = paste0(substr(toupper(name), 1, 1), substr(name, 2, 999))) |>
   mutate(name = gsub(" and ", "/", name)) |>
-  filter(name %unlike% "^Combinations",
-         name %unlike% "/beta[-]lactamase inhibitor",
-         name %unlike% "combinations") |>
+  filter(
+    name %unlike% "^Combinations",
+    name %unlike% "/beta[-]lactamase inhibitor",
+    name %unlike% "combinations"
+  ) |>
   arrange(name)
 
 new_atcs <- new_ab |>

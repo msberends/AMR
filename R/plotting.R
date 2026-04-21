@@ -200,7 +200,7 @@
 #'     theme_minimal() +
 #'     geom_boxplot(fill = NA, colour = "grey30") +
 #'     geom_jitter(width = 0.25)
-#'     labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
+#'   labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
 #'
 #'   mic_sir_plot
 #' }

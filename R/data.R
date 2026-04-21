@@ -307,7 +307,7 @@
 #' - `is_SDD`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to `r sum(clinical_breakpoints$is_SDD)` breakpoints.
 #' @details
 #' ### Different Types of Breakpoints
-#' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quote = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
+#' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quotes = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 #'
 #' The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. Use [`as.sir(..., breakpoint_type = ...)`][as.sir()] to interpret raw data using a specific breakpoint type, e.g. `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
 #'

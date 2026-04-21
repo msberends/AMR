@@ -31,7 +31,7 @@
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. See *Examples*.
 #' @param x Any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
-#' @param property One of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`.
+#' @param property One of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, documentation = TRUE)`, or must be `"shortname"`.
 #' @inheritParams as.mo
 #' @param ... Other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'.
 #' @param ab Any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()].

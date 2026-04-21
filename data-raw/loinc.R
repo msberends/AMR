@@ -31,7 +31,7 @@
 
 # Steps to reproduce:
 # 1. Create a fake account at https://loinc.org (sad you have to create one...)
-# 2. Download the CSV from https://loinc.org/download/loinc-complete/ 
+# 2. Download the CSV from https://loinc.org/download/loinc-complete/
 # 3. Read file LoincTable/Loinc.csv
 loinc_df <- read.csv("data-raw/Loinc.csv",
   row.names = NULL,
@@ -47,7 +47,7 @@ loinc_df %>%
   filter(COMPONENT %like% "ampicillin|fluconazol|meropenem") %>%
   count(CLASS, sort = TRUE)
 loinc_df <- loinc_df %>%
-  filter(CLASS %in% c("DRUG/TOX", "ABXBACT")) %>% 
+  filter(CLASS %in% c("DRUG/TOX", "ABXBACT")) %>%
   mutate(name = generalise_antibiotic_name(COMPONENT), .before = 1)
 
 # antimicrobials

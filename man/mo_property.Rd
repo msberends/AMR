@@ -165,7 +165,7 @@ The default is \code{FALSE}, which will return a note if outdated taxonomic name
 
 \item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}.}
 
-\item{property}{One of the column names of the \link{microorganisms} data set: {.val mo}, {.val fullname}, {.val status}, {.val kingdom}, {.val phylum}, {.val class}, {.val order}, {.val family}, {.val genus}, {.val species}, {.val subspecies}, {.val rank}, {.val ref}, {.val oxygen_tolerance}, {.val source}, {.val lpsn}, {.val lpsn_parent}, {.val lpsn_renamed_to}, {.val mycobank}, {.val mycobank_parent}, {.val mycobank_renamed_to}, {.val gbif}, {.val gbif_parent}, {.val gbif_renamed_to}, {.val prevalence}, or {.val snomed}, or must be \code{"shortname"}.}
+\item{property}{One of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}, or must be \code{"shortname"}.}
 }
 \value{
 \itemize{

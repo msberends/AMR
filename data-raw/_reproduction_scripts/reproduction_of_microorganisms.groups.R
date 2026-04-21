@@ -59,72 +59,101 @@ whonet_organisms <- whonet_organisms %>%
   mutate(
     # this one was called Issatchenkia orientalis, but it should be:
     ORGANISM = if_else(ORGANISM_CODE == "ckr", "Candida krusei", ORGANISM)
-  ) %>% 
+  ) %>%
   # try to match on GBIF identifier
-  left_join(microorganisms %>% distinct(mo, gbif, status) %>% filter(!is.na(gbif)), by = c("GBIF_TAXON_ID" = "gbif")) %>% 
+  left_join(microorganisms %>% distinct(mo, gbif, status) %>% filter(!is.na(gbif)), by = c("GBIF_TAXON_ID" = "gbif")) %>%
   # remove duplicates
   arrange(ORGANISM_CODE, GBIF_TAXON_ID, status) %>%
-  distinct(ORGANISM_CODE, .keep_all = TRUE) %>% 
+  distinct(ORGANISM_CODE, .keep_all = TRUE) %>%
   # add Enterobacterales, which is a subkingdom code in their data
-  bind_rows(data.frame(ORGANISM_CODE = "ebc", ORGANISM = "Enterobacterales", mo = as.mo("Enterobacterales"))) %>% 
+  bind_rows(data.frame(ORGANISM_CODE = "ebc", ORGANISM = "Enterobacterales", mo = as.mo("Enterobacterales"))) %>%
   arrange(ORGANISM)
 
 # check non-existing species groups in the microorganisms table
 whonet_organisms %>%
   filter(!is.na(SPECIES_GROUP)) %>%
   group_by(SPECIES_GROUP) %>%
-  summarise(complex = ORGANISM[ORGANISM %like% " (group|complex)"][1],
-            organisms = paste0(n(), ": ", paste(sort(unique(ORGANISM)), collapse = ", "))) %>% 
+  summarise(
+    complex = ORGANISM[ORGANISM %like% " (group|complex)"][1],
+    organisms = paste0(n(), ": ", paste(sort(unique(ORGANISM)), collapse = ", "))
+  ) %>%
   filter(!SPECIES_GROUP %in% microorganisms.codes$code)
 
 # create the species group data set ----
 microorganisms.groups <- whonet_organisms %>%
   # these will not be translated well
-  filter(!ORGANISM %in% c("Trueperella pyogenes-like bacteria",
-                          "Mycobacterium suricattae",
-                          "Mycobacterium canetti")) %>% 
+  filter(!ORGANISM %in% c(
+    "Trueperella pyogenes-like bacteria",
+    "Mycobacterium suricattae",
+    "Mycobacterium canetti"
+  )) %>%
   filter(!is.na(SPECIES_GROUP), SPECIES_GROUP != ORGANISM_CODE) %>%
-  transmute(mo_group = as.mo(SPECIES_GROUP),
-            mo = ifelse(is.na(mo),
-                        as.character(as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0)),
-                        mo)) %>% 
+  transmute(
+    mo_group = as.mo(SPECIES_GROUP),
+    mo = ifelse(is.na(mo),
+      as.character(as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0)),
+      mo
+    )
+  ) %>%
   # add our own CoNS and CoPS, WHONET does not strictly follow Becker et al. (2014, 2019, 2020)
-  filter(mo_group != as.mo("CoNS")) %>% 
-  bind_rows(tibble(mo_group = as.mo("CoNS"), mo = MO_CONS)) %>% 
-  filter(mo_group != as.mo("CoPS")) %>% 
-  bind_rows(tibble(mo_group = as.mo("CoPS"), mo = MO_COPS)) %>% 
+  filter(mo_group != as.mo("CoNS")) %>%
+  bind_rows(tibble(mo_group = as.mo("CoNS"), mo = MO_CONS)) %>%
+  filter(mo_group != as.mo("CoPS")) %>%
+  bind_rows(tibble(mo_group = as.mo("CoPS"), mo = MO_COPS)) %>%
   # at least all our Lancefield-grouped streptococci must be in the beta-haemolytic group:
-  bind_rows(tibble(mo_group = as.mo("Beta-haemolytic streptococcus"), 
-                   mo = c(MO_LANCEFIELD,
-                          microorganisms %>% filter(fullname %like% "^Streptococcus Group") %>% pull(mo)))) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Beta-haemolytic streptococcus"),
+    mo = c(
+      MO_LANCEFIELD,
+      microorganisms %>% filter(fullname %like% "^Streptococcus Group") %>% pull(mo)
+    )
+  )) %>%
   # and per Streptococcus group as well:
   # group A - S. pyogenes
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group A"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_PYGN(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group A"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_PYGN(_|$)")]
+  )) %>%
   # group B - S. agalactiae
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group B"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_AGLC(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group B"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_AGLC(_|$)")]
+  )) %>%
   # group C - all subspecies within S. dysgalactiae and S. equi (such as S. equi zooepidemicus)
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group C"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(DYSG|EQUI)(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group C"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(DYSG|EQUI)(_|$)")]
+  )) %>%
   # group F - Milleri group == S. anginosus group, which incl. S. anginosus, S. constellatus, S. intermedius
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group F"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(ANGN|CNST|INTR)(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group F"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(ANGN|CNST|INTR)(_|$)")]
+  )) %>%
   # group G - S. dysgalactiae and S. canis (though dysgalactiae is also group C and will be matched there)
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group G"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(DYSG|CANS)(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group G"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(DYSG|CANS)(_|$)")]
+  )) %>%
   # group H - S. sanguinis
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group H"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SNGN(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group H"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SNGN(_|$)")]
+  )) %>%
   # group K - S. salivarius, incl. S. salivarius salivariuss and S. salivarius thermophilus
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group K"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SLVR(_|$)")])) %>%
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group K"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SLVR(_|$)")]
+  )) %>%
   # group L - only S. dysgalactiae
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group L"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_DYSG(_|$)")])) %>% 
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group L"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_DYSG(_|$)")]
+  )) %>%
   # and for EUCAST: Strep group A, B, C, G
-  bind_rows(tibble(mo_group = as.mo("Streptococcus Group A, B, C, G"),
-                   mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(PYGN|AGLC|DYSG|EQUI|CANS|GRPA|GRPB|GRPC|GRPG)(_|$)")])) %>%
+  bind_rows(tibble(
+    mo_group = as.mo("Streptococcus Group A, B, C, G"),
+    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(PYGN|AGLC|DYSG|EQUI|CANS|GRPA|GRPB|GRPC|GRPG)(_|$)")]
+  )) %>%
   # HACEK is:
   # - Haemophilus species
   # - Aggregatibacter species
@@ -133,38 +162,46 @@ microorganisms.groups <- whonet_organisms %>%
   # - Kingella species
   # - and previously Actinobacillus actinomycetemcomitans
   # see https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3656887/
-  filter(mo_group != as.mo("HACEK")) %>% 
-  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Haemophilus") %>% pull(mo))) %>% 
-  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Aggregatibacter") %>% pull(mo))) %>% 
+  filter(mo_group != as.mo("HACEK")) %>%
+  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Haemophilus") %>% pull(mo))) %>%
+  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Aggregatibacter") %>% pull(mo))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Cardiobacterium hominis", keep_synonyms = TRUE))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Eikenella corrodens", keep_synonyms = TRUE))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Kingella") %>% pull(mo))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Actinobacillus actinomycetemcomitans", keep_synonyms = TRUE))) %>%
   # Citrobacter freundii complex in the NCBI Taxonomy Browser:
   # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1344959
-  filter(mo_group != "B_CTRBC_FRND-C") %>% 
-  bind_rows(tibble(mo_group = as.mo("B_CTRBC_FRND-C"),
-                   mo = paste("Citrobacter", c("freundii", "braakii", "gillenii", "murliniae", "portucalensis", "sedlakii", "werkmanii", "youngae")) %>% as.mo(keep_synonyms = TRUE))) %>% 
+  filter(mo_group != "B_CTRBC_FRND-C") %>%
+  bind_rows(tibble(
+    mo_group = as.mo("B_CTRBC_FRND-C"),
+    mo = paste("Citrobacter", c("freundii", "braakii", "gillenii", "murliniae", "portucalensis", "sedlakii", "werkmanii", "youngae")) %>% as.mo(keep_synonyms = TRUE)
+  )) %>%
   # Klebsiella pneumoniae complex
-  filter(mo_group != "B_KLBSL_PNMN-C") %>% 
-  bind_rows(tibble(mo_group = as.mo("B_KLBSL_PNMN-C"),
-                   mo = paste("Klebsiella", c("africana", "pneumoniae", "quasipneumoniae", "quasivariicola", "variicola")) %>% as.mo(keep_synonyms = TRUE))) %>% 
+  filter(mo_group != "B_KLBSL_PNMN-C") %>%
+  bind_rows(tibble(
+    mo_group = as.mo("B_KLBSL_PNMN-C"),
+    mo = paste("Klebsiella", c("africana", "pneumoniae", "quasipneumoniae", "quasivariicola", "variicola")) %>% as.mo(keep_synonyms = TRUE)
+  )) %>%
   # Yersinia pseudotuberculosis complex in the NCBI Taxonomy Browser:
   # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1649845
-  filter(mo_group != "B_YERSN_PSDT-C") %>% 
-  bind_rows(tibble(mo_group = as.mo("B_YERSN_PSDT-C"),
-                   mo = paste("Yersinia", c("pseudotuberculosis", "pestis", "similis", "wautersii")) %>% as.mo(keep_synonyms = TRUE))) %>% 
+  filter(mo_group != "B_YERSN_PSDT-C") %>%
+  bind_rows(tibble(
+    mo_group = as.mo("B_YERSN_PSDT-C"),
+    mo = paste("Yersinia", c("pseudotuberculosis", "pestis", "similis", "wautersii")) %>% as.mo(keep_synonyms = TRUE)
+  )) %>%
   # RGM are Rapidly-growing Mycobacteria, see https://pubmed.ncbi.nlm.nih.gov/28084211/
-  filter(mo_group != "B_MYCBC_RGM") %>% 
-  bind_rows(tibble(mo_group = as.mo("B_MYCBC_RGM"),
-                   mo = paste("Mycobacterium", c( "abscessus abscessus", "abscessus bolletii", "abscessus massiliense", "agri", "aichiense", "algericum", "alvei", "anyangense", "arabiense", "aromaticivorans", "aubagnense", "aubagnense", "aurum", "austroafricanum", "bacteremicum", "boenickei", "bourgelatii", "brisbanense", "brumae", "canariasense", "celeriflavum", "chelonae", "chitae", "chlorophenolicum", "chubuense", "confluentis", "cosmeticum", "crocinum", "diernhoferi", "duvalii", "elephantis", "fallax", "flavescens", "fluoranthenivorans", "fortuitum", "franklinii", "frederiksbergense", "gadium", "gilvum", "goodii", "hassiacum", "hippocampi", "hodleri", "holsaticum", "houstonense", "immunogenum", "insubricum", "iranicum", "komossense", "litorale", "llatzerense", "madagascariense", "mageritense", "monacense", "moriokaense", "mucogenicum", "mucogenicum", "murale", "neoaurum", "neworleansense", "novocastrense", "obuense", "pallens", "parafortuitum", "peregrinum", "phlei", "phocaicum", "phocaicum", "porcinum", "poriferae", "psychrotolerans", "pyrenivorans", "rhodesiae", "rufum", "rutilum", "salmoniphilum", "sediminis", "senegalense", "septicum", "setense", "smegmatis", "sphagni", "thermoresistibile", "tokaiense", "vaccae", "vanbaalenii", "wolinskyi")) %>% as.mo(keep_synonyms = TRUE)))
+  filter(mo_group != "B_MYCBC_RGM") %>%
+  bind_rows(tibble(
+    mo_group = as.mo("B_MYCBC_RGM"),
+    mo = paste("Mycobacterium", c("abscessus abscessus", "abscessus bolletii", "abscessus massiliense", "agri", "aichiense", "algericum", "alvei", "anyangense", "arabiense", "aromaticivorans", "aubagnense", "aubagnense", "aurum", "austroafricanum", "bacteremicum", "boenickei", "bourgelatii", "brisbanense", "brumae", "canariasense", "celeriflavum", "chelonae", "chitae", "chlorophenolicum", "chubuense", "confluentis", "cosmeticum", "crocinum", "diernhoferi", "duvalii", "elephantis", "fallax", "flavescens", "fluoranthenivorans", "fortuitum", "franklinii", "frederiksbergense", "gadium", "gilvum", "goodii", "hassiacum", "hippocampi", "hodleri", "holsaticum", "houstonense", "immunogenum", "insubricum", "iranicum", "komossense", "litorale", "llatzerense", "madagascariense", "mageritense", "monacense", "moriokaense", "mucogenicum", "mucogenicum", "murale", "neoaurum", "neworleansense", "novocastrense", "obuense", "pallens", "parafortuitum", "peregrinum", "phlei", "phocaicum", "phocaicum", "porcinum", "poriferae", "psychrotolerans", "pyrenivorans", "rhodesiae", "rufum", "rutilum", "salmoniphilum", "sediminis", "senegalense", "septicum", "setense", "smegmatis", "sphagni", "thermoresistibile", "tokaiense", "vaccae", "vanbaalenii", "wolinskyi")) %>% as.mo(keep_synonyms = TRUE)
+  ))
 
 # add subspecies to all species
 for (group in unique(microorganisms.groups$mo_group)) {
   spp <- microorganisms.groups %>%
-    filter(mo_group == group & mo_rank(mo, keep_synonyms = TRUE) == "species") %>% 
-    pull(mo) %>% 
-    paste0(collapse = "|") %>% 
+    filter(mo_group == group & mo_rank(mo, keep_synonyms = TRUE) == "species") %>%
+    pull(mo) %>%
+    paste0(collapse = "|") %>%
     paste0("^(", ., ")")
   mos <- microorganisms %>%
     filter(mo %like% spp & rank == "subspecies") %>%
@@ -175,9 +212,11 @@ for (group in unique(microorganisms.groups$mo_group)) {
 
 # add full names, arrange and clean
 microorganisms.groups <- microorganisms.groups %>%
-  mutate(mo_group_name = mo_name(mo_group, keep_synonyms = TRUE, language = NULL),
-         mo_name = mo_name(mo, keep_synonyms = TRUE, language = NULL)) %>%
-  arrange(mo_group_name, mo_name) %>% 
+  mutate(
+    mo_group_name = mo_name(mo_group, keep_synonyms = TRUE, language = NULL),
+    mo_name = mo_name(mo, keep_synonyms = TRUE, language = NULL)
+  ) %>%
+  arrange(mo_group_name, mo_name) %>%
   filter(mo_group != mo) %>%
   distinct() %>%
   dataset_UTF8_to_ASCII()

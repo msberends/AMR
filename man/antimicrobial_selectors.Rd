@@ -157,7 +157,7 @@ not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be {.val 1.2}.}
+\item{version_expected_phenotypes}{The version number to use for the EUCAST Expected Phenotypes. Can be \code{"1.2"}.}
 }
 \value{
 When used inside selecting or filtering, this returns a \link{character} vector of column names, with additional class \code{"amr_selector"}. When used individually, this returns an \link[=as.ab]{'ab' vector} with all possible antimicrobials that the function would be able to select or filter.

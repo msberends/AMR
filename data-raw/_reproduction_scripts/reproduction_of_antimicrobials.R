@@ -262,9 +262,9 @@ get_synonyms <- function(CID, clean = TRUE) {
     if (is.na(CID[i])) {
       next
     }
-    
+
     all_cids <- CID[i]
-    
+
     # we will now get the closest compounds with a 96% threshold
     similar_cids <- tryCatch(
       data.table::fread(
@@ -281,7 +281,7 @@ get_synonyms <- function(CID, clean = TRUE) {
     # leave out all CIDs that we have in our antimicrobials dataset to prevent duplication
     similar_cids <- similar_cids[!similar_cids %in% antimicrobials$cid[!is.na(antimicrobials$cid)]]
     all_cids <- unique(c(all_cids, similar_cids))
-    
+
     # for each one, we are getting the synonyms
     current_syns <- character(0)
     for (j in seq_len(length(all_cids))) {
@@ -297,9 +297,9 @@ get_synonyms <- function(CID, clean = TRUE) {
         )[[1]],
         error = function(e) NA_character_
       )
-      
+
       Sys.sleep(0.05)
-      
+
       if (clean == TRUE) {
         # remove text between brackets
         synonyms_txt <- trimws(gsub(
@@ -319,16 +319,16 @@ get_synonyms <- function(CID, clean = TRUE) {
         synonyms_txt <- gsub("[^a-z]+$", "", ignore.case = TRUE, synonyms_txt)
         # only length 5 to 20 and lower-case names starting with a capital letter
         synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(5:20) &
-                                       grepl("^[A-Z][a-z]+$", synonyms_txt, ignore.case = FALSE)]
+          grepl("^[A-Z][a-z]+$", synonyms_txt, ignore.case = FALSE)]
         synonyms_txt <- unlist(strsplit(synonyms_txt, ";", fixed = TRUE))
       }
-      
+
       # synonyms must not be set for other agents, so remove the duplicates
       synonyms_txt <- synonyms_txt[!synonyms_txt %in% unlist(synonyms)]
-      
+
       current_syns <- c(current_syns, synonyms_txt)
     }
-    
+
     current_syns <- unique(trimws(current_syns[tolower(current_syns) %in% unique(tolower(current_syns))]))
     synonyms[i] <- list(sort(current_syns))
   }
@@ -763,10 +763,12 @@ antimicrobials[which(antimicrobials$ab %in% c("CYC", "LNZ", "THA", "TZD")), "gro
 # add efflux
 effl <- antimicrobials |>
   filter(ab == "ACM") |>
-  mutate(ab = as.character("EFF"),
-         cid = NA_real_,
-         name = "Efflux",
-         group = "Other")
+  mutate(
+    ab = as.character("EFF"),
+    cid = NA_real_,
+    name = "Efflux",
+    group = "Other"
+  )
 antimicrobials <- antimicrobials |>
   mutate(ab = as.character(ab)) |>
   bind_rows(effl)
@@ -777,9 +779,11 @@ antimicrobials[which(antimicrobials$ab == "EFF"), "abbreviations"][[1]] <- list(
 # add clindamycin inducible screening
 clin <- antimicrobials |>
   filter(ab == "FOX1") |>
-  mutate(ab = as.character("CLI-S"),
-         name = "Clindamycin inducible screening",
-         group = "Macrolides/lincosamides")
+  mutate(
+    ab = as.character("CLI-S"),
+    name = "Clindamycin inducible screening",
+    group = "Macrolides/lincosamides"
+  )
 antimicrobials <- antimicrobials |>
   mutate(ab = as.character(ab)) |>
   bind_rows(clin)
@@ -791,109 +795,123 @@ antimicrobials <- antimicrobials |>
   bind_rows(
     antimicrobials |>
       filter(ab == "EFF") |>
-      mutate(ab = "BLA-S",
-             name = paste("Beta-lactamase", "screening test"),
-             cid = NA_real_,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("beta-lactamase", "betalactamase", "bl screen", "blt screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0))),
+      mutate(
+        ab = "BLA-S",
+        name = paste("Beta-lactamase", "screening test"),
+        cid = NA_real_,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("beta-lactamase", "betalactamase", "bl screen", "blt screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      ),
     antimicrobials |>
       filter(ab == "PEN") |>
-      mutate(ab = "PEN-S",
-             name = paste(name, "screening test"),
-             cid = NA,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("pen screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0))),
+      mutate(
+        ab = "PEN-S",
+        name = paste(name, "screening test"),
+        cid = NA,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("pen screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      ),
     antimicrobials |>
       filter(ab == "OXA") |>
-      mutate(ab = "OXA-S",
-             name = paste(name, "screening test"),
-             cid = NA,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("oxa screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0))),
+      mutate(
+        ab = "OXA-S",
+        name = paste(name, "screening test"),
+        cid = NA,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("oxa screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      ),
     antimicrobials |>
       filter(ab == "PEF") |>
-      mutate(ab = "PEF-S",
-             name = paste(name, "screening test"),
-             cid = NA,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("pef screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0))),
+      mutate(
+        ab = "PEF-S",
+        name = paste(name, "screening test"),
+        cid = NA,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("pef screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      ),
     antimicrobials |>
       filter(ab == "NAL") |>
-      mutate(ab = "NAL-S",
-             name = paste(name, "screening test"),
-             cid = NA,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("nal screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0))),
+      mutate(
+        ab = "NAL-S",
+        name = paste(name, "screening test"),
+        cid = NA,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("nal screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      ),
     antimicrobials |>
       filter(ab == "NOR") |>
-      mutate(ab = "NOR-S",
-             name = paste(name, "screening test"),
-             cid = NA,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("nor screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0))),
+      mutate(
+        ab = "NOR-S",
+        name = paste(name, "screening test"),
+        cid = NA,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("nor screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      ),
     antimicrobials |>
       filter(ab == "TCY") |>
-      mutate(ab = "TCY-S",
-             name = paste(name, "screening test"),
-             cid = NA,
-             atc = list(character(0)),
-             atc_group1 = NA_character_,
-             atc_group2 = NA_character_,
-             abbreviations = list(c("tcy screen")),
-             synonyms = list(character(0)),
-             oral_ddd = NA_real_,
-             oral_units = NA_character_,
-             iv_ddd = NA_real_,
-             iv_units = NA_character_,
-             loinc = list(character(0)))
+      mutate(
+        ab = "TCY-S",
+        name = paste(name, "screening test"),
+        cid = NA,
+        atc = list(character(0)),
+        atc_group1 = NA_character_,
+        atc_group2 = NA_character_,
+        abbreviations = list(c("tcy screen")),
+        synonyms = list(character(0)),
+        oral_ddd = NA_real_,
+        oral_units = NA_character_,
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(character(0))
+      )
   )
 
 
@@ -919,16 +937,20 @@ antimicrobials <- antimicrobials |>
     antimicrobials |>
       filter(ab == "FPE") |>
       mutate(ab = as.character(ab)) |>
-      mutate(ab = "FTA",
-             name = "Cefepime/taniborbactam",
-             cid = NA_real_),
+      mutate(
+        ab = "FTA",
+        name = "Cefepime/taniborbactam",
+        cid = NA_real_
+      ),
     antimicrobials |>
       filter(ab == "TBP") |>
       mutate(ab = as.character(ab)) |>
-      mutate(ab = "TAN",
-             name = "Taniborbactam",
-             cid = 76902493,
-             abbreviations = list("VNRX-5133"))
+      mutate(
+        ab = "TAN",
+        name = "Taniborbactam",
+        cid = 76902493,
+        abbreviations = list("VNRX-5133")
+      )
   )
 
 antimicrobials <- antimicrobials |>
@@ -936,39 +958,51 @@ antimicrobials <- antimicrobials |>
   bind_rows(
     antimicrobials |>
       filter(ab == "CTB") |>
-      mutate(ab = "CTA",
-             cid = NA_real_,
-             name = "Ceftibuten/avibactam") |>
+      mutate(
+        ab = "CTA",
+        cid = NA_real_,
+        name = "Ceftibuten/avibactam"
+      ) |>
       select(1:4),
     antimicrobials |>
       filter(ab == "KAC") |>
-      mutate(ab = "KAS",
-             cid = NA_real_,
-             name = "Kasugamycin") |>
+      mutate(
+        ab = "KAS",
+        cid = NA_real_,
+        name = "Kasugamycin"
+      ) |>
       select(1:4),
     antimicrobials |>
       filter(ab == "PRI") |>
-      mutate(ab = "OST",
-             cid = NA_real_,
-             name = "Ostreogrycin") |>
+      mutate(
+        ab = "OST",
+        cid = NA_real_,
+        name = "Ostreogrycin"
+      ) |>
       select(1:4),
     antimicrobials |>
       filter(ab == "PRI") |>
-      mutate(ab = "THS",
-             cid = NA_real_,
-             name = "Thiostrepton") |>
+      mutate(
+        ab = "THS",
+        cid = NA_real_,
+        name = "Thiostrepton"
+      ) |>
       select(1, 3),
     antimicrobials |>
       filter(ab == "CLA1") |>
-      mutate(ab = "XER",
-             cid = NA_real_,
-             name = "Xeruborbactam") |>
+      mutate(
+        ab = "XER",
+        cid = NA_real_,
+        name = "Xeruborbactam"
+      ) |>
       select(1:4),
     antimicrobials |>
       filter(ab == "BLM") |>
-      mutate(ab = "ZOR",
-             cid = NA_real_,
-             name = "Zorbamycin") |>
+      mutate(
+        ab = "ZOR",
+        cid = NA_real_,
+        name = "Zorbamycin"
+      ) |>
       select(1:4),
   )
 
@@ -977,9 +1011,11 @@ antimicrobials <- antimicrobials |>
   bind_rows(
     antimicrobials |>
       filter(ab == "NOV") |>
-      mutate(ab = "CLB",
-             cid = 54706138,
-             name = "Clorobiocin") |>
+      mutate(
+        ab = "CLB",
+        cid = 54706138,
+        name = "Clorobiocin"
+      ) |>
       select(1:4),
   )
 
@@ -990,7 +1026,7 @@ get_atc_table <- function(ab_name, type = "human") {
   if (type == "human") {
     url <- "https://atcddd.fhi.no/atc_ddd_index/"
   } else if (type == "veterinary") {
-    url <- "https://atcddd.fhi.no/atcvet/atcvet_index/"  
+    url <- "https://atcddd.fhi.no/atcvet/atcvet_index/"
   } else {
     stop("invalid type")
   }
@@ -1055,8 +1091,10 @@ to_update <- 1:nrow(antimicrobials)
 # or just the empty ones:
 to_update <- which(sapply(antimicrobials$atc, function(x) length(x[!is.na(x)])) == 0)
 
-updated_atc <- lapply(seq_len(length(to_update)),
-                      function(x) NA_character_)
+updated_atc <- lapply(
+  seq_len(length(to_update)),
+  function(x) NA_character_
+)
 
 
 # this takes around 10 minutes for the whole table (some ABx are skipped and go faster)

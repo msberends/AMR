@@ -649,7 +649,9 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
   arrange(fullname)
 
 taxonomy_mycobank %>% count(rank, sort = TRUE)
-taxonomy_mycobank %>% filter(rank %like% "#") %>% count(rank)
+taxonomy_mycobank %>%
+  filter(rank %like% "#") %>%
+  count(rank)
 
 taxonomy_mycobank3 <- taxonomy_mycobank
 
@@ -2546,7 +2548,9 @@ taxonomy %>%
   arrange(mo) %>%
   View()
 # keep the firsts
-taxonomy <- taxonomy %>% arrange(mo) %>% distinct(mo, .keep_all = TRUE)
+taxonomy <- taxonomy %>%
+  arrange(mo) %>%
+  distinct(mo, .keep_all = TRUE)
 
 # are fullnames unique?
 taxonomy %>%
@@ -2997,7 +3001,9 @@ taxonomy$rank[which(taxonomy$fullname %like% "unknown")] <- "(unknown rank)"
 
 # this happened in early 2025, check that MO codes do not have repeated elements
 # fixed it then like this: microorganisms$mo <- gsub("B_SCLLM_CNNM_LNSM_LNSM_LNSM_LNSM", "B_SCLLM_CNNM", microorganisms$mo)
-taxonomy |> filter(mo %like% "_.*_.*_.*_") |> View()
+taxonomy |>
+  filter(mo %like% "_.*_.*_.*_") |>
+  View()
 
 
 fix_old_mos <- function(dataset) {
@@ -3085,7 +3091,9 @@ microorganisms <- taxonomy
 
 # set class <mo>
 class(microorganisms$mo) <- c("mo", "character")
-microorganisms <- microorganisms %>% arrange(fullname) %>% df_remove_nonASCII()
+microorganisms <- microorganisms %>%
+  arrange(fullname) %>%
+  df_remove_nonASCII()
 usethis::use_data(
   microorganisms,
   overwrite = TRUE,

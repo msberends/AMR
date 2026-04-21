@@ -1056,8 +1056,10 @@ import$mo <- as.mo(import$mo_name)
 
 microorganisms.codes <- microorganisms.codes |>
   bind_rows(
-    tibble(code = toupper(import$code),
-           mo = import$mo) |>
+    tibble(
+      code = toupper(import$code),
+      mo = import$mo
+    ) |>
       distinct()
   ) |>
   arrange(code)
@@ -1065,4 +1067,3 @@ class(microorganisms.codes$mo) <- c("mo", "character")
 usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
 rm(microorganisms.codes)
 devtools::load_all()
-
