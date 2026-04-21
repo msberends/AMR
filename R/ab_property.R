@@ -361,7 +361,7 @@ ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) 
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(property, is_in = colnames(AMR::antimicrobials), has_length = 1)
   language <- validate_language(language)
-  translate_into_language(ab_validate(x = x, property = property, ...), language = language)
+  translate_into_language(ab_validate(x = x, property = property, ...), language = language, only_affect_ab_names = TRUE)
 }
 
 #' @rdname ab_property

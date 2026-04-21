@@ -1140,7 +1140,7 @@ edit_sir <- function(x,
                      add_if_missing) {
   cols <- unique(cols[!is.na(cols) & !is.null(cols)])
   rows <- unique(rows)
-  
+
   # for Verbose Mode, keep track of all changes and return them
   track_changes <- list(
     added = 0,
