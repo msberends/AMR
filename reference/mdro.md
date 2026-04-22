@@ -253,7 +253,8 @@ Currently supported guidelines are (case-insensitive):
 
   The Dutch national guideline - Samenwerkingverband Richtlijnen
   Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen
-  (BRMO)" ([link](https://www.sri-richtlijnen.nl/brmo))
+  (BRMO)"
+  ([link](https://richtlijnendatabase.nl/richtlijn/bijzonder_resistente_micro-organismen_brmo))
 
   Also:
 

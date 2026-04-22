@@ -249,14 +249,14 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
 ## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
-A data set with 271 905 rows and 2 columns, containing the following
+A data set with 285 928 rows and 2 columns, containing the following
 column names:  
 *mo* and *ab*.
 
 This data set is in R available as `intrinsic_resistant`, after you load
 the `AMR` package.
 
-It was last updated on 28 March 2025 10:17:49 UTC. Find more info about
+It was last updated on 22 April 2026 06:16:44 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/intrinsic_resistant.html).
 
@@ -267,22 +267,22 @@ here](https://amr-for-r.org/reference/intrinsic_resistant.html).
   (0.1 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.txt)
-  (10.1 MB)  
+  (10.6 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.xlsx)
-  (2.9 MB)  
+  (3.3 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.feather)
-  (2.3 MB)  
+  (2.5 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.parquet)
   (0.3 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.sav)
-  (14.8 MB)  
+  (15.5 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.dta)
-  (22.6 MB)
+  (27.5 MB)
 
 **Example content**
 
@@ -326,7 +326,9 @@ Example rows when filtering on *Enterobacter cloacae*:
 | Enterobacter cloacae |        Norvancomycin        |
 | Enterobacter cloacae |        Oleandomycin         |
 | Enterobacter cloacae |         Oritavancin         |
+| Enterobacter cloacae |        Ostreogrycin         |
 | Enterobacter cloacae |         Pirlimycin          |
+| Enterobacter cloacae |          Primycin           |
 | Enterobacter cloacae |        Pristinamycin        |
 | Enterobacter cloacae |  Quinupristin/dalfopristin  |
 | Enterobacter cloacae |         Ramoplanin          |
@@ -347,6 +349,8 @@ Example rows when filtering on *Enterobacter cloacae*:
 | Enterobacter cloacae |           Tylosin           |
 | Enterobacter cloacae |         Tylvalosin          |
 | Enterobacter cloacae |         Vancomycin          |
+| Enterobacter cloacae |       Virginiamycine        |
+| Enterobacter cloacae |         Zorbamycin          |
 
 ------------------------------------------------------------------------
 

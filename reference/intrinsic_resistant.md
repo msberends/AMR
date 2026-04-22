@@ -14,8 +14,8 @@ intrinsic_resistant
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 271
-905 observations and 2 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 285
+928 observations and 2 variables:
 
 - `mo`  
   Microorganism ID which occurs in
@@ -64,7 +64,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 intrinsic_resistant
-#> # A tibble: 271,905 × 2
+#> # A tibble: 285,928 × 2
 #>    mo          ab  
 #>    <mo>        <ab>
 #>  1 B_GRAMP     ATM 
@@ -77,5 +77,5 @@ intrinsic_resistant
 #>  8 B_ANAER-POS NAL 
 #>  9 B_ANAER-POS PLB 
 #> 10 B_ANAER-POS TEM 
-#> # ℹ 271,895 more rows
+#> # ℹ 285,918 more rows
 ```

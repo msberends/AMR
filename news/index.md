@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9047
+## AMR 3.0.1.9048
 
 #### New
 
@@ -97,6 +97,8 @@
 - Fixed translation of foreign languages in
   [`sir_df()`](https://amr-for-r.org/reference/proportion.md)
   ([\#272](https://github.com/msberends/AMR/issues/272))
+- Fixed BRMO classification by including bacterial complexes
+  ([\#275](https://github.com/msberends/AMR/issues/275))
 
 #### Updates
 
