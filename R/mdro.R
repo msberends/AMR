@@ -84,7 +84,7 @@
 #'
 #' * `guideline = "BRMO 2024"` (or simply `guideline = "BRMO"`)
 #'
-#'   The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" ([link](https://www.sri-richtlijnen.nl/brmo))
+#'   The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" ([link](https://richtlijnendatabase.nl/richtlijn/bijzonder_resistente_micro-organismen_brmo))
 #'
 #'   Also:
 #'
@@ -379,7 +379,7 @@ mdro <- function(x = NULL,
     guideline$name <- "Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "Samenwerkingsverband Richtlijnen Infectiepreventie (SRI)"
     guideline$version <- "November 2024"
-    guideline$source_url <- font_url("https://www.sri-richtlijnen.nl/brmo", "Direct link")
+    guideline$source_url <- font_url("https://richtlijnendatabase.nl/richtlijn/bijzonder_resistente_micro-organismen_brmo", "Direct link")
     guideline$type <- "BRMOs"
   } else if (guideline$code == "brmo2017") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
@@ -510,13 +510,13 @@ mdro <- function(x = NULL,
               message_(
                 "Inferring resistance for ",
                 ab_name(.base_code, language = NULL, tolower = TRUE),
-                " (", font_bold(.base_code, collapse = NULL), ", ", font_italic("missing"), ") from ",
+                " (", font_italic("missing"), ") from ",
                 vector_or(
                   quotes = FALSE,
                   last_sep = " and/or ",
                   paste0(
                     ab_name(.combos, language = NULL, tolower = TRUE),
-                    " (", font_bold(.combos, collapse = NULL), ", ", font_italic("available"), ")"
+                    " ({.field ", font_bold(.combo_cols, collapse = NULL), "}, ", font_italic("available"), ")"
                   )
                 )
               )
@@ -1558,12 +1558,13 @@ mdro <- function(x = NULL,
       reason = "Enterobacterales: carbapenemase"
     )
     c.freundii_complex <- AMR::microorganisms.groups$mo_name[AMR::microorganisms.groups$mo_group_name == "Citrobacter freundii complex"]
+    c.freundii_complex <- paste(c.freundii_complex, collapse = "|")
     trans_tbl(
       3,
       rows = which(col_values(x, SXT) == "R" &
         (col_values(x, GEN) == "R" | col_values(x, TOB) == "R" | col_values(x, AMK) == "R") &
         (col_values(x, CIP) == "R" | col_values(x, NOR) == "R" | col_values(x, LVX) == "R") &
-        (x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c(c.freundii_complex, "Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
+        (x$fullname %like_case% c.freundii_complex | x$genus %in% c("Enterobacter", "Providencia") | paste(x$genus, x$species) %in% c("Klebsiella aerogenes", "Hafnia alvei", "Morganella morganii"))),
       cols = c(SXT, aminoglycosides, fluoroquinolones),
       any_all = "any",
       reason = "Enterobacterales group II: aminoglycoside + fluoroquinolone + cotrimoxazol"
@@ -1580,25 +1581,27 @@ mdro <- function(x = NULL,
     )
 
     # Acinetobacter baumannii-calcoaceticus complex
+    a.baumannii_complex <- AMR::microorganisms.groups$mo_name[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]
+    a.baumannii_complex <- paste(a.baumannii_complex, collapse = "|")
     trans_tbl(
       3,
       rows = which((col_values(x, GEN) == "R" | col_values(x, TOB) == "R" | col_values(x, AMK) == "R") &
         (col_values(x, CIP) == "R" | col_values(x, LVX) == "R") &
-        x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"]),
+        x$fullname %like_case% a.baumannii_complex),
       cols = c(aminoglycosides, CIP, LVX),
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: aminoglycoside + ciprofloxacin or levofloxacin"
     )
     trans_tbl(
       2, # unconfirmed
-      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & is.na(x$carbapenemase)),
+      rows = which(x$fullname %like_case% a.baumannii_complex & is.na(x$carbapenemase)),
       cols = carbapenems,
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: potential carbapenemase"
     )
     trans_tbl(
       3,
-      rows = which(x[[col_mo]] %in% AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group_name == "Acinetobacter baumannii complex"] & x$carbapenemase == TRUE),
+      rows = which(x$fullname %like_case% a.baumannii_complex & x$carbapenemase == TRUE),
       cols = carbapenems,
       any_all = "any",
       reason = "A. baumannii-calcoaceticus complex: carbapenemase"
@@ -1851,6 +1854,7 @@ mdro <- function(x = NULL,
 
   if (isTRUE(info.bak)) {
     cat(group_msg)
+    cat("\n")
     if (sum(!is.na(x$MDRO)) == 0) {
       cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
     } else {
@@ -1873,14 +1877,15 @@ mdro <- function(x = NULL,
   ))
   if (length(rows_empty) > 0) {
     if (isTRUE(info.bak)) {
-      cat(font_italic(paste0(" (", length(rows_empty), " isolates had no test results)\n")))
+      cat(font_italic(paste0("\n   (another ", length(rows_empty), " isolates had no test results)\n")))
     }
   } else if (isTRUE(info.bak)) {
     cat("\n")
   }
 
   if (isTRUE(info.bak) && !isTRUE(verbose)) {
-    cat("\nRerun with 'verbose = TRUE' to retrieve detailed info and reasons for every MDRO classification.\n")
+    cat("\n")
+    cat(format_inline_("Rerun with {.code verbose = TRUE} to retrieve detailed info and reasons for every MDRO classification.\n"))
   }
 
   # Results ----

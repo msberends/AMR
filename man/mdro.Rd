@@ -119,7 +119,7 @@ The international guideline for multi-drug resistant tuberculosis - World Health
 The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7; \doi{10.1186/s13756-015-0047-6}
 \item \code{guideline = "BRMO 2024"} (or simply \code{guideline = "BRMO"})
 
-The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" (\href{https://www.sri-richtlijnen.nl/brmo}{link})
+The Dutch national guideline - Samenwerkingverband Richtlijnen Infectiepreventie (SRI) (2024) "Bijzonder Resistente Micro-Organismen (BRMO)" (\href{https://richtlijnendatabase.nl/richtlijn/bijzonder_resistente_micro-organismen_brmo}{link})
 
 Also:
 \itemize{

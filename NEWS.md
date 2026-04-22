@@ -1,4 +1,4 @@
-# AMR 3.0.1.9047
+# AMR 3.0.1.9048
 
 ### New
 * Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
@@ -33,6 +33,7 @@
 * Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo and CoPS to Stafilococco coagulasi-positivo (#256)
 * Fixed SIR and MIC coercion of combined values, e.g. `as.sir("<= 0.002; S") ` or `as.mic("S; 0.002")` (#252)
 * Fixed translation of foreign languages in `sir_df()` (#272)
+* Fixed BRMO classification by including bacterial complexes (#275)
 
 ### Updates
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
