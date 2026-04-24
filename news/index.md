@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9048
+## AMR 3.0.1.9050
 
 #### New
 
@@ -63,6 +63,21 @@
 
 #### Fixes
 
+- Fixed multiple bugs in the `parallel = TRUE` mode of
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
+  frames: (1) PSOCK workers (Windows / R \< 4.0) now correctly load the
+  AMR package before processing, with a graceful fallback to sequential
+  mode when the package cannot be loaded; (2) resolved stale-environment
+  issue where the PSOCK path read a frozen copy of `AMR_env` instead of
+  the live one, causing the wrong log entries to be captured; (3) fixed
+  log-entry duplication in the fork-based path (`mclapply`) where
+  pre-existing `sir_interpretation_history` rows were included in every
+  worker’s captured log; (4) removed use of non-exported internal
+  functions (`%pm>%`, `pm_pull`, `as.sir.default`) from the worker
+  closure, which made PSOCK workers fail; (5) suppressed per-column
+  progress messages inside workers to prevent interleaved console
+  output; (6) fixed a malformed Unicode escape `\u00a` (3 digits) in the
+  “DONE” status message
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   where values that were purely numeric (e.g., `"1"`) and matched the
   broad SIR-matching regex would be incorrectly stripped of all content
@@ -99,6 +114,28 @@
   ([\#272](https://github.com/msberends/AMR/issues/272))
 - Fixed BRMO classification by including bacterial complexes
   ([\#275](https://github.com/msberends/AMR/issues/275))
+- Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
+  frames silently deleting columns whose AB class was already `<sir>`
+  when called a second time (re-running on already-converted data)
+  ([\#278](https://github.com/msberends/AMR/issues/278))
+- Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
+  frames incorrectly treating metadata columns (e.g. `patient`, `ward`)
+  as antibiotic columns when their names coincidentally matched an
+  antibiotic code; column content is now validated against AMR data
+  patterns before inclusion
+- Improved parallel computing in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md): when the
+  number of AB columns is smaller than the number of available cores,
+  rows are now split into batches so all cores stay active (row-batch
+  mode). Previously, a 6-column dataset on a 16-core machine would only
+  use 6 cores; now all 16 are used, with each worker processing a
+  smaller row slice (lower per-worker memory pressure)
+- Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) ignoring
+  `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against
+  *E. coli*): an operator-precedence bug (`&&`/`||`) caused the
+  “Interpreting MIC values” intro message to fire unconditionally when
+  `nrow(breakpoints) == 0`, regardless of `info`; the progress bar title
+  was also not gated by `info`
 
 #### Updates
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9048</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9050</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9048" id="amr-3019048">AMR 3.0.1.9048<a class="anchor" aria-label="anchor" href="#amr-3019048"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9050" id="amr-3019050">AMR 3.0.1.9050<a class="anchor" aria-label="anchor" href="#amr-3019050"></a></h2>
 <div class="section level4">
-<h4 id="new-3-0-1-9048">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9048"></a></h4>
+<h4 id="new-3-0-1-9050">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9050"></a></h4>
 <ul><li>Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the <code>clinical_breakpoints</code> data set for usage in <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.</li>
 <li>Integration with the <strong>tidymodels</strong> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
 <ul><li>
@@ -86,8 +86,9 @@
 <li>Two new <code>NA</code> objects, <code>NA_ab_</code> and <code>NA_mo_</code>, analogous to base R’s <code>NA_character_</code> and <code>NA_integer_</code>, for use in pipelines that require typed missing values</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixes-3-0-1-9048">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9048"></a></h4>
-<ul><li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where values that were purely numeric (e.g., <code>"1"</code>) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter</li>
+<h4 id="fixes-3-0-1-9050">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9050"></a></h4>
+<ul><li>Fixed multiple bugs in the <code>parallel = TRUE</code> mode of <code><a href="../reference/as.sir.html">as.sir()</a></code> for data frames: (1) PSOCK workers (Windows / R &lt; 4.0) now correctly load the AMR package before processing, with a graceful fallback to sequential mode when the package cannot be loaded; (2) resolved stale-environment issue where the PSOCK path read a frozen copy of <code>AMR_env</code> instead of the live one, causing the wrong log entries to be captured; (3) fixed log-entry duplication in the fork-based path (<code>mclapply</code>) where pre-existing <code>sir_interpretation_history</code> rows were included in every worker’s captured log; (4) removed use of non-exported internal functions (<code>%pm&gt;%</code>, <code>pm_pull</code>, <code>as.sir.default</code>) from the worker closure, which made PSOCK workers fail; (5) suppressed per-column progress messages inside workers to prevent interleaved console output; (6) fixed a malformed Unicode escape <code>\u00a</code> (3 digits) in the “DONE” status message</li>
+<li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where values that were purely numeric (e.g., <code>"1"</code>) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter</li>
 <li>Fixed a bug in <code><a href="../reference/as.mic.html">as.mic()</a></code> where MIC values in scientific notation (e.g., <code>"1e-3"</code>) were incorrectly handled because the letter <code>e</code> was removed along with other Unicode letters; scientific notation <code>e</code> is now preserved</li>
 <li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> where certain AB codes containing “PH” or “TH” (such as <code>ETH</code>, <code>MTH</code>, <code>PHE</code>, <code>PHN</code>, <code>STH</code>, <code>THA</code>, <code>THI1</code>) would incorrectly return <code>NA</code> when combined in a vector with any untranslatable value (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
 <li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
@@ -101,9 +102,14 @@
 <li>Fixed SIR and MIC coercion of combined values, e.g. <code>as.sir("&lt;= 0.002; S")</code> or <code>as.mic("S; 0.002")</code> (<a href="https://github.com/msberends/AMR/issues/252" class="external-link">#252</a>)</li>
 <li>Fixed translation of foreign languages in <code><a href="../reference/proportion.html">sir_df()</a></code> (<a href="https://github.com/msberends/AMR/issues/272" class="external-link">#272</a>)</li>
 <li>Fixed BRMO classification by including bacterial complexes (<a href="https://github.com/msberends/AMR/issues/275" class="external-link">#275</a>)</li>
+<li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> for data frames silently deleting columns whose AB class was already <code>&lt;sir&gt;</code> when called a second time (re-running on already-converted data) (<a href="https://github.com/msberends/AMR/issues/278" class="external-link">#278</a>)</li>
+<li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> for data frames incorrectly treating metadata columns (e.g. <code>patient</code>, <code>ward</code>) as antibiotic columns when their names coincidentally matched an antibiotic code; column content is now validated against AMR data patterns before inclusion</li>
+<li>Improved parallel computing in <code><a href="../reference/as.sir.html">as.sir()</a></code>: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure)</li>
+<li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> ignoring <code>info = FALSE</code> for columns with no breakpoints (e.g. cefoxitin against <em>E. coli</em>): an operator-precedence bug (<code>&amp;&amp;</code>/<code>||</code>) caused the “Interpreting MIC values” intro message to fire unconditionally when <code>nrow(breakpoints) == 0</code>, regardless of <code>info</code>; the progress bar title was also not gated by <code>info</code>
+</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updates-3-0-1-9048">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9048"></a></h4>
+<h4 id="updates-3-0-1-9050">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9050"></a></h4>
 <ul><li>Extensive <code>cli</code> integration for better message handling and clickable links in messages and warnings (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 <li>
 <code><a href="../reference/mdro.html">mdro()</a></code> now infers resistance for a <em>missing</em> base drug column from an <em>available</em> corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument <code>infer_from_combinations</code>, which defaults to <code>TRUE</code> (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).</li>
