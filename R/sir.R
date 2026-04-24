@@ -891,7 +891,7 @@ as.sir.data.frame <- function(x,
 
   stop_if(
     length(ab_cols) == 0,
-    "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns."
+    "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use {.help [{.fun as.mic}](AMR::as.mic)} or {.help [{.fun as.disk}](AMR::as.disk)} to transform antimicrobial columns."
   )
   # set type per column
   types <- character(length(ab_cols))
@@ -1094,9 +1094,9 @@ as.sir.data.frame <- function(x,
     if (isTRUE(info)) {
       message_(as_note = FALSE)
       if (pieces_per_col > 1L) {
-        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), " (", pieces_per_col, " row slices per column)...", as_note = FALSE, appendLF = FALSE)
+        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(paste0("{.field ", ab_cols, "}"), quotes = FALSE, sort = FALSE), " (", pieces_per_col, " row slices per column)...", as_note = FALSE, appendLF = FALSE)
       } else {
-        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
+        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(paste0("{.field ", ab_cols, "}"), quotes = FALSE, sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
       }
     }
     if (.Platform$OS.type == "windows" || getRversion() < "4.0.0") {
