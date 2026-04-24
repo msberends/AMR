@@ -716,7 +716,7 @@ as.sir.disk <- function(x,
 }
 
 #' @rdname as.sir
-#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. This requires no additional packages, as the used `parallel` package is part of base \R. On Windows and on \R < 4.0.0 [parallel::parLapply()] will be used, in all other cases the more efficient [parallel::mclapply()] will be used.
+#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. The `parallel` package is part of base \R and no additional packages are required. On Unix/macOS with \R >= 4.0.0, [parallel::mclapply()] (fork-based) is used; on Windows and \R < 4.0.0, [parallel::parLapply()] with a PSOCK cluster is used (requires the AMR package to be installed, not just loaded via `devtools::load_all()`). Parallelism distributes columns across cores; it is most beneficial when there are many antibiotic columns and a large number of rows.
 #' @param max_cores Maximum number of cores to use if `parallel = TRUE`. Use a negative value to subtract that number from the available number of cores, e.g. a value of `-2` on an 8-core machine means that at most 6 cores will be used. Defaults to `-1`. There will never be used more cores than variables to analyse. The available number of cores are detected using [parallelly::availableCores()] if that package is installed, and base \R's [parallel::detectCores()] otherwise.
 #' @export
 as.sir.data.frame <- function(x,
@@ -906,6 +906,21 @@ as.sir.data.frame <- function(x,
         return(NULL)
       }
     )
+    if (!is.null(cl)) {
+      # Each PSOCK worker is a fresh R session — the AMR package must be loaded there
+      # so all exported functions (as.sir, as.mic, as.disk, ...) are available.
+      amr_loaded_on_workers <- tryCatch({
+        parallel::clusterEvalQ(cl, library(AMR, quietly = TRUE))
+        TRUE
+      }, error = function(e) FALSE)
+      if (!amr_loaded_on_workers) {
+        if (isTRUE(info)) {
+          message_("Could not load AMR on parallel workers (package may not be installed); falling back to single-core computation.")
+        }
+        parallel::stopCluster(cl)
+        cl <- NULL
+      }
+    }
     if (is.null(cl)) {
       n_cores <- 1
     }
@@ -916,65 +931,93 @@ as.sir.data.frame <- function(x,
     message_("Processing columns:", as_note = FALSE)
   }
 
+  # In parallel mode suppress per-column messages: workers print simultaneously and
+  # their output would be interleaved on the console.
+  is_parallel_run <- isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1
+  effective_info <- if (is_parallel_run) FALSE else info
+
   run_as_sir_column <- function(i) {
+    # Always resolve AMR_env from the package namespace.  This is essential for
+    # PSOCK workers (where the closure-captured AMR_env is a stale serialised copy
+    # while as.sir() writes to the live AMR:::AMR_env) and also avoids capturing
+    # pre-existing log entries from earlier in the session when forking.
+    .amr_env <- get("AMR_env", envir = asNamespace("AMR"), inherits = FALSE)
+    # In parallel mode each worker (fork or PSOCK) has its own copy of the
+    # history; record the current length so we capture only the new rows added
+    # by the as.sir() call below, not any pre-existing entries inherited at fork
+    # time or carried over from earlier as.sir() calls.
+    if (is_parallel_run) pre_log_n <- NROW(.amr_env$sir_interpretation_history)
+
     ab_col <- ab_cols[i]
     out <- list(result = NULL, log = NULL)
 
     if (types[i] == "mic") {
-      result <- x %pm>%
-        pm_pull(ab_col) %pm>%
-        as.character() %pm>%
-        as.mic() %pm>%
-        as.sir(
-          mo = x_mo,
-          mo.bak = x[, col_mo, drop = TRUE],
-          ab = ab_col,
-          guideline = guideline,
-          uti = uti,
-          capped_mic_handling = capped_mic_handling,
-          as_wt_nwt = as_wt_nwt,
-          add_intrinsic_resistance = add_intrinsic_resistance,
-          reference_data = reference_data,
-          substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
-          include_screening = include_screening,
-          include_PKPD = include_PKPD,
-          breakpoint_type = breakpoint_type,
-          host = host,
-          verbose = verbose,
-          info = info,
-          conserve_capped_values = conserve_capped_values,
-          is_data.frame = TRUE
-        )
+      result <- as.sir(
+        as.mic(as.character(x[, ab_col, drop = TRUE])),
+        mo = x_mo,
+        mo.bak = x[, col_mo, drop = TRUE],
+        ab = ab_col,
+        guideline = guideline,
+        uti = uti,
+        capped_mic_handling = capped_mic_handling,
+        as_wt_nwt = as_wt_nwt,
+        add_intrinsic_resistance = add_intrinsic_resistance,
+        reference_data = reference_data,
+        substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
+        include_screening = include_screening,
+        include_PKPD = include_PKPD,
+        breakpoint_type = breakpoint_type,
+        host = host,
+        verbose = verbose,
+        info = effective_info,
+        conserve_capped_values = conserve_capped_values,
+        is_data.frame = TRUE
+      )
       out$result <- result
-      out$log <- AMR_env$sir_interpretation_history
-      AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE] # reset log
+      if (is_parallel_run) {
+        full_log <- .amr_env$sir_interpretation_history
+        out$log <- if (pre_log_n < NROW(full_log)) {
+          full_log[seq.int(pre_log_n + 1L, NROW(full_log)), , drop = FALSE]
+        } else {
+          full_log[0L, , drop = FALSE]
+        }
+      } else {
+        out$log <- .amr_env$sir_interpretation_history
+        .amr_env$sir_interpretation_history <- .amr_env$sir_interpretation_history[0L, , drop = FALSE]
+      }
       return(out)
     } else if (types[i] == "disk") {
-      result <- x %pm>%
-        pm_pull(ab_col) %pm>%
-        as.character() %pm>%
-        as.disk() %pm>%
-        as.sir(
-          mo = x_mo,
-          mo.bak = x[, col_mo, drop = TRUE],
-          ab = ab_col,
-          guideline = guideline,
-          uti = uti,
-          as_wt_nwt = as_wt_nwt,
-          add_intrinsic_resistance = add_intrinsic_resistance,
-          reference_data = reference_data,
-          substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
-          include_screening = include_screening,
-          include_PKPD = include_PKPD,
-          breakpoint_type = breakpoint_type,
-          host = host,
-          verbose = verbose,
-          info = info,
-          is_data.frame = TRUE
-        )
+      result <- as.sir(
+        as.disk(as.character(x[, ab_col, drop = TRUE])),
+        mo = x_mo,
+        mo.bak = x[, col_mo, drop = TRUE],
+        ab = ab_col,
+        guideline = guideline,
+        uti = uti,
+        as_wt_nwt = as_wt_nwt,
+        add_intrinsic_resistance = add_intrinsic_resistance,
+        reference_data = reference_data,
+        substitute_missing_r_breakpoint = substitute_missing_r_breakpoint,
+        include_screening = include_screening,
+        include_PKPD = include_PKPD,
+        breakpoint_type = breakpoint_type,
+        host = host,
+        verbose = verbose,
+        info = effective_info,
+        is_data.frame = TRUE
+      )
       out$result <- result
-      out$log <- AMR_env$sir_interpretation_history
-      AMR_env$sir_interpretation_history <- AMR_env$sir_interpretation_history[0, , drop = FALSE]
+      if (is_parallel_run) {
+        full_log <- .amr_env$sir_interpretation_history
+        out$log <- if (pre_log_n < NROW(full_log)) {
+          full_log[seq.int(pre_log_n + 1L, NROW(full_log)), , drop = FALSE]
+        } else {
+          full_log[0L, , drop = FALSE]
+        }
+      } else {
+        out$log <- .amr_env$sir_interpretation_history
+        .amr_env$sir_interpretation_history <- .amr_env$sir_interpretation_history[0L, , drop = FALSE]
+      }
       return(out)
     } else if (types[i] == "sir") {
       ab <- ab_col
@@ -982,27 +1025,27 @@ as.sir.data.frame <- function(x,
       show_message <- FALSE
       if (!all(x[, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
-        if (isTRUE(info)) {
-          message_("\u00a0\u00a0", AMR_env$bullet_icon, " Cleaning values in column ", paste0("{.field ", font_bold(ab), "}"), " (",
+        if (isTRUE(effective_info)) {
+          message_("\u00a0\u00a0", .amr_env$bullet_icon, " Cleaning values in column ", paste0("{.field ", font_bold(ab), "}"), " (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-            ab_name(ab_coerced, tolower = TRUE, info = info), ")... ",
+            ab_name(ab_coerced, tolower = TRUE, info = effective_info), ")... ",
             appendLF = FALSE,
             as_note = FALSE
           )
         }
       } else if (!is.sir(x.bak[, ab, drop = TRUE])) {
         show_message <- TRUE
-        if (isTRUE(info)) {
-          message_("\u00a0\u00a0", AMR_env$bullet_icon, " Assigning class {.cls sir} to already clean column ", paste0("{.field ", font_bold(ab), "}"), " (",
+        if (isTRUE(effective_info)) {
+          message_("\u00a0\u00a0", .amr_env$bullet_icon, " Assigning class {.cls sir} to already clean column ", paste0("{.field ", font_bold(ab), "}"), " (",
             ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-            ab_name(ab_coerced, tolower = TRUE, language = NULL, info = info), ")... ",
+            ab_name(ab_coerced, tolower = TRUE, language = NULL, info = effective_info), ")... ",
             appendLF = FALSE,
             as_note = FALSE
           )
         }
       }
-      result <- as.sir.default(x = as.character(x[, ab, drop = TRUE]))
-      if (show_message == TRUE && isTRUE(info)) {
+      result <- as.sir(as.character(x[, ab, drop = TRUE]))
+      if (show_message == TRUE && isTRUE(effective_info)) {
         message_(font_green_bg("\u00a0OK\u00a0"), as_note = FALSE)
       }
       out$result <- result
@@ -1025,8 +1068,9 @@ as.sir.data.frame <- function(x,
         "x", "x.bak", "x_mo", "ab_cols", "types",
         "capped_mic_handling", "as_wt_nwt", "add_intrinsic_resistance",
         "reference_data", "substitute_missing_r_breakpoint", "include_screening", "include_PKPD",
-        "breakpoint_type", "guideline", "host", "uti", "info", "verbose",
-        "col_mo", "AMR_env", "conserve_capped_values",
+        "breakpoint_type", "guideline", "host", "uti", "verbose",
+        "col_mo", "conserve_capped_values",
+        "effective_info", "is_parallel_run",
         "run_as_sir_column"
       ), envir = environment())
       result_list <- parallel::parLapply(cl, seq_along(ab_cols), run_as_sir_column)
@@ -1035,7 +1079,7 @@ as.sir.data.frame <- function(x,
       result_list <- parallel::mclapply(seq_along(ab_cols), run_as_sir_column, mc.cores = n_cores)
     }
     if (isTRUE(info)) {
-      message_(font_green_bg("\u00aDONE\u00a"), as_note = FALSE)
+      message_(font_green_bg("\u00a0DONE\u00a0"), as_note = FALSE)
       message_(as_note = FALSE)
       message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} to retrieve a logbook with all details of the breakpoint interpretations.")
     }
