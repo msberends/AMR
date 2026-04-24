@@ -1094,9 +1094,9 @@ as.sir.data.frame <- function(x,
     if (isTRUE(info)) {
       message_(as_note = FALSE)
       if (pieces_per_col > 1L) {
-        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(paste0("{.field ", ab_cols, "}"), quotes = FALSE, sort = FALSE), " (", pieces_per_col, " row slices per column)...", as_note = FALSE, appendLF = FALSE)
+        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(paste0("{.field ", font_bold(ab_cols), "}"), quotes = FALSE, sort = FALSE), " (", pieces_per_col, " row slices per column)...", as_note = FALSE, appendLF = FALSE)
       } else {
-        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(paste0("{.field ", ab_cols, "}"), quotes = FALSE, sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
+        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(paste0("{.field ", font_bold(ab_cols), "}"), quotes = FALSE, sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
       }
     }
     if (.Platform$OS.type == "windows" || getRversion() < "4.0.0") {
