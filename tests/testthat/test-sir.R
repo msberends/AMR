@@ -502,6 +502,21 @@ test_that("test-sir.R", {
   sir_single_par <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE, parallel = TRUE))
   expect_identical(sir_single_seq[["AMC"]], sir_single_par[["AMC"]])
 
+  # 9. row-batch mode (n_cols < n_cores): force row splitting via max_cores and
+  #    verify identical output to sequential for a dataset with 2 AB columns so
+  #    pieces_per_col = ceiling(max_cores / 2) >= 2 and row batching activates
+  df_wide <- data.frame(
+    mo  = "B_ESCHR_COLI",
+    AMC = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
+    GEN = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
+    stringsAsFactors = FALSE
+  )
+  sir_wide_seq <- suppressMessages(as.sir(df_wide, col_mo = "mo", info = FALSE))
+  sir_wide_par <- suppressMessages(as.sir(df_wide, col_mo = "mo", info = FALSE,
+                                          parallel = TRUE, max_cores = 8L))
+  expect_identical(sir_wide_seq[["AMC"]], sir_wide_par[["AMC"]])
+  expect_identical(sir_wide_seq[["GEN"]], sir_wide_par[["GEN"]])
+
   # 8. info = TRUE with parallel does not produce per-column worker messages
   #    (messages should only appear in the main process, not duplicated from workers)
   msgs <- capture.output(

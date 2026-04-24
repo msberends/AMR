@@ -952,7 +952,22 @@ as.sir.data.frame <- function(x,
   is_parallel_run <- isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1
   effective_info <- if (is_parallel_run) FALSE else info
 
-  run_as_sir_column <- function(i) {
+  # Row-batch mode: when n_cols < n_cores we would leave cores idle under plain
+  # column-parallel dispatch.  Instead we split rows into pieces so every core
+  # gets work.  pieces_per_col = ceil(n_cores / n_cols) gives ~n_cores jobs
+  # total; each job processes one column on one row slice, which also reduces
+  # per-worker memory pressure (smaller breakpoints search space).
+  # Only used for the fork path (R >= 4.0, non-Windows); PSOCK clusters already
+  # incur high per-job serialisation overhead so we keep column-mode there.
+  use_fork <- is_parallel_run &&
+    !(.Platform$OS.type == "windows" || getRversion() < "4.0.0")
+  pieces_per_col <- if (use_fork && length(ab_cols) < n_cores) {
+    ceiling(n_cores / length(ab_cols))
+  } else {
+    1L
+  }
+
+  run_as_sir_column <- function(i, rows = NULL) {
     # Always resolve AMR_env from the package namespace.  This is essential for
     # PSOCK workers (where the closure-captured AMR_env is a stale serialised copy
     # while as.sir() writes to the live AMR:::AMR_env) and also avoids capturing
@@ -967,14 +982,17 @@ as.sir.data.frame <- function(x,
     ab_col <- ab_cols[i]
     out <- list(result = NULL, log = NULL)
 
+    # row subsetting: NULL means all rows (column-mode), otherwise row-batch mode
+    row_idx <- if (is.null(rows)) seq_len(nrow(x)) else rows
+
     if (types[i] == "mic") {
       result <- as.sir(
-        as.mic(as.character(x[, ab_col, drop = TRUE])),
-        mo = x_mo,
-        mo.bak = x[, col_mo, drop = TRUE],
+        as.mic(as.character(x[row_idx, ab_col, drop = TRUE])),
+        mo = x_mo[row_idx],
+        mo.bak = x[row_idx, col_mo, drop = TRUE],
         ab = ab_col,
         guideline = guideline,
-        uti = uti,
+        uti = if (length(uti) > 1L) uti[row_idx] else uti,
         capped_mic_handling = capped_mic_handling,
         as_wt_nwt = as_wt_nwt,
         add_intrinsic_resistance = add_intrinsic_resistance,
@@ -983,7 +1001,7 @@ as.sir.data.frame <- function(x,
         include_screening = include_screening,
         include_PKPD = include_PKPD,
         breakpoint_type = breakpoint_type,
-        host = host,
+        host = if (length(host) > 1L) host[row_idx] else host,
         verbose = verbose,
         info = effective_info,
         conserve_capped_values = conserve_capped_values,
@@ -1004,12 +1022,12 @@ as.sir.data.frame <- function(x,
       return(out)
     } else if (types[i] == "disk") {
       result <- as.sir(
-        as.disk(as.character(x[, ab_col, drop = TRUE])),
-        mo = x_mo,
-        mo.bak = x[, col_mo, drop = TRUE],
+        as.disk(as.character(x[row_idx, ab_col, drop = TRUE])),
+        mo = x_mo[row_idx],
+        mo.bak = x[row_idx, col_mo, drop = TRUE],
         ab = ab_col,
         guideline = guideline,
-        uti = uti,
+        uti = if (length(uti) > 1L) uti[row_idx] else uti,
         as_wt_nwt = as_wt_nwt,
         add_intrinsic_resistance = add_intrinsic_resistance,
         reference_data = reference_data,
@@ -1017,7 +1035,7 @@ as.sir.data.frame <- function(x,
         include_screening = include_screening,
         include_PKPD = include_PKPD,
         breakpoint_type = breakpoint_type,
-        host = host,
+        host = if (length(host) > 1L) host[row_idx] else host,
         verbose = verbose,
         info = effective_info,
         is_data.frame = TRUE
@@ -1039,7 +1057,7 @@ as.sir.data.frame <- function(x,
       ab <- ab_col
       ab_coerced <- suppressWarnings(as.ab(ab, info = FALSE))
       show_message <- FALSE
-      if (!all(x[, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
+      if (!all(x[row_idx, ab, drop = TRUE] %in% c("S", "SDD", "I", "R", "NI", NA), na.rm = TRUE)) {
         show_message <- TRUE
         if (isTRUE(effective_info)) {
           message_("\u00a0\u00a0", .amr_env$bullet_icon, " Cleaning values in column ", paste0("{.field ", font_bold(ab), "}"), " (",
@@ -1060,7 +1078,7 @@ as.sir.data.frame <- function(x,
           )
         }
       }
-      result <- as.sir(as.character(x[, ab, drop = TRUE]))
+      result <- as.sir(as.character(x[row_idx, ab, drop = TRUE]))
       if (show_message == TRUE && isTRUE(effective_info)) {
         message_(font_green_bg("\u00a0OK\u00a0"), as_note = FALSE)
       }
@@ -1075,10 +1093,14 @@ as.sir.data.frame <- function(x,
   if (isTRUE(parallel) && n_cores > 1 && length(ab_cols) > 1) {
     if (isTRUE(info)) {
       message_(as_note = FALSE)
-      message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
+      if (pieces_per_col > 1L) {
+        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), " (", pieces_per_col, " row slices per column)...", as_note = FALSE, appendLF = FALSE)
+      } else {
+        message_("Running in parallel mode using ", n_cores, " out of ", get_n_cores(Inf), " cores, on columns ", vector_and(font_bold(ab_cols, collapse = NULL), quotes = "'", sort = FALSE), "...", as_note = FALSE, appendLF = FALSE)
+      }
     }
     if (.Platform$OS.type == "windows" || getRversion() < "4.0.0") {
-      # `cl` has been created in the part above before the `run_as_sir_column` function
+      # PSOCK cluster: column-mode only (row-batch serialisation overhead not worth it)
       on.exit(parallel::stopCluster(cl), add = TRUE)
       parallel::clusterExport(cl, varlist = c(
         "x", "x.bak", "x_mo", "ab_cols", "types",
@@ -1090,8 +1112,32 @@ as.sir.data.frame <- function(x,
         "run_as_sir_column"
       ), envir = environment())
       result_list <- parallel::parLapply(cl, seq_along(ab_cols), run_as_sir_column)
+    } else if (pieces_per_col > 1L) {
+      # Row-batch mode (R >= 4.0, non-Windows, n_cols < n_cores):
+      # build (col, row_slice) job pairs so all cores stay active
+      row_cuts <- unique(round(seq(0, nrow(x), length.out = pieces_per_col + 1L)))
+      row_ranges <- lapply(seq_len(length(row_cuts) - 1L), function(p) {
+        seq.int(row_cuts[p] + 1L, row_cuts[p + 1L])
+      })
+      jobs <- do.call(c, lapply(seq_along(ab_cols), function(ci) {
+        lapply(seq_along(row_ranges), function(p) list(col = ci, rows = row_ranges[[p]]))
+      }))
+      flat <- parallel::mclapply(jobs, function(job) {
+        run_as_sir_column(job$col, job$rows)
+      }, mc.cores = n_cores)
+      # Reassemble: for each column concatenate row pieces in order
+      result_list <- lapply(seq_along(ab_cols), function(ci) {
+        pieces <- flat[vapply(jobs, function(j) j$col == ci, logical(1L))]
+        list(
+          result = as.sir(do.call(c, lapply(pieces, function(p) as.character(p$result)))),
+          log    = {
+            logs <- Filter(Negate(is.null), lapply(pieces, function(p) p$log))
+            if (length(logs) > 0L) do.call(rbind_AMR, logs) else NULL
+          }
+        )
+      })
     } else {
-      # R>=4.0 on unix
+      # Column-parallel mode (R >= 4.0, non-Windows, n_cols >= n_cores)
       result_list <- parallel::mclapply(seq_along(ab_cols), run_as_sir_column, mc.cores = n_cores)
     }
     if (isTRUE(info)) {
