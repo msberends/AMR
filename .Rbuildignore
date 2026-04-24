@@ -41,4 +41,5 @@
 ^CRAN-SUBMISSION$
 ^PythonPackage$
 ^README\.Rmd$
+^tools$
 \.no_include$
