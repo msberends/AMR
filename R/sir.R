@@ -852,7 +852,6 @@ as.sir.data.frame <- function(x,
   i <- 0
   ab_cols <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(y) {
     i <<- i + 1
-    check <- is.mic(y) | is.disk(y)
     ab <- colnames(x)[i]
     if (!is.null(col_mo) && ab == col_mo) {
       return(FALSE)
@@ -861,13 +860,30 @@ as.sir.data.frame <- function(x,
       return(FALSE)
     }
     if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
+      # columns already carrying an AMR class are always included
+      y_bak <- x.bak[, ab, drop = TRUE]
+      if (is.mic(y_bak) || is.disk(y_bak) || is.sir(y_bak)) {
+        return(TRUE)
+      }
       ab_coerced <- suppressWarnings(as.ab(ab, info = FALSE))
       if (is.na(ab_coerced) || (length(sel) > 0 & !ab %in% sel)) {
         # not even a valid AB code
         return(FALSE)
-      } else {
-        return(TRUE)
       }
+      # Name matches an antibiotic; also verify column content resembles AMR
+      # data. This prevents false positives on metadata columns whose names
+      # happen to match a drug code (e.g. 'patient' -> OXY, 'ward' -> PRU).
+      # Note: all_valid_disks() is intentionally avoided here because it strips
+      # non-numeric characters (as.disk("Pt_1") == 1), accepting patient IDs.
+      y_char <- tryCatch(as.character(y), error = function(e) character(0))
+      y_valid <- y_char[!is.na(y_char) & nzchar(trimws(y_char))]
+      if (length(y_valid) == 0L) {
+        return(FALSE)
+      }
+      y_numeric <- suppressWarnings(as.numeric(y_valid))
+      all_valid_mics(y) ||
+        all(!is.na(y_numeric)) ||
+        any(y_valid %in% c("S", "SDD", "I", "R", "NI"))
     } else {
       return(FALSE)
     }
@@ -883,7 +899,7 @@ as.sir.data.frame <- function(x,
   types[vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.mic)] <- "mic"
   types[types == "" & vapply(FUN.VALUE = logical(1), x[, ab_cols, drop = FALSE], all_valid_disks)] <- "disk"
   types[types == "" & vapply(FUN.VALUE = logical(1), x[, ab_cols, drop = FALSE], all_valid_mics)] <- "mic"
-  types[types == "" & !vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.sir)] <- "sir"
+  types[types == ""] <- "sir"
   if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
     # now we need an mo column
     stop_if(is.null(col_mo), "{.arg col_mo} must be set")

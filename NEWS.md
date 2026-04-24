@@ -35,6 +35,8 @@
 * Fixed SIR and MIC coercion of combined values, e.g. `as.sir("<= 0.002; S") ` or `as.mic("S; 0.002")` (#252)
 * Fixed translation of foreign languages in `sir_df()` (#272)
 * Fixed BRMO classification by including bacterial complexes (#275)
+* Fixed `as.sir()` for data frames silently deleting columns whose AB class was already `<sir>` when called a second time (re-running on already-converted data) (#278)
+* Fixed `as.sir()` for data frames incorrectly treating metadata columns (e.g. `patient`, `ward`) as antibiotic columns when their names coincidentally matched an antibiotic code; column content is now validated against AMR data patterns before inclusion
 
 ### Updates
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)

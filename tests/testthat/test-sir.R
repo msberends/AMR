@@ -406,6 +406,37 @@ test_that("test-sir.R", {
   expect_equal(out3, as.sir(c("NWT", "WT", "NWT")))
   expect_equal(out4, as.sir(c("NWT", "WT", "NWT")))
 
+  # Issue #278: re-running as.sir() on already-<sir> data must preserve columns
+  df_already_sir <- data.frame(
+    mo  = "B_ESCHR_COLI",
+    AMC = as.mic(c("1", "2", "4")),
+    GEN = sample(c("S", "I", "R"), 3, replace = TRUE),
+    stringsAsFactors = FALSE
+  )
+  first_pass  <- suppressMessages(as.sir(df_already_sir, col_mo = "mo", info = FALSE))
+  second_pass <- suppressMessages(as.sir(first_pass,    col_mo = "mo", info = FALSE))
+  expect_equal(ncol(first_pass), ncol(second_pass))
+  expect_true(is.sir(second_pass[["AMC"]]))
+  expect_true(is.sir(second_pass[["GEN"]]))
+  expect_identical(first_pass[["AMC"]], second_pass[["AMC"]])
+  expect_identical(first_pass[["GEN"]], second_pass[["GEN"]])
+
+  # Issue #278: metadata columns whose names coincidentally match antibiotic
+  # codes (e.g. 'patient' -> OXY, 'ward' -> PRU) must not be processed
+  df_meta <- data.frame(
+    mo      = "B_ESCHR_COLI",
+    patient = paste0("Pt_", 1:20),
+    ward    = rep(c("ICU", "Surgery", "Outpatient", "ED"), 5),
+    AMC     = as.mic(rep(c("1", "2", "4", "8"), 5)),
+    stringsAsFactors = FALSE
+  )
+  df_meta_sir <- suppressMessages(as.sir(df_meta, col_mo = "mo", info = FALSE))
+  expect_true("patient" %in% colnames(df_meta_sir))
+  expect_true("ward"    %in% colnames(df_meta_sir))
+  expect_false(is.sir(df_meta_sir[["patient"]]))
+  expect_false(is.sir(df_meta_sir[["ward"]]))
+  expect_true(is.sir(df_meta_sir[["AMC"]]))
+
   # Parallel computing ----------------------------------------------------
   # Tests must pass even when only 1 core is available; parallel = TRUE then
   # silently falls back to sequential, but results must still be identical.
