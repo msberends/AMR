@@ -1598,11 +1598,11 @@ as_sir_method <- function(method_short,
     add_intrinsic_resistance_to_AMR_env()
   }
 
-  if (isTRUE(info) && nrow(df_unique) < 10 || nrow(breakpoints) == 0) {
+  if (isTRUE(info) && (nrow(df_unique) < 10 || nrow(breakpoints) == 0)) {
     # only print intro under 10 items, otherwise progressbar will print this and then it will be printed double
     message_(intro_txt, appendLF = FALSE, as_note = FALSE)
   }
-  p <- progress_ticker(n = nrow(df_unique), n_min = 10, title = intro_txt, only_bar_percent = TRUE)
+  p <- progress_ticker(n = nrow(df_unique), n_min = 10, print = isTRUE(info), title = intro_txt, only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
 
