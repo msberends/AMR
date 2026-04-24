@@ -407,39 +407,79 @@ test_that("test-sir.R", {
   expect_equal(out4, as.sir(c("NWT", "WT", "NWT")))
 
   # Parallel computing ----------------------------------------------------
+  # Tests must pass even when only 1 core is available; parallel = TRUE then
+  # silently falls back to sequential, but results must still be identical.
 
-  # MB 29 Apr 2025: I have run the code of AVC, PEI, Canada (dataset of 2854x65), and compared it like this:
+  set.seed(42)
+  n_par <- 200
+  df_par <- data.frame(
+    mo  = "B_ESCHR_COLI",
+    AMC = as.mic(sample(c("0.25", "0.5", "1", "2", "4", "8", "16", "32"), n_par, TRUE)),
+    GEN = as.mic(sample(c("0.5", "1", "2", "4", "8", "16", "32", "64"), n_par, TRUE)),
+    CIP = as.mic(sample(c("0.001", "0.002", "0.004", "0.008", "0.016", "0.032"), n_par, TRUE)),
+    PEN = sample(c("S", "I", "R", NA_character_), n_par, TRUE),
+    stringsAsFactors = FALSE
+  )
 
-  # system.time({
-  #   data_2022_2023_SIR_parallel <- data_2022_2023_clean |>
-  #   as.sir(amikacin:tiamulin,
-  #          col_mo = "mo",
-  #          guideline = "CLSI 2024",
-  #          host = "Species",
-  #          uti = "isUTI",
-  #          parallel = TRUE)
-  # })
-  # #    user  system elapsed
-  # # 271.424   2.767  45.762
-  #
-  # history_parallel <- sir_interpretation_history(clean = TRUE)
-  #
-  # system.time({
-  #   data_2022_2023_SIR <- data_2022_2023_clean |>
-  #     as.sir(amikacin:tiamulin,
-  #            col_mo = "mo",
-  #            guideline = "CLSI 2024",
-  #            host = "Species",
-  #            uti = "isUTI")
-  # })
-  # #    user  system elapsed
-  # # 120.637   5.406 128.835
-  # history <- sir_interpretation_history()
+  # clear any existing history before comparing
+  sir_interpretation_history(clean = TRUE)
+  sir_seq <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE))
+  log_seq <- sir_interpretation_history(clean = TRUE)
 
+  sir_par <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+  log_par <- sir_interpretation_history(clean = TRUE)
 
-  # and then got this:
-  # identical(history[, -1], history_parallel[, -1])
-  #> [1] TRUE
+  # 1. parallel = TRUE gives identical SIR results to sequential
+  expect_identical(sir_seq[["AMC"]], sir_par[["AMC"]])
+  expect_identical(sir_seq[["GEN"]], sir_par[["GEN"]])
+  expect_identical(sir_seq[["CIP"]], sir_par[["CIP"]])
+  expect_identical(sir_seq[["PEN"]], sir_par[["PEN"]])
 
-  # so parallel on Apple M2 is 2.8x faster, with identical history -> GREAT!
+  # 2. same number of log rows as sequential
+  expect_equal(nrow(log_seq), nrow(log_par))
+
+  # 3. pre-existing log entries must not be duplicated
+  #    run sequential once to populate the history, then run parallel and
+  #    verify the new parallel run adds exactly as many rows as sequential
+  sir_interpretation_history(clean = TRUE)
+  suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE)) # populate history
+  pre_n <- nrow(sir_interpretation_history())
+  suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+  post_n <- nrow(sir_interpretation_history())
+  expect_equal(post_n - pre_n, nrow(log_seq)) # exactly one run's worth of new rows
+  sir_interpretation_history(clean = TRUE)
+
+  # 4. two sequential runs and two parallel runs yield identical results
+  sir_par2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+  expect_identical(sir_par[["AMC"]], sir_par2[["AMC"]])
+  expect_identical(sir_par[["GEN"]], sir_par2[["GEN"]])
+
+  # 5. max_cores = 1 gives same results as default sequential
+  sir_mc1 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE, max_cores = 1L))
+  expect_identical(sir_seq[["AMC"]], sir_mc1[["AMC"]])
+  expect_identical(sir_seq[["GEN"]], sir_mc1[["GEN"]])
+
+  # 6. max_cores = 2 and max_cores = 3 give same results as sequential
+  sir_mc2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE, max_cores = 2L))
+  sir_mc3 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE, max_cores = 3L))
+  expect_identical(sir_seq[["AMC"]], sir_mc2[["AMC"]])
+  expect_identical(sir_seq[["GEN"]], sir_mc3[["GEN"]])
+
+  # 7. single-column data frame falls back silently to sequential
+  df_single <- df_par[, c("mo", "AMC")]
+  sir_single_seq <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE))
+  sir_single_par <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE, parallel = TRUE))
+  expect_identical(sir_single_seq[["AMC"]], sir_single_par[["AMC"]])
+
+  # 8. info = TRUE with parallel does not produce per-column worker messages
+  #    (messages should only appear in the main process, not duplicated from workers)
+  msgs <- capture.output(
+    suppressWarnings(as.sir(df_par, col_mo = "mo", info = TRUE, parallel = TRUE)),
+    type = "message"
+  )
+  # each AB column name should appear at most once in all messages combined
+  for (ab_nm in c("AMC", "GEN", "CIP", "PEN")) {
+    n_mentions <- sum(grepl(ab_nm, msgs, fixed = TRUE))
+    expect_lte(n_mentions, 1L)
+  }
 })
