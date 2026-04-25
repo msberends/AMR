@@ -69,7 +69,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param host A vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
 #' @param language Language to convert values set in `host` when using animal breakpoints. Use one of these supported language names or [ISO 639-1 codes](https://en.wikipedia.org/wiki/ISO_639-1): `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @param verbose A [logical] to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.
-#' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
+#' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). When `reference_data` is manually set, the `guideline` argument is optional: if omitted (or if its value does not match any row in the custom data), all rows in `reference_data` are considered. If `guideline` is set to a value that exists in the `guideline` column of the custom data, only matching rows are used — useful when a single custom table contains multiple guidelines. For the R classification, the EUCAST convention is used by default: MIC values `> breakpoint_R` and disk diffusion values `< breakpoint_R` are classified as R, with values between `breakpoint_S` and `breakpoint_R` classified as I (or SDD). Only when `guideline` contains `"CLSI"` are the closed-interval rules (`>= breakpoint_R` for MIC, `<= breakpoint_R` for disk) applied instead.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
 #' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()], e.g. `as.sir(df, penicillins())`.
@@ -1690,8 +1690,15 @@ as_sir_method <- function(method_short,
 
     # gather all available breakpoints for current MO
     # TODO for VET09 do not filter out E. coli and such
+    # For custom reference_data: skip guideline filter when guideline_current is not in the data (#239)
+    guideline_filter_current <- if (!identical(reference_data, AMR::clinical_breakpoints) &&
+      !guideline_current %in% breakpoints$guideline) {
+      unique(breakpoints$guideline)
+    } else {
+      guideline_current
+    }
     breakpoints_current <- breakpoints %pm>%
-      subset(ab == ab_current & guideline == guideline_current) %pm>%
+      subset(ab == ab_current & guideline %in% guideline_filter_current) %pm>%
       subset(mo %in% c(
         mo_current, mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
@@ -1701,8 +1708,13 @@ as_sir_method <- function(method_short,
       ))
 
     if (breakpoint_type == "animal") {
-      # 2025-03-13/ for now, only strictly follow guideline for current host, no extrapolation
-      breakpoints_current <- breakpoints_current[which(breakpoints_current$host == host_current), , drop = FALSE]
+      host_matched <- breakpoints_current[which(breakpoints_current$host == host_current), , drop = FALSE]
+      if (nrow(host_matched) > 0) {
+        breakpoints_current <- host_matched
+      } else {
+        # fall back to host-agnostic rows (host = NA) for custom breakpoint tables (#239)
+        breakpoints_current <- breakpoints_current[which(is.na(breakpoints_current$host)), , drop = FALSE]
+      }
     }
 
     ## fall-back methods for veterinary guidelines ----
@@ -1978,8 +1990,9 @@ as_sir_method <- function(method_short,
 
           # otherwise: the normal (uncapped or ignored) interpretation
           input_clean <= breakpoints_current$breakpoint_S ~ as.sir("S"),
-          guideline_current %like% "EUCAST" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
+          # CLSI uses closed interval (>=); EUCAST and all custom guidelines use open interval (>)
           guideline_current %like% "CLSI" & input_clean >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+          !guideline_current %like% "CLSI" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
 
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
@@ -1992,8 +2005,9 @@ as_sir_method <- function(method_short,
         new_sir <- case_when_AMR(
           is.na(input_clean) ~ NA_sir_,
           as.double(input_clean) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
-          guideline_current %like% "EUCAST" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          # CLSI uses closed interval (<=); EUCAST and all custom guidelines use open interval (<)
           guideline_current %like% "CLSI" & as.double(input_clean) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          !guideline_current %like% "CLSI" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),

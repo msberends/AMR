@@ -529,3 +529,51 @@ test_that("test-sir.R", {
     expect_lte(n_mentions, 1L)
   }
 })
+
+# issue #239 — custom reference_data support
+test_that("custom reference_data: non-EUCAST/CLSI guideline produces R", {
+  # use any MIC/human row as structural template, then override mo/ab/guideline/breakpoints
+  my_bp <- clinical_breakpoints[clinical_breakpoints$method == "MIC" &
+    clinical_breakpoints$type == "human", ][1, ]
+  my_bp$guideline    <- "MyLab 2025"
+  my_bp$mo           <- "B_ESCHR_COLI"
+  my_bp$ab           <- "AMC"
+  my_bp$breakpoint_S <- 8
+  my_bp$breakpoint_R <- 32
+
+  # guideline omitted: all rows in reference_data are used
+  expect_equal(as.character(suppressMessages(
+    as.sir(as.mic(64), mo = "E. coli", ab = "AMC", reference_data = my_bp)
+  )), "R")
+  expect_equal(as.character(suppressMessages(
+    as.sir(as.mic(16), mo = "E. coli", ab = "AMC", reference_data = my_bp)
+  )), "I")
+  # at R breakpoint value must be I (open interval: > not >=)
+  expect_equal(as.character(suppressMessages(
+    as.sir(as.mic(32), mo = "E. coli", ab = "AMC", reference_data = my_bp)
+  )), "I")
+
+  # guideline explicitly set: same result when it matches the data
+  expect_equal(as.character(suppressMessages(
+    as.sir(as.mic(64), mo = "E. coli", ab = "AMC",
+      guideline = "MyLab 2025", reference_data = my_bp)
+  )), "R")
+})
+
+test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
+  my_bp <- clinical_breakpoints[clinical_breakpoints$method == "MIC" &
+    clinical_breakpoints$type == "human", ][1, ]
+  my_bp$guideline    <- "MyLab 2025"
+  my_bp$mo           <- "B_ESCHR_COLI"
+  my_bp$ab           <- "AMC"
+  my_bp$type         <- "animal"
+  my_bp$host         <- NA
+  my_bp$breakpoint_S <- 8
+  my_bp$breakpoint_R <- 32
+
+  # NA host should match when no species-specific row exists; guideline omitted
+  result <- suppressMessages(
+    as.sir(as.mic(64), mo = "E. coli", ab = "AMC", host = "dogs", reference_data = my_bp)
+  )
+  expect_equal(as.character(result), "R")
+})
