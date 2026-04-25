@@ -532,32 +532,31 @@ test_that("test-sir.R", {
 
 # issue #239 — custom reference_data support
 test_that("custom reference_data: non-EUCAST/CLSI guideline produces R", {
-  # Take the first MIC/human row (B_ACHRMB_XYLS / MEM) as a template.
-  # Only override guideline and breakpoints; keep mo/ab as <mo>/<ab> class objects.
+  # Build a minimal one-row custom breakpoint table from a plain data.frame.
+  # coerce_reference_data_columns() will coerce mo/ab to the right class.
   my_bp <- clinical_breakpoints[clinical_breakpoints$method == "MIC" &
     clinical_breakpoints$type == "human", ][1, ]
   my_bp$guideline    <- "MyLab 2025"
+  my_bp$mo           <- "B_ACHRMB_XYLS"  # plain character — coerced to <mo>
+  my_bp$ab           <- "MEM"             # plain character — coerced to <ab>
   my_bp$breakpoint_S <- 8
   my_bp$breakpoint_R <- 32
 
-  mo_val <- as.character(my_bp$mo)  # "B_ACHRMB_XYLS"
-  ab_val <- as.character(my_bp$ab)  # "MEM"
-
   # guideline omitted: all rows in reference_data are used; R via open interval (>)
   expect_equal(as.character(suppressMessages(
-    as.sir(as.mic(64), mo = mo_val, ab = ab_val, reference_data = my_bp)
+    as.sir(as.mic(64), mo = "B_ACHRMB_XYLS", ab = "MEM", reference_data = my_bp)
   )), "R")
   expect_equal(as.character(suppressMessages(
-    as.sir(as.mic(16), mo = mo_val, ab = ab_val, reference_data = my_bp)
+    as.sir(as.mic(16), mo = "B_ACHRMB_XYLS", ab = "MEM", reference_data = my_bp)
   )), "I")
   # at R breakpoint value must be I (open interval: > not >=)
   expect_equal(as.character(suppressMessages(
-    as.sir(as.mic(32), mo = mo_val, ab = ab_val, reference_data = my_bp)
+    as.sir(as.mic(32), mo = "B_ACHRMB_XYLS", ab = "MEM", reference_data = my_bp)
   )), "I")
 
   # guideline explicitly set: same result when it matches the data
   expect_equal(as.character(suppressMessages(
-    as.sir(as.mic(64), mo = mo_val, ab = ab_val,
+    as.sir(as.mic(64), mo = "B_ACHRMB_XYLS", ab = "MEM",
       guideline = "MyLab 2025", reference_data = my_bp)
   )), "R")
 })
@@ -566,17 +565,16 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   my_bp <- clinical_breakpoints[clinical_breakpoints$method == "MIC" &
     clinical_breakpoints$type == "human", ][1, ]
   my_bp$guideline    <- "MyLab 2025"
+  my_bp$mo           <- "B_ACHRMB_XYLS"
+  my_bp$ab           <- "MEM"
   my_bp$type         <- "animal"
-  my_bp$host         <- NA_character_  # must stay character class, not logical NA
+  my_bp$host         <- NA  # logical NA — coerced to character by coerce_reference_data_columns()
   my_bp$breakpoint_S <- 8
   my_bp$breakpoint_R <- 32
 
-  mo_val <- as.character(my_bp$mo)
-  ab_val <- as.character(my_bp$ab)
-
-  # NA host should match when no species-specific row exists; guideline omitted
+  # NA host should match when no species-specific row exists
   result <- suppressMessages(
-    as.sir(as.mic(64), mo = mo_val, ab = ab_val,
+    as.sir(as.mic(64), mo = "B_ACHRMB_XYLS", ab = "MEM",
       host = "dogs", breakpoint_type = "animal", reference_data = my_bp)
   )
   expect_equal(as.character(result), "R")
