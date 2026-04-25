@@ -1,4 +1,4 @@
-# AMR 3.0.1.9051
+# AMR 3.0.1.9052
 
 ### New
 * Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
