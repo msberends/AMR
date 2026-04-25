@@ -1060,6 +1060,9 @@ if (require("data.table")) {
 #> The following objects are masked from ‘package:AMR’:
 #> 
 #>     %like%, like
+#> The following object is masked from ‘package:base’:
+#> 
+#>     %notin%
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> Warning: It should never be needed to print an antimicrobial selector class. Are you
 #> using data.table? Then add the argument `with = FALSE`, see our examples at

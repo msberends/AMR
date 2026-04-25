@@ -606,20 +606,20 @@ example_isolates
 #> #   IPM <sir>, MEM <sir>, MTR <sir>, CHL <sir>, COL <sir>, MUP <sir>, …
 
 summary(example_isolates[, 1:10]) # see all SIR results at a glance
-#>       date              patient               age           gender         
-#>  Min.   :2002-01-02   Length:2000        Min.   : 0.00   Length:2000       
-#>  1st Qu.:2005-07-31   Class :character   1st Qu.:63.00   Class :character  
-#>  Median :2009-07-31   Mode  :character   Median :74.00   Mode  :character  
-#>  Mean   :2009-11-20                      Mean   :70.69                     
-#>  3rd Qu.:2014-05-30                      3rd Qu.:82.00                     
-#>  Max.   :2017-12-28                      Max.   :97.00                     
-#>      ward                mo                  PEN                
-#>  Length:2000        Class :mo             Class:sir             
-#>  Class :character   <NA>  :0              %S   :25.6% (n=417)   
-#>  Mode  :character   Unique:90             %SDD : 0.0% (n=0)     
-#>                     #1    :B_ESCHR_COLI   %I   : 0.7% (n=11)    
-#>                     #2    :B_STPHY_CONS   %R   :73.7% (n=1201)  
-#>                     #3    :B_STPHY_AURS   %NI  : 0.0% (n=0)     
+#>       date                 patient          age              gender    
+#>  Min.   :2002-01-02   Length   :2000   Min.   : 0.00   Length   :2000  
+#>  1st Qu.:2005-07-31   N.unique : 981   1st Qu.:63.00   N.unique :   2  
+#>  Median :2009-07-31   N.blank  :   0   Median :74.00   N.blank  :   0  
+#>  Mean   :2009-11-20   Min.nchar:   6   Mean   :70.69   Min.nchar:   1  
+#>  3rd Qu.:2014-05-30   Max.nchar:   6   3rd Qu.:82.00   Max.nchar:   1  
+#>  Max.   :2017-12-28                    Max.   :97.00                   
+#>         ward           mo                  PEN                
+#>  Length   :2000   Class :mo             Class:sir             
+#>  N.unique :   3   <NA>  :0              %S   :25.6% (n=417)   
+#>  N.blank  :   0   Unique:90             %SDD : 0.0% (n=0)     
+#>  Min.nchar:   3   #1    :B_ESCHR_COLI   %I   : 0.7% (n=11)    
+#>  Max.nchar:  10   #2    :B_STPHY_CONS   %R   :73.7% (n=1201)  
+#>                   #3    :B_STPHY_AURS   %NI  : 0.0% (n=0)     
 #>     OXA                   FLC                   AMX               
 #>  Class:sir             Class:sir             Class:sir            
 #>  %S   :68.8% (n=251)   %S   :70.5% (n=665)   %S   :40.2% (n=543)  
@@ -660,10 +660,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-04-24 22:41:17     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-04-24 22:41:17     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-04-24 22:41:18     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-04-24 22:41:18     1 DISK   genta       Escherich… human      18         
+#> 1 2026-04-25 12:45:43     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-04-25 12:45:43     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-04-25 12:45:44     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-04-25 12:45:44     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

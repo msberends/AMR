@@ -63,6 +63,12 @@
 
 #### Fixes
 
+- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) with
+  `reference_data`: custom guideline names now correctly classify values
+  as R using EUCAST convention (`> breakpoint_R` for MIC,
+  `< breakpoint_R` for disk); custom breakpoints with `host = NA` now
+  serve as a host-agnostic fallback when no host-specific row matches
+  (fixes [\#239](https://github.com/msberends/AMR/issues/239))
 - Fixed multiple bugs in the `parallel = TRUE` mode of
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
   frames: (1) PSOCK workers (Windows / R \< 4.0) now correctly load the

@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 24 April 2026.
+methodology remains unchanged. This page was generated on 25 April 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-04-24 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-04-24 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-04-24 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-04-25 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-04-25 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-04-25 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -367,27 +367,27 @@ and `sir` classes that we now have in our data set:
 
 ``` r
 summary(our_data_1st)
-#>   patient_id          hospital              date           
-#>  Length:2724        Length:2724        Min.   :2011-01-01  
-#>  Class :character   Class :character   1st Qu.:2013-04-07  
-#>  Mode  :character   Mode  :character   Median :2015-06-03  
-#>                                        Mean   :2015-06-09  
-#>                                        3rd Qu.:2017-08-11  
-#>                                        Max.   :2019-12-27  
-#>    bacteria               AMX                    AMC                
-#>  Class :mo             Class:sir              Class:sir             
-#>  <NA>  :0              %S   :41.6% (n=1133)   %S   :52.6% (n=1432)  
-#>  Unique:4              %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     
-#>  #1    :B_ESCHR_COLI   %I   :16.4% (n=446)    %I   :12.2% (n=333)   
-#>  #2    :B_STPHY_AURS   %R   :42.0% (n=1145)   %R   :35.2% (n=959)   
-#>  #3    :B_STRPT_PNMN   %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     
-#>     CIP                    GEN                  first        
-#>  Class:sir              Class:sir              Mode:logical  
-#>  %S   :52.5% (n=1431)   %S   :61.0% (n=1661)   TRUE:2724     
-#>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)                    
-#>  %I   : 6.5% (n=176)    %I   : 3.0% (n=82)                   
-#>  %R   :41.0% (n=1117)   %R   :36.0% (n=981)                  
-#>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)
+#>      patient_id        hospital         date              bacteria           
+#>  Length   :2724   Length   :2724   Min.   :2011-01-01   Class :mo            
+#>  N.unique : 260   N.unique :   3   1st Qu.:2013-04-07   <NA>  :0             
+#>  N.blank  :   0   N.blank  :   0   Median :2015-06-03   Unique:4             
+#>  Min.nchar:   2   Min.nchar:   1   Mean   :2015-06-09   #1    :B_ESCHR_COLI  
+#>  Max.nchar:   3   Max.nchar:   1   3rd Qu.:2017-08-11   #2    :B_STPHY_AURS  
+#>                                    Max.   :2019-12-27   #3    :B_STRPT_PNMN  
+#>     AMX                    AMC                    CIP                
+#>  Class:sir              Class:sir              Class:sir             
+#>  %S   :41.6% (n=1133)   %S   :52.6% (n=1432)   %S   :52.5% (n=1431)  
+#>  %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)      %SDD : 0.0% (n=0)     
+#>  %I   :16.4% (n=446)    %I   :12.2% (n=333)    %I   : 6.5% (n=176)   
+#>  %R   :42.0% (n=1145)   %R   :35.2% (n=959)    %R   :41.0% (n=1117)  
+#>  %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)      %NI  : 0.0% (n=0)     
+#>     GEN                  first        
+#>  Class:sir              Mode:logical  
+#>  %S   :61.0% (n=1661)   TRUE:2724     
+#>  %SDD : 0.0% (n=0)                    
+#>  %I   : 3.0% (n=82)                   
+#>  %R   :36.0% (n=981)                  
+#>  %NI  : 0.0% (n=0)
 
 glimpse(our_data_1st)
 #> Rows: 2,724

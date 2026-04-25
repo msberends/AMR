@@ -370,20 +370,20 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span> <span class="co"># see all SIR results at a glance</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       date              patient               age           gender         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :2002-01-02   Length:2000        Min.   : 0.00   Length:2000       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:2005-07-31   Class :character   1st Qu.:63.00   Class :character  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :2009-07-31   Mode  :character   Median :74.00   Mode  :character  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :2009-11-20                      Mean   :70.69                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:2014-05-30                      3rd Qu.:82.00                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :2017-12-28                      Max.   :97.00                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      ward                mo                  PEN                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Length:2000        Class :mo             Class:sir             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class :character   &lt;NA&gt;  :0              %S   :25.6% (n=417)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mode  :character   Unique:90             %SDD : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     #1    :B_ESCHR_COLI   %I   : 0.7% (n=11)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     #2    :B_STPHY_CONS   %R   :73.7% (n=1201)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     #3    :B_STPHY_AURS   %NI  : 0.0% (n=0)     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       date                 patient          age              gender    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :2002-01-02   Length   :2000   Min.   : 0.00   Length   :2000  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:2005-07-31   N.unique : 981   1st Qu.:63.00   N.unique :   2  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :2009-07-31   N.blank  :   0   Median :74.00   N.blank  :   0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :2009-11-20   Min.nchar:   6   Mean   :70.69   Min.nchar:   1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:2014-05-30   Max.nchar:   6   3rd Qu.:82.00   Max.nchar:   1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :2017-12-28                    Max.   :97.00                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         ward           mo                  PEN                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Length   :2000   Class :mo             Class:sir             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  N.unique :   3   &lt;NA&gt;  :0              %S   :25.6% (n=417)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  N.blank  :   0   Unique:90             %SDD : 0.0% (n=0)     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.nchar:   3   #1    :B_ESCHR_COLI   %I   : 0.7% (n=11)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.nchar:  10   #2    :B_STPHY_CONS   %R   :73.7% (n=1201)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   #3    :B_STPHY_AURS   %NI  : 0.0% (n=0)     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     OXA                   FLC                   AMX               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:sir             Class:sir             Class:sir            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  %S   :68.8% (n=251)   %S   :70.5% (n=665)   %S   :40.2% (n=543)  </span>
@@ -424,10 +424,10 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-04-24 <span style="color: #949494;">22:41:17</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-04-24 <span style="color: #949494;">22:41:17</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-04-24 <span style="color: #949494;">22:41:18</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-04-24 <span style="color: #949494;">22:41:18</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-04-25 <span style="color: #949494;">12:45:43</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-04-25 <span style="color: #949494;">12:45:43</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-04-25 <span style="color: #949494;">12:45:44</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-04-25 <span style="color: #949494;">12:45:44</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>

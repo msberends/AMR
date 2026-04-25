@@ -163,7 +163,7 @@ if (require("tidymodels")) {
   metrics
 }
 #> Loading required package: tidymodels
-#> ── Attaching packages ────────────────────────────────────── tidymodels 1.4.1 ──
+#> ── Attaching packages ────────────────────────────────────── tidymodels 1.5.0 ──
 #> ✔ broom        1.0.12     ✔ rsample      1.3.2 
 #> ✔ dials        1.4.3      ✔ tailor       0.1.0 
 #> ✔ infer        1.1.0      ✔ tidyr        1.3.2 
