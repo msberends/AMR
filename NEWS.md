@@ -1,4 +1,4 @@
-# AMR 3.0.1.9050
+# AMR 3.0.1.9051
 
 ### New
 * Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
@@ -21,8 +21,7 @@
 * Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 ### Fixes
-* `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (fixes #239)
-* Fixed multiple bugs in the `parallel = TRUE` mode of `as.sir()` for data frames: (1) PSOCK workers (Windows / R < 4.0) now correctly load the AMR package before processing, with a graceful fallback to sequential mode when the package cannot be loaded; (2) resolved stale-environment issue where the PSOCK path read a frozen copy of `AMR_env` instead of the live one, causing the wrong log entries to be captured; (3) fixed log-entry duplication in the fork-based path (`mclapply`) where pre-existing `sir_interpretation_history` rows were included in every worker's captured log; (4) removed use of non-exported internal functions (`%pm>%`, `pm_pull`, `as.sir.default`) from the worker closure, which made PSOCK workers fail; (5) suppressed per-column progress messages inside workers to prevent interleaved console output; (6) fixed a malformed Unicode escape `\u00a` (3 digits) in the "DONE" status message
+* Fixed multiple bugs in the `parallel = TRUE` mode of `as.sir()` for data frames
 * Fixed a bug in `as.sir()` where values that were purely numeric (e.g., `"1"`) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter
 * Fixed a bug in `as.mic()` where MIC values in scientific notation (e.g., `"1e-3"`) were incorrectly handled because the letter `e` was removed along with other Unicode letters; scientific notation `e` is now preserved
 * Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
@@ -42,6 +41,7 @@
 * Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*): an operator-precedence bug (`&&`/`||`) caused the "Interpreting MIC values" intro message to fire unconditionally when `nrow(breakpoints) == 0`, regardless of `info`; the progress bar title was also not gated by `info`
 
 ### Updates
+* `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (#239)
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
 * `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.
