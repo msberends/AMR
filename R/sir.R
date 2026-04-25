@@ -1286,6 +1286,7 @@ as_sir_method <- function(method_short,
   }
 
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
+  custom_breakpoints_set <- !identical(reference_data, AMR::clinical_breakpoints)
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
     message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n")
@@ -1490,7 +1491,7 @@ as_sir_method <- function(method_short,
     "\u00a0\u00a0", AMR_env$bullet_icon, " Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
     ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0(vector_and(agent_formatted, quotes = FALSE, sort = FALSE))),
     mo_var_found,
-    ifelse(identical(reference_data, AMR::clinical_breakpoints),
+    ifelse(!custom_breakpoints_set,
       paste0(", ", vector_and(font_bold(guideline_coerced, collapse = NULL), quotes = FALSE)),
       ""
     ),
@@ -1507,7 +1508,7 @@ as_sir_method <- function(method_short,
   method_coerced <- toupper(method)
   ab_coerced <- as.ab(ab, info = FALSE)
 
-  if (identical(reference_data, AMR::clinical_breakpoints)) {
+  if (!custom_breakpoints_set) {
     breakpoints <- reference_data %pm>%
       subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
     if (any(ab_coerced == "AMX") && nrow(breakpoints[breakpoints$ab == "AMX", , drop = FALSE]) == 0) {
@@ -1691,7 +1692,7 @@ as_sir_method <- function(method_short,
     # gather all available breakpoints for current MO
     # TODO for VET09 do not filter out E. coli and such
     # For custom reference_data: skip guideline filter when guideline_current is not in the data (#239)
-    guideline_filter_current <- if (!identical(reference_data, AMR::clinical_breakpoints) &&
+    guideline_filter_current <- if (custom_breakpoints_set &&
       !guideline_current %in% breakpoints$guideline) {
       unique(breakpoints$guideline)
     } else {
@@ -1990,9 +1991,11 @@ as_sir_method <- function(method_short,
 
           # otherwise: the normal (uncapped or ignored) interpretation
           input_clean <= breakpoints_current$breakpoint_S ~ as.sir("S"),
-          # CLSI uses closed interval (>=); EUCAST and all custom guidelines use open interval (>)
-          guideline_current %like% "CLSI" & input_clean >= breakpoints_current$breakpoint_R ~ as.sir("R"),
-          !guideline_current %like% "CLSI" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
+          # standard data: EUCAST open interval (>), CLSI closed interval (>=)
+          !custom_breakpoints_set & guideline_current %like% "EUCAST" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
+          !custom_breakpoints_set & guideline_current %like% "CLSI" & input_clean >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+          # custom reference_data: always EUCAST open interval (>), regardless of guideline name
+          custom_breakpoints_set & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
 
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
@@ -2005,9 +2008,11 @@ as_sir_method <- function(method_short,
         new_sir <- case_when_AMR(
           is.na(input_clean) ~ NA_sir_,
           as.double(input_clean) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
-          # CLSI uses closed interval (<=); EUCAST and all custom guidelines use open interval (<)
-          guideline_current %like% "CLSI" & as.double(input_clean) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
-          !guideline_current %like% "CLSI" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          # standard data: EUCAST open interval (<), CLSI closed interval (<=)
+          !custom_breakpoints_set & guideline_current %like% "EUCAST" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          !custom_breakpoints_set & guideline_current %like% "CLSI" & as.double(input_clean) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          # custom reference_data: always EUCAST open interval (<), regardless of guideline name
+          custom_breakpoints_set & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
