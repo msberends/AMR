@@ -69,7 +69,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param host A vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
 #' @param language Language to convert values set in `host` when using animal breakpoints. Use one of these supported language names or [ISO 639-1 codes](https://en.wikipedia.org/wiki/ISO_639-1): `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @param verbose A [logical] to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.
-#' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [clinical_breakpoints] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
+#' @param reference_data A [data.frame] to be used for interpretation, which defaults to the [clinical_breakpoints] data set. Changing this argument allows for using own interpretation guidelines. This argument must have the same column names as the [clinical_breakpoints] data set. Column types are coerced automatically where possible: the `mo` column is passed through [as.mo()], the `ab` column through [as.ab()], and plain character, numeric, or logical columns are cast to the expected type. When `reference_data` is manually set, the `guideline` argument is optional: if omitted (or if its value does not match any row in the custom data), all rows in `reference_data` are considered. If `guideline` is set to a value that exists in the `guideline` column of the custom data, only matching rows are used — useful when a single custom table contains multiple guidelines. For the R classification, the EUCAST convention is used by default: MIC values `> breakpoint_R` and disk diffusion values `< breakpoint_R` are classified as R, with values between `breakpoint_S` and `breakpoint_R` classified as I (or SDD). Only when using the standard [clinical_breakpoints] with a CLSI guideline are the closed-interval rules (`>= breakpoint_R` for MIC, `<= breakpoint_R` for disk) applied; custom `reference_data` always uses the open-interval (EUCAST) convention regardless of the guideline name.
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
 #' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()], e.g. `as.sir(df, penicillins())`.
@@ -1271,7 +1271,7 @@ as_sir_method <- function(method_short,
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
-  check_reference_data(reference_data, .call_depth = -2)
+  reference_data <- check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   language <- validate_language(language)
@@ -1286,6 +1286,7 @@ as_sir_method <- function(method_short,
   }
 
   current_sir_interpretation_history <- NROW(AMR_env$sir_interpretation_history)
+  custom_breakpoints_set <- !identical(reference_data, AMR::clinical_breakpoints)
 
   if (isTRUE(info) && message_not_thrown_before("as.sir", "sir_interpretation_history")) {
     message_("Run {.help [{.fun sir_interpretation_history}](AMR::sir_interpretation_history)} afterwards to retrieve a logbook with all details of the breakpoint interpretations.\n\n")
@@ -1490,7 +1491,7 @@ as_sir_method <- function(method_short,
     "\u00a0\u00a0", AMR_env$bullet_icon, " Interpreting ", method_long, ": ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
     ifelse(length(unique(agent_formatted)) == 1, unique(agent_formatted), paste0(vector_and(agent_formatted, quotes = FALSE, sort = FALSE))),
     mo_var_found,
-    ifelse(identical(reference_data, AMR::clinical_breakpoints),
+    ifelse(!custom_breakpoints_set,
       paste0(", ", vector_and(font_bold(guideline_coerced, collapse = NULL), quotes = FALSE)),
       ""
     ),
@@ -1507,7 +1508,7 @@ as_sir_method <- function(method_short,
   method_coerced <- toupper(method)
   ab_coerced <- as.ab(ab, info = FALSE)
 
-  if (identical(reference_data, AMR::clinical_breakpoints)) {
+  if (!custom_breakpoints_set) {
     breakpoints <- reference_data %pm>%
       subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
     if (any(ab_coerced == "AMX") && nrow(breakpoints[breakpoints$ab == "AMX", , drop = FALSE]) == 0) {
@@ -1690,8 +1691,15 @@ as_sir_method <- function(method_short,
 
     # gather all available breakpoints for current MO
     # TODO for VET09 do not filter out E. coli and such
+    # For custom reference_data: skip guideline filter when guideline_current is not in the data (#239)
+    guideline_filter_current <- if (custom_breakpoints_set &&
+      !guideline_current %in% breakpoints$guideline) {
+      unique(breakpoints$guideline)
+    } else {
+      guideline_current
+    }
     breakpoints_current <- breakpoints %pm>%
-      subset(ab == ab_current & guideline == guideline_current) %pm>%
+      subset(ab == ab_current & guideline %in% guideline_filter_current) %pm>%
       subset(mo %in% c(
         mo_current, mo_current_genus, mo_current_family,
         mo_current_order, mo_current_class,
@@ -1701,8 +1709,13 @@ as_sir_method <- function(method_short,
       ))
 
     if (breakpoint_type == "animal") {
-      # 2025-03-13/ for now, only strictly follow guideline for current host, no extrapolation
-      breakpoints_current <- breakpoints_current[which(breakpoints_current$host == host_current), , drop = FALSE]
+      host_matched <- breakpoints_current[which(breakpoints_current$host == host_current), , drop = FALSE]
+      if (nrow(host_matched) > 0) {
+        breakpoints_current <- host_matched
+      } else {
+        # fall back to host-agnostic rows (host = NA) for custom breakpoint tables (#239)
+        breakpoints_current <- breakpoints_current[which(is.na(breakpoints_current$host)), , drop = FALSE]
+      }
     }
 
     ## fall-back methods for veterinary guidelines ----
@@ -1978,8 +1991,11 @@ as_sir_method <- function(method_short,
 
           # otherwise: the normal (uncapped or ignored) interpretation
           input_clean <= breakpoints_current$breakpoint_S ~ as.sir("S"),
-          guideline_current %like% "EUCAST" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
-          guideline_current %like% "CLSI" & input_clean >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+          # standard data: EUCAST open interval (>), CLSI closed interval (>=)
+          !custom_breakpoints_set & guideline_current %like% "EUCAST" & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
+          !custom_breakpoints_set & guideline_current %like% "CLSI" & input_clean >= breakpoints_current$breakpoint_R ~ as.sir("R"),
+          # custom reference_data: always EUCAST open interval (>), regardless of guideline name
+          custom_breakpoints_set & input_clean > breakpoints_current$breakpoint_R ~ as.sir("R"),
 
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
@@ -1992,8 +2008,11 @@ as_sir_method <- function(method_short,
         new_sir <- case_when_AMR(
           is.na(input_clean) ~ NA_sir_,
           as.double(input_clean) >= as.double(breakpoints_current$breakpoint_S) ~ as.sir("S"),
-          guideline_current %like% "EUCAST" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
-          guideline_current %like% "CLSI" & as.double(input_clean) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          # standard data: EUCAST open interval (<), CLSI closed interval (<=)
+          !custom_breakpoints_set & guideline_current %like% "EUCAST" & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          !custom_breakpoints_set & guideline_current %like% "CLSI" & as.double(input_clean) <= as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
+          # custom reference_data: always EUCAST open interval (<), regardless of guideline name
+          custom_breakpoints_set & as.double(input_clean) < as.double(breakpoints_current$breakpoint_R) ~ as.sir("R"),
           # return "I" or "SDD" when breakpoints are in the middle
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == TRUE ~ as.sir("SDD"),
           !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) & breakpoints_current$is_SDD == FALSE ~ as.sir("I"),
@@ -2340,13 +2359,36 @@ rep.sir <- function(x, ...) {
   y
 }
 
+coerce_reference_data_columns <- function(x) {
+  ref <- AMR::clinical_breakpoints
+  for (col in names(ref)) {
+    col_ref <- ref[[col]]
+    col_x   <- x[[col]]
+    if (identical(class(col_ref), class(col_x))) next
+    if (col == "mo") {
+      x[[col]] <- suppressMessages(as.mo(col_x))
+    } else if (col == "ab") {
+      x[[col]] <- suppressMessages(as.ab(col_x))
+    } else if (is.character(col_ref)) {
+      x[[col]] <- as.character(col_x)
+    } else if (is.numeric(col_ref)) {
+      x[[col]] <- as.double(col_x)
+    } else if (is.logical(col_ref)) {
+      x[[col]] <- as.logical(col_x)
+    }
+  }
+  x
+}
+
 check_reference_data <- function(reference_data, .call_depth) {
   if (!identical(reference_data, AMR::clinical_breakpoints)) {
-    class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
-    class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
-    if (!all(names(class_sir) == names(class_ref))) {
+    if (!all(names(AMR::clinical_breakpoints) == names(reference_data))) {
       stop_("{.arg reference_data} must have the same column names as the {.help [clinical_breakpoints](AMR::clinical_breakpoints)} data set.", call = .call_depth)
     }
+    # coerce mo, ab, and other columns to the expected types where possible
+    reference_data <- coerce_reference_data_columns(reference_data)
+    class_sir <- vapply(FUN.VALUE = character(1), AMR::clinical_breakpoints, function(x) paste0("<", class(x), ">", collapse = " and "))
+    class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(class_sir == class_ref)) {
       bad_col <- names(class_ref[class_sir != class_ref][1])
       bad_cls <- gsub("<|>", "", class_ref[class_sir != class_ref][1])
@@ -2354,4 +2396,5 @@ check_reference_data <- function(reference_data, .call_depth) {
       stop_("{.arg reference_data} must be the same structure as the {.help [clinical_breakpoints](AMR::clinical_breakpoints)} data set. Column ", paste0("{.field ", font_bold(bad_col, collapse = NULL), "}"), " is of class ", paste0("{.cls ", bad_cls, "}"), ", but should be of class ", paste0("{.cls ", exp_cls, "}"), call = .call_depth)
     }
   }
+  reference_data
 }
