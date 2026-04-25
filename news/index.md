@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9050
+## AMR 3.0.1.9052
 
 #### New
 
@@ -63,27 +63,9 @@
 
 #### Fixes
 
-- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) with
-  `reference_data`: custom guideline names now correctly classify values
-  as R using EUCAST convention (`> breakpoint_R` for MIC,
-  `< breakpoint_R` for disk); custom breakpoints with `host = NA` now
-  serve as a host-agnostic fallback when no host-specific row matches
-  (fixes [\#239](https://github.com/msberends/AMR/issues/239))
 - Fixed multiple bugs in the `parallel = TRUE` mode of
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
-  frames: (1) PSOCK workers (Windows / R \< 4.0) now correctly load the
-  AMR package before processing, with a graceful fallback to sequential
-  mode when the package cannot be loaded; (2) resolved stale-environment
-  issue where the PSOCK path read a frozen copy of `AMR_env` instead of
-  the live one, causing the wrong log entries to be captured; (3) fixed
-  log-entry duplication in the fork-based path (`mclapply`) where
-  pre-existing `sir_interpretation_history` rows were included in every
-  worker’s captured log; (4) removed use of non-exported internal
-  functions (`%pm>%`, `pm_pull`, `as.sir.default`) from the worker
-  closure, which made PSOCK workers fail; (5) suppressed per-column
-  progress messages inside workers to prevent interleaved console
-  output; (6) fixed a malformed Unicode escape `\u00a` (3 digits) in the
-  “DONE” status message
+  frames
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   where values that were purely numeric (e.g., `"1"`) and matched the
   broad SIR-matching regex would be incorrectly stripped of all content
@@ -145,6 +127,12 @@
 
 #### Updates
 
+- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) with
+  `reference_data`: custom guideline names now correctly classify values
+  as R using EUCAST convention (`> breakpoint_R` for MIC,
+  `< breakpoint_R` for disk); custom breakpoints with `host = NA` now
+  serve as a host-agnostic fallback when no host-specific row matches
+  ([\#239](https://github.com/msberends/AMR/issues/239))
 - Extensive `cli` integration for better message handling and clickable
   links in messages and warnings
   ([\#191](https://github.com/msberends/AMR/issues/191),

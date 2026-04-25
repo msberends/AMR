@@ -247,12 +247,28 @@ disk diffusion diameters:
   interpretation, which defaults to the
   [clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
   data set. Changing this argument allows for using own interpretation
-  guidelines. This argument must contain a data set that is equal in
-  structure to the
+  guidelines. This argument must have the same column names as the
   [clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
-  data set (same column names and column types). Please note that the
-  `guideline` argument will be ignored when `reference_data` is manually
-  set.
+  data set. Column types are coerced automatically where possible: the
+  `mo` column is passed through
+  [`as.mo()`](https://amr-for-r.org/reference/as.mo.md), the `ab` column
+  through [`as.ab()`](https://amr-for-r.org/reference/as.ab.md), and
+  plain character, numeric, or logical columns are cast to the expected
+  type. When `reference_data` is manually set, the `guideline` argument
+  is optional: if omitted (or if its value does not match any row in the
+  custom data), all rows in `reference_data` are considered. If
+  `guideline` is set to a value that exists in the `guideline` column of
+  the custom data, only matching rows are used — useful when a single
+  custom table contains multiple guidelines. For the R classification,
+  the EUCAST convention is used by default: MIC values `> breakpoint_R`
+  and disk diffusion values `< breakpoint_R` are classified as R, with
+  values between `breakpoint_S` and `breakpoint_R` classified as I (or
+  SDD). Only when using the standard
+  [clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
+  with a CLSI guideline are the closed-interval rules (`>= breakpoint_R`
+  for MIC, `<= breakpoint_R` for disk) applied; custom `reference_data`
+  always uses the open-interval (EUCAST) convention regardless of the
+  guideline name.
 
 - substitute_missing_r_breakpoint:
 
@@ -332,13 +348,16 @@ disk diffusion diameters:
 - parallel:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate if
-  parallel computing must be used, defaults to `FALSE`. This requires no
-  additional packages, as the used `parallel` package is part of base R.
-  On Windows and on R \< 4.0.0
-  [`parallel::parLapply()`](https://rdrr.io/r/parallel/clusterApply.html)
-  will be used, in all other cases the more efficient
+  parallel computing must be used, defaults to `FALSE`. The `parallel`
+  package is part of base R and no additional packages are required. On
+  Unix/macOS with R \>= 4.0.0,
   [`parallel::mclapply()`](https://rdrr.io/r/parallel/mclapply.html)
-  will be used.
+  (fork-based) is used; on Windows and R \< 4.0.0,
+  [`parallel::parLapply()`](https://rdrr.io/r/parallel/clusterApply.html)
+  with a PSOCK cluster is used (requires the AMR package to be
+  installed, not just loaded via `devtools::load_all()`). Parallelism
+  distributes columns across cores; it is most beneficial when there are
+  many antibiotic columns and a large number of rows.
 
 - max_cores:
 
@@ -660,10 +679,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-04-25 12:45:43     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-04-25 12:45:43     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-04-25 12:45:44     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-04-25 12:45:44     1 DISK   genta       Escherich… human      18         
+#> 1 2026-04-25 14:25:30     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-04-25 14:25:30     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-04-25 14:25:31     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-04-25 14:25:31     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
