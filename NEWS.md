@@ -1,4 +1,4 @@
-# AMR 3.0.1.9052
+# AMR 3.0.1.9053
 
 ### New
 * Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
@@ -41,6 +41,7 @@
 * Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*): an operator-precedence bug (`&&`/`||`) caused the "Interpreting MIC values" intro message to fire unconditionally when `nrow(breakpoints) == 0`, regardless of `info`; the progress bar title was also not gated by `info`
 
 ### Updates
+* `as.sir()` with `parallel = TRUE` now uses `future.apply::future_lapply()` instead of `parallel::mclapply()`/`parallel::parLapply()`, enabling transparent support for any `future` backend (including `mirai_multisession`) on all platforms; `future` and `future.apply` are now listed under `Suggests`
 * `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (#239)
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
