@@ -1681,28 +1681,6 @@ readRDS_AMR <- function(file, refhook = NULL) {
   readRDS(con, refhook = refhook)
 }
 
-get_n_cores <- function(max_cores = Inf) {
-  if (pkg_is_available("parallelly", min_version = "0.8.0", also_load = FALSE)) {
-    available_cores <- import_fn("availableCores", "parallelly")
-    n_cores <- min(available_cores(), na.rm = TRUE)
-  } else {
-    # `parallel` is part of base R since 2.14.0, but detectCores() is not very precise on exotic systems like Docker and quota-set Linux environments
-    n_cores <- parallel::detectCores()[1]
-    if (is.na(n_cores)) {
-      n_cores <- 1
-    }
-  }
-  max_cores <- floor(max_cores)
-  if (max_cores == 0) {
-    n_cores <- 1
-  } else if (max_cores < 0) {
-    n_cores <- max(1, n_cores - abs(max_cores))
-  } else if (max_cores > 0) {
-    n_cores <- min(n_cores, max_cores)
-  }
-  n_cores
-}
-
 # Support `where()` if tidyselect not installed ----
 if (!is.null(import_fn("where", "tidyselect", error_on_fail = FALSE))) {
   # tidyselect::where() exists, retrieve from their namespace to make `where()`s work across the package in default arguments

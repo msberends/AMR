@@ -73,7 +73,7 @@ is_sir_eligible(x, threshold = 0.05)
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
   language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  parallel = FALSE, max_cores = -1, conserve_capped_values = NULL)
+  parallel = FALSE, conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 }
@@ -151,8 +151,6 @@ The default \code{"conservative"} setting ensures cautious handling of uncertain
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. Requires the \code{\link[future.apply:future_lapply]{future.apply}} package. \strong{A non-sequential \code{\link[future:plan]{future::plan()}} must already be active before setting \code{parallel = TRUE}} — for example, \code{future::plan(future::multisession)}. An error is thrown if \code{parallel = TRUE} is used without a plan set by the user. Parallelism distributes columns (and optionally row batches) across workers; it is most beneficial when there are many antibiotic columns and a large number of rows.}
-
-\item{max_cores}{Maximum number of workers to use when \code{parallel = TRUE}. Use a negative value to subtract that number from the available workers, e.g. a value of \code{-2} means at most \code{nbrOfWorkers() - 2} workers will be used. Defaults to \code{-1} (all but one worker). There will never be more workers used than there are antibiotic columns to analyse.}
 
 \item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }

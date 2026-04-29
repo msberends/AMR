@@ -408,13 +408,13 @@ test_that("test-sir.R", {
 
   # Issue #278: re-running as.sir() on already-<sir> data must preserve columns
   df_already_sir <- data.frame(
-    mo  = "B_ESCHR_COLI",
+    mo = "B_ESCHR_COLI",
     AMC = as.mic(c("1", "2", "4")),
     GEN = sample(c("S", "I", "R"), 3, replace = TRUE),
     stringsAsFactors = FALSE
   )
-  first_pass  <- suppressMessages(as.sir(df_already_sir, col_mo = "mo", info = FALSE))
-  second_pass <- suppressMessages(as.sir(first_pass,    col_mo = "mo", info = FALSE))
+  first_pass <- suppressMessages(as.sir(df_already_sir, col_mo = "mo", info = FALSE))
+  second_pass <- suppressMessages(as.sir(first_pass, col_mo = "mo", info = FALSE))
   expect_equal(ncol(first_pass), ncol(second_pass))
   expect_true(is.sir(second_pass[["AMC"]]))
   expect_true(is.sir(second_pass[["GEN"]]))
@@ -424,15 +424,15 @@ test_that("test-sir.R", {
   # Issue #278: metadata columns whose names coincidentally match antibiotic
   # codes (e.g. 'patient' -> OXY, 'ward' -> PRU) must not be processed
   df_meta <- data.frame(
-    mo      = "B_ESCHR_COLI",
+    mo = "B_ESCHR_COLI",
     patient = paste0("Pt_", 1:20),
-    ward    = rep(c("ICU", "Surgery", "Outpatient", "ED"), 5),
-    AMC     = as.mic(rep(c("1", "2", "4", "8"), 5)),
+    ward = rep(c("ICU", "Surgery", "Outpatient", "ED"), 5),
+    AMC = as.mic(rep(c("1", "2", "4", "8"), 5)),
     stringsAsFactors = FALSE
   )
   df_meta_sir <- suppressMessages(as.sir(df_meta, col_mo = "mo", info = FALSE))
   expect_true("patient" %in% colnames(df_meta_sir))
-  expect_true("ward"    %in% colnames(df_meta_sir))
+  expect_true("ward" %in% colnames(df_meta_sir))
   expect_false(is.sir(df_meta_sir[["patient"]]))
   expect_false(is.sir(df_meta_sir[["ward"]]))
   expect_true(is.sir(df_meta_sir[["AMC"]]))
@@ -444,7 +444,7 @@ test_that("test-sir.R", {
   set.seed(42)
   n_par <- 200
   df_par <- data.frame(
-    mo  = "B_ESCHR_COLI",
+    mo = "B_ESCHR_COLI",
     AMC = as.mic(sample(c("0.25", "0.5", "1", "2", "4", "8", "16", "32"), n_par, TRUE)),
     GEN = as.mic(sample(c("0.5", "1", "2", "4", "8", "16", "32", "64"), n_par, TRUE)),
     CIP = as.mic(sample(c("0.001", "0.002", "0.004", "0.008", "0.016", "0.032"), n_par, TRUE)),
@@ -506,14 +506,16 @@ test_that("test-sir.R", {
   #    verify identical output to sequential for a dataset with 2 AB columns so
   #    pieces_per_col = ceiling(max_cores / 2) >= 2 and row batching activates
   df_wide <- data.frame(
-    mo  = "B_ESCHR_COLI",
+    mo = "B_ESCHR_COLI",
     AMC = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
     GEN = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
     stringsAsFactors = FALSE
   )
   sir_wide_seq <- suppressMessages(as.sir(df_wide, col_mo = "mo", info = FALSE))
-  sir_wide_par <- suppressMessages(as.sir(df_wide, col_mo = "mo", info = FALSE,
-                                          parallel = TRUE, max_cores = 8L))
+  sir_wide_par <- suppressMessages(as.sir(df_wide,
+    col_mo = "mo", info = FALSE,
+    parallel = TRUE, max_cores = 8L
+  ))
   expect_identical(sir_wide_seq[["AMC"]], sir_wide_par[["AMC"]])
   expect_identical(sir_wide_seq[["GEN"]], sir_wide_par[["GEN"]])
 
@@ -536,9 +538,9 @@ test_that("custom reference_data: non-EUCAST/CLSI guideline produces R", {
   # coerce_reference_data_columns() will coerce mo/ab to the right class.
   my_bp <- clinical_breakpoints[clinical_breakpoints$method == "MIC" &
     clinical_breakpoints$type == "human", ][1, ]
-  my_bp$guideline    <- "MyLab 2025"
-  my_bp$mo           <- "B_ACHRMB_XYLS"  # plain character — coerced to <mo>
-  my_bp$ab           <- "MEM"             # plain character — coerced to <ab>
+  my_bp$guideline <- "MyLab 2025"
+  my_bp$mo <- "B_ACHRMB_XYLS" # plain character — coerced to <mo>
+  my_bp$ab <- "MEM" # plain character — coerced to <ab>
   my_bp$breakpoint_S <- 8
   my_bp$breakpoint_R <- 32
 
@@ -556,26 +558,30 @@ test_that("custom reference_data: non-EUCAST/CLSI guideline produces R", {
 
   # guideline explicitly set: same result when it matches the data
   expect_equal(as.character(suppressMessages(
-    as.sir(as.mic(64), mo = "B_ACHRMB_XYLS", ab = "MEM",
-      guideline = "MyLab 2025", reference_data = my_bp)
+    as.sir(as.mic(64),
+      mo = "B_ACHRMB_XYLS", ab = "MEM",
+      guideline = "MyLab 2025", reference_data = my_bp
+    )
   )), "R")
 })
 
 test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   my_bp <- clinical_breakpoints[clinical_breakpoints$method == "MIC" &
     clinical_breakpoints$type == "human", ][1, ]
-  my_bp$guideline    <- "MyLab 2025"
-  my_bp$mo           <- "B_ACHRMB_XYLS"
-  my_bp$ab           <- "MEM"
-  my_bp$type         <- "animal"
-  my_bp$host         <- NA  # logical NA — coerced to character by coerce_reference_data_columns()
+  my_bp$guideline <- "MyLab 2025"
+  my_bp$mo <- "B_ACHRMB_XYLS"
+  my_bp$ab <- "MEM"
+  my_bp$type <- "animal"
+  my_bp$host <- NA # logical NA — coerced to character by coerce_reference_data_columns()
   my_bp$breakpoint_S <- 8
   my_bp$breakpoint_R <- 32
 
   # NA host should match when no species-specific row exists
   result <- suppressMessages(
-    as.sir(as.mic(64), mo = "B_ACHRMB_XYLS", ab = "MEM",
-      host = "dogs", breakpoint_type = "animal", reference_data = my_bp)
+    as.sir(as.mic(64),
+      mo = "B_ACHRMB_XYLS", ab = "MEM",
+      host = "dogs", breakpoint_type = "animal", reference_data = my_bp
+    )
   )
   expect_equal(as.character(result), "R")
 })

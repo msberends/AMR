@@ -49,7 +49,6 @@ Suggests:
   ggplot2,
   knitr,
   openxlsx,
-  parallelly,
   pillar,
   progress,
   readxl,
