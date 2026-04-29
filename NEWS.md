@@ -6,6 +6,7 @@ This will become release v3.1.0, intended for launch end of May.
 * Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
 * Support for the [`future`](https://future.futureverse.org) package and its framework, as the previous implementation of parallel computing was slow
   - **Breaking change**: `as.sir()` with `parallel = TRUE` now requires a non-sequential `future::plan()` to be active before the call — e.g., `future::plan(future::multisession)` — and throws an informative error if none is set.
+  - New all-core usage setup: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure and processing time)
 * Integration with the *tidymodels* framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
   - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
   - New `tidyselect` helpers:
@@ -40,12 +41,9 @@ This will become release v3.1.0, intended for launch end of May.
 * Fixed BRMO classification by including bacterial complexes (#275)
 * Fixed `as.sir()` for data frames silently deleting columns whose AB class was already `<sir>` when called a second time (re-running on already-converted data) (#278)
 * Fixed `as.sir()` for data frames incorrectly treating metadata columns (e.g. `patient`, `ward`) as antibiotic columns when their names coincidentally matched an antibiotic code; column content is now validated against AMR data patterns before inclusion
-* Improved parallel computing in `as.sir()`: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure)
-* Fixed false-positive `"as_wt_nwt is no longer used"` warnings that appeared during parallel `as.sir()` runs; `as_wt_nwt` is now excluded from the unused-argument check in `as_sir_method()`
 * Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*)
 
 ### Updates
-* `as.sir()` with `parallel = TRUE` now uses `future.apply::future_lapply()` instead of `parallel::mclapply()`/`parallel::parLapply()`, enabling transparent support for any `future` backend (including `mirai_multisession`) on all platforms; `future` and `future.apply` are now listed under `Suggests`
 * `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (#239)
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).

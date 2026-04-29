@@ -311,10 +311,6 @@ as.sir(df_wide)
 sir_interpretation_history()
 
 \donttest{
-# using parallel computing (requires the future.apply package):
-# future::plan(future::multisession)  # optional: set your own plan first
-as.sir(df_wide, parallel = TRUE, info = TRUE)
-
 
 ## Using dplyr -------------------------------------------------
 if (require("dplyr")) {
