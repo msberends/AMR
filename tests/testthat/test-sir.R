@@ -441,94 +441,111 @@ test_that("test-sir.R", {
   # Tests must pass even when only 1 core is available; parallel = TRUE then
   # silently falls back to sequential, but results must still be identical.
 
-  set.seed(42)
-  n_par <- 200
-  df_par <- data.frame(
-    mo = "B_ESCHR_COLI",
-    AMC = as.mic(sample(c("0.25", "0.5", "1", "2", "4", "8", "16", "32"), n_par, TRUE)),
-    GEN = as.mic(sample(c("0.5", "1", "2", "4", "8", "16", "32", "64"), n_par, TRUE)),
-    CIP = as.mic(sample(c("0.001", "0.002", "0.004", "0.008", "0.016", "0.032"), n_par, TRUE)),
-    PEN = sample(c("S", "I", "R", NA_character_), n_par, TRUE),
-    stringsAsFactors = FALSE
-  )
+  if (AMR:::pkg_is_available("future.apply")) {
+    set.seed(42)
+    n_par <- 200
+    df_par <- data.frame(
+      mo = "B_ESCHR_COLI",
+      AMC = as.mic(sample(c("0.25", "0.5", "1", "2", "4", "8", "16", "32"), n_par, TRUE)),
+      GEN = as.mic(sample(c("0.5", "1", "2", "4", "8", "16", "32", "64"), n_par, TRUE)),
+      CIP = as.mic(sample(c("0.001", "0.002", "0.004", "0.008", "0.016", "0.032"), n_par, TRUE)),
+      PEN = sample(c("S", "I", "R", NA_character_), n_par, TRUE),
+      stringsAsFactors = FALSE
+    )
 
-  # clear any existing history before comparing
-  sir_interpretation_history(clean = TRUE)
-  sir_seq <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE))
-  log_seq <- sir_interpretation_history(clean = TRUE)
+    # clear any existing history before comparing
+    sir_interpretation_history(clean = TRUE)
+    sir_seq <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE))
+    log_seq <- sir_interpretation_history(clean = TRUE)
 
-  sir_par <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
-  log_par <- sir_interpretation_history(clean = TRUE)
+    future::plan(future::multicore)
+    n_max_workers <- future::nbrOfWorkers()
 
-  # 1. parallel = TRUE gives identical SIR results to sequential
-  expect_identical(sir_seq[["AMC"]], sir_par[["AMC"]])
-  expect_identical(sir_seq[["GEN"]], sir_par[["GEN"]])
-  expect_identical(sir_seq[["CIP"]], sir_par[["CIP"]])
-  expect_identical(sir_seq[["PEN"]], sir_par[["PEN"]])
+    sir_par <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+    log_par <- sir_interpretation_history(clean = TRUE)
 
-  # 2. same number of log rows as sequential
-  expect_equal(nrow(log_seq), nrow(log_par))
+    # 1. parallel = TRUE gives identical SIR results to sequential
+    expect_identical(sir_seq[["AMC"]], sir_par[["AMC"]])
+    expect_identical(sir_seq[["GEN"]], sir_par[["GEN"]])
+    expect_identical(sir_seq[["CIP"]], sir_par[["CIP"]])
+    expect_identical(sir_seq[["PEN"]], sir_par[["PEN"]])
 
-  # 3. pre-existing log entries must not be duplicated
-  #    run sequential once to populate the history, then run parallel and
-  #    verify the new parallel run adds exactly as many rows as sequential
-  sir_interpretation_history(clean = TRUE)
-  suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE)) # populate history
-  pre_n <- nrow(sir_interpretation_history())
-  suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
-  post_n <- nrow(sir_interpretation_history())
-  expect_equal(post_n - pre_n, nrow(log_seq)) # exactly one run's worth of new rows
-  sir_interpretation_history(clean = TRUE)
+    # 2. same number of log rows as sequential
+    expect_equal(nrow(log_seq), nrow(log_par))
 
-  # 4. two sequential runs and two parallel runs yield identical results
-  sir_par2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
-  expect_identical(sir_par[["AMC"]], sir_par2[["AMC"]])
-  expect_identical(sir_par[["GEN"]], sir_par2[["GEN"]])
+    # 3. pre-existing log entries must not be duplicated
+    #    run sequential once to populate the history, then run parallel and
+    #    verify the new parallel run adds exactly as many rows as sequential
+    sir_interpretation_history(clean = TRUE)
+    future::plan(future::sequential)
+    suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE)) # populate history
+    pre_n <- nrow(sir_interpretation_history())
+    future::plan(future::multicore)
+    suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+    post_n <- nrow(sir_interpretation_history())
+    expect_equal(post_n - pre_n, nrow(log_seq)) # exactly one run's worth of new rows
+    sir_interpretation_history(clean = TRUE)
 
-  # 5. max_cores = 1 gives same results as default sequential
-  sir_mc1 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE, max_cores = 1L))
-  expect_identical(sir_seq[["AMC"]], sir_mc1[["AMC"]])
-  expect_identical(sir_seq[["GEN"]], sir_mc1[["GEN"]])
+    # 4. two sequential runs and two parallel runs yield identical results
+    sir_par2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+    expect_identical(sir_par[["AMC"]], sir_par2[["AMC"]])
+    expect_identical(sir_par[["GEN"]], sir_par2[["GEN"]])
 
-  # 6. max_cores = 2 and max_cores = 3 give same results as sequential
-  sir_mc2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE, max_cores = 2L))
-  sir_mc3 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE, max_cores = 3L))
-  expect_identical(sir_seq[["AMC"]], sir_mc2[["AMC"]])
-  expect_identical(sir_seq[["GEN"]], sir_mc3[["GEN"]])
+    # 5. max_cores = 1 gives same results as default sequential
+    future::plan(future::multicore, workers = 1)
+    sir_mc1 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+    expect_identical(sir_seq[["AMC"]], sir_mc1[["AMC"]])
+    expect_identical(sir_seq[["GEN"]], sir_mc1[["GEN"]])
 
-  # 7. single-column data frame falls back silently to sequential
-  df_single <- df_par[, c("mo", "AMC")]
-  sir_single_seq <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE))
-  sir_single_par <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE, parallel = TRUE))
-  expect_identical(sir_single_seq[["AMC"]], sir_single_par[["AMC"]])
+    # 6. max_cores = 2 and max_cores = 3 give same results as sequential
+    if (n_max_workers >= 3) {
+      future::plan(future::multicore, workers = 2)
+      sir_mc2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+      future::plan(future::multicore, workers = 3)
+      sir_mc3 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
+      expect_identical(sir_seq[["AMC"]], sir_mc2[["AMC"]])
+      expect_identical(sir_seq[["GEN"]], sir_mc3[["GEN"]])
+    }
 
-  # 9. row-batch mode (n_cols < n_cores): force row splitting via max_cores and
-  #    verify identical output to sequential for a dataset with 2 AB columns so
-  #    pieces_per_col = ceiling(max_cores / 2) >= 2 and row batching activates
-  df_wide <- data.frame(
-    mo = "B_ESCHR_COLI",
-    AMC = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
-    GEN = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
-    stringsAsFactors = FALSE
-  )
-  sir_wide_seq <- suppressMessages(as.sir(df_wide, col_mo = "mo", info = FALSE))
-  sir_wide_par <- suppressMessages(as.sir(df_wide,
-    col_mo = "mo", info = FALSE,
-    parallel = TRUE, max_cores = 8L
-  ))
-  expect_identical(sir_wide_seq[["AMC"]], sir_wide_par[["AMC"]])
-  expect_identical(sir_wide_seq[["GEN"]], sir_wide_par[["GEN"]])
+    # 7. single-column data frame falls back silently to sequential
+    df_single <- df_par[, c("mo", "AMC")]
+    future::plan(future::sequential)
+    sir_single_seq <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE))
+    future::plan(future::multicore)
+    sir_single_par <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE, parallel = TRUE))
+    expect_identical(sir_single_seq[["AMC"]], sir_single_par[["AMC"]])
 
-  # 8. info = TRUE with parallel does not produce per-column worker messages
-  #    (messages should only appear in the main process, not duplicated from workers)
-  msgs <- capture.output(
-    suppressWarnings(as.sir(df_par, col_mo = "mo", info = TRUE, parallel = TRUE)),
-    type = "message"
-  )
-  # each AB column name should appear at most once in all messages combined
-  for (ab_nm in c("AMC", "GEN", "CIP", "PEN")) {
-    n_mentions <- sum(grepl(ab_nm, msgs, fixed = TRUE))
-    expect_lte(n_mentions, 1L)
+    # 8. row-batch mode (n_cols < n_cores): force row splitting via max_cores and
+    #    verify identical output to sequential for a dataset with 2 AB columns so
+    #    pieces_per_col = ceiling(max_cores / 2) >= 2 and row batching activates
+    df_wide <- data.frame(
+      mo = "B_ESCHR_COLI",
+      AMC = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
+      GEN = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
+      stringsAsFactors = FALSE
+    )
+    future::plan(future::sequential)
+    sir_wide_seq <- suppressMessages(as.sir(df_wide, col_mo = "mo", info = FALSE))
+    future::plan(future::multicore)
+    sir_wide_par <- suppressMessages(as.sir(df_wide,
+      col_mo = "mo", info = FALSE,
+      parallel = TRUE, max_cores = 8L
+    ))
+    expect_identical(sir_wide_seq[["AMC"]], sir_wide_par[["AMC"]])
+    expect_identical(sir_wide_seq[["GEN"]], sir_wide_par[["GEN"]])
+
+    # 8. info = TRUE with parallel does not produce per-column worker messages
+    #    (messages should only appear in the main process, not duplicated from workers)
+    msgs <- capture.output(
+      suppressWarnings(as.sir(df_par, col_mo = "mo", info = TRUE, parallel = TRUE)),
+      type = "message"
+    )
+    # each AB column name should appear at most once in all messages combined
+    for (ab_nm in c("AMC", "GEN", "CIP", "PEN")) {
+      n_mentions <- sum(grepl(ab_nm, msgs, fixed = TRUE))
+      expect_lte(n_mentions, 1L)
+    }
+    future::plan(future::sequential)
   }
 })
 
