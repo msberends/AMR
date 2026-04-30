@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9053</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9055</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,15 +49,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9053" id="amr-3019053">AMR 3.0.1.9053<a class="anchor" aria-label="anchor" href="#amr-3019053"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9055" id="amr-3019055">AMR 3.0.1.9055<a class="anchor" aria-label="anchor" href="#amr-3019055"></a></h2>
 <p>This will become release v3.1.0, intended for launch end of May.</p>
 <div class="section level4">
-<h4 id="new-3-0-1-9053">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9053"></a></h4>
+<h4 id="new-3-0-1-9055">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9055"></a></h4>
 <ul><li>Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the <code>clinical_breakpoints</code> data set for usage in <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.</li>
 <li>Support for the <a href="https://future.futureverse.org" class="external-link"><code>future</code></a> package and its framework, as the previous implementation of parallel computing was slow
 <ul><li>
 <strong>Breaking change</strong>: <code><a href="../reference/as.sir.html">as.sir()</a></code> with <code>parallel = TRUE</code> now requires a non-sequential <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> to be active before the call — e.g., <code>future::plan(future::multisession)</code> — and throws an informative error if none is set.</li>
 <li>New all-core usage setup: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure and processing time)</li>
+<li>
+<code><a href="../reference/antibiogram.html">antibiogram()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code> gained a <code>parallel</code> argument using the same <code>future</code>/<code>future.apply</code> pattern: for WISCA, Monte Carlo simulations are split into <code>(group, chunk)</code> job pairs distributed across workers; for grouped antibiograms, each group is processed by a separate worker (<a href="https://github.com/msberends/AMR/issues/281" class="external-link">#281</a>)</li>
 </ul></li>
 <li>Integration with the <em>tidymodels</em> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
 <ul><li>
@@ -92,7 +94,7 @@
 <li>Two new <code>NA</code> objects, <code>NA_ab_</code> and <code>NA_mo_</code>, analogous to base R’s <code>NA_character_</code> and <code>NA_integer_</code>, for use in pipelines that require typed missing values</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixes-3-0-1-9053">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9053"></a></h4>
+<h4 id="fixes-3-0-1-9055">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9055"></a></h4>
 <ul><li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where values that were purely numeric (e.g., <code>"1"</code>) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter</li>
 <li>Fixed a bug in <code><a href="../reference/as.mic.html">as.mic()</a></code> where MIC values in scientific notation (e.g., <code>"1e-3"</code>) were incorrectly handled because the letter <code>e</code> was removed along with other Unicode letters; scientific notation <code>e</code> is now preserved</li>
 <li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> where certain AB codes containing “PH” or “TH” (such as <code>ETH</code>, <code>MTH</code>, <code>PHE</code>, <code>PHN</code>, <code>STH</code>, <code>THA</code>, <code>THI1</code>) would incorrectly return <code>NA</code> when combined in a vector with any untranslatable value (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
@@ -112,7 +114,7 @@
 <li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> ignoring <code>info = FALSE</code> for columns with no breakpoints (e.g. cefoxitin against <em>E. coli</em>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updates-3-0-1-9053">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9053"></a></h4>
+<h4 id="updates-3-0-1-9055">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9055"></a></h4>
 <ul><li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code> with <code>reference_data</code>: custom guideline names now correctly classify values as R using EUCAST convention (<code>&gt; breakpoint_R</code> for MIC, <code>&lt; breakpoint_R</code> for disk); custom breakpoints with <code>host = NA</code> now serve as a host-agnostic fallback when no host-specific row matches (<a href="https://github.com/msberends/AMR/issues/239" class="external-link">#239</a>)</li>
 <li>Extensive <code>cli</code> integration for better message handling and clickable links in messages and warnings (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>

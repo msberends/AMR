@@ -19,7 +19,8 @@ antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
   minimum = 30, combine_SI = TRUE, sep = " + ", sort_columns = TRUE,
   wisca = FALSE, simulations = 1000, conf_interval = 0.95,
-  interval_side = "two-tailed", info = interactive(), ...)
+  interval_side = "two-tailed", info = interactive(), parallel = FALSE,
+  ...)
 
 wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
   syndromic_group = NULL, only_all_tested = FALSE, digits = 1,
@@ -27,7 +28,7 @@ wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
   col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
   sep = " + ", sort_columns = TRUE, simulations = 1000,
   conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), ...)
+  info = interactive(), parallel = FALSE, ...)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -183,7 +184,7 @@ knit_print(x, italicise = TRUE,
 
 - formatting_type:
 
-  Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the
+  Numeric value (1-22 for WISCA, 1-12 for non-WISCA) indicating how the
   'cells' of the antibiogram table should be formatted. See *Details* \>
   *Formatting Type* for a list of options.
 
@@ -250,6 +251,19 @@ knit_print(x, italicise = TRUE,
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate info
   should be printed - the default is `TRUE` only in interactive mode.
+
+- parallel:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate if
+  parallel computing must be used, defaults to `FALSE`. Requires the
+  [`future.apply`](https://future.apply.futureverse.org/reference/future_lapply.html)
+  package. For WISCA, Monte Carlo simulations are distributed across
+  workers; for grouped antibiograms, each group is processed by a
+  separate worker. **A non-sequential
+  [`future::plan()`](https://future.futureverse.org/reference/plan.html)
+  must already be active before setting `parallel = TRUE`** – for
+  example, `future::plan(future::multisession)`. An error is thrown if
+  `parallel = TRUE` is used without a plan set by the user.
 
 - ...:
 

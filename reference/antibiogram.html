@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9053</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9055</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,8 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wisca</span>, <span class="fl">14</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span>, col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">" + "</span>, sort_columns <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  wisca <span class="op">=</span> <span class="cn">FALSE</span>, simulations <span class="op">=</span> <span class="fl">1000</span>, conf_interval <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">wisca</span><span class="op">(</span><span class="va">x</span>, antimicrobials <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.sir</span><span class="op">)</span>, ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>  syndromic_group <span class="op">=</span> <span class="cn">NULL</span>, only_all_tested <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -73,7 +74,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">" + "</span>, sort_columns <span class="op">=</span> <span class="cn">TRUE</span>, simulations <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  conf_interval <span class="op">=</span> <span class="fl">0.95</span>, interval_side <span class="op">=</span> <span class="st">"two-tailed"</span>,</span>
-<span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">retrieve_wisca_parameters</span><span class="op">(</span><span class="va">wisca_model</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -147,7 +148,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 
 <dt id="arg-formatting-type">formatting_type<a class="anchor" aria-label="anchor" href="#arg-formatting-type"></a></dt>
-<dd><p>Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See <em>Details</em> &gt; <em>Formatting Type</em> for a list of options.</p></dd>
+<dd><p>Numeric value (1-22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See <em>Details</em> &gt; <em>Formatting Type</em> for a list of options.</p></dd>
 
 
 <dt id="arg-col-mo">col_mo<a class="anchor" aria-label="anchor" href="#arg-col-mo"></a></dt>
@@ -192,6 +193,10 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
 <dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate info should be printed - the default is <code>TRUE</code> only in interactive mode.</p></dd>
+
+
+<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>. Requires the <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply</a></code> package. For WISCA, Monte Carlo simulations are distributed across workers; for grouped antibiograms, each group is processed by a separate worker. <strong>A non-sequential <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> must already be active before setting <code>parallel = TRUE</code></strong> – for example, <code>future::plan(future::multisession)</code>. An error is thrown if <code>parallel = TRUE</code> is used without a plan set by the user.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9053
+## AMR 3.0.1.9055
 
 This will become release v3.1.0, intended for launch end of May.
 
@@ -28,6 +28,13 @@ This will become release v3.1.0, intended for launch end of May.
     dataset on a 16-core machine would only use 6 cores; now all 16 are
     used, with each worker processing a smaller row slice (lower
     per-worker memory pressure and processing time)
+  - [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
+    and [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
+    gained a `parallel` argument using the same `future`/`future.apply`
+    pattern: for WISCA, Monte Carlo simulations are split into
+    `(group, chunk)` job pairs distributed across workers; for grouped
+    antibiograms, each group is processed by a separate worker
+    ([\#281](https://github.com/msberends/AMR/issues/281))
 - Integration with the *tidymodels* framework to allow seamless use of
   SIR, MIC and disk data in modelling pipelines via `recipes`
   - [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md)
