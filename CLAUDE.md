@@ -167,7 +167,8 @@ Then run the following from the repo root to determine the version string to use
 currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
 currenttagfull=$(git describe --tags --abbrev=0)
 defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
-currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
+git fetch origin ${defaultbranch} --quiet
+currentcommit=$(git rev-list --count ${currenttagfull}..origin/${defaultbranch})
 currentversion="${currenttag}.$((currentcommit + 9001 + 1))"
 echo "$currentversion"
 ```

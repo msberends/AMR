@@ -25,7 +25,8 @@ antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
   ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
   minimum = 30, combine_SI = TRUE, sep = " + ", sort_columns = TRUE,
   wisca = FALSE, simulations = 1000, conf_interval = 0.95,
-  interval_side = "two-tailed", info = interactive(), ...)
+  interval_side = "two-tailed", info = interactive(), parallel = FALSE,
+  ...)
 
 wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
   syndromic_group = NULL, only_all_tested = FALSE, digits = 1,
@@ -33,7 +34,7 @@ wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
   col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
   sep = " + ", sort_columns = TRUE, simulations = 1000,
   conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), ...)
+  info = interactive(), parallel = FALSE, ...)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -80,7 +81,7 @@ retrieve_wisca_parameters(wisca_model, ...)
 
 \item{digits}{Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.}
 
-\item{formatting_type}{Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See \emph{Details} > \emph{Formatting Type} for a list of options.}
+\item{formatting_type}{Numeric value (1-22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See \emph{Details} > \emph{Formatting Type} for a list of options.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -103,6 +104,8 @@ retrieve_wisca_parameters(wisca_model, ...)
 \item{interval_side}{The side of the confidence interval, either \code{"two-tailed"} (default), \code{"left"} or \code{"right"}.}
 
 \item{info}{A \link{logical} to indicate info should be printed - the default is \code{TRUE} only in interactive mode.}
+
+\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. Requires the \code{\link[future.apply:future_lapply]{future.apply}} package. For WISCA, Monte Carlo simulations are distributed across workers; for grouped antibiograms, each group is processed by a separate worker. \strong{A non-sequential \code{\link[future:plan]{future::plan()}} must already be active before setting \code{parallel = TRUE}} -- for example, \code{future::plan(future::multisession)}. An error is thrown if \code{parallel = TRUE} is used without a plan set by the user.}
 
 \item{...}{When used in \link[knitr:kable]{R Markdown or Quarto}: arguments passed on to \code{\link[knitr:kable]{knitr::kable()}} (otherwise, has no use).}
 
