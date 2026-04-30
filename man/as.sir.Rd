@@ -73,7 +73,7 @@ is_sir_eligible(x, threshold = 0.05)
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
   language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  parallel = FALSE, max_cores = -1, conserve_capped_values = NULL)
+  parallel = FALSE, conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 }
@@ -150,9 +150,7 @@ The default \code{"conservative"} setting ensures cautious handling of uncertain
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. The \code{parallel} package is part of base \R and no additional packages are required. On Unix/macOS with \R >= 4.0.0, \code{\link[parallel:mclapply]{parallel::mclapply()}} (fork-based) is used; on Windows and \R < 4.0.0, \code{\link[parallel:clusterApply]{parallel::parLapply()}} with a PSOCK cluster is used (requires the AMR package to be installed, not just loaded via \code{devtools::load_all()}). Parallelism distributes columns across cores; it is most beneficial when there are many antibiotic columns and a large number of rows.}
-
-\item{max_cores}{Maximum number of cores to use if \code{parallel = TRUE}. Use a negative value to subtract that number from the available number of cores, e.g. a value of \code{-2} on an 8-core machine means that at most 6 cores will be used. Defaults to \code{-1}. There will never be used more cores than variables to analyse. The available number of cores are detected using \code{\link[parallelly:availableCores]{parallelly::availableCores()}} if that package is installed, and base \R's \code{\link[parallel:detectCores]{parallel::detectCores()}} otherwise.}
+\item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. Requires the \code{\link[future.apply:future_lapply]{future.apply}} package. \strong{A non-sequential \code{\link[future:plan]{future::plan()}} must already be active before setting \code{parallel = TRUE}} — for example, \code{future::plan(future::multisession)}. An error is thrown if \code{parallel = TRUE} is used without a plan set by the user. Parallelism distributes columns (and optionally row batches) across workers; it is most beneficial when there are many antibiotic columns and a large number of rows.}
 
 \item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
@@ -183,7 +181,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 
-# fast processing with parallel computing:
+# fast processing with parallel computing (requires future.apply):
 as.sir(your_data, ..., parallel = TRUE)
 }\if{html}{\out{</div>}}
 \item Operators like "<=" will be considered according to the \code{capped_mic_handling} setting. At default, an MIC value of e.g. ">2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the \emph{true} MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
@@ -201,7 +199,7 @@ your_data \%>\% mutate_if(is.disk, as.sir, ab = c("cipro", "ampicillin", ...), m
 # for veterinary breakpoints, also set `host`:
 your_data \%>\% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 
-# fast processing with parallel computing:
+# fast processing with parallel computing (requires future.apply):
 as.sir(your_data, ..., parallel = TRUE)
 }\if{html}{\out{</div>}}
 }
@@ -313,9 +311,6 @@ as.sir(df_wide)
 sir_interpretation_history()
 
 \donttest{
-# using parallel computing, which is available in base R:
-as.sir(df_wide, parallel = TRUE, info = TRUE)
-
 
 ## Using dplyr -------------------------------------------------
 if (require("dplyr")) {

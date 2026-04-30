@@ -26,12 +26,9 @@
 <div style="display: flex; font-size: 0.8em;">
 
 <p style="text-align:left; width: 50%;">
-
 <small><a href="https://amr-for-r.org/">amr-for-r.org</a></small>
 </p>
-
 <p style="text-align:right; width: 50%;">
-
 <small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">doi.org/10.18637/jss.v104.i03</a></small>
 </p>
 
@@ -174,24 +171,26 @@ example_isolates %>%
 #> ℹ Using column mo as input for `mo_fullname()`
 #> ℹ Using column mo as input for `mo_is_gram_negative()`
 #> ℹ Using column mo as input for `mo_is_intrinsic_resistant()`
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
-#>   Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
-#>   (amikacin), and KAN (kanamycin)
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected
+#>   Resistant Phenotypes' v1.2 (2023). This note will be shown
+#>   once per session.
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
+#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM
+#>   (meropenem)
 #> # A tibble: 35 × 7
-#>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
-#>    <chr>                        <sir> <sir> <sir> <sir> <sir> <sir>
-#>  1 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
-#>  2 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
-#>  3 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
-#>  4 Pseudomonas aeruginosa       S     S     S     R     NA    S    
-#>  5 Pseudomonas aeruginosa       S     S     S     R     S     S    
-#>  6 Pseudomonas aeruginosa       S     S     S     R     S     S    
-#>  7 Stenotrophomonas maltophilia R     R     R     R     R     R    
-#>  8 Pseudomonas aeruginosa       S     S     S     R     NA    S    
-#>  9 Pseudomonas aeruginosa       S     S     S     R     NA    S    
-#> 10 Pseudomonas aeruginosa       S     S     S     R     S     S    
+#>    bacteria         GEN   TOB   AMK   KAN   IPM   MEM  
+#>    <chr>            <sir> <sir> <sir> <sir> <sir> <sir>
+#>  1 Pseudomonas aer… I     S     NA    R     S     NA   
+#>  2 Pseudomonas aer… I     S     NA    R     S     NA   
+#>  3 Pseudomonas aer… I     S     NA    R     S     NA   
+#>  4 Pseudomonas aer… S     S     S     R     NA    S    
+#>  5 Pseudomonas aer… S     S     S     R     S     S    
+#>  6 Pseudomonas aer… S     S     S     R     S     S    
+#>  7 Stenotrophomona… R     R     R     R     R     R    
+#>  8 Pseudomonas aer… S     S     S     R     NA    S    
+#>  9 Pseudomonas aer… S     S     S     R     NA    S    
+#> 10 Pseudomonas aer… S     S     S     R     S     S    
 #> # ℹ 25 more rows
 ```
 
@@ -215,23 +214,24 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 ``` r
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
-#>   (amikacin), and KAN (kanamycin)
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
+#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM
+#>   (meropenem)
 ```
 
-| Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
-|:---|:---|:---|:---|:---|:---|:---|
-| CoNS | 0% (0-8%,N=43) | 86% (82-90%,N=309) | 52% (37-67%,N=48) | 0% (0-8%,N=43) | 52% (37-67%,N=48) | 22% (12-35%,N=55) |
-| *E. coli* | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) | NA | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
-| *E. faecalis* | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) | NA | 0% (0-9%,N=39) |
-| *K. pneumoniae* | NA | 90% (79-96%,N=58) | 100% (93-100%,N=51) | NA | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
-| *P. aeruginosa* | NA | 100% (88-100%,N=30) | NA | 0% (0-12%,N=30) | NA | 100% (88-100%,N=30) |
-| *P. mirabilis* | NA | 94% (80-99%,N=34) | 94% (79-99%,N=32) | NA | NA | 94% (80-99%,N=34) |
-| *S. aureus* | NA | 99% (97-100%,N=233) | NA | NA | NA | 98% (92-100%,N=86) |
-| *S. epidermidis* | 0% (0-8%,N=44) | 79% (71-85%,N=163) | NA | 0% (0-8%,N=44) | NA | 51% (40-61%,N=89) |
-| *S. hominis* | NA | 92% (84-97%,N=80) | NA | NA | NA | 85% (74-93%,N=62) |
-| *S. pneumoniae* | 0% (0-3%,N=117) | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) |
+| Pathogen         | Amikacin             | Gentamicin          | Imipenem             | Kanamycin       | Meropenem            | Tobramycin          |
+|:-----------------|:---------------------|:--------------------|:---------------------|:----------------|:---------------------|:--------------------|
+| CoNS             | 0% (0-8%,N=43)       | 86% (82-90%,N=309)  | 52% (37-67%,N=48)    | 0% (0-8%,N=43)  | 52% (37-67%,N=48)    | 22% (12-35%,N=55)   |
+| *E. coli*        | 100% (98-100%,N=171) | 98% (96-99%,N=460)  | 100% (99-100%,N=422) | NA              | 100% (99-100%,N=418) | 97% (96-99%,N=462)  |
+| *E. faecalis*    | 0% (0-9%,N=39)       | 0% (0-9%,N=39)      | 100% (91-100%,N=38)  | 0% (0-9%,N=39)  | NA                   | 0% (0-9%,N=39)      |
+| *K. pneumoniae*  | NA                   | 90% (79-96%,N=58)   | 100% (93-100%,N=51)  | NA              | 100% (93-100%,N=53)  | 90% (79-96%,N=58)   |
+| *P. aeruginosa*  | NA                   | 100% (88-100%,N=30) | NA                   | 0% (0-12%,N=30) | NA                   | 100% (88-100%,N=30) |
+| *P. mirabilis*   | NA                   | 94% (80-99%,N=34)   | 94% (79-99%,N=32)    | NA              | NA                   | 94% (80-99%,N=34)   |
+| *S. aureus*      | NA                   | 99% (97-100%,N=233) | NA                   | NA              | NA                   | 98% (92-100%,N=86)  |
+| *S. epidermidis* | 0% (0-8%,N=44)       | 79% (71-85%,N=163)  | NA                   | 0% (0-8%,N=44)  | NA                   | 51% (40-61%,N=89)   |
+| *S. hominis*     | NA                   | 92% (84-97%,N=80)   | NA                   | NA              | NA                   | 85% (74-93%,N=62)   |
+| *S. pneumoniae*  | 0% (0-3%,N=117)      | 0% (0-3%,N=117)     | NA                   | 0% (0-3%,N=117) | NA                   | 0% (0-3%,N=117)     |
 
 In combination antibiograms, it is clear that combined antimicrobials
 yield higher empiric coverage:
@@ -242,10 +242,10 @@ antibiogram(example_isolates,
             mo_transform = "gramstain")
 ```
 
-| Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:---|:---|:---|:---|
-| Gram-negative | 88% (85-91%,N=641) | 99% (97-99%,N=691) | 98% (97-99%,N=693) |
-| Gram-positive | 86% (82-89%,N=345) | 98% (96-98%,N=1044) | 95% (93-97%,N=550) |
+| Pathogen      | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:--------------|:------------------------|:-------------------------------------|:-------------------------------------|
+| Gram-negative | 88% (85-91%,N=641)      | 99% (97-99%,N=691)                   | 98% (97-99%,N=693)                   |
+| Gram-positive | 86% (82-89%,N=345)      | 98% (96-98%,N=1044)                  | 95% (93-97%,N=550)                   |
 
 Like many other functions in this package, `antibiogram()` comes with
 support for 28 languages that are often detected automatically based on
@@ -318,16 +318,18 @@ example_isolates %>%
   summarise(across(c(GEN, TOB),
                    list(total_R = resistance,
                         conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
-#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
-#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ `resistance()` assumes the EUCAST guideline and thus
+#>   considers the 'I' category susceptible. Set the `guideline`
+#>   argument or the `AMR_guideline` option to either "CLSI" or
+#>   "EUCAST", see `?AMR-options`.
 #> ℹ This message will be shown once per session.
 #> # A tibble: 3 × 5
-#>   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int
-#>   <chr>            <dbl> <chr>              <dbl> <chr>       
-#> 1 Clinical         0.229 0.205-0.254        0.315 0.284-0.347 
-#> 2 ICU              0.290 0.253-0.33         0.400 0.353-0.449 
-#> 3 Outpatient       0.2   0.131-0.285        0.368 0.254-0.493
+#>   ward       GEN_total_R GEN_conf_int TOB_total_R
+#>   <chr>            <dbl> <chr>              <dbl>
+#> 1 Clinical         0.229 0.205-0.254        0.315
+#> 2 ICU              0.290 0.253-0.33         0.400
+#> 3 Outpatient       0.2   0.131-0.285        0.368
+#> # ℹ 1 more variable: TOB_conf_int <chr>
 ```
 
 Or use [antimicrobial
@@ -344,15 +346,16 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
-#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
+#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
 #> ℹ For `polymyxins()` using column COL (colistin)
 #> Warning: There was 1 warning in `summarise()`.
-#> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
+#> ℹ In argument: `across(c(aminoglycosides(), polymyxins()),
+#>   resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient"
-#> (whilst `minimum = 30`).
+#> ! Introducing NA: only 23 results available for KAN in group:
+#> ward = "Outpatient" (whilst `minimum = 30`).
 out
 #> # A tibble: 3 × 6
 #>   ward         GEN   TOB   AMK   KAN   COL
@@ -366,11 +369,12 @@ out
 # transform the antibiotic columns to names:
 out %>% set_ab_names()
 #> # A tibble: 3 × 6
-#>   ward       gentamicin tobramycin amikacin kanamycin colistin
-#>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>    <dbl>
-#> 1 Clinical        0.229      0.315    0.626         1    0.780
-#> 2 ICU             0.290      0.400    0.662         1    0.857
-#> 3 Outpatient      0.2        0.368    0.605        NA    0.889
+#>   ward       gentamicin tobramycin amikacin kanamycin
+#>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>
+#> 1 Clinical        0.229      0.315    0.626         1
+#> 2 ICU             0.290      0.400    0.662         1
+#> 3 Outpatient      0.2        0.368    0.605        NA
+#> # ℹ 1 more variable: colistin <dbl>
 ```
 
 ``` r

@@ -129,16 +129,21 @@ bug_drug_combinations <- function(x,
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
         m <- as.matrix(table(as.sir(x), useNA = "always"))
+        na_idx <- which(is.na(rownames(m)))
+        get_row <- function(lbl) {
+          idx <- which(rownames(m) == lbl)
+          if (length(idx) == 1L) unname(m[idx, ]) else rep(0L, ncol(m))
+        }
         data.frame(
-          S = m["S", ],
-          SDD = m["SDD", ],
-          I = m["I", ],
-          R = m["R", ],
-          NI = m["NI", ],
-          WT = m["WT", ],
-          NWT = m["NWT", ],
-          NS = m["NS", ],
-          na = m[which(is.na(rownames(m))), ],
+          S = get_row("S"),
+          SDD = get_row("SDD"),
+          I = get_row("I"),
+          R = get_row("R"),
+          NI = get_row("NI"),
+          WT = get_row("WT"),
+          NWT = get_row("NWT"),
+          NS = get_row("NS"),
+          na = if (length(na_idx) == 1L) unname(m[na_idx, ]) else rep(0L, ncol(m)),
           stringsAsFactors = FALSE
         )
       })

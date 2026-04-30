@@ -1,8 +1,13 @@
-# AMR 3.0.1.9052
+# AMR 3.0.1.9053
+
+This will become release v3.1.0, intended for launch end of May.
 
 ### New
 * Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
-* Integration with the **tidymodels** framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
+* Support for the [`future`](https://future.futureverse.org) package and its framework, as the previous implementation of parallel computing was slow
+  - **Breaking change**: `as.sir()` with `parallel = TRUE` now requires a non-sequential `future::plan()` to be active before the call — e.g., `future::plan(future::multisession)` — and throws an informative error if none is set.
+  - New all-core usage setup: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure and processing time)
+* Integration with the *tidymodels* framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
   - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
   - New `tidyselect` helpers:
     - `all_sir()`, `all_sir_predictors()`
@@ -21,7 +26,6 @@
 * Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 ### Fixes
-* Fixed multiple bugs in the `parallel = TRUE` mode of `as.sir()` for data frames
 * Fixed a bug in `as.sir()` where values that were purely numeric (e.g., `"1"`) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter
 * Fixed a bug in `as.mic()` where MIC values in scientific notation (e.g., `"1e-3"`) were incorrectly handled because the letter `e` was removed along with other Unicode letters; scientific notation `e` is now preserved
 * Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
@@ -37,8 +41,7 @@
 * Fixed BRMO classification by including bacterial complexes (#275)
 * Fixed `as.sir()` for data frames silently deleting columns whose AB class was already `<sir>` when called a second time (re-running on already-converted data) (#278)
 * Fixed `as.sir()` for data frames incorrectly treating metadata columns (e.g. `patient`, `ward`) as antibiotic columns when their names coincidentally matched an antibiotic code; column content is now validated against AMR data patterns before inclusion
-* Improved parallel computing in `as.sir()`: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure)
-* Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*): an operator-precedence bug (`&&`/`||`) caused the "Interpreting MIC values" intro message to fire unconditionally when `nrow(breakpoints) == 0`, regardless of `info`; the progress bar title was also not gated by `info`
+* Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*)
 
 ### Updates
 * `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (#239)
@@ -56,7 +59,6 @@
   * This results in more reliable behaviour compared to previous versions for capped MIC values
   * Removed the `"inverse"` option, which has now become redundant
 * `ab_group()` now returns values consist with the AMR selectors (#246)
-* Added two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
 
 
 # AMR 3.0.1

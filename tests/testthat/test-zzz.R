@@ -89,6 +89,11 @@ test_that("test-zzz.R", {
     "symbol" = "cli",
     # curl
     "has_internet" = "curl",
+    # future
+    "plan" = "future",
+    "nbrOfWorkers" = "future",
+    # future.apply
+    "future_lapply" = "future.apply",
     # ggplot2
     "aes" = "ggplot2",
     "arrow" = "ggplot2",
@@ -127,8 +132,6 @@ test_that("test-zzz.R", {
     "kable" = "knitr",
     "knit_print" = "knitr",
     "opts_chunk" = "knitr",
-    # parallelly
-    "availableCores" = "parallelly",
     # pillar
     "pillar_shaft" = "pillar",
     "style_na" = "pillar",
