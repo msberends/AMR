@@ -209,27 +209,27 @@ subspecies).
 
 All mentioned methods are covered in the `first_isolate()` function:
 
-|                                                 |                                                        |
-|-------------------------------------------------|--------------------------------------------------------|
-| **Method**                                      | **Function to apply**                                  |
-| **Isolate-based**                               | `first_isolate(x, method = "isolate-based")`           |
-| *(= all isolates)*                              |                                                        |
-|                                                 |                                                        |
-|                                                 |                                                        |
-| **Patient-based**                               | `first_isolate(x, method = "patient-based")`           |
-| *(= first isolate per patient)*                 |                                                        |
-|                                                 |                                                        |
-|                                                 |                                                        |
-| **Episode-based**                               | `first_isolate(x, method = "episode-based")`, or:      |
-| *(= first isolate per episode)*                 |                                                        |
-| \- 7-Day interval from initial isolate          | \- `first_isolate(x, method = "e", episode_days = 7)`  |
-| \- 30-Day interval from initial isolate         | \- `first_isolate(x, method = "e", episode_days = 30)` |
-|                                                 |                                                        |
-|                                                 |                                                        |
-| **Phenotype-based**                             | `first_isolate(x, method = "phenotype-based")`, or:    |
-| *(= first isolate per phenotype)*               |                                                        |
-| \- Major difference in any antimicrobial result | \- `first_isolate(x, type = "points")`                 |
-| \- Any difference in key antimicrobial results  | \- `first_isolate(x, type = "keyantimicrobials")`      |
+|  |  |
+|----|----|
+| **Method** | **Function to apply** |
+| **Isolate-based** | `first_isolate(x, method = "isolate-based")` |
+| *(= all isolates)* |  |
+|  |  |
+|  |  |
+| **Patient-based** | `first_isolate(x, method = "patient-based")` |
+| *(= first isolate per patient)* |  |
+|  |  |
+|  |  |
+| **Episode-based** | `first_isolate(x, method = "episode-based")`, or: |
+| *(= first isolate per episode)* |  |
+| \- 7-Day interval from initial isolate | \- `first_isolate(x, method = "e", episode_days = 7)` |
+| \- 30-Day interval from initial isolate | \- `first_isolate(x, method = "e", episode_days = 30)` |
+|  |  |
+|  |  |
+| **Phenotype-based** | `first_isolate(x, method = "phenotype-based")`, or: |
+| *(= first isolate per phenotype)* |  |
+| \- Major difference in any antimicrobial result | \- `first_isolate(x, type = "points")` |
+| \- Any difference in key antimicrobial results | \- `first_isolate(x, type = "keyantimicrobials")` |
 
 **Isolate-based**
 

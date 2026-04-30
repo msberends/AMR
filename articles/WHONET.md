@@ -11,6 +11,7 @@ date fields are imported correctly.
 An example syntax could look like this:
 
 ``` r
+
 library(readxl)
 data <- read_excel(path = "path/to/your/file.xlsx")
 ```
@@ -27,6 +28,7 @@ I suggest you read about it on their website:
 <https://www.tidyverse.org/>.
 
 ``` r
+
 library(dplyr) # part of tidyverse
 library(ggplot2) # part of tidyverse
 library(AMR) # this package
@@ -50,6 +52,7 @@ analysis:
   for.
 
 ``` r
+
 # transform variables
 data <- WHONET %>%
   # get microbial ID based on given organism
@@ -68,6 +71,7 @@ function can be used to create frequency tables.
 So let’s check our data, with a couple of frequency tables:
 
 ``` r
+
 # our newly created `mo` variable, put in the mo_name() function
 data %>% freq(mo_name(mo), nmax = 10)
 ```
@@ -82,22 +86,23 @@ Unique: 38
 Shortest: 11  
 Longest: 40
 
-|     | Item                                     | Count | Percent | Cum. Count | Cum. Percent |
-|:----|:-----------------------------------------|------:|--------:|-----------:|-------------:|
-| 1   | Escherichia coli                         |   245 |   49.0% |        245 |        49.0% |
-| 2   | Coagulase-negative Staphylococcus (CoNS) |    74 |   14.8% |        319 |        63.8% |
-| 3   | Staphylococcus epidermidis               |    38 |    7.6% |        357 |        71.4% |
-| 4   | Streptococcus pneumoniae                 |    31 |    6.2% |        388 |        77.6% |
-| 5   | Staphylococcus hominis                   |    21 |    4.2% |        409 |        81.8% |
-| 6   | Proteus mirabilis                        |     9 |    1.8% |        418 |        83.6% |
-| 7   | Enterococcus faecium                     |     8 |    1.6% |        426 |        85.2% |
-| 8   | Staphylococcus capitis urealyticus       |     8 |    1.6% |        434 |        86.8% |
-| 9   | Enterobacter cloacae                     |     5 |    1.0% |        439 |        87.8% |
-| 10  | Enterococcus columbae                    |     4 |    0.8% |        443 |        88.6% |
+|  | Item | Count | Percent | Cum. Count | Cum. Percent |
+|:---|:---|---:|---:|---:|---:|
+| 1 | Escherichia coli | 245 | 49.0% | 245 | 49.0% |
+| 2 | Coagulase-negative Staphylococcus (CoNS) | 74 | 14.8% | 319 | 63.8% |
+| 3 | Staphylococcus epidermidis | 38 | 7.6% | 357 | 71.4% |
+| 4 | Streptococcus pneumoniae | 31 | 6.2% | 388 | 77.6% |
+| 5 | Staphylococcus hominis | 21 | 4.2% | 409 | 81.8% |
+| 6 | Proteus mirabilis | 9 | 1.8% | 418 | 83.6% |
+| 7 | Enterococcus faecium | 8 | 1.6% | 426 | 85.2% |
+| 8 | Staphylococcus capitis urealyticus | 8 | 1.6% | 434 | 86.8% |
+| 9 | Enterobacter cloacae | 5 | 1.0% | 439 | 87.8% |
+| 10 | Enterococcus columbae | 4 | 0.8% | 443 | 88.6% |
 
 (omitted 28 entries, n = 57 \[11.4%\])
 
 ``` r
+
 # our transformed antibiotic columns
 # amoxicillin/clavulanic acid (J01CR02) as an example
 data %>% freq(AMC_ND2)
@@ -132,6 +137,7 @@ included [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)
 function:
 
 ``` r
+
 data %>%
   group_by(Country) %>%
   select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%

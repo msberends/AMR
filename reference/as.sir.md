@@ -69,7 +69,7 @@ as.sir(x, ..., col_mo = NULL,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
   language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  parallel = FALSE, max_cores = -1, conserve_capped_values = NULL)
+  parallel = FALSE, conserve_capped_values = NULL)
 
 sir_interpretation_history(clean = FALSE)
 ```
@@ -348,28 +348,16 @@ disk diffusion diameters:
 - parallel:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate if
-  parallel computing must be used, defaults to `FALSE`. The `parallel`
-  package is part of base R and no additional packages are required. On
-  Unix/macOS with R \>= 4.0.0,
-  [`parallel::mclapply()`](https://rdrr.io/r/parallel/mclapply.html)
-  (fork-based) is used; on Windows and R \< 4.0.0,
-  [`parallel::parLapply()`](https://rdrr.io/r/parallel/clusterApply.html)
-  with a PSOCK cluster is used (requires the AMR package to be
-  installed, not just loaded via `devtools::load_all()`). Parallelism
-  distributes columns across cores; it is most beneficial when there are
-  many antibiotic columns and a large number of rows.
-
-- max_cores:
-
-  Maximum number of cores to use if `parallel = TRUE`. Use a negative
-  value to subtract that number from the available number of cores, e.g.
-  a value of `-2` on an 8-core machine means that at most 6 cores will
-  be used. Defaults to `-1`. There will never be used more cores than
-  variables to analyse. The available number of cores are detected using
-  [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
-  if that package is installed, and base R's
-  [`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html)
-  otherwise.
+  parallel computing must be used, defaults to `FALSE`. Requires the
+  [`future.apply`](https://future.apply.futureverse.org/reference/future_lapply.html)
+  package. **A non-sequential
+  [`future::plan()`](https://future.futureverse.org/reference/plan.html)
+  must already be active before setting `parallel = TRUE`** — for
+  example, `future::plan(future::multisession)`. An error is thrown if
+  `parallel = TRUE` is used without a plan set by the user. Parallelism
+  distributes columns (and optionally row batches) across workers; it is
+  most beneficial when there are many antibiotic columns and a large
+  number of rows.
 
 - clean:
 
@@ -425,7 +413,7 @@ The `as.sir()` function can work in four ways:
           # for veterinary breakpoints, also set `host`:
           your_data %>% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 
-          # fast processing with parallel computing:
+          # fast processing with parallel computing (requires future.apply):
           as.sir(your_data, ..., parallel = TRUE)
 
     - Operators like "\<=" will be considered according to the
@@ -458,7 +446,7 @@ The `as.sir()` function can work in four ways:
           # for veterinary breakpoints, also set `host`:
           your_data %>% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
 
-          # fast processing with parallel computing:
+          # fast processing with parallel computing (requires future.apply):
           as.sir(your_data, ..., parallel = TRUE)
 
 4.  For **interpreting a complete data set**, with automatic
@@ -679,29 +667,15 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-04-25 14:25:30     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-04-25 14:25:30     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-04-25 14:25:31     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-04-25 14:25:31     1 DISK   genta       Escherich… human      18         
+#> 1 2026-04-30 08:03:38     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-04-30 08:03:38     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-04-30 08:03:38     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-04-30 08:03:39     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
 
 # \donttest{
-# using parallel computing, which is available in base R:
-as.sir(df_wide, parallel = TRUE, info = TRUE)
-#> ℹ Run `sir_interpretation_history()` afterwards to retrieve a logbook with all
-#>   details of the breakpoint interpretations.
-#> 
-#> Processing columns:
-#> 
-#>  DONE 
-#> 
-#> ℹ Run `sir_interpretation_history()` to retrieve a logbook with all details of
-#>   the breakpoint interpretations.
-#>      microorganism amoxicillin cipro tobra genta ERY
-#> 1 Escherichia coli           S     I     S     S   R
-
 
 ## Using dplyr -------------------------------------------------
 if (require("dplyr")) {

@@ -57,6 +57,7 @@ Data." *Journal of Statistical Software*, *104*(3), 1-31.
 
 A BibTeX entry for LaTeX users is:
 
+
     @Article{,
       title = {{AMR}: An {R} Package for Working with Antimicrobial Resistance Data},
       author = {Matthijs S. Berends and Christian F. Luz and Alexander W. Friedrich and Bhanu N. M. Sinha and Casper J. Albers and Corinna Glasner},

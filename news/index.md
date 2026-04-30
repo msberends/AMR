@@ -1,6 +1,8 @@
 # Changelog
 
-## AMR 3.0.1.9052
+## AMR 3.0.1.9053
+
+This will become release v3.1.0, intended for launch end of May.
 
 #### New
 
@@ -10,7 +12,23 @@
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md). EUCAST 2026
   is now the new default guideline for all MIC and disk diffusion
   interpretations.
-- Integration with the **tidymodels** framework to allow seamless use of
+- Support for the [`future`](https://future.futureverse.org) package and
+  its framework, as the previous implementation of parallel computing
+  was slow
+  - **Breaking change**:
+    [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) with
+    `parallel = TRUE` now requires a non-sequential
+    [`future::plan()`](https://future.futureverse.org/reference/plan.html)
+    to be active before the call — e.g.,
+    `future::plan(future::multisession)` — and throws an informative
+    error if none is set.
+  - New all-core usage setup: when the number of AB columns is smaller
+    than the number of available cores, rows are now split into batches
+    so all cores stay active (row-batch mode). Previously, a 6-column
+    dataset on a 16-core machine would only use 6 cores; now all 16 are
+    used, with each worker processing a smaller row slice (lower
+    per-worker memory pressure and processing time)
+- Integration with the *tidymodels* framework to allow seamless use of
   SIR, MIC and disk data in modelling pipelines via `recipes`
   - [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md)
     to transform `<mic>` columns with log2, and
@@ -63,9 +81,6 @@
 
 #### Fixes
 
-- Fixed multiple bugs in the `parallel = TRUE` mode of
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
-  frames
 - Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   where values that were purely numeric (e.g., `"1"`) and matched the
   broad SIR-matching regex would be incorrectly stripped of all content
@@ -111,19 +126,9 @@
   as antibiotic columns when their names coincidentally matched an
   antibiotic code; column content is now validated against AMR data
   patterns before inclusion
-- Improved parallel computing in
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md): when the
-  number of AB columns is smaller than the number of available cores,
-  rows are now split into batches so all cores stay active (row-batch
-  mode). Previously, a 6-column dataset on a 16-core machine would only
-  use 6 cores; now all 16 are used, with each worker processing a
-  smaller row slice (lower per-worker memory pressure)
 - Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) ignoring
   `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against
-  *E. coli*): an operator-precedence bug (`&&`/`||`) caused the
-  “Interpreting MIC values” intro message to fire unconditionally when
-  `nrow(breakpoints) == 0`, regardless of `info`; the progress bar title
-  was also not gated by `info`
+  *E. coli*)
 
 #### Updates
 
@@ -184,9 +189,6 @@
 - [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) now
   returns values consist with the AMR selectors
   ([\#246](https://github.com/msberends/AMR/issues/246))
-- Added two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base
-  R’s `NA_character_` and `NA_integer_`, for use in pipelines that
-  require typed missing values
 
 ## AMR 3.0.1
 

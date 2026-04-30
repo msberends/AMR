@@ -36,6 +36,7 @@ function resolves this, by applying the latest ‘EUCAST Expected
 Resistant Phenotypes’ guideline:
 
 ``` r
+
 oops <- tibble::tibble(
   mo = c(
     "Klebsiella pneumoniae",
@@ -64,6 +65,7 @@ that uses the same guideline, but allows to check for one or more
 specific microorganisms or antimicrobials:
 
 ``` r
+
 mo_is_intrinsic_resistant(
   c("Klebsiella pneumoniae", "Escherichia coli"),
   "ampicillin"
@@ -83,6 +85,7 @@ other antimicrobials drugs. This process is called *interpretive
 reading*, and is basically a form of imputation:
 
 ``` r
+
 data <- tibble::tibble(
   mo = c(
     "Staphylococcus aureus",
@@ -102,6 +105,7 @@ data <- tibble::tibble(
 ```
 
 ``` r
+
 data
 ```
 
@@ -114,6 +118,7 @@ data
 | Pseudomonas aeruginosa | \-  | \-  | \-  | \-  | \-  |  S  |  S  |
 
 ``` r
+
 eucast_rules(data, overwrite = TRUE)
 ```
 

@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9052</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9053</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,7 +111,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span>  include_PKPD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_include_PKPD"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  breakpoint_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_breakpoint_type"</span>, <span class="st">"human"</span><span class="op">)</span>, host <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>, max_cores <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>, conserve_capped_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">sir_interpretation_history</span><span class="op">(</span>clean <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -227,11 +227,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>. The <code>parallel</code> package is part of base <span style="R">R</span> and no additional packages are required. On Unix/macOS with <span style="R">R</span> &gt;= 4.0.0, <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code> (fork-based) is used; on Windows and <span style="R">R</span> &lt; 4.0.0, <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parallel::parLapply()</a></code> with a PSOCK cluster is used (requires the AMR package to be installed, not just loaded via <code>devtools::load_all()</code>). Parallelism distributes columns across cores; it is most beneficial when there are many antibiotic columns and a large number of rows.</p></dd>
-
-
-<dt id="arg-max-cores">max_cores<a class="anchor" aria-label="anchor" href="#arg-max-cores"></a></dt>
-<dd><p>Maximum number of cores to use if <code>parallel = TRUE</code>. Use a negative value to subtract that number from the available number of cores, e.g. a value of <code>-2</code> on an 8-core machine means that at most 6 cores will be used. Defaults to <code>-1</code>. There will never be used more cores than variables to analyse. The available number of cores are detected using <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> if that package is installed, and base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code> otherwise.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if parallel computing must be used, defaults to <code>FALSE</code>. Requires the <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply</a></code> package. <strong>A non-sequential <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> must already be active before setting <code>parallel = TRUE</code></strong> — for example, <code>future::plan(future::multisession)</code>. An error is thrown if <code>parallel = TRUE</code> is used without a plan set by the user. Parallelism distributes columns (and optionally row batches) across workers; it is most beneficial when there are many antibiotic columns and a large number of rows.</p></dd>
 
 
 <dt id="arg-clean">clean<a class="anchor" aria-label="anchor" href="#arg-clean"></a></dt>
@@ -258,7 +254,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># fast processing with parallel computing:</span></span>
+<span><span class="co"># fast processing with parallel computing (requires future.apply):</span></span>
 <span><span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">your_data</span>, <span class="va">...</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div></li>
 <li><p>Operators like "&lt;=" will be considered according to the <code>capped_mic_handling</code> setting. At default, an MIC value of e.g. "&gt;2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the <em>true</em> MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.</p></li>
 <li><p><strong>Note:</strong> When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.</p></li>
@@ -272,7 +268,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span><span class="co"># for veterinary breakpoints, also set `host`:</span></span>
 <span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.sir</span>, host <span class="op">=</span> <span class="st">"column_with_animal_species"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># fast processing with parallel computing:</span></span>
+<span><span class="co"># fast processing with parallel computing (requires future.apply):</span></span>
 <span><span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">your_data</span>, <span class="va">...</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div></li>
 </ul></li>
 <li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.sir(your_data)</code>.</p></li>
@@ -424,29 +420,15 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-04-25 <span style="color: #949494;">14:25:30</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-04-25 <span style="color: #949494;">14:25:30</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-04-25 <span style="color: #949494;">14:25:31</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-04-25 <span style="color: #949494;">14:25:31</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-04-30 <span style="color: #949494;">08:03:38</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-04-30 <span style="color: #949494;">08:03:38</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-04-30 <span style="color: #949494;">08:03:38</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-04-30 <span style="color: #949494;">08:03:39</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># using parallel computing, which is available in base R:</span></span></span>
-<span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `sir_interpretation_history()` afterwards to retrieve a logbook with all</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   details of the breakpoint interpretations.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing columns:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #080808; background-color: #5FD7AF;"> DONE </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `sir_interpretation_history()` to retrieve a logbook with all details of</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   the breakpoint interpretations.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism amoxicillin cipro tobra genta ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           S     I     S     S   R</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Using dplyr -------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>

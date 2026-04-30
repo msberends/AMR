@@ -49,6 +49,7 @@ We begin by loading the required libraries and preparing the
 `example_isolates` dataset from the `AMR` package.
 
 ``` r
+
 # Load required libraries
 library(AMR) # For AMR data analysis
 library(tidymodels) # For machine learning workflows, and data manipulation (dplyr, tidyr, ...)
@@ -57,6 +58,7 @@ library(tidymodels) # For machine learning workflows, and data manipulation (dpl
 Prepare the data:
 
 ``` r
+
 # Your data could look like this:
 example_isolates
 #> # A tibble: 2,000 × 46
@@ -127,6 +129,7 @@ preprocessing, model specification, and fitting.
 We create a recipe to preprocess the data for modelling.
 
 ``` r
+
 # Define the recipe for data preprocessing
 resistance_recipe <- recipe(mo ~ ., data = data) %>%
   step_corr(c(aminoglycosides(), betalactams()), threshold = 0.9)
@@ -148,6 +151,7 @@ have with `step_corr()`, the necessary parameters can be estimated from
 a training set using `prep()`:
 
 ``` r
+
 prep(resistance_recipe)
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
@@ -201,6 +205,7 @@ We define a logistic regression model since resistance prediction is a
 binary classification task.
 
 ``` r
+
 # Specify a logistic regression model
 logistic_model <- logistic_reg() %>%
   set_engine("glm") # Use the Generalised Linear Model engine
@@ -221,6 +226,7 @@ We bundle the recipe and model together into a `workflow`, which
 organises the entire modelling process.
 
 ``` r
+
 # Combine the recipe and model into a workflow
 resistance_workflow <- workflow() %>%
   add_recipe(resistance_recipe) %>% # Add the preprocessing recipe
@@ -248,6 +254,7 @@ Then, we fit the workflow on the training set and evaluate its
 performance.
 
 ``` r
+
 # Split data into training and testing sets
 set.seed(123) # For reproducibility
 data_split <- initial_split(data, prop = 0.8) # 80% training, 20% testing
@@ -271,6 +278,7 @@ they are stored in the recipe.
 Next, we evaluate the model on the testing data.
 
 ``` r
+
 # Make predictions on the testing set
 predictions <- fitted_workflow %>%
   predict(testing_data) # Generate predictions
@@ -338,6 +346,7 @@ AMR results of only aminoglycosides and beta-lactam antibiotics. The ROC
 curve looks like this:
 
 ``` r
+
 predictions %>%
   roc_curve(mo, `.pred_Gram-negative`) %>%
   autoplot()
@@ -390,6 +399,7 @@ Our goal is to:
 We use the `esbl_isolates` dataset that comes with the AMR package.
 
 ``` r
+
 # Load required libraries
 library(AMR)
 library(tidymodels)
@@ -437,6 +447,7 @@ selected using the new
 [`all_mic_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md):
 
 ``` r
+
 # Split into training and testing sets
 set.seed(123)
 split <- initial_split(data)
@@ -480,6 +491,7 @@ manual](https://parsnip.tidymodels.org/reference/details_boost_tree_xgboost.html
 could be much more precise.
 
 ``` r
+
 # Define the model
 model <- logistic_reg(mode = "classification") %>%
   set_engine("glm")
@@ -498,6 +510,7 @@ model
 #### 3. Building the Workflow
 
 ``` r
+
 # Create workflow
 workflow_model <- workflow() %>%
   add_recipe(mic_recipe) %>%
@@ -522,6 +535,7 @@ workflow_model
 ### **Training and Evaluating the Model**
 
 ``` r
+
 # Fit the model
 fitted <- fit(workflow_model, training_data)
 
@@ -566,6 +580,7 @@ We can visualise predictions by comparing predicted and actual ESBL
 status.
 
 ``` r
+
 library(ggplot2)
 
 ggplot(predictions, aes(x = esbl, fill = .pred_class)) +
@@ -583,6 +598,7 @@ ggplot(predictions, aes(x = esbl, fill = .pred_class)) +
 And plot the certainties too - how certain were the actual predictions?
 
 ``` r
+
 predictions %>%
   mutate(
     certainty = ifelse(.pred_class == "FALSE",
@@ -646,6 +662,7 @@ We start by transforming the `example_isolates` dataset into a
 structured time-series format.
 
 ``` r
+
 # Load required libraries
 library(AMR)
 library(tidymodels)
@@ -706,6 +723,7 @@ step, a model specification, and the fitting process.
 #### 1. Preprocessing with a Recipe
 
 ``` r
+
 # Define the recipe
 resistance_recipe_time <- recipe(res_AMX ~ year + gramstain, data = data_time) %>%
   step_dummy(gramstain, one_hot = TRUE) %>% # Convert categorical to numerical
@@ -739,6 +757,7 @@ resistance_recipe_time
 We use a linear regression model to predict resistance trends.
 
 ``` r
+
 # Define the linear regression model
 lm_model <- linear_reg() %>%
   set_engine("lm") # Use linear regression
@@ -759,6 +778,7 @@ lm_model
 We combine the preprocessing recipe and model into a workflow.
 
 ``` r
+
 # Create workflow
 resistance_workflow_time <- workflow() %>%
   add_recipe(resistance_recipe_time) %>%
@@ -788,6 +808,7 @@ We split the data into training and testing sets, fit the model, and
 evaluate performance.
 
 ``` r
+
 # Split the data
 set.seed(123)
 data_split_time <- initial_split(data_time, prop = 0.8)
@@ -829,6 +850,7 @@ metrics_time
 We plot resistance trends over time for amoxicillin.
 
 ``` r
+
 library(ggplot2)
 
 # Plot actual vs predicted resistance over time
@@ -849,6 +871,7 @@ Additionally, we can visualise resistance trends in `ggplot2` and
 directly add linear models there:
 
 ``` r
+
 ggplot(data_time, aes(x = year, y = res_AMX, color = gramstain)) +
   geom_line() +
   labs(

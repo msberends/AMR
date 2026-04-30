@@ -23,6 +23,7 @@ Concentration (MIC) and disk diffusion handling - Multilingual output
 All commands run inside an R session:
 
 ``` r
+
 # Rebuild documentation (roxygen2 → .Rd files + NAMESPACE)
 devtools::document()
 
@@ -94,14 +95,14 @@ R CMD check AMR
 The package defines five S3 classes with full print/format/plot/vctrs
 support:
 
-| Class    | Created by                                                | Represents                       |
-|----------|-----------------------------------------------------------|----------------------------------|
-| `<mo>`   | [`as.mo()`](https://amr-for-r.org/reference/as.mo.md)     | Microorganism code               |
-| `<ab>`   | [`as.ab()`](https://amr-for-r.org/reference/as.ab.md)     | Antimicrobial drug code          |
-| `<av>`   | [`as.av()`](https://amr-for-r.org/reference/as.av.md)     | Antiviral drug code              |
-| `<sir>`  | [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)   | SIR value (S/I/R/SDD)            |
-| `<mic>`  | [`as.mic()`](https://amr-for-r.org/reference/as.mic.md)   | Minimum inhibitory concentration |
-| `<disk>` | [`as.disk()`](https://amr-for-r.org/reference/as.disk.md) | Disk diffusion diameter          |
+| Class | Created by | Represents |
+|----|----|----|
+| `<mo>` | [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) | Microorganism code |
+| `<ab>` | [`as.ab()`](https://amr-for-r.org/reference/as.ab.md) | Antimicrobial drug code |
+| `<av>` | [`as.av()`](https://amr-for-r.org/reference/as.av.md) | Antiviral drug code |
+| `<sir>` | [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) | SIR value (S/I/R/SDD) |
+| `<mic>` | [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) | Minimum inhibitory concentration |
+| `<disk>` | [`as.disk()`](https://amr-for-r.org/reference/as.disk.md) | Disk diffusion diameter |
 
 ## Data Files
 
@@ -125,6 +126,7 @@ integrations (ggplot2, dplyr, data.table, tidymodels, cli, crayon, etc.)
 are listed in `Suggests` and guarded with:
 
 ``` r
+
 if (requireNamespace("pkg", quietly = TRUE)) { ... }
 ```
 

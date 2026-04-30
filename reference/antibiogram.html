@@ -9,7 +9,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9052</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9053</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -411,7 +411,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin), <span style="color: #00BB00; font-weight: bold;">AMK</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 10 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 10 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Pathogen       Amikacin    Gentamicin Imipenem Kanamycin Meropenem Tobramycin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
@@ -426,7 +426,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> S. hominis     <span style="color: #BB0000;">NA</span>          92% (84-9… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        85% (74-9…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> S. pneumoniae  0% (0-3%,N… 0% (0-3%,… <span style="color: #BB0000;">NA</span>       0% (0-3%… <span style="color: #BB0000;">NA</span>        0% (0-3%,…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
@@ -435,14 +435,14 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin), <span style="color: #00BB00; font-weight: bold;">AMK</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 2 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 96% (94-97%,N=686) 96% (95-98%,N=684)  0% (0-10%,N=35) 98% (96-…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-positive 34% (31-38%,N=665) 63% (60-66%,N=1170) 0% (0-1%,N=436) 0% (0-1%…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
@@ -450,7 +450,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"name"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 5 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 5 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen                                 Imipenem             Meropenem       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
@@ -460,7 +460,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Klebsiella pneumoniae                    100% (93-100%,N=51)  100% (93-100%,N…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Proteus mirabilis                        94% (79-99%,N=32)    <span style="color: #BB0000;">NA</span>              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Combined antibiogram -------------------------------------------------</span></span></span>
@@ -470,7 +470,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 2 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
@@ -480,7 +480,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Piperacillin/tazobactam + Gentamicin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​`Piperacillin/tazobactam + Tobramycin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># you can use any antimicrobial selector with `+` too:</span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
@@ -488,7 +488,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `ureidopenicillins()` using column <span style="color: #00BB00; font-weight: bold;">TZP</span> (piperacillin/tazobactam)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 2 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
@@ -498,7 +498,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Piperacillin/tazobactam + Gentamicin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​`Piperacillin/tazobactam + Tobramycin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># names of antimicrobials do not need to resemble columns exactly:</span></span></span>
 <span class="r-in"><span><span class="fu">antibiogram</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
@@ -507,14 +507,14 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  ab_transform <span class="op">=</span> <span class="st">"name"</span>,</span></span>
 <span class="r-in"><span>  sep <span class="op">=</span> <span class="st">" &amp; "</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 2 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pathogen      Ciprofloxacin      `Ciprofloxacin &amp; Gentamicin`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Gram-negative 91% (88-93%,N=684) 99% (97-99%,N=694)          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Gram-positive 77% (74-80%,N=724) 93% (91-94%,N=847)          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Syndromic antibiogram ------------------------------------------------</span></span></span>
@@ -527,7 +527,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin), <span style="color: #00BB00; font-weight: bold;">AMK</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 14 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 14 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    `Syndromic Group` Pathogen   Amikacin Gentamicin Imipenem Kanamycin Meropenem</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
@@ -547,7 +547,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ICU               S. pneumo… 0% (0-1… 0% (0-12%… <span style="color: #BB0000;">NA</span>       0% (0-12… <span style="color: #BB0000;">NA</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: Tobramycin &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># now define a data set with only E. coli</span></span></span>
 <span class="r-in"><span><span class="va">ex1</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="mo_property.html">mo_genus</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Escherichia"</span><span class="op">)</span>, <span class="op">]</span></span></span>
@@ -565,14 +565,14 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin), <span style="color: #00BB00; font-weight: bold;">AMK</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 2 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Non-WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> No UCI             E. coli  100% (97-100%,N=119) 98% (96-99%,N=32… 98% (96-99…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> UCI                E. coli  100% (93-100%,N=52)  99% (95-100%,N=1… 96% (92-99…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># WISCA antibiogram ----------------------------------------------------</span></span></span>
@@ -583,7 +583,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span>,</span></span>
 <span class="r-in"><span>  wisca <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An Antibiogram: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An antibiogram: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           WISCA with 95% CI</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
@@ -593,7 +593,7 @@ Adhering to previously described approaches (see Source) and especially the Baye
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or https://quarto.org, see ?antibiogram</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># or use it directly in R Markdown or Quarto, see ?antibiogram</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Print the output for R Markdown / Quarto -----------------------------</span></span></span>

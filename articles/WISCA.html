@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9052</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9053</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,7 +151,7 @@ isolates. Therefore, traditional antibiograms:</p>
 regimen.</li>
 </ul>
 <p>We can write this as:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Coverage</mtext><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><mrow><mo stretchy="true" form="prefix">(</mo><msub><mtext mathvariant="normal">Incidence</mtext><mi>i</mi></msub><mo>×</mo><msub><mtext mathvariant="normal">Susceptibility</mtext><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{Coverage} = \sum_i (\text{Incidence}_i \times \text{Susceptibility}_i)</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Coverage</mtext><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><mo stretchy="false" form="prefix">(</mo><msub><mtext mathvariant="normal">Incidence</mtext><mi>i</mi></msub><mo>×</mo><msub><mtext mathvariant="normal">Susceptibility</mtext><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\text{Coverage} = \sum_i (\text{Incidence}_i \times \text{Susceptibility}_i)</annotation></semantics></math></p>
 <p>For example, suppose:</p>
 <ul>
 <li>
@@ -162,7 +162,7 @@ are susceptible to a drug.</li>
 <em>Klebsiella</em> are susceptible.</li>
 </ul>
 <p>Then:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Coverage</mtext><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.6</mn><mo>×</mo><mn>0.9</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.4</mn><mo>×</mo><mn>0.7</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.82</mn></mrow><annotation encoding="application/x-tex">\text{Coverage} = (0.6 \times 0.9) + (0.4 \times 0.7) = 0.82</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Coverage</mtext><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.6</mn><mo>×</mo><mn>0.9</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>×</mo><mn>0.7</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.82</mn></mrow><annotation encoding="application/x-tex">\text{Coverage} = (0.6 \times 0.9) + (0.4 \times 0.7) = 0.82</annotation></semantics></math></p>
 <p>But in real data, incidence and susceptibility are <strong>estimated
 from samples</strong>, so they carry uncertainty. WISCA models this
 <strong>probabilistically</strong>, using conjugate Bayesian
@@ -180,16 +180,16 @@ distributions.</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
 be the number of pathogens,</li>
 <li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\alpha = (1, 1, \ldots, 1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\alpha = (1, 1, \ldots, 1)</annotation></semantics></math>
 be a <strong>Dirichlet</strong> prior (uniform),</li>
 <li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>n</mi><mi>K</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">n = (n_1, \ldots, n_K)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>n</mi><mi>K</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n = (n_1, \ldots, n_K)</annotation></semantics></math>
 be the observed counts per species.</li>
 </ul>
 <p>Then the posterior incidence is:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∼</mo><mtext mathvariant="normal">Dirichlet</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>α</mi><mi>K</mi></msub><mo>+</mo><msub><mi>n</mi><mi>K</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p \sim \text{Dirichlet}(\alpha_1 + n_1, \ldots, \alpha_K + n_K)</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∼</mo><mtext mathvariant="normal">Dirichlet</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>α</mi><mi>K</mi></msub><mo>+</mo><msub><mi>n</mi><mi>K</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p \sim \text{Dirichlet}(\alpha_1 + n_1, \ldots, \alpha_K + n_K)</annotation></semantics></math></p>
 <p>To simulate from this, we use:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mtext mathvariant="normal">Gamma</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>n</mi><mi>i</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mfrac><msub><mi>x</mi><mi>i</mi></msub><mrow><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><msub><mi>x</mi><mi>j</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">x_i \sim \text{Gamma}(\alpha_i + n_i,\ 1), \quad p_i = \frac{x_i}{\sum_{j=1}^{K} x_j}</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mtext mathvariant="normal">Gamma</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>n</mi><mi>i</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mfrac><msub><mi>x</mi><mi>i</mi></msub><mrow><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><msub><mi>x</mi><mi>j</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">x_i \sim \text{Gamma}(\alpha_i + n_i,\ 1), \quad p_i = \frac{x_i}{\sum_{j=1}^{K} x_j}</annotation></semantics></math></p>
 </div>
 <div class="section level3">
 <h3 id="susceptibility">Susceptibility<a class="anchor" aria-label="anchor" href="#susceptibility"></a>
@@ -197,7 +197,7 @@ be the observed counts per species.</li>
 <p>Each pathogen–regimen pair has a prior and data:</p>
 <ul>
 <li>Prior:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Beta</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>0</mn></msub><mo>,</mo><msub><mi>β</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{Beta}(\alpha_0, \beta_0)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Beta</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>0</mn></msub><mo>,</mo><msub><mi>β</mi><mn>0</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\text{Beta}(\alpha_0, \beta_0)</annotation></semantics></math>,
 with default
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mn>0</mn></msub><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha_0 = \beta_0 = 1</annotation></semantics></math>
 </li>
@@ -213,7 +213,7 @@ category could also include values SDD (susceptible, dose-dependent) and
 I (intermediate [CLSI], or susceptible, increased exposure
 [EUCAST]).</p>
 <p>Then the posterior is:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>∼</mo><mtext mathvariant="normal">Beta</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><mi>S</mi><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><mi>N</mi><mo>−</mo><mi>S</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta \sim \text{Beta}(\alpha_0 + S,\ \beta_0 + N - S)</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>∼</mo><mtext mathvariant="normal">Beta</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><mi>S</mi><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><mi>N</mi><mo>−</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\theta \sim \text{Beta}(\alpha_0 + S,\ \beta_0 + N - S)</annotation></semantics></math></p>
 </div>
 <div class="section level3">
 <h3 id="final-coverage-estimate">Final coverage estimate<a class="anchor" aria-label="anchor" href="#final-coverage-estimate"></a>
@@ -224,7 +224,7 @@ I (intermediate [CLSI], or susceptible, increased exposure
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐩</mi><mo>∼</mo><mtext mathvariant="normal">Dirichlet</mtext></mrow><annotation encoding="application/x-tex">\boldsymbol{p} \sim \text{Dirichlet}</annotation></semantics></math>
 </li>
 <li>Simulate susceptibility:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mo>∼</mo><mtext mathvariant="normal">Beta</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><msub><mi>S</mi><mi>i</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mn>1</mn><mo>+</mo><msub><mi>R</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta_i \sim \text{Beta}(1 + S_i,\ 1 + R_i)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mo>∼</mo><mtext mathvariant="normal">Beta</mtext><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><msub><mi>S</mi><mi>i</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mn>1</mn><mo>+</mo><msub><mi>R</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\theta_i \sim \text{Beta}(1 + S_i,\ 1 + R_i)</annotation></semantics></math>
 </li>
 <li>Combine:</li>
 </ol>

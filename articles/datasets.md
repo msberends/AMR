@@ -78,14 +78,14 @@ Included (sub)species per taxonomic kingdom:
 
 First 6 rows when filtering on genus *Escherichia*:
 
-|        mo         |          fullname          |  status  | kingdom  |     phylum     |        class        |      order       |       family       |    genus    |    species     | subspecies |    rank    |           ref           |      oxygen_tolerance       | source |  lpsn  | lpsn_parent | lpsn_renamed_to | mycobank | mycobank_parent | mycobank_renamed_to |   gbif   | gbif_parent | gbif_renamed_to | prevalence |                  snomed                   |
-|:-----------------:|:--------------------------:|:--------:|:--------:|:--------------:|:-------------------:|:----------------:|:------------------:|:-----------:|:--------------:|:----------:|:----------:|:-----------------------:|:---------------------------:|:------:|:------:|:-----------:|:---------------:|:--------:|:---------------:|:-------------------:|:--------:|:-----------:|:---------------:|:----------:|:-----------------------------------------:|
-|      B_ESCHR      |        Escherichia         | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |                |            |   genus    | Castellani et al., 1919 |    facultative anaerobe     |  LPSN  | 515602 |     482     |                 |          |                 |                     |          |  11158430   |                 |     1      |    407310004, 407251000, 407281008, …     |
-|   B_ESCHR_ADCR    | Escherichia adecarboxylata | synonym  | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | adecarboxylata |            |  species   |      Leclerc, 1962      | likely facultative anaerobe |  LPSN  | 776052 |   515602    |     777447      |          |                 |                     |          |             |                 |     1      |                                           |
-|   B_ESCHR_ALBR    |    Escherichia albertii    | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |    albertii    |            |  species   |    Huys et al., 2003    |    facultative anaerobe     |  LPSN  | 776053 |   515602    |                 |          |                 |                     | 5427575  |             |                 |     1      |                 419388003                 |
-|   B_ESCHR_BLTT    |    Escherichia blattae     | synonym  | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |    blattae     |            |  species   |  Burgess et al., 1973   | likely facultative anaerobe |  LPSN  | 776056 |   515602    |     788468      |          |                 |                     |          |             |                 |     1      |                                           |
-|   B_ESCHR_COLI    |      Escherichia coli      | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |      coli      |            |  species   | Castellani et al., 1919 |    facultative anaerobe     |  LPSN  | 776057 |   515602    |                 |          |                 |                     | 11286021 |             |                 |     1      | 1095001000112106, 715307006, 737528008, … |
-| B_ESCHR_COLI_COLI |   Escherichia coli coli    | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |      coli      |    coli    | subspecies |                         |                             |  GBIF  |        |   776057    |                 |          |                 |                     | 12233256 |  11286021   |                 |     1      |                                           |
+| mo | fullname | status | kingdom | phylum | class | order | family | genus | species | subspecies | rank | ref | oxygen_tolerance | source | lpsn | lpsn_parent | lpsn_renamed_to | mycobank | mycobank_parent | mycobank_renamed_to | gbif | gbif_parent | gbif_renamed_to | prevalence | snomed |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| B_ESCHR | Escherichia | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |  |  | genus | Castellani et al., 1919 | facultative anaerobe | LPSN | 515602 | 482 |  |  |  |  |  | 11158430 |  | 1 | 407310004, 407251000, 407281008, … |
+| B_ESCHR_ADCR | Escherichia adecarboxylata | synonym | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | adecarboxylata |  | species | Leclerc, 1962 | likely facultative anaerobe | LPSN | 776052 | 515602 | 777447 |  |  |  |  |  |  | 1 |  |
+| B_ESCHR_ALBR | Escherichia albertii | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | albertii |  | species | Huys et al., 2003 | facultative anaerobe | LPSN | 776053 | 515602 |  |  |  |  | 5427575 |  |  | 1 | 419388003 |
+| B_ESCHR_BLTT | Escherichia blattae | synonym | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | blattae |  | species | Burgess et al., 1973 | likely facultative anaerobe | LPSN | 776056 | 515602 | 788468 |  |  |  |  |  |  | 1 |  |
+| B_ESCHR_COLI | Escherichia coli | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli |  | species | Castellani et al., 1919 | facultative anaerobe | LPSN | 776057 | 515602 |  |  |  |  | 11286021 |  |  | 1 | 1095001000112106, 715307006, 737528008, … |
+| B_ESCHR_COLI_COLI | Escherichia coli coli | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli | coli | subspecies |  |  | GBIF |  | 776057 |  |  |  |  | 12233256 | 11286021 |  | 1 |  |
 
 ------------------------------------------------------------------------
 
@@ -134,14 +134,14 @@ as comma separated values.
 
 **Example content**
 
-| ab  |   cid    |            name             |                     group                      |              atc               |                 atc_group1                  |                          atc_group2                          |    abbreviations    |                        synonyms                         | oral_ddd | oral_units | iv_ddd | iv_units |             loinc              |
-|:---:|:--------:|:---------------------------:|:----------------------------------------------:|:------------------------------:|:-------------------------------------------:|:------------------------------------------------------------:|:-------------------:|:-------------------------------------------------------:|:--------:|:----------:|:------:|:--------:|:------------------------------:|
-| AMK |  37768   |          Amikacin           |                Aminoglycosides                 | D06AX12, J01GB06, QD06AX12, …  |        Aminoglycoside antibacterials        |                    Other aminoglycosides                     |  ak, ami, amik, …   |          amikacillin, amikacina, amikacine, …           |          |            |  1.0   |    g     |    101493-5, 11-7, 12-5, …     |
-| AMX |  33613   |         Amoxicillin         |  Aminopenicillins, Penicillins, Beta-lactams   |  J01CA04, QG51AA03, QJ01CA04   |   Beta-lactam antibacterials, penicillins   |              Penicillins with extended spectrum              | ac, amox, amoxic, … |             acuotricina, alfamox, alfida, …             |   1.5    |     g      |  3.0   |    g     |    101498-4, 15-8, 16-6, …     |
-| AMC | 23665637 | Amoxicillin/clavulanic acid | Aminopenicillins, Penicillins, Beta-lactams, … |       J01CR02, QJ01CR02        |   Beta-lactam antibacterials, penicillins   | Combinations of penicillins, incl. beta-lactamase inhibitors |  a/c, amcl, aml, …  |               amocla, amoclan, amoclav, …               |   1.5    |     g      |  3.0   |    g     |                                |
-| AMP |   6249   |         Ampicillin          |  Aminopenicillins, Penicillins, Beta-lactams   | J01CA01, QJ01CA01, QJ51CA01, … |   Beta-lactam antibacterials, penicillins   |              Penicillins with extended spectrum              | am, amp, amp100, …  |             adobacillin, alpen, amblosin, …             |   2.0    |     g      |  6.0   |    g     | 101477-8, 101478-6, 18864-9, … |
-| AZM |  447043  |        Azithromycin         |                   Macrolides                   | J01FA10, QJ01FA10, QS01AA26, … | Macrolides, lincosamides and streptogramins |                          Macrolides                          |  az, azi, azit, …   |           aritromicina, aruzilina, azasite, …           |   0.3    |     g      |  0.5   |    g     | 100043-9, 16420-2, 16421-0, …  |
-| PEN |   5904   |      Benzylpenicillin       |           Penicillins, Beta-lactams            | J01CE01, QJ01CE01, QJ51CE01, … |       Combinations of antibacterials        |                Combinations of antibacterials                | bepe, pen, peni, …  | bencilpenicilina, benzopenicillin, benzylpenicilline, … |          |            |  3.6   |    g     |                                |
+| ab | cid | name | group | atc | atc_group1 | atc_group2 | abbreviations | synonyms | oral_ddd | oral_units | iv_ddd | iv_units | loinc |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| AMK | 37768 | Amikacin | Aminoglycosides | D06AX12, J01GB06, QD06AX12, … | Aminoglycoside antibacterials | Other aminoglycosides | ak, ami, amik, … | amikacillin, amikacina, amikacine, … |  |  | 1.0 | g | 101493-5, 11-7, 12-5, … |
+| AMX | 33613 | Amoxicillin | Aminopenicillins, Penicillins, Beta-lactams | J01CA04, QG51AA03, QJ01CA04 | Beta-lactam antibacterials, penicillins | Penicillins with extended spectrum | ac, amox, amoxic, … | acuotricina, alfamox, alfida, … | 1.5 | g | 3.0 | g | 101498-4, 15-8, 16-6, … |
+| AMC | 23665637 | Amoxicillin/clavulanic acid | Aminopenicillins, Penicillins, Beta-lactams, … | J01CR02, QJ01CR02 | Beta-lactam antibacterials, penicillins | Combinations of penicillins, incl. beta-lactamase inhibitors | a/c, amcl, aml, … | amocla, amoclan, amoclav, … | 1.5 | g | 3.0 | g |  |
+| AMP | 6249 | Ampicillin | Aminopenicillins, Penicillins, Beta-lactams | J01CA01, QJ01CA01, QJ51CA01, … | Beta-lactam antibacterials, penicillins | Penicillins with extended spectrum | am, amp, amp100, … | adobacillin, alpen, amblosin, … | 2.0 | g | 6.0 | g | 101477-8, 101478-6, 18864-9, … |
+| AZM | 447043 | Azithromycin | Macrolides | J01FA10, QJ01FA10, QS01AA26, … | Macrolides, lincosamides and streptogramins | Macrolides | az, azi, azit, … | aritromicina, aruzilina, azasite, … | 0.3 | g | 0.5 | g | 100043-9, 16420-2, 16421-0, … |
+| PEN | 5904 | Benzylpenicillin | Penicillins, Beta-lactams | J01CE01, QJ01CE01, QJ51CE01, … | Combinations of antibacterials | Combinations of antibacterials | bepe, pen, peni, … | bencilpenicilina, benzopenicillin, benzylpenicilline, … |  |  | 3.6 | g |  |
 
 ------------------------------------------------------------------------
 
@@ -186,14 +186,14 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 **Example content**
 
-|  guideline  | type  | host  | method | site |      mo       |          mo_name           | rank_index | ab  |            ab_name            |     ref_tbl     |   disk_dose    | breakpoint_S | breakpoint_R |  uti  | is_SDD |
-|:-----------:|:-----:|:-----:|:------:|:----:|:-------------:|:--------------------------:|:----------:|:---:|:-----------------------------:|:---------------:|:--------------:|:------------:|:------------:|:-----:|:------:|
-| EUCAST 2026 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | MEM |           Meropenem           | A. xylosoxidans |     10 mcg     |    26.000    |    20.000    | FALSE | FALSE  |
-| EUCAST 2026 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | MEM |           Meropenem           | A. xylosoxidans |                |    1.000     |    4.000     | FALSE | FALSE  |
-| EUCAST 2026 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans | 1.25/23.75 mcg |    26.000    |    26.000    | FALSE | FALSE  |
-| EUCAST 2026 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans |                |    0.125     |    0.125     | FALSE | FALSE  |
-| EUCAST 2026 | human | human |  DISK  |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | TZP |    Piperacillin/tazobactam    | A. xylosoxidans |    30/6 mcg    |    26.000    |    26.000    | FALSE | FALSE  |
-| EUCAST 2026 | human | human |  MIC   |      | B_ACHRMB_XYLS | Achromobacter xylosoxidans |     2      | TZP |    Piperacillin/tazobactam    | A. xylosoxidans |                |    4.000     |    4.000     | FALSE | FALSE  |
+| guideline | type | host | method | site | mo | mo_name | rank_index | ab | ab_name | ref_tbl | disk_dose | breakpoint_S | breakpoint_R | uti | is_SDD |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| EUCAST 2026 | human | human | DISK |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | MEM | Meropenem | A. xylosoxidans | 10 mcg | 26.000 | 20.000 | FALSE | FALSE |
+| EUCAST 2026 | human | human | MIC |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | MEM | Meropenem | A. xylosoxidans |  | 1.000 | 4.000 | FALSE | FALSE |
+| EUCAST 2026 | human | human | DISK |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans | 1.25/23.75 mcg | 26.000 | 26.000 | FALSE | FALSE |
+| EUCAST 2026 | human | human | MIC |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans |  | 0.125 | 0.125 | FALSE | FALSE |
+| EUCAST 2026 | human | human | DISK |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | TZP | Piperacillin/tazobactam | A. xylosoxidans | 30/6 mcg | 26.000 | 26.000 | FALSE | FALSE |
+| EUCAST 2026 | human | human | MIC |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | TZP | Piperacillin/tazobactam | A. xylosoxidans |  | 4.000 | 4.000 | FALSE | FALSE |
 
 ------------------------------------------------------------------------
 
@@ -236,14 +236,14 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
 **Example content**
 
-|    mo_group    |      mo      |          mo_group_name          |           mo_name           |
-|:--------------:|:------------:|:-------------------------------:|:---------------------------:|
-| B_ACNTB_BMNN-C | B_ACNTB_BMNN | Acinetobacter baumannii complex |   Acinetobacter baumannii   |
+| mo_group | mo | mo_group_name | mo_name |
+|:--:|:--:|:--:|:--:|
+| B_ACNTB_BMNN-C | B_ACNTB_BMNN | Acinetobacter baumannii complex | Acinetobacter baumannii |
 | B_ACNTB_BMNN-C | B_ACNTB_CLCC | Acinetobacter baumannii complex | Acinetobacter calcoaceticus |
 | B_ACNTB_BMNN-C | B_ACNTB_LCTC | Acinetobacter baumannii complex | Acinetobacter dijkshoorniae |
-| B_ACNTB_BMNN-C | B_ACNTB_NSCM | Acinetobacter baumannii complex | Acinetobacter nosocomialis  |
-| B_ACNTB_BMNN-C | B_ACNTB_PITT | Acinetobacter baumannii complex |    Acinetobacter pittii     |
-| B_ACNTB_BMNN-C | B_ACNTB_SFRT | Acinetobacter baumannii complex |   Acinetobacter seifertii   |
+| B_ACNTB_BMNN-C | B_ACNTB_NSCM | Acinetobacter baumannii complex | Acinetobacter nosocomialis |
+| B_ACNTB_BMNN-C | B_ACNTB_PITT | Acinetobacter baumannii complex | Acinetobacter pittii |
+| B_ACNTB_BMNN-C | B_ACNTB_SFRT | Acinetobacter baumannii complex | Acinetobacter seifertii |
 
 ------------------------------------------------------------------------
 
@@ -394,14 +394,14 @@ here](https://amr-for-r.org/reference/dosage.html).
 
 **Example content**
 
-| ab  |    name     |       type        |    dose     | dose_times | administration | notes |    original_txt    | eucast_version |
-|:---:|:-----------:|:-----------------:|:-----------:|:----------:|:--------------:|:-----:|:------------------:|:--------------:|
-| AMK |  Amikacin   |  standard_dosage  | 25-30 mg/kg |     1      |       iv       |       | 25-30 mg/kg x 1 iv |       15       |
-| AMX | Amoxicillin |    high_dosage    |     2 g     |     6      |       iv       |       |     2 g x 6 iv     |       15       |
-| AMX | Amoxicillin |  standard_dosage  |     1 g     |     3      |       iv       |       |    1 g x 3-4 iv    |       15       |
-| AMX | Amoxicillin |    high_dosage    |  0.75-1 g   |     3      |      oral      |       | 0.75-1 g x 3 oral  |       15       |
-| AMX | Amoxicillin |  standard_dosage  |    0.5 g    |     3      |      oral      |       |   0.5 g x 3 oral   |       15       |
-| AMX | Amoxicillin | uncomplicated_uti |    0.5 g    |     3      |      oral      |       |   0.5 g x 3 oral   |       15       |
+| ab | name | type | dose | dose_times | administration | notes | original_txt | eucast_version |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| AMK | Amikacin | standard_dosage | 25-30 mg/kg | 1 | iv |  | 25-30 mg/kg x 1 iv | 15 |
+| AMX | Amoxicillin | high_dosage | 2 g | 6 | iv |  | 2 g x 6 iv | 15 |
+| AMX | Amoxicillin | standard_dosage | 1 g | 3 | iv |  | 1 g x 3-4 iv | 15 |
+| AMX | Amoxicillin | high_dosage | 0.75-1 g | 3 | oral |  | 0.75-1 g x 3 oral | 15 |
+| AMX | Amoxicillin | standard_dosage | 0.5 g | 3 | oral |  | 0.5 g x 3 oral | 15 |
+| AMX | Amoxicillin | uncomplicated_uti | 0.5 g | 3 | oral |  | 0.5 g x 3 oral | 15 |
 
 ------------------------------------------------------------------------
 
@@ -424,14 +424,14 @@ here](https://amr-for-r.org/reference/example_isolates.html).
 
 **Example content**
 
-|    date    | patient | age | gender |   ward   |      mo      | PEN | OXA | FLC | AMX | AMC | AMP | TZP | CZO | FEP | CXM | FOX | CTX | CAZ | CRO | GEN | TOB | AMK | KAN | TMP | SXT | NIT | FOS | LNZ | CIP | MFX | VAN | TEC | TCY | TGC | DOX | ERY | CLI | AZM | IPM | MEM | MTR | CHL | COL | MUP | RIF |
-|:----------:|:-------:|:---:|:------:|:--------:|:------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 2002-01-02 | A77334  | 65  |   F    | Clinical | B_ESCHR_COLI |  R  |     |     |     |  I  |     |     |     |     |  I  |     |     |     |     |     |     |     |     |  R  |  R  |     |     |  R  |     |     |  R  |  R  |  R  |     |     |  R  |  R  |  R  |     |     |     |     |     |     |  R  |
-| 2002-01-03 | A77334  | 65  |   F    | Clinical | B_ESCHR_COLI |  R  |     |     |     |  I  |     |     |     |     |  I  |     |     |     |     |     |     |     |     |  R  |  R  |     |     |  R  |     |     |  R  |  R  |  R  |     |     |  R  |  R  |  R  |     |     |     |     |     |     |  R  |
-| 2002-01-07 | 067927  | 45  |   F    |   ICU    | B_STPHY_EPDR |  R  |     |  R  |     |     |     |     |     |     |  R  |     |     |  R  |     |     |     |     |     |  S  |  S  |     |     |     |     |     |  S  |     |  S  |  S  |  S  |  R  |     |  R  |     |     |     |     |  R  |     |     |
-| 2002-01-07 | 067927  | 45  |   F    |   ICU    | B_STPHY_EPDR |  R  |     |  R  |     |     |     |     |     |     |  R  |     |     |  R  |     |     |     |     |     |  S  |  S  |     |     |     |     |     |  S  |     |  S  |  S  |  S  |  R  |     |  R  |     |     |     |     |  R  |     |     |
-| 2002-01-13 | 067927  | 45  |   F    |   ICU    | B_STPHY_EPDR |  R  |     |  R  |     |     |     |     |     |     |  R  |     |     |  R  |     |     |     |     |     |  R  |     |     |     |     |     |     |  S  |     |  S  |  S  |  S  |  R  |     |  R  |     |     |     |     |  R  |     |     |
-| 2002-01-13 | 067927  | 45  |   F    |   ICU    | B_STPHY_EPDR |  R  |     |  R  |     |     |     |     |     |     |  R  |     |     |  R  |     |     |     |     |     |  R  |     |     |     |     |     |     |  S  |     |  S  |  S  |  S  |  R  |  R  |  R  |     |     |     |     |  R  |     |     |
+| date | patient | age | gender | ward | mo | PEN | OXA | FLC | AMX | AMC | AMP | TZP | CZO | FEP | CXM | FOX | CTX | CAZ | CRO | GEN | TOB | AMK | KAN | TMP | SXT | NIT | FOS | LNZ | CIP | MFX | VAN | TEC | TCY | TGC | DOX | ERY | CLI | AZM | IPM | MEM | MTR | CHL | COL | MUP | RIF |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| 2002-01-02 | A77334 | 65 | F | Clinical | B_ESCHR_COLI | R |  |  |  | I |  |  |  |  | I |  |  |  |  |  |  |  |  | R | R |  |  | R |  |  | R | R | R |  |  | R | R | R |  |  |  |  |  |  | R |
+| 2002-01-03 | A77334 | 65 | F | Clinical | B_ESCHR_COLI | R |  |  |  | I |  |  |  |  | I |  |  |  |  |  |  |  |  | R | R |  |  | R |  |  | R | R | R |  |  | R | R | R |  |  |  |  |  |  | R |
+| 2002-01-07 | 067927 | 45 | F | ICU | B_STPHY_EPDR | R |  | R |  |  |  |  |  |  | R |  |  | R |  |  |  |  |  | S | S |  |  |  |  |  | S |  | S | S | S | R |  | R |  |  |  |  | R |  |  |
+| 2002-01-07 | 067927 | 45 | F | ICU | B_STPHY_EPDR | R |  | R |  |  |  |  |  |  | R |  |  | R |  |  |  |  |  | S | S |  |  |  |  |  | S |  | S | S | S | R |  | R |  |  |  |  | R |  |  |
+| 2002-01-13 | 067927 | 45 | F | ICU | B_STPHY_EPDR | R |  | R |  |  |  |  |  |  | R |  |  | R |  |  |  |  |  | R |  |  |  |  |  |  | S |  | S | S | S | R |  | R |  |  |  |  | R |  |  |
+| 2002-01-13 | 067927 | 45 | F | ICU | B_STPHY_EPDR | R |  | R |  |  |  |  |  |  | R |  |  | R |  |  |  |  |  | R |  |  |  |  |  |  | S |  | S | S | S | R | R | R |  |  |  |  | R |  |  |
 
 ------------------------------------------------------------------------
 
@@ -555,11 +555,11 @@ contain the trade names and LOINC codes as comma separated values.
 
 **Example content**
 
-| av  |        name        |   atc   |    cid    |                             atc_group                              |                       synonyms                        | oral_ddd | oral_units | iv_ddd | iv_units |            loinc             |
-|:---:|:------------------:|:-------:|:---------:|:------------------------------------------------------------------:|:-----------------------------------------------------:|:--------:|:----------:|:------:|:--------:|:----------------------------:|
-| ABA |      Abacavir      | J05AF06 |  441300   |     Nucleoside and nucleotide reverse transcriptase inhibitors     |          abacavir sulfate, avacavir, ziagen           |   0.6    |     g      |        |          | 29113-8, 30273-7, 30287-7, … |
-| ACI |     Aciclovir      | J05AB01 | 135398513 | Nucleosides and nucleotides excl. reverse transcriptase inhibitors |        acicloftal, aciclovier, aciclovirum, …         |   4.0    |     g      |   4    |    g     |                              |
-| ADD | Adefovir dipivoxil | J05AF08 |   60871   |     Nucleoside and nucleotide reverse transcriptase inhibitors     | adefovir di, adefovir di ester, adefovir dipivoxyl, … |   10.0   |     mg     |        |          |                              |
-| AME |     Amenamevir     | J05AX26 | 11397521  |                          Other antivirals                          |                       amenalief                       |   0.4    |     g      |        |          |                              |
-| AMP |     Amprenavir     | J05AE05 |   65016   |                        Protease inhibitors                         |             agenerase, carbamate, prozei              |   1.2    |     g      |        |          | 29114-6, 30296-8, 30297-6, … |
-| ASU |    Asunaprevir     | J05AP06 | 16076883  |             Antivirals for treatment of HCV infections             |                sunvepra, sunvepratrade                |   0.2    |     g      |        |          |                              |
+| av | name | atc | cid | atc_group | synonyms | oral_ddd | oral_units | iv_ddd | iv_units | loinc |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| ABA | Abacavir | J05AF06 | 441300 | Nucleoside and nucleotide reverse transcriptase inhibitors | abacavir sulfate, avacavir, ziagen | 0.6 | g |  |  | 29113-8, 30273-7, 30287-7, … |
+| ACI | Aciclovir | J05AB01 | 135398513 | Nucleosides and nucleotides excl. reverse transcriptase inhibitors | acicloftal, aciclovier, aciclovirum, … | 4.0 | g | 4 | g |  |
+| ADD | Adefovir dipivoxil | J05AF08 | 60871 | Nucleoside and nucleotide reverse transcriptase inhibitors | adefovir di, adefovir di ester, adefovir dipivoxyl, … | 10.0 | mg |  |  |  |
+| AME | Amenamevir | J05AX26 | 11397521 | Other antivirals | amenalief | 0.4 | g |  |  |  |
+| AMP | Amprenavir | J05AE05 | 65016 | Protease inhibitors | agenerase, carbamate, prozei | 1.2 | g |  |  | 29114-6, 30296-8, 30297-6, … |
+| ASU | Asunaprevir | J05AP06 | 16076883 | Antivirals for treatment of HCV infections | sunvepra, sunvepratrade | 0.2 | g |  |  |  |

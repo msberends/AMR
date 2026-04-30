@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 25 April 2026.
+methodology remains unchanged. This page was generated on 30 April 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-04-25 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-04-25 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-04-25 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-04-30 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-04-30 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-04-30 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -69,6 +69,7 @@ We will also use the `cleaner` package, that can be used for cleaning
 data and creating frequency tables.
 
 ``` r
+
 library(dplyr)
 library(ggplot2)
 library(AMR)
@@ -81,6 +82,7 @@ The `AMR` package contains a data set `example_isolates_unclean`, which
 might look data that users have extracted from their laboratory systems:
 
 ``` r
+
 example_isolates_unclean
 #> # A tibble: 3,000 × 8
 #>    patient_id hospital date       bacteria      AMX   AMC   CIP   GEN  
@@ -119,6 +121,7 @@ still human readable. More importantly,
 of input:
 
 ``` r
+
 as.mo("Klebsiella pneumoniae")
 #> Class <mo>
 #> [1] B_KLBSL_PNMN
@@ -143,6 +146,7 @@ Gram-stain. They all start with `mo_` and they use
 that still any arbitrary user input can be used:
 
 ``` r
+
 mo_family("K. pneumoniae")
 #> [1] "Enterobacteriaceae"
 mo_genus("K. pneumoniae")
@@ -165,6 +169,7 @@ mo_snomed("K. pneumoniae")
 Now we can thus clean our data:
 
 ``` r
+
 our_data$bacteria <- as.mo(our_data$bacteria, info = TRUE)
 #> ℹ Retrieved values from the `microorganisms.codes` data set for "ESCCOL",
 #>   "KLEPNE", "STAAUR", and "STRPNE".
@@ -177,6 +182,7 @@ Apparently, there was some uncertainty about the translation to
 taxonomic codes. Let’s check this:
 
 ``` r
+
 mo_uncertainties()
 #> Matching scores are based on the resemblance between the input and the full
 #> taxonomic name, and the pathogenicity in humans. See `mo_matching_score()`.
@@ -231,6 +237,7 @@ diffusion values, read more about that on the
 For now, we will just clean the SIR columns in our data using dplyr:
 
 ``` r
+
 # method 1, be explicit about the columns:
 our_data <- our_data %>%
   mutate_at(vars(AMX:GEN), as.sir)
@@ -308,6 +315,7 @@ page.
 The outcome of the function can easily be added to our data:
 
 ``` r
+
 our_data <- our_data %>%
   mutate(first = first_isolate(info = TRUE))
 #> ℹ Determining first isolates using an episode length of 365 days
@@ -326,6 +334,7 @@ with the [`filter()`](https://dplyr.tidyverse.org/reference/filter.html)
 function, also from the `dplyr` package:
 
 ``` r
+
 our_data_1st <- our_data %>%
   filter(first == TRUE)
 ```
@@ -333,6 +342,7 @@ our_data_1st <- our_data %>%
 For future use, the above two syntaxes can be shortened:
 
 ``` r
+
 our_data_1st <- our_data %>%
   filter_first_isolate()
 ```
@@ -340,6 +350,7 @@ our_data_1st <- our_data %>%
 So we end up with 2 724 isolates for analysis. Now our data looks like:
 
 ``` r
+
 our_data_1st
 #> # A tibble: 2,724 × 9
 #>    patient_id hospital date       bacteria     AMX   AMC   CIP   GEN   first
@@ -366,6 +377,7 @@ gives a good first impression, as it comes with support for the new `mo`
 and `sir` classes that we now have in our data set:
 
 ``` r
+
 summary(our_data_1st)
 #>      patient_id        hospital         date              bacteria           
 #>  Length   :2724   Length   :2724   Min.   :2011-01-01   Class :mo            
@@ -417,6 +429,7 @@ table with [`count()`](https://amr-for-r.org/reference/count.md) based
 on the name of the microorganisms:
 
 ``` r
+
 our_data %>%
   count(mo_name(bacteria), sort = TRUE)
 #> # A tibble: 4 × 2
@@ -445,6 +458,7 @@ columns based on the antibiotic class that your antibiotic results are
 in:
 
 ``` r
+
 our_data_1st %>%
   select(date, aminoglycosides())
 #> ℹ For `aminoglycosides()` using column GEN
@@ -590,6 +604,7 @@ function to create any of the above antibiogram types. For starters,
 this is what the included `example_isolates` data set looks like:
 
 ``` r
+
 example_isolates
 #> # A tibble: 2,000 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
@@ -622,6 +637,7 @@ function supports any (combination) of the previously mentioned
 antibiotic class selectors:
 
 ``` r
+
 antibiogram(example_isolates,
   antibiotics = c(aminoglycosides(), carbapenems())
 )
@@ -630,18 +646,18 @@ antibiogram(example_isolates,
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
-| Pathogen         | Amikacin             | Gentamicin          | Imipenem             | Kanamycin       | Meropenem            | Tobramycin          |
-|:-----------------|:---------------------|:--------------------|:---------------------|:----------------|:---------------------|:--------------------|
-| CoNS             | 0% (0-8%,N=43)       | 86% (82-90%,N=309)  | 52% (37-67%,N=48)    | 0% (0-8%,N=43)  | 52% (37-67%,N=48)    | 22% (12-35%,N=55)   |
-| *E. coli*        | 100% (98-100%,N=171) | 98% (96-99%,N=460)  | 100% (99-100%,N=422) | NA              | 100% (99-100%,N=418) | 97% (96-99%,N=462)  |
-| *E. faecalis*    | 0% (0-9%,N=39)       | 0% (0-9%,N=39)      | 100% (91-100%,N=38)  | 0% (0-9%,N=39)  | NA                   | 0% (0-9%,N=39)      |
-| *K. pneumoniae*  | NA                   | 90% (79-96%,N=58)   | 100% (93-100%,N=51)  | NA              | 100% (93-100%,N=53)  | 90% (79-96%,N=58)   |
-| *P. aeruginosa*  | NA                   | 100% (88-100%,N=30) | NA                   | 0% (0-12%,N=30) | NA                   | 100% (88-100%,N=30) |
-| *P. mirabilis*   | NA                   | 94% (80-99%,N=34)   | 94% (79-99%,N=32)    | NA              | NA                   | 94% (80-99%,N=34)   |
-| *S. aureus*      | NA                   | 99% (97-100%,N=233) | NA                   | NA              | NA                   | 98% (92-100%,N=86)  |
-| *S. epidermidis* | 0% (0-8%,N=44)       | 79% (71-85%,N=163)  | NA                   | 0% (0-8%,N=44)  | NA                   | 51% (40-61%,N=89)   |
-| *S. hominis*     | NA                   | 92% (84-97%,N=80)   | NA                   | NA              | NA                   | 85% (74-93%,N=62)   |
-| *S. pneumoniae*  | 0% (0-3%,N=117)      | 0% (0-3%,N=117)     | NA                   | 0% (0-3%,N=117) | NA                   | 0% (0-3%,N=117)     |
+| Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
+|:---|:---|:---|:---|:---|:---|:---|
+| CoNS | 0% (0-8%,N=43) | 86% (82-90%,N=309) | 52% (37-67%,N=48) | 0% (0-8%,N=43) | 52% (37-67%,N=48) | 22% (12-35%,N=55) |
+| *E. coli* | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) | NA | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
+| *E. faecalis* | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) | NA | 0% (0-9%,N=39) |
+| *K. pneumoniae* | NA | 90% (79-96%,N=58) | 100% (93-100%,N=51) | NA | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
+| *P. aeruginosa* | NA | 100% (88-100%,N=30) | NA | 0% (0-12%,N=30) | NA | 100% (88-100%,N=30) |
+| *P. mirabilis* | NA | 94% (80-99%,N=34) | 94% (79-99%,N=32) | NA | NA | 94% (80-99%,N=34) |
+| *S. aureus* | NA | 99% (97-100%,N=233) | NA | NA | NA | 98% (92-100%,N=86) |
+| *S. epidermidis* | 0% (0-8%,N=44) | 79% (71-85%,N=163) | NA | 0% (0-8%,N=44) | NA | 51% (40-61%,N=89) |
+| *S. hominis* | NA | 92% (84-97%,N=80) | NA | NA | NA | 85% (74-93%,N=62) |
+| *S. pneumoniae* | 0% (0-3%,N=117) | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) |
 
 Notice that the
 [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -659,6 +675,7 @@ Ukrainian, Urdu, or Vietnamese. In this next example, we force the
 language to be Spanish using the `language` argument:
 
 ``` r
+
 antibiogram(example_isolates,
   mo_transform = "gramstain",
   antibiotics = aminoglycosides(),
@@ -669,10 +686,10 @@ antibiogram(example_isolates,
 #>   (amikacin), and KAN (kanamycin)
 ```
 
-| Patógeno      | Amikacina          | Gentamicina         | Kanamicina      | Tobramicina        |
-|:--------------|:-------------------|:--------------------|:----------------|:-------------------|
-| Gram negativo | 98% (96-99%,N=256) | 96% (95-98%,N=684)  | 0% (0-10%,N=35) | 96% (94-97%,N=686) |
-| Gram positivo | 0% (0-1%,N=436)    | 63% (60-66%,N=1170) | 0% (0-1%,N=436) | 34% (31-38%,N=665) |
+| Patógeno | Amikacina | Gentamicina | Kanamicina | Tobramicina |
+|:---|:---|:---|:---|:---|
+| Gram negativo | 98% (96-99%,N=256) | 96% (95-98%,N=684) | 0% (0-10%,N=35) | 96% (94-97%,N=686) |
+| Gram positivo | 0% (0-1%,N=436) | 63% (60-66%,N=1170) | 0% (0-1%,N=436) | 34% (31-38%,N=665) |
 
 #### Combined Antibiogram
 
@@ -680,6 +697,7 @@ To create a combined antibiogram, use antibiotic codes or names with a
 plus `+` character like this:
 
 ``` r
+
 combined_ab <- antibiogram(example_isolates,
   antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
   ab_transform = NULL
@@ -687,17 +705,17 @@ combined_ab <- antibiogram(example_isolates,
 combined_ab
 ```
 
-| Pathogen         | TZP                  | TZP + GEN            | TZP + TOB            |
-|:-----------------|:---------------------|:---------------------|:---------------------|
-| CoNS             | 30% (16-49%,N=33)    | 97% (95-99%,N=274)   | NA                   |
-| *E. coli*        | 94% (92-96%,N=416)   | 100% (98-100%,N=459) | 99% (97-100%,N=461)  |
-| *K. pneumoniae*  | 89% (77-96%,N=53)    | 93% (83-98%,N=58)    | 93% (83-98%,N=58)    |
-| *P. aeruginosa*  | NA                   | 100% (88-100%,N=30)  | 100% (88-100%,N=30)  |
-| *P. mirabilis*   | NA                   | 100% (90-100%,N=34)  | 100% (90-100%,N=34)  |
-| *S. aureus*      | NA                   | 100% (98-100%,N=231) | 100% (96-100%,N=91)  |
-| *S. epidermidis* | NA                   | 100% (97-100%,N=128) | 100% (92-100%,N=46)  |
-| *S. hominis*     | NA                   | 100% (95-100%,N=74)  | 100% (93-100%,N=53)  |
-| *S. pneumoniae*  | 100% (97-100%,N=112) | 100% (97-100%,N=112) | 100% (97-100%,N=112) |
+| Pathogen | TZP | TZP + GEN | TZP + TOB |
+|:---|:---|:---|:---|
+| CoNS | 30% (16-49%,N=33) | 97% (95-99%,N=274) | NA |
+| *E. coli* | 94% (92-96%,N=416) | 100% (98-100%,N=459) | 99% (97-100%,N=461) |
+| *K. pneumoniae* | 89% (77-96%,N=53) | 93% (83-98%,N=58) | 93% (83-98%,N=58) |
+| *P. aeruginosa* | NA | 100% (88-100%,N=30) | 100% (88-100%,N=30) |
+| *P. mirabilis* | NA | 100% (90-100%,N=34) | 100% (90-100%,N=34) |
+| *S. aureus* | NA | 100% (98-100%,N=231) | 100% (96-100%,N=91) |
+| *S. epidermidis* | NA | 100% (97-100%,N=128) | 100% (92-100%,N=46) |
+| *S. hominis* | NA | 100% (95-100%,N=74) | 100% (93-100%,N=53) |
+| *S. pneumoniae* | 100% (97-100%,N=112) | 100% (97-100%,N=112) | 100% (97-100%,N=112) |
 
 #### Syndromic Antibiogram
 
@@ -707,6 +725,7 @@ be used. This can be any column in the data, or e.g. an
 on certain columns:
 
 ``` r
+
 antibiogram(example_isolates,
   antibiotics = c(aminoglycosides(), carbapenems()),
   syndromic_group = "ward"
@@ -716,22 +735,22 @@ antibiogram(example_isolates,
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
-| Syndromic Group | Pathogen         | Amikacin             | Gentamicin          | Imipenem             | Kanamycin       | Meropenem            | Tobramycin          |
-|:----------------|:-----------------|:---------------------|:--------------------|:---------------------|:----------------|:---------------------|:--------------------|
-| Clinical        | CoNS             | NA                   | 89% (84-93%,N=205)  | 57% (39-74%,N=35)    | NA              | 57% (39-74%,N=35)    | 26% (12-45%,N=31)   |
-| ICU             | CoNS             | NA                   | 79% (68-88%,N=73)   | NA                   | NA              | NA                   | NA                  |
-| Outpatient      | CoNS             | NA                   | 84% (66-95%,N=31)   | NA                   | NA              | NA                   | NA                  |
-| Clinical        | *E. coli*        | 100% (97-100%,N=104) | 98% (96-99%,N=297)  | 100% (99-100%,N=266) | NA              | 100% (99-100%,N=276) | 98% (96-99%,N=299)  |
-| ICU             | *E. coli*        | 100% (93-100%,N=52)  | 99% (95-100%,N=137) | 100% (97-100%,N=133) | NA              | 100% (97-100%,N=118) | 96% (92-99%,N=137)  |
-| Clinical        | *K. pneumoniae*  | NA                   | 92% (81-98%,N=51)   | 100% (92-100%,N=44)  | NA              | 100% (92-100%,N=46)  | 92% (81-98%,N=51)   |
-| Clinical        | *P. mirabilis*   | NA                   | 100% (88-100%,N=30) | NA                   | NA              | NA                   | 100% (88-100%,N=30) |
-| Clinical        | *S. aureus*      | NA                   | 99% (95-100%,N=150) | NA                   | NA              | NA                   | 97% (89-100%,N=63)  |
-| ICU             | *S. aureus*      | NA                   | 100% (95-100%,N=66) | NA                   | NA              | NA                   | NA                  |
-| Clinical        | *S. epidermidis* | NA                   | 82% (72-90%,N=79)   | NA                   | NA              | NA                   | 55% (39-70%,N=44)   |
-| ICU             | *S. epidermidis* | NA                   | 72% (60-82%,N=75)   | NA                   | NA              | NA                   | 41% (26-58%,N=41)   |
-| Clinical        | *S. hominis*     | NA                   | 96% (85-99%,N=45)   | NA                   | NA              | NA                   | 94% (79-99%,N=31)   |
-| Clinical        | *S. pneumoniae*  | 0% (0-5%,N=78)       | 0% (0-5%,N=78)      | NA                   | 0% (0-5%,N=78)  | NA                   | 0% (0-5%,N=78)      |
-| ICU             | *S. pneumoniae*  | 0% (0-12%,N=30)      | 0% (0-12%,N=30)     | NA                   | 0% (0-12%,N=30) | NA                   | 0% (0-12%,N=30)     |
+| Syndromic Group | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
+|:---|:---|:---|:---|:---|:---|:---|:---|
+| Clinical | CoNS | NA | 89% (84-93%,N=205) | 57% (39-74%,N=35) | NA | 57% (39-74%,N=35) | 26% (12-45%,N=31) |
+| ICU | CoNS | NA | 79% (68-88%,N=73) | NA | NA | NA | NA |
+| Outpatient | CoNS | NA | 84% (66-95%,N=31) | NA | NA | NA | NA |
+| Clinical | *E. coli* | 100% (97-100%,N=104) | 98% (96-99%,N=297) | 100% (99-100%,N=266) | NA | 100% (99-100%,N=276) | 98% (96-99%,N=299) |
+| ICU | *E. coli* | 100% (93-100%,N=52) | 99% (95-100%,N=137) | 100% (97-100%,N=133) | NA | 100% (97-100%,N=118) | 96% (92-99%,N=137) |
+| Clinical | *K. pneumoniae* | NA | 92% (81-98%,N=51) | 100% (92-100%,N=44) | NA | 100% (92-100%,N=46) | 92% (81-98%,N=51) |
+| Clinical | *P. mirabilis* | NA | 100% (88-100%,N=30) | NA | NA | NA | 100% (88-100%,N=30) |
+| Clinical | *S. aureus* | NA | 99% (95-100%,N=150) | NA | NA | NA | 97% (89-100%,N=63) |
+| ICU | *S. aureus* | NA | 100% (95-100%,N=66) | NA | NA | NA | NA |
+| Clinical | *S. epidermidis* | NA | 82% (72-90%,N=79) | NA | NA | NA | 55% (39-70%,N=44) |
+| ICU | *S. epidermidis* | NA | 72% (60-82%,N=75) | NA | NA | NA | 41% (26-58%,N=41) |
+| Clinical | *S. hominis* | NA | 96% (85-99%,N=45) | NA | NA | NA | 94% (79-99%,N=31) |
+| Clinical | *S. pneumoniae* | 0% (0-5%,N=78) | 0% (0-5%,N=78) | NA | 0% (0-5%,N=78) | NA | 0% (0-5%,N=78) |
+| ICU | *S. pneumoniae* | 0% (0-12%,N=30) | 0% (0-12%,N=30) | NA | 0% (0-12%,N=30) | NA | 0% (0-12%,N=30) |
 
 #### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 
@@ -745,6 +764,7 @@ susceptibility estimates, weighted by pathogen incidence and
 antimicrobial susceptibility patterns.
 
 ``` r
+
 example_isolates %>%
   wisca(
     antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
@@ -753,8 +773,8 @@ example_isolates %>%
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:------------------------|:-------------------------------------|:-------------------------------------|
-| 69.4% (64.3-74.3%)      | 92.6% (91.1-93.9%)                   | 88.7% (85.8-91.2%)                   |
+|:---|:---|:---|
+| 69.4% (64.3-74.3%) | 92.6% (91.1-93.9%) | 88.7% (85.8-91.2%) |
 
 WISCA uses a **Bayesian decision model** to integrate data from multiple
 pathogens, improving empirical therapy guidance, especially for
@@ -775,6 +795,7 @@ grouped `tibble`, i.e., using
 first:
 
 ``` r
+
 example_isolates %>%
   top_n_microorganisms(n = 10) %>%
   group_by(
@@ -785,15 +806,15 @@ example_isolates %>%
 ```
 
 | age_group | gender | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:----------|:-------|:------------------------|:-------------------------------------|:-------------------------------------|
-| 0-24      | F      | 56.6% (25.2-83.9%)      | 73.6% (48-91.6%)                     | 68.6% (42.9-89.5%)                   |
-| 0-24      | M      | 60.3% (28.4-87.1%)      | 79.7% (57.6-94.2%)                   | 60.1% (29.5-87.7%)                   |
-| 25-49     | F      | 66.6% (45.6-85.5%)      | 91.7% (84.6-96.7%)                   | 83% (67.9-94%)                       |
-| 25-49     | M      | 56.4% (29.1-81.7%)      | 89.2% (80.3-95.7%)                   | 72.4% (49.7-90%)                     |
-| 50-74     | F      | 67.8% (55.8-80.1%)      | 95.6% (93.2-97.5%)                   | 88.1% (80.4-94.6%)                   |
-| 50-74     | M      | 66.2% (54.8-75.8%)      | 95.2% (92.4-97.4%)                   | 84.4% (74.4-92.5%)                   |
-| 75+       | F      | 71.7% (61-81.7%)        | 96.6% (94.4-98.2%)                   | 90.6% (84.6-95.3%)                   |
-| 75+       | M      | 72.9% (63.8-82%)        | 96.6% (94.6-98.1%)                   | 92.8% (87.8-96.5%)                   |
+|:---|:---|:---|:---|:---|
+| 0-24 | F | 56.6% (25.2-83.9%) | 73.6% (48-91.6%) | 68.6% (42.9-89.5%) |
+| 0-24 | M | 60.3% (28.4-87.1%) | 79.7% (57.6-94.2%) | 60.1% (29.5-87.7%) |
+| 25-49 | F | 66.6% (45.6-85.5%) | 91.7% (84.6-96.7%) | 83% (67.9-94%) |
+| 25-49 | M | 56.4% (29.1-81.7%) | 89.2% (80.3-95.7%) | 72.4% (49.7-90%) |
+| 50-74 | F | 67.8% (55.8-80.1%) | 95.6% (93.2-97.5%) | 88.1% (80.4-94.6%) |
+| 50-74 | M | 66.2% (54.8-75.8%) | 95.2% (92.4-97.4%) | 84.4% (74.4-92.5%) |
+| 75+ | F | 71.7% (61-81.7%) | 96.6% (94.4-98.2%) | 90.6% (84.6-95.3%) |
+| 75+ | M | 72.9% (63.8-82%) | 96.6% (94.6-98.1%) | 92.8% (87.8-96.5%) |
 
 #### Plotting antibiograms
 
@@ -803,6 +824,7 @@ from the `ggplot2` packages, since this `AMR` package provides an
 extension to that function:
 
 ``` r
+
 autoplot(combined_ab)
 ```
 
@@ -847,6 +869,7 @@ equal to
 These functions can be used on their own:
 
 ``` r
+
 our_data_1st %>% resistance(AMX)
 #> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
 #>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
@@ -861,6 +884,7 @@ Or can be used in conjunction with
 both from the `dplyr` package:
 
 ``` r
+
 our_data_1st %>%
   group_by(hospital) %>%
   summarise(amoxicillin = resistance(AMX))
@@ -881,6 +905,7 @@ example with randomly generated MIC values for *Klebsiella pneumoniae*
 and ciprofloxacin:
 
 ``` r
+
 set.seed(123)
 mic_values <- random_mic(100)
 sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
@@ -916,6 +941,7 @@ y-axis and
 colour-code SIR categories.
 
 ``` r
+
 # add a group
 my_data$group <- rep(c("A", "B", "C", "D"), each = 25)
 
@@ -946,12 +972,14 @@ has been extended by this package to directly plot MIC and disk
 diffusion values:
 
 ``` r
+
 autoplot(mic_values)
 ```
 
 ![](AMR_files/figure-html/autoplot-1.png)
 
 ``` r
+
 
 # by providing `mo` and `ab`, colours will indicate the SIR interpretation:
 autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")

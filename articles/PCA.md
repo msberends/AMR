@@ -11,6 +11,7 @@ For PCA, we need to transform our AMR data first. This is what the
 `example_isolates` data set in this package looks like:
 
 ``` r
+
 library(AMR)
 library(dplyr)
 glimpse(example_isolates)
@@ -68,6 +69,7 @@ Now to transform this to a data set with only resistance percentages per
 taxonomic order and genus:
 
 ``` r
+
 resistance_data <- example_isolates %>%
   group_by(
     order = mo_order(mo), # group on anything, like order
@@ -103,6 +105,7 @@ automatically filter on rows that contain numeric values in all selected
 variables, so we now only need to do:
 
 ``` r
+
 pca_result <- pca(resistance_data)
 #> ℹ Columns selected for PCA: "\033[1mAMC\033[22m", "\033[1mCAZ\033[22m",
 #>   "\033[1mCTX\033[22m", "\033[1mCXM\033[22m", "\033[1mGEN\033[22m",
@@ -114,6 +117,7 @@ The result can be reviewed with the good old
 [`summary()`](https://rdrr.io/r/base/summary.html) function:
 
 ``` r
+
 summary(pca_result)
 #> Groups (n=4, named as 'order'):
 #> [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"
@@ -137,6 +141,7 @@ microorganism.
 ## Plotting the results
 
 ``` r
+
 biplot(pca_result)
 ```
 
@@ -148,6 +153,7 @@ better with our new
 function, that automatically adds the right labels and even groups:
 
 ``` r
+
 ggplot_pca(pca_result)
 ```
 
@@ -156,6 +162,7 @@ ggplot_pca(pca_result)
 You can also print an ellipse per group, and edit the appearance:
 
 ``` r
+
 ggplot_pca(pca_result, ellipse = TRUE) +
   ggplot2::labs(title = "An AMR/PCA biplot!")
 ```

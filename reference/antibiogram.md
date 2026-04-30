@@ -602,7 +602,7 @@ antibiogram(example_isolates,
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> # An Antibiogram: 10 × 7
+#> # An antibiogram: 10 × 7
 #> # Type:           Non-WISCA with 95% CI
 #>    Pathogen       Amikacin    Gentamicin Imipenem Kanamycin Meropenem Tobramycin
 #>    <chr>          <chr>       <chr>      <chr>    <chr>     <chr>     <chr>     
@@ -617,7 +617,7 @@ antibiogram(example_isolates,
 #>  9 S. hominis     NA          92% (84-9… NA       NA        NA        85% (74-9…
 #> 10 S. pneumoniae  0% (0-3%,N… 0% (0-3%,… NA       0% (0-3%… NA        0% (0-3%,…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 antibiogram(example_isolates,
   antimicrobials = aminoglycosides(),
@@ -626,14 +626,14 @@ antibiogram(example_isolates,
 )
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
-#> # An Antibiogram: 2 × 5
+#> # An antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  
 #>   <chr>         <chr>              <chr>               <chr>           <chr>    
 #> 1 Gram-negative 96% (94-97%,N=686) 96% (95-98%,N=684)  0% (0-10%,N=35) 98% (96-…
 #> 2 Gram-positive 34% (31-38%,N=665) 63% (60-66%,N=1170) 0% (0-1%,N=436) 0% (0-1%…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 antibiogram(example_isolates,
   antimicrobials = carbapenems(),
@@ -641,7 +641,7 @@ antibiogram(example_isolates,
   mo_transform = "name"
 )
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> # An Antibiogram: 5 × 3
+#> # An antibiogram: 5 × 3
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen                                 Imipenem             Meropenem       
 #>   <chr>                                    <chr>                <chr>           
@@ -651,7 +651,7 @@ antibiogram(example_isolates,
 #> 4 Klebsiella pneumoniae                    100% (93-100%,N=51)  100% (93-100%,N…
 #> 5 Proteus mirabilis                        94% (79-99%,N=32)    NA              
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 
 # Combined antibiogram -------------------------------------------------
@@ -661,7 +661,7 @@ antibiogram(example_isolates,
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   mo_transform = "gramstain"
 )
-#> # An Antibiogram: 2 × 4
+#> # An antibiogram: 2 × 4
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³
 #>   <chr>     <chr>                  <chr>                  <chr>                 
@@ -671,7 +671,7 @@ antibiogram(example_isolates,
 #> #   ²​`Piperacillin/tazobactam + Gentamicin`,
 #> #   ³​`Piperacillin/tazobactam + Tobramycin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 # you can use any antimicrobial selector with `+` too:
 antibiogram(example_isolates,
@@ -679,7 +679,7 @@ antibiogram(example_isolates,
   mo_transform = "gramstain"
 )
 #> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
-#> # An Antibiogram: 2 × 4
+#> # An antibiogram: 2 × 4
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³
 #>   <chr>     <chr>                  <chr>                  <chr>                 
@@ -689,7 +689,7 @@ antibiogram(example_isolates,
 #> #   ²​`Piperacillin/tazobactam + Gentamicin`,
 #> #   ³​`Piperacillin/tazobactam + Tobramycin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 # names of antimicrobials do not need to resemble columns exactly:
 antibiogram(example_isolates,
@@ -698,14 +698,14 @@ antibiogram(example_isolates,
   ab_transform = "name",
   sep = " & "
 )
-#> # An Antibiogram: 2 × 3
+#> # An antibiogram: 2 × 3
 #> # Type:           Non-WISCA with 95% CI
 #>   Pathogen      Ciprofloxacin      `Ciprofloxacin & Gentamicin`
 #>   <chr>         <chr>              <chr>                       
 #> 1 Gram-negative 91% (88-93%,N=684) 99% (97-99%,N=694)          
 #> 2 Gram-positive 77% (74-80%,N=724) 93% (91-94%,N=847)          
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 
 # Syndromic antibiogram ------------------------------------------------
@@ -718,7 +718,7 @@ antibiogram(example_isolates,
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> # An Antibiogram: 14 × 8
+#> # An antibiogram: 14 × 8
 #> # Type:           Non-WISCA with 95% CI
 #>    `Syndromic Group` Pathogen   Amikacin Gentamicin Imipenem Kanamycin Meropenem
 #>    <chr>             <chr>      <chr>    <chr>      <chr>    <chr>     <chr>    
@@ -738,7 +738,7 @@ antibiogram(example_isolates,
 #> 14 ICU               S. pneumo… 0% (0-1… 0% (0-12%… NA       0% (0-12… NA       
 #> # ℹ 1 more variable: Tobramycin <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 # now define a data set with only E. coli
 ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
@@ -756,14 +756,14 @@ antibiogram(ex1,
 )
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
-#> # An Antibiogram: 2 × 5
+#> # An antibiogram: 2 × 5
 #> # Type:           Non-WISCA with 95% CI
 #>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina
 #>   <chr>              <chr>    <chr>                <chr>             <chr>      
 #> 1 No UCI             E. coli  100% (97-100%,N=119) 98% (96-99%,N=32… 98% (96-99…
 #> 2 UCI                E. coli  100% (93-100%,N=52)  99% (95-100%,N=1… 96% (92-99…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 
 # WISCA antibiogram ----------------------------------------------------
@@ -774,7 +774,7 @@ antibiogram(example_isolates,
   syndromic_group = "ward",
   wisca = TRUE
 )
-#> # An Antibiogram: 3 × 4
+#> # An antibiogram: 3 × 4
 #> # Type:           WISCA with 95% CI
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
@@ -784,7 +784,7 @@ antibiogram(example_isolates,
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or https://quarto.org, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see ?antibiogram
 
 
 # Print the output for R Markdown / Quarto -----------------------------

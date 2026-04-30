@@ -58,7 +58,9 @@ This means combining two things:
 
 We can write this as:
 
-$$\text{Coverage} = \sum\limits_{i}\left( \text{Incidence}_{i} \times \text{Susceptibility}_{i} \right)$$
+``` math
+\text{Coverage} = \sum_i (\text{Incidence}_i \times \text{Susceptibility}_i)
+```
 
 For example, suppose:
 
@@ -69,7 +71,9 @@ For example, suppose:
 
 Then:
 
-$$\text{Coverage} = (0.6 \times 0.9) + (0.4 \times 0.7) = 0.82$$
+``` math
+\text{Coverage} = (0.6 \times 0.9) + (0.4 \times 0.7) = 0.82
+```
 
 But in real data, incidence and susceptibility are **estimated from
 samples**, so they carry uncertainty. WISCA models this
@@ -81,45 +85,53 @@ samples**, so they carry uncertainty. WISCA models this
 
 Let:
 
-- $K$ be the number of pathogens,
-- $\alpha = (1,1,\ldots,1)$ be a **Dirichlet** prior (uniform),
-- $n = \left( n_{1},\ldots,n_{K} \right)$ be the observed counts per
-  species.
+- $`K`$ be the number of pathogens,
+- $`\alpha = (1, 1, \ldots, 1)`$ be a **Dirichlet** prior (uniform),
+- $`n = (n_1, \ldots, n_K)`$ be the observed counts per species.
 
 Then the posterior incidence is:
 
-$$p \sim \text{Dirichlet}\left( \alpha_{1} + n_{1},\ldots,\alpha_{K} + n_{K} \right)$$
+``` math
+p \sim \text{Dirichlet}(\alpha_1 + n_1, \ldots, \alpha_K + n_K)
+```
 
 To simulate from this, we use:
 
-$$x_{i} \sim \text{Gamma}\left( \alpha_{i} + n_{i},\ 1 \right),\quad p_{i} = \frac{x_{i}}{\sum\limits_{j = 1}^{K}x_{j}}$$
+``` math
+x_i \sim \text{Gamma}(\alpha_i + n_i,\ 1), \quad p_i = \frac{x_i}{\sum_{j=1}^{K} x_j}
+```
 
 ### Susceptibility
 
 Each pathogen–regimen pair has a prior and data:
 
-- Prior: $\text{Beta}\left( \alpha_{0},\beta_{0} \right)$, with default
-  $\alpha_{0} = \beta_{0} = 1$
-- Data: $S$ susceptible out of $N$ tested
+- Prior: $`\text{Beta}(\alpha_0, \beta_0)`$, with default
+  $`\alpha_0 = \beta_0 = 1`$
+- Data: $`S`$ susceptible out of $`N`$ tested
 
-The $S$ category could also include values SDD (susceptible,
+The $`S`$ category could also include values SDD (susceptible,
 dose-dependent) and I (intermediate \[CLSI\], or susceptible, increased
 exposure \[EUCAST\]).
 
 Then the posterior is:
 
-$$\theta \sim \text{Beta}\left( \alpha_{0} + S,\ \beta_{0} + N - S \right)$$
+``` math
+\theta \sim \text{Beta}(\alpha_0 + S,\ \beta_0 + N - S)
+```
 
 ### Final coverage estimate
 
 Putting it together:
 
-1.  Simulate pathogen incidence: $\mathbf{p} \sim \text{Dirichlet}$
+1.  Simulate pathogen incidence:
+    $`\boldsymbol{p} \sim \text{Dirichlet}`$
 2.  Simulate susceptibility:
-    $\theta_{i} \sim \text{Beta}\left( 1 + S_{i},\ 1 + R_{i} \right)$
+    $`\theta_i \sim \text{Beta}(1 + S_i,\ 1 + R_i)`$
 3.  Combine:
 
-$$\text{Coverage} = \sum\limits_{i = 1}^{K}p_{i} \cdot \theta_{i}$$
+``` math
+\text{Coverage} = \sum_{i=1}^{K} p_i \cdot \theta_i
+```
 
 Repeat this simulation (e.g. 1000×) and summarise:
 
@@ -131,6 +143,7 @@ Repeat this simulation (e.g. 1000×) and summarise:
 ### Prepare data and simulate synthetic syndrome
 
 ``` r
+
 library(AMR)
 data <- example_isolates
 
@@ -164,6 +177,7 @@ data$syndrome <- ifelse(data$mo %like% "coli", "UTI", "No UTI")
 ### Basic WISCA antibiogram
 
 ``` r
+
 wisca(data,
   antimicrobials = c("AMC", "CIP", "GEN")
 )
@@ -176,18 +190,20 @@ wisca(data,
 ### Use combination regimens
 
 ``` r
+
 wisca(data,
   antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN")
 )
 ```
 
 | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
-|:----------------------------|:--------------------------------------------|:-----------------------------------------|
-| 73.8% (71.8-75.7%)          | 87.5% (85.9-89%)                            | 89.7% (88.2-91.1%)                       |
+|:---|:---|:---|
+| 73.8% (71.8-75.7%) | 87.5% (85.9-89%) | 89.7% (88.2-91.1%) |
 
 ### Stratify by syndrome
 
 ``` r
+
 wisca(data,
   antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
   syndromic_group = "syndrome"
@@ -195,15 +211,16 @@ wisca(data,
 ```
 
 | Syndromic Group | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
-|:----------------|:----------------------------|:--------------------------------------------|:-----------------------------------------|
-| No UTI          | 70.1% (67.8-72.3%)          | 85.2% (83.1-87.2%)                          | 87.1% (85.3-88.7%)                       |
-| UTI             | 80.9% (77.7-83.8%)          | 88.2% (85.7-90.5%)                          | 90.9% (88.7-93%)                         |
+|:---|:---|:---|:---|
+| No UTI | 70.1% (67.8-72.3%) | 85.2% (83.1-87.2%) | 87.1% (85.3-88.7%) |
+| UTI | 80.9% (77.7-83.8%) | 88.2% (85.7-90.5%) | 90.9% (88.7-93%) |
 
 The `AMR` package is available in 28 languages, which can all be used
 for the [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
 function too:
 
 ``` r
+
 wisca(data,
   antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
   syndromic_group = gsub("UTI", "UCI", data$syndrome),
@@ -212,9 +229,9 @@ wisca(data,
 ```
 
 | Grupo sindrómico | Amoxicilina/ácido clavulánico | Amoxicilina/ácido clavulánico + Ciprofloxacina | Amoxicilina/ácido clavulánico + Gentamicina |
-|:-----------------|:------------------------------|:-----------------------------------------------|:--------------------------------------------|
-| No UCI           | 70% (67.8-72.4%)              | 85.3% (83.3-87.2%)                             | 87% (85.3-88.8%)                            |
-| UCI              | 80.9% (77.7-83.9%)            | 88.2% (85.5-90.6%)                             | 90.9% (88.7-93%)                            |
+|:---|:---|:---|:---|
+| No UCI | 70% (67.8-72.4%) | 85.3% (83.3-87.2%) | 87% (85.3-88.8%) |
+| UCI | 80.9% (77.7-83.9%) | 88.2% (85.5-90.6%) | 90.9% (88.7-93%) |
 
 ## Sensible defaults, which can be customised
 
@@ -242,6 +259,7 @@ WISCA enables:
 It is available in the `AMR` package via either:
 
 ``` r
+
 wisca(...)
 
 antibiogram(..., wisca = TRUE)
