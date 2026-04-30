@@ -483,6 +483,34 @@ antibiogram.default <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
 
+  # parallel gate - identical pattern to as.sir()
+  if (requireNamespace("future.apply", quietly = TRUE) && !inherits(future::plan(), "sequential")) {
+    if (isFALSE(parallel)) {
+      message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
+    }
+    parallel <- TRUE
+  }
+  if (isTRUE(parallel)) {
+    stop_ifnot(
+      requireNamespace("future.apply", quietly = TRUE),
+      "Setting {.code parallel = TRUE} requires the {.pkg future.apply} package.\n",
+      "Install it with {.code install.packages(\"future.apply\")}."
+    )
+    stop_if(inherits(future::plan(), "sequential"),
+      "Setting {.code parallel = TRUE} requires a non-sequential {.help [{.fun future::plan}](future::plan)} to be active.\n",
+      "For your system, you could first run: {.code library(future); ",
+      ifelse(.Platform$OS.type == "windows" || in_rstudio(),
+        "plan(multisession)",
+        "plan(multicore)"
+      ),
+      "}",
+      call = FALSE
+    )
+    n_workers <- future::nbrOfWorkers()
+  } else {
+    n_workers <- 1L
+  }
+
   # try to find columns based on type
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
@@ -719,34 +747,6 @@ antibiogram.default <- function(x,
     }
 
     unique_groups <- unique(wisca_parameters$group)
-
-    # parallel gate for WISCA - identical pattern to as.sir()
-    if (requireNamespace("future.apply", quietly = TRUE) && !inherits(future::plan(), "sequential")) {
-      if (isFALSE(parallel)) {
-        message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
-      }
-      parallel <- TRUE
-    }
-    if (isTRUE(parallel)) {
-      stop_ifnot(
-        requireNamespace("future.apply", quietly = TRUE),
-        "Setting {.code parallel = TRUE} requires the {.pkg future.apply} package.\n",
-        "Install it with {.code install.packages(\"future.apply\")}."
-      )
-      stop_if(inherits(future::plan(), "sequential"),
-        "Setting {.code parallel = TRUE} requires a non-sequential {.help [{.fun future::plan}](future::plan)} to be active.\n",
-        "For your system, you could first run: {.code library(future); ",
-        ifelse(.Platform$OS.type == "windows" || in_rstudio(),
-          "plan(multisession)",
-          "plan(multicore)"
-        ),
-        "}",
-        call = FALSE
-      )
-      n_workers <- future::nbrOfWorkers()
-    } else {
-      n_workers <- 1L
-    }
 
     use_parallel_wisca <- isTRUE(parallel) && n_workers > 1L && length(unique_groups) > 0L
 
