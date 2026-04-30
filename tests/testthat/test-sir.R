@@ -491,13 +491,13 @@ test_that("test-sir.R", {
     expect_identical(sir_par[["AMC"]], sir_par2[["AMC"]])
     expect_identical(sir_par[["GEN"]], sir_par2[["GEN"]])
 
-    # 5. max_cores = 1 gives same results as default sequential
+    # 5. used cores = 1 gives same results as default sequential
     future::plan(future::multicore, workers = 1)
     sir_mc1 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
     expect_identical(sir_seq[["AMC"]], sir_mc1[["AMC"]])
     expect_identical(sir_seq[["GEN"]], sir_mc1[["GEN"]])
 
-    # 6. max_cores = 2 and max_cores = 3 give same results as sequential
+    # 6. used cores = 2 and used cores = 3 give same results as sequential
     if (n_max_workers >= 3) {
       future::plan(future::multicore, workers = 2)
       sir_mc2 <- suppressMessages(as.sir(df_par, col_mo = "mo", info = FALSE, parallel = TRUE))
@@ -515,9 +515,9 @@ test_that("test-sir.R", {
     sir_single_par <- suppressMessages(as.sir(df_single, col_mo = "mo", info = FALSE, parallel = TRUE))
     expect_identical(sir_single_seq[["AMC"]], sir_single_par[["AMC"]])
 
-    # 8. row-batch mode (n_cols < n_cores): force row splitting via max_cores and
+    # 8. row-batch mode (n_cols < n_cores): force row splitting via used cores and
     #    verify identical output to sequential for a dataset with 2 AB columns so
-    #    pieces_per_col = ceiling(max_cores / 2) >= 2 and row batching activates
+    #    pieces_per_col = ceiling(used cores / 2) >= 2 and row batching activates
     df_wide <- data.frame(
       mo = "B_ESCHR_COLI",
       AMC = as.mic(sample(c("1", "2", "4", "8"), n_par, TRUE)),
@@ -529,7 +529,7 @@ test_that("test-sir.R", {
     future::plan(future::multicore)
     sir_wide_par <- suppressMessages(as.sir(df_wide,
       col_mo = "mo", info = FALSE,
-      parallel = TRUE, max_cores = 8L
+      parallel = TRUE
     ))
     expect_identical(sir_wide_seq[["AMC"]], sir_wide_par[["AMC"]])
     expect_identical(sir_wide_seq[["GEN"]], sir_wide_par[["GEN"]])

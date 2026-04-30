@@ -1206,7 +1206,7 @@ retrieve_wisca_parameters <- function(wisca_model, ...) {
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::tbl_sum, antibiogram)
 tbl_sum.antibiogram <- function(x, ...) {
   dims <- paste(format(NROW(x), big.mark = ","), AMR_env$cross_icon, format(NCOL(x), big.mark = ","))
-  names(dims) <- "An Antibiogram"
+  names(dims) <- "An antibiogram"
   if (isTRUE(attributes(x)$wisca)) {
     dims <- c(dims, Type = paste0("WISCA with ", attributes(x)$conf_interval * 100, "% CI"))
   } else if (isTRUE(attributes(x)$formatting_type >= 13)) {
@@ -1226,8 +1226,7 @@ tbl_format_footer.antibiogram <- function(x, ...) {
   }
   c(footer, font_subtle(paste0(
     "# Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,\n",
-    "# or use it directly in R Markdown or ",
-    font_url("https://quarto.org", "Quarto"), ", see ", word_wrap("?antibiogram")
+    "# or use it directly in R Markdown or Quarto, see ", word_wrap("?antibiogram")
   )))
 }
 
