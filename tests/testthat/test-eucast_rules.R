@@ -32,8 +32,9 @@ test_that("test-eucast_rules.R", {
 
   # thoroughly check input table
   expect_equal(
-    sort(colnames(AMR:::EUCAST_RULES_DF)),
+    sort(colnames(AMR:::INTERPRETIVE_RULES_DF)),
     sort(c(
+      "rule.provider",
       "if_mo_property", "like.is.one_of", "this_value",
       "and_these_antibiotics", "have_these_values",
       "then_change_these_antibiotics", "to_value",
@@ -42,7 +43,7 @@ test_that("test-eucast_rules.R", {
       "note"
     ))
   )
-  MOs_mentioned <- unique(AMR:::EUCAST_RULES_DF$this_value)
+  MOs_mentioned <- unique(AMR:::INTERPRETIVE_RULES_DF$this_value)
   MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
   MOs_test <- suppressWarnings(
     trimws(paste(
@@ -219,7 +220,7 @@ test_that("test-eucast_rules.R", {
   expect_inherits(eucast_dosage(c("tobra", "genta", "cipro")), "data.frame")
 
 
-  x <- custom_eucast_rules(
+  x <- custom_interpretive_rules(
     AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
     AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I",
     AMX == "S" ~ AMC == "S"
@@ -239,5 +240,18 @@ test_that("test-eucast_rules.R", {
     )),
     8,
     tolerance = 0.5
+  )
+
+  # deprecated custom_eucast_rules() still works and emits a warning
+  expect_warning(
+    x_old <- custom_eucast_rules(AMC == "R" ~ aminopenicillins == "R"),
+    regexp = "custom_interpretive_rules"
+  )
+  expect_inherits(x_old, "custom_interpretive_rules")
+
+  # clsi_rules() no longer errors (returns data unchanged until CLSI rows are added)
+  expect_identical(
+    suppressWarnings(clsi_rules(example_isolates, info = FALSE)),
+    example_isolates
   )
 })

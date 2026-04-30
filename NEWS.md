@@ -1,4 +1,4 @@
-# AMR 3.0.1.9055
+# AMR 3.0.1.9056
 
 This will become release v3.1.0, intended for launch end of May.
 
@@ -45,6 +45,7 @@ This will become release v3.1.0, intended for launch end of May.
 * Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*)
 
 ### Updates
+* Renamed `custom_eucast_rules()` to `custom_interpretive_rules()`; old function is now a deprecated wrapper. Renamed `data-raw/eucast_rules.tsv` to `interpretive_rules.tsv` and added `rule.provider` column for multi-guideline (EUCAST/CLSI) support. `clsi_rules()` no longer throws an error (#268)
 * `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (#239)
 * Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
 * `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).

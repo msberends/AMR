@@ -62,17 +62,17 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param x A data set with antimicrobials columns, such as `amox`, `AMX` and `AMC`.
 #' @param info A [logical] to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.
 #' @param guideline A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option [`AMR_guideline`][AMR-options].
-#' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_interpretive_rules`][AMR-options]: `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
+#' @param rules A [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expected_phenotypes"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expected_phenotypes")`. The default value can be set to another value using the package option [`AMR_interpretive_rules`][AMR-options]: `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_interpretive_rules()].
 #' @param verbose A [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints The version number to use for the EUCAST Clinical Breakpoints guideline. Can be `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), documentation = TRUE, reverse = TRUE)`.
 #' @param version_expected_phenotypes The version number to use for the EUCAST Expected Phenotypes. Can be `r vector_or(names(EUCAST_VERSION_EXPECTED_PHENOTYPES), documentation = TRUE, reverse = TRUE)`.
 #' @param version_expertrules The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), documentation = TRUE, reverse = TRUE)`.
-#' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(EUCAST_RULES_DF[which(EUCAST_RULES_DF$reference.version %in% c(3.2, 3.3) & EUCAST_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
+#' @param ampc_cephalosporin_resistance (only applies when `rules` contains `"expert"` or `"all"`) a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is `NA`. Currently only works when `version_expertrules` is `3.2` and higher; these versions of '*EUCAST Expert Rules on Enterobacterales*' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of `NA` (the default) for this argument will remove results for these three drugs, while e.g. a value of `"R"` will make the results for these drugs resistant. Use `NULL` or `FALSE` to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(INTERPRETIVE_RULES_DF[which(INTERPRETIVE_RULES_DF$reference.version %in% c(3.2, 3.3) & INTERPRETIVE_RULES_DF$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... Column names of antimicrobials. To automatically detect antimicrobial column names, do not provide any named arguments; [guess_ab_col()] will then be used for detection. To manually specify a column, provide its name (case-insensitive) as an argument, e.g. `AMX = "amoxicillin"`. To skip a specific antimicrobial, set it to `NULL`, e.g. `TIC = NULL` to exclude ticarcillin. If a manually defined column does not exist in the data, it will be skipped with a warning.
 #' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
 #' @param administration Route of administration, either `r vector_or(dosage$administration, documentation = TRUE)`.
 #' @param only_sir_columns A [logical] to indicate whether only antimicrobial columns must be included that were transformed to class [sir][as.sir()] on beforehand. Defaults to `FALSE` if no columns of `x` have a class [sir][as.sir()].
-#' @param custom_rules Custom rules to apply, created with [custom_eucast_rules()].
+#' @param custom_rules Custom rules to apply, created with [custom_interpretive_rules()].
 #' @param overwrite A [logical] indicating whether to overwrite existing SIR values (default: `FALSE`). When `FALSE`, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, **this should remain** `FALSE`, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".
 #' @param add_if_missing A [logical] indicating whether rules should also be applied to missing (`NA`) values (default: `TRUE`). When `FALSE`, rules are only applied to cells that already contain an SIR value; cells with `NA` are left untouched. This is particularly useful when using `overwrite = TRUE` with custom rules and you want to update reported results without imputing values for untested drugs.
 #' @inheritParams first_isolate
@@ -80,15 +80,15 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' **Note:** This function does not translate MIC or disk values to SIR values. Use [as.sir()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 #'
-#' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The `AMR` package contains the full microbial taxonomy updated until `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`, see [microorganisms].
+#' The file containing all interpretive rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The `AMR` package contains the full microbial taxonomy updated until `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`, see [microorganisms].
 #'
 #' ### Custom Rules
 #'
-#' Custom rules can be created using [custom_eucast_rules()], e.g.:
+#' Custom rules can be created using [custom_interpretive_rules()], e.g.:
 #'
 #' ```r
-#' x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
-#'                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+#' x <- custom_interpretive_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+#'                                AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 #'
 #' eucast_rules(example_isolates, rules = "custom", custom_rules = x)
 #' ```
@@ -184,18 +184,13 @@ interpretive_rules <- function(x,
   meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
   meet_criteria(ampc_cephalosporin_resistance, allow_class = c("logical", "character", "sir"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE)
   meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
-  meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
+  meet_criteria(custom_rules, allow_class = c("custom_interpretive_rules", "custom_eucast_rules"), allow_NULL = TRUE)
   meet_criteria(overwrite, allow_class = "logical", has_length = 1)
   meet_criteria(add_if_missing, allow_class = "logical", has_length = 1)
 
   stop_if(
     !overwrite && !add_if_missing,
     "Either set {.arg overwrite} or {.arg add_if_missing} to {.code TRUE}, or both."
-  )
-
-  stop_if(
-    guideline == "CLSI",
-    "CLSI guideline is not yet supported."
   )
 
   stop_if(
@@ -206,7 +201,7 @@ interpretive_rules <- function(x,
   add_MO_lookup_to_AMR_env()
 
   if ("custom" %in% rules && is.null(custom_rules)) {
-    warning_("in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: no custom rules were set with the {.arg custom_rules} argument",
+    warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: no custom rules were set with the {.arg custom_rules} argument",
       immediate = TRUE
     )
     rules <- rules[rules != "custom"]
@@ -611,59 +606,62 @@ interpretive_rules <- function(x,
 
   if (!any(c("all", "custom") %in% rules) && !is.null(custom_rules)) {
     if (isTRUE(info)) {
-      message_("Skipping custom EUCAST rules, since the {.arg rules} argument does not contain {.code \"custom\"}.")
+      message_("Skipping custom interpretive rules, since the {.arg rules} argument does not contain {.code \"custom\"}.")
     }
     custom_rules <- NULL
   }
 
-  # >>> Apply Official EUCAST rules <<< ---------------------------------------------------
+  # >>> Apply Official interpretive rules <<< ---------------------------------------------------
   eucast_notification_shown <- FALSE
-  if (!is.null(list(...)$eucast_rules_df)) {
-    # this allows: eucast_rules(x, eucast_rules_df = AMR:::EUCAST_RULES_DF |> filter(is.na(have_these_values)))
-    eucast_rules_df_total <- list(...)$eucast_rules_df
+  if (!is.null(list(...)$interpretive_rules_df)) {
+    # this allows: interpretive_rules(x, interpretive_rules_df = AMR:::INTERPRETIVE_RULES_DF |> filter(is.na(have_these_values)))
+    interpretive_rules_df_total <- list(...)$interpretive_rules_df
+  } else if (!is.null(list(...)$eucast_rules_df)) {
+    # deprecated parameter name kept for backward compatibility
+    interpretive_rules_df_total <- list(...)$eucast_rules_df
   } else {
     # otherwise internal data file, created in data-raw/_pre_commit_checks.R
-    eucast_rules_df_total <- EUCAST_RULES_DF
+    interpretive_rules_df_total <- INTERPRETIVE_RULES_DF
   }
 
-  ## filter on user-set guideline versions ----
-  eucast_rules_df <- data.frame()
+  ## filter on guideline provider and user-set guideline versions ----
+  interpretive_rules_df <- data.frame()
   if (any(c("all", "breakpoints") %in% rules)) {
-    eucast_rules_df <- eucast_rules_df %pm>%
-      rbind_AMR(eucast_rules_df_total %pm>%
-        subset(reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
+    interpretive_rules_df <- interpretive_rules_df %pm>%
+      rbind_AMR(interpretive_rules_df_total %pm>%
+        subset(rule.provider == guideline & reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
   }
   if (any(c("all", "expected_phenotypes") %in% rules)) {
-    eucast_rules_df <- eucast_rules_df %pm>%
-      rbind_AMR(eucast_rules_df_total %pm>%
-        subset(reference.rule_group %like% "expected" & reference.version == version_expected_phenotypes))
+    interpretive_rules_df <- interpretive_rules_df %pm>%
+      rbind_AMR(interpretive_rules_df_total %pm>%
+        subset(rule.provider == guideline & reference.rule_group %like% "expected" & reference.version == version_expected_phenotypes))
   }
   if (any(c("all", "expert") %in% rules)) {
-    eucast_rules_df <- eucast_rules_df %pm>%
-      rbind_AMR(eucast_rules_df_total %pm>%
-        subset(reference.rule_group %like% "expert" & reference.version == version_expertrules))
+    interpretive_rules_df <- interpretive_rules_df %pm>%
+      rbind_AMR(interpretive_rules_df_total %pm>%
+        subset(rule.provider == guideline & reference.rule_group %like% "expert" & reference.version == version_expertrules))
   }
   ## filter out AmpC de-repressed cephalosporin-resistant mutants ----
   # no need to filter on version number here - the rules contain these version number, so are inherently filtered
   # cefotaxime, ceftriaxone, ceftazidime
   if (is.null(ampc_cephalosporin_resistance) || isFALSE(ampc_cephalosporin_resistance)) {
-    eucast_rules_df <- subset(
-      eucast_rules_df,
+    interpretive_rules_df <- subset(
+      interpretive_rules_df,
       reference.rule %unlike% "ampc"
     )
   } else {
     if (isTRUE(ampc_cephalosporin_resistance)) {
       ampc_cephalosporin_resistance <- "R"
     }
-    if (!is.null(eucast_rules_df$reference.rule)) {
-      eucast_rules_df[which(eucast_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
+    if (!is.null(interpretive_rules_df$reference.rule)) {
+      interpretive_rules_df[which(interpretive_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
     }
   }
 
   # sometimes, the screenings are missing but the names are actually available
-  # we only hints on remaining rows in `eucast_rules_df`
+  # we only hints on remaining rows in `interpretive_rules_df`
   screening_abx <- as.character(AMR::antimicrobials$ab[which(AMR::antimicrobials$ab %like% "-S$")])
-  screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(EUCAST_RULES_DF$and_these_antibiotics[!is.na(EUCAST_RULES_DF$and_these_antibiotics)], ", *")))]
+  screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(INTERPRETIVE_RULES_DF$and_these_antibiotics[!is.na(INTERPRETIVE_RULES_DF$and_these_antibiotics)], ", *")))]
   if (isTRUE(info)) {
     cat("\n")
   }
@@ -682,12 +680,12 @@ interpretive_rules <- function(x,
   }
 
   ## Go over all rules and apply them ----
-  for (i in seq_len(nrow(eucast_rules_df))) {
-    rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule", drop = TRUE]
-    rule_current <- eucast_rules_df[i, "reference.rule", drop = TRUE]
-    rule_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule", drop = TRUE]
-    rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group", drop = TRUE]
-    rule_group_current <- eucast_rules_df[i, "reference.rule_group", drop = TRUE]
+  for (i in seq_len(nrow(interpretive_rules_df))) {
+    rule_previous <- interpretive_rules_df[max(1, i - 1), "reference.rule", drop = TRUE]
+    rule_current <- interpretive_rules_df[i, "reference.rule", drop = TRUE]
+    rule_next <- interpretive_rules_df[min(nrow(interpretive_rules_df), i + 1), "reference.rule", drop = TRUE]
+    rule_group_previous <- interpretive_rules_df[max(1, i - 1), "reference.rule_group", drop = TRUE]
+    rule_group_current <- interpretive_rules_df[i, "reference.rule_group", drop = TRUE]
     # don't apply rules if user doesn't want to apply them
     if (rule_group_current %like% "breakpoint" && !any(c("all", "breakpoints") %in% rules)) {
       next
@@ -702,16 +700,16 @@ interpretive_rules <- function(x,
     if (isFALSE(info) || isFALSE(verbose)) {
       rule_text <- ""
     } else {
-      if (is.na(eucast_rules_df[i, "and_these_antibiotics", drop = TRUE])) {
-        rule_text <- paste0("always report as '", eucast_rules_df[i, "to_value", drop = TRUE], "': ", get_antibiotic_names(eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]))
+      if (is.na(interpretive_rules_df[i, "and_these_antibiotics", drop = TRUE])) {
+        rule_text <- paste0("always report as '", interpretive_rules_df[i, "to_value", drop = TRUE], "': ", get_antibiotic_names(interpretive_rules_df[i, "then_change_these_antibiotics", drop = TRUE]))
       } else {
         rule_text <- paste0(
-          "report as '", eucast_rules_df[i, "to_value", drop = TRUE], "' when ",
+          "report as '", interpretive_rules_df[i, "to_value", drop = TRUE], "' when ",
           format_antibiotic_names(
-            ab_names = get_antibiotic_names(eucast_rules_df[i, "and_these_antibiotics", drop = TRUE]),
-            ab_results = eucast_rules_df[i, "have_these_values", drop = TRUE]
+            ab_names = get_antibiotic_names(interpretive_rules_df[i, "and_these_antibiotics", drop = TRUE]),
+            ab_results = interpretive_rules_df[i, "have_these_values", drop = TRUE]
           ), ": ",
-          get_antibiotic_names(eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE])
+          get_antibiotic_names(interpretive_rules_df[i, "then_change_these_antibiotics", drop = TRUE])
         )
       }
     }
@@ -720,7 +718,7 @@ interpretive_rules <- function(x,
       rule_previous <- ""
       rule_group_previous <- ""
     }
-    if (i == nrow(eucast_rules_df)) {
+    if (i == nrow(interpretive_rules_df)) {
       rule_next <- ""
     }
 
@@ -789,13 +787,13 @@ interpretive_rules <- function(x,
     }
 
     ## Get rule from file ------------------------------------------------------
-    if_mo_property <- trimws(eucast_rules_df[i, "if_mo_property", drop = TRUE])
-    like_is_one_of <- trimws(eucast_rules_df[i, "like.is.one_of", drop = TRUE])
-    mo_value <- trimws(eucast_rules_df[i, "this_value", drop = TRUE])
-    source_antibiotics <- eucast_rules_df[i, "and_these_antibiotics", drop = TRUE]
-    source_value <- trimws(unlist(strsplit(eucast_rules_df[i, "have_these_values", drop = TRUE], ",", fixed = TRUE)))
-    target_antibiotics <- eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]
-    target_value <- eucast_rules_df[i, "to_value", drop = TRUE]
+    if_mo_property <- trimws(interpretive_rules_df[i, "if_mo_property", drop = TRUE])
+    like_is_one_of <- trimws(interpretive_rules_df[i, "like.is.one_of", drop = TRUE])
+    mo_value <- trimws(interpretive_rules_df[i, "this_value", drop = TRUE])
+    source_antibiotics <- interpretive_rules_df[i, "and_these_antibiotics", drop = TRUE]
+    source_value <- trimws(unlist(strsplit(interpretive_rules_df[i, "have_these_values", drop = TRUE], ",", fixed = TRUE)))
+    target_antibiotics <- interpretive_rules_df[i, "then_change_these_antibiotics", drop = TRUE]
+    target_value <- interpretive_rules_df[i, "to_value", drop = TRUE]
 
     # if amo_value contains a group name, expand that name with all species in it
     if (any(trimws(strsplit(mo_value, ",")[[1]]) %in% AMR::microorganisms.groups$mo_group_name, na.rm = TRUE)) {
@@ -894,7 +892,7 @@ interpretive_rules <- function(x,
   if (!is.null(custom_rules)) {
     if (isTRUE(info)) {
       cat("\n")
-      cat(font_bold("Custom EUCAST rules, set by user"), "\n")
+      cat(font_bold("Custom interpretive rules, set by user"), "\n")
     }
     for (i in seq_len(length(custom_rules))) {
       rule <- custom_rules[[i]]
@@ -929,8 +927,8 @@ interpretive_rules <- function(x,
         to = target_value,
         rule = c(
           rule_text,
-          "Custom EUCAST rules",
-          paste0("Custom EUCAST rule ", i),
+          "Custom interpretive rules",
+          paste0("Custom interpretive rule ", i),
           paste0(
             "Object '", deparse(substitute(custom_rules)),
             "' consisting of ", length(custom_rules), " custom rules"
