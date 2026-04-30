@@ -130,6 +130,74 @@ test_that("test-antibiogram.R", {
     expect_equal(colnames(ab9), c("ward", "gender", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
   }
 
+  # Parallel computing ----------------------------------------------------
+  # Tests must pass even when only 1 core is available; parallel = TRUE then
+  # silently falls back to sequential, but results must still be correct.
+
+  if (AMR:::pkg_is_available("future.apply")) {
+    set.seed(42)
+
+    # sequential reference for WISCA
+    wisca_seq <- suppressWarnings(suppressMessages(
+      wisca(example_isolates, antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"), simulations = 100, info = FALSE)
+    ))
+
+    future::plan(future::multicore)
+
+    # 1. parallel = TRUE produces the same antibiogram structure as sequential
+    wisca_par <- suppressWarnings(suppressMessages(
+      wisca(example_isolates, antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"), simulations = 100, parallel = TRUE, info = FALSE)
+    ))
+    expect_inherits(wisca_par, "antibiogram")
+    expect_equal(colnames(wisca_par), colnames(wisca_seq))
+    expect_true(isTRUE(attributes(wisca_par)$wisca))
+
+    # 2. coverage values fall within [0, 100] (basic sanity)
+    ln <- attributes(wisca_par)$long_numeric
+    expect_true(all(ln$coverage >= 0 & ln$coverage <= 1, na.rm = TRUE))
+    expect_true(all(ln$lower_ci <= ln$coverage, na.rm = TRUE))
+    expect_true(all(ln$upper_ci >= ln$coverage, na.rm = TRUE))
+
+    # 3. a second parallel run gives the same column names
+    wisca_par2 <- suppressWarnings(suppressMessages(
+      wisca(example_isolates, antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"), simulations = 100, parallel = TRUE, info = FALSE)
+    ))
+    expect_equal(colnames(wisca_par), colnames(wisca_par2))
+
+    # 4. parallel with workers = 1 gives same structure as sequential
+    future::plan(future::multicore, workers = 1)
+    wisca_par1 <- suppressWarnings(suppressMessages(
+      wisca(example_isolates, antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"), simulations = 100, parallel = TRUE, info = FALSE)
+    ))
+    expect_equal(colnames(wisca_seq), colnames(wisca_par1))
+
+    # 5. grouped antibiogram in parallel yields identical structure to sequential
+    if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+      future::plan(future::sequential)
+      ab_grp_seq <- suppressWarnings(suppressMessages(
+        example_isolates %>%
+          group_by(ward) %>%
+          wisca(antimicrobials = c("TZP", "TZP+TOB"), simulations = 50, info = FALSE)
+      ))
+      future::plan(future::multicore)
+      ab_grp_par <- suppressWarnings(suppressMessages(
+        example_isolates %>%
+          group_by(ward) %>%
+          wisca(antimicrobials = c("TZP", "TZP+TOB"), simulations = 50, parallel = TRUE, info = FALSE)
+      ))
+      expect_equal(colnames(ab_grp_seq), colnames(ab_grp_par))
+      expect_equal(nrow(ab_grp_seq), nrow(ab_grp_par))
+    }
+
+    # 6. parallel = TRUE without a plan raises an informative error
+    future::plan(future::sequential)
+    expect_error(
+      suppressWarnings(wisca(example_isolates, antimicrobials = "TZP", parallel = TRUE, info = FALSE)),
+      "non-sequential"
+    )
+
+    future::plan(future::sequential)
+  }
 
   # Generate plots with ggplot2 or base R --------------------------------
 
