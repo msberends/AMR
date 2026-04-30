@@ -746,7 +746,7 @@ antibiogram.default <- function(x,
       c(1 - conf_interval, 1)
     }
 
-    unique_groups <- unique(wisca_parameters$group)
+    unique_groups <- as.character(unique(wisca_parameters$group))
 
     use_parallel_wisca <- isTRUE(parallel) && n_workers > 1L && length(unique_groups) > 0L
 
@@ -815,6 +815,17 @@ antibiogram.default <- function(x,
         out_wisca$upper_ci[out_wisca$group == group] <- ci_vals[2]
       }
       close(progress)
+      if (isTRUE(info) && simulations >= 500 && length(unique_groups) >= 3) {
+        suggest <- ifelse(.Platform$OS.type == "windows" || in_rstudio(),
+          "plan(multisession)",
+          "plan(multicore)"
+        )
+        if (requireNamespace("future.apply", quietly = TRUE)) {
+          message_("Running in sequential mode. To speed up WISCA, set a parallel {.help [{.fun future::plan}](future::plan)} such as {.code ", suggest, "} and use {.code parallel = TRUE}.")
+        } else {
+          message_("Running in sequential mode. To speed up WISCA, install the {.pkg future.apply} package and then set {.code parallel = TRUE}.")
+        }
+      }
     }
 
     # final output preparation

@@ -152,11 +152,14 @@ test_that("test-antibiogram.R", {
     expect_equal(colnames(wisca_par), colnames(wisca_seq))
     expect_true(isTRUE(attributes(wisca_par)$wisca))
 
-    # 2. coverage values fall within [0, 100] (basic sanity)
+    # 2. coverage values are non-NA and fall within [0, 1]
     ln <- attributes(wisca_par)$long_numeric
-    expect_true(all(ln$coverage >= 0 & ln$coverage <= 1, na.rm = TRUE))
-    expect_true(all(ln$lower_ci <= ln$coverage, na.rm = TRUE))
-    expect_true(all(ln$upper_ci >= ln$coverage, na.rm = TRUE))
+    expect_false(anyNA(ln$coverage))
+    expect_false(anyNA(ln$lower_ci))
+    expect_false(anyNA(ln$upper_ci))
+    expect_true(all(ln$coverage >= 0 & ln$coverage <= 1))
+    expect_true(all(ln$lower_ci <= ln$coverage))
+    expect_true(all(ln$upper_ci >= ln$coverage))
 
     # 3. a second parallel run gives the same column names
     wisca_par2 <- suppressWarnings(suppressMessages(
