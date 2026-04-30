@@ -54,7 +54,7 @@
 #' @param add_total_n *(deprecated in favour of `formatting_type`)* A [logical] to indicate whether `n_tested` available numbers per pathogen should be added to the table (default is `TRUE`). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for *E. coli* 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when `wisca = TRUE`; in that case, use [retrieve_wisca_parameters()] to get the parameters used for WISCA.
 #' @param only_all_tested (for combination antibiograms): a [logical] to indicate that isolates must be tested for all antimicrobials, see *Details*.
 #' @param digits Number of digits to use for rounding the antimicrobial coverage, defaults to 1 for WISCA and 0 otherwise.
-#' @param formatting_type Numeric value (1–22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See *Details* > *Formatting Type* for a list of options.
+#' @param formatting_type Numeric value (1-22 for WISCA, 1-12 for non-WISCA) indicating how the 'cells' of the antibiogram table should be formatted. See *Details* > *Formatting Type* for a list of options.
 #' @param col_mo Column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param language Language to translate text, which defaults to the system language (see [get_AMR_locale()]).
 #' @param minimum The minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
@@ -65,7 +65,7 @@
 #' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations.
 #' @param conf_interval A numerical value to set confidence interval (default is `0.95`).
 #' @param interval_side The side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`.
-#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. Requires the [`future.apply`][future.apply::future_lapply()] package. For WISCA, Monte Carlo simulations are distributed across workers; for grouped antibiograms, each group is processed by a separate worker. **A non-sequential [future::plan()] must already be active before setting `parallel = TRUE`** — for example, `future::plan(future::multisession)`. An error is thrown if `parallel = TRUE` is used without a plan set by the user.
+#' @param parallel A [logical] to indicate if parallel computing must be used, defaults to `FALSE`. Requires the [`future.apply`][future.apply::future_lapply()] package. For WISCA, Monte Carlo simulations are distributed across workers; for grouped antibiograms, each group is processed by a separate worker. **A non-sequential [future::plan()] must already be active before setting `parallel = TRUE`** -- for example, `future::plan(future::multisession)`. An error is thrown if `parallel = TRUE` is used without a plan set by the user.
 #' @param info A [logical] to indicate info should be printed - the default is `TRUE` only in interactive mode.
 #' @param object An [antibiogram()] object.
 #' @param ... When used in [R Markdown or Quarto][knitr::kable()]: arguments passed on to [knitr::kable()] (otherwise, has no use).
@@ -720,7 +720,7 @@ antibiogram.default <- function(x,
 
     unique_groups <- unique(wisca_parameters$group)
 
-    # parallel gate for WISCA — identical pattern to as.sir()
+    # parallel gate for WISCA - identical pattern to as.sir()
     if (requireNamespace("future.apply", quietly = TRUE) && !inherits(future::plan(), "sequential")) {
       if (isFALSE(parallel)) {
         message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
@@ -787,7 +787,7 @@ antibiogram.default <- function(x,
         out_wisca$upper_ci[out_wisca$group == g] <- ci_vals[2]
       }
 
-      if (isTRUE(info)) message_(font_green_bg(" DONE "), as_note = FALSE)
+      if (isTRUE(info)) message_(font_green_bg(" DONE "), as_note = FALSE)
 
     } else {
       progress <- progress_ticker(
@@ -1071,7 +1071,7 @@ antibiogram.grouped_df <- function(x,
   groups <- attributes(x)$groups
   n_groups <- NROW(groups)
 
-  # parallel gate — identical pattern to as.sir()
+  # parallel gate - identical pattern to as.sir()
   if (requireNamespace("future.apply", quietly = TRUE) && !inherits(future::plan(), "sequential")) {
     if (isFALSE(parallel)) {
       message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
