@@ -1,4 +1,4 @@
-# AMR 3.0.1.9053
+# AMR 3.0.1.9055
 
 This will become release v3.1.0, intended for launch end of May.
 
@@ -7,6 +7,7 @@ This will become release v3.1.0, intended for launch end of May.
 * Support for the [`future`](https://future.futureverse.org) package and its framework, as the previous implementation of parallel computing was slow
   - **Breaking change**: `as.sir()` with `parallel = TRUE` now requires a non-sequential `future::plan()` to be active before the call — e.g., `future::plan(future::multisession)` — and throws an informative error if none is set.
   - New all-core usage setup: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure and processing time)
+  - `antibiogram()` and `wisca()` gained a `parallel` argument using the same `future`/`future.apply` pattern: for WISCA, Monte Carlo simulations are split into `(group, chunk)` job pairs distributed across workers; for grouped antibiograms, each group is processed by a separate worker (#281)
 * Integration with the *tidymodels* framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
   - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
   - New `tidyselect` helpers:
