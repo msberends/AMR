@@ -72,6 +72,13 @@ as.data.frame.deprecated_amr_dataset <- function(x, ...) {
 
 #' @rdname AMR-deprecated
 #' @export
+custom_eucast_rules <- function(...) {
+  deprecation_warning("custom_eucast_rules", "custom_interpretive_rules", is_function = TRUE)
+  custom_interpretive_rules(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
 ab_class <- function(...) {
   deprecation_warning("ab_class", "amr_class", is_function = TRUE)
   amr_class(...)

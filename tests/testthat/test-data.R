@@ -53,12 +53,12 @@ test_that("test-data.R", {
   expect_false(anyNA(microorganisms.codes$mo))
   expect_true(all(dosage$ab %in% AMR::antimicrobials$ab))
   expect_true(all(dosage$name %in% AMR::antimicrobials$name))
-  eucast_abx <- AMR:::EUCAST_RULES_DF$and_these_antibiotics
-  eucast_abx <- unique(unlist(strsplit(eucast_abx[!is.na(eucast_abx)], ", +")))
-  expect_true(all(eucast_abx %in% AMR::antimicrobials$ab),
+  interpretive_abx <- AMR:::INTERPRETIVE_RULES_DF$and_these_antibiotics
+  interpretive_abx <- unique(unlist(strsplit(interpretive_abx[!is.na(interpretive_abx)], ", +")))
+  expect_true(all(interpretive_abx %in% AMR::antimicrobials$ab),
     info = paste0(
       "Missing in `antimicrobials` data set: ",
-      toString(eucast_abx[which(!eucast_abx %in% AMR::antimicrobials$ab)])
+      toString(interpretive_abx[which(!interpretive_abx %in% AMR::antimicrobials$ab)])
     )
   )
 

@@ -762,7 +762,9 @@ antibiogram.default <- function(x,
       # precompute priors per group and build (group, chunk) job list
       jobs <- unlist(lapply(unique_groups, function(g) {
         params_g <- wisca_parameters[wisca_parameters$group == g, , drop = FALSE]
-        if (sum(params_g$n_tested, na.rm = TRUE) == 0L) return(NULL)
+        if (sum(params_g$n_tested, na.rm = TRUE) == 0L) {
+          return(NULL)
+        }
         priors_g <- create_wisca_priors(params_g)
         lapply(seq_along(chunk_sizes), function(ch) {
           list(group = g, priors = priors_g, n_sims = chunk_sizes[ch])
@@ -788,7 +790,6 @@ antibiogram.default <- function(x,
       }
 
       if (isTRUE(info)) message_(font_green_bg(" DONE "), as_note = FALSE)
-
     } else {
       progress <- progress_ticker(
         n = length(unique_groups) * simulations,
@@ -1115,7 +1116,9 @@ antibiogram.grouped_df <- function(x,
   x_df <- as.data.frame(x)
   run_group <- function(i) {
     rows <- unlist(groups[i, ]$.rows)
-    if (length(rows) == 0L) return(NULL)
+    if (length(rows) == 0L) {
+      return(NULL)
+    }
     antibiogram(x_df[rows, , drop = FALSE],
       antimicrobials = antimicrobials,
       mo_transform = NULL,
@@ -1136,7 +1139,7 @@ antibiogram.grouped_df <- function(x,
       conf_interval = conf_interval,
       interval_side = interval_side,
       info = FALSE,
-      parallel = FALSE  # never nest parallelism in workers
+      parallel = FALSE # never nest parallelism in workers
     )
   }
 

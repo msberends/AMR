@@ -27,27 +27,27 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-#' Define Custom EUCAST Rules
+#' Define Custom Interpretive Rules
 #'
-#' Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in [eucast_rules()].
+#' Define custom interpretive rules for your organisation or specific analysis and use the output of this function in [interpretive_rules()].
 #' @param ... Rules in [formula][base::tilde] notation, see below for instructions, and in *Examples*.
 #' @details
-#' Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the [eucast_rules()] function.
+#' Some organisations have their own adoption of interpretive rules. This function can be used to define custom rules to be used in the [interpretive_rules()] function.
 #'
 #' ### Basics
 #'
 #' If you are familiar with the [`case_when()`][dplyr::case_when()] function of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written *before* the tilde (`~`) and the consequence of the rule is written *after* the tilde:
 #'
 #' ```r
-#' x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
-#'                          TZP == "R" ~ aminopenicillins == "R")
+#' x <- custom_interpretive_rules(TZP == "S" ~ aminopenicillins == "S",
+#'                                TZP == "R" ~ aminopenicillins == "R")
 #' ```
 #'
-#' These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:
+#' These are two custom interpretive rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:
 #'
 #' ```r
 #' x
-#' #> A set of custom EUCAST rules:
+#' #> A set of custom interpretive rules:
 #' #>
 #' #>   1. If TZP is "S" then set to  S :
 #' #>      amoxicillin (AMX), ampicillin (AMP)
@@ -68,11 +68,11 @@
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    S     S
 #'
-#' eucast_rules(df,
-#'              rules = "custom",
-#'              custom_rules = x,
-#'              info = FALSE,
-#'              overwrite = TRUE)
+#' interpretive_rules(df,
+#'                    rules = "custom",
+#'                    custom_rules = x,
+#'                    info = FALSE,
+#'                    overwrite = TRUE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    R     S
 #' #> 2 Klebsiella pneumoniae   R    R     S
@@ -83,16 +83,16 @@
 #' There is one exception in columns used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), sort = FALSE, documentation = TRUE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
 #'
 #' ```r
-#' y <- custom_eucast_rules(
+#' y <- custom_interpretive_rules(
 #'   TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
 #'   TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R"
 #' )
 #'
-#' eucast_rules(df,
-#'              rules = "custom",
-#'              custom_rules = y,
-#'              info = FALSE,
-#'              overwrite = TRUE)
+#' interpretive_rules(df,
+#'                    rules = "custom",
+#'                    custom_rules = y,
+#'                    info = FALSE,
+#'                    overwrite = TRUE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    R     S
@@ -109,9 +109,9 @@
 #' Rules can also be applied to multiple antimicrobials and antimicrobial groups simultaneously. Use the `c()` function to combine multiple antimicrobials. For instance, the following example sets all aminopenicillins and ureidopenicillins to "R" if column TZP (piperacillin/tazobactam) is "R":
 #'
 #' ```r
-#' x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
+#' x <- custom_interpretive_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
 #' x
-#' #> A set of custom EUCAST rules:
+#' #> A set of custom interpretive rules:
 #' #>
 #' #>   1. If TZP is "R" then set to "R":
 #' #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
@@ -123,7 +123,7 @@
 #' @returns A [list] containing the custom rules
 #' @export
 #' @examples
-#' x <- custom_eucast_rules(
+#' x <- custom_interpretive_rules(
 #'   AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
 #'   AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I"
 #' )
@@ -141,24 +141,24 @@
 #' # combine rule sets
 #' x2 <- c(
 #'   x,
-#'   custom_eucast_rules(TZP == "R" ~ carbapenems == "R")
+#'   custom_interpretive_rules(TZP == "R" ~ carbapenems == "R")
 #' )
 #' x2
-custom_eucast_rules <- function(...) {
+custom_interpretive_rules <- function(...) {
   dots <- tryCatch(list(...),
     error = function(e) "error"
   )
   stop_if(
     identical(dots, "error"),
-    "rules must be a valid formula inputs (e.g., using '~'), see {.help [{.fun custom_eucast_rules}](AMR::custom_eucast_rules)}"
+    "rules must be a valid formula inputs (e.g., using '~'), see {.help [{.fun custom_interpretive_rules}](AMR::custom_interpretive_rules)}"
   )
   n_dots <- length(dots)
-  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using {.help [{.fun custom_eucast_rules}](AMR::custom_eucast_rules)}.")
+  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using {.help [{.fun custom_interpretive_rules}](AMR::custom_interpretive_rules)}.")
   out <- vector("list", n_dots)
   for (i in seq_len(n_dots)) {
     stop_ifnot(
       inherits(dots[[i]], "formula"),
-      "rule ", i, " must be a valid formula input (e.g., using '~'), see {.help [{.fun custom_eucast_rules}](AMR::custom_eucast_rules)}"
+      "rule ", i, " must be a valid formula input (e.g., using '~'), see {.help [{.fun custom_interpretive_rules}](AMR::custom_interpretive_rules)}"
     )
 
     # Query
@@ -180,7 +180,7 @@ custom_eucast_rules <- function(...) {
     result <- dots[[i]][[3]]
     stop_ifnot(
       deparse(result) %like% "==",
-      "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see {.help [{.fun custom_eucast_rules}](AMR::custom_eucast_rules)}"
+      "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see {.help [{.fun custom_interpretive_rules}](AMR::custom_interpretive_rules)}"
     )
     result_group <- as.character(result)[[2]]
     result_group <- as.character(str2lang(result_group))
@@ -230,13 +230,13 @@ custom_eucast_rules <- function(...) {
   }
 
   names(out) <- paste0("rule", seq_len(n_dots))
-  set_clean_class(out, new_class = c("custom_eucast_rules", "list"))
+  set_clean_class(out, new_class = c("custom_interpretive_rules", "list"))
 }
 
-#' @method c custom_eucast_rules
+#' @method c custom_interpretive_rules
 #' @noRd
 #' @export
-c.custom_eucast_rules <- function(x, ...) {
+c.custom_interpretive_rules <- function(x, ...) {
   if (length(list(...)) == 0) {
     return(x)
   }
@@ -245,21 +245,21 @@ c.custom_eucast_rules <- function(x, ...) {
     out <- c(out, unclass(e))
   }
   names(out) <- paste0("rule", seq_len(length(out)))
-  set_clean_class(out, new_class = c("custom_eucast_rules", "list"))
+  set_clean_class(out, new_class = c("custom_interpretive_rules", "list"))
 }
 
-#' @method as.list custom_eucast_rules
+#' @method as.list custom_interpretive_rules
 #' @noRd
 #' @export
-as.list.custom_eucast_rules <- function(x, ...) {
+as.list.custom_interpretive_rules <- function(x, ...) {
   c(x, ...)
 }
 
-#' @method print custom_eucast_rules
+#' @method print custom_interpretive_rules
 #' @export
 #' @noRd
-print.custom_eucast_rules <- function(x, ...) {
-  cat("A set of custom EUCAST rules:\n")
+print.custom_interpretive_rules <- function(x, ...) {
+  cat("A set of custom interpretive rules:\n")
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
     rule$query <- format_custom_query_rule(rule$query)
@@ -291,3 +291,19 @@ print.custom_eucast_rules <- function(x, ...) {
     cat("\n  ", rule_if, "\n", rule_then, "\n", sep = "")
   }
 }
+
+# Backward-compat S3 dispatch for objects created with the old custom_eucast_rules() function
+#' @method c custom_eucast_rules
+#' @noRd
+#' @export
+c.custom_eucast_rules <- function(x, ...) c.custom_interpretive_rules(x, ...)
+
+#' @method as.list custom_eucast_rules
+#' @noRd
+#' @export
+as.list.custom_eucast_rules <- function(x, ...) as.list.custom_interpretive_rules(x, ...)
+
+#' @method print custom_eucast_rules
+#' @export
+#' @noRd
+print.custom_eucast_rules <- function(x, ...) print.custom_interpretive_rules(x, ...)

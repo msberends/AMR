@@ -42,9 +42,9 @@ pre_commit_lst <- list()
 
 usethis::ui_info(paste0("Updating internal package data"))
 
-# See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
-pre_commit_lst$EUCAST_RULES_DF <- utils::read.delim(
-  file = "data-raw/eucast_rules.tsv",
+# See 'data-raw/interpretive_rules.tsv' for the interpretive rules reference file
+pre_commit_lst$INTERPRETIVE_RULES_DF <- utils::read.delim(
+  file = "data-raw/interpretive_rules.tsv",
   skip = 9,
   sep = "\t",
   stringsAsFactors = FALSE,
@@ -364,7 +364,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
 )
 
 # antibiotic groups
-# (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
+# (these will also be used for interpretive_rules() and understanding data-raw/interpretive_rules.tsv)
 pre_commit_lst$AB_AMINOGLYCOSIDES <- antimicrobials %>%
   filter(group %like% "aminoglycoside|paromomycin|spectinomycin") %>%
   pull(ab)
