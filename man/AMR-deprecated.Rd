@@ -2,10 +2,13 @@
 % Please edit documentation in R/zz_deprecated.R
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
+\alias{custom_eucast_rules}
 \alias{ab_class}
 \alias{ab_selector}
 \title{Deprecated Functions, Arguments, or Datasets}
 \usage{
+custom_eucast_rules(...)
+
 ab_class(...)
 
 ab_selector(...)

@@ -46,7 +46,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{info}{A \link{logical} to indicate whether progress should be printed to the console - the default is only print while in interactive sessions.}
 
-\item{rules}{A \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expected_phenotypes"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expected_phenotypes")}. The default value can be set to another value using the package option \code{\link[=AMR-options]{AMR_interpretive_rules}}: \code{options(AMR_interpretive_rules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
+\item{rules}{A \link{character} vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expected_phenotypes"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expected_phenotypes")}. The default value can be set to another value using the package option \code{\link[=AMR-options]{AMR_interpretive_rules}}: \code{options(AMR_interpretive_rules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_interpretive_rules]{custom_interpretive_rules()}}.}
 
 \item{guideline}{A guideline name, either "EUCAST" (default) or "CLSI". This can be set with the package option \code{\link[=AMR-options]{AMR_guideline}}.}
 
@@ -62,7 +62,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 
 \item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE} if no columns of \code{x} have a class \link[=as.sir]{sir}.}
 
-\item{custom_rules}{Custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
+\item{custom_rules}{Custom rules to apply, created with \code{\link[=custom_interpretive_rules]{custom_interpretive_rules()}}.}
 
 \item{overwrite}{A \link{logical} indicating whether to overwrite existing SIR values (default: \code{FALSE}). When \code{FALSE}, only non-SIR values are modified (i.e., any value that is not already S, I or R). To ensure compliance with EUCAST guidelines, \strong{this should remain} \code{FALSE}, as EUCAST notes often state that an organism "should be tested for susceptibility to individual agents or be reported resistant".}
 
@@ -86,15 +86,15 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 \strong{Note:} This function does not translate MIC or disk values to SIR values. Use \code{\link[=as.sir]{as.sir()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 
-The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until June 24th, 2024, see \link{microorganisms}.
+The file containing all interpretive rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until June 24th, 2024, see \link{microorganisms}.
 \subsection{Custom Rules}{
 
-Custom rules can be created using \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}, e.g.:
+Custom rules can be created using \code{\link[=custom_interpretive_rules]{custom_interpretive_rules()}}, e.g.:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
-                         AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_interpretive_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+                               AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 
-eucast_rules(example_isolates, rules = "custom", custom_rules = x)
+interpretive_rules(example_isolates, rules = "custom", custom_rules = x)
 }\if{html}{\out{</div>}}
 }
 
@@ -108,7 +108,7 @@ Before further processing, two non-EUCAST rules about drug combinations can be a
 
 Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 
-Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the package option \code{\link[=AMR-options]{AMR_interpretive_rules}}, i.e. run \code{options(AMR_interpretive_rules = "all")}.
+Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{interpretive_rules(..., rules = "all")}. You can also set the package option \code{\link[=AMR-options]{AMR_interpretive_rules}}, i.e. run \code{options(AMR_interpretive_rules = "all")}.
 }
 }
 \section{Download Our Reference Data}{

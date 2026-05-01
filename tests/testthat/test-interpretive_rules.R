@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-test_that("test-eucast_rules.R", {
+test_that("test-interpretive_rules.R", {
   skip_on_cran()
 
   # thoroughly check input table
@@ -55,19 +55,19 @@ test_that("test-eucast_rules.R", {
   MOs_test[MOs_test == ""] <- mo_fullname(MOs_mentioned[MOs_test == ""], keep_synonyms = TRUE, language = NULL)
   expect_equal(MOs_mentioned, MOs_test)
 
-  expect_error(suppressWarnings(eucast_rules(example_isolates, col_mo = "Non-existing")))
-  expect_error(eucast_rules(x = "text"))
-  expect_error(eucast_rules(data.frame(a = "test")))
-  expect_error(eucast_rules(data.frame(mo = "test"), rules = "invalid rules set"))
+  expect_error(suppressWarnings(interpretive_rules(example_isolates, col_mo = "Non-existing")))
+  expect_error(interpretive_rules(x = "text"))
+  expect_error(interpretive_rules(data.frame(a = "test")))
+  expect_error(interpretive_rules(data.frame(mo = "test"), rules = "invalid rules set"))
 
-  # expect_warning(eucast_rules(data.frame(mo = "Escherichia coli", vancomycin = "S", stringsAsFactors = TRUE)))
+  # expect_warning(interpretive_rules(data.frame(mo = "Escherichia coli", vancomycin = "S", stringsAsFactors = TRUE)))
 
   expect_identical(
     colnames(example_isolates),
-    colnames(suppressWarnings(eucast_rules(example_isolates, info = FALSE)))
+    colnames(suppressWarnings(interpretive_rules(example_isolates, info = FALSE)))
   )
 
-  expect_output(suppressMessages(eucast_rules(example_isolates, info = TRUE)))
+  expect_output(suppressMessages(interpretive_rules(example_isolates, info = TRUE)))
 
   a <- data.frame(
     mo = c(
@@ -87,8 +87,8 @@ test_that("test-eucast_rules.R", {
     amox = "R", # Amoxicillin
     stringsAsFactors = FALSE
   )
-  expect_identical(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
-  expect_output(suppressMessages(suppressWarnings(eucast_rules(a, "mo", info = TRUE))))
+  expect_identical(suppressWarnings(interpretive_rules(a, "mo", info = FALSE)), b)
+  expect_output(suppressMessages(suppressWarnings(interpretive_rules(a, "mo", info = TRUE))))
 
   a <- data.frame(
     mo = c(
@@ -106,7 +106,7 @@ test_that("test-eucast_rules.R", {
     COL = "R", # Colistin
     stringsAsFactors = FALSE
   )
-  expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
+  expect_equal(suppressWarnings(interpretive_rules(a, "mo", info = FALSE)), b)
 
   # piperacillin must be R in Enterobacteriaceae when tica is R
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
@@ -118,7 +118,7 @@ test_that("test-eucast_rules.R", {
             TIC = as.sir("R"),
             PIP = as.sir("S")
           ) %>%
-          eucast_rules(col_mo = "mo", version_expertrules = 3.1, rules = "expert", info = FALSE, overwrite = TRUE) %>%
+          interpretive_rules(col_mo = "mo", version_expertrules = 3.1, rules = "expert", info = FALSE, overwrite = TRUE) %>%
           pull(PIP) %>%
           unique() %>%
           as.character()
@@ -128,7 +128,7 @@ test_that("test-eucast_rules.R", {
   }
 
   # azithromycin and clarythromycin must be equal to Erythromycin
-  a <- suppressWarnings(as.sir(eucast_rules(
+  a <- suppressWarnings(as.sir(interpretive_rules(
     data.frame(
       mo = example_isolates$mo,
       ERY = example_isolates$ERY,
@@ -150,7 +150,7 @@ test_that("test-eucast_rules.R", {
   # amox is inferred by benzylpenicillin in Kingella kingae
   expect_equal(
     suppressWarnings(
-      as.list(eucast_rules(
+      as.list(interpretive_rules(
         data.frame(
           mo = as.mo("Kingella kingae"),
           PEN = "S",
@@ -165,16 +165,16 @@ test_that("test-eucast_rules.R", {
 
   # also test norf
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-    expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
+    expect_output(suppressWarnings(interpretive_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
   }
 
   # check verbose output
-  expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, rules = "all", info = TRUE)))
+  expect_output(suppressWarnings(interpretive_rules(example_isolates, verbose = TRUE, rules = "all", info = TRUE)))
 
   # AmpC de-repressed cephalo mutants
 
   expect_identical(
-    eucast_rules(
+    interpretive_rules(
       data.frame(
         mo = c("Escherichia coli", "Enterobacter cloacae"),
         cefotax = as.sir(c("S", "S"))
@@ -188,7 +188,7 @@ test_that("test-eucast_rules.R", {
   )
 
   expect_identical(
-    eucast_rules(
+    interpretive_rules(
       data.frame(
         mo = c("Escherichia coli", "Enterobacter cloacae"),
         cefotax = as.sir(c("S", "S"))
@@ -202,7 +202,7 @@ test_that("test-eucast_rules.R", {
   )
 
   expect_identical(
-    eucast_rules(
+    interpretive_rules(
       data.frame(
         mo = c("Escherichia coli", "Enterobacter cloacae"),
         cefotax = as.sir(c("S", "S"))
@@ -231,7 +231,7 @@ test_that("test-eucast_rules.R", {
 
   # this custom rules makes 8 changes
   expect_equal(
-    nrow(eucast_rules(example_isolates,
+    nrow(interpretive_rules(example_isolates,
       rules = "custom",
       custom_rules = x,
       info = FALSE,
@@ -242,9 +242,9 @@ test_that("test-eucast_rules.R", {
     tolerance = 0.5
   )
 
-  # deprecated custom_eucast_rules() still works and emits a warning
+  # deprecated custom_interpretive_rules() still works and emits a warning
   expect_warning(
-    x_old <- custom_eucast_rules(AMC == "R" ~ aminopenicillins == "R"),
+    x_old <- custom_interpretive_rules(AMC == "R" ~ aminopenicillins == "R"),
     regexp = "custom_interpretive_rules"
   )
   expect_inherits(x_old, "custom_interpretive_rules")

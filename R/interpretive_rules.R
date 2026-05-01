@@ -90,7 +90,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' x <- custom_interpretive_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
 #'                                AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 #'
-#' eucast_rules(example_isolates, rules = "custom", custom_rules = x)
+#' interpretive_rules(example_isolates, rules = "custom", custom_rules = x)
 #' ```
 #'
 #' ### 'Other' Rules
@@ -102,7 +102,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #' Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 #'
-#' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `eucast_rules(..., rules = "all")`. You can also set the package option [`AMR_interpretive_rules`][AMR-options], i.e. run `options(AMR_interpretive_rules = "all")`.
+#' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` argument, or use `interpretive_rules(..., rules = "all")`. You can also set the package option [`AMR_interpretive_rules`][AMR-options], i.e. run `options(AMR_interpretive_rules = "all")`.
 #' @aliases EUCAST
 #' @rdname interpretive_rules
 #' @export
@@ -224,13 +224,13 @@ interpretive_rules <- function(x,
 
   if (interactive() && isTRUE(verbose) && isTRUE(info)) {
     txt <- paste0(
-      "WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with comprehensive info about which rows and columns would be effected and in which way.",
+      "WARNING: In Verbose mode, the interpretive_rules() function does not apply rules to the data, but instead returns a data set in logbook form with comprehensive info about which rows and columns would be effected and in which way.",
       "\n\nThis may overwrite your existing data if you use e.g.:",
-      "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?"
+      "\ndata <- interpretive_rules(data, verbose = TRUE)\n\nDo you want to continue?"
     )
     showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
     if (!is.null(showQuestion)) {
-      q_continue <- showQuestion("Using verbose = TRUE with eucast_rules()", txt)
+      q_continue <- showQuestion("Using verbose = TRUE with interpretive_rules()", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
@@ -325,7 +325,7 @@ interpretive_rules <- function(x,
     verbose = verbose,
     info = info,
     only_sir_columns = only_sir_columns,
-    fn = "eucast_rules",
+    fn = "interpretive_rules",
     ...
   )
 
@@ -484,7 +484,7 @@ interpretive_rules <- function(x,
           "Rules by the ",
           font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
           " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
-          "), see {.help [{.fun eucast_rules}](AMR::eucast_rules)}\n"
+          "), see {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}\n"
         )
       ))
       cat("\n\n")
@@ -1082,7 +1082,7 @@ interpretive_rules <- function(x,
     warn_lacking_sir_class <- warn_lacking_sir_class[order(colnames(x.bak))]
     warn_lacking_sir_class <- warn_lacking_sir_class[!is.na(warn_lacking_sir_class)]
     warning_(
-      "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: not all columns with antimicrobial results are of class {.cls sir}. Transform them on beforehand, e.g.:\n\n",
+      "in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: not all columns with antimicrobial results are of class {.cls sir}. Transform them on beforehand, e.g.:\n\n",
       "\u00a0\u00a0", AMR_env$bullet_icon, " ", highlight_code(paste0(x_deparsed, " |> as.sir(", ifelse(length(warn_lacking_sir_class) == 1,
         warn_lacking_sir_class,
         paste0(warn_lacking_sir_class[1], ":", warn_lacking_sir_class[length(warn_lacking_sir_class)])
@@ -1184,7 +1184,7 @@ edit_sir <- function(x,
         new_edits[rows, cols] == "NS")
     non_SIR <- !isSIR
     if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
-      warning_("in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: some columns had SIR values which were not overwritten, since {.code overwrite = FALSE}.")
+      warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: some columns had SIR values which were not overwritten, since {.code overwrite = FALSE}.")
     }
     # determine which cells to modify based on overwrite and add_if_missing
     if (isTRUE(overwrite)) {
@@ -1218,7 +1218,7 @@ edit_sir <- function(x,
           })
           suppressWarnings(do_assign())
           warning_(
-            "in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: value \"", to, "\" added to the factor levels of column",
+            "in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: value \"", to, "\" added to the factor levels of column",
             ifelse(length(cols) == 1, "", "s"),
             " ", vector_and(cols, quotes = "`", sort = FALSE),
             " because this value was not an existing factor level."
@@ -1226,7 +1226,7 @@ edit_sir <- function(x,
           txt_warning()
           warned <<- FALSE
         } else {
-          warning_("in {.help [{.fun eucast_rules}](AMR::eucast_rules)}: ", w$message)
+          warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: ", w$message)
           txt_warning()
         }
       },
