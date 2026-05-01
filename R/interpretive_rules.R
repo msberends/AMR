@@ -619,9 +619,18 @@ interpretive_rules <- function(x,
   } else if (!is.null(list(...)$eucast_rules_df)) {
     # deprecated parameter name kept for backward compatibility
     interpretive_rules_df_total <- list(...)$eucast_rules_df
-  } else {
-    # otherwise internal data file, created in data-raw/_pre_commit_checks.R
+  } else if (exists("INTERPRETIVE_RULES_DF", envir = asNamespace("AMR"), inherits = FALSE)) {
+    # internal data file, created in data-raw/_pre_commit_checks.R
     interpretive_rules_df_total <- INTERPRETIVE_RULES_DF
+  } else {
+    # transitional fallback: sysdata.rda predates the rename from EUCAST_RULES_DF
+    # re-run data-raw/_pre_commit_checks.R to regenerate sysdata.rda
+    interpretive_rules_df_total <- EUCAST_RULES_DF
+    interpretive_rules_df_total$rule.provider <- "EUCAST"
+    interpretive_rules_df_total <- interpretive_rules_df_total[
+      , c("rule.provider", setdiff(colnames(interpretive_rules_df_total), "rule.provider")),
+      drop = FALSE
+    ]
   }
 
   ## filter on guideline provider and user-set guideline versions ----
@@ -661,7 +670,7 @@ interpretive_rules <- function(x,
   # sometimes, the screenings are missing but the names are actually available
   # we only hints on remaining rows in `interpretive_rules_df`
   screening_abx <- as.character(AMR::antimicrobials$ab[which(AMR::antimicrobials$ab %like% "-S$")])
-  screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(INTERPRETIVE_RULES_DF$and_these_antibiotics[!is.na(INTERPRETIVE_RULES_DF$and_these_antibiotics)], ", *")))]
+  screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(interpretive_rules_df_total$and_these_antibiotics[!is.na(interpretive_rules_df_total$and_these_antibiotics)], ", *")))]
   if (isTRUE(info)) {
     cat("\n")
   }

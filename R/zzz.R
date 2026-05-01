@@ -112,17 +112,6 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
   AMR_env$AB_lookup <- cbind(AMR::antimicrobials, AB_LOOKUP)
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
-
-  # Transitional: create INTERPRETIVE_RULES_DF alias if sysdata.rda predates the rename from EUCAST_RULES_DF.
-  # Remove this block once data-raw/_pre_commit_checks.R has been re-run.
-  ns <- asNamespace("AMR")
-  if (!exists("INTERPRETIVE_RULES_DF", envir = ns, inherits = FALSE) &&
-      exists("EUCAST_RULES_DF", envir = ns, inherits = FALSE)) {
-    df <- get("EUCAST_RULES_DF", envir = ns)
-    df$rule.provider <- "EUCAST"
-    df <- df[, c("rule.provider", setdiff(colnames(df), "rule.provider")), drop = FALSE]
-    assignInNamespace("INTERPRETIVE_RULES_DF", df, ns = "AMR")
-  }
 }
 
 .onAttach <- function(libname, pkgname) {
