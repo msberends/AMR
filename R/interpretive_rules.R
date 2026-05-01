@@ -200,6 +200,12 @@ interpretive_rules <- function(x,
 
   add_MO_lookup_to_AMR_env()
 
+  if (guideline %like% "EUCAST") {
+    guideline <- "EUCAST"
+  } else if (guideline %like% "CLSI") {
+    guideline <- "CLSI"
+  }
+
   if ("custom" %in% rules && is.null(custom_rules)) {
     warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: no custom rules were set with the {.arg custom_rules} argument",
       immediate = TRUE
@@ -619,18 +625,9 @@ interpretive_rules <- function(x,
   } else if (!is.null(list(...)$eucast_rules_df)) {
     # deprecated parameter name kept for backward compatibility
     interpretive_rules_df_total <- list(...)$eucast_rules_df
-  } else if (exists("INTERPRETIVE_RULES_DF", envir = asNamespace("AMR"), inherits = FALSE)) {
+  } else {
     # internal data file, created in data-raw/_pre_commit_checks.R
     interpretive_rules_df_total <- INTERPRETIVE_RULES_DF
-  } else {
-    # transitional fallback: sysdata.rda predates the rename from EUCAST_RULES_DF
-    # re-run data-raw/_pre_commit_checks.R to regenerate sysdata.rda
-    interpretive_rules_df_total <- EUCAST_RULES_DF
-    interpretive_rules_df_total$rule.provider <- "EUCAST"
-    interpretive_rules_df_total <- interpretive_rules_df_total[
-      , c("rule.provider", setdiff(colnames(interpretive_rules_df_total), "rule.provider")),
-      drop = FALSE
-    ]
   }
 
   ## filter on guideline provider and user-set guideline versions ----

@@ -32,4 +32,11 @@ test_that("test-_deprecated.R", {
 
   expect_warning(example_isolates[, ab_class("mycobact")])
   expect_warning(example_isolates[, ab_selector(name %like% "trim")])
+
+  # deprecated custom_interpretive_rules() still works and emits a warning
+  expect_warning(
+    x_old <- custom_eucast_rules(AMC == "R" ~ aminopenicillins == "R"),
+    regexp = "custom_eucast_rules"
+  )
+  expect_inherits(x_old, "custom_interpretive_rules")
 })

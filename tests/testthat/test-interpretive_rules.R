@@ -242,13 +242,6 @@ test_that("test-interpretive_rules.R", {
     tolerance = 0.5
   )
 
-  # deprecated custom_interpretive_rules() still works and emits a warning
-  expect_warning(
-    x_old <- custom_interpretive_rules(AMC == "R" ~ aminopenicillins == "R"),
-    regexp = "custom_interpretive_rules"
-  )
-  expect_inherits(x_old, "custom_interpretive_rules")
-
   # clsi_rules() no longer errors (returns data unchanged until CLSI rows are added)
   expect_identical(
     suppressWarnings(clsi_rules(example_isolates, info = FALSE)),
