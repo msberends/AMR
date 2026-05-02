@@ -155,12 +155,12 @@ The default \code{"conservative"} setting ensures cautious handling of uncertain
 \item{clean}{A \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results.}
 }
 \value{
-Ordered \link{factor} with new class \code{sir}
+Ordered [factor] with new class `sir`
 }
 \description{
-Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. \code{\link[=as.sir]{as.sir()}} transforms the input to a new class \code{\link{sir}}, which is an ordered \link{factor} containing the levels \code{S}, \code{SDD}, \code{I}, \code{R}, \code{NI}.
+Clean up existing SIR values, or interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI. [as.sir()] transforms the input to a new class [`sir`], which is an ordered [factor] containing the levels `S`, `SDD`, `I`, `R`, `NI`.
 
-Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, see \emph{Details}. All breakpoints used for interpretation are available in our \link{clinical_breakpoints} data set.
+Breakpoints are currently implemented from EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` and CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, see *Details*. All breakpoints used for interpretation are available in our [clinical_breakpoints] data set.
 }
 \details{
 \emph{Note: The clinical breakpoints in this package were validated through, and imported from, \href{https://whonet.org}{WHONET}. The public use of this \code{AMR} package has been endorsed by both CLSI and EUCAST. See \link{clinical_breakpoints} for more information.}

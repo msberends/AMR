@@ -156,17 +156,17 @@ reference:
     - "`atc_online_property`"
     - "`add_custom_antimicrobials`"
 
-  - title: "Preparing data: antimicrobial results"
+  - title: "Interpreting data: antimicrobial results"
     desc: >
       With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
       Use `as.sir()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines.
-      Afterwards, you can extend antibiotic interpretations by applying [EUCAST rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) with `eucast_rules()`.
+      Afterwards, you can extend antibiotic interpretations by applying interpretive rules, for example [from EUCAST](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) with `interpretive_rules()`.
     contents:
     - "`as.sir`"
     - "`as.mic`"
     - "`as.disk`"
-    - "`eucast_rules`"
-    - "`custom_eucast_rules`"
+    - "`interpretive_rules`"
+    - "`custom_interpretive_rules`"
 
   - title: "Analysing data"
     desc: >
@@ -265,7 +265,7 @@ reference:
 
   - title: "Other: statistical tests"
     desc: >
-      Some statistical tests or methods are not part of base R and were added to this package for convenience.
+      Some statistical tests or methods usable for AMR analyses are not part of base R and were added to this package for convenience.
     contents:
     - "`g.test`"
     - "`kurtosis`"

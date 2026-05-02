@@ -12,7 +12,7 @@ custom_mdro_guideline(..., as_factor = TRUE)
 \arguments{
 \item{...}{Guideline rules in \link[base:tilde]{formula} notation, see below for instructions, and in \emph{Examples}.}
 
-\item{as_factor}{A \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector. For combining rules sets (using \code{\link[=c]{c()}}) this value will be inherited from the first set at default.}
+\item{as_factor}{A [logical] to indicate whether the returned value should be an ordered [factor] (`TRUE`, default), or otherwise a [character] vector. For combining rules sets (using [c()]) this value will be inherited from the first set at default.}
 
 \item{x}{Existing custom MDRO rules}
 }

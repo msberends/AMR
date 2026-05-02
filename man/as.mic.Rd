@@ -39,22 +39,23 @@ mic_p90(x, na.rm = FALSE, ...)
 
 \item{mic_range}{A manual range to rescale the MIC values, e.g., \code{mic_range = c(0.001, 32)}. Use \code{NA} to prevent rescaling on one side, e.g., \code{mic_range = c(NA, 32)}.}
 
-\item{as.mic}{A \link{logical} to indicate whether the \code{mic} class should be kept - the default is \code{TRUE} for \code{\link[=rescale_mic]{rescale_mic()}} and \code{FALSE} for \code{\link[=droplevels]{droplevels()}}. When setting this to \code{FALSE} in \code{\link[=rescale_mic]{rescale_mic()}}, the output will have factor levels that acknowledge \code{mic_range}.}
+\item{as.mic}{A [logical] to indicate whether the `mic` class should be kept - the default is `TRUE` for [rescale_mic()] and `FALSE` for [droplevels()]. When setting this to `FALSE` in [rescale_mic()], the output will have factor levels that acknowledge `mic_range`.}
 
 \item{...}{Arguments passed on to methods.}
 }
 \value{
-Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as a \link{numeric} vector. Bear in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
+Ordered [factor] with additional class [`mic`], that in mathematical operations acts as a [numeric] vector. Bear in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 }
 \description{
 This transforms vectors to a new class \code{\link{mic}}, which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 }
 \details{
-To interpret MIC values as SIR values, use \code{\link[=as.sir]{as.sir()}} on MIC values. It supports guidelines from EUCAST (2011-2026) and CLSI (2011-2026).
+To interpret MIC values as SIR values, use [as.sir()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 
-This class for MIC values is a quite a special data type: formally it is an ordered \link{factor} with valid MIC values as \link{factor} levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
+This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{x <- random_mic(10)
+```
+x <- random_mic(10)
 x
 #> Class <mic>
 #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
@@ -67,16 +68,17 @@ x[1] * 2
 
 median(x)
 #> [1] 26
-}\if{html}{\out{</div>}}
+```
 
-This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using \link{numeric} values in data analysis, e.g.:
+This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using [numeric] values in data analysis, e.g.:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{x[x > 4]
+```
+x[x > 4]
 #> Class <mic>
 #> [1] 16    8     8     64    >=128 32    32    16
 
 df <- data.frame(x, hospital = "A")
-subset(df, x > 4) # or with dplyr: df \%>\% filter(x > 4)
+subset(df, x > 4) # or with dplyr: df %>% filter(x > 4)
 #>        x hospital
 #> 1     16        A
 #> 5     64        A
@@ -84,19 +86,19 @@ subset(df, x > 4) # or with dplyr: df \%>\% filter(x > 4)
 #> 8     32        A
 #> 9     32        A
 #> 10    16        A
-}\if{html}{\out{</div>}}
+```
 
-All so-called \link[=groupGeneric]{group generic functions} are implemented for the MIC class (such as \code{!}, \code{!=}, \code{<}, \code{>=}, \code{\link[=exp]{exp()}}, \code{\link[=log2]{log2()}}). Some mathematical functions are also implemented (such as \code{\link[=quantile]{quantile()}}, \code{\link[=median]{median()}}, \code{\link[=fivenum]{fivenum()}}). Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
+All so-called [group generic functions][groupGeneric()] are implemented for the MIC class (such as `!`, `!=`, `<`, `>=`, [exp()], [log2()]). Some mathematical functions are also implemented (such as [quantile()], [median()], [fivenum()]). Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
 
-Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numeric()}} on MIC values will remove the operators and return a numeric vector. Do \strong{not} use \code{\link[=as.integer]{as.integer()}} on MIC values as by the \R convention on \link{factor}s, it will return the index of the factor levels (which is often useless for regular users).
+Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
 
-The function \code{\link[=is.mic]{is.mic()}} detects if the input contains class \code{mic}. If the input is a \link{data.frame} or \link{list}, it iterates over all columns/items and returns a \link{logical} vector.
+The function [is.mic()] detects if the input contains class `mic`. If the input is a [data.frame] or [list], it iterates over all columns/items and returns a [logical] vector.
 
-Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \code{mic} class.
+Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 
-With \code{\link[=rescale_mic]{rescale_mic()}}, existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
+With [rescale_mic()], existing MIC ranges can be limited to a defined range of MIC values. This can be useful to better compare MIC distributions.
 
-For \code{ggplot2}, use one of the \code{\link[=scale_x_mic]{scale_*_mic()}} functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+For `ggplot2`, use one of the [`scale_*_mic()`][scale_x_mic()] functions to plot MIC values. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 
 \code{NA_mic_} is a missing value of the new \code{mic} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 
