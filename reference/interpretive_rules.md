@@ -100,7 +100,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   `options(AMR_interpretive_rules = "all")`. If using `"custom"`, be
   sure to fill in argument `custom_rules` too. Custom rules can be
   created with
-  [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md).
+  [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md).
 
 - guideline:
 
@@ -166,7 +166,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 - custom_rules:
 
   Custom rules to apply, created with
-  [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md).
+  [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md).
 
 - overwrite:
 
@@ -226,8 +226,8 @@ where there is a dependency on ampicillin. These drugs are
 interchangeable when it comes to expression of antimicrobial
 resistance.  
 
-The file containing all EUCAST rules is located here:
-<https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.
+The file containing all interpretive rules is located here:
+<https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv>.
 **Note:** Old taxonomic names are replaced with the current taxonomy
 where applicable. For example, *Ochrobactrum anthropi* was renamed to
 *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did
@@ -238,13 +238,13 @@ full microbial taxonomy updated until June 24th, 2024, see
 ### Custom Rules
 
 Custom rules can be created using
-[`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md),
+[`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md),
 e.g.:
 
-    x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
-                             AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+    x <- custom_interpretive_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+                                   AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 
-    eucast_rules(example_isolates, rules = "custom", custom_rules = x)
+    interpretive_rules(example_isolates, rules = "custom", custom_rules = x)
 
 ### 'Other' Rules
 
@@ -264,8 +264,8 @@ these rules to work, both drugs must be available in the data set.
 
 Since these rules are not officially approved by EUCAST, they are not
 applied at default. To use these rules, include `"other"` to the `rules`
-argument, or use `eucast_rules(..., rules = "all")`. You can also set
-the package option
+argument, or use `interpretive_rules(..., rules = "all")`. You can also
+set the package option
 [`AMR_interpretive_rules`](https://amr-for-r.org/reference/AMR-options.md),
 i.e. run `options(AMR_interpretive_rules = "all")`.
 
@@ -318,8 +318,8 @@ head(a)
 
 # apply EUCAST rules: some results wil be changed
 b <- eucast_rules(a, overwrite = TRUE)
-#> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of class
-#> <sir>. Transform them on beforehand, e.g.:
+#> Warning: in `interpretive_rules()`: not all columns with antimicrobial results are of
+#> class <sir>. Transform them on beforehand, e.g.:
 #> 
 #>   • x |> as.sir(CXM:AMX)
 #> 
@@ -339,8 +339,8 @@ head(b)
 # do not apply EUCAST rules, but rather get a data.frame
 # containing all details about the transformations:
 c <- eucast_rules(a, overwrite = TRUE, verbose = TRUE)
-#> Warning: in `eucast_rules()`: not all columns with antimicrobial results are of class
-#> <sir>. Transform them on beforehand, e.g.:
+#> Warning: in `interpretive_rules()`: not all columns with antimicrobial results are of
+#> class <sir>. Transform them on beforehand, e.g.:
 #> 
 #>   • x |> as.sir(CXM:AMX)
 #> 

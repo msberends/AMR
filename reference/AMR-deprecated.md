@@ -9,6 +9,8 @@ warning with the name of the alternative object it has been replaced by
 ## Usage
 
 ``` r
+custom_eucast_rules(...)
+
 ab_class(...)
 
 ab_selector(...)

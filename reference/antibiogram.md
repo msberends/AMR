@@ -154,10 +154,9 @@ knit_print(x, italicise = TRUE,
 
 - syndromic_group:
 
-  A column name of `x`, or values calculated to split rows of `x`, e.g.
-  by using [`ifelse()`](https://rdrr.io/r/base/ifelse.html) or
-  [`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html).
-  See *Examples*.
+  A column name of \`x\`, or values calculated to split rows of \`x\`,
+  e.g. by using \[ifelse()\] or
+  \[\`case_when()\`\]\[dplyr::case_when()\]. See \*Examples\*.
 
 - add_total_n:
 

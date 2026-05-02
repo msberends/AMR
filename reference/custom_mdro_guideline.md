@@ -22,13 +22,10 @@ c(x, ..., as_factor = NULL)
 
 - as_factor:
 
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  the returned value should be an ordered
-  [factor](https://rdrr.io/pkg/data.table/man/fctr.html) (`TRUE`,
-  default), or otherwise a
-  [character](https://rdrr.io/r/base/character.html) vector. For
-  combining rules sets (using [`c()`](https://rdrr.io/r/base/c.html))
-  this value will be inherited from the first set at default.
+  A \[logical\] to indicate whether the returned value should be an
+  ordered \[factor\] (\`TRUE\`, default), or otherwise a \[character\]
+  vector. For combining rules sets (using \[c()\]) this value will be
+  inherited from the first set at default.
 
 - x:
 

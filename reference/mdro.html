@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9055</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9057</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,18 +144,17 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-
-<ul><li><p>If <code>verbose</code> is set to <code>TRUE</code>:<br>
-A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> containing columns <code>row_number</code>, <code>microorganism</code>, <code>MDRO</code>, <code>reason</code>, <code>all_nonsusceptible_columns</code>, <code>guideline</code></p></li>
-<li><p>CMI 2012 paper - function <code>mdr_cmi2012()</code> or <code>mdro()</code>:<br>
-Ordered <a href="https://rdrr.io/pkg/data.table/man/fctr.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Multi-drug-resistant (MDR)</code> &lt; <code>Extensively drug-resistant (XDR)</code> &lt; <code>Pandrug-resistant (PDR)</code></p></li>
-<li><p>TB guideline - function <code>mdr_tb()</code> or <code>mdro(..., guideline = "TB")</code>:<br>
-Ordered <a href="https://rdrr.io/pkg/data.table/man/fctr.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Mono-resistant</code> &lt; <code>Poly-resistant</code> &lt; <code>Multi-drug-resistant</code> &lt; <code>Extensively drug-resistant</code></p></li>
-<li><p>German guideline - function <code>mrgn()</code> or <code>mdro(..., guideline = "MRGN")</code>:<br>
-Ordered <a href="https://rdrr.io/pkg/data.table/man/fctr.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>3MRGN</code> &lt; <code>4MRGN</code></p></li>
-<li><p>Everything else, except for custom guidelines:<br>
-Ordered <a href="https://rdrr.io/pkg/data.table/man/fctr.html" class="external-link">factor</a> with levels <code>Negative</code> &lt; <code>Positive, unconfirmed</code> &lt; <code>Positive</code>. The value <code>"Positive, unconfirmed"</code> means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. genotypic) tests</p></li>
-</ul></div>
+    <p>- If `verbose` is set to `TRUE`:<br>
+  A [data.frame] containing columns `row_number`, `microorganism`, `MDRO`, `reason`, `all_nonsusceptible_columns`, `guideline`
+- CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:<br>
+  Ordered [factor] with levels `Negative` &lt; `Multi-drug-resistant (MDR)` &lt; `Extensively drug-resistant (XDR)` &lt; `Pandrug-resistant (PDR)`
+- TB guideline - function [mdr_tb()] or [`mdro(..., guideline = "TB")`][mdro()]:<br>
+  Ordered [factor] with levels `Negative` &lt; `Mono-resistant` &lt; `Poly-resistant` &lt; `Multi-drug-resistant` &lt; `Extensively drug-resistant`
+- German guideline - function [mrgn()] or [`mdro(..., guideline = "MRGN")`][mdro()]:<br>
+  Ordered [factor] with levels `Negative` &lt; `3MRGN` &lt; `4MRGN`
+- Everything else, except for custom guidelines:<br>
+  Ordered [factor] with levels `Negative` &lt; `Positive, unconfirmed` &lt; `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. genotypic) tests</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> call, see <em>Examples</em>.</p>

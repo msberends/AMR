@@ -25,43 +25,6 @@ step_sir_numeric(recipe, ..., role = NA, trained = FALSE, columns = NULL,
   skip = FALSE, id = recipes::rand_id("sir_numeric"))
 ```
 
-## Arguments
-
-- recipe:
-
-  A recipe object. The step will be added to the sequence of operations
-  for this recipe.
-
-- ...:
-
-  One or more selector functions to choose variables for this step. See
-  [`selections()`](https://recipes.tidymodels.org/reference/selections.html)
-  for more details.
-
-- role:
-
-  Not used by this step since no new variables are created.
-
-- trained:
-
-  A logical to indicate if the quantities for preprocessing have been
-  estimated.
-
-- skip:
-
-  A logical. Should the step be skipped when the recipe is baked by
-  [`bake()`](https://recipes.tidymodels.org/reference/bake.html)? While
-  all operations are baked when
-  [`prep()`](https://recipes.tidymodels.org/reference/prep.html) is run,
-  some operations may not be able to be conducted on new data (e.g.
-  processing the outcome variable(s)). Care should be taken when using
-  `skip = TRUE` as it may affect the computations for subsequent
-  operations.
-
-- id:
-
-  A character string that is unique to this step to identify it.
-
 ## Details
 
 You can read more in our online [AMR with tidymodels

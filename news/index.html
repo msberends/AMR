@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9055</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9057</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,96 +49,50 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9055" id="amr-3019055">AMR 3.0.1.9055<a class="anchor" aria-label="anchor" href="#amr-3019055"></a></h2>
-<p>This will become release v3.1.0, intended for launch end of May.</p>
+<h2 class="pkg-version" data-toc-text="3.0.1.9057" id="amr-3019057">AMR 3.0.1.9057<a class="anchor" aria-label="anchor" href="#amr-3019057"></a></h2>
+<p>Planned as v3.1.0, May 2026.</p>
 <div class="section level4">
-<h4 id="new-3-0-1-9055">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9055"></a></h4>
-<ul><li>Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the <code>clinical_breakpoints</code> data set for usage in <code><a href="../reference/as.sir.html">as.sir()</a></code>. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.</li>
-<li>Support for the <a href="https://future.futureverse.org" class="external-link"><code>future</code></a> package and its framework, as the previous implementation of parallel computing was slow
-<ul><li>
-<strong>Breaking change</strong>: <code><a href="../reference/as.sir.html">as.sir()</a></code> with <code>parallel = TRUE</code> now requires a non-sequential <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> to be active before the call — e.g., <code>future::plan(future::multisession)</code> — and throws an informative error if none is set.</li>
-<li>New all-core usage setup: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure and processing time)</li>
+<h4 id="new-3-0-1-9057">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9057"></a></h4>
+<ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
+<li>Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting <code>breakpoint_type = "ECOFF"</code> in <code><a href="../reference/as.sir.html">as.sir()</a></code>; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (<a href="https://github.com/msberends/AMR/issues/254" class="external-link">#254</a>)</li>
+<li>Faster parallel computing via the <code>future</code> package; <strong>breaking change</strong>: a non-sequential plan (e.g. <code>future::plan(future::multisession)</code>) must be active before using <code>parallel = TRUE</code>; <code><a href="../reference/antibiogram.html">antibiogram()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code> now also support <code>parallel = TRUE</code> (<a href="https://github.com/msberends/AMR/issues/281" class="external-link">#281</a>)</li>
 <li>
-<code><a href="../reference/antibiogram.html">antibiogram()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code> gained a <code>parallel</code> argument using the same <code>future</code>/<code>future.apply</code> pattern: for WISCA, Monte Carlo simulations are split into <code>(group, chunk)</code> job pairs distributed across workers; for grouped antibiograms, each group is processed by a separate worker (<a href="https://github.com/msberends/AMR/issues/281" class="external-link">#281</a>)</li>
-</ul></li>
-<li>Integration with the <em>tidymodels</em> framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via <code>recipes</code>
-<ul><li>
-<code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code> to transform <code>&lt;mic&gt;</code> columns with log2, and <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code> to convert <code>&lt;sir&gt;</code> columns to numeric</li>
-<li>New <code>tidyselect</code> helpers:
-<ul><li>
-<code><a href="../reference/amr-tidymodels.html">all_sir()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_sir_predictors()</a></code>
+<em>tidymodels</em> integration for using SIR, MIC and disk data in modelling pipelines: <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code>, <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code>, and new column selectors <code><a href="../reference/amr-tidymodels.html">all_sir()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_disk()</a></code>
 </li>
-<li>
-<code><a href="../reference/amr-tidymodels.html">all_mic()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic_predictors()</a></code>
+<li>New <code>esbl_isolates</code> data set for practising AMR modelling</li>
+<li>New antimicrobial selectors: <code><a href="../reference/antimicrobial_selectors.html">ionophores()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">peptides()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">phosphonics()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">spiropyrimidinetriones()</a></code>
 </li>
-<li>
-<code><a href="../reference/amr-tidymodels.html">all_disk()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_disk_predictors()</a></code>
-</li>
-</ul></li>
-</ul></li>
-<li>Data set <code>esbl_isolates</code> to practise with AMR modelling</li>
-<li>AMR selectors <code><a href="../reference/antimicrobial_selectors.html">ionophores()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">peptides()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">phosphonics()</a></code> and <code><a href="../reference/antimicrobial_selectors.html">spiropyrimidinetriones()</a></code>
-</li>
-<li>Support for Wildtype (WT) / Non-wildtype (NWT) in <code><a href="../reference/as.sir.html">as.sir()</a></code>, all plotting functions, and all susceptibility/resistance functions.
-<ul><li>
-<code><a href="../reference/as.sir.html">as.sir()</a></code> gained an argument <code>as_wt_nwt</code>, which defaults to <code>TRUE</code> only when <code>breakpoint_type = "ECOFF"</code> (<a href="https://github.com/msberends/AMR/issues/254" class="external-link">#254</a>)</li>
-<li>This transforms the output from S/R to WT/NWT</li>
-<li>Functions such as <code><a href="../reference/proportion.html">susceptibility()</a></code> count WT as S and NWT as R</li>
-</ul></li>
-<li>Function <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, which allows future implementation of CLSI interpretive rules (<a href="https://github.com/msberends/AMR/issues/235" class="external-link">#235</a>)
-<ul><li>
-<code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code> has become a wrapper around that function</li>
-<li>Gained argument <code>add_if_missing</code> (default: <code>TRUE</code>). When set to <code>FALSE</code>, rules are only applied to cells that already contain an SIR value; <code>NA</code> cells are left untouched. This is useful with <code>overwrite = TRUE</code> to update reported results without imputing values for drugs that were not tested (<a href="https://github.com/msberends/AMR/issues/259" class="external-link">#259</a>)</li>
-</ul></li>
-<li>Function <code><a href="../reference/amr_course.html">amr_course()</a></code>, which allows for automated download and unpacking of a GitHub repository for e.g. webinar use</li>
-<li>Two new <code>NA</code> objects, <code>NA_ab_</code> and <code>NA_mo_</code>, analogous to base R’s <code>NA_character_</code> and <code>NA_integer_</code>, for use in pipelines that require typed missing values</li>
+<li>New <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, a unified function for EUCAST and CLSI interpretive rules; <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code> is now a wrapper around it (<a href="https://github.com/msberends/AMR/issues/235" class="external-link">#235</a>, <a href="https://github.com/msberends/AMR/issues/259" class="external-link">#259</a>)</li>
+<li>New <code><a href="../reference/amr_course.html">amr_course()</a></code> to download and unpack course or webinar materials from GitHub in one call</li>
+<li>Typed missing value constants <code>NA_ab_</code> and <code>NA_mo_</code>, for use in pipelines that need missing values of a specific class</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixes-3-0-1-9055">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9055"></a></h4>
-<ul><li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where values that were purely numeric (e.g., <code>"1"</code>) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter</li>
-<li>Fixed a bug in <code><a href="../reference/as.mic.html">as.mic()</a></code> where MIC values in scientific notation (e.g., <code>"1e-3"</code>) were incorrectly handled because the letter <code>e</code> was removed along with other Unicode letters; scientific notation <code>e</code> is now preserved</li>
-<li>Fixed a bug in <code><a href="../reference/as.ab.html">as.ab()</a></code> where certain AB codes containing “PH” or “TH” (such as <code>ETH</code>, <code>MTH</code>, <code>PHE</code>, <code>PHN</code>, <code>STH</code>, <code>THA</code>, <code>THI1</code>) would incorrectly return <code>NA</code> when combined in a vector with any untranslatable value (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
-<li>Fixed a bug in <code><a href="../reference/antibiogram.html">antibiogram()</a></code> for when no antimicrobials are set</li>
-<li>Fixed a bug in <code><a href="../reference/as.sir.html">as.sir()</a></code> where for numeric input the arguments <code>S</code>, <code>I</code>, and <code>R</code> would not be considered (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
-<li>Fixed a bug in plotting MIC values when <code>keep_operators = "all"</code>
-</li>
-<li>Fixed some foreign translations of antimicrobial drugs</li>
-<li>Fixed a bug for printing column names to the console when using <code>mutate_at(vars(...), as.mic)</code> (<a href="https://github.com/msberends/AMR/issues/249" class="external-link">#249</a>)</li>
-<li>Fixed a bug to disregard <code>NI</code> for susceptibility proportion functions</li>
-<li>Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo and CoPS to Stafilococco coagulasi-positivo (<a href="https://github.com/msberends/AMR/issues/256" class="external-link">#256</a>)</li>
-<li>Fixed SIR and MIC coercion of combined values, e.g. <code>as.sir("&lt;= 0.002; S")</code> or <code>as.mic("S; 0.002")</code> (<a href="https://github.com/msberends/AMR/issues/252" class="external-link">#252</a>)</li>
-<li>Fixed translation of foreign languages in <code><a href="../reference/proportion.html">sir_df()</a></code> (<a href="https://github.com/msberends/AMR/issues/272" class="external-link">#272</a>)</li>
-<li>Fixed BRMO classification by including bacterial complexes (<a href="https://github.com/msberends/AMR/issues/275" class="external-link">#275</a>)</li>
-<li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> for data frames silently deleting columns whose AB class was already <code>&lt;sir&gt;</code> when called a second time (re-running on already-converted data) (<a href="https://github.com/msberends/AMR/issues/278" class="external-link">#278</a>)</li>
-<li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> for data frames incorrectly treating metadata columns (e.g. <code>patient</code>, <code>ward</code>) as antibiotic columns when their names coincidentally matched an antibiotic code; column content is now validated against AMR data patterns before inclusion</li>
-<li>Fixed <code><a href="../reference/as.sir.html">as.sir()</a></code> ignoring <code>info = FALSE</code> for columns with no breakpoints (e.g. cefoxitin against <em>E. coli</em>)</li>
+<h4 id="fixes-3-0-1-9057">Fixes<a class="anchor" aria-label="anchor" href="#fixes-3-0-1-9057"></a></h4>
+<ul><li>
+<code><a href="../reference/as.sir.html">as.sir()</a></code> on data frames: already-converted SIR columns no longer dropped on re-run (<a href="https://github.com/msberends/AMR/issues/278" class="external-link">#278</a>); metadata columns (e.g. <code>patient</code>, <code>ward</code>) no longer misidentified as antibiotic columns; <code>info = FALSE</code> now suppresses all messages, including for columns without breakpoints</li>
+<li>
+<code><a href="../reference/as.mic.html">as.mic()</a></code>: values in scientific notation (e.g. <code>1e-3</code>) now handled correctly</li>
+<li>
+<code><a href="../reference/as.ab.html">as.ab()</a></code>: codes containing “PH” or “TH” (e.g. <code>ETH</code>, <code>PHE</code>) no longer return <code>NA</code> when mixed with unrecognised input (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
+<li>Combined MIC/SIR input values (e.g. <code>"&lt;= 0.002; S"</code> or <code>"S; 0.002"</code>) now parsed correctly (<a href="https://github.com/msberends/AMR/issues/252" class="external-link">#252</a>)</li>
+<li>BRMO classification now includes bacterial complexes (<a href="https://github.com/msberends/AMR/issues/275" class="external-link">#275</a>)</li>
+<li>Translation fixes for Italian CoNS/CoPS names (<a href="https://github.com/msberends/AMR/issues/256" class="external-link">#256</a>), Dutch antimicrobials, and <code><a href="../reference/proportion.html">sir_df()</a></code> foreign-language output (<a href="https://github.com/msberends/AMR/issues/272" class="external-link">#272</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updates-3-0-1-9055">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9055"></a></h4>
+<h4 id="updates-3-0-1-9057">Updates<a class="anchor" aria-label="anchor" href="#updates-3-0-1-9057"></a></h4>
 <ul><li>
-<code><a href="../reference/as.sir.html">as.sir()</a></code> with <code>reference_data</code>: custom guideline names now correctly classify values as R using EUCAST convention (<code>&gt; breakpoint_R</code> for MIC, <code>&lt; breakpoint_R</code> for disk); custom breakpoints with <code>host = NA</code> now serve as a host-agnostic fallback when no host-specific row matches (<a href="https://github.com/msberends/AMR/issues/239" class="external-link">#239</a>)</li>
-<li>Extensive <code>cli</code> integration for better message handling and clickable links in messages and warnings (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
+<code><a href="../reference/AMR-deprecated.html">custom_eucast_rules()</a></code> renamed to <code><a href="../reference/custom_interpretive_rules.html">custom_interpretive_rules()</a></code>; old name deprecated but still works (<a href="https://github.com/msberends/AMR/issues/268" class="external-link">#268</a>)</li>
 <li>
-<code><a href="../reference/mdro.html">mdro()</a></code> now infers resistance for a <em>missing</em> base drug column from an <em>available</em> corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument <code>infer_from_combinations</code>, which defaults to <code>TRUE</code> (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).</li>
+<code><a href="../reference/mdro.html">mdro()</a></code> can now infer resistance from a drug+inhibitor combination when the base drug column is absent (e.g. piperacillin inferred from piperacillin/tazobactam); controlled via new <code>infer_from_combinations</code> argument (default <code>TRUE</code>) (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>)</li>
 <li>
-<code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> gained the argument <code>guideline</code>, which defaults to EUCAST, for interpreting the ‘I’ category correctly.</li>
-<li>Added to the <code>antimicrobials</code> data set: cefepime/taniborbactam (<code>FTA</code>), ceftibuten/avibactam (<code>CTA</code>), clorobiocin (<code>CLB</code>), kasugamycin (<code>KAS</code>), ostreogrycin (<code>OST</code>), taniborbactam (<code>TAN</code>), thiostrepton (<code>THS</code>), xeruborbactam (<code>XER</code>), and zorbamycin (<code>ZOR</code>)</li>
+<code><a href="../reference/proportion.html">susceptibility()</a></code> / <code><a href="../reference/proportion.html">resistance()</a></code>: new <code>guideline</code> argument (default EUCAST) to ensure the ‘I’ category is interpreted correctly per guideline</li>
+<li>Capped MIC handling in <code><a href="../reference/as.sir.html">as.sir()</a></code> reworked into four clearly defined options: <code>"none"</code>, <code>"conservative"</code> (new default), <code>"standard"</code>, <code>"lenient"</code> (<a href="https://github.com/msberends/AMR/issues/243" class="external-link">#243</a>)</li>
 <li>
-<code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.mic.html">rescale_mic()</a></code> gained the argument <code>round_to_next_log2</code>, which can be set to <code>TRUE</code> to round all values up to the nearest next log2 level (<a href="https://github.com/msberends/AMR/issues/255" class="external-link">#255</a>)</li>
+<code><a href="../reference/as.mic.html">as.mic()</a></code> / <code><a href="../reference/as.mic.html">rescale_mic()</a></code>: new <code>round_to_next_log2</code> argument to round values up to the nearest log2 dilution level (<a href="https://github.com/msberends/AMR/issues/255" class="external-link">#255</a>)</li>
 <li>
-<code>antimicrobials$group</code> is now a <code>list</code> instead of a <code>character</code>, to contain any group the drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
-<li>
-<code><a href="../reference/ab_property.html">ab_group()</a></code> gained an argument <code>all_groups</code> to return all groups the antimicrobial drug is in (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
-<li>Added explaining message to <code><a href="../reference/as.sir.html">as.sir()</a></code> when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (<a href="https://github.com/msberends/AMR/issues/244" class="external-link">#244</a>)</li>
-<li>Updated handling of capped MIC values (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in <code><a href="../reference/as.sir.html">as.sir()</a></code> in the argument <code>capped_mic_handling</code>: (<a href="https://github.com/msberends/AMR/issues/243" class="external-link">#243</a>)
-<ul><li>Introduced four clearly defined options: <code>"none"</code>, <code>"conservative"</code> (default), <code>"standard"</code>, and <code>"lenient"</code>
-</li>
-<li>Interpretation of capped MIC values now consistently returns <code>"NI"</code> (non-interpretable) when the true MIC could be at either side of a breakpoint, depending on the selected handling mode</li>
-<li>This results in more reliable behaviour compared to previous versions for capped MIC values</li>
-<li>Removed the <code>"inverse"</code> option, which has now become redundant</li>
-</ul></li>
-<li>
-<code><a href="../reference/ab_property.html">ab_group()</a></code> now returns values consist with the AMR selectors (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
+<code>antimicrobials$group</code> now a <code>list</code>, so drugs belonging to multiple groups are fully represented; use <code>ab_group(all_groups = TRUE)</code> to retrieve all groups for a drug (<a href="https://github.com/msberends/AMR/issues/246" class="external-link">#246</a>)</li>
+<li>New antimicrobials added: cefepime/taniborbactam (<code>FTA</code>), ceftibuten/avibactam (<code>CTA</code>), clorobiocin (<code>CLB</code>), kasugamycin (<code>KAS</code>), ostreogrycin (<code>OST</code>), taniborbactam (<code>TAN</code>), thiostrepton (<code>THS</code>), xeruborbactam (<code>XER</code>), zorbamycin (<code>ZOR</code>)</li>
+<li>Improved console messages with clickable links throughout, powered by <code>cli</code> (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -300,7 +254,7 @@
 <li>Disks of 0 to 5 mm are now allowed, the newly allowed range for disk diffusion (<code><a href="../reference/as.disk.html">as.disk()</a></code>) is now between 0 and 50 mm</li>
 <li>Updated <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> to support HTML output</li>
 <li>
-<code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> now supports multiple antimicrobials and antimicrobial groups to be affected by a single rule</li>
+<code><a href="../reference/AMR-deprecated.html">custom_eucast_rules()</a></code> now supports multiple antimicrobials and antimicrobial groups to be affected by a single rule</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_info()</a></code> now contains an extra element <code>rank</code> and <code>group_members</code> (with the contents of the new <code><a href="../reference/mo_property.html">mo_group_members()</a></code> function)</li>
 <li>Updated all ATC codes from WHOCC</li>

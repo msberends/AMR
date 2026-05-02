@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9055</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9057</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-rules">rules<a class="anchor" aria-label="anchor" href="#arg-rules"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expected_phenotypes"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expected_phenotypes")</code>. The default value can be set to another value using the package option <code><a href="AMR-options.html">AMR_interpretive_rules</a></code>: <code>options(AMR_interpretive_rules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expected_phenotypes"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code>c("breakpoints", "expected_phenotypes")</code>. The default value can be set to another value using the package option <code><a href="AMR-options.html">AMR_interpretive_rules</a></code>: <code>options(AMR_interpretive_rules = "all")</code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href="custom_interpretive_rules.html">custom_interpretive_rules()</a></code>.</p></dd>
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
@@ -139,7 +139,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt id="arg-custom-rules">custom_rules<a class="anchor" aria-label="anchor" href="#arg-custom-rules"></a></dt>
-<dd><p>Custom rules to apply, created with <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>.</p></dd>
+<dd><p>Custom rules to apply, created with <code><a href="custom_interpretive_rules.html">custom_interpretive_rules()</a></code>.</p></dd>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
@@ -169,15 +169,15 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Note:</strong> This function does not translate MIC or disk values to SIR values. Use <code><a href="as.sir.html">as.sir()</a></code> for that. <br><strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. <br></p>
-<p>The file containing all EUCAST rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The <code>AMR</code> package contains the full microbial taxonomy updated until June 24th, 2024, see <a href="microorganisms.html">microorganisms</a>.</p><div class="section">
+<p>The file containing all interpretive rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The <code>AMR</code> package contains the full microbial taxonomy updated until June 24th, 2024, see <a href="microorganisms.html">microorganisms</a>.</p><div class="section">
 <h3 id="custom-rules">Custom Rules<a class="anchor" aria-label="anchor" href="#custom-rules"></a></h3>
 
 
-<p>Custom rules can be created using <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>, e.g.:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_eucast_rules.html">custom_eucast_rules</a></span><span class="op">(</span><span class="va">AMC</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span>,</span>
-<span>                         <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span><span class="op">)</span></span>
+<p>Custom rules can be created using <code><a href="custom_interpretive_rules.html">custom_interpretive_rules()</a></code>, e.g.:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_interpretive_rules.html">custom_interpretive_rules</a></span><span class="op">(</span><span class="va">AMC</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span>,</span>
+<span>                               <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/interpretive_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">example_isolates</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="fu"><a href="../reference/interpretive_rules.html">interpretive_rules</a></span><span class="op">(</span><span class="va">example_isolates</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -187,7 +187,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <p>Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:</p><ol><li><p>A drug <strong>with</strong> enzyme inhibitor will be set to S if the same drug <strong>without</strong> enzyme inhibitor is S</p></li>
 <li><p>A drug <strong>without</strong> enzyme inhibitor will be set to R if the same drug <strong>with</strong> enzyme inhibitor is R</p></li>
 </ol><p>Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.</p>
-<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the package option <code><a href="AMR-options.html">AMR_interpretive_rules</a></code>, i.e. run <code>options(AMR_interpretive_rules = "all")</code>.</p>
+<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>interpretive_rules(..., rules = "all")</code>. You can also set the package option <code><a href="AMR-options.html">AMR_interpretive_rules</a></code>, i.e. run <code>options(AMR_interpretive_rules = "all")</code>.</p>
 </div>
 
     </div>
@@ -232,8 +232,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># apply EUCAST rules: some results wil be changed</span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `eucast_rules()`: not all columns with antimicrobial results are of class</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `interpretive_rules()`: not all columns with antimicrobial results are of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> class <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   • x <span style="color: #D7AF00;">|&gt;</span> <span style="font-weight: bold;">as.sir</span><span style="color: #D7AF00;">(</span>CXM<span style="color: #D7AF00;">:</span>AMX<span style="color: #D7AF00;">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
@@ -253,8 +253,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="co"># do not apply EUCAST rules, but rather get a data.frame</span></span></span>
 <span class="r-in"><span><span class="co"># containing all details about the transformations:</span></span></span>
 <span class="r-in"><span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">eucast_rules</span><span class="op">(</span><span class="va">a</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `eucast_rules()`: not all columns with antimicrobial results are of class</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `interpretive_rules()`: not all columns with antimicrobial results are of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> class <span style="color: #0000BB;">&lt;sir&gt;</span>. Transform them on beforehand, e.g.:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   • x <span style="color: #D7AF00;">|&gt;</span> <span style="font-weight: bold;">as.sir</span><span style="color: #D7AF00;">(</span>CXM<span style="color: #D7AF00;">:</span>AMX<span style="color: #D7AF00;">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>

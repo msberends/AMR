@@ -1,8 +1,8 @@
 # Split Ages into Age Groups
 
-Split ages into age groups defined by the `split` argument. This allows
-for easier demographic (antimicrobial resistance) analysis. The function
-returns an ordered [factor](https://rdrr.io/r/base/factor.html).
+Split ages into age groups defined by the \`split\` argument. This
+allows for easier demographic (antimicrobial resistance) analysis. The
+function returns an ordered \[factor\].
 
 ## Usage
 
@@ -34,7 +34,7 @@ age_groups(x, split_at = c(0, 12, 25, 55, 75), names = NULL,
 
 ## Value
 
-Ordered [factor](https://rdrr.io/r/base/factor.html)
+Ordered \[factor\]
 
 ## Details
 

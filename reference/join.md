@@ -59,16 +59,13 @@ a [data.frame](https://rdrr.io/r/base/data.frame.html)
 
 ## Details
 
-**Note:** As opposed to the `join()` functions of `dplyr`,
-[character](https://rdrr.io/r/base/character.html) vectors are supported
-and at default existing columns will get a suffix `"2"` and the newly
-joined columns will not get a suffix.
+\*\*Note:\*\* As opposed to the \`join()\` functions of \`dplyr\`,
+\[character\] vectors are supported and at default existing columns will
+get a suffix \`"2"\` and the newly joined columns will not get a suffix.
 
-If the `dplyr` package is installed, their join functions will be used.
-Otherwise, the much slower
-[`merge()`](https://rdrr.io/pkg/data.table/man/merge.html) and
-[`interaction()`](https://rdrr.io/r/base/interaction.html) functions
-from base R will be used.
+If the \`dplyr\` package is installed, their join functions will be
+used. Otherwise, the much slower \[merge()\] and \[interaction()\]
+functions from base R will be used.
 
 ## Examples
 

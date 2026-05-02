@@ -2,16 +2,13 @@
 
 Clean up existing SIR values, or interpret minimum inhibitory
 concentration (MIC) values and disk diffusion diameters according to
-EUCAST or CLSI. `as.sir()` transforms the input to a new class `sir`,
-which is an ordered
-[factor](https://rdrr.io/pkg/data.table/man/fctr.html) containing the
-levels `S`, `SDD`, `I`, `R`, `NI`.
+EUCAST or CLSI. \[as.sir()\] transforms the input to a new class
+\[\`sir\`\], which is an ordered \[factor\] containing the levels \`S\`,
+\`SDD\`, \`I\`, \`R\`, \`NI\`.
 
-Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI
-2011-2026, see *Details*. All breakpoints used for interpretation are
-available in our
-[clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
-data set.
+Breakpoints are currently implemented from EUCAST \`r
+min(as.integer(gsub("\[^0-9\]", "", subset(AMR::clinical_breakpoints,
+guideline
 
 ## Usage
 
@@ -367,8 +364,7 @@ disk diffusion diameters:
 
 ## Value
 
-Ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with new
-class `sir`
+Ordered \[factor\] with new class \`sir\`
 
 ## Details
 
@@ -667,10 +663,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-04-30 17:47:55     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-04-30 17:47:55     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-04-30 17:47:55     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-04-30 17:47:55     1 DISK   genta       Escherich… human      18         
+#> 1 2026-05-02 13:02:42     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-05-02 13:02:42     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-05-02 13:02:42     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-05-02 13:02:43     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

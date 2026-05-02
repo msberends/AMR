@@ -606,7 +606,7 @@ from clinical text records, using
   [`clear_custom_antimicrobials()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
   : Add Custom Antimicrobials
 
-## Preparing data: antimicrobial results
+## Interpreting data: antimicrobial results
 
 With [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) and
 [`as.disk()`](https://amr-for-r.org/reference/as.disk.md) you can
@@ -615,10 +615,10 @@ transform your raw input to valid MIC or disk diffusion values. Use
 data to let it only contain “R”, “I” and “S”, or to interpret MIC or
 disk diffusion values as SIR based on the lastest EUCAST and CLSI
 guidelines. Afterwards, you can extend antibiotic interpretations by
-applying [EUCAST
-rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/)
+applying interpretive rules, for example [from
+EUCAST](https://www.eucast.org/expert_rules_and_intrinsic_resistance/)
 with
-[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
+[`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
 
 - [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   [`NA_sir_`](https://amr-for-r.org/reference/as.sir.md)
@@ -643,8 +643,8 @@ with
   [`clsi_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
   [`eucast_dosage()`](https://amr-for-r.org/reference/interpretive_rules.md)
   : Apply Interpretive Rules
-- [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md)
-  : Define Custom EUCAST Rules
+- [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md)
+  : Define Custom Interpretive Rules
 
 ## Analysing data
 
@@ -955,8 +955,8 @@ and other utilities. Especially the ‘like’ function can be useful:
 
 ## Other: statistical tests
 
-Some statistical tests or methods are not part of base R and were added
-to this package for convenience.
+Some statistical tests or methods usable for AMR analyses are not part
+of base R and were added to this package for convenience.
 
 - [`g.test()`](https://amr-for-r.org/reference/g.test.md) :
 
@@ -973,7 +973,8 @@ to this package for convenience.
 These objects are deprecated, meaning that they will still work but show
 a warning that they will be removed in a future version.
 
-- [`ab_class()`](https://amr-for-r.org/reference/AMR-deprecated.md)
+- [`custom_eucast_rules()`](https://amr-for-r.org/reference/AMR-deprecated.md)
+  [`ab_class()`](https://amr-for-r.org/reference/AMR-deprecated.md)
   [`ab_selector()`](https://amr-for-r.org/reference/AMR-deprecated.md) :
   Deprecated Functions, Arguments, or Datasets
 

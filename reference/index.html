@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9055</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9057</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,9 +145,9 @@
         </dt>
         <dd>Add Custom Antimicrobials</dd>
       </dl></div><div class="section level2">
-      <h2 id="preparing-data-antimicrobial-results">Preparing data: antimicrobial results<a class="anchor" aria-label="anchor" href="#preparing-data-antimicrobial-results"></a></h2>
+      <h2 id="interpreting-data-antimicrobial-results">Interpreting data: antimicrobial results<a class="anchor" aria-label="anchor" href="#interpreting-data-antimicrobial-results"></a></h2>
 
-      <div class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST rules</a> with <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code>.</p></div>
+      <div class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying interpretive rules, for example <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">from EUCAST</a> with <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -184,10 +184,10 @@
 
         <dt>
 
-          <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>
+          <code><a href="custom_interpretive_rules.html">custom_interpretive_rules()</a></code>
 
         </dt>
-        <dd>Define Custom EUCAST Rules</dd>
+        <dd>Define Custom Interpretive Rules</dd>
       </dl></div><div class="section level2">
       <h2 id="analysing-data">Analysing data<a class="anchor" aria-label="anchor" href="#analysing-data"></a></h2>
 
@@ -560,7 +560,7 @@
       </dl></div><div class="section level2">
       <h2 id="other-statistical-tests">Other: statistical tests<a class="anchor" aria-label="anchor" href="#other-statistical-tests"></a></h2>
 
-      <div class="section-desc"><p>Some statistical tests or methods are not part of base R and were added to this package for convenience.</p></div>
+      <div class="section-desc"><p>Some statistical tests or methods usable for AMR analyses are not part of base R and were added to this package for convenience.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -599,7 +599,7 @@
 
       <dl><dt>
 
-          <code><a href="AMR-deprecated.html">ab_class()</a></code> <code><a href="AMR-deprecated.html">ab_selector()</a></code>
+          <code><a href="AMR-deprecated.html">custom_eucast_rules()</a></code> <code><a href="AMR-deprecated.html">ab_class()</a></code> <code><a href="AMR-deprecated.html">ab_selector()</a></code>
 
         </dt>
         <dd>Deprecated Functions, Arguments, or Datasets</dd>

@@ -1,13 +1,13 @@
-# Define Custom EUCAST Rules
+# Define Custom Interpretive Rules
 
-Define custom EUCAST rules for your organisation or specific analysis
-and use the output of this function in
-[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
+Define custom interpretive rules for your organisation or specific
+analysis and use the output of this function in
+[`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
 
 ## Usage
 
 ``` r
-custom_eucast_rules(...)
+custom_interpretive_rules(...)
 ```
 
 ## Arguments
@@ -23,9 +23,9 @@ A [list](https://rdrr.io/r/base/list.html) containing the custom rules
 
 ## Details
 
-Some organisations have their own adoption of EUCAST rules. This
-function can be used to define custom EUCAST rules to be used in the
-[`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+Some organisations have their own adoption of interpretive rules. This
+function can be used to define custom rules to be used in the
+[`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
 function.
 
 ### Basics
@@ -37,17 +37,17 @@ set your own rules. Rules must be set using what R considers to be the
 'formula notation'. The rule itself is written *before* the tilde (`~`)
 and the consequence of the rule is written *after* the tilde:
 
-    x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
-                             TZP == "R" ~ aminopenicillins == "R")
+    x <- custom_interpretive_rules(TZP == "S" ~ aminopenicillins == "S",
+                                   TZP == "R" ~ aminopenicillins == "R")
 
-These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is
-"S", all aminopenicillins (ampicillin and amoxicillin) must be made "S",
-and if TZP is "R", aminopenicillins must be made "R". These rules can
-also be printed to the console, so it is immediately clear how they
-work:
+These are two custom interpretive rules: if TZP
+(piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and
+amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must
+be made "R". These rules can also be printed to the console, so it is
+immediately clear how they work:
 
     x
-    #> A set of custom EUCAST rules:
+    #> A set of custom interpretive rules:
     #>
     #>   1. If TZP is "S" then set to  S :
     #>      amoxicillin (AMX), ampicillin (AMP)
@@ -70,11 +70,11 @@ data set and test the rules set:
     #> 1      Escherichia coli   R    S     S
     #> 2 Klebsiella pneumoniae   R    S     S
 
-    eucast_rules(df,
-                 rules = "custom",
-                 custom_rules = x,
-                 info = FALSE,
-                 overwrite = TRUE)
+    interpretive_rules(df,
+                       rules = "custom",
+                       custom_rules = x,
+                       info = FALSE,
+                       overwrite = TRUE)
     #>                      mo TZP ampi cipro
     #> 1      Escherichia coli   R    R     S
     #> 2 Klebsiella pneumoniae   R    R     S
@@ -94,16 +94,16 @@ column names are: `"mo"`, `"fullname"`, `"status"`, `"kingdom"`,
 example will work as well, despite the fact that the `df` data set does
 not contain a column `genus`:
 
-    y <- custom_eucast_rules(
+    y <- custom_interpretive_rules(
       TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
       TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R"
     )
 
-    eucast_rules(df,
-                 rules = "custom",
-                 custom_rules = y,
-                 info = FALSE,
-                 overwrite = TRUE)
+    interpretive_rules(df,
+                       rules = "custom",
+                       custom_rules = y,
+                       info = FALSE,
+                       overwrite = TRUE)
     #>                      mo TZP ampi cipro
     #> 1      Escherichia coli   R    S     S
     #> 2 Klebsiella pneumoniae   R    R     S
@@ -129,9 +129,9 @@ function to combine multiple antimicrobials. For instance, the following
 example sets all aminopenicillins and ureidopenicillins to "R" if column
 TZP (piperacillin/tazobactam) is "R":
 
-    x <- custom_eucast_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
+    x <- custom_interpretive_rules(TZP == "R" ~ c(aminopenicillins, ureidopenicillins) == "R")
     x
-    #> A set of custom EUCAST rules:
+    #> A set of custom interpretive rules:
     #>
     #>   1. If TZP is "R" then set to "R":
     #>      amoxicillin (AMX), ampicillin (AMP), azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP), piperacillin/tazobactam (TZP)
@@ -499,12 +499,12 @@ These 43 antimicrobial groups are allowed in the rules
 ## Examples
 
 ``` r
-x <- custom_eucast_rules(
+x <- custom_interpretive_rules(
   AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
   AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I"
 )
 x
-#> A set of custom EUCAST rules:
+#> A set of custom interpretive rules:
 #> 
 #>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
@@ -523,22 +523,22 @@ eucast_rules(example_isolates,
 #> # A tibble: 8 × 9
 #>     row col   mo_fullname     old   new   rule  rule_group rule_name rule_source
 #>   <int> <chr> <chr>           <ord> <chr> <chr> <chr>      <chr>     <chr>      
-#> 1    33 AMP   Klebsiella pne… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 2    33 AMX   Klebsiella pne… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 3    34 AMP   Klebsiella pne… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 4    34 AMX   Klebsiella pne… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 5   531 AMP   Klebsiella pne… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 6   531 AMX   Klebsiella pne… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 7  1485 AMP   Klebsiella oxy… R     I     "rep… Custom EU… Custom E… Object 'x'…
-#> 8  1485 AMX   Klebsiella oxy… R     I     "rep… Custom EU… Custom E… Object 'x'…
+#> 1    33 AMP   Klebsiella pne… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 2    33 AMX   Klebsiella pne… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 3    34 AMP   Klebsiella pne… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 4    34 AMX   Klebsiella pne… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 5   531 AMP   Klebsiella pne… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 6   531 AMX   Klebsiella pne… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 7  1485 AMP   Klebsiella oxy… R     I     "rep… Custom in… Custom i… Object 'x'…
+#> 8  1485 AMX   Klebsiella oxy… R     I     "rep… Custom in… Custom i… Object 'x'…
 
 # combine rule sets
 x2 <- c(
   x,
-  custom_eucast_rules(TZP == "R" ~ carbapenems == "R")
+  custom_interpretive_rules(TZP == "R" ~ carbapenems == "R")
 )
 x2
-#> A set of custom EUCAST rules:
+#> A set of custom interpretive rules:
 #> 
 #>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)

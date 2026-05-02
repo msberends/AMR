@@ -184,135 +184,116 @@ mo_property(x, property = "fullname", language = get_AMR_locale(),
 
 ## Value
 
-- An [integer](https://rdrr.io/r/base/integer.html) in case of
-  `mo_year()`
-
-- An [ordered factor](https://rdrr.io/pkg/data.table/man/fctr.html) in
-  case of `mo_pathogenicity()`
-
-- A [list](https://rdrr.io/r/base/list.html) in case of `mo_taxonomy()`,
-  `mo_synonyms()`, `mo_snomed()`, and `mo_info()`
-
-- A [logical](https://rdrr.io/r/base/logical.html) in case of
-  `mo_is_anaerobic()`, `mo_is_gram_negative()`, `mo_is_gram_positive()`,
-  `mo_is_intrinsic_resistant()`, and `mo_is_yeast()`
-
-- A named [character](https://rdrr.io/r/base/character.html) in case of
-  `mo_synonyms()` and `mo_url()`
-
-- A [character](https://rdrr.io/r/base/character.html) in all other
-  cases
+\- An \[integer\] in case of \[mo_year()\] - An \[ordered
+factor\]\[factor\] in case of \[mo_pathogenicity()\] - A \[list\] in
+case of \[mo_taxonomy()\], \[mo_synonyms()\], \[mo_snomed()\], and
+\[mo_info()\] - A \[logical\] in case of \[mo_is_anaerobic()\],
+\[mo_is_gram_negative()\], \[mo_is_gram_positive()\],
+\[mo_is_intrinsic_resistant()\], and \[mo_is_yeast()\] - A named
+\[character\] in case of \[mo_synonyms()\] and \[mo_url()\] - A
+\[character\] in all other cases
 
 ## Details
 
-All functions will, at default, **not** keep old taxonomic properties,
-as synonyms are automatically replaced with the current taxonomy. Take
-for example *Enterobacter aerogenes*, which was initially named in 1960
-but renamed to *Klebsiella aerogenes* in 2017:
+All functions will, at default, \*\*not\*\* keep old taxonomic
+properties, as synonyms are automatically replaced with the current
+taxonomy. Take for example \*Enterobacter aerogenes\*, which was
+initially named in 1960 but renamed to \*Klebsiella aerogenes\* in
+2017: - \`mo_genus("Enterobacter aerogenes")\` will return
+\`"Klebsiella"\` (with a note about the renaming) -
+\`mo_genus("Enterobacter aerogenes", keep_synonyms = TRUE)\` will return
+\`"Enterobacter"\` (with a once-per-session warning that the name is
+outdated) - \`mo_ref("Enterobacter aerogenes")\` will return \`"Tindall
+et al., 2017"\` (with a note about the renaming) -
+\`mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)\` will return
+\`"Hormaeche et al., 1960"\` (with a once-per-session warning that the
+name is outdated)
 
-- `mo_genus("Enterobacter aerogenes")` will return `"Klebsiella"` (with
-  a note about the renaming)
-
-- `mo_genus("Enterobacter aerogenes", keep_synonyms = TRUE)` will return
-  `"Enterobacter"` (with a once-per-session warning that the name is
-  outdated)
-
-- `mo_ref("Enterobacter aerogenes")` will return
-  `"Tindall et al., 2017"` (with a note about the renaming)
-
-- `mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)` will return
-  `"Hormaeche et al., 1960"` (with a once-per-session warning that the
-  name is outdated)
-
-The short name (`mo_shortname()`) returns the first character of the
-genus and the full species, such as `"E. coli"`, for species and
+The short name (\[mo_shortname()\]) returns the first character of the
+genus and the full species, such as \`"E. coli"\`, for species and
 subspecies. Exceptions are abbreviations of staphylococci (such as
-*"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic
-streptococci (such as *"GBS"*, Group B Streptococci). Please bear in
-mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of
-Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning
-to the full name will be done using
-[`as.mo()`](https://amr-for-r.org/reference/as.mo.md) internally, giving
-priority to bacteria and human pathogens, i.e. `"E. coli"` will be
-considered *Escherichia coli*. As a result,
-`mo_fullname(mo_shortname("Entamoeba coli"))` returns
-`"Escherichia coli"`.
+\*"CoNS"\*, Coagulase-Negative Staphylococci) and beta-haemolytic
+streptococci (such as \*"GBS"\*, Group B Streptococci). Please bear in
+mind that e.g. \*E. coli\* could mean \*Escherichia coli\* (kingdom of
+Bacteria) as well as \*Entamoeba coli\* (kingdom of Protozoa). Returning
+to the full name will be done using \[as.mo()\] internally, giving
+priority to bacteria and human pathogens, i.e. \`"E. coli"\` will be
+considered \*Escherichia coli\*. As a result,
+\`mo_fullname(mo_shortname("Entamoeba coli"))\` returns \`"Escherichia
+coli"\`.
 
 Since the top-level of the taxonomy is sometimes referred to as
-'kingdom' and sometimes as 'domain', the functions `mo_kingdom()` and
-`mo_domain()` return the exact same results.
+'kingdom' and sometimes as 'domain', the functions \[mo_kingdom()\] and
+\[mo_domain()\] return the exact same results.
 
-Determination of human pathogenicity (`mo_pathogenicity()`) is strongly
-based on Bartlett *et al.* (2022,
+Determination of human pathogenicity (\[mo_pathogenicity()\]) is
+strongly based on Bartlett \*et al.\* (2022,
 [doi:10.1099/mic.0.001269](https://doi.org/10.1099/mic.0.001269) ). This
-function returns a
-[factor](https://rdrr.io/pkg/data.table/man/fctr.html) with the levels
-*Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
+function returns a \[factor\] with the levels \*Pathogenic\*,
+\*Potentially pathogenic\*, \*Non-pathogenic\*, and \*Unknown\*.
 
-Determination of the Gram stain (`mo_gramstain()`) will be based on the
-taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the
-so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID
-11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only
+Determination of the Gram stain (\[mo_gramstain()\]) will be based on
+the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the
+so-called subkingdoms Negibacteria and Posibacteria (2002, \[PMID
+11837318\](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only
 considered these phyla as Posibacteria: Actinobacteria, Chloroflexi,
 Firmicutes, and Tenericutes. These phyla were later renamed to
 Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021,
-[PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in
-these phyla are considered Gram-positive in this `AMR` package, except
-for members of the class Negativicutes (within phylum Bacillota) which
-are Gram-negative. All other bacteria are considered Gram-negative.
-Species outside the kingdom of Bacteria will return a value `NA`.
-Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` always
-return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code
-is `UNKNOWN`), thus always return `FALSE` for species outside the
-taxonomic kingdom of Bacteria.
+\[PMID 34694987\](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria
+in these phyla are considered Gram-positive in this \`AMR\` package,
+except for members of the class Negativicutes (within phylum Bacillota)
+which are Gram-negative. All other bacteria are considered
+Gram-negative. Species outside the kingdom of Bacteria will return a
+value \`NA\`. Functions \[mo_is_gram_negative()\] and
+\[mo_is_gram_positive()\] always return \`TRUE\` or \`FALSE\` (or \`NA\`
+when the input is \`NA\` or the MO code is \`UNKNOWN\`), thus always
+return \`FALSE\` for species outside the taxonomic kingdom of Bacteria.
 
-Determination of yeasts (`mo_is_yeast()`) will be based on the taxonomic
-kingdom and class. *Budding yeasts* are yeasts that reproduce asexually
-through a process called budding, where a new cell develops from a small
-protrusion on the parent cell. Taxonomically, these are members of the
-phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes)
-or Pichiomycetes. *True yeasts* quite specifically refers to yeasts in
-the underlying order Saccharomycetales (such as *Saccharomyces
-cerevisiae*). Thus, for all microorganisms that are member of the
-taxonomic class Saccharomycetes or Pichiomycetes, the function will
-return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is
-`NA` or the MO code is `UNKNOWN`).
+Determination of yeasts (\[mo_is_yeast()\]) will be based on the
+taxonomic kingdom and class. \*Budding yeasts\* are yeasts that
+reproduce asexually through a process called budding, where a new cell
+develops from a small protrusion on the parent cell. Taxonomically,
+these are members of the phylum Ascomycota, class Saccharomycetes (also
+called Hemiascomycetes) or Pichiomycetes. \*True yeasts\* quite
+specifically refers to yeasts in the underlying order Saccharomycetales
+(such as \*Saccharomyces cerevisiae\*). Thus, for all microorganisms
+that are member of the taxonomic class Saccharomycetes or Pichiomycetes,
+the function will return \`TRUE\`. It returns \`FALSE\` otherwise (or
+\`NA\` when the input is \`NA\` or the MO code is \`UNKNOWN\`).
 
-Determination of intrinsic resistance (`mo_is_intrinsic_resistant()`)
-will be based on the
-[intrinsic_resistant](https://amr-for-r.org/reference/intrinsic_resistant.md)
-data set, which is based on ['EUCAST Expected Resistant Phenotypes'
-v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
-(2023). The `mo_is_intrinsic_resistant()` function can be vectorised
-over both argument `x` (input for microorganisms) and `ab` (input for
+Determination of intrinsic resistance (\[mo_is_intrinsic_resistant()\])
+will be based on the \[intrinsic_resistant\] data set, which is based on
+\`r
+format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES\[1\]))\`.
+The \[mo_is_intrinsic_resistant()\] function can be vectorised over both
+argument \`x\` (input for microorganisms) and \`ab\` (input for
 antimicrobials).
 
-Determination of bacterial oxygen tolerance (`mo_oxygen_tolerance()`)
-will be based on BacDive, see *Source*. The function `mo_is_anaerobic()`
-only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicting
-an obligate anaerobic species or genus. It always returns `FALSE` for
-species outside the taxonomic kingdom of Bacteria.
+Determination of bacterial oxygen tolerance (\[mo_oxygen_tolerance()\])
+will be based on BacDive, see \*Source\*. The function
+\[mo_is_anaerobic()\] only returns \`TRUE\` if the oxygen tolerance is
+\`"anaerobe"\`, indicting an obligate anaerobic species or genus. It
+always returns \`FALSE\` for species outside the taxonomic kingdom of
+Bacteria.
 
-The function `mo_url()` will return the direct URL to the online
+The function \[mo_url()\] will return the direct URL to the online
 database entry, which also shows the scientific reference of the
-concerned species. [This MycoBank URL](https://www.mycobank.org) will be
-used for fungi wherever available , [this LPSN
-URL](https://www.mycobank.org) for bacteria wherever available, and
-[this GBIF link](https://www.gbif.org) otherwise.
+concerned species. \[This MycoBank URL\](\`r
+TAXONOMY_VERSION\$MycoBank\$url\`) will be used for fungi wherever
+available , \[this LPSN URL\](\`r TAXONOMY_VERSION\$MycoBank\$url\`) for
+bacteria wherever available, and \[this GBIF link\](\`r
+TAXONOMY_VERSION\$GBIF\$url\`) otherwise.
 
-SNOMED codes (`mo_snomed()`) was last updated on July 16th, 2024. See
-*Source* and the
-[microorganisms](https://amr-for-r.org/reference/microorganisms.md) data
-set for more info.
+SNOMED codes (\[mo_snomed()\]) was last updated on \`r
+documentation_date(TAXONOMY_VERSION\$SNOMED\$accessed_date)\`. See
+\*Source\* and the \[microorganisms\] data set for more info.
 
 Old taxonomic names (so-called 'synonyms') can be retrieved with
-`mo_synonyms()` (which will have the scientific reference as
-[name](https://rdrr.io/r/base/names.html)), the current taxonomic name
-can be retrieved with `mo_current()`. Both functions return full names.
+\[mo_synonyms()\] (which will have the scientific reference as
+\[name\]\[base::names()\]), the current taxonomic name can be retrieved
+with \[mo_current()\]. Both functions return full names.
 
-All output [will be
-translated](https://amr-for-r.org/reference/translate.md) where
-possible.
+All output \[will be translated\]\[translate\] where possible.
 
 ## Matching Score for Microorganisms
 

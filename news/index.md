@@ -1,201 +1,116 @@
 # Changelog
 
-## AMR 3.0.1.9055
+## AMR 3.0.1.9057
 
-This will become release v3.1.0, intended for launch end of May.
+Planned as v3.1.0, May 2026.
 
 #### New
 
-- Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by
-  adding all of their over 5,700 new clinical breakpoints to the
-  `clinical_breakpoints` data set for usage in
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md). EUCAST 2026
-  is now the new default guideline for all MIC and disk diffusion
-  interpretations.
-- Support for the [`future`](https://future.futureverse.org) package and
-  its framework, as the previous implementation of parallel computing
-  was slow
-  - **Breaking change**:
-    [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) with
-    `parallel = TRUE` now requires a non-sequential
-    [`future::plan()`](https://future.futureverse.org/reference/plan.html)
-    to be active before the call — e.g.,
-    `future::plan(future::multisession)` — and throws an informative
-    error if none is set.
-  - New all-core usage setup: when the number of AB columns is smaller
-    than the number of available cores, rows are now split into batches
-    so all cores stay active (row-batch mode). Previously, a 6-column
-    dataset on a 16-core machine would only use 6 cores; now all 16 are
-    used, with each worker processing a smaller row slice (lower
-    per-worker memory pressure and processing time)
-  - [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
-    and [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
-    gained a `parallel` argument using the same `future`/`future.apply`
-    pattern: for WISCA, Monte Carlo simulations are split into
-    `(group, chunk)` job pairs distributed across workers; for grouped
-    antibiograms, each group is processed by a separate worker
-    ([\#281](https://github.com/msberends/AMR/issues/281))
-- Integration with the *tidymodels* framework to allow seamless use of
-  SIR, MIC and disk data in modelling pipelines via `recipes`
-  - [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md)
-    to transform `<mic>` columns with log2, and
-    [`step_sir_numeric()`](https://amr-for-r.org/reference/amr-tidymodels.md)
-    to convert `<sir>` columns to numeric
-  - New `tidyselect` helpers:
-    - [`all_sir()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-      [`all_sir_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
-    - [`all_mic()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-      [`all_mic_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
-    - [`all_disk()`](https://amr-for-r.org/reference/amr-tidymodels.md),
-      [`all_disk_predictors()`](https://amr-for-r.org/reference/amr-tidymodels.md)
-- Data set `esbl_isolates` to practise with AMR modelling
-- AMR selectors
+- EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints
+  added to the `clinical_breakpoints` data set; EUCAST 2026 is now the
+  default for all MIC and disk diffusion interpretations
+- Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based
+  interpretation, by setting `breakpoint_type = "ECOFF"` in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md); WT/NWT
+  results are fully supported in all resistance/susceptibility functions
+  and plots ([\#254](https://github.com/msberends/AMR/issues/254))
+- Faster parallel computing via the `future` package; **breaking
+  change**: a non-sequential plan
+  (e.g. `future::plan(future::multisession)`) must be active before
+  using `parallel = TRUE`;
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) now also
+  support `parallel = TRUE`
+  ([\#281](https://github.com/msberends/AMR/issues/281))
+- *tidymodels* integration for using SIR, MIC and disk data in modelling
+  pipelines:
+  [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+  [`step_sir_numeric()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+  and new column selectors
+  [`all_sir()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+  [`all_mic()`](https://amr-for-r.org/reference/amr-tidymodels.md),
+  [`all_disk()`](https://amr-for-r.org/reference/amr-tidymodels.md)
+- New `esbl_isolates` data set for practising AMR modelling
+- New antimicrobial selectors:
   [`ionophores()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`peptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
-  [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
-  and
+  [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
-- Support for Wildtype (WT) / Non-wildtype (NWT) in
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), all plotting
-  functions, and all susceptibility/resistance functions.
-  - [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) gained an
-    argument `as_wt_nwt`, which defaults to `TRUE` only when
-    `breakpoint_type = "ECOFF"`
-    ([\#254](https://github.com/msberends/AMR/issues/254))
-  - This transforms the output from S/R to WT/NWT
-  - Functions such as
-    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
-    count WT as S and NWT as R
-- Function
+- New
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
-  which allows future implementation of CLSI interpretive rules
-  ([\#235](https://github.com/msberends/AMR/issues/235))
-  - [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
-    has become a wrapper around that function
-  - Gained argument `add_if_missing` (default: `TRUE`). When set to
-    `FALSE`, rules are only applied to cells that already contain an SIR
-    value; `NA` cells are left untouched. This is useful with
-    `overwrite = TRUE` to update reported results without imputing
-    values for drugs that were not tested
-    ([\#259](https://github.com/msberends/AMR/issues/259))
-- Function
-  [`amr_course()`](https://amr-for-r.org/reference/amr_course.md), which
-  allows for automated download and unpacking of a GitHub repository for
-  e.g. webinar use
-- Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R’s
-  `NA_character_` and `NA_integer_`, for use in pipelines that require
-  typed missing values
+  a unified function for EUCAST and CLSI interpretive rules;
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  is now a wrapper around it
+  ([\#235](https://github.com/msberends/AMR/issues/235),
+  [\#259](https://github.com/msberends/AMR/issues/259))
+- New [`amr_course()`](https://amr-for-r.org/reference/amr_course.md) to
+  download and unpack course or webinar materials from GitHub in one
+  call
+- Typed missing value constants `NA_ab_` and `NA_mo_`, for use in
+  pipelines that need missing values of a specific class
 
 #### Fixes
 
-- Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
-  where values that were purely numeric (e.g., `"1"`) and matched the
-  broad SIR-matching regex would be incorrectly stripped of all content
-  by the Unicode letter filter
-- Fixed a bug in [`as.mic()`](https://amr-for-r.org/reference/as.mic.md)
-  where MIC values in scientific notation (e.g., `"1e-3"`) were
-  incorrectly handled because the letter `e` was removed along with
-  other Unicode letters; scientific notation `e` is now preserved
-- Fixed a bug in [`as.ab()`](https://amr-for-r.org/reference/as.ab.md)
-  where certain AB codes containing “PH” or “TH” (such as `ETH`, `MTH`,
-  `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when
-  combined in a vector with any untranslatable value
+- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) on data
+  frames: already-converted SIR columns no longer dropped on re-run
+  ([\#278](https://github.com/msberends/AMR/issues/278)); metadata
+  columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic
+  columns; `info = FALSE` now suppresses all messages, including for
+  columns without breakpoints
+- [`as.mic()`](https://amr-for-r.org/reference/as.mic.md): values in
+  scientific notation (e.g. `1e-3`) now handled correctly
+- [`as.ab()`](https://amr-for-r.org/reference/as.ab.md): codes
+  containing “PH” or “TH” (e.g. `ETH`, `PHE`) no longer return `NA` when
+  mixed with unrecognised input
   ([\#245](https://github.com/msberends/AMR/issues/245))
-- Fixed a bug in
-  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) for
-  when no antimicrobials are set
-- Fixed a bug in [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
-  where for numeric input the arguments `S`, `I`, and `R` would not be
-  considered ([\#244](https://github.com/msberends/AMR/issues/244))
-- Fixed a bug in plotting MIC values when `keep_operators = "all"`
-- Fixed some foreign translations of antimicrobial drugs
-- Fixed a bug for printing column names to the console when using
-  `mutate_at(vars(...), as.mic)`
-  ([\#249](https://github.com/msberends/AMR/issues/249))
-- Fixed a bug to disregard `NI` for susceptibility proportion functions
-- Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo
-  and CoPS to Stafilococco coagulasi-positivo
-  ([\#256](https://github.com/msberends/AMR/issues/256))
-- Fixed SIR and MIC coercion of combined values,
-  e.g. `as.sir("<= 0.002; S")` or `as.mic("S; 0.002")`
+- Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`)
+  now parsed correctly
   ([\#252](https://github.com/msberends/AMR/issues/252))
-- Fixed translation of foreign languages in
-  [`sir_df()`](https://amr-for-r.org/reference/proportion.md)
-  ([\#272](https://github.com/msberends/AMR/issues/272))
-- Fixed BRMO classification by including bacterial complexes
+- BRMO classification now includes bacterial complexes
   ([\#275](https://github.com/msberends/AMR/issues/275))
-- Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
-  frames silently deleting columns whose AB class was already `<sir>`
-  when called a second time (re-running on already-converted data)
-  ([\#278](https://github.com/msberends/AMR/issues/278))
-- Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) for data
-  frames incorrectly treating metadata columns (e.g. `patient`, `ward`)
-  as antibiotic columns when their names coincidentally matched an
-  antibiotic code; column content is now validated against AMR data
-  patterns before inclusion
-- Fixed [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) ignoring
-  `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against
-  *E. coli*)
+- Translation fixes for Italian CoNS/CoPS names
+  ([\#256](https://github.com/msberends/AMR/issues/256)), Dutch
+  antimicrobials, and
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md)
+  foreign-language output
+  ([\#272](https://github.com/msberends/AMR/issues/272))
 
 #### Updates
 
-- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) with
-  `reference_data`: custom guideline names now correctly classify values
-  as R using EUCAST convention (`> breakpoint_R` for MIC,
-  `< breakpoint_R` for disk); custom breakpoints with `host = NA` now
-  serve as a host-agnostic fallback when no host-specific row matches
-  ([\#239](https://github.com/msberends/AMR/issues/239))
-- Extensive `cli` integration for better message handling and clickable
-  links in messages and warnings
-  ([\#191](https://github.com/msberends/AMR/issues/191),
-  [\#265](https://github.com/msberends/AMR/issues/265))
-- [`mdro()`](https://amr-for-r.org/reference/mdro.md) now infers
-  resistance for a *missing* base drug column from an *available*
-  corresponding drug+inhibitor combination showing resistance (e.g.,
-  piperacillin is absent but required, while piperacillin/tazobactam
-  available and resistant). Can be set with the new argument
-  `infer_from_combinations`, which defaults to `TRUE`
-  ([\#209](https://github.com/msberends/AMR/issues/209)). Note that this
-  can yield a higher MDRO detection (which is a good thing as it has
-  become more reliable).
-- [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
-  and [`resistance()`](https://amr-for-r.org/reference/proportion.md)
-  gained the argument `guideline`, which defaults to EUCAST, for
-  interpreting the ‘I’ category correctly.
-- Added to the `antimicrobials` data set: cefepime/taniborbactam
-  (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`),
-  kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`),
-  thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)
-- [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) and
-  [`rescale_mic()`](https://amr-for-r.org/reference/as.mic.md) gained
-  the argument `round_to_next_log2`, which can be set to `TRUE` to round
-  all values up to the nearest next log2 level
-  ([\#255](https://github.com/msberends/AMR/issues/255))
-- `antimicrobials$group` is now a `list` instead of a `character`, to
-  contain any group the drug is in
-  ([\#246](https://github.com/msberends/AMR/issues/246))
-- [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) gained
-  an argument `all_groups` to return all groups the antimicrobial drug
-  is in ([\#246](https://github.com/msberends/AMR/issues/246))
-- Added explaining message to
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) when
-  interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R)
-  ([\#244](https://github.com/msberends/AMR/issues/244))
-- Updated handling of capped MIC values (`<`, `<=`, `>`, `>=`) in
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) in the
-  argument `capped_mic_handling`:
+- [`custom_eucast_rules()`](https://amr-for-r.org/reference/AMR-deprecated.md)
+  renamed to
+  [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md);
+  old name deprecated but still works
+  ([\#268](https://github.com/msberends/AMR/issues/268))
+- [`mdro()`](https://amr-for-r.org/reference/mdro.md) can now infer
+  resistance from a drug+inhibitor combination when the base drug column
+  is absent (e.g. piperacillin inferred from piperacillin/tazobactam);
+  controlled via new `infer_from_combinations` argument (default `TRUE`)
+  ([\#209](https://github.com/msberends/AMR/issues/209))
+- [`susceptibility()`](https://amr-for-r.org/reference/proportion.md) /
+  [`resistance()`](https://amr-for-r.org/reference/proportion.md): new
+  `guideline` argument (default EUCAST) to ensure the ‘I’ category is
+  interpreted correctly per guideline
+- Capped MIC handling in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) reworked into
+  four clearly defined options: `"none"`, `"conservative"` (new
+  default), `"standard"`, `"lenient"`
   ([\#243](https://github.com/msberends/AMR/issues/243))
-  - Introduced four clearly defined options: `"none"`, `"conservative"`
-    (default), `"standard"`, and `"lenient"`
-  - Interpretation of capped MIC values now consistently returns `"NI"`
-    (non-interpretable) when the true MIC could be at either side of a
-    breakpoint, depending on the selected handling mode
-  - This results in more reliable behaviour compared to previous
-    versions for capped MIC values
-  - Removed the `"inverse"` option, which has now become redundant
-- [`ab_group()`](https://amr-for-r.org/reference/ab_property.md) now
-  returns values consist with the AMR selectors
+- [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) /
+  [`rescale_mic()`](https://amr-for-r.org/reference/as.mic.md): new
+  `round_to_next_log2` argument to round values up to the nearest log2
+  dilution level ([\#255](https://github.com/msberends/AMR/issues/255))
+- `antimicrobials$group` now a `list`, so drugs belonging to multiple
+  groups are fully represented; use `ab_group(all_groups = TRUE)` to
+  retrieve all groups for a drug
   ([\#246](https://github.com/msberends/AMR/issues/246))
+- New antimicrobials added: cefepime/taniborbactam (`FTA`),
+  ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin
+  (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton
+  (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
+- Improved console messages with clickable links throughout, powered by
+  `cli` ([\#191](https://github.com/msberends/AMR/issues/191),
+  [\#265](https://github.com/msberends/AMR/issues/265))
 
 ## AMR 3.0.1
 
@@ -581,7 +496,7 @@ this change.
 - Updated
   [`italicise_taxonomy()`](https://amr-for-r.org/reference/italicise_taxonomy.md)
   to support HTML output
-- [`custom_eucast_rules()`](https://amr-for-r.org/reference/custom_eucast_rules.md)
+- [`custom_eucast_rules()`](https://amr-for-r.org/reference/AMR-deprecated.md)
   now supports multiple antimicrobials and antimicrobial groups to be
   affected by a single rule
 - [`mo_info()`](https://amr-for-r.org/reference/mo_property.md) now

@@ -51,8 +51,8 @@ pca(x, ..., retx = TRUE, center = TRUE, scale. = TRUE, tol = NULL,
   than or equal to `tol` times the standard deviation of the first
   component.) With the default null setting, no components are omitted
   (unless `rank.` is specified less than `min(dim(x))`.). Other settings
-  for tol could be `tol = 0` or `tol = sqrt(.Machine$double.eps)`, which
-  would omit essentially constant components.
+  for `tol` could be `tol = 0` or `tol = sqrt(.Machine$double.eps)`,
+  which would omit essentially constant components.
 
 - rank.:
 
