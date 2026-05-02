@@ -28,7 +28,7 @@ Planned as v3.1.0, May 2026.
 * Capped MIC handling in `as.sir()` reworked — four clearly defined options: `"none"`, `"conservative"` (new default), `"standard"`, `"lenient"` (#243)
 * `as.mic()` / `rescale_mic()`: new `round_to_next_log2` argument to round values up to the nearest log2 dilution level (#255)
 * `antimicrobials$group` now a `list`, so drugs belonging to multiple groups are fully represented — use `ab_group(all_groups = TRUE)` to retrieve all groups for a drug (#246)
-* New antimicrobials added: cefepime/taniborbactam, ceftibuten/avibactam, clorobiocin, kasugamycin, ostreogrycin, taniborbactam, thiostrepton, xeruborbactam, zorbamycin
+* New antimicrobials added: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 * Improved console messages with clickable links throughout, powered by `cli` (#191, #265)
 
 
