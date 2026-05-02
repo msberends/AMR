@@ -1,66 +1,35 @@
 # AMR 3.0.1.9056
 
-This will become release v3.1.0, intended for launch end of May.
+Planned as v3.1.0, May 2026.
 
 ### New
-* Support for clinical breakpoints of 2026 of both CLSI and EUCAST, by adding all of their over 5,700 new clinical breakpoints to the `clinical_breakpoints` data set for usage in `as.sir()`. EUCAST 2026 is now the new default guideline for all MIC and disk diffusion interpretations.
-* Support for the [`future`](https://future.futureverse.org) package and its framework, as the previous implementation of parallel computing was slow
-  - **Breaking change**: `as.sir()` with `parallel = TRUE` now requires a non-sequential `future::plan()` to be active before the call — e.g., `future::plan(future::multisession)` — and throws an informative error if none is set.
-  - New all-core usage setup: when the number of AB columns is smaller than the number of available cores, rows are now split into batches so all cores stay active (row-batch mode). Previously, a 6-column dataset on a 16-core machine would only use 6 cores; now all 16 are used, with each worker processing a smaller row slice (lower per-worker memory pressure and processing time)
-  - `antibiogram()` and `wisca()` gained a `parallel` argument using the same `future`/`future.apply` pattern: for WISCA, Monte Carlo simulations are split into `(group, chunk)` job pairs distributed across workers; for grouped antibiograms, each group is processed by a separate worker (#281)
-* Integration with the *tidymodels* framework to allow seamless use of SIR, MIC and disk data in modelling pipelines via `recipes`
-  - `step_mic_log2()` to transform `<mic>` columns with log2, and `step_sir_numeric()` to convert `<sir>` columns to numeric
-  - New `tidyselect` helpers:
-    - `all_sir()`, `all_sir_predictors()`
-    - `all_mic()`, `all_mic_predictors()`
-    - `all_disk()`, `all_disk_predictors()`
-* Data set `esbl_isolates` to practise with AMR modelling
-* AMR selectors `ionophores()`, `peptides()`, `phosphonics()` and `spiropyrimidinetriones()`
-* Support for Wildtype (WT) / Non-wildtype (NWT) in `as.sir()`, all plotting functions, and all susceptibility/resistance functions.
-  - `as.sir()` gained an argument `as_wt_nwt`, which defaults to `TRUE` only when `breakpoint_type = "ECOFF"` (#254)
-  - This transforms the output from S/R to WT/NWT
-  - Functions such as `susceptibility()` count WT as S and NWT as R
-* Function `interpretive_rules()`, which allows future implementation of CLSI interpretive rules (#235)
-  - `eucast_rules()` has become a wrapper around that function
-  - Gained argument `add_if_missing` (default: `TRUE`). When set to `FALSE`, rules are only applied to cells that already contain an SIR value; `NA` cells are left untouched. This is useful with `overwrite = TRUE` to update reported results without imputing values for drugs that were not tested (#259)
-* Function `amr_course()`, which allows for automated download and unpacking of a GitHub repository for e.g. webinar use
-* Two new `NA` objects, `NA_ab_` and `NA_mo_`, analogous to base R's `NA_character_` and `NA_integer_`, for use in pipelines that require typed missing values
+* EUCAST 2026 and CLSI 2026 breakpoints (5,700+); EUCAST 2026 is now the default
+* Wildtype/Non-wildtype (WT/NWT) classification in `as.sir()`, all resistance functions, and all plots — use `breakpoint_type = "ECOFF"`
+* Faster parallel computing via `future` package — **breaking**: requires `future::plan(future::multisession)` before calling `as.sir(..., parallel = TRUE)`; `antibiogram()` and `wisca()` now also support `parallel = TRUE`
+* *tidymodels* integration: `step_mic_log2()`, `step_sir_numeric()`, and new column selectors `all_sir()`, `all_mic()`, `all_disk()`
+* New `esbl_isolates` data set for AMR modelling practice
+* New antimicrobial selectors: `ionophores()`, `peptides()`, `phosphonics()`, `spiropyrimidinetriones()`
+* `interpretive_rules()` — unified engine for EUCAST and CLSI interpretive rules; `eucast_rules()` is now a wrapper
+* `amr_course()` — one-call download of course/webinar materials from GitHub
+* Typed missing value constants `NA_ab_` and `NA_mo_`
 
 ### Fixes
-* Fixed a bug in `as.sir()` where values that were purely numeric (e.g., `"1"`) and matched the broad SIR-matching regex would be incorrectly stripped of all content by the Unicode letter filter
-* Fixed a bug in `as.mic()` where MIC values in scientific notation (e.g., `"1e-3"`) were incorrectly handled because the letter `e` was removed along with other Unicode letters; scientific notation `e` is now preserved
-* Fixed a bug in `as.ab()` where certain AB codes containing "PH" or "TH" (such as `ETH`, `MTH`, `PHE`, `PHN`, `STH`, `THA`, `THI1`) would incorrectly return `NA` when combined in a vector with any untranslatable value (#245)
-* Fixed a bug in `antibiogram()` for when no antimicrobials are set
-* Fixed a bug in `as.sir()` where for numeric input the arguments `S`,  `I`,  and `R` would not be considered (#244)
-* Fixed a bug in plotting MIC values when `keep_operators = "all"`
-* Fixed some foreign translations of antimicrobial drugs
-* Fixed a bug for printing column names to the console when using `mutate_at(vars(...), as.mic)` (#249)
-* Fixed a bug to disregard `NI` for susceptibility proportion functions
-* Fixed Italian translation of CoNS to Stafilococco coagulasi-negativo and CoPS to Stafilococco coagulasi-positivo (#256)
-* Fixed SIR and MIC coercion of combined values, e.g. `as.sir("<= 0.002; S") ` or `as.mic("S; 0.002")` (#252)
-* Fixed translation of foreign languages in `sir_df()` (#272)
-* Fixed BRMO classification by including bacterial complexes (#275)
-* Fixed `as.sir()` for data frames silently deleting columns whose AB class was already `<sir>` when called a second time (re-running on already-converted data) (#278)
-* Fixed `as.sir()` for data frames incorrectly treating metadata columns (e.g. `patient`, `ward`) as antibiotic columns when their names coincidentally matched an antibiotic code; column content is now validated against AMR data patterns before inclusion
-* Fixed `as.sir()` ignoring `info = FALSE` for columns with no breakpoints (e.g. cefoxitin against *E. coli*)
+* `as.sir()` on data frames: already-converted SIR columns no longer dropped on re-run; metadata columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic columns; `info = FALSE` now suppresses all messages including for columns without breakpoints
+* `as.mic()`: scientific notation values (e.g. `1e-3`) now preserved correctly
+* `as.ab()`: codes containing "PH" or "TH" (e.g. `ETH`, `PHE`) no longer return `NA` in mixed vectors
+* Combined MIC/SIR input (e.g. `"<= 0.002; S"` or `"S; 0.002"`) now parsed correctly
+* BRMO classification now includes bacterial complexes
+* Translation fixes: Italian CoNS/CoPS names, Dutch antimicrobials, `sir_df()` foreign output
 
 ### Updates
-* Renamed `custom_eucast_rules()` to `custom_interpretive_rules()`; old function is now a deprecated wrapper. Renamed `data-raw/eucast_rules.tsv` to `interpretive_rules.tsv` and added `rule.provider` column for multi-guideline (EUCAST/CLSI) support. `clsi_rules()` no longer throws an error (#268)
-* `as.sir()` with `reference_data`: custom guideline names now correctly classify values as R using EUCAST convention (`> breakpoint_R` for MIC, `< breakpoint_R` for disk); custom breakpoints with `host = NA` now serve as a host-agnostic fallback when no host-specific row matches (#239)
-* Extensive `cli` integration for better message handling and clickable links in messages and warnings (#191, #265)
-* `mdro()` now infers resistance for a _missing_ base drug column from an _available_ corresponding drug+inhibitor combination showing resistance (e.g., piperacillin is absent but required, while piperacillin/tazobactam available and resistant). Can be set with the new argument `infer_from_combinations`, which defaults to `TRUE` (#209). Note that this can yield a higher MDRO detection (which is a good thing as it has become more reliable).
-* `susceptibility()` and `resistance()` gained the argument `guideline`, which defaults to EUCAST, for interpreting the 'I' category correctly.
-* Added to the `antimicrobials` data set: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), and zorbamycin (`ZOR`)
-* `as.mic()` and `rescale_mic()` gained the argument `round_to_next_log2`, which can be set to `TRUE` to round all values up to the nearest next log2 level (#255)
-* `antimicrobials$group` is now a `list` instead of a `character`, to contain any group the drug is in (#246)
-* `ab_group()` gained an argument `all_groups` to return all groups the antimicrobial drug is in (#246)
-* Added explaining message to `as.sir()` when interpreting numeric values (e.g., 1 for S, 2 for I, 3 for R) (#244)
-* Updated handling of capped MIC values (`<`, `<=`, `>`, `>=`) in `as.sir()` in the argument `capped_mic_handling`: (#243)
-  * Introduced four clearly defined options: `"none"`, `"conservative"` (default), `"standard"`, and `"lenient"`
-  * Interpretation of capped MIC values now consistently returns `"NI"` (non-interpretable) when the true MIC could be at either side of a breakpoint, depending on the selected handling mode
-  * This results in more reliable behaviour compared to previous versions for capped MIC values
-  * Removed the `"inverse"` option, which has now become redundant
-* `ab_group()` now returns values consist with the AMR selectors (#246)
+* `custom_eucast_rules()` renamed to `custom_interpretive_rules()` — old name deprecated but still works
+* `mdro()` now infers resistance from a drug+inhibitor combination when the base drug column is absent (e.g. piperacillin inferred from piperacillin/tazobactam); controlled via new `infer_from_combinations` argument (default `TRUE`)
+* `susceptibility()` / `resistance()`: new `guideline` argument (default EUCAST) for correct 'I' category handling
+* Capped MIC handling in `as.sir()` reworked — four options: `"none"`, `"conservative"` (new default), `"standard"`, `"lenient"`
+* `as.mic()` / `rescale_mic()`: new `round_to_next_log2` argument
+* `antimicrobials$group` now a `list`; drugs can belong to multiple groups — use `ab_group(all_groups = TRUE)` to retrieve all
+* New antimicrobials added: cefepime/taniborbactam, ceftibuten/avibactam, clorobiocin, kasugamycin, ostreogrycin, taniborbactam, thiostrepton, xeruborbactam, zorbamycin
+* Better console output with clickable links throughout via `cli`
 
 
 # AMR 3.0.1
