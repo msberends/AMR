@@ -42,6 +42,8 @@
 #' - `mo_ref("Enterobacter aerogenes")` will return `"Tindall et al., 2017"` (with a note about the renaming)
 #' - `mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Hormaeche et al., 1960"` (with a once-per-session warning that the name is outdated)
 #'
+#' [mo_ref()] returns the abbreviated authority of the nomenclatural act that created the queried name combination. When `keep_synonyms = FALSE` (default), this is the authority of the currently accepted name. When `keep_synonyms = TRUE`, this is the authority under which the queried (possibly outdated) name was published. Emendations (changes to the species description without a name change) are not reflected; only the combination or original description authority is returned.
+#'
 #' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.

@@ -122,8 +122,8 @@ get_author_year <- function(ref) {
   authors <- gsub("[A-Z-][a-z-]?[.]", "", authors, ignore.case = FALSE)
   # remove trailing and leading spaces
   authors <- trimws(authors)
-  # keep only the part after last 'emend.' to get the latest authors
-  authors <- gsub(".*emend[.] ?", "", authors)
+  # strip emend. and everything after it to retain the combination authority
+  authors <- gsub(" ?emend[.]?.*", "", authors)
   # only keep first author and replace all others by 'et al'
   authors <- gsub("(,| and| et| &| ex| emend\\.?) .*", " et al.", authors)
   # et al. always with ending dot

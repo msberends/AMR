@@ -1,4 +1,4 @@
-# AMR 3.0.1.9057
+# AMR 3.0.1.9058
 
 Planned as v3.1.0, May 2026.
 
@@ -18,6 +18,7 @@ Planned as v3.1.0, May 2026.
 * `as.mic()`: values in scientific notation (e.g. `1e-3`) now handled correctly
 * `as.ab()`: codes containing "PH" or "TH" (e.g. `ETH`, `PHE`) no longer return `NA` when mixed with unrecognised input (#245)
 * Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`) now parsed correctly (#252)
+* `get_author_year()` in the microorganism reproduction script now strips `emend.` and everything after it, so `ref` reflects the combination authority rather than the emendation author (e.g. *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
 * BRMO classification now includes bacterial complexes (#275)
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
 
