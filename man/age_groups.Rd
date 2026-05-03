@@ -17,10 +17,10 @@ age_groups(x, split_at = c(0, 12, 25, 55, 75), names = NULL,
 \item{na.rm}{A \link{logical} to indicate whether missing values should be removed.}
 }
 \value{
-Ordered [factor]
+Ordered \link{factor}
 }
 \description{
-Split ages into age groups defined by the `split` argument. This allows for easier demographic (antimicrobial resistance) analysis. The function returns an ordered [factor].
+Split ages into age groups defined by the \code{split} argument. This allows for easier demographic (antimicrobial resistance) analysis. The function returns an ordered \link{factor}.
 }
 \details{
 To split ages, the input for the \code{split_at} argument can be:
