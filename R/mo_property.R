@@ -56,7 +56,7 @@
 #'
 #' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) is based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antimicrobials).
 #'
-#' Determination of bacterial oxygen tolerance ([mo_oxygen_tolerance()]) is based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicting an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' Determination of both bacterial oxygen tolerance ([mo_oxygen_tolerance()]) and morphology ([mo_morphology()]) are  based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicating an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. [This MycoBank URL](`r TAXONOMY_VERSION$MycoBank$url`) is used for fungi wherever available , [this LPSN URL](`r TAXONOMY_VERSION$MycoBank$url`) for bacteria wherever available, and [this GBIF link](`r TAXONOMY_VERSION$GBIF$url`) otherwise.
 #'
@@ -462,8 +462,9 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
 }
 
 #' @rdname mo_property
+#' @param add_morphology a [logical] to indicate whether the morphology (from [mo_morphology()]) should be added to the Gram stain result, e.g. `"Gram-negative rods"` instead of `"Gram-negative"`. The default is `FALSE`.
 #' @export
-mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), add_morphology = FALSE, ...) {
   if (missing(x)) {
     # this tries to find the data and an 'mo' column
     x <- find_mo_col(fn = "mo_gramstain")
@@ -634,6 +635,20 @@ mo_is_anaerobic <- function(x, language = get_AMR_locale(), keep_synonyms = getO
   out <- oxygen == "anaerobe" & !is.na(oxygen)
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
+}
+
+#' @rdname mo_property
+#' @export
+mo_morphology <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_morphology")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+
+  mo_validate(x = x, property = "morphology", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
 #' @rdname mo_property

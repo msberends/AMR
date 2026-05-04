@@ -746,7 +746,7 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
         tax_h,
       tax_i %in% taxonomy_mycobank$fullname[taxonomy_mycobank$rank == "genus"] ~
         tax_i,
-      tax_k %in% taxonomy_mycobank$fullname[taxonomy_mycobank$rank == "genus"] ~
+      tax_j %in% taxonomy_mycobank$fullname[taxonomy_mycobank$rank == "genus"] ~
         tax_j,
       tax_k %in% taxonomy_mycobank$fullname[taxonomy_mycobank$rank == "genus"] ~
         tax_k,
@@ -2856,6 +2856,135 @@ bacdive <- bacdive %>%
 taxonomy <- taxonomy %>%
   left_join(bacdive, by = "fullname") %>%
   relocate(oxygen_tolerance, .after = ref)
+
+
+# Add morphology ---------------------------------------------------------------------
+
+# We will use the BacDive data base for this:
+# - go to https://bacdive.dsmz.de/advsearch
+# - filter 'Cell shape' on "*" and click Submit
+# - click on the 'Download table as CSV' button
+bacdive_shape <- vroom::vroom("data-raw/bacdive_shape.csv", skip = 2) %>%
+  select(species, shape = `Cell shape`)
+bacdive_shape <- bacdive_shape %>%
+  # fill in missing species from previous rows
+  mutate(fullname = if_else(is.na(species), lag(species), species)) %>%
+  filter(
+    !is.na(species),
+    !is.na(shape),
+    species %unlike% "unclassified"
+  ) %>%
+  select(-species)
+bacdive_shape <- bacdive_shape %>%
+  # map raw BacDive values to a controlled vocabulary
+  mutate(
+    shape = case_when(
+      shape %in% c("coccus-shaped", "sphere-shaped", "diplococcus-shaped") ~ "cocci",
+      shape %in% c("oval-shaped", "ovoid-shaped") ~ "coccobacilli",
+      shape %in% c("rod-shaped", "curved-shaped", "vibrio-shaped", "flask-shaped") ~ "rods",
+      shape %in% c("spiral-shaped", "helical-shaped") ~ "spirilla",
+      shape == "filament-shaped" ~ "filamentous",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(shape)) %>%
+  # now determine shape per species by majority vote
+  group_by(fullname) %>%
+  summarise(
+    morphology = names(sort(table(shape), decreasing = TRUE))[1]
+  )
+# now find all synonyms and copy them from their current taxonomic names
+synonyms_shape <- taxonomy %>%
+  filter(status == "synonym") %>%
+  transmute(
+    mo,
+    fullname_old = fullname,
+    current = synonym_mo_to_accepted_mo(
+      mo,
+      fill_in_accepted = FALSE,
+      dataset = taxonomy
+    )
+  ) %>%
+  filter(!is.na(current)) %>%
+  mutate(fullname = taxonomy$fullname[match(current, taxonomy$mo)]) %>%
+  left_join(bacdive_shape, by = "fullname") %>%
+  filter(!is.na(morphology)) %>%
+  select(fullname, morphology)
+
+bacdive_shape <- bacdive_shape %>%
+  bind_rows(synonyms_shape) %>%
+  distinct()
+
+bacdive_shape_genus <- bacdive_shape %>%
+  mutate(
+    shape_raw = morphology,
+    genus = taxonomy$genus[match(fullname, taxonomy$fullname)]
+  ) %>%
+  group_by(fullname = genus) %>%
+  summarise(
+    morphology = names(sort(table(shape_raw), decreasing = TRUE))[1]
+  )
+bacdive_shape <- bacdive_shape %>%
+  bind_rows(bacdive_shape_genus) %>%
+  arrange(fullname)
+
+bacdive_shape_other <- taxonomy %>%
+  filter(
+    kingdom == "Bacteria",
+    rank == "species",
+    !fullname %in% bacdive_shape$fullname,
+    genus %in% bacdive_shape$fullname
+  ) %>%
+  select(fullname, genus) %>%
+  left_join(bacdive_shape, by = c("genus" = "fullname")) %>%
+  mutate(
+    morphology = paste("likely", morphology)
+  ) %>%
+  select(fullname, morphology) %>%
+  distinct(fullname, .keep_all = TRUE)
+
+bacdive_shape <- bacdive_shape %>%
+  bind_rows(bacdive_shape_other) %>%
+  arrange(fullname) %>%
+  distinct(fullname, .keep_all = TRUE)
+
+taxonomy <- taxonomy %>%
+  left_join(bacdive_shape, by = "fullname") %>%
+  relocate(morphology, .after = oxygen_tolerance)
+
+# Override: genera that are clinically established coccobacilli but where BacDive
+# majority vote yields "rods" due to observer disagreement on the rod/oval boundary.
+# These genera are universally reported as coccobacilli on Gram stain in clinical
+# microbiology practice.
+coccobacilli_genera <- c(
+  "Acinetobacter", "Aggregatibacter", "Brucella",
+  "Gardnerella", "Haemophilus", "Kingella",
+  "Moraxella", "Pasteurella"
+)
+taxonomy <- taxonomy %>%
+  mutate(
+    morphology = case_when(
+      genus %in% coccobacilli_genera & is.na(morphology) ~ "likely coccobacilli",
+      genus %in% coccobacilli_genera &
+        morphology %in% c("rods", "cocci") ~ "coccobacilli",
+      genus %in% coccobacilli_genera &
+        morphology %in% c("likely rods", "likely cocci") ~ "likely coccobacilli",
+      TRUE ~ morphology
+    )
+  )
+
+# Spirochaetes: the entire phylum is spirochaete by definition, fill in where missing
+taxonomy <- taxonomy %>%
+  mutate(
+    morphology = case_when(
+      phylum %in% c("Spirochaetota", "Spirochaetes") & is.na(morphology) ~ "likely spirilla",
+      phylum %in% c("Spirochaetota", "Spirochaetes") &
+        morphology %in% c("rods", "likely rods") ~ "spirilla",
+      TRUE ~ morphology
+    )
+  )
+
+
 
 
 # Restore 'synonym' microorganisms to 'accepted' --------------------------------------------------
