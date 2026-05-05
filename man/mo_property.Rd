@@ -24,6 +24,7 @@
 \alias{mo_is_intrinsic_resistant}
 \alias{mo_oxygen_tolerance}
 \alias{mo_is_anaerobic}
+\alias{mo_morphology}
 \alias{mo_snomed}
 \alias{mo_ref}
 \alias{mo_authors}
@@ -86,7 +87,8 @@ mo_pathogenicity(x, language = get_AMR_locale(),
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
 mo_gramstain(x, language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
+  add_morphology = FALSE, ...)
 
 mo_is_gram_negative(x, language = get_AMR_locale(),
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
@@ -104,6 +106,9 @@ mo_oxygen_tolerance(x, language = get_AMR_locale(),
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
 mo_is_anaerobic(x, language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
+
+mo_morphology(x, language = get_AMR_locale(),
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...)
 
 mo_snomed(x, language = get_AMR_locale(),
@@ -161,6 +166,8 @@ The default is \code{FALSE}, which will return a note if outdated taxonomic name
 
 \item{...}{Other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'.}
 
+\item{add_morphology}{a \link{logical} to indicate whether the morphology (from \code{\link[=mo_morphology]{mo_morphology()}}) should be added to the Gram stain result, e.g. \code{"Gram-negative rods"} instead of \code{"Gram-negative"}. The default is \code{FALSE}.}
+
 \item{ab}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}.}
 
 \item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}.}
@@ -203,7 +210,7 @@ Determination of yeasts (\code{\link[=mo_is_yeast]{mo_is_yeast()}}) is based on 
 
 Determination of intrinsic resistance (\code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}) is based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/bacteria/important-additional-information/expert-rules/}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antimicrobials).
 
-Determination of bacterial oxygen tolerance (\code{\link[=mo_oxygen_tolerance]{mo_oxygen_tolerance()}}) is based on BacDive, see \emph{Source}. The function \code{\link[=mo_is_anaerobic]{mo_is_anaerobic()}} only returns \code{TRUE} if the oxygen tolerance is \code{"anaerobe"}, indicting an obligate anaerobic species or genus. It always returns \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
+Determination of both bacterial oxygen tolerance (\code{\link[=mo_oxygen_tolerance]{mo_oxygen_tolerance()}}) and morphology (\code{\link[=mo_morphology]{mo_morphology()}}) are  based on BacDive, see \emph{Source}. The function \code{\link[=mo_is_anaerobic]{mo_is_anaerobic()}} only returns \code{TRUE} if the oxygen tolerance is \code{"anaerobe"}, indicating an obligate anaerobic species or genus. It always returns \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
 
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. \href{https://www.mycobank.org}{This MycoBank URL} is used for fungi wherever available , \href{https://www.mycobank.org}{this LPSN URL} for bacteria wherever available, and \href{https://www.gbif.org}{this GBIF link} otherwise.
 
@@ -262,8 +269,10 @@ mo_shortname("Klebsiella pneumoniae")
 
 # other properties ---------------------------------------------------------
 
-mo_pathogenicity("Klebsiella pneumoniae")
+mo_morphology("Klebsiella pneumoniae")
 mo_gramstain("Klebsiella pneumoniae")
+mo_gramstain("Klebsiella pneumoniae", add_morphology = TRUE)
+mo_pathogenicity("Klebsiella pneumoniae")
 mo_snomed("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
 mo_rank("Klebsiella pneumoniae")

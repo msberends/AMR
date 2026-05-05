@@ -102,8 +102,10 @@
 #'
 #' # other properties ---------------------------------------------------------
 #'
-#' mo_pathogenicity("Klebsiella pneumoniae")
+#' mo_morphology("Klebsiella pneumoniae")
 #' mo_gramstain("Klebsiella pneumoniae")
+#' mo_gramstain("Klebsiella pneumoniae", add_morphology = TRUE)
+#' mo_pathogenicity("Klebsiella pneumoniae")
 #' mo_snomed("Klebsiella pneumoniae")
 #' mo_type("Klebsiella pneumoniae")
 #' mo_rank("Klebsiella pneumoniae")
@@ -472,6 +474,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  meet_criteria(add_morphology, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
@@ -496,6 +499,12 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
     mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms) != "Negativicutes")
   # and of course our own ID for Gram-positives
   | x.mo %in% c("B_GRAMP", "B_ANAER-POS")] <- "Gram-positive"
+
+  if (isTRUE(add_morphology)) {
+    morphs <- mo_morphology(x.mo, language = NULL)
+    morphs[is.na(x)] <- ""
+    x[!is.na(x)] <- paste(x[!is.na(x)], tolower(morphs[!is.na(x)]))
+  }
 
   load_mo_uncertainties(metadata)
   translate_into_language(x, language = language, only_unknown = FALSE)
