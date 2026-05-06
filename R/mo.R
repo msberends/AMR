@@ -1023,17 +1023,19 @@ print.mo_uncertainties <- function(x, n = 10, ...) {
       message_(out2, as_note = FALSE)
     }
 
-    other_matches <- paste0(
-      "Also matched: ",
-      vector_and(
-        paste0(
-          candidates_formatted,
-          font_blue(paste0(" (", scores_formatted, ")"), collapse = NULL)
-        ),
-        quotes = FALSE, sort = FALSE
+    if (x[i, ]$candidates != "") {
+      other_matches <- paste0(
+        "Also matched: ",
+        vector_and(
+          paste0(
+            candidates_formatted,
+            font_blue(paste0(" (", scores_formatted, ")"), collapse = NULL)
+          ),
+          quotes = FALSE, sort = FALSE
+        )
       )
-    )
-    message_(other_matches, as_note = FALSE)
+      message_(other_matches, as_note = FALSE)
+    }
   }
 
   if (isTRUE(any_maxed_out)) {
