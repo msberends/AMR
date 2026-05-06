@@ -352,6 +352,18 @@ as.mo <- function(x,
             (MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
               MO_lookup_current$subspecies_first == substr(x_parts[2], 1, 1) |
               MO_lookup_current$subspecies_first == substr(x_parts[3], 1, 1)))
+          # Issue #288: if the species (and subspecies) word(s) in the input exactly match
+          # exactly one candidate, use only that candidate and bypass the 0.55 cutoff.
+          # This prevents prevalent bacteria from outranking a rarer organism whose species
+          # epithet is an unambiguous exact match, e.g. "S. apiospermum" → Scedosporium.
+          sp_exact <- tolower(MO_lookup_current$species[filtr]) == x_parts[2]
+          if (length(x_parts) == 3) {
+            sp_exact <- sp_exact & tolower(MO_lookup_current$subspecies[filtr]) == x_parts[3]
+          }
+          if (sum(sp_exact) == 1) {
+            filtr <- filtr[sp_exact]
+            minimum_matching_score <- 0
+          }
         } else {
           filtr <- which(MO_lookup_current$full_first == substr(x_parts[1], 1, 1) |
             MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
