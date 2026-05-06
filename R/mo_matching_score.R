@@ -125,6 +125,26 @@ mo_matching_score <- function(x, n) {
   # kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
   k_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "kingdom_index", drop = TRUE]
 
-  # matching score:
-  (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)
+  # base matching score
+  score <- (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)
+
+  # Issue #288: when the genus is abbreviated (≤3 chars) and the species epithet of the
+  # candidate exactly matches the species epithet of the input, boost the score ×2.
+  # This prevents a prevalent bacterium (low p_n/k_n) from outranking a rarer organism
+  # whose species epithet is the only exact match, e.g. "S. apiospermum" → Scedosporium.
+  x_parts_list <- strsplit(x, " ", fixed = TRUE)
+  n_parts_list <- strsplit(n, " ", fixed = TRUE)
+  x_genus <- vapply(x_parts_list, function(w) if (length(w) >= 1) w[1L] else "", character(1L))
+  x_sp    <- vapply(x_parts_list, function(w) if (length(w) >= 2L) tolower(w[2L]) else "", character(1L))
+  n_g1    <- vapply(n_parts_list, function(w) if (length(w) >= 1L) tolower(substr(w[1L], 1L, 1L)) else "", character(1L))
+  n_sp    <- vapply(n_parts_list, function(w) if (length(w) >= 2L) tolower(w[2L]) else "", character(1L))
+
+  exact_sp <- nchar(x_genus) <= 3L &
+    x_sp != "" &
+    n_sp != "" &
+    tolower(substr(x_genus, 1L, 1L)) == n_g1 &
+    x_sp == n_sp
+  score[exact_sp] <- score[exact_sp] * 2
+
+  score
 }

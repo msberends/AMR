@@ -322,6 +322,15 @@ as.mo <- function(x,
         return(as.character(MO_lookup_current$mo[match(x_out, MO_lookup_current$fullname_lower)]))
       }
 
+      # Issue #287: "X complex" is not a distinct taxon - strip " complex" and try "X"
+      if (grepl(" complex$", x_out, ignore.case = FALSE)) {
+        x_out <- sub(" complex$", "", x_out)
+        x_search_cleaned <- sub(" [Cc]omplex$", "", x_search_cleaned)
+        if (x_out %in% MO_lookup_current$fullname_lower) {
+          return(as.character(MO_lookup_current$mo[match(x_out, MO_lookup_current$fullname_lower)]))
+        }
+      }
+
       # input must not be too short
       if (nchar(x_out) < 3) {
         return("UNKNOWN")
